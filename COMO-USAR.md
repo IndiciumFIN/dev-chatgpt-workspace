@@ -25,14 +25,11 @@ npm run build:spa
 | `audit/` `audit-run/` `audit-evidence/` | o registro das execuções |
 | `docs/` | `PENDENCIAS.md` (54 itens) e `PARIDADE-CKO.md` |
 
-## Branches
+## Workspace GitHub autorizado
 
-```
-main                o que está publicado
-dev/bibliotecas     onde o trabalho acontece
-```
+O destino exclusivo de escrita é `IndiciumFIN/dev-chatgpt-workspace` (privado). O remoto está inicialmente vazio, e a `main` **desse novo repositório** é a única branch remota destinada à importação. Não criar branches remotas adicionais nem alterar repositórios anteriores. A branch `dev/bibliotecas` neste ZIP é histórica e local. Veja `docs/WORKSPACE-HANDOFF-2026-10-23.md`.
 
-Uma branch por frente: `feat/utc-024-formula`, `feat/utc-051-rotas`.
+Para publicar a importação inicial sem sobrescrever refs, use o script de validação `tools/publicar-workspace.ps1` em PowerShell com Git autenticado. Não inicialize o repo com outro commit antes de importar o histórico.
 
 ## Os gates
 
@@ -77,6 +74,6 @@ Refs: UTC-024, UTC-028, UTC-053, UTC-056
 
 ## Estado da auditoria 2026-10-23
 
-Consulte `docs/AUDITORIA-RELEASE-2026-10-23.md` antes de publicar. Este ZIP possui branch local `dev/bibliotecas` e nao possui `origin` remoto. Nao execute push contra uma `main` remota divergente.
+Consulte `docs/AUDITORIA-RELEASE-2026-10-23.md` antes de publicar. Este ZIP possui branch local `dev/bibliotecas` e `origin` apontado exclusivamente ao novo workspace privado. O novo remoto deve continuar vazio no momento da importacao. O script bloqueia push se ja houver alguma branch no destino.
 
 `vercel.json` prepara `npm run build:spa`, mas o build completo e os testes E2E ainda precisam ser reproduzidos no ambiente de CI. Nao confunda arquivos HTML do mesmo shell com SEO prerenderizado por rota. Login e banco permanecem desabilitados por politica; conferir tambem as variaveis do runtime remoto.

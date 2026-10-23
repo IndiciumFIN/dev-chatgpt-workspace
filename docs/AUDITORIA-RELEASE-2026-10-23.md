@@ -1,3 +1,5 @@
+> NOTA HISTORICA (2026-10-23): este relatorio foi produzido antes da criacao do novo workspace exclusivo. Para destino Git atual e remediacao de `FIND-CKO-PACKAGING-001`, leia `docs/WORKSPACE-HANDOFF-2026-10-23.md`.
+
 # Auditoria de release — bibliotecas — 2026-10-23
 
 ## Escopo e identidade

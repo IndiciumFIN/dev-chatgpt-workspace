@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 3,
+  "revision": 4,
   "updatedOn": "2026-10-23",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -46,12 +46,13 @@
       "priority": "P0",
       "owner": "ChatGPT + revisão independente",
       "criteria": "Investigar alerta npm de alta severidade e validar autorização e proteção de dados.",
-      "next": "FIND-SEC-001: avaliar correção Zod >=4.6.6 e limites de entrada antes de qualquer liberação.",
+      "next": "Zod 4.6.7 implantado e audit limpo. Investigar limites de entrada (arrays/maps/sets), RBAC e LGPD; FIND aberto.",
       "dependencies": [
         "WO-PMO-001"
       ],
       "evidence": [
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031113963"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031113963",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031635438"
       ],
       "updatedOn": "2026-10-23"
     },
@@ -170,6 +171,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-23",
       "reason": "Scan de dependências identificou 1 HIGH em Zod no conjunto de produção (GHSA-mrhx-c7xc-m3w5), FIND-SEC-001 aberto; sem remediação automática."
+    },
+    {
+      "seq": 6,
+      "workId": "WO-SEC-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-23",
+      "reason": "Commit 9ce1226 com Zod 4.6.7, npm audit bloqueante, 200 testes e build aprovados; Vercel READY. Mantido FIND por limites de entrada/RBAC."
     }
   ]
 }

@@ -1,0 +1,70 @@
+# Diagnóstico remoto de paridade com Vercel e correção proposta do lockfile.
+# Read-only: não publica, não faz push e não altera projetos.
+name: Diagnóstico build Vercel e lockfile
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate-lockfile-node22:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Gerar proposta de lockfile sem instalar pacotes
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Validar npm ci com o lockfile proposto
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Mostrar resumo das alterações sem vazar conteúdo extenso
+        run: |
+          git diff --check
+          git diff --stat -- package-lock.json
+          sha256sum package-lock.json
+      - name: Arquivar proposta para revisão independente
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: candidate-package-lock-node22
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 3
+
+  vercel-parity-node24:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      VITE_AUTH_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Verificar exclusões críticas da Vercel
+        run: |
+          excluded="$(git ls-files --cached --ignored --exclude-from=.vercelignore -- contracts/cko-tokens/dist)"
+          if [ -n "$excluded" ]; then
+            printf '%s\n' "$excluded"
+            echo "FAIL: .vercelignore exclui arquivos CKO exigidos pelo manifesto"
+            exit 1
+          fi
+          echo "PASS: nenhum arquivo CKO dist excluído pelo .vercelignore"
+      - name: Instalar estritamente
+        run: npm ci
+      - name: Reproduzir o build Vercel
+        run: npm run build:spa
+      - name: Verificar artefatos SPA
+        run: |
+          test -s .vercel/output/static/index.html
+          test -s .vercel/output/static/sitemap.xml
+          test -s .vercel/output/static/robots.txt

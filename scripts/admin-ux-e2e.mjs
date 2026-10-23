@@ -16,7 +16,7 @@ try {
   await page.getByRole('button', { name: /Conteúdos/ }).click();
   await page.locator('#admin-tool-title').fill('Escala de Braden · prévia de teste');
   await page.getByRole('radio', { name: 'Assinante' }).check();
-  await page.getByRole('heading', { name: 'Escala de Braden · prévia de teste' }).waitFor();
+  await page.getByRole('heading', { name: 'Escala de Braden · prévia de teste', exact: true }).waitFor();
   await page.screenshot({ path: 'audit-evidence/admin-ux/02-conteudos-rascunho-desktop.png', fullPage: true });
   await page.getByRole('button', { name: 'Salvar rascunho' }).click();
   await page.getByRole('button', { name: /Publicação/ }).click();
@@ -26,7 +26,7 @@ try {
   await page.reload({ waitUntil: 'networkidle' });
   await page.getByRole('button', { name: /Conteúdos/ }).click();
   await page.getByRole('radio', { name: 'Publicado local' }).check();
-  await page.getByRole('heading', { name: 'Escala de Braden · prévia de teste' }).waitFor();
+  await page.getByRole('heading', { name: 'Escala de Braden · prévia de teste', exact: true }).waitFor();
   await page.screenshot({ path: 'audit-evidence/admin-ux/03-conteudos-publicado-desktop.png', fullPage: true });
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, deviceScaleFactor: 2, reducedMotion: 'reduce' });
   mobile.on('pageerror', error => errors.push(error.message));

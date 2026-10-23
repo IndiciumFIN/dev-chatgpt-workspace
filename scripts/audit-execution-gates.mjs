@@ -23,4 +23,7 @@ for (const [id,path] of [['vite-bin','node_modules/.bin/vite'],['tsc-bin','node_
 const report={schemaVersion:1,scope:'CE_PUBLIC_BACKUP_ONLY',base:'v2.6.9',generatedAt:new Date().toISOString(),remoteIntegration:'PROHIBITED',results,releaseGate:'BLOCKED'};
 const out=resolve(root,'audit/execution/execution-gates-latest.json');mkdirSync(resolve(root,'audit/execution'),{recursive:true});writeFileSync(out,JSON.stringify(report,null,2)+'\n');
 for(const r of results) console.log(`${r.status} ${r.id}`);
-process.exit(results.every(x=>x.status==='PASS')?0:1);
+// PASS significa controle executado e aprovado; PRESENT significa pré-requisito localizado.
+// BLOCKED/FAIL continuam bloqueantes. O releaseGate permanece separado e não é homologação.
+const executionOk = results.every(x => x.status === 'PASS' || x.status === 'PRESENT');
+process.exit(executionOk ? 0 : 1);

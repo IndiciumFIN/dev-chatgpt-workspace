@@ -269,7 +269,9 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
 {
   // O RUNTIME e a fonte de verdade. O contrato em disco e o que precisa bater
   // com ele — se o codigo muda e o contrato nao e regerado, o gate acusa.
-  const dump = (() => { try { return JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8")); } catch { return {}; } })();
+  // O dump é gerado com diretório temporário exclusivo e validado nesta execução.
+  // Não consultar /tmp compartilhado: isso criava falsos FAILs com fontes/bindings vazios.
+  const dump = runtime;
   const fontesRuntime = dump.fontes ?? [];
   const bindingsRuntime = [...(dump.bindings ?? []), ...(dump.campos ?? []), ...(dump.camposContexto ?? [])];
   const fontes = fontesRuntime;

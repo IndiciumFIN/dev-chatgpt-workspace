@@ -10,8 +10,12 @@ node_modules
 /dist
 build
 
-# Evidencia de auditoria e capturas: nao fazem parte do produto publicado.
-audit
+# Baseline e registros de audit sao entradas obrigatorias dos gates de build.
+# Nao excluir audit/ por inteiro: check-context-invariants verifica essas fontes.
+# Apenas artefatos de execucao/visual nao sao entradas do build.
+audit/cleanup
+audit/execution
+audit/visual
 audit-evidence
 backups
 

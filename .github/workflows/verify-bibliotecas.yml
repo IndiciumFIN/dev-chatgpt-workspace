@@ -44,6 +44,7 @@ jobs:
           git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
       - run: npm ci
+      - run: node scripts/test-admin-console.mjs
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 const read = path => readFileSync(path, 'utf8');
 const store = read('src/lib/local-publication-register.ts');
-const ui = read('src/components/local/local-workbench-page.tsx');
+const ui = read('src/components/admin/admin-console.tsx');
 const canonical = read('src/lib/local-canonical.ts');
 const checks = [
   ['draft and published are independent slots', /draft: LocalWorkbench; published: LocalWorkbench/.test(store)],

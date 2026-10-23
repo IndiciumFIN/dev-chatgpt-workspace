@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/research_method.schema.json",
+  "title": "CKO | research_method",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "research_type",
+    "question_ref",
+    "study_design_ref",
+    "ethics_review_policy",
+    "instrument_refs",
+    "population_sampling_ref",
+    "analysis_plan_ref",
+    "reproducibility_refs",
+    "source_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "research_type": {
+      "type": "string",
+      "enum": [
+        "QUALITATIVE",
+        "QUANTITATIVE",
+        "MIXED",
+        "REVIEW",
+        "IMPLEMENTATION",
+        "OTHER"
+      ]
+    },
+    "question_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "study_design_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ethics_review_policy": {
+      "type": "string",
+      "enum": [
+        "REQUIRES_HUMAN_CHECK",
+        "DOCUMENTED_NOT_APPLICABLE",
+        "APPROVED"
+      ]
+    },
+    "instrument_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "population_sampling_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "analysis_plan_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reproducibility_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "calculation_engine_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

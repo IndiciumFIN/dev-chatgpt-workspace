@@ -1,0 +1,25 @@
+# Arquivos que a Vercel nao deve subir.
+#
+# Sem isto, `vercel deploy` envia node_modules (centenas de MB) e a propria
+# pasta .vercel/output, que e build local — nao fonte. O `.gitignore` NAO vale
+# aqui: a CLI usa o .vercelignore quando existe, e gitignore quando nao existe.
+node_modules
+.vercel
+dist
+build
+
+# Evidencia de auditoria e capturas: nao fazem parte do produto publicado.
+audit
+audit-evidence
+backups
+
+# Credenciais nunca sobem, mesmo com dotenv.
+.env
+.env.*
+!.env.example
+
+# Logs, cobertura esobras de empacotamento.
+*.log
+coverage
+*.zip
+.DS_Store

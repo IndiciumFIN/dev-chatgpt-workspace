@@ -1,26 +1,46 @@
-# ChatGPT Workspace — preparação para importação
+# Dois sistemas de contrato — qual é o quê
 
-Este é o repositório **privado e exclusivo** para o trabalho do ChatGPT.
+O projeto tem duas pastas com nomes parecidos e propósitos opostos. Confundi-las
+já custou uma limpeza inteira, então a regra está escrita aqui.
 
-## Status
-**Preparado para a importação inicial; o projeto integral ainda não foi publicado.** O código e os cinco commits originais estão no arquivo `WORKSPACE-chatgpt-IMPORTACAO-2026-10-23.zip` disponibilizado no ChatGPT.
+## `contracts/` — invariante de runtime
 
-## Importação pelo navegador, sem instalações no Windows
+Gerado a partir do código. **A aplicação depende destes arquivos**: `src/lib/contracts.ts`
+importa o índice gerado e valida em tempo de carga. Se um contrato estiver errado
+ou ausente, a aplicação não sobe (`ContractViolation`).
 
-1. Abra a aba **Code → Codespaces** deste repositório e crie um Codespace.
-2. No Explorer do Codespace, carregue o ZIP original de 40,9 MB.
-3. No terminal integrado do Codespace, execute:
+Nada aqui é escrito à mão. Para mudar um contrato, muda-se o código e roda-se:
 
-```bash
-bash tools/importar-codespaces.sh WORKSPACE-chatgpt-IMPORTACAO-2026-10-23.zip
-```
+    node scripts/generate-entity-contracts.mjs
 
-O importador confere o SHA-256 do ZIP, a identidade do repositório, a existência dos cinco commits e a ausência de alterações concorrentes. Ele cria um commit de integração com **dois pais**: o commit de inicialização deste repositório e o HEAD original do pacote. Assim o push para a `main` é **fast-forward**, preserva o histórico original e não exige `--force` nem criação de branches.
+Verificado por `scripts/check-contract-coverage.mjs`, que roda **antes** do build
+e do teste. Ele bloqueia quando: uma entidade existe e não tem contrato, um contrato
+cita algo que não existe, um id falta ou se repete, ou um contrato fica órfão.
 
-**Atenção:** até o script informar `IMPORTAÇÃO CONCLUÍDA`, o repositório contém apenas o mecanismo de preparação e não deve ser considerado homologado. O Codespaces poderá consumir cota ou gerar custo conforme seu plano.
+| contrato | cobre |
+|---|---|
+| `CE-CONTRACT-ROUTES` | uma entrada por arquivo em `src/routes/` |
+| `CE-CONTRACT-COMPONENTS` | um por componente em `src/components/site/` |
+| `CE-CONTRACT-DESIGN-TOKENS` | paleta congelada e paleta recusada |
+| `CE-CONTRACT-CHROME` | tokens das faixas de cabeçalho |
+| `CE-CONTRACT-BRAND` | assets de marca, com `papel` e `status` |
+| `CE-CONTRACT-CLINICAL-TOOLS` | slugs do catálogo clínico |
+| `CE-CONTRACT-ARTICLES` | slugs do catálogo de artigos de fundo |
 
-## Restrições
-- Não editar outros repositórios.
-- Não criar branches adicionais.
-- Não publicar na Vercel antes do build e dos testes.
-- Não enviar credenciais, `.env` ou dados pessoais ao repositório.
+## `registers/` — evidência versionada
+
+Histórico de auditoria. **Não é lido pela aplicação** — é lido por scripts de
+auditoria e responde "o que foi decidido, quando, e com que evidência". Fica
+versionado com o nome da versão no arquivo porque é um registro de estado, não
+uma invariante viva.
+
+`registers/i18n/country-icon-contract.v1.json` é a exceção: nasceu da fusão de
+dois registros que descreviam a mesma entidade (decisão de política + gate de
+aprovação). Passou a ser contrato único, não duas metades.
+
+## A regra
+
+- Afirmação sobre **o que o código faz agora** → vai em `contracts/`, gerada do código.
+- Registro de **o que foi decidido e com que fonte** → vai em `registers/`.
+- String solta em `.ts` que descreve estado controlado pelo código → sempre foi
+  candidata a mentir. Derive do contrato.

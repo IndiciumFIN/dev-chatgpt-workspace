@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/agent.schema.json",
+  "title": "CKO | agent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "agent_type",
+    "reads",
+    "writes",
+    "depends_on",
+    "control_scope",
+    "failure_policy",
+    "maker_checker_auditor_role"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "agent_type": {
+      "type": "string",
+      "enum": [
+        "WATCHER",
+        "LEARNER",
+        "SPECIALIST",
+        "GUARDIAN",
+        "ORCHESTRATOR",
+        "AUDITOR",
+        "REASONING",
+        "RETRIEVAL",
+        "VALIDATION",
+        "MONITORING",
+        "CUSTOM",
+        "PARALLEL_WORKER",
+        "GATE_WORKER",
+        "JOIN_WORKER",
+        "HOLD_GATE",
+        "RELEASE"
+      ]
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "writes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "control_scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "failure_policy": {
+      "type": "string",
+      "enum": [
+        "FAIL_CLOSED",
+        "HOLD_HUMAN",
+        "CONTINUE_SCOPED_LIMITATION"
+      ]
+    },
+    "maker_checker_auditor_role": {
+      "type": "string",
+      "enum": [
+        "MAKER",
+        "CHECKER",
+        "AUDITOR",
+        "ORCHESTRATOR"
+      ]
+    },
+    "prompt_contract_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tool_allowlist": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "output_schema_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validators": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "owner_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

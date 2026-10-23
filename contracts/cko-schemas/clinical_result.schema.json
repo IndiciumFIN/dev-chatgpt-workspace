@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/clinical_result.schema.json",
+  "title": "CKO | clinical_result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "tool_ref",
+    "raw_value_ref",
+    "normalized_value_ref",
+    "precision_policy_ref",
+    "interpretation_ref",
+    "state",
+    "replay_hash_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "tool_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_value_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normalized_value_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "precision_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interpretation_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "NOT_EVALUATED",
+        "INCOMPLETE",
+        "READY",
+        "CALCULATING",
+        "CALCULATED",
+        "INVALID",
+        "BLOCKED",
+        "ERROR"
+      ]
+    },
+    "replay_hash_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unit_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-claim:v1.0.0",
+  "title": "CKO Vaccine Claim",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "vaccine_ref",
+    "field",
+    "authority",
+    "authority_scope",
+    "value",
+    "source_ref",
+    "source_evidence_level",
+    "provenance_class",
+    "verified_on",
+    "freshness"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "pattern": "^cko\\.claim\\.vaccine\\.[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "variant_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "string",
+      "enum": [
+        "SBIm",
+        "Ministério da Saúde / PNI"
+      ]
+    },
+    "authority_scope": {
+      "type": "string",
+      "enum": [
+        "technical_editorial",
+        "official_programmatic"
+      ]
+    },
+    "value": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "number",
+        "boolean",
+        "null"
+      ]
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_evidence_level": {
+      "const": "A"
+    },
+    "provenance_class": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B"
+      ]
+    },
+    "verified_on": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "freshness": {
+      "type": "object",
+      "required": [
+        "review_due",
+        "staleness_warning_required"
+      ],
+      "properties": {
+        "review_due": {
+          "const": "2027-01-31"
+        },
+        "staleness_warning_required": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

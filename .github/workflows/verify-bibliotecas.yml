@@ -22,6 +22,27 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Validar entradas e simular exclusões de upload da Vercel
+        run: |
+          critical_files=(
+            audit/baseline/v0.1.0/file-register.json
+            audit/registers/current.json
+            contracts/cko-tokens/dist/_cko-universal-content-tokens.scss
+            contracts/cko-tokens/dist/cko-universal-content-tokens.css
+            contracts/cko-tokens/dist/cko-universal-content-tokens.ts
+          )
+          ignored="$(git ls-files --cached --ignored --exclude-from=.vercelignore -- "${critical_files[@]}")"
+          if [ -n "$ignored" ]; then
+            echo "::error::.vercelignore descarta entradas obrigatorias dos gates"
+            printf '%s\n' "$ignored"
+            exit 1
+          fi
+          for file in "${critical_files[@]}"; do
+            test -s "$file" || { echo "::error::Falta arquivo de build: $file"; exit 1; }
+          done
+          # Mesmo conjunto de arquivos que Vercel prepara para npm ci/build.
+          git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
+          echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
       - run: npm ci
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs

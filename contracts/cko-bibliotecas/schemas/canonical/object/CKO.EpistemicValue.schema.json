@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:library-object:epistemic-value:v1.0.0",
+  "title": "CKO Epistemic Value v1.0",
+  "type": "object",
+  "required": [
+    "state",
+    "value"
+  ],
+  "properties": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "derived",
+        "declared",
+        "decision_required",
+        "not_applicable"
+      ]
+    },
+    "value": {},
+    "unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provenance_class": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "source_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "decision_required"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "value": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

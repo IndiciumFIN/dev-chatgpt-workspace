@@ -1,0 +1,275 @@
+{
+  "schemaVersion": "2.0.0",
+  "scope": "CE_PUBLIC_BACKUP_ONLY",
+  "authority": "EXPLICIT_REVIEWED_SOURCE_IMPORT_CONTRACT",
+  "notes": "PASS means static imports exist, NOT visual parity or end-to-end validation",
+  "entries": {
+    "__root.tsx": {
+      "kind": "shell",
+      "role": "system",
+      "templateKind": null,
+      "requiredImports": [
+        "@/components/preview-host-bridge",
+        "@/lib/auth/provider",
+        "@/lib/chrome"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "admin.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/local/local-workbench-page"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "api/auth/$.ts": {
+      "kind": "endpoint",
+      "role": "authentication",
+      "templateKind": null,
+      "requiredImports": [
+        "@/lib/auth/server"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "assinante.ferramentas.$slug.tsx": {
+      "kind": "page",
+      "role": "subscriber",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@/lib/local-canonical",
+        "@/components/tools/clinical-tool",
+        "@/components/site/areas"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "assinante.tsx": {
+      "kind": "page",
+      "role": "subscriber",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/local-canonical",
+        "@/components/site/areas",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "blog.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "artigo",
+      "requiredImports": [
+        "@/components/article/article-page",
+        "@/components/site/related-content",
+        "@/components/site/shell",
+        "@/components/templates/biography-view",
+        "@/lib/content/articles/index",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "conta.tsx": {
+      "kind": "redirect",
+      "role": "account",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "ferramentas.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@/lib/local-canonical",
+        "@/components/tools/clinical-tool",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "home",
+      "requiredImports": [
+        "@/components/site/home-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.$page.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.index.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "institucional.index.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "login.tsx": {
+      "kind": "page",
+      "role": "authentication",
+      "templateKind": "entrada",
+      "requiredImports": [
+        "@/lib/auth/client",
+        "@/lib/auth/gates"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.$id.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/lib/templates",
+        "@/components/templates/editorial-view",
+        "@/components/templates/form-view",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/lib/templates",
+        "@/components/article/article-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "oficina-local.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/local/local-workbench-page"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "pacote.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/site-data",
+        "@/components/article/article-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "secao.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "secao",
+      "requiredImports": [
+        "@/lib/sections",
+        "@/components/site/section-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "sessao.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/site/areas"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "sistema.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/contract",
+        "@/components/article/article-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": null,
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.$object.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    }
+  }
+}

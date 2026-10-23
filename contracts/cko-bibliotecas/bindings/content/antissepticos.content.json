@@ -1,0 +1,734 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "antissepticos",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Antissépticos",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre antissépticos, indicações, preparo da pele, concentrações, tempo de ação, segurança e condutas recomendadas.",
+  "template_family": "device-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Atualizado",
+      "tone": "green",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Revisão técnica válida até 01/06/2026",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Baseado em evidências",
+      "tone": "neutral",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Antissépticos"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "antiseptic_types",
+          "concentrations_and_action_time",
+          "practice_blocks",
+          "videos",
+          "articles_and_evidence",
+          "clinical_attention",
+          "compatibilities",
+          "support_materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tipos-de-antissepticos",
+        "label": "Tipos de Antissépticos",
+        "status": "mapped",
+        "module_refs": [
+          "antiseptic_types"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "antiseptic_types",
+          "concentrations_and_action_time"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "aplicacao",
+        "label": "Aplicação",
+        "status": "mapped",
+        "module_refs": [
+          "practice_blocks"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "seguranca",
+        "label": "Segurança",
+        "status": "mapped",
+        "module_refs": [
+          "practice_blocks",
+          "clinical_attention",
+          "compatibilities"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "gestao-e-estoque",
+        "label": "Gestão e Estoque",
+        "status": "DECISION_REQUIRED",
+        "module_refs": [],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "articles_and_evidence",
+          "videos",
+          "support_materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/antissepticos/hero_antissepticos.png",
+          "alt": "Antissépticos",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Substâncias que reduzem ou eliminam microrganismos na pele, mucosas ou ambiente.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Objetivo do uso",
+                "text": "Prevenir infecções relacionadas à assistência e reduzir a carga microbiana.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Ação desejada",
+                "text": "Atividade bactericida, fungicida ou virucida dependendo do produto e da concentração.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Importância",
+                "text": "Escolha adequada do antisséptico e técnica correta são essenciais para a segurança do paciente.",
+                "icon": "system:info"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Espectro de ação",
+                "text": "Varia conforme o princípio ativo e concentração.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Início de ação",
+                "text": "Tempo necessário para início da atividade antimicrobiana.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Tempo de ação",
+                "text": "Período em que o antisséptico mantém atividade na pele ou mucosa.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Fatores que interferem",
+                "text": "Matéria orgânica, umidade, temperatura e interações químicas.",
+                "icon": "system:info"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "antiseptic_types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TIPOS DE ANTISSÉPTICOS",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Clorexidina Alcoólica 0,5%",
+            "description": "Amplo espectro, ação residual prolongada. Uso em pele íntegra.",
+            "main_indications": [
+              "Preparo pré-operatório",
+              "Punção venosa",
+              "Curativos"
+            ],
+            "asset": "../assets/antissepticos/tipo_clorexidina_alcoolica.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Clorexidina Aquosa 0,5%",
+            "description": "Menor risco de irritação. Indicada para mucosas e pele sensível.",
+            "main_indications": [
+              "Higiene íntima",
+              "Mucosas",
+              "Neonatos"
+            ],
+            "asset": "../assets/antissepticos/tipo_clorexidina_aquosa.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "PVPI (Povidona Iodo) 10%",
+            "description": "Amplo espectro, rápida ação. Uso em pele íntegra e feridas.",
+            "main_indications": [
+              "Preparo de pele",
+              "Feridas superficiais",
+              "Procedimentos"
+            ],
+            "asset": "../assets/antissepticos/tipo_pvpi.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Álcool Etílico 70%",
+            "description": "Ação rápida, não residual. Uso em pele íntegra e superfícies.",
+            "main_indications": [
+              "Antissepsia de pele",
+              "Desinfecção de superfícies",
+              "Fricção de mãos"
+            ],
+            "asset": "../assets/antissepticos/tipo_alcool_etilico.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Outros Antissépticos",
+            "description": "Octenidina, Triclosan, Peróxido de Hidrogênio, entre outros.",
+            "main_indications": [
+              "Indicações específicas",
+              "Alternativas em alergia",
+              "Protocolos institucionais"
+            ],
+            "asset": "../assets/antissepticos/tipo_outros_antissepticos.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/antiseptic_types"
+    },
+    {
+      "module_id": "concentrations_and_action_time",
+      "module_type": "item_grid",
+      "semantic_role": "orientation",
+      "title": "CONCENTRAÇÕES E TEMPO DE AÇÃO",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "title": "Clorexidina Alcoólica 0,5%",
+            "usual_concentration": "0,5% (álcool 70%)",
+            "onset": "30 segundos",
+            "action_time": "Até 6 horas",
+            "icons": {
+              "concentration": "system:clock",
+              "onset": "system:clock",
+              "action_time": "system:clock"
+            },
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Clorexidina Aquosa 0,5%",
+            "usual_concentration": "0,5%",
+            "onset": "1 minuto",
+            "action_time": "Até 2 horas",
+            "icons": {
+              "concentration": "system:clock",
+              "onset": "system:clock",
+              "action_time": "system:clock"
+            },
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "PVPI 10%",
+            "usual_concentration": "10% (1% iodo disponível)",
+            "onset": "15 a 30 segundos",
+            "action_time": "Até 4 horas",
+            "icons": {
+              "concentration": "system:clock",
+              "onset": "system:clock",
+              "action_time": "system:clock"
+            },
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Álcool Etílico 70%",
+            "usual_concentration": "70%",
+            "onset": "15 segundos",
+            "action_time": "1 a 2 horas",
+            "icons": {
+              "concentration": "system:clock",
+              "onset": "system:clock",
+              "action_time": "system:clock"
+            },
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/concentrations_and_action_time"
+    },
+    {
+      "module_id": "practice_blocks",
+      "module_type": "grouped_list",
+      "semantic_role": "orientation",
+      "title": null,
+      "priority": 25,
+      "payload": {
+        "groups": [
+          {
+            "title": "PREPARO DA PELE",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              {
+                "label": "Higienizar as mãos",
+                "icon": "system:hand"
+              },
+              {
+                "label": "Remover sujidades visíveis",
+                "icon": "system:info"
+              },
+              {
+                "label": "Aplicar o antisséptico adequado",
+                "icon": "system:info"
+              },
+              {
+                "label": "Aguardar o tempo de ação",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Não tocar a área preparada",
+                "icon": "system:info"
+              }
+            ],
+            "action": {
+              "label": "Ver passo a passo completo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "APLICAÇÃO CORRETA",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              {
+                "label": "Usar técnica asséptica",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Aplicar do centro para periferia",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Não retornar com o mesmo algodão",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Permitir secagem completa",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Respeitar volume necessário",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver orientações detalhadas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "SEGURANÇA DO PACIENTE",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              {
+                "label": "Verificar alergias conhecidas",
+                "icon": "system:shield"
+              },
+              {
+                "label": "Observar sinais de irritação",
+                "icon": "system:shield"
+              },
+              {
+                "label": "Suspender em caso de reação",
+                "icon": "system:shield"
+              },
+              {
+                "label": "Registrar intercorrências",
+                "icon": "system:shield"
+              },
+              {
+                "label": "Notificar eventos adversos",
+                "icon": "system:shield"
+              }
+            ],
+            "action": {
+              "label": "Ver recomendações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "CONTRAINDICAÇÕES",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Hipersensibilidade ao produto",
+              "Uso em mucosas (sem indicação)",
+              "Feridas profundas não avaliadas",
+              "Recém-nascidos (conforme produto)",
+              "Áreas extensas com álcool"
+            ],
+            "action": {
+              "label": "Ver lista completa",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/practice_blocks"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TÉCNICAS",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "title": "Preparo da pele pré-operatória",
+            "duration": "02:10",
+            "asset": "../assets/antissepticos/video_preparo_pele_preoperatoria.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Antissepsia de pele para punção",
+            "duration": "02:45",
+            "asset": "../assets/antissepticos/video_antissepsia_pele_puncao.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Curativo com técnica asséptica",
+            "duration": "04:20",
+            "asset": "../assets/antissepticos/video_curativo_tecnica_asseptica.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Atenção à segurança",
+            "duration": "02:30",
+            "asset": "../assets/antissepticos/video_atencao_seguranca.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:info"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e técnicas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "title": "Diretrizes brasileiras para antissepsia da pele",
+            "source_label": "SOBENFe, 2023"
+          },
+          {
+            "title": "Bundle de prevenção de IPC em procedimentos",
+            "source_label": "ANVISA, 2022"
+          },
+          {
+            "title": "Revisão sobre clorexidina em diferentes concentrações",
+            "source_label": "Rev. Latino-Am. Enfermagem, 2021"
+          }
+        ],
+        "verification_note": "Títulos, fontes e anos são transcrição da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "clinical_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO E SEGURANÇA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Cuidados essenciais",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Higienizar as mãos antes e após o uso",
+              "Respeitar concentração e tempo de ação",
+              "Não misturar produtos diferentes",
+              "Manter frascos identificados e fechados",
+              "Observar validade e conservação"
+            ],
+            "action": null
+          },
+          {
+            "title": "Evitar / Contraindicado",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Uso em mucosas sem indicação específica",
+              "Mistura de antissépticos incompatíveis",
+              "Aplicação em feridas sem avaliação",
+              "Uso de álcool em áreas extensas em lactentes"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver alertas e contraindicações",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/clinical_attention"
+    },
+    {
+      "module_id": "compatibilities",
+      "module_type": "compatibility",
+      "semantic_role": "safety",
+      "title": "COMPATIBILIDADES",
+      "priority": 68,
+      "payload": {
+        "positive": {
+          "title": null,
+          "icon": "system:info",
+          "items": [
+            "Soro fisiológico 0,9%",
+            "Materiais estéreis",
+            "Curativos estéreis",
+            "Luvas de procedimento"
+          ],
+          "tone": "success"
+        },
+        "negative": {
+          "title": null,
+          "icon": "system:info",
+          "items": [
+            "Sabões aniônicos",
+            "Água oxigenada concentrada",
+            "Outros antissépticos (mistura)"
+          ],
+          "tone": "danger"
+        }
+      },
+      "actions": [
+        {
+          "label": "Ver tabela completa",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/compatibilities"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 72,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia de antissépticos (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Protocolo de preparo da pele (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Fluxograma de escolha (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Tabela de concentrações (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Checklist de aplicação (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:info",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:info",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:info",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:info",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/antissepticos.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/antissepticos.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/antissepticos.provenance.json"
+}

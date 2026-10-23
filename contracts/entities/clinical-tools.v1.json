@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "contract": "CE-CONTRACT-CLINICAL-TOOLS",
+  "domain": "clinical",
+  "generatedBy": "scripts/generate-entity-contracts.mjs",
+  "generatedOn": "2026-10-23",
+  "authority": "src/lib/tools/catalog.ts",
+  "note": "O conteúdo clínico (critérios, campos, faixas, referências) é o produto. Cada ferramenta precisa de id, faixa de escore e referência verificável.",
+  "items": [
+    {
+      "id": "CE-TOOL-braden",
+      "slug": "braden",
+      "tool_kind": "ESCALA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [
+        "SRC-REV-ENF-USP-BRADEN-1999"
+      ],
+      "authority_binding_refs": [
+        "AB-BRADEN-SENSORIAL",
+        "AB-BRADEN-UMIDADE",
+        "AB-BRADEN-ATIVIDADE",
+        "AB-BRADEN-MOBILIDADE",
+        "AB-BRADEN-NUTRICAO",
+        "AB-BRADEN-FRICCAO",
+        "AB-BRADEN-BAND-MUITOALTO",
+        "AB-BRADEN-BAND-ALTO",
+        "AB-BRADEN-BAND-MODERADO",
+        "AB-BRADEN-BAND-BAIXO",
+        "AB-BRADEN-BAND-SEMRISCO"
+      ],
+      "field_definition_refs": [
+        "FD-BRADEN-SENSORIAL",
+        "FD-BRADEN-UMIDADE",
+        "FD-BRADEN-ATIVIDADE",
+        "FD-BRADEN-MOBILIDADE",
+        "FD-BRADEN-NUTRICAO",
+        "FD-BRADEN-FRICCAO"
+      ],
+      "formula_ref": "FORMULA-BRADEN",
+      "rule_refs": [
+        "AB-BRADEN-BAND-MUITOALTO",
+        "AB-BRADEN-BAND-ALTO",
+        "AB-BRADEN-BAND-MODERADO",
+        "AB-BRADEN-BAND-BAIXO",
+        "AB-BRADEN-BAND-SEMRISCO"
+      ],
+      "interpretation_ref": "INTERP-BRADEN",
+      "result_ref": "RESULT-BRADEN",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-BRADEN",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 6,
+        "max": 23
+      },
+      "referenciasOriginais": 2,
+      "authority": "src/lib/tools/catalog.ts#braden"
+    },
+    {
+      "id": "CE-TOOL-morse",
+      "slug": "morse",
+      "tool_kind": "ESCALA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [
+        "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
+      ],
+      "authority_binding_refs": [
+        "AB-MORSE-QUEDAS",
+        "AB-MORSE-DIAGNOSTICO",
+        "AB-MORSE-AUXILIO",
+        "AB-MORSE-VENOSO",
+        "AB-MORSE-MARCHA",
+        "AB-MORSE-MENTAL",
+        "AB-MORSE-BAND-BAIXO",
+        "AB-MORSE-BAND-MEDIO",
+        "AB-MORSE-BAND-ALTO"
+      ],
+      "field_definition_refs": [
+        "FD-MORSE-QUEDAS",
+        "FD-MORSE-DIAGNOSTICO",
+        "FD-MORSE-AUXILIO",
+        "FD-MORSE-VENOSO",
+        "FD-MORSE-MARCHA",
+        "FD-MORSE-MENTAL"
+      ],
+      "formula_ref": "FORMULA-MORSE",
+      "rule_refs": [
+        "AB-MORSE-BAND-BAIXO",
+        "AB-MORSE-BAND-MEDIO",
+        "AB-MORSE-BAND-ALTO"
+      ],
+      "interpretation_ref": "INTERP-MORSE",
+      "result_ref": "RESULT-MORSE",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-MORSE",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 125
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#morse"
+    },
+    {
+      "id": "CE-TOOL-apgar",
+      "slug": "apgar",
+      "tool_kind": "ESCALA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [
+        "SRC-APGAR-1953"
+      ],
+      "authority_binding_refs": [
+        "AB-APGAR-APARENCIA",
+        "AB-APGAR-PULSO",
+        "AB-APGAR-REFLEXO",
+        "AB-APGAR-TONUS",
+        "AB-APGAR-COR",
+        "AB-APGAR-BAND-NORMAL",
+        "AB-APGAR-BAND-DEPRESSAO",
+        "AB-APGAR-BAND-GRAVE"
+      ],
+      "field_definition_refs": [
+        "FD-APGAR-APARENCIA",
+        "FD-APGAR-PULSO",
+        "FD-APGAR-REFLEXO",
+        "FD-APGAR-TONUS",
+        "FD-APGAR-COR"
+      ],
+      "formula_ref": "FORMULA-APGAR",
+      "rule_refs": [
+        "AB-APGAR-BAND-NORMAL",
+        "AB-APGAR-BAND-DEPRESSAO",
+        "AB-APGAR-BAND-GRAVE"
+      ],
+      "interpretation_ref": "INTERP-APGAR",
+      "result_ref": "RESULT-APGAR",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-APGAR",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 10
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#apgar"
+    },
+    {
+      "id": "CE-TOOL-gotejamento",
+      "slug": "gotejamento",
+      "tool_kind": "CALCULADORA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [
+        "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
+      ],
+      "authority_binding_refs": [
+        "AB-GOTEJAMENTO-VOLUME",
+        "AB-GOTEJAMENTO-HORAS",
+        "AB-GOTEJAMENTO-MINUTOS",
+        "AB-GOTEJAMENTO-FATOR"
+      ],
+      "field_definition_refs": [
+        "FD-GOTEJAMENTO-VOLUME",
+        "FD-GOTEJAMENTO-HORAS",
+        "FD-GOTEJAMENTO-MINUTOS",
+        "FD-GOTEJAMENTO-FATOR"
+      ],
+      "formula_ref": "FORMULA-GOTEJAMENTO",
+      "rule_refs": [],
+      "interpretation_ref": "INTERP-GOTEJAMENTO",
+      "result_ref": "RESULT-GOTEJAMENTO",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-GOTEJAMENTO",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": null,
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#gotejamento"
+    },
+    {
+      "id": "CE-TOOL-imc",
+      "slug": "imc",
+      "tool_kind": "CALCULADORA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [
+        "SRC-OMS-OBESIDADE-2000"
+      ],
+      "authority_binding_refs": [
+        "AB-IMC-PESO",
+        "AB-IMC-ALTURA"
+      ],
+      "field_definition_refs": [
+        "FD-IMC-PESO",
+        "FD-IMC-ALTURA"
+      ],
+      "formula_ref": "FORMULA-IMC",
+      "rule_refs": [],
+      "interpretation_ref": "INTERP-IMC",
+      "result_ref": "RESULT-IMC",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-IMC",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 200
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#imc"
+    },
+    {
+      "id": "CE-TOOL-aldrete",
+      "slug": "aldrete",
+      "tool_kind": "ESCALA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "candidata",
+      "holds": [
+        "UTC-003/UTC-071: externalizar toda verdade clinica do source da pagina para binding governado em runtime",
+        "UTC-004: reconciliar identidade tecnica UUIDv5 legado com UUIDv7, sem duplicidade",
+        "UTC-051: provar a derivacao de canonical/hreflang a partir do Route Registry em build/runtime",
+        "UTC-053/UTC-056: recuperar dimensoes intrinsecas da imagem OG e perfil completo de direitos/hash",
+        "UTC-072: E2E de browser",
+        "UTC-080/081/082: verificador de ABNT/citacao/pinpoint",
+        "UTC-097: decisao sobre aplicabilidade do disclaimer de emergencia"
+      ],
+      "source_ids": [
+        "SRC-CFM-PARECER-28-2020"
+      ],
+      "authority_binding_refs": [
+        "AB-ALDRETE-ATIVIDADE",
+        "AB-ALDRETE-RESPIRACAO",
+        "AB-ALDRETE-CIRCULACAO",
+        "AB-ALDRETE-CONSCIENCIA",
+        "AB-ALDRETE-SATURACAO",
+        "AB-ALDRETE-BAND-OK",
+        "AB-ALDRETE-BAND-WARN",
+        "AB-ALDRETE-BAND-DANGER"
+      ],
+      "field_definition_refs": [
+        "FD-ALDRETE-ATIVIDADE",
+        "FD-ALDRETE-RESPIRACAO",
+        "FD-ALDRETE-CIRCULACAO",
+        "FD-ALDRETE-CONSCIENCIA",
+        "FD-ALDRETE-SATURACAO"
+      ],
+      "formula_ref": "FORMULA-ALDRETE",
+      "rule_refs": [
+        "AB-ALDRETE-BAND-OK",
+        "AB-ALDRETE-BAND-WARN",
+        "AB-ALDRETE-BAND-DANGER"
+      ],
+      "interpretation_ref": "INTERP-ALDRETE",
+      "result_ref": "RESULT-ALDRETE",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-ALDRETE",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 10
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#aldrete"
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:library:v1.0.0",
+  "title": "CKO Library v1.0",
+  "description": "Semantic container/catalog contract. It is distinct from ContentPage and from LibraryObject.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "identity",
+    "title",
+    "description",
+    "domain",
+    "library_family",
+    "archetype_id",
+    "locale",
+    "jurisdiction",
+    "governance",
+    "content_status",
+    "accepted_object_types",
+    "object_refs",
+    "page_bindings",
+    "classification_sources",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "library"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "library_id",
+        "slug",
+        "state"
+      ],
+      "properties": {
+        "library_id": {
+          "type": "string",
+          "pattern": "^cko\\.library\\.[a-z0-9-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "assigned",
+            "verified",
+            "decision_required"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "object",
+      "required": [
+        "domain_id",
+        "display_label"
+      ],
+      "properties": {
+        "domain_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "library_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "archetype_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "locale": {
+      "type": "string",
+      "const": "pt-BR"
+    },
+    "jurisdiction": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    },
+    "content_status": {
+      "type": "string",
+      "enum": [
+        "authored",
+        "scope_only",
+        "draft",
+        "review",
+        "approved",
+        "published",
+        "hold"
+      ]
+    },
+    "accepted_object_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "object_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^cko\\.object\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+      },
+      "uniqueItems": true
+    },
+    "page_bindings": {
+      "type": "object",
+      "required": [
+        "content_page_ref",
+        "composition_ref",
+        "asset_manifest_ref",
+        "provenance_manifest_ref"
+      ],
+      "properties": {
+        "content_page_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "composition_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "asset_manifest_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provenance_manifest_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "classification_sources": {
+      "type": "object",
+      "required": [
+        "module_refs",
+        "state"
+      ],
+      "properties": {
+        "module_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "derived_from_content",
+            "decision_required",
+            "not_applicable"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "class",
+        "source_ref",
+        "derivation"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "source_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "derivation": {
+          "type": "string"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

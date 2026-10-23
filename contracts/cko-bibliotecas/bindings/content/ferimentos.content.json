@@ -1,0 +1,1110 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "ferimentos",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Ferimentos",
+  "subtitle": "Classificação, estadiamento, condutas e coberturas para avaliação e tratamento de feridas.",
+  "template_family": "device-library",
+  "archetype_id": "wound_care_library",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Dispositivo clínico"
+    },
+    {
+      "label": "Uso tópico"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Ferimentos"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "wound-staging",
+          "wound-classification",
+          "general-conduct",
+          "time-method",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "compatibilities",
+          "infection-signs",
+          "assessment-frequency",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "classificacao",
+        "label": "Classificação",
+        "status": "mapped",
+        "module_refs": [
+          "wound-classification"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "estadiamento",
+        "label": "Estadiamento",
+        "status": "mapped",
+        "module_refs": [
+          "wound-staging"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "coberturas",
+        "label": "Coberturas",
+        "status": "DECISION_REQUIRED",
+        "module_refs": [],
+        "selectors": []
+      },
+      {
+        "tab_id": "condutas",
+        "label": "Condutas",
+        "status": "mapped",
+        "module_refs": [
+          "general-conduct"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "complicacoes",
+        "label": "Complicações",
+        "status": "mapped",
+        "module_refs": [
+          "infection-signs",
+          "compatibilities"
+        ],
+        "selectors": [
+          {
+            "module_id": "infection-signs"
+          },
+          {
+            "module_id": "compatibilities"
+          }
+        ]
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "general-conduct",
+          "assessment-frequency"
+        ],
+        "selectors": [
+          {
+            "module_id": "general-conduct"
+          },
+          {
+            "module_id": "assessment-frequency"
+          }
+        ]
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/ferimentos/hero_ferimentos_transparent.png",
+          "alt": "Ilustração em corte de pele mostrando uma ferida.",
+          "raw": {
+            "type": "clinical_illustration",
+            "visual_description": "Ilustração em corte de pele com lesão/ferida profunda.",
+            "asset_id": "DECISION_REQUIRED",
+            "alt_text": "Ilustração em corte de pele mostrando uma ferida.",
+            "provenance": {
+              "class": "B",
+              "note": "Descrição visual derivada da imagem; não há identificador de asset na fonte."
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "definicao",
+                "title": "Definição",
+                "subtitle": "",
+                "description": "Interrupção da integridade da pele ou mucosa, podendo atingir tecidos subjacentes.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "objetivo-do-tratamento",
+                "title": "Objetivo do tratamento",
+                "subtitle": "",
+                "description": "Promover cicatrização, prevenir infecção, reduzir dor e melhorar a qualidade de vida.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "fatores-que-afetam-a-cicatrizacao",
+                "title": "Fatores que afetam a cicatrização",
+                "subtitle": "",
+                "description": "Perfusão tecidual, nutrição, controle de infecção, idade, comorbidades e mobilidade.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "avaliacao-da-ferida",
+                "title": "Avaliação da ferida",
+                "subtitle": "",
+                "description": "Utilizar o método TIME para avaliação completa.",
+                "image": "../assets/ferimentos/estagio_ferida_cronica_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "id": "tipo-de-tecido",
+                "title": "Tipo de tecido",
+                "subtitle": "",
+                "description": "Necrose, esfacelo, granulação ou epitelização.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "exsudato",
+                "title": "Exsudato",
+                "subtitle": "",
+                "description": "Quantidade, cor, viscosidade e odor.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "bordas",
+                "title": "Bordas",
+                "subtitle": "",
+                "description": "Íntegras, irregulares, maceradas ou epíbole.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "pele-ao-redor",
+                "title": "Pele ao redor",
+                "subtitle": "",
+                "description": "Íntegra, seca, macerada ou com sinais inflamatórios.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "wound-staging",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Estadiamento de feridas",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "limpa-superficial",
+            "title": "Limpa / Superficial",
+            "subtitle": "",
+            "description": "Perda da epiderme com exposição da derme.",
+            "image": "../assets/ferimentos/estagio_limpa_superficial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Leito vermelho",
+              "Pouco ou nenhum exsudato",
+              "Sem tecido desvitalizado"
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condutas",
+              "action": "open"
+            }
+          },
+          {
+            "id": "profunda-parcial",
+            "title": "Profunda Parcial",
+            "subtitle": "",
+            "description": "Perda parcial da pele com exposição da derme profunda.",
+            "image": "../assets/ferimentos/estagio_profunda_parcial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Leito vermelho/rosado",
+              "Exsudato moderado",
+              "Pode apresentar bolhas"
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condutas",
+              "action": "open"
+            }
+          },
+          {
+            "id": "profunda-total",
+            "title": "Profunda Total",
+            "subtitle": "",
+            "description": "Perda total da pele com exposição do tecido subcutâneo.",
+            "image": "../assets/ferimentos/estagio_profunda_total_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Leito com granulação/esfacelo",
+              "Exsudato moderado a intenso",
+              "Pode atingir músculos"
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condutas",
+              "action": "open"
+            }
+          },
+          {
+            "id": "extensa-complexa",
+            "title": "Extensa / Complexa",
+            "subtitle": "",
+            "description": "Perda extensa com exposição de estruturas profundas.",
+            "image": "../assets/ferimentos/estagio_extensa_complexa_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Pode expor ossos, tendões",
+              "Alto risco de infecção",
+              "Exsudato intenso"
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condutas",
+              "action": "open"
+            }
+          },
+          {
+            "id": "ferida-cronica",
+            "title": "Ferida Crônica",
+            "subtitle": "",
+            "description": "Ferida com mais de 4 semanas sem tendência de cicatrização.",
+            "image": "../assets/ferimentos/estagio_ferida_cronica_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Estagnação do processo",
+              "Biofilme presente",
+              "Exsudato variável"
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condutas",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/wound-staging"
+    },
+    {
+      "module_id": "wound-classification",
+      "module_type": "list_panel",
+      "semantic_role": "classification",
+      "title": "Classificação das feridas",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "id": "cirurgicas",
+            "title": "Cirúrgicas",
+            "subtitle": "",
+            "description": "Incisões realizadas por procedimento cirúrgico.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "traumaticas",
+            "title": "Traumáticas",
+            "subtitle": "",
+            "description": "Causadas por agentes externos (cortes, lacerações, abrasões).",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "pressao",
+            "title": "Pressão",
+            "subtitle": "",
+            "description": "Resultantes de pressão prolongada sobre a pele.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "vasculares",
+            "title": "Vasculares",
+            "subtitle": "",
+            "description": "Relacionadas à insuficiência arterial ou venosa.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "diabeticas",
+            "title": "Diabéticas",
+            "subtitle": "",
+            "description": "Úlceras associadas ao pé diabético.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/wound-classification"
+    },
+    {
+      "module_id": "general-conduct",
+      "module_type": "step_flow",
+      "semantic_role": "intervention",
+      "title": "Condutas gerais",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliar-a-ferida-utilizando-o-metodo-time",
+            "title": "Avaliar a ferida utilizando o método TIME.",
+            "subtitle": "",
+            "description": "Avaliar a ferida utilizando o método TIME.",
+            "image": "../assets/ferimentos/estagio_ferida_cronica_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 1
+            }
+          },
+          {
+            "id": "realizar-limpeza-com-solucao-adequada",
+            "title": "Realizar limpeza com solução adequada.",
+            "subtitle": "",
+            "description": "Realizar limpeza com solução adequada.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 2
+            }
+          },
+          {
+            "id": "remover-tecido-desvitalizado-se-necessario",
+            "title": "Remover tecido desvitalizado, se necessário.",
+            "subtitle": "",
+            "description": "Remover tecido desvitalizado, se necessário.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 3
+            }
+          },
+          {
+            "id": "selecionar-cobertura-apropriada",
+            "title": "Selecionar cobertura apropriada.",
+            "subtitle": "",
+            "description": "Selecionar cobertura apropriada.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 4
+            }
+          },
+          {
+            "id": "manter-ambiente-umido-e-protegido",
+            "title": "Manter ambiente úmido e protegido.",
+            "subtitle": "",
+            "description": "Manter ambiente úmido e protegido.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 5
+            }
+          },
+          {
+            "id": "avaliar-resposta-ao-tratamento-e-ajustar-conduta",
+            "title": "Avaliar resposta ao tratamento e ajustar conduta.",
+            "subtitle": "",
+            "description": "Avaliar resposta ao tratamento e ajustar conduta.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 6
+            }
+          },
+          {
+            "id": "registrar-evolucao-em-prontuario",
+            "title": "Registrar evolução em prontuário.",
+            "subtitle": "",
+            "description": "Registrar evolução em prontuário.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "step": 7
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/general-conduct"
+    },
+    {
+      "module_id": "time-method",
+      "module_type": "grouped_list",
+      "semantic_role": "orientation",
+      "title": "Método TIME",
+      "priority": 40,
+      "payload": {
+        "groups": [
+          {
+            "title": "Name",
+            "items": [
+              {
+                "id": "name",
+                "title": "TIME",
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Components",
+            "items": [
+              {
+                "id": "tecido",
+                "title": "Tecido",
+                "subtitle": "",
+                "description": "Avaliar e tratar o tecido não viável.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "code": "T"
+                }
+              },
+              {
+                "id": "infeccao-inflamacao",
+                "title": "Infecção / Inflamação",
+                "subtitle": "",
+                "description": "Identificar e controlar infecção e inflamação.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "code": "I"
+                }
+              },
+              {
+                "id": "manutencao-do-ambiente-umido",
+                "title": "Manutenção do ambiente úmido",
+                "subtitle": "",
+                "description": "Escolher cobertura que mantenha equilíbrio ideal de umidade.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "code": "M"
+                }
+              },
+              {
+                "id": "bordas-da-ferida",
+                "title": "Bordas da ferida",
+                "subtitle": "",
+                "description": "Avaliar e tratar bordas não avançantes.",
+                "image": "../assets/ferimentos/estagio_ferida_cronica_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "code": "E"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/time-method"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliacao-de-feridas",
+            "title": "Avaliação de feridas",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "limpeza-da-ferida",
+            "title": "Limpeza da ferida",
+            "subtitle": "Técnica correta",
+            "description": "",
+            "image": "../assets/ferimentos/estagio_ferida_cronica_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "desbridamento",
+            "title": "Desbridamento",
+            "subtitle": "Técnicas e cuidados",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "aplicacao-de-curativos",
+            "title": "Aplicação de curativos",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 60,
+      "payload": {
+        "items": [
+          {
+            "id": "diretrizes-brasileiras-para-o-tratamento-de-feridas",
+            "title": "Diretrizes brasileiras para o tratamento de feridas",
+            "subtitle": "SOBENFe, 2022",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "international-guidelines-on-wound-management",
+            "title": "International guidelines on wound management",
+            "subtitle": "WUWHS, 2023",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "coberturas-evidencias-e-recomendacoes",
+            "title": "Coberturas: evidências e recomendações",
+            "subtitle": "Rev. Enferm. Atual, 2023",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "compatibilities",
+      "module_type": "compatibility",
+      "semantic_role": "safety",
+      "title": "Compatibilidades",
+      "priority": 10,
+      "payload": {
+        "tabs": [
+          "Com outros materiais",
+          "Com soluções"
+        ],
+        "active_tab": "Com outros materiais",
+        "positive": [
+          "Soro fisiológico 0,9%",
+          "PHMB",
+          "Prata iônica",
+          "Hidrogel"
+        ],
+        "negative": [
+          "Água oxigenada",
+          "Clorexidina alcoólica concentrada"
+        ],
+        "attention": []
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/compatibilities"
+    },
+    {
+      "module_id": "infection-signs",
+      "module_type": "status_panel",
+      "semantic_role": "monitoring",
+      "title": "Sinais de infecção",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": [
+              "Aumento de dor",
+              "Calor local",
+              "Vermelhidão ao redor da lesão",
+              "Edema",
+              "Exsudato purulento",
+              "Mau odor",
+              "Febre"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/infection-signs"
+    },
+    {
+      "module_id": "assessment-frequency",
+      "module_type": "table",
+      "semantic_role": "assessment",
+      "title": "Frequência de avaliação",
+      "priority": 30,
+      "payload": {
+        "columns": [
+          {
+            "key": "wound_group",
+            "label": "Wound Group"
+          },
+          {
+            "key": "frequency_text",
+            "label": "Frequency Text"
+          }
+        ],
+        "rows": [
+          {
+            "wound_group": "Feridas agudas",
+            "frequency_text": "Diariamente"
+          },
+          {
+            "wound_group": "Feridas crônicas",
+            "frequency_text": "2 a 3 vezes por semana"
+          },
+          {
+            "wound_group": "Feridas infectadas",
+            "frequency_text": "Diariamente ou conforme evolução"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/assessment-frequency"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "guia-de-avaliacao-de-feridas",
+            "title": "Guia de avaliação de feridas",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "protocolo-de-tratamento",
+            "title": "Protocolo de tratamento",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "classificacao-de-feridas",
+            "title": "Classificação de feridas",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "coberturas-e-indicacoes",
+            "title": "Coberturas e indicações",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "checklist-de-avaliacao",
+            "title": "Checklist de avaliação",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          },
+          {
+            "id": "baixar-todos-os-materiais",
+            "title": "Baixar todos os materiais",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "download_all_support_materials",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        },
+        {
+          "id": "baixar-todos-os-materiais",
+          "title": "Baixar todos os materiais",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "download_all_support_materials",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ferimentos.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/ferimentos.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/ferimentos.provenance.json"
+}

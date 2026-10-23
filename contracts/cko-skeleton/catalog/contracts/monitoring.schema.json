@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/monitoring.schema.json",
+  "title": "CKO | monitoring",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "monitor_kind",
+    "source_ref",
+    "check_schedule_ref",
+    "trigger_conditions",
+    "alert_owner_ref",
+    "remediation_workflow_ref",
+    "fail_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "monitor_kind": {
+      "type": "string",
+      "enum": [
+        "NORMATIVE_CHANGE",
+        "SOURCE_DRIFT",
+        "BROKEN_URL",
+        "ASSET_RIGHTS",
+        "RUNTIME_REGRESSION",
+        "SECURITY",
+        "CONTENT_EXPIRY"
+      ]
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "check_schedule_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trigger_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "alert_owner_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_workflow_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fail_state": {
+      "type": "string",
+      "const": "HOLD"
+    },
+    "previous_version_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

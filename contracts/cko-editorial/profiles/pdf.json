@@ -1,0 +1,56 @@
+{
+  "template_id": "TPL-PDF-001",
+  "name": "PDF / Paged Editorial",
+  "version": "0.2.0",
+  "profile": "pdf",
+  "channels": [
+    "pdf",
+    "print"
+  ],
+  "required_roles": [
+    "cover_title",
+    "toc",
+    "body",
+    "references",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "table",
+    "chart",
+    "appendix"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "section",
+    "claim",
+    "figure",
+    "diagram",
+    "table",
+    "chart",
+    "callout",
+    "definition",
+    "steps",
+    "timeline",
+    "comparison",
+    "references",
+    "toc",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "pdf": "paged-media-with-running-header-footer"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "print_preflight",
+      "tagged_pdf_target"
+    ]
+  }
+}

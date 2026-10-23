@@ -146,8 +146,13 @@ export function AdminConsole() {
     <Breadcrumb items={[{ label: 'Início', to: '/' }, { label: 'Administração' }]} />
     <PageHero title="Centro de administração" titleId="admin-heading" eyebrow="Gestão canônica · ambiente isolado" lead="Organize, edite, confira evidências e veja o resultado como um usuário final — antes de qualquer publicação." />
     <div className="ce-admin-scope" role="note"><LockKeyhole size={18} aria-hidden="true" /><div>
-      <strong>Prévia administrativa local — não é a autoridade corporativa.</strong>
-      <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
+      {tab === 'pmo' ? <>
+        <strong>PMO oficial da execução — fonte versionada no GitHub.</strong>
+        <span>A fila é somente leitura aqui. Alterações exigem commit, evidência e gates; não aprovações por inteligência artificial.</span>
+      </> : <>
+        <strong>Prévia administrativa local — não é a autoridade corporativa.</strong>
+        <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
+      </>}
     </div></div>
     <div className="ce-admin-layout">
       <nav className="ce-admin-sidebar" aria-label="Módulos da administração">
@@ -161,11 +166,11 @@ export function AdminConsole() {
         <div className="ce-admin-toolbar">
           <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{tabs.find(x => x.id === tab)?.label}</h2></div>
           <div className="ce-admin-toolbar-actions">
-            <Indicator tone={showRisk ? 'warn' : 'ok'}>{loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
+            <Indicator tone={tab === 'pmo' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
-        <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>
+        {tab !== 'pmo' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 2,
+  "revision": 3,
   "updatedOn": "2026-10-23",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -46,11 +46,13 @@
       "priority": "P0",
       "owner": "ChatGPT + revisão independente",
       "criteria": "Investigar alerta npm de alta severidade e validar autorização e proteção de dados.",
-      "next": "Executar inventário npm audit no CI, classificar dependências afetadas e impacto.",
+      "next": "FIND-SEC-001: avaliar correção Zod >=4.6.6 e limites de entrada antes de qualquer liberação.",
       "dependencies": [
         "WO-PMO-001"
       ],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031113963"
+      ],
       "updatedOn": "2026-10-23"
     },
     {
@@ -161,6 +163,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-23",
       "reason": "Iniciada triagem automatizada de dependências, com execução não destrutiva na nuvem."
+    },
+    {
+      "seq": 5,
+      "workId": "WO-SEC-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-23",
+      "reason": "Scan de dependências identificou 1 HIGH em Zod no conjunto de produção (GHSA-mrhx-c7xc-m3w5), FIND-SEC-001 aberto; sem remediação automática."
     }
   ]
 }

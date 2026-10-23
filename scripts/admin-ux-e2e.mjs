@@ -11,6 +11,10 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(`${base}/admin`, { waitUntil: 'networkidle' });
   await page.getByRole('heading', { name: 'Centro de administração' }).waitFor();
+  await page.getByRole('heading', { name: 'Fila única de execução' }).waitFor();
+  await page.locator('[data-work-id="WO-SEC-001"]').waitFor();
+  await page.screenshot({ path: 'audit-evidence/admin-ux/00-pmo-desktop.png', fullPage: true });
+  await page.getByRole('button', { name: /Visão geral/ }).click();
   await page.getByRole('heading', { name: 'Visão geral' }).waitFor();
   await page.screenshot({ path: 'audit-evidence/admin-ux/01-overview-desktop.png', fullPage: true });
   await page.getByRole('button', { name: /Conteúdos/ }).click();
@@ -32,7 +36,10 @@ try {
   mobile.on('pageerror', error => errors.push(error.message));
   await mobile.goto(`${base}/admin`, { waitUntil: 'networkidle' });
   await mobile.getByRole('heading', { name: 'Centro de administração' }).waitFor();
+  await mobile.locator('[data-work-id="WO-PMO-001"]').waitFor();
+  await mobile.screenshot({ path: 'audit-evidence/admin-ux/05-pmo-mobile.png', fullPage: true });
+  await mobile.getByRole('button', { name: /Visão geral/ }).click();
   await mobile.screenshot({ path: 'audit-evidence/admin-ux/04-overview-mobile.png', fullPage: true });
   if (errors.length) throw new Error('JavaScript errors in admin browser: ' + errors.join('; '));
-  console.log('PASS ADMIN E2E: desktop, edição, persistência, publicação local, usuário assinante, mobile; 4 capturas.');
+  console.log('PASS ADMIN E2E: desktop, edição, persistência, publicação local, usuário assinante, mobile; 6 capturas.');
 } finally { await browser.close(); }

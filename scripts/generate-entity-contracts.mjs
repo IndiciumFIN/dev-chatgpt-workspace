@@ -31,7 +31,12 @@ const routes = readdirSync("src/routes")
 // de verdade — assim o contrato carrega o estado editorial e a fonte real,
 // e nao um regex sobre o texto.
 const catalog = read("src/lib/tools/catalog.ts");
-const toolsRaw = [...catalog.matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
+// A lista de slugs vem do RUNTIME (o dump), nao de um regex sobre o fonte.
+// O regex pegava so `slug:` no inicio da linha — um slug escrito no meio da
+// linha passava batido, e o contrato ficava desatualizado sem ninguem perceber.
+// O dump e o mesmo mecanismo que o gate de cobertura usa, entao os dois veem
+// a mesma verdade. O regex fica como REDE, nao como fonte.
+const toolsRaw = [];
 const toolMeta = {};
 try {
   const dump = "/tmp/ce-tool-contracts.json";
@@ -40,10 +45,16 @@ try {
     "import('./scripts/read-tool-contracts.ts').then(()=>process.exit(0)).catch(e=>{process.stderr.write(String(e));process.exit(1)})",
   ], { encoding: "utf8", cwd: process.cwd(), stdio: ["ignore", "pipe", "inherit"], env: { ...process.env, TOOL_CONTRACTS_DUMP: dump } });
   const payload = JSON.parse(readFileSync(dump, "utf8"));
-  for (const t of payload.tools) toolMeta[t.slug] = t;
+  for (const t of payload.tools) { toolMeta[t.slug] = t; toolsRaw.push(t.slug); }
   var GOV = payload;
 } catch (e) {
   console.error(`[contracts] nao consegui ler o catalogo: ${String(e).slice(0, 200)}`);
+}
+// REDE: se o runtime nao respondeu, cai para o regex — melhor um contrato
+// parcial do que nenhum, e o gate de frescor avisa que algo ficou para tras.
+if (!toolsRaw.length) {
+  toolsRaw.push(...[...catalog.matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]));
+  console.error("[contracts] runtime indisponivel — slugs por regex (modo reduzido)");
 }
 const tools = toolsRaw;
 

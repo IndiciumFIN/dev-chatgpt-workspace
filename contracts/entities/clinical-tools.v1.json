@@ -187,6 +187,71 @@
       "authority": "src/lib/tools/catalog.ts#apgar"
     },
     {
+      "id": "CE-TOOL-aldrete",
+      "slug": "aldrete",
+      "tool_kind": "ESCALA",
+      "status": "EVIDENCE_BOUND",
+      "publicacao": "candidata",
+      "holds": [
+        "UTC-003/UTC-071: externalizar toda verdade clinica do source da pagina para binding governado em runtime",
+        "UTC-004: reconciliar identidade tecnica UUIDv5 legado com UUIDv7, sem duplicidade",
+        "UTC-051: provar a derivacao de canonical/hreflang a partir do Route Registry em build/runtime",
+        "UTC-053/UTC-056: recuperar dimensoes intrinsecas da imagem OG e perfil completo de direitos/hash",
+        "UTC-072: E2E de browser",
+        "UTC-080/081/082: verificador de ABNT/citacao/pinpoint",
+        "UTC-097: decisao sobre aplicabilidade do disclaimer de emergencia"
+      ],
+      "source_ids": [
+        "SRC-CFM-PARECER-28-2020"
+      ],
+      "authority_binding_refs": [
+        "AB-ALDRETE-ATIVIDADE",
+        "AB-ALDRETE-RESPIRACAO",
+        "AB-ALDRETE-CIRCULACAO",
+        "AB-ALDRETE-CONSCIENCIA",
+        "AB-ALDRETE-SATURACAO",
+        "AB-ALDRETE-BAND-OK",
+        "AB-ALDRETE-BAND-WARN",
+        "AB-ALDRETE-BAND-DANGER"
+      ],
+      "field_definition_refs": [
+        "FD-ALDRETE-ATIVIDADE",
+        "FD-ALDRETE-RESPIRACAO",
+        "FD-ALDRETE-CIRCULACAO",
+        "FD-ALDRETE-CONSCIENCIA",
+        "FD-ALDRETE-SATURACAO"
+      ],
+      "formula_ref": "FORMULA-ALDRETE",
+      "rule_refs": [
+        "AB-ALDRETE-BAND-OK",
+        "AB-ALDRETE-BAND-WARN",
+        "AB-ALDRETE-BAND-DANGER"
+      ],
+      "interpretation_ref": "INTERP-ALDRETE",
+      "result_ref": "RESULT-ALDRETE",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-ALDRETE",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 10
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#aldrete"
+    },
+    {
       "id": "CE-TOOL-gotejamento",
       "slug": "gotejamento",
       "tool_kind": "CALCULADORA",
@@ -276,51 +341,30 @@
       "authority": "src/lib/tools/catalog.ts#imc"
     },
     {
-      "id": "CE-TOOL-aldrete",
-      "slug": "aldrete",
-      "tool_kind": "ESCALA",
-      "status": "EVIDENCE_BOUND",
+      "id": "CE-TOOL-exames-laboratoriais",
+      "slug": "exames-laboratoriais",
+      "tool_kind": "CALCULADORA",
+      "status": "CANDIDATE",
       "publicacao": "candidata",
       "holds": [
-        "UTC-003/UTC-071: externalizar toda verdade clinica do source da pagina para binding governado em runtime",
-        "UTC-004: reconciliar identidade tecnica UUIDv5 legado com UUIDv7, sem duplicidade",
-        "UTC-051: provar a derivacao de canonical/hreflang a partir do Route Registry em build/runtime",
-        "UTC-053/UTC-056: recuperar dimensoes intrinsecas da imagem OG e perfil completo de direitos/hash",
-        "UTC-072: E2E de browser",
-        "UTC-080/081/082: verificador de ABNT/citacao/pinpoint",
-        "UTC-097: decisao sobre aplicabilidade do disclaimer de emergencia"
+        "UTC-024 — a comparacao e aritmetica, nao motor de formula com test vectors",
+        "UTC-028 — o resultado nao tem contrato proprio (clinical_result)",
+        "UTC-053 — as faixas vem da base do site, sem regra de pontuacao versionada",
+        "UTC-056 — faixa por sexo existe em 10 dos 149 exames; os demais nao declaram faixa etaria",
+        "UTC-072 — sem E2E",
+        "UTC-080/081/082 — referencias em texto, sem verificador ABNT",
+        "UTC-097 — sem disclaimer de emergencia"
       ],
-      "source_ids": [
-        "SRC-CFM-PARECER-28-2020"
-      ],
-      "authority_binding_refs": [
-        "AB-ALDRETE-ATIVIDADE",
-        "AB-ALDRETE-RESPIRACAO",
-        "AB-ALDRETE-CIRCULACAO",
-        "AB-ALDRETE-CONSCIENCIA",
-        "AB-ALDRETE-SATURACAO",
-        "AB-ALDRETE-BAND-OK",
-        "AB-ALDRETE-BAND-WARN",
-        "AB-ALDRETE-BAND-DANGER"
-      ],
-      "field_definition_refs": [
-        "FD-ALDRETE-ATIVIDADE",
-        "FD-ALDRETE-RESPIRACAO",
-        "FD-ALDRETE-CIRCULACAO",
-        "FD-ALDRETE-CONSCIENCIA",
-        "FD-ALDRETE-SATURACAO"
-      ],
-      "formula_ref": "FORMULA-ALDRETE",
-      "rule_refs": [
-        "AB-ALDRETE-BAND-OK",
-        "AB-ALDRETE-BAND-WARN",
-        "AB-ALDRETE-BAND-DANGER"
-      ],
-      "interpretation_ref": "INTERP-ALDRETE",
-      "result_ref": "RESULT-ALDRETE",
+      "source_ids": [],
+      "authority_binding_refs": [],
+      "field_definition_refs": [],
+      "formula_ref": "FORMULA-EXAMES-LABORATORIAIS",
+      "rule_refs": [],
+      "interpretation_ref": "INTERP-EXAMES-LABORATORIAIS",
+      "result_ref": "RESULT-EXAMES-LABORATORIAIS",
       "component_refs": [],
       "privacy_profile": "PRIVACY-TOOL-PROFILE",
-      "safety_profile": "SAFETY-ALDRETE",
+      "safety_profile": "SAFETY-EXAMES-LABORATORIAIS",
       "release_gate": "HOLD_HUMAN",
       "test_vector_refs": [],
       "seo_profile_ref": "SEO-PROFILE-SITE",
@@ -333,12 +377,9 @@
         "certs": [],
         "goals": []
       },
-      "faixa": {
-        "min": 0,
-        "max": 10
-      },
-      "referenciasOriginais": 1,
-      "authority": "src/lib/tools/catalog.ts#aldrete"
+      "faixa": null,
+      "referenciasOriginais": 3,
+      "authority": "src/lib/tools/catalog.ts#exames-laboratoriais"
     }
   ]
 }

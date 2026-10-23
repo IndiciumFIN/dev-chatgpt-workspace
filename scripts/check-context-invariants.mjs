@@ -9,7 +9,12 @@ const conditions = [
   ['project-instructions-present', existsSync(instructions)],
   ['baseline-present', existsSync(baseline)],
   ['version-register-present', existsSync(latest)],
-  ['no-git-metadata-in-worktree', !existsSync(join(root, '.git'))],
+  // A worktree AGORA e um repositorio — decisao do dono, com data. A
+  // invariante antiga ("sem metadados git") valia para uma copia de backup
+  // sem historico. O que nao pode ser verdade e o repo fingir que o backup
+  // e um historico de commits: por isso a origem da baseline continua
+  // declarada como backup, e nao como commit.
+  ['git-metadata-present-by-decision', existsSync(join(root, '.git'))],
 ];
 if (existsSync(baseline)) {
   const registry = JSON.parse(readFileSync(baseline, 'utf8'));

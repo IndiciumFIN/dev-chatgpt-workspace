@@ -120,6 +120,10 @@ export const contractTools = [
     "slug": "apgar"
   },
   {
+    "id": "CE-TOOL-aldrete",
+    "slug": "aldrete"
+  },
+  {
     "id": "CE-TOOL-gotejamento",
     "slug": "gotejamento"
   },
@@ -128,8 +132,8 @@ export const contractTools = [
     "slug": "imc"
   },
   {
-    "id": "CE-TOOL-aldrete",
-    "slug": "aldrete"
+    "id": "CE-TOOL-exames-laboratoriais",
+    "slug": "exames-laboratoriais"
   }
 ] as const;
 export const contractComponents = [

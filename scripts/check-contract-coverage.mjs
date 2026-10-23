@@ -50,7 +50,16 @@ const derived = {
   routes: readdirSync(join(root, "src/routes"))
     .filter((f) => f.endsWith(".tsx") && !f.startsWith("__"))
     .map((f) => f.replace(/\.tsx$/, "")),
-  tools: [...read("src/lib/tools/catalog.ts").matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]),
+  // Slugs vindos do RUNTIME (o mesmo dump que o gerador usa), nao de regex
+  // sobre o fonte: o regex so pegava `slug:` no inicio da linha, e um slug
+  // escrito no meio dela deixava o contrato desatualizado — com o gate verde.
+  tools: (() => {
+    try {
+      const payload = JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8"));
+      if (payload.tools?.length) return payload.tools.map((t) => t.slug);
+    } catch { /* sem dump: cai no regex, e o gate de frescor avisa */ }
+    return [...read("src/lib/tools/catalog.ts").matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
+  })(),
   // As tres listas vem do dump em runtime — nao de regex sobre texto.
   toolSources: (() => { try { return JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8")).fontes.map((f) => f.canonical_id); } catch { return []; } })(),
   toolBindings: (() => { try { const payload = JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8")); return payload.bindings.map((b) => b.canonical_id).concat(payload.campos.map((c) => c.canonical_id)).concat(payload.camposContexto.map((c) => c.canonical_id)); } catch { return []; } })(),

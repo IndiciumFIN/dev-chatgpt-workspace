@@ -1,6 +1,6 @@
 # Pendencias — branch-bibliotecas
 
-Gerado por `scripts/generate-pendencias.mjs` a partir do estado MEDIDO em **2026-10-23 07:43Z**.
+Gerado por `scripts/generate-pendencias.mjs` a partir do estado MEDIDO em **2026-10-23 18:37Z**.
 Nada aqui vem de memoria: cada item carrega a evidencia que o produziu.
 
 > A lista so cresce quando algo esta de fato por fazer. Se um gate passa, o item desaparece.

@@ -31,14 +31,16 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Iniciar servidor e executar jornadas do administrador
         run: |
+          export PATH="$PWD/node_modules/.bin:$PATH"
           node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 > /tmp/admin-vite.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for attempt in $(seq 1 50); do
-            if curl -fsS http://127.0.0.1:4173/admin -o /dev/null; then break; fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/admin-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4173/admin -o /dev/null 2>/dev/null; then break; fi
             sleep 2
           done
-          curl --fail http://127.0.0.1:4173/admin -o /dev/null
+          curl --fail http://127.0.0.1:4173/admin -o /dev/null || { cat /tmp/admin-vite.log; exit 1; }
           node scripts/admin-ux-e2e.mjs
       - name: Guardar as evidências para auditoria
         if: always()

@@ -46,6 +46,8 @@ jobs:
       - name: Validar PMO canônico e histórico
         run: node scripts/check-pmo-queue.mjs
       - run: npm ci
+      - name: Auditoria de dependências bloqueante
+        run: npm audit --audit-level=high
       - run: node scripts/test-admin-console.mjs
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs

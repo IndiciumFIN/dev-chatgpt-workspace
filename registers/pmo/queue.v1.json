@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 1,
+  "revision": 2,
   "updatedOn": "2026-10-23",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -26,24 +26,27 @@
       "id": "WO-PMO-001",
       "order": 1,
       "title": "PMO visível no administrador",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "priority": "P0",
       "owner": "ChatGPT + validadores",
       "criteria": "Aba PMO renderiza fonte única, CI valida esquema e deploy passa.",
-      "next": "Publicar e verificar a navegação e atualização por commit.",
+      "next": "Acompanhar novas alterações por commit e os gates de CI.",
       "dependencies": [],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40030852696",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40030803250"
+      ],
       "updatedOn": "2026-10-23"
     },
     {
       "id": "WO-SEC-001",
       "order": 2,
       "title": "Segurança, dependências e LGPD",
-      "status": "QUEUED",
+      "status": "IN_PROGRESS",
       "priority": "P0",
       "owner": "ChatGPT + revisão independente",
       "criteria": "Investigar alerta npm de alta severidade e validar autorização e proteção de dados.",
-      "next": "Executar diagnóstico npm audit; produzir FIND e testes de regressão.",
+      "next": "Executar inventário npm audit no CI, classificar dependências afetadas e impacto.",
       "dependencies": [
         "WO-PMO-001"
       ],
@@ -144,6 +147,20 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-23",
       "reason": "Proprietário determinou fila visível e atualização pela coordenação."
+    },
+    {
+      "seq": 3,
+      "workId": "WO-PMO-001",
+      "to": "DONE",
+      "date": "2026-10-23",
+      "reason": "CI 40030852696 e jornada browser 40030803250 aprovados; Vercel READY no commit 7356637."
+    },
+    {
+      "seq": 4,
+      "workId": "WO-SEC-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-23",
+      "reason": "Iniciada triagem automatizada de dependências, com execução não destrutiva na nuvem."
     }
   ]
 }

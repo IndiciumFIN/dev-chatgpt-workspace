@@ -66,7 +66,7 @@
     "audit:contracts": "node scripts/check-contract-coverage.mjs",
     "audit:country-icons": "node --experimental-strip-types --import ./scripts/alias-hook.mjs scripts/test-country-icons.mjs",
     "content:generate": "node scripts/generate-article-index.mjs && node scripts/generate-entity-contracts.mjs",
-    "build:spa": "SPA_BUILD=1 node scripts/with-app-env.mjs vite build && node scripts/materialize-static-routes.mjs",
+    "build:spa": "node scripts/check-generated-fresh.mjs && node scripts/check-cko-packages.mjs && npm run typecheck && npm test && node scripts/audit-execution-gates.mjs && SPA_BUILD=1 node scripts/with-app-env.mjs vite build && node scripts/materialize-static-routes.mjs",
     "audit:brazil": "node scripts/audit-brazil-first.mjs",
     "audit:templates": "node scripts/audit-templates.mjs"
   },

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { execFileSync } from "node:child_process";
+import { loadToolContracts } from "./load-tool-contracts.mjs";
 /**
  * Gate de cobertura de contratos.
  *
@@ -35,15 +35,14 @@ const check = (id, pass, detail) => {
 /* =====================================================================
    1. Re-deriva as entidades do CÓDIGO, sem consultar os contratos.
    ===================================================================== */
-// O dump vem do runtime (o catalogo tem dado que regex nao ve). O gate o produz
-// antes de ler, para nao depender de o gerador ter rodado antes.
+// Dado novo e isolado por execucao. Falha na extracao deve reprovar o gate,
+// nao produzir verde com regex ou reaproveitar arquivo temporario anterior.
+let runtime;
 try {
-  execFileSync(process.execPath, [
-    "--experimental-strip-types", "--import", "./scripts/alias-hook.mjs", "-e",
-    "import('./scripts/read-tool-contracts.ts').then(()=>process.exit(0)).catch(e=>{process.stderr.write(String(e));process.exit(1)})",
-  ], { encoding: "utf8", cwd: root, stdio: ["ignore", "ignore", "pipe"], env: { ...process.env, TOOL_CONTRACTS_DUMP: "/tmp/ce-tool-contracts.json" } });
-} catch (e) {
-  console.error(`[gate] nao consegui ler os contratos de ferramenta: ${String(e).slice(0, 200)}`);
+  runtime = loadToolContracts(root);
+} catch (err) {
+  console.error(String(err));
+  process.exit(1);
 }
 
 const derived = {
@@ -53,16 +52,11 @@ const derived = {
   // Slugs vindos do RUNTIME (o mesmo dump que o gerador usa), nao de regex
   // sobre o fonte: o regex so pegava `slug:` no inicio da linha, e um slug
   // escrito no meio dela deixava o contrato desatualizado — com o gate verde.
-  tools: (() => {
-    try {
-      const payload = JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8"));
-      if (payload.tools?.length) return payload.tools.map((t) => t.slug);
-    } catch { /* sem dump: cai no regex, e o gate de frescor avisa */ }
-    return [...read("src/lib/tools/catalog.ts").matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
-  })(),
-  // As tres listas vem do dump em runtime — nao de regex sobre texto.
-  toolSources: (() => { try { return JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8")).fontes.map((f) => f.canonical_id); } catch { return []; } })(),
-  toolBindings: (() => { try { const payload = JSON.parse(readFileSync("/tmp/ce-tool-contracts.json", "utf8")); return payload.bindings.map((b) => b.canonical_id).concat(payload.campos.map((c) => c.canonical_id)).concat(payload.camposContexto.map((c) => c.canonical_id)); } catch { return []; } })(),
+  tools: runtime.tools.map((tool) => tool.slug),
+  toolSources: runtime.fontes.map((f) => f.canonical_id),
+  toolBindings: runtime.bindings.map((b) => b.canonical_id)
+    .concat(runtime.campos.map((c) => c.canonical_id))
+    .concat(runtime.camposContexto.map((c) => c.canonical_id)),
   toolComponents: readdirSync(join(root, "src/components/site"))
     .filter((f) => f.endsWith(".tsx"))
     .map((f) => `CE-COMP-${f.replace(/\.tsx$/, "")}`),

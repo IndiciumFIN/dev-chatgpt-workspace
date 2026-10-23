@@ -74,3 +74,9 @@ Refs: UTC-024, UTC-028, UTC-053, UTC-056
 - **Conteúdo clínico não se inventa.** Se não tem fonte declarada, fica como candidata fora do índice.
 - **A Aldrete é candidata.** Sete HOLDs, fora do sitemap, com `noindex`.
 - **`md_gate` está fechado.** Nada vai a `RELEASED` até ele abrir.
+
+## Estado da auditoria 2026-10-23
+
+Consulte `docs/AUDITORIA-RELEASE-2026-10-23.md` antes de publicar. Este ZIP possui branch local `dev/bibliotecas` e nao possui `origin` remoto. Nao execute push contra uma `main` remota divergente.
+
+`vercel.json` prepara `npm run build:spa`, mas o build completo e os testes E2E ainda precisam ser reproduzidos no ambiente de CI. Nao confunda arquivos HTML do mesmo shell com SEO prerenderizado por rota. Login e banco permanecem desabilitados por politica; conferir tambem as variaveis do runtime remoto.

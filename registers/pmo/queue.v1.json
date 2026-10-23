@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "registryId": "CE-PMO-001",
+  "revision": 1,
+  "updatedOn": "2026-10-23",
+  "readOnly": true,
+  "canonicalSource": "registers/pmo/queue.v1.json",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "items": [
+    {
+      "id": "WO-ADM-001",
+      "order": 0,
+      "title": "Protótipo administrativo congelado",
+      "status": "PAUSED",
+      "priority": "P1",
+      "owner": "ChatGPT",
+      "criteria": "Retomar somente após autorização do proprietário.",
+      "next": "Sem novas funcionalidades no protótipo.",
+      "dependencies": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/1533477527f55b61855af95d12f5a07d7f97e0ae"
+      ],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-PMO-001",
+      "order": 1,
+      "title": "PMO visível no administrador",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "owner": "ChatGPT + validadores",
+      "criteria": "Aba PMO renderiza fonte única, CI valida esquema e deploy passa.",
+      "next": "Publicar e verificar a navegação e atualização por commit.",
+      "dependencies": [],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-SEC-001",
+      "order": 2,
+      "title": "Segurança, dependências e LGPD",
+      "status": "QUEUED",
+      "priority": "P0",
+      "owner": "ChatGPT + revisão independente",
+      "criteria": "Investigar alerta npm de alta severidade e validar autorização e proteção de dados.",
+      "next": "Executar diagnóstico npm audit; produzir FIND e testes de regressão.",
+      "dependencies": [
+        "WO-PMO-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-E2E-001",
+      "order": 3,
+      "title": "E2E, acessibilidade e visual",
+      "status": "QUEUED",
+      "priority": "P0",
+      "owner": "ChatGPT + browser cloud",
+      "criteria": "Cobertura das jornadas relevantes, evidências por rota e viewport, revisão de teclado/contraste.",
+      "next": "Capturar desktop e mobile, executar cenários positivos e negativos.",
+      "dependencies": [
+        "WO-PMO-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-DS-001",
+      "order": 4,
+      "title": "Design System e templates canônicos",
+      "status": "QUEUED",
+      "priority": "P1",
+      "owner": "ChatGPT + revisor visual",
+      "criteria": "Inventário de desvios e correções sem componentes concorrentes.",
+      "next": "Comparar com tokens, contratos e referências homologados.",
+      "dependencies": [
+        "WO-E2E-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-CKO-001",
+      "order": 5,
+      "title": "CKO e fontes normativas",
+      "status": "QUEUED",
+      "priority": "P1",
+      "owner": "ChatGPT + revisores especializados",
+      "criteria": "Verificar fontes, schemas, lineage, direitos e casos-ouro; manter HOLD clínico.",
+      "next": "Medir cobertura e registrar pendências sem inventar autoridade.",
+      "dependencies": [
+        "WO-PMO-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-AUTO-001",
+      "order": 6,
+      "title": "Automação recorrente com orçamento e rastreabilidade",
+      "status": "QUEUED",
+      "priority": "P1",
+      "owner": "ChatGPT + GitHub Actions",
+      "criteria": "Jobs agendados, idempotentes, limites e alertas testados.",
+      "next": "Construir monitor com evidências e fail-closed.",
+      "dependencies": [
+        "WO-SEC-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-HOM-001",
+      "order": 7,
+      "title": "Homologação independente",
+      "status": "HOLD_HUMAN",
+      "priority": "P0",
+      "owner": "Responsáveis pela homologação",
+      "criteria": "Aprovações humanas e requisitos técnicos completos e auditáveis.",
+      "next": "Não liberar conteúdos clínicos ou mudanças críticas sem autorização.",
+      "dependencies": [
+        "WO-SEC-001",
+        "WO-E2E-001",
+        "WO-DS-001",
+        "WO-CKO-001",
+        "WO-AUTO-001"
+      ],
+      "evidence": [],
+      "updatedOn": "2026-10-23"
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "workId": "WO-ADM-001",
+      "to": "PAUSED",
+      "date": "2026-10-23",
+      "reason": "Proprietário determinou congelar o protótipo e seguir a fila."
+    },
+    {
+      "seq": 2,
+      "workId": "WO-PMO-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-23",
+      "reason": "Proprietário determinou fila visível e atualização pela coordenação."
+    }
+  ]
+}

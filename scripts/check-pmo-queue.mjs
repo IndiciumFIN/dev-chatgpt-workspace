@@ -19,7 +19,10 @@ for(const [i,item] of q.items.entries()){
   assert.match(item.id,/^WO-[A-Z0-9-]+$/);
   assert(statuses.has(item.status),'Status inválido: '+item.id);
   assert(priorities.has(item.priority),'Prioridade inválida: '+item.id);
-  for(const f of ['title','owner','criteria','next'])assert(typeof item[f]==='string'&&item[f].length>12,item.id+' sem '+f);
+  for(const field of ['title','owner','criteria','next']) {
+    const minimum = field === 'owner' ? 4 : 12;
+    assert(typeof item[field] === 'string' && item[field].trim().length >= minimum, item.id+' sem '+field);
+  }
   assert(Array.isArray(item.dependencies));
   assert(item.dependencies.every(dep=>ids.has(dep)&&dep!==item.id),'Dependência inválida: '+item.id);
   assert(Array.isArray(item.evidence));

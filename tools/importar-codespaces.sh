@@ -19,11 +19,11 @@ echo "OK: arquivo original validado pelo SHA-256."
 [[ -d .git ]] || die "Abra o terminal na raiz do Codespace deste repositório."
 current_origin="$(git remote get-url origin 2>/dev/null || true)"
 case "$current_origin" in
-  "$REMOTE"|"git@github.com:IndiciumFIN/dev-chatgpt-workspace.git") ;;
+  "$REMOTE"|"https://github.com/IndiciumFIN/dev-chatgpt-workspace"|"git@github.com:IndiciumFIN/dev-chatgpt-workspace.git"|"git@github.com:IndiciumFIN/dev-chatgpt-workspace") ;;
   *) die "Este Codespace não pertence ao repositório autorizado ($current_origin)" ;;
 esac
 [[ "$(git branch --show-current)" == "main" ]] || die "O Codespace deve estar na main do repositório de destino."
-[[ -z "$(git status --porcelain)" ]] || die "O Codespace tem alterações locais; interrompendo."
+[[ -z "$(git status --porcelain --untracked-files=no)" ]] || die "O Codespace tem alterações em arquivos versionados; interrompendo."
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT

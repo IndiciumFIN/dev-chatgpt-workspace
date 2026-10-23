@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import {
   AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Check, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
-  LayoutDashboard, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone,
+  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone,
   type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
@@ -19,13 +19,15 @@ import {
   readPublicationRegister, saveLocalDraft, publishLocalDraft, exportPublicationRegister,
   type PublicationEvent,
 } from '@/lib/local-publication-register';
+import { PmoPanel } from '@/components/admin/pmo-panel';
 import '@/styles/admin-console.css';
 
-type Tab = 'overview' | 'content' | 'templates' | 'sources' | 'publication';
+type Tab = 'overview' | 'pmo' | 'content' | 'templates' | 'sources' | 'publication';
 type PreviewAudience = 'publico' | 'assinante';
 type PreviewVersion = 'draft' | 'published';
 const tabs: { id: Tab; label: string; icon: LucideIcon; hint: string }[] = [
-  { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Situação da operação' },
+  { id: 'pmo', label: 'PMO · fila', icon: ListTodo, hint: 'Ordens, status e evidências' },
+  { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Protótipo congelado' },
   { id: 'content', label: 'Conteúdos', icon: BookOpenText, hint: 'Editar instrumentos' },
   { id: 'templates', label: 'Templates', icon: Layers3, hint: 'Contratos de apresentação' },
   { id: 'sources', label: 'Fontes e controle', icon: ShieldCheck, hint: 'Rastreabilidade' },
@@ -51,7 +53,7 @@ export function AdminConsole() {
   const [published, setPublished] = useState<LocalWorkbench>(initialWorkbench);
   const [revision, setRevision] = useState(0);
   const [events, setEvents] = useState<PublicationEvent[]>([]);
-  const [tab, setTab] = useState<Tab>('overview');
+  const [tab, setTab] = useState<Tab>('pmo');
   const [selected, setSelected] = useState<string>(() => initialWorkbench().tools[0]?.slug ?? '');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'publicado' | 'oculto'>('todos');
@@ -164,6 +166,7 @@ export function AdminConsole() {
           </div>
         </div>
         <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>
+        {tab === 'pmo' && <PmoPanel />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
             <Stat label="Instrumentos" value={model.tools.length} note="Catálogo existente" icon={BookOpenCheck} />

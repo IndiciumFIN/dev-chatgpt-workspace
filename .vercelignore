@@ -5,7 +5,9 @@
 # aqui: a CLI usa o .vercelignore quando existe, e gitignore quando nao existe.
 node_modules
 .vercel
-dist
+# Apenas o dist gerado na raiz: contratos/cko-tokens/dist e outros
+# artefatos versionados sao entradas verificadas pelos gates do build.
+/dist
 build
 
 # Evidencia de auditoria e capturas: nao fazem parte do produto publicado.

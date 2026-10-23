@@ -43,6 +43,8 @@ jobs:
           # Mesmo conjunto de arquivos que Vercel prepara para npm ci/build.
           git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
+      - name: Validar PMO canônico e histórico
+        run: node scripts/check-pmo-queue.mjs
       - run: npm ci
       - run: node scripts/test-admin-console.mjs
       - run: npm run typecheck

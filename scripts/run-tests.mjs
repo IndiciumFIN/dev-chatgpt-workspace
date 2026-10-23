@@ -53,62 +53,7 @@ const SUITES = [
 
 const tally = (out) => {
   const pick = (key) => {
-    const m = out.match(new RegExp(`^(?:#|ℹ)\\s+${key}\\s+(\\d+)\\s*#!/usr/bin/env node
-/**
- * Runner da suíte de testes.
- *
- * Existia um bug aqui: o script de `npm test` encadeava as duas metades com
- * `&&`. A primeira metade (os testes em scripts/) termina com 17 falhas
- * pré-existentes, então o `&&` cortava a execução e a segunda metade — que é
- * onde ficam os testes do motor clínico — nunca rodava. O projeto acreditava
- * não ter teste de motor porque o encadeamento o pulava em silêncio.
- *
- * Aqui as duas metades rodam SEMPRE, e o código de saída é 1 se qualquer uma
- * falhar. Nenhum resultado é engolido.
- */
-import { readdirSync } from "node:fs";
-import { spawnSync } from "node:child_process";
-
-
-/** Todo *.test.ts em src/, em ordem estavel. Sem lista manual para manter. */
-function discoverTests() {
-  const out = [];
-  (function walk(dir) {
-    for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-      if (e.name === "node_modules") continue;
-      const p = `${dir}/${e.name}`;
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".test.ts") || e.name.endsWith(".test.tsx")) out.push(p);
-    }
-  })("src");
-  if (!out.length) throw new Error("nenhum teste encontrado em src/ — glob quebrado?");
-  return out;
-}
-
-const SUITES = [
-  {
-    name: "scripts",
-    args: ["--test", "scripts/**/*.test.mjs"],
-  },
-  {
-    name: "src",
-    args: [
-      "--experimental-strip-types",
-      "--import",
-      "./scripts/alias-hook.mjs",
-      "--test",
-      // Descoberto, nao listado. A lista era manual e um teste novo ficava
-      // invisivel ate alguem lembrar de editar este arquivo — exatamente o modo
-      // de falha que os contratos vieram remover. O glob ja e o que a suite de
-      // scripts usa; aqui nao havia motivo para ser diferente.
-      ...discoverTests(),
-    ],
-  },
-];
-
-const tally = (out) => {
-  const pick = (key) => {
-    , "m"));
+    const m = out.match(new RegExp(`^(?:#|ℹ)\\s+${key}\\s+(\\d+)\\s*$`, "m"));
     return m ? Number(m[1]) : 0;
   };
   return { tests: pick("tests"), pass: pick("pass"), fail: pick("fail") };
@@ -119,8 +64,7 @@ let failed = false;
 
 for (const suite of SUITES) {
   process.stdout.write(`\n=== ${suite.name} ===\n`);
-  // Testes unitários devem validar o comportamento DEFAULT (env ausente)
-  // independentemente da flag usada no build; cada teste pode ativá-la explicitamente.
+  // Isolar a flag de build: cada teste exercita explicitamente o cenario que valida.
   const testEnv = { ...process.env };
   delete testEnv.VITE_AUTH_ENABLED;
   const run = spawnSync(process.execPath, suite.args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], env: testEnv });

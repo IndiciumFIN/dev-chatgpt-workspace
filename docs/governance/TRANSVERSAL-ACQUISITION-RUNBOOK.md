@@ -11,3 +11,7 @@ Escopo exclusivo: `IndiciumFIN/dev-chatgpt-workspace`; entradas em `registers/go
 - O extrator **não** cria `requirement`, `claim`, atomização validada, status de vigência, conformidade, decisão Kernel ou publicação.
 - O gate comprova hashes dos arquivos que foram efetivamente baixados e enviados ao artefato; não prova exatidão da interpretação, completude jurídica nem atualização legislativa.
 - Sem segredos, sem commits/push automáticos, sem outros repositórios e sem envio dos textos para provedores de IA.
+
+
+### Complemento de localização de fontes (24/10/2026)
+As resoluções ANPD 15, 18 e 19/2024 passam a usar URLs diretas verificadas nos sites oficiais da ANPD e do Ministério da Justiça e Segurança Pública. Os links genéricos anteriores foram preservados no registro. O executor aceita esses dois domínios oficiais sem buscar em repositórios de terceiros. Atenção: a Resolução 19 foi objeto de retificação em 2025, e o cotejo com a edição do Diário Oficial permanece obrigatório. O arquivo extraído não comprova vigência, completude de anexos ou revisão do regulamento.

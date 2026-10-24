@@ -21,7 +21,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "registers/governance/transversal-standards-candidates.v1.json"
 OUT = ROOT / "audit-evidence/transversal-acquisition"
 MAX_BYTES = 5 * 1024 * 1024
-ALLOW_HOSTS = {"www.planalto.gov.br", "planalto.gov.br"}
+ALLOW_HOSTS = {"www.planalto.gov.br", "planalto.gov.br", "www.gov.br", "bibliotecadigital.mj.gov.br"}
 UA = "Mozilla/5.0 (compatible; CE-GovernedSourceArchive/1.0; public-official-acts)"
 BLOCK_COPIES = {"www.iso.org", "committee.iso.org", "www.ifrs.org", "www.isaca.org"}
 def sha(data): return hashlib.sha256(data).hexdigest()
@@ -57,7 +57,12 @@ def decode(raw, content_type):
     return raw.decode("latin-1"),"latin-1-fallback"
 def check_identity(identifier, extracted):
     match=re.match(r"^(Lei|Decreto)\s+([\d.]+)/(\d{4})$", identifier, re.I)
-    if not match:return False
+    if not match:
+        anpd=re.match(r"^Resolução ANPD (\d+)/(\d{4})$",identifier)
+        if not anpd:return False
+        num,year=anpd.groups()
+        top=extracted[:5000].lower()
+        return bool(re.search(r"resolu[çc][ãa]o\s+(?:cd\s*/\s*)?anpd\s+n[ºo°.]?\s*"+re.escape(num)+r"\b",top)) and year in top and len(extracted)>1200
     name,num,year=match.groups()
     digits=num.replace(".","")
     expression=r"(?<!\d)"+r"\s*\.?\s*".join(map(re.escape,list(digits)))+r"(?!\d)"
@@ -70,9 +75,11 @@ def download_one(row):
     r={"officialIdentifier":ident,"sourceUrl":url,"outcome":"NOT_ATTEMPTED",
        "checkedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),"bodyStored":False}
     host=(parse.urlparse(url).hostname or "").lower()
-    if not ident.startswith(("Lei ","Decreto ")) or host not in ALLOW_HOSTS:
+    eligible_law=ident.startswith(("Lei ","Decreto ")) and host in {"www.planalto.gov.br","planalto.gov.br"}
+    eligible_anpd=ident.startswith("Resolução ANPD ") and host in {"www.gov.br","bibliotecadigital.mj.gov.br"}
+    if not (eligible_law or eligible_anpd):
         r["outcome"]="METADATA_ONLY_OR_LICENSE_REVIEW"
-        r["reason"]="Apenas atos oficiais brasileiros com URL primária Planalto são elegíveis a download integral nesta execução."
+        r["reason"]="Apenas atos brasileiros de sites oficiais primários qualificados são elegíveis para aquisição integral nesta execução."
         return r
     last=None
     for attempt in range(2):
@@ -136,7 +143,7 @@ def main():
     manifest={"sourceRepository":"IndiciumFIN/dev-chatgpt-workspace",
      "sourceCatalog":"registers/governance/transversal-standards-candidates.v1.json",
      "sourceCatalogSha256":sha(CATALOG.read_bytes()),"executedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),
-     "scope":"Fonte oficial de atos normativos brasileiros, apenas links do catálogo; metadados para referências licenciadas.",
+     "scope":"Fontes oficiais de atos brasileiros (Planalto e ANPD/MJ), apenas URLs qualificadas do catálogo; metadados para referências licenciadas.",
      "purpose":"Acervo auxiliar de aquisição em GitHub Actions; NÃO Kernel/REG/Master Data admitidos.",
      "items":results,"summary":{"items":len(results),"byOutcome":statuses},
      "safety":{"crossRepositorySources":False,"externalUpload":False,"protectedStandardFullTextCopied":False,

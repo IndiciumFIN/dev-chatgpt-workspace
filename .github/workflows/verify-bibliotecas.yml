@@ -47,6 +47,10 @@ jobs:
         run: node scripts/check-pmo-queue.mjs
       - name: Verificar integridade do inventário transversal candidato (não conformidade)
         run: node scripts/check-transversal-catalog.mjs
+      - name: Auditar 18 instâncias ISO com schemas canônicos, hashes e testes negativos (sem admissão)
+        run: |
+          python3 -m pip install --disable-pip-version-check "jsonschema==4.25.1"
+          python3 scripts/verify-transversal-iso-materialization.py
       - name: Validar lote CKO/COFEN e hashes dos registros
         run: node scripts/check-candidate-find-register.mjs
       - run: npm ci

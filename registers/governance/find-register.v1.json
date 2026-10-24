@@ -184,13 +184,15 @@
       "canonical_id": "FIND-TRANS-ISO-20261024",
       "finding_type": "INTEGRATION_GAP",
       "severity": "HIGH",
-      "fact": "As 18 referências ISO/ISO-IEC indicam nomes de schemas mas não apresentam instâncias source plenamente qualificadas, authority_binding verificável por cláusula ou teste documental de requisitos. Catálogo não substitui o contrato canônico.",
+      "fact": "18 conjuntos ISO/ISO-IEC foram materializados como candidatos, com hashes e quatro schemas, mas não representam documentação ISO adquirida, fonte ISO qualificada ou requisitos normativos. Seus 18 authority_binding são deliberadamente HOLD_HUMAN e apontam à política interna CKO-POL-UT-001 §3, não a cláusula ISO. Antes de qualquer promoção, corrigir o mapeamento semântico e qualificar fonte/versão/licença/cláusula mediante evidência.",
       "evidence_refs": [
         "registers/governance/transversal-standards-candidates.v1.json",
         "contracts/cko-schemas/source.schema.json",
         "contracts/cko-schemas/authority_binding.schema.json",
         "contracts/cko-schemas/audit_evidence.schema.json",
-        "agents/normativos-licenciados.md"
+        "agents/normativos-licenciados.md",
+        "registers/governance/transversal-source-instances/materialization-manifest.json",
+        "scripts/verify-transversal-iso-materialization.py"
       ]
     }
   ],

@@ -1,13 +1,28 @@
 export type ServiceOrderStatus =
   | "draft"
-  | "pending"
-  | "in_review"
+  | "planned"
+  | "pilot"
+  | "approved_for_development"
+  | "in_development"
+  | "ready_for_test"
+  | "in_test"
+  | "approved_for_production"
+  | "in_production"
+  | "closed"
   | "rejected"
-  | "admitted"
-  | "preview"
-  | "approved"
-  | "deployed"
   | "revoked";
+
+export type WorkOrderType =
+  | "planning"
+  | "pilot"
+  | "development"
+  | "test"
+  | "production"
+  | "rollback";
+
+export type RiskLevel = "low" | "medium" | "high" | "critical";
+export type DataClassification = "public" | "internal" | "confidential" | "restricted";
+export type SecurityImpact = "none" | "low" | "medium" | "high";
 
 export type PolicyRule = {
   id: string;
@@ -29,18 +44,38 @@ export type EvidenceRecord = {
   payload: Record<string, unknown>;
 };
 
-export type ServiceOrder = {
+export type ApprovalRecord = {
   id: string;
-  type: string;
+  approver: string;
+  decision: "approved" | "rejected" | "hold";
+  reason?: string;
+  approvedAt: string;
+};
+
+export type WorkOrder = {
+  id: string;
+  type: WorkOrderType;
   title: string;
-  owner: string;
+  objective: string;
   scope: string;
+  owner: string;
+  approver: string;
   sourceRef: string;
   policySet: string[];
+  riskLevel: RiskLevel;
+  dataClassification: DataClassification;
+  securityImpact: SecurityImpact;
+  environment: "planning" | "pilot" | "dev" | "test" | "prod";
   status: ServiceOrderStatus;
-  createdAt: string;
   manifestId?: string;
+  hash?: string;
+  dependencies: string[];
+  acceptanceCriteria: string[];
   evidence: EvidenceRecord[];
+  approvals: ApprovalRecord[];
+  rollbackPlan?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Manifest = {

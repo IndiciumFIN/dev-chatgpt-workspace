@@ -1,21 +1,21 @@
-import type { Manifest, PolicyRule, ServiceOrder, KernelDecision } from "./types";
+import type { KernelDecision, Manifest, PolicyRule, WorkOrder } from "./types";
 
-export async function evaluateServiceOrder(
-  order: ServiceOrder,
+export async function evaluateWorkOrder(
+  workOrder: WorkOrder,
   manifest: Manifest | null,
   policyRules: PolicyRule[],
   validators: Array<() => Promise<boolean>>,
 ): Promise<KernelDecision> {
-  if (!order.id) {
-    return { outcome: "reject", reason: "service-order-missing-id" };
+  if (!workOrder.id) {
+    return { outcome: "reject", reason: "work-order-missing-id" };
   }
 
-  if (!order.policySet?.length) {
+  if (!workOrder.policySet?.length) {
     return { outcome: "reject", reason: "policy-set-required" };
   }
 
   const activePolicies = policyRules.filter((rule) => rule.active);
-  const missingPolicy = order.policySet.find(
+  const missingPolicy = workOrder.policySet.find(
     (code) => !activePolicies.some((rule) => rule.code === code),
   );
 
@@ -27,7 +27,7 @@ export async function evaluateServiceOrder(
     return { outcome: "hold", reason: "manifest-required" };
   }
 
-  const validatorResults = await Promise.all(validators.map((v) => v()));
+  const validatorResults = await Promise.all(validators.map((validator) => validator()));
   if (validatorResults.some((ok) => !ok)) {
     return { outcome: "reject", reason: "validator-failed" };
   }
@@ -40,15 +40,15 @@ export async function evaluateServiceOrder(
 }
 
 export function buildManifest(
-  serviceOrderId: string,
+  workOrderId: string,
   state: string,
   hash: string,
   validators: string[],
   policySet: string[],
 ): Manifest {
   return {
-    id: `manifest-${serviceOrderId}`,
-    serviceOrderId,
+    id: `manifest-${workOrderId}`,
+    serviceOrderId: workOrderId,
     version: "1.0.0",
     state,
     hash,

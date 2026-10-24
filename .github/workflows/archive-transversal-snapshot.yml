@@ -39,7 +39,7 @@ jobs:
           test -s audit-evidence/transversal-acquisition/snapshots/20261024/SNAPSHOT-MANIFEST.json
           test -s audit-evidence/transversal-acquisition/snapshots/20261024/manifest.json
           git add -- audit-evidence/transversal-acquisition/snapshots/20261024/
-          git diff --cached --check
+          python3 scripts/verify-transversal-staged.py
           ! git diff --cached --name-only | grep -v '^audit-evidence/transversal-acquisition/snapshots/20261024/'
       - name: Commit limitado ao snapshot — sem force push nem branch nova
         run: |

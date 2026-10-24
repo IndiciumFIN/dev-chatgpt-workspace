@@ -1,0 +1,51 @@
+# Escopo estrito: cópia permanente, uma única vez, dos bytes já verificados em run anterior.
+# Não efetua extração nova, não cria branch, não altera contratos e não promove ao Kernel.
+name: Arquivar corpus transversal — snapshot controlado
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/archive-transversal-snapshot.yml'
+jobs:
+  archive:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: archive-transversal-20261024
+      cancel-in-progress: false
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Impedir reexecução destrutiva
+        run: |
+          test ! -e audit-evidence/transversal-acquisition/snapshots/20261024/manifest.json
+          test -f audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json
+      - name: Obter exclusivamente o artifact já verificado do mesmo repositório
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/ce-transversal-input"
+          gh run download 40065059009 --repo "$GITHUB_REPOSITORY" --name transversal-public-acquisition --dir "$RUNNER_TEMP/ce-transversal-input"
+      - name: Conferir cada arquivo e copiar preservando os bytes
+        run: python3 scripts/archive-transversal-snapshot.py "$RUNNER_TEMP/ce-transversal-input"
+      - name: Conferir que mudanças se limitam ao diretório permitido
+        run: |
+          test -s audit-evidence/transversal-acquisition/snapshots/20261024/SNAPSHOT-MANIFEST.json
+          test -s audit-evidence/transversal-acquisition/snapshots/20261024/manifest.json
+          git add -- audit-evidence/transversal-acquisition/snapshots/20261024/
+          git diff --cached --check
+          ! git diff --cached --name-only | grep -v '^audit-evidence/transversal-acquisition/snapshots/20261024/'
+      - name: Commit limitado ao snapshot — sem force push nem branch nova
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --cached --quiet && { echo "HOLD: nada a arquivar"; exit 1; }
+          git commit -m "audit(sources): preservar snapshot transversal verificado, sem admissao"
+          # Estado remoto mudou => rejeitar o push, nunca rebase/force.
+          git push origin HEAD:main

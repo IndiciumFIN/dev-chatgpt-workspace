@@ -7,3 +7,7 @@ export function sendMessage(route: BrokerRoute, msg: MessageEnvelope): boolean {
   if (!msg.payloadHash) return false;
   return routeAllowed(route);
 }
+
+function routeAllowed(route: BrokerRoute): boolean {
+  return route.status === "admitted";
+}

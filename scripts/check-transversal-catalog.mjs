@@ -47,4 +47,30 @@ assert.equal(r.sourceContractReview.normativeClauseTestsVerified,0);
 assert.equal(r.sourceContractReview.admission,'NOT_ADMITTED');
 assert(['RUN_PENDING','CANDIDATES_MATERIALIZED'].includes(r.sourceContractReview.materializationStatus));
 
+
+if (r.sourceContractReview.materializationStatus === 'CANDIDATES_MATERIALIZED') {
+  const {createHash} = await import('node:crypto');
+  const base = 'registers/governance/transversal-source-instances/';
+  const report=JSON.parse(readFileSync(base+'materialization-manifest.json','utf8'));
+  assert.equal(report.sourceCandidates,18);
+  assert.equal(report.ISOClausesVerified,0);
+  assert.equal(r.sourceContractReview.candidateSourceInstancesSchemaValidated,18);
+  for (const entry of report.items) {
+    const key=entry.sourceCanonicalId.replace(/\.source$/,'');
+    const src=JSON.parse(readFileSync(base+'source/'+key+'.json','utf8'));
+    const meta=readFileSync(base+'metadata/'+key+'.json');
+    const app=JSON.parse(readFileSync(base+'applicability/'+key+'.json','utf8'));
+    const bind=JSON.parse(readFileSync(base+'authority-binding/'+key+'.json','utf8'));
+    const evid=JSON.parse(readFileSync(base+'audit-evidence/'+key+'.json','utf8'));
+    const sh=createHash('sha256').update(meta).digest('hex');
+    assert.equal(src.integrity.sha256,sh);
+    assert.equal(src.status,'CANDIDATE');
+    assert.equal(src.rights,'UNKNOWN');
+    assert.equal(app.decision,'HOLD');
+    assert.equal(bind.decision,'HOLD_HUMAN');
+    assert.equal(bind.requirement_id,'CKO-POL-UT-001:3');
+    assert.equal(evid.result,'PASS');
+    assert(evid.limit_statement.includes('APENAS esquema'));
+  }
+}
 console.log('PASS inventário transversal candidato: '+r.standards.length+' anteriores + '+keys.length+' referências complementares; sem alegação de implementação ou Kernel.');

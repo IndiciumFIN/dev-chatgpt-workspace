@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/index-transversal-public-articles.yml'
+      - 'scripts/index-transversal-public-articles.py'
+      - 'scripts/verify-transversal-public-article-index.py'
 jobs:
   index:
     if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && github.ref == 'refs/heads/main'

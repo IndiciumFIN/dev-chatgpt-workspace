@@ -28,11 +28,11 @@ def main():
     am=json.loads(ARCHIVE_MANIFEST.read_text("utf-8"))
     source_items={x["identifier"]:x for x in p["items"]}
     archive_items={x["officialIdentifier"]:x for x in am["items"] if x.get("bodyStored")}
-    eligible=sorted(
+    eligible=sorted([
         x for x in p["items"] if x["identifier"] in archive_items
         and x["sourcePath"].startswith("registers/governance/transversal-source-instances/public/source/")
         and x["identifier"].startswith(("Lei ","Decreto ","Resolução ANPD "))
-    ,key=lambda x:x["identifier"])
+    ],key=lambda x:x["identifier"])
     assert len(eligible)==21 and len(archive_items)==24, "HOLD: escopo histórico divergente"
     all_results=[]
     for source in eligible:

@@ -2,7 +2,7 @@
   "as_of": "2026-10-24",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -213,6 +213,30 @@
         "scripts/verify-transversal-public-materialization.py"
       ],
       "root_cause_status": "EVIDENCED",
+      "remediation_task_refs": [],
+      "blocking_policy_refs": [
+        "CKO-POL-UT-001"
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-TRANS-ARTICLE-INDEX-20261024",
+      "version": "1.0.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-10-24",
+      "provenance_refs": [
+        "docs/CKO-POL-UT-001.md",
+        "audit-evidence/transversal-acquisition/article-index/20261024/index-manifest.json"
+      ],
+      "finding_type": "TEST_GAP",
+      "severity": "MEDIUM",
+      "fact": "O índice mecânico identificou 1.577 cabeçalhos 'Art.' em 21 atos brasileiros; 16 documentos contêm sinais de anexos e/ou numeração repetida. São indicações de revisão, não comprovação de erro ou requisitos normativos. Não há revisão artigo a artigo, vigência, anexos ou validação de aplicabilidade.",
+      "evidence_refs": [
+        "audit-evidence/transversal-acquisition/article-index/20261024/index-manifest.json",
+        "scripts/verify-transversal-public-article-index.py",
+        "audit-evidence/transversal-acquisition/snapshots/20261024/manifest.json"
+      ],
+      "root_cause_status": "PENDING",
       "remediation_task_refs": [],
       "blocking_policy_refs": [
         "CKO-POL-UT-001"

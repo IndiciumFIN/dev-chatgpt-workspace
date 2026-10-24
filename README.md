@@ -1,46 +1,54 @@
-# Dois sistemas de contrato — qual é o quê
+# Calculadoras de Enfermagem
 
-O projeto tem duas pastas com nomes parecidos e propósitos opostos. Confundi-las
-já custou uma limpeza inteira, então a regra está escrita aqui.
+Este repositório é um workspace de publicação e auditoria para a base pública de conteúdo clínico e materiais educacionais da família "Calculadoras de Enfermagem".
 
-## `contracts/` — invariante de runtime
+Ele reúne:
+- a aplicação web e roteamento principal em `src/`
+- os contratos e invariantes gerados em `contracts/`
+- os registros e evidências de decisões em `registers/`
+- as auditorias e artefatos de execução em `audit/`, `audit-run/` e `audit-evidence/`
+- os gates e validações em `scripts/`
 
-Gerado a partir do código. **A aplicação depende destes arquivos**: `src/lib/contracts.ts`
-importa o índice gerado e valida em tempo de carga. Se um contrato estiver errado
-ou ausente, a aplicação não sobe (`ContractViolation`).
+## Visão geral
 
-Nada aqui é escrito à mão. Para mudar um contrato, muda-se o código e roda-se:
+O objetivo deste projeto é manter uma base pública, auditável e governada para publicação de conteúdo e ferramentas educacionais, sem promover material clínico sem evidência e sem acionar infra de produção por padrão.
 
-    node scripts/generate-entity-contracts.mjs
+Este workspace opera com política explícita:
+- autenticação desligada por padrão (`VITE_AUTH_ENABLED=false`)
+- banco desligado por política do backup público (`DB_ENABLED = false`)
+- conteúdo clínico fora do índice até ter fonte e validação humanas
+- `md_gate` fechado para publicação/"release" formal
 
-Verificado por `scripts/check-contract-coverage.mjs`, que roda **antes** do build
-e do teste. Ele bloqueia quando: uma entidade existe e não tem contrato, um contrato
-cita algo que não existe, um id falta ou se repete, ou um contrato fica órfão.
+## Onde começar
 
-| contrato | cobre |
-|---|---|
-| `CE-CONTRACT-ROUTES` | uma entrada por arquivo em `src/routes/` |
-| `CE-CONTRACT-COMPONENTS` | um por componente em `src/components/site/` |
-| `CE-CONTRACT-DESIGN-TOKENS` | paleta congelada e paleta recusada |
-| `CE-CONTRACT-CHROME` | tokens das faixas de cabeçalho |
-| `CE-CONTRACT-BRAND` | assets de marca, com `papel` e `status` |
-| `CE-CONTRACT-CLINICAL-TOOLS` | slugs do catálogo clínico |
-| `CE-CONTRACT-ARTICLES` | slugs do catálogo de artigos de fundo |
+- `COMO-USAR.md` — guia operacional e fluxo de uso do repositório
+- `README.md` — visão geral e contexto do projeto
+- `docs/PENDENCIAS.md` — pendências e itens em aberto
 
-## `registers/` — evidência versionada
+## Verificação e gates
 
-Histórico de auditoria. **Não é lido pela aplicação** — é lido por scripts de
-auditoria e responde "o que foi decidido, quando, e com que evidência". Fica
-versionado com o nome da versão no arquivo porque é um registro de estado, não
-uma invariante viva.
+Os gates e auditorias locais devem ser executados antes de qualquer publicação ou promoção:
 
-`registers/i18n/country-icon-contract.v1.json` é a exceção: nasceu da fusão de
-dois registros que descreviam a mesma entidade (decisão de política + gate de
-aprovação). Passou a ser contrato único, não duas metades.
+```bash
+npm ci
+npm run typecheck
+npm test
+npm run build:spa
+```
 
-## A regra
+Os pontos relevantes incluem:
+- `check-generated-fresh` para garantir contratos gerados em sincronia com o código
+- `check-cko-packages` para verificar integridade de pacotes CKO
+- `check-contract-coverage` para garantir cobertura completa de contratos e entidades
 
-- Afirmação sobre **o que o código faz agora** → vai em `contracts/`, gerada do código.
-- Registro de **o que foi decidido e com que fonte** → vai em `registers/`.
-- String solta em `.ts` que descreve estado controlado pelo código → sempre foi
-  candidata a mentir. Derive do contrato.
+## Segurança e política
+
+- O backup público não deve telegravar autenticação, banco ou infra de produção em modo padrão.
+- Qualquer reativação de autenticação ou banco precisa ser uma decisão explícita de produto e governança.
+- Conteúdo sem fonte validada fica em estado de candidato e foi removido do índice até revisão humana.
+
+## Observações importantes
+
+Este é um workspace de auditoria e publicação controlada, não um app final de produção homogênea. A intenção aqui é manter a cadeia de evidência, os contratos e a integridade do material em evolução, com a política de backup pública preservada.
+
+Para detalhes de uso e execução, consulte `COMO-USAR.md`.

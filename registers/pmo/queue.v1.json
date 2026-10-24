@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 8,
+  "revision": 9,
   "updatedOn": "2026-10-24",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -144,12 +144,14 @@
       "priority": "P0",
       "owner": "ChatGPT + auditor de normas técnicas",
       "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
-      "next": "21 atos oficiais e 3 especificações W3C obtidos e conferidos por hash. Preservar os bytes antes de expirar o artefato, cotejar vigência/retificações e anexos, reconciliar 23 somente em metadados; aplicar contratos e admissibilidade por gate.",
+      "next": "25 documentos públicos históricos agora preservados no próprio repo (21 atos, 3 originais W3C, eMAG 3.1). Restam 22 referências sem texto integral; verificar 4 ISO de catálogo gratuito sem presumir direitos, licenças de outras ISO/ABNT/IFRS e OPA. Sem atomização vinculante ou admissão Kernel.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40065059009",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024/SNAPSHOT-MANIFEST.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/evidence.json"
       ],
       "updatedOn": "2026-10-24"
     },
@@ -244,6 +246,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-24",
       "reason": "GitHub Actions 40065059009: corpus provisório com 21 atos públicos e 3 originais W3C, hashes conferidos; 23 apenas metadados; sem Kernel/atomização aprovada."
+    },
+    {
+      "seq": 11,
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "GitHub Actions archivou com verificação SHA-256 24 fontes + eMAG 3.1 sob CC BY; 25 originais no repositório, 22 restantes apenas metadados; sem admissão e sem promoção."
     }
   ]
 }

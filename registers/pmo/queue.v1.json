@@ -1,52 +1,139 @@
 {
-  "schemaVersion": 1,
-  "registryId": "CE-PMO-001",
-  "revision": 11,
-  "updatedOn": "2026-10-24",
-  "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
-  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "events": [
+    {
+      "date": "2026-10-23",
+      "reason": "Proprietário determinou congelar o protótipo e seguir a fila.",
+      "seq": 1,
+      "to": "PAUSED",
+      "workId": "WO-ADM-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "Proprietário determinou fila visível e atualização pela coordenação.",
+      "seq": 2,
+      "to": "IN_PROGRESS",
+      "workId": "WO-PMO-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "CI 40030852696 e jornada browser 40030803250 aprovados; Vercel READY no commit 7356637.",
+      "seq": 3,
+      "to": "DONE",
+      "workId": "WO-PMO-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "Iniciada triagem automatizada de dependências, com execução não destrutiva na nuvem.",
+      "seq": 4,
+      "to": "IN_PROGRESS",
+      "workId": "WO-SEC-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "Scan de dependências identificou 1 HIGH em Zod no conjunto de produção (GHSA-mrhx-c7xc-m3w5), FIND-SEC-001 aberto; sem remediação automática.",
+      "seq": 5,
+      "to": "IN_PROGRESS",
+      "workId": "WO-SEC-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "Commit 9ce1226 com Zod 4.6.7, npm audit bloqueante, 200 testes e build aprovados; Vercel READY. Mantido FIND por limites de entrada/RBAC.",
+      "seq": 6,
+      "to": "IN_PROGRESS",
+      "workId": "WO-SEC-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "17 achados (9 P0, 8 P1) registrados como candidatos em quarentena; nova WO ao final da fila antes de homologação.",
+      "seq": 7,
+      "to": "QUEUED",
+      "workId": "WO-CKO-COFEN-001"
+    },
+    {
+      "date": "2026-10-23",
+      "reason": "Inventário normativo transversal e Master/Reference Data solicitado pelo proprietário; candidata preservada sem Kernel admission.",
+      "seq": 8,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "Ampliado o mesmo registro candidato com 29 referencias transversais adicionais; check automatizado verifica integridade do catalogo, nao conformidade.",
+      "seq": 9,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "GitHub Actions 40065059009: corpus provisório com 21 atos públicos e 3 originais W3C, hashes conferidos; 23 apenas metadados; sem Kernel/atomização aprovada.",
+      "seq": 10,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "GitHub Actions archivou com verificação SHA-256 24 fontes + eMAG 3.1 sob CC BY; 25 originais no repositório, 22 restantes apenas metadados; sem admissão e sem promoção.",
+      "seq": 11,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "Triagem IFRS S1/S2 reprovada para o produto e marcada NOT_APPLICABLE_JUSTIFIED; contrato ISO/IEC confirmado em schemas, mas 18 vínculos por fonte/cláusula não implementados. Dois FINDs candidatos preservados.",
+      "seq": 12,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "IFRS S1/S2 excluída fisicamente do inventário ativo, preservada em excludedByApplicability; preparar materialização de 18 fontes ISO/ISO-IEC com contratos preexistentes e evidência local.",
+      "seq": 13,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "Materializados 18 conjuntos ISO: source candidatos, applicability HOLD, authority_binding HOLD_HUMAN e audit_evidence PASS estrutural; sem cláusulas/Kernel.",
+      "seq": 14,
+      "to": "IN_PROGRESS",
+      "workId": "WO-GOV-TRANS-001"
+    }
+  ],
   "items": [
     {
-      "id": "WO-ADM-001",
-      "order": 0,
-      "title": "Protótipo administrativo congelado",
-      "status": "PAUSED",
-      "priority": "P1",
-      "owner": "ChatGPT",
       "criteria": "Retomar somente após autorização do proprietário.",
-      "next": "Sem novas funcionalidades no protótipo.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/1533477527f55b61855af95d12f5a07d7f97e0ae"
       ],
+      "id": "WO-ADM-001",
+      "next": "Sem novas funcionalidades no protótipo.",
+      "order": 0,
+      "owner": "ChatGPT",
+      "priority": "P1",
+      "status": "PAUSED",
+      "title": "Protótipo administrativo congelado",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-PMO-001",
-      "order": 1,
-      "title": "PMO visível no administrador",
-      "status": "DONE",
-      "priority": "P0",
-      "owner": "ChatGPT + validadores",
       "criteria": "Aba PMO renderiza fonte única, CI valida esquema e deploy passa.",
-      "next": "Acompanhar novas alterações por commit e os gates de CI.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40030852696",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40030803250"
       ],
+      "id": "WO-PMO-001",
+      "next": "Acompanhar novas alterações por commit e os gates de CI.",
+      "order": 1,
+      "owner": "ChatGPT + validadores",
+      "priority": "P0",
+      "status": "DONE",
+      "title": "PMO visível no administrador",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-SEC-001",
-      "order": 2,
-      "title": "Segurança, dependências e LGPD",
-      "status": "IN_PROGRESS",
-      "priority": "P0",
-      "owner": "ChatGPT + revisão independente",
       "criteria": "Investigar alerta npm de alta severidade e validar autorização e proteção de dados.",
-      "next": "Zod 4.6.7 implantado e audit limpo. Investigar limites de entrada (arrays/maps/sets), RBAC e LGPD; FIND aberto.",
       "dependencies": [
         "WO-PMO-001"
       ],
@@ -54,78 +141,78 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031113963",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031635438"
       ],
+      "id": "WO-SEC-001",
+      "next": "Zod 4.6.7 implantado e audit limpo. Investigar limites de entrada (arrays/maps/sets), RBAC e LGPD; FIND aberto.",
+      "order": 2,
+      "owner": "ChatGPT + revisão independente",
+      "priority": "P0",
+      "status": "IN_PROGRESS",
+      "title": "Segurança, dependências e LGPD",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-E2E-001",
-      "order": 3,
-      "title": "E2E, acessibilidade e visual",
-      "status": "QUEUED",
-      "priority": "P0",
-      "owner": "ChatGPT + browser cloud",
       "criteria": "Cobertura das jornadas relevantes, evidências por rota e viewport, revisão de teclado/contraste.",
-      "next": "Capturar desktop e mobile, executar cenários positivos e negativos.",
       "dependencies": [
         "WO-PMO-001"
       ],
       "evidence": [],
+      "id": "WO-E2E-001",
+      "next": "Capturar desktop e mobile, executar cenários positivos e negativos.",
+      "order": 3,
+      "owner": "ChatGPT + browser cloud",
+      "priority": "P0",
+      "status": "QUEUED",
+      "title": "E2E, acessibilidade e visual",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-DS-001",
-      "order": 4,
-      "title": "Design System e templates canônicos",
-      "status": "QUEUED",
-      "priority": "P1",
-      "owner": "ChatGPT + revisor visual",
       "criteria": "Inventário de desvios e correções sem componentes concorrentes.",
-      "next": "Comparar com tokens, contratos e referências homologados.",
       "dependencies": [
         "WO-E2E-001"
       ],
       "evidence": [],
+      "id": "WO-DS-001",
+      "next": "Comparar com tokens, contratos e referências homologados.",
+      "order": 4,
+      "owner": "ChatGPT + revisor visual",
+      "priority": "P1",
+      "status": "QUEUED",
+      "title": "Design System e templates canônicos",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-CKO-001",
-      "order": 5,
-      "title": "CKO e fontes normativas",
-      "status": "QUEUED",
-      "priority": "P1",
-      "owner": "ChatGPT + revisores especializados",
       "criteria": "Verificar fontes, schemas, lineage, direitos e casos-ouro; manter HOLD clínico.",
-      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Medir cobertura e registrar pendências sem inventar autoridade.",
       "dependencies": [
         "WO-PMO-001",
         "WO-GOV-TRANS-001"
       ],
       "evidence": [],
+      "id": "WO-CKO-001",
+      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Medir cobertura e registrar pendências sem inventar autoridade.",
+      "order": 5,
+      "owner": "ChatGPT + revisores especializados",
+      "priority": "P1",
+      "status": "QUEUED",
+      "title": "CKO e fontes normativas",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-AUTO-001",
-      "order": 6,
-      "title": "Automação recorrente com orçamento e rastreabilidade",
-      "status": "QUEUED",
-      "priority": "P1",
-      "owner": "ChatGPT + GitHub Actions",
       "criteria": "Jobs agendados, idempotentes, limites e alertas testados.",
-      "next": "Construir monitor com evidências e fail-closed.",
       "dependencies": [
         "WO-SEC-001"
       ],
       "evidence": [],
+      "id": "WO-AUTO-001",
+      "next": "Construir monitor com evidências e fail-closed.",
+      "order": 6,
+      "owner": "ChatGPT + GitHub Actions",
+      "priority": "P1",
+      "status": "QUEUED",
+      "title": "Automação recorrente com orçamento e rastreabilidade",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-CKO-COFEN-001",
-      "order": 7,
-      "title": "Reconciliar 17 achados candidatos CKO/COREN/COFEN",
-      "status": "QUEUED",
-      "priority": "P0",
-      "owner": "ChatGPT + auditor documental",
       "criteria": "Conferir fontes e integridade, revalidar schemas, revisar políticas e produzir WO admitida sem publicação normativa.",
-      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Resolver itens P0 verificáveis; localizar ZIP CKO integral e PDFs para validação restante. Sem bypass de HOLD.",
       "dependencies": [
         "WO-CKO-001",
         "WO-GOV-TRANS-001"
@@ -134,17 +221,17 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/docs/audits/AUDITORIA_PENDENCIAS_CKO_COREN_COFEN_20261023.md"
       ],
+      "id": "WO-CKO-COFEN-001",
+      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Resolver itens P0 verificáveis; localizar ZIP CKO integral e PDFs para validação restante. Sem bypass de HOLD.",
+      "order": 7,
+      "owner": "ChatGPT + auditor documental",
+      "priority": "P0",
+      "status": "QUEUED",
+      "title": "Reconciliar 17 achados candidatos CKO/COREN/COFEN",
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-GOV-TRANS-001",
-      "order": 8,
-      "title": "Matriz transversal de governança e Master Data (CKO)",
-      "status": "IN_PROGRESS",
-      "priority": "P0",
-      "owner": "ChatGPT + auditor de normas técnicas",
       "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
-      "next": "IFRS excluída da lista ativa com histórico preservado; executar e validar a materialização de 18 fontes ISO/ISO-IEC usando os schemas existentes e hashes de snapshots locais, sem confundir metadado com texto licenciado ou requisito de cláusula.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json",
@@ -152,19 +239,20 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024/SNAPSHOT-MANIFEST.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/evidence.json",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/find-register.v1.json"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/find-register.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-source-instances/materialization-manifest.json"
       ],
+      "id": "WO-GOV-TRANS-001",
+      "next": "18 fontes ISO candidatas e vínculos estruturais HOLD validados por schemas. Qualificar edição, direitos e fonte original; revisar população e requisitos por cláusula antes de qualquer admissão.",
+      "order": 8,
+      "owner": "ChatGPT + auditor de normas técnicas",
+      "priority": "P0",
+      "status": "IN_PROGRESS",
+      "title": "Matriz transversal de governança e Master Data (CKO)",
       "updatedOn": "2026-10-24"
     },
     {
-      "id": "WO-HOM-001",
-      "order": 9,
-      "title": "Homologação independente",
-      "status": "HOLD_HUMAN",
-      "priority": "P0",
-      "owner": "Responsáveis pela homologação",
       "criteria": "Aprovações humanas e requisitos técnicos completos e auditáveis.",
-      "next": "Não liberar conteúdos clínicos ou mudanças críticas sem autorização.",
       "dependencies": [
         "WO-SEC-001",
         "WO-E2E-001",
@@ -174,100 +262,20 @@
         "WO-GOV-TRANS-001"
       ],
       "evidence": [],
+      "id": "WO-HOM-001",
+      "next": "Não liberar conteúdos clínicos ou mudanças críticas sem autorização.",
+      "order": 9,
+      "owner": "Responsáveis pela homologação",
+      "priority": "P0",
+      "status": "HOLD_HUMAN",
+      "title": "Homologação independente",
       "updatedOn": "2026-10-23"
     }
   ],
-  "events": [
-    {
-      "seq": 1,
-      "workId": "WO-ADM-001",
-      "to": "PAUSED",
-      "date": "2026-10-23",
-      "reason": "Proprietário determinou congelar o protótipo e seguir a fila."
-    },
-    {
-      "seq": 2,
-      "workId": "WO-PMO-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-23",
-      "reason": "Proprietário determinou fila visível e atualização pela coordenação."
-    },
-    {
-      "seq": 3,
-      "workId": "WO-PMO-001",
-      "to": "DONE",
-      "date": "2026-10-23",
-      "reason": "CI 40030852696 e jornada browser 40030803250 aprovados; Vercel READY no commit 7356637."
-    },
-    {
-      "seq": 4,
-      "workId": "WO-SEC-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-23",
-      "reason": "Iniciada triagem automatizada de dependências, com execução não destrutiva na nuvem."
-    },
-    {
-      "seq": 5,
-      "workId": "WO-SEC-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-23",
-      "reason": "Scan de dependências identificou 1 HIGH em Zod no conjunto de produção (GHSA-mrhx-c7xc-m3w5), FIND-SEC-001 aberto; sem remediação automática."
-    },
-    {
-      "seq": 6,
-      "workId": "WO-SEC-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-23",
-      "reason": "Commit 9ce1226 com Zod 4.6.7, npm audit bloqueante, 200 testes e build aprovados; Vercel READY. Mantido FIND por limites de entrada/RBAC."
-    },
-    {
-      "seq": 7,
-      "workId": "WO-CKO-COFEN-001",
-      "to": "QUEUED",
-      "date": "2026-10-23",
-      "reason": "17 achados (9 P0, 8 P1) registrados como candidatos em quarentena; nova WO ao final da fila antes de homologação."
-    },
-    {
-      "seq": 8,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-23",
-      "reason": "Inventário normativo transversal e Master/Reference Data solicitado pelo proprietário; candidata preservada sem Kernel admission."
-    },
-    {
-      "seq": 9,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "Ampliado o mesmo registro candidato com 29 referencias transversais adicionais; check automatizado verifica integridade do catalogo, nao conformidade."
-    },
-    {
-      "seq": 10,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "GitHub Actions 40065059009: corpus provisório com 21 atos públicos e 3 originais W3C, hashes conferidos; 23 apenas metadados; sem Kernel/atomização aprovada."
-    },
-    {
-      "seq": 11,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "GitHub Actions archivou com verificação SHA-256 24 fontes + eMAG 3.1 sob CC BY; 25 originais no repositório, 22 restantes apenas metadados; sem admissão e sem promoção."
-    },
-    {
-      "seq": 12,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "Triagem IFRS S1/S2 reprovada para o produto e marcada NOT_APPLICABLE_JUSTIFIED; contrato ISO/IEC confirmado em schemas, mas 18 vínculos por fonte/cláusula não implementados. Dois FINDs candidatos preservados."
-    },
-    {
-      "seq": 13,
-      "workId": "WO-GOV-TRANS-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "IFRS S1/S2 excluída fisicamente do inventário ativo, preservada em excludedByApplicability; preparar materialização de 18 fontes ISO/ISO-IEC com contratos preexistentes e evidência local."
-    }
-  ]
+  "readOnly": true,
+  "registryId": "CE-PMO-001",
+  "revision": 12,
+  "schemaVersion": 1,
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "updatedOn": "2026-10-24"
 }

@@ -1,8 +1,8 @@
 {
-  "as_of": "2026-10-23",
+  "as_of": "2026-10-24",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -142,6 +142,56 @@
       "validator_ref": "PENDING_ADMISSION",
       "work_order": "NOT_ADMITTED",
       "mutation_allowed": false
+    },
+    {
+      "schema_version": "0.1.0",
+      "version": "1.0.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-10-24",
+      "root_cause_status": "EVIDENCED",
+      "remediation_task_refs": [],
+      "provenance_refs": [
+        "docs/CKO-POL-UT-001.md",
+        "registers/governance/transversal-standards-candidates.v1.json"
+      ],
+      "blocking_policy_refs": [
+        "CKO-POL-UT-001"
+      ],
+      "canonical_id": "FIND-TRANS-IFRS-20261024",
+      "finding_type": "CONTRACT_COLLISION",
+      "severity": "MEDIUM",
+      "fact": "O inventário de normas transversais incluiu IFRS S1/S2 sem demonstrar aplicabilidade ao produto público Calculadoras de Enfermagem. Corrigido como NOT_APPLICABLE_JUSTIFIED para esta finalidade; manter histórico do registro, retirar da fila de aquisição.",
+      "evidence_refs": [
+        "registers/governance/transversal-standards-candidates.v1.json",
+        "docs/governance/TRANSVERSAL-ACQUISITION-STATUS-20261024.md",
+        "contracts/cko-schemas/applicability.schema.json"
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "version": "1.0.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-10-24",
+      "root_cause_status": "EVIDENCED",
+      "remediation_task_refs": [],
+      "provenance_refs": [
+        "docs/CKO-POL-UT-001.md",
+        "registers/governance/transversal-standards-candidates.v1.json"
+      ],
+      "blocking_policy_refs": [
+        "CKO-POL-UT-001"
+      ],
+      "canonical_id": "FIND-TRANS-ISO-20261024",
+      "finding_type": "INTEGRATION_GAP",
+      "severity": "HIGH",
+      "fact": "As 18 referências ISO/ISO-IEC indicam nomes de schemas mas não apresentam instâncias source plenamente qualificadas, authority_binding verificável por cláusula ou teste documental de requisitos. Catálogo não substitui o contrato canônico.",
+      "evidence_refs": [
+        "registers/governance/transversal-standards-candidates.v1.json",
+        "contracts/cko-schemas/source.schema.json",
+        "contracts/cko-schemas/authority_binding.schema.json",
+        "contracts/cko-schemas/audit_evidence.schema.json",
+        "agents/normativos-licenciados.md"
+      ]
     }
   ],
   "candidate_batches": [

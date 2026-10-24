@@ -20,4 +20,27 @@ for(const x of r.coverageExpansion.items){
   assert(x.verificationNote?.trim().length>10);
 }
 assert(r.coverageExpansion.notClaimed.some(x=>x.includes('conformidade')));
+
+const ifrs = r.coverageExpansion.items.find(x=>x.officialIdentifier==='IFRS S1 e IFRS S2');
+assert(ifrs,'IFRS precisa permanecer rastreável no histórico');
+assert.equal(ifrs.applicabilityDecision,'NOT_APPLICABLE_JUSTIFIED','IFRS não pode retornar à fila de aquisição de enfermagem');
+assert.equal(ifrs.acquisitionRequired,false);
+assert.equal(ifrs.applicabilityContractRef,'contracts/cko-schemas/applicability.schema.json');
+assert(ifrs.applicabilityRationale?.includes('não requisitos técnicos ou clínicos'));
+assert.equal(r.acquisitionReadback20261024.scopeReconciliation.currentProjectApplicableCandidates,46);
+assert.equal(r.acquisitionReadback20261024.scopeReconciliation.currentApplicableMetadataOnlyCandidates,21);
+const iso=[...r.standards.filter(x=>x.authority==='ISO'||x.authority==='ISO/IEC').map(x=>x.id),
+ ...r.coverageExpansion.items.filter(x=>/^(ISO |ISO\/IEC )/.test(x.officialIdentifier)).map(x=>x.officialIdentifier)];
+assert.equal(iso.length,18,'Número de referências ISO alterado sem reconciliação');
+assert.deepEqual(r.sourceContractReview.identifiers,iso,'Cobertura de contratos ISO divergente');
+for(const field of ['sourceSchemaRef','applicabilitySchemaRef','authorityBindingSchemaRef','auditEvidenceSchemaRef']){
+ const path=r.sourceContractReview[field];
+ assert(path?.startsWith('contracts/cko-schemas/'),'Não criar contrato paralelo');
+ assert(readFileSync(path,'utf8').includes('"$schema"'),'Schema canônico inacessível');
+}
+assert.equal(r.sourceContractReview.canonicalSourceInstancesVerified,0,'Instâncias não comprovadas não podem ser afirmadas');
+assert.equal(r.sourceContractReview.canonicalRequirementBindingsVerified,0);
+assert.equal(r.sourceContractReview.normativeClauseTestsVerified,0);
+assert.equal(r.sourceContractReview.admission,'NOT_ADMITTED');
+
 console.log('PASS inventário transversal candidato: '+r.standards.length+' anteriores + '+keys.length+' referências complementares; sem alegação de implementação ou Kernel.');

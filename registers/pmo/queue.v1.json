@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 9,
+  "revision": 10,
   "updatedOn": "2026-10-24",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -144,14 +144,15 @@
       "priority": "P0",
       "owner": "ChatGPT + auditor de normas técnicas",
       "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
-      "next": "25 documentos públicos históricos agora preservados no próprio repo (21 atos, 3 originais W3C, eMAG 3.1). Restam 22 referências sem texto integral; verificar 4 ISO de catálogo gratuito sem presumir direitos, licenças de outras ISO/ABNT/IFRS e OPA. Sem atomização vinculante ou admissão Kernel.",
+      "next": "Corrigida inclusão IFRS como NÃO APLICÁVEL JUSTIFICADA ao produto; 25 fontes permanecem preservadas; 21 referências relevantes continuam somente com metadados. Aplicar os contratos já existentes a 18 normas ISO/ISO/IEC por fonte, direitos, aplicabilidade, requisito, evidência e validador; não exigir PDF pago globalmente nem declarar conformidade sem teste.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40065059009",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024/SNAPSHOT-MANIFEST.json",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/evidence.json"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/evidence.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/find-register.v1.json"
       ],
       "updatedOn": "2026-10-24"
     },
@@ -253,6 +254,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-24",
       "reason": "GitHub Actions archivou com verificação SHA-256 24 fontes + eMAG 3.1 sob CC BY; 25 originais no repositório, 22 restantes apenas metadados; sem admissão e sem promoção."
+    },
+    {
+      "seq": 12,
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "Triagem IFRS S1/S2 reprovada para o produto e marcada NOT_APPLICABLE_JUSTIFIED; contrato ISO/IEC confirmado em schemas, mas 18 vínculos por fonte/cláusula não implementados. Dois FINDs candidatos preservados."
     }
   ]
 }

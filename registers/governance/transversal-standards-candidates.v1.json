@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CKO-TRANS-REFERENCES-001",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "asOf": "2026-10-24",
   "status": "CANDIDATE_HOLD",
   "scope": "TRANSVERSAL_GOVERNANCE_NOT_CLINICAL_CONTENT",
@@ -19,7 +19,9 @@
     "legalApplicabilityAssessed": 0,
     "runtimeGatesDerivedFromNewLawRefs": 0,
     "actualDocumentBytesArchived": 25,
-    "remainingMetadataOnly": 22
+    "remainingMetadataOnly": 22,
+    "applicableCandidates": 46,
+    "metadataOnlyApplicableCandidates": 21
   },
   "standards": [
     {
@@ -716,7 +718,12 @@
         "officialSourceUrl": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/",
         "area": "Sustentabilidade",
         "howItMayApply": "Divulgações corporativas quando o produtor/usuário tem obrigação ou adota padrão",
-        "verificationNote": "Licença de integração em produtos não presumida; texto público ao registrado não garante uso comercial"
+        "verificationNote": "Licença de integração em produtos não presumida; texto público ao registrado não garante uso comercial | Revisão 24/10/2026: referência excluída da aquisição por NÃO APLICABILIDADE JUSTIFICADA neste produto; erro da triagem anterior registrado.",
+        "applicabilityDecision": "NOT_APPLICABLE_JUSTIFIED",
+        "applicabilityContractRef": "contracts/cko-schemas/applicability.schema.json",
+        "applicabilityScope": "Produto público de calculadoras, bibliotecas e educação em enfermagem, neste repositório",
+        "applicabilityRationale": "IFRS S1/S2 são padrões de divulgação financeira de sustentabilidade, não requisitos técnicos ou clínicos do produto de enfermagem. Não há funcionalidade de elaboração de relatórios financeiros corporativos dentro do escopo. Inclusão anterior na lista de aquisições foi erro de seleção; preservar histórico e não manter demanda de licença. Reavaliar somente se escopo do produto for formalmente alterado.",
+        "acquisitionRequired": false
       }
     ],
     "openAreasToQualify": [
@@ -733,7 +740,8 @@
       "Não prova que todos os conteúdos originais estejam adquiridos",
       "Não contém requisito verificado cláusula a cláusula",
       "Não comprova execução de motor OPA nem admissão Kernel",
-      "Não presume que norma dirigida a entidades públicas é vinculante a produto privado"
+      "Não presume que norma dirigida a entidades públicas é vinculante a produto privado",
+      "A existência de arquivos de schema ISO não comprova a aplicação da norma nem a existência de registros source, authority_binding e testes por cláusula."
     ]
   },
   "acquisitionReadback20261024": {
@@ -761,6 +769,58 @@
       "OPA/Rego: documentação técnica pública; ainda sem arquivamento com escopo e atribuição da licença individualizados.",
       "ABNT NBR 17225:2025: fonte oficial exata e direitos de reprodução pendentes."
     ],
-    "publicationAuthorized": false
+    "publicationAuthorized": false,
+    "scopeReconciliation": {
+      "originalInventoryCount": 47,
+      "downloadedDocumentsUnchanged": 25,
+      "historicalMetadataOnlyUnchanged": 22,
+      "currentProjectApplicableCandidates": 46,
+      "currentApplicableMetadataOnlyCandidates": 21,
+      "excludedFromAcquisition": [
+        {
+          "officialIdentifier": "IFRS S1 e IFRS S2",
+          "decision": "NOT_APPLICABLE_JUSTIFIED",
+          "reason": "IFRS S1/S2 são padrões de divulgação financeira de sustentabilidade, não requisitos técnicos ou clínicos do produto de enfermagem. Não há funcionalidade de elaboração de relatórios financeiros corporativos dentro do escopo. Inclusão anterior na lista de aquisições foi erro de seleção; preservar histórico e não manter demanda de licença. Reavaliar somente se escopo do produto for formalmente alterado."
+        }
+      ],
+      "note": "Contagem histórica 47 e materiais recuperados permanecem íntegros; exclusão não é deleção nem revoga proteção a conteúdo licenciado."
+    }
+  },
+  "sourceContractReview": {
+    "assessmentDate": "2026-10-24",
+    "scope": "Apenas as 18 referências ISO e ISO/IEC do inventário deste repositório",
+    "identifiers": [
+      "TRV-001",
+      "TRV-002",
+      "TRV-003",
+      "TRV-004",
+      "TRV-005",
+      "TRV-006",
+      "TRV-007",
+      "TRV-008",
+      "TRV-009",
+      "TRV-011",
+      "TRV-012",
+      "TRV-013",
+      "TRV-014",
+      "TRV-015",
+      "TRV-016",
+      "TRV-017",
+      "ISO/IEC 40500:2025",
+      "ISO 14001:2026"
+    ],
+    "sourceSchemaRef": "contracts/cko-schemas/source.schema.json",
+    "applicabilitySchemaRef": "contracts/cko-schemas/applicability.schema.json",
+    "authorityBindingSchemaRef": "contracts/cko-schemas/authority_binding.schema.json",
+    "auditEvidenceSchemaRef": "contracts/cko-schemas/audit_evidence.schema.json",
+    "governingPolicyRef": "docs/CKO-POL-UT-001.md",
+    "aiOperationalInstructionRef": "agents/normativos-licenciados.md",
+    "existingSchemaFilesLocated": true,
+    "canonicalSourceInstancesVerified": 0,
+    "canonicalRequirementBindingsVerified": 0,
+    "normativeClauseTestsVerified": 0,
+    "normativeFullTextsArchived": 0,
+    "limitation": "A referência a contratos e seus schemas é mapeamento declarativo. Não comprova instâncias source com licença/integridade, requisitos por cláusula, implementação técnica nem admissão Kernel. Metadados públicos e documentação aberta continuam utilizáveis nos limites dos direitos verificados.",
+    "admission": "NOT_ADMITTED"
   }
 }

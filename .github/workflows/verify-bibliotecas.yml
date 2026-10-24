@@ -22,6 +22,18 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Validar PMO canônico e histórico
+        run: node scripts/check-pmo-queue.mjs
+      - name: Verificar integridade do inventário transversal candidato (não conformidade)
+        run: node scripts/check-transversal-catalog.mjs
+      - name: Auditar 18 instâncias ISO com schemas canônicos, hashes e testes negativos (sem admissão)
+        run: |
+          python3 -m pip install --disable-pip-version-check "jsonschema==4.25.1"
+          python3 scripts/verify-transversal-iso-materialization.py
+      - name: Validar lote CKO/COFEN e hashes dos registros
+        run: node scripts/check-candidate-find-register.mjs
+      # O checkout integral contém evidências que não devem integrar o deploy.
+      # Primeiro executar os gates normativos, depois simular .vercelignore.
       - name: Validar entradas e simular exclusões de upload da Vercel
         run: |
           critical_files=(
@@ -43,16 +55,6 @@ jobs:
           # Mesmo conjunto de arquivos que Vercel prepara para npm ci/build.
           git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
-      - name: Validar PMO canônico e histórico
-        run: node scripts/check-pmo-queue.mjs
-      - name: Verificar integridade do inventário transversal candidato (não conformidade)
-        run: node scripts/check-transversal-catalog.mjs
-      - name: Auditar 18 instâncias ISO com schemas canônicos, hashes e testes negativos (sem admissão)
-        run: |
-          python3 -m pip install --disable-pip-version-check "jsonschema==4.25.1"
-          python3 scripts/verify-transversal-iso-materialization.py
-      - name: Validar lote CKO/COFEN e hashes dos registros
-        run: node scripts/check-candidate-find-register.mjs
       - run: npm ci
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high

@@ -182,9 +182,7 @@ function gateSigninUrl(ctx: InboundContext): string | undefined {
         ? `https://${publicHost}`
         : undefined;
     const signin = `https://${gateHost}/__gate/signin`;
-    return gated
-      ? `${signin}?return_to=${encodeURIComponent(gated)}`
-      : signin;
+    return gated ? `${signin}?return_to=${encodeURIComponent(gated)}` : signin;
   } catch {
     return undefined;
   }
@@ -278,7 +276,10 @@ function tokenIdentityKey(token: string): string {
             .digest("base64url");
         }
       }
-    } catch {}
+    } catch {
+      // Ignore malformed tokens for the failure memo; the request will fail below
+      // and we can fall back to hashing the raw token for the keyed cache.
+    }
   }
   return createHash("sha256").update(token).digest("base64url");
 }

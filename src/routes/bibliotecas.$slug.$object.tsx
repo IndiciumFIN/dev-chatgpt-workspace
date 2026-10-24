@@ -1,7 +1,7 @@
 import { createFileRoute, notFound, retainSearchParams } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { LibraryObject } from "@/components/templates/library-canonical";
-import { languageLinks } from "@/lib/seo";
+import { languageLinks } from "@/seo";
 import { assetById, getLibrary, idOf, titleOf } from "@/lib/bibliotecas";
 import { parseLocale } from "@/lib/translate";
 import type { Locale } from "@/lib/chrome";
@@ -57,12 +57,14 @@ export const Route = createFileRoute("/bibliotecas/$slug/$object")({
         ]
       : [],
   }),
-  component: () => {
-    const { slug, object } = Route.useParams();
-    return (
-      <Shell>
-        <LibraryObject slug={slug} object={object} />
-      </Shell>
-    );
-  },
+  component: BibliotecaObjectRoute,
 });
+
+function BibliotecaObjectRoute() {
+  const { slug, object } = Route.useParams();
+  return (
+    <Shell>
+      <LibraryObject slug={slug} object={object} />
+    </Shell>
+  );
+}

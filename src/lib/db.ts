@@ -229,7 +229,7 @@ export async function getPglite(): Promise<import("@electric-sql/pglite").PGlite
   }
   await getSql();
   // O tipo precisa do narrowing explícito: `await` sobre um campo opcional
-  // deixava `pg` como `PGLite | undefined` mesmo depois do `throw` abaixo.
+  // deixava `pg` como `PGlite | undefined` mesmo depois do `throw` abaixo.
   const pg: import("@electric-sql/pglite").PGlite | undefined = await globalRef.__pgliteInstance__;
   if (!pg) throw new Error("PGLite instance failed to initialize");
   return pg;
@@ -255,7 +255,7 @@ export function ensureDbReady(): Promise<void> {
 const globalBoot = globalThis as typeof globalThis & {
   __pgBootstrapPromise__?: Promise<void>;
 };
-if (false && typeof window === "undefined" && dbSource === "pglite") {
+if (DB_ENABLED && typeof window === "undefined" && dbSource === "pglite") {
   globalBoot.__pgBootstrapPromise__ ??= ensureDbReady().catch((err) => {
     globalBoot.__pgBootstrapPromise__ = undefined;
     console.error("[db] PGLite bootstrap failed:", err);

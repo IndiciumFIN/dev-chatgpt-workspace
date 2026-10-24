@@ -54,12 +54,14 @@ export const Route = createFileRoute("/bibliotecas/$slug/")({
         ]
       : [],
   }),
-  component: () => {
-    const { slug } = Route.useParams();
-    return (
-      <Shell>
-        <LibraryHub slug={slug} />
-      </Shell>
-    );
-  },
+  component: BibliotecasSlugIndexRoute,
 });
+
+function BibliotecasSlugIndexRoute() {
+  const { slug } = Route.useParams();
+  return (
+    <Shell>
+      <LibraryHub slug={slug} />
+    </Shell>
+  );
+}

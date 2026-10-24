@@ -246,19 +246,25 @@ const files = {
       return {
         id: `CE-BRAND-${base.toUpperCase().replace(/[^A-Z0-9]+/g, "-")}${ext ? `-${ext}` : ""}`,
         file: `public/brand/${f}`,
-        // logo.webp foi substituido pelo vetor. Fica declarado, nao apagado —
-        // apagar asset do backup do dono nao e minha decisao.
-        status: f === "logo.svg" ? "superseded" : "live",
+        // logo.svg e a marca primaria vigente (decisao do dono, commit 326350f);
+        // logo.webp fica declarado como legado, nao apagado — apagar asset do
+        // backup do dono nao e decisao do codigo.
+        status: f === "logo.webp" ? "superseded" : "live",
         // `papel` e o que torna o contrato autoritativo: sem ele o consumidor
         // precisa adivinhar pelo nome do arquivo, e aí a declaracao do
         // contrato vira sugestao.
-        ...(f === "logo.webp" ? { papel: "marca-primaria" } : {}),
+        ...(f === "logo.svg" ? { papel: "marca-primaria" } : {}),
         ...(f === "logo.svg"
           ? {
-              supersededBy: "CE-BRAND-LOGO-WEBP",
               nota:
-                "Vetor criado por mim sem autorização do dono. Nenhum consumidor; " +
-                "mantido em disco e fora do caminho da aplicação. Apagar é decisão do dono.",
+                "Vetor vetorial canônico usado no header. Mantém legibilidade em " +
+                "qualquer densidade de tela e evita distorção do raster anterior.",
+            }
+          : {}),
+        ...(f === "logo.webp"
+          ? {
+              supersededBy: "CE-BRAND-LOGO-SVG",
+              nota: "Raster legado, mantido apenas como referência e não utilizado pela aplicação.",
             }
           : {}),
       };

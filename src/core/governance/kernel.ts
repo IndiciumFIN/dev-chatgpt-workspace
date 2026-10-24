@@ -54,9 +54,11 @@ export function buildManifest(
     hash,
     validators,
     policySet,
-    status: "approved",
-    approvedBy: "kernel",
-    approvedAt: new Date().toISOString(),
+    // Um manifesto em rascunho nunca nasce aprovado: canPreview/canDeploy exigem "approved".
+    status: state === "draft" ? "draft" : "approved",
+    ...(state === "draft"
+      ? {}
+      : { approvedBy: "kernel", approvedAt: new Date().toISOString() }),
   };
 }
 

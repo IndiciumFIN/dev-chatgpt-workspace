@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { buildManifest, canDeploy, canPreview, evaluateWorkOrder } from "./kernel";
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import { buildManifest, canDeploy, canPreview, evaluateWorkOrder } from "./kernel.ts";
 
 const policyRules = [
   {
@@ -54,7 +55,7 @@ describe("governance kernel", () => {
     };
 
     const decision = await evaluateWorkOrder(workOrder, null, [...policyRules], [async () => true]);
-    expect(decision.outcome).toBe("reject");
+    assert.equal(decision.outcome, "reject");
   });
 
   it("holds work order without manifest", async () => {
@@ -82,7 +83,7 @@ describe("governance kernel", () => {
     };
 
     const decision = await evaluateWorkOrder(workOrder, null, [...policyRules], [async () => true]);
-    expect(decision.outcome).toBe("hold");
+    assert.equal(decision.outcome, "hold");
   });
 
   it("admits work order with approved manifest and valid validators", async () => {
@@ -124,7 +125,7 @@ describe("governance kernel", () => {
       [async () => true, async () => true],
     );
 
-    expect(decision.outcome).toBe("admit");
+    assert.equal(decision.outcome, "admit");
   });
 
   it("blocks preview without approved manifest", () => {
@@ -135,7 +136,7 @@ describe("governance kernel", () => {
       ["schema"],
       ["policy.require.source"],
     );
-    expect(canPreview(manifest)).toBe(false);
+    assert.equal(canPreview(manifest), false);
   });
 
   it("allows preview only with approved manifest", () => {
@@ -146,7 +147,7 @@ describe("governance kernel", () => {
       ["schema", "policy"],
       ["policy.require.source"],
     );
-    expect(canPreview(manifest)).toBe(true);
+    assert.equal(canPreview(manifest), true);
   });
 
   it("allows deploy only with approved preview state", () => {
@@ -157,6 +158,6 @@ describe("governance kernel", () => {
       ["schema", "policy"],
       ["policy.require.source"],
     );
-    expect(canDeploy(manifest)).toBe(true);
+    assert.equal(canDeploy(manifest), true);
   });
 });

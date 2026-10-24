@@ -1,0 +1,40 @@
+name: Indexar artigos de atos públicos — extração mecânica sem promoção
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/index-transversal-public-articles.yml'
+jobs:
+  index:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Indexar cabeçalhos Art. dos 21 atos já arquivados sem interpretar
+        run: python3 scripts/index-transversal-public-articles.py
+      - name: Verificar cortes e hashes contra texto original do snapshot
+        run: python3 scripts/verify-transversal-public-article-index.py
+      - name: Confirmar que apenas índice candidato foi criado
+        run: |
+          git add -- audit-evidence/transversal-acquisition/article-index/20261024/
+          git diff --cached --check
+          git diff --cached --name-only | while IFS= read -r path; do
+            case "$path" in
+              audit-evidence/transversal-acquisition/article-index/20261024/*) ;;
+              *) echo "HOLD unexpected path $path"; exit 1;;
+            esac
+          done
+          test -s audit-evidence/transversal-acquisition/article-index/20261024/index-manifest.json
+      - name: Preservar índices verificáveis sem force push e sem tocar no Kernel
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --cached --quiet && { echo 'HOLD no index to archive'; exit 1; }
+          git commit -m "audit(norms): indexar artigos de 21 atos públicos por offsets e hash, sem admissão"
+          git push origin HEAD:main

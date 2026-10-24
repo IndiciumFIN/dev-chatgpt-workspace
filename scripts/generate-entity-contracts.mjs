@@ -78,7 +78,7 @@ const chromeTokens = [...css.matchAll(/--chrome-([a-z-]+):\s*([^;]+);/g)].map((m
 // Metadado de emissao do contrato, NAO a data de execucao do build.
  // É versionado para que uma virada de dia em UTC não invalide hashes do conteúdo.
 const releaseMetadata = JSON.parse(read("registers/governance/entity-contracts-release.v1.json"));
-if (releaseMetadata.schemaVersion !== 1 || !/^\\d{4}-\\d{2}-\\d{2}$/.test(releaseMetadata.generatedOn)) {
+if (releaseMetadata.schemaVersion !== 1 || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(releaseMetadata.generatedOn)) {
   throw new Error("Metadado de emissao do contrato invalido (fail-closed)");
 }
 const stamp = releaseMetadata.generatedOn;

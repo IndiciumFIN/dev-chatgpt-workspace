@@ -2,7 +2,7 @@ import { createFileRoute, notFound, retainSearchParams } from "@tanstack/react-r
 import { Shell } from "@/components/site/shell";
 import { LibraryObject } from "@/components/templates/library-canonical";
 import { languageLinks } from "@/lib/seo";
-import { assetById, getLibrary, idOf, titleOf } from "@/lib/bibliotecas";
+import { assetById, getLibrary, titleOf } from "@/lib/bibliotecas";
 import { parseLocale } from "@/lib/translate";
 import type { Locale } from "@/lib/chrome";
 
@@ -19,8 +19,6 @@ export const Route = createFileRoute("/bibliotecas/$slug/$object")({
   loader: ({ params }) => {
     const lib = getLibrary(params.slug);
     if (!lib || lib.slug === "acervo-a-classificar") throw notFound();
-    // "coracao-humano" nao e um asset: e uma PAGINA DE CONTEUDOMontada a mao
-    // (HeartContent), com atlas proprio. Ela existe mesmo sem arquivo no acervo.
     const isCurated = lib.slug === "anatomia" && params.object === "coracao-humano";
     const asset = isCurated ? undefined : assetById(lib.category, params.object);
     if (!asset && !isCurated) throw notFound();
@@ -57,12 +55,14 @@ export const Route = createFileRoute("/bibliotecas/$slug/$object")({
         ]
       : [],
   }),
-  component: () => {
-    const { slug, object } = Route.useParams();
-    return (
-      <Shell>
-        <LibraryObject slug={slug} object={object} />
-      </Shell>
-    );
-  },
+  component: BibliotecaObjectRoute,
 });
+
+function BibliotecaObjectRoute() {
+  const { slug, object } = Route.useParams();
+  return (
+    <Shell>
+      <LibraryObject slug={slug} object={object} />
+    </Shell>
+  );
+}

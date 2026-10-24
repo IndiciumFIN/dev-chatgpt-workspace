@@ -24,8 +24,6 @@ export const Route = createFileRoute("/bibliotecas/$slug/")({
     const lang = parseLocale(search.lang);
     return { ...(lang ? { lang } : {}) };
   },
-  // O `head` usa o loader PROPRIO da rota; o do pai nao alcanca o filho.
-  // Por isso o hub tem o seu — mesma validacao, dados os mesmos.
   loader: ({ params }) => {
     const lib = getLibrary(params.slug);
     if (!lib) throw new Error("biblioteca desconhecida");
@@ -54,12 +52,14 @@ export const Route = createFileRoute("/bibliotecas/$slug/")({
         ]
       : [],
   }),
-  component: () => {
-    const { slug } = Route.useParams();
-    return (
-      <Shell>
-        <LibraryHub slug={slug} />
-      </Shell>
-    );
-  },
+  component: BibliotecasSlugIndexRoute,
 });
+
+function BibliotecasSlugIndexRoute() {
+  const { slug } = Route.useParams();
+  return (
+    <Shell>
+      <LibraryHub slug={slug} />
+    </Shell>
+  );
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 7,
+  "revision": 8,
   "updatedOn": "2026-10-24",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -144,10 +144,12 @@
       "priority": "P0",
       "owner": "ChatGPT + auditor de normas técnicas",
       "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
-      "next": "Conciliar as 29 referências complementares (direitos intelectuais, internet, proteção de menores, acessibilidade, sustentabilidade, pesquisa e políticas executáveis) com fontes já adquiridas; avaliar aplicabilidade e acionar gates somente para requisitos comprovados.",
+      "next": "21 atos oficiais e 3 especificações W3C obtidos e conferidos por hash. Preservar os bytes antes de expirar o artefato, cotejar vigência/retificações e anexos, reconciliar 23 somente em metadados; aplicar contratos e admissibilidade por gate.",
       "dependencies": [],
       "evidence": [
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40065059009",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/audit-evidence/transversal-acquisition/runs/readback-20261024.v1.json"
       ],
       "updatedOn": "2026-10-24"
     },
@@ -235,6 +237,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-24",
       "reason": "Ampliado o mesmo registro candidato com 29 referencias transversais adicionais; check automatizado verifica integridade do catalogo, nao conformidade."
+    },
+    {
+      "seq": 10,
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "GitHub Actions 40065059009: corpus provisório com 21 atos públicos e 3 originais W3C, hashes conferidos; 23 apenas metadados; sem Kernel/atomização aprovada."
     }
   ]
 }

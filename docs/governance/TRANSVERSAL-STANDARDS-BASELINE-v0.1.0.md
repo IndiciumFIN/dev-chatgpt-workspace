@@ -43,3 +43,26 @@ As fontes e links oficiais por item constam em `registers/governance/transversal
 
 ## Critério de aceite da WO
 Confrontar os 18 metadados com fontes e direitos; incorporar os demais referenciais (COSO, COSO ERM, DAMA-DMBOK, LGPD, ISO/IEC 38505 etc.) após qualificação; registrar owners, schema binding por domínio e matriz de exigências verificáveis; executar gates; solicitar admissão **sem promover** conteúdos clínicos.
+
+
+## Ampliação de cobertura — 24/10/2026 (sem nova fonte concorrente)
+Conforme revisão do proprietário, a matriz de 18 referências era insuficiente para o ecossistema digital. **As 29 referências adicionais agora integram o mesmo arquivo** `registers/governance/transversal-standards-candidates.v1.json`, em `coverageExpansion.items`, usando apenas identificadores das autoridades emissoras; **não criar** novos níveis ou siglas de classificação.
+
+| Eixo | Fontes adicionais | Validação inicial possível |
+|---|---|---|
+| Direitos intelectuais | Leis 9.610/1998, 9.609/1998 e 9.279/1996 | Links oficiais e direitos de uso por ativo |
+| Serviços digitais, consumidores e contratos | Marco Civil da Internet, Decreto 8.771/2016, Código de Defesa do Consumidor e Decreto 7.962/2013 | Inventariar funcionalidades de assinatura, publicidade e logs |
+| Privacidade e menores | Lei 13.709/2018, Resoluções ANPD 15/18/19 de 2024, Estatuto da Criança e do Adolescente e Lei 15.211/2025 | Fluxos de dados, titularidade, direitos, idade e comunicação de incidentes |
+| Acessibilidade | Leis 13.146/2015, 10.098/2000, 10.436/2002; WCAG 2.2; ABNT NBR 17225:2025; eMAG; ISO/IEC 40500:2025 | Critérios de testes por UI, formulários, conteúdo e formatos |
+| Sustentabilidade | Leis 12.305/2010, 12.187/2009 e 15.042/2024; ISO 14001:2026; IFRS S1/S2 (uso e licença a verificar) | Somente controles pertinentes às atividades ou divulgações realizadas |
+| Pesquisa, dados clínicos | Leis 14.874/2024 e 13.787/2018 | Avaliar relevância para recrutamento, pesquisa, prontuários e armazenamento |
+| Tecnologia de políticas | Open Policy Agent/Rego e W3C SHACL | Podem executar/validar políticas **já autorizadas**; não são legislação |
+
+Os links e justificativas por referência estão no registro expandido. A ISO 14001:2026 substitui a edição de 2015; a Lei 15.211/2025 vigora desde 17/03/2026. O decreto que regulamenta o Marco Civil contém alterações de 2026, exigindo verificação da edição vigente. Documentos públicos identificados não garantem teste de cláusulas nem a extensão da obrigação ao serviço.
+
+### Controles e fronteiras
+- Acervo anterior com 18 referencias continua imutável no sentido de identidade: **18 registros originais e 29 lacunas adicionais identificadas**, sem deduplicação com fontes de outros workspaces.
+- A verificação `scripts/check-transversal-catalog.mjs` assegura apenas unicidade de identificadores, links HTTPS, correspondência de contagens e ausência de afirmação de Kernel admitido. É um **gate de integridade do inventário**, não um validador jurídico.
+- Validação de aplicabilidade, contratos por cláusula, direitos de reprodução, texto licenciado, prova de implementação e revisão humana continuam pendentes.
+- Não criar outro register canônico, nem promover esse documento candidato por ter passado um check sintático.
+- Vincular controles específicos no futuro via `source`, `authority_binding`, `audit_evidence`, `work_order` e `risk_control` existentes; não derivar obrigação normativa apenas de título/metadados.

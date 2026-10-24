@@ -45,6 +45,8 @@ jobs:
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
       - name: Validar PMO canônico e histórico
         run: node scripts/check-pmo-queue.mjs
+      - name: Verificar integridade do inventário transversal candidato (não conformidade)
+        run: node scripts/check-transversal-catalog.mjs
       - name: Validar lote CKO/COFEN e hashes dos registros
         run: node scripts/check-candidate-find-register.mjs
       - run: npm ci

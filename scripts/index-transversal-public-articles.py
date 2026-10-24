@@ -44,9 +44,10 @@ def main():
         original=ROOT/source["originalPath"]
         orig_bytes=original.read_bytes()
         assert sha(orig_bytes)==source["originalSha256"]==src["integrity"]["sha256"]==arch["sourceSha256"]
-        extracted=Path(arch["extractedPath"])
-        assert str(extracted).startswith("audit-evidence/transversal-acquisition/snapshots/20261024/public-acts/")
-        text_bytes=(ROOT/extracted).read_bytes()
+        relative_text=arch["extractedPath"].removeprefix("audit-evidence/transversal-acquisition/")
+        assert relative_text.startswith("public-acts/") and ".." not in Path(relative_text).parts
+        extracted=SNAPSHOT/relative_text
+        text_bytes=extracted.read_bytes()
         assert sha(text_bytes)==arch["textSha256"],"HOLD: extracted text not identical to snapshot"
         text=text_bytes.decode("utf-8")
         hits=list(HEAD.finditer(text))
@@ -81,7 +82,7 @@ def main():
             "sourcePath":source["sourcePath"],
             "officialOriginalPath":source["originalPath"],
             "originalSha256":source["originalSha256"],
-            "extractedTextPath":str(extracted),
+            "extractedTextPath":str(extracted.relative_to(ROOT)),
             "extractedTextSha256":sha(text_bytes),
             "extractedTextBytes":len(text_bytes),
             "prefixBeforeFirstArticle":{"endByte":len(prefix),"sha256":sha(prefix)},

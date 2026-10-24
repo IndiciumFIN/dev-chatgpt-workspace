@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 5,
+  "revision": 6,
   "updatedOn": "2026-10-23",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -94,9 +94,10 @@
       "priority": "P1",
       "owner": "ChatGPT + revisores especializados",
       "criteria": "Verificar fontes, schemas, lineage, direitos e casos-ouro; manter HOLD clínico.",
-      "next": "Medir cobertura e registrar pendências sem inventar autoridade.",
+      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Medir cobertura e registrar pendências sem inventar autoridade.",
       "dependencies": [
-        "WO-PMO-001"
+        "WO-PMO-001",
+        "WO-GOV-TRANS-001"
       ],
       "evidence": [],
       "updatedOn": "2026-10-23"
@@ -124,9 +125,10 @@
       "priority": "P0",
       "owner": "ChatGPT + auditor documental",
       "criteria": "Conferir fontes e integridade, revalidar schemas, revisar políticas e produzir WO admitida sem publicação normativa.",
-      "next": "Resolver itens P0 verificáveis; localizar ZIP CKO integral e PDFs para validação restante. Sem bypass de HOLD.",
+      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Resolver itens P0 verificáveis; localizar ZIP CKO integral e PDFs para validação restante. Sem bypass de HOLD.",
       "dependencies": [
-        "WO-CKO-001"
+        "WO-CKO-001",
+        "WO-GOV-TRANS-001"
       ],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
@@ -135,8 +137,23 @@
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-HOM-001",
+      "id": "WO-GOV-TRANS-001",
       "order": 8,
+      "title": "Matriz transversal de governança e Master Data (CKO)",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "owner": "ChatGPT + auditor de normas técnicas",
+      "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
+      "next": "Verificar acesso/licenças e integrar ISO 8000, ISO 11179, PROV e qualidade aos contratos já existentes; preparar FINDs sem inventar cláusulas.",
+      "dependencies": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json"
+      ],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-HOM-001",
+      "order": 9,
       "title": "Homologação independente",
       "status": "HOLD_HUMAN",
       "priority": "P0",
@@ -148,7 +165,8 @@
         "WO-E2E-001",
         "WO-DS-001",
         "WO-CKO-001",
-        "WO-AUTO-001"
+        "WO-AUTO-001",
+        "WO-GOV-TRANS-001"
       ],
       "evidence": [],
       "updatedOn": "2026-10-23"
@@ -203,6 +221,13 @@
       "to": "QUEUED",
       "date": "2026-10-23",
       "reason": "17 achados (9 P0, 8 P1) registrados como candidatos em quarentena; nova WO ao final da fila antes de homologação."
+    },
+    {
+      "seq": 8,
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-23",
+      "reason": "Inventário normativo transversal e Master/Reference Data solicitado pelo proprietário; candidata preservada sem Kernel admission."
     }
   ]
 }

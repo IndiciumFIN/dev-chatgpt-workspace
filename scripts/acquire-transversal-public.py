@@ -69,6 +69,50 @@ def check_identity(identifier, extracted):
     # Law title must be present near top, and the number must occur in that title/context.
     top=extracted[:12000].lower()
     return name.lower() in top and (bool(re.search(expression, top)) or num in top) and len(extracted)>1200
+def download_w3c(row):
+    """W3C Document License: keep complete original unmodified, no textual derivative."""
+    ident=row.get("officialIdentifier") or row.get("id")
+    url=row.get("officialSourceUrl") or row.get("officialMetadataUrl")
+    record={"officialIdentifier":ident,"sourceUrl":url,"outcome":"NOT_ATTEMPTED",
+            "checkedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),"bodyStored":False}
+    if (parse.urlparse(url).hostname or "").lower()!="www.w3.org" or not url.startswith("https://www.w3.org/TR/"):
+        record.update(outcome="HOLD_SOURCE_SCOPE")
+        return record
+    try:
+        req=request.Request(url,headers={"User-Agent":UA,"Accept":"text/html,*/*;q=0.1"})
+        with request.urlopen(req,timeout=25,context=ssl.create_default_context()) as resp:
+            final=resp.url
+            body=resp.read(MAX_BYTES+1)
+            ctype=resp.headers.get("Content-Type","")
+            record.update(httpStatus=resp.status,finalUrl=final,contentType=ctype,receivedBytes=len(body))
+        if (parse.urlparse(final).hostname or "").lower()!="www.w3.org" or len(body)>MAX_BYTES:
+            record.update(outcome="HOLD_REDIRECT_OR_SIZE")
+            return record
+        decoded,_=decode(body,ctype)
+        expected={"TRV-010":"PROV-O","WCAG 2.2":"WCAG 2.2","W3C SHACL":"SHACL"}
+        marker=expected.get(ident)
+        if not marker or marker.lower() not in decoded.lower() or len(body)<10000 or "<html" not in decoded[:2500].lower():
+            record.update(outcome="HOLD_IDENTITY_OR_CONTENT")
+            return record
+        folder=OUT/"public-standards-w3c"/slug(ident);folder.mkdir(parents=True,exist_ok=True)
+        (folder/"original.html").write_bytes(body)
+        notice=("Source: "+url+"\n"+
+                "Document: "+str(ident)+"\n"+
+                "W3C document license: https://www.w3.org/copyright/document-license/\n"+
+                "Original document, copyright notice and publication status remain in original.html.\n"+
+                "DO NOT modify/reissue as a W3C specification or imply W3C endorsement.\n"+
+                "Any derived requirement or excerpt must separately observe license and attribution.\n")
+        (folder/"LICENSE-AND-ATTRIBUTION.txt").write_text(notice,"utf-8")
+        record.update(outcome="DOWNLOADED_W3C_UNMODIFIED",bodyStored=True,sourceSha256=sha(body),
+                      originalPath=str((folder/"original.html").relative_to(ROOT)),
+                      licenseNoticePath=str((folder/"LICENSE-AND-ATTRIBUTION.txt").relative_to(ROOT)),
+                      licenseUrl="https://www.w3.org/copyright/document-license/",
+                      limitations="Cópia original W3C inalterada sob licença documental; nenhuma extração/atomização derivada ou conformidade.")
+        return record
+    except Exception as exc:
+        record.update(outcome="HOLD_NETWORK_OR_ORIGIN",reason=f"{type(exc).__name__}: {str(exc)[:250]}")
+        return record
+
 def download_one(row):
     ident=row["officialIdentifier"]
     url=row["officialSourceUrl"]
@@ -131,12 +175,17 @@ def main():
     additions=d.get("coverageExpansion",{}).get("items",[])
     existing=d.get("standards",[])
     assert len(existing)==18 and len(additions)==29, "Catalog must be reconciled before acquisition"
+    w3c_additional={"WCAG 2.2","W3C SHACL"}
+    w3c_existing={"TRV-010"}
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        results=list(pool.map(download_one,additions))
+        results=list(pool.map(lambda x: download_w3c(x) if x["officialIdentifier"] in w3c_additional else download_one(x),additions))
     for x in existing:
-        results.append({"officialIdentifier":x.get("id"),"sourceUrl":x.get("officialMetadataUrl"),
-           "outcome":"METADATA_ONLY_LICENSE_OR_APPLICABILITY_REVIEW",
-           "bodyStored":False,"reason":"Não fazer cópia integral de ISO/ISACA/W3C sem qualificação dos direitos e do uso pretendido."})
+        if x["id"] in w3c_existing:
+            results.append(download_w3c(x))
+        else:
+            results.append({"officialIdentifier":x.get("id"),"sourceUrl":x.get("officialMetadataUrl"),
+               "outcome":"METADATA_ONLY_LICENSE_OR_APPLICABILITY_REVIEW",
+               "bodyStored":False,"reason":"Sem comprovação de licença para copiar integralmente ISO/ISACA ou outros textos protegidos."})
     results.sort(key=lambda x:x["officialIdentifier"])
     statuses={}
     for x in results:statuses[x["outcome"]]=statuses.get(x["outcome"],0)+1

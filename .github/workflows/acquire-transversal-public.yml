@@ -28,8 +28,9 @@ jobs:
               if a['bodyStored']:
                   p=pathlib.Path(a['originalPath'])
                   assert p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest()==a['sourceSha256']
-                  t=pathlib.Path(a['extractedPath'])
-                  assert t.is_file() and hashlib.sha256(t.read_bytes()).hexdigest()==a['textSha256']
+                  if 'extractedPath' in a:
+                      t=pathlib.Path(a['extractedPath'])
+                      assert t.is_file() and hashlib.sha256(t.read_bytes()).hexdigest()==a['textSha256']
           print('PASS: SHA-256 and manifest of downloaded official texts verified')
           PY
       - name: Preservar corpus de aquisição e blockers, sem push ou deploy

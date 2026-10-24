@@ -15,3 +15,7 @@ Escopo exclusivo: `IndiciumFIN/dev-chatgpt-workspace`; entradas em `registers/go
 
 ### Complemento de localização de fontes (24/10/2026)
 As resoluções ANPD 15, 18 e 19/2024 passam a usar URLs diretas verificadas nos sites oficiais da ANPD e do Ministério da Justiça e Segurança Pública. Os links genéricos anteriores foram preservados no registro. O executor aceita esses dois domínios oficiais sem buscar em repositórios de terceiros. Atenção: a Resolução 19 foi objeto de retificação em 2025, e o cotejo com a edição do Diário Oficial permanece obrigatório. O arquivo extraído não comprova vigência, completude de anexos ou revisão do regulamento.
+
+
+### Aquisição sob licença documental W3C (24/10/2026)
+Para as três especificações W3C já registradas (PROV-O, WCAG 2.2 e SHACL), a licença documental pública permite redistribuição íntegra com URL, aviso de direitos e status da especificação preservados. Guardar **HTML original sem modificação** e arquivo LICENSE-AND-ATTRIBUTION, sem criar tradução/derivado normativo, conforme https://www.w3.org/copyright/document-license/ . Os outros referenciais com direitos controlados permanecem apenas em metadados.

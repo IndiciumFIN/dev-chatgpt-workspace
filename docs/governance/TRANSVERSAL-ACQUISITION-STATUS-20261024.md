@@ -58,3 +58,11 @@ Os dois achados de remediação foram registrados em `registers/governance/find-
 
 ### Correção de inventário ativo — 24/10/2026
 IFRS S1/S2 saiu de `coverageExpansion.items`: **46 referências ativas**, 1 exclusão histórica em `coverageExpansion.excludedByApplicability`, 25 documentos preservados, 21 fontes ativas apenas com metadados. Nenhuma exclusão física de evidências. O snapshot histórico da aquisição mantém 47 entradas e não é alterado.
+
+
+## Materialização de registros canônicos candidatos — 24/10/2026
+- **18 ISO/ISO-IEC**: `registers/governance/transversal-source-instances/` (18 fontes, 18 aplicabilidades HOLD, 18 vínculos de autoridade HOLD_HUMAN, 18 evidências estruturais), todos derivados somente do catálogo interno, não dos textos integrais ISO.
+- **25 fontes públicas**: `registers/governance/transversal-source-instances/public/` (25 fontes candidatas e 25 evidências com hashes dos arquivos originais recuperados). Sem criação de cláusulas, regras jurídicas ou validação de vigência.
+- O gate `scripts/verify-transversal-public-materialization.py` confronta identidades, licenças registradas, snapshots e hashes com os contratos existentes; os contratos **não foram alterados**.
+- IFRS S1/S2 permanece **fora da lista ativa**, mas rastreada em `coverageExpansion.excludedByApplicability`.
+- **Nenhuma fonte ISO ou pública foi admitida ou promovida no Kernel.** Não confundir armazenamento e validação estrutural com publicação de conteúdo normativo.

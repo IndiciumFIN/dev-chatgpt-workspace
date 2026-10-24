@@ -35,3 +35,8 @@ If any answer is unknown, stop the claim or operation, mark `HOLD_HUMAN` or `NOT
 - `docs/EXECUTION_STATUS_v0.3.0.md`: previous status, not proof of present current state.
 
 Keep this file and the source-lock validator in every derivative package. Do not silently update these invariants.
+
+## Licensed normative sources — mandatory AI work instruction
+
+For every task involving ISO, ABNT, ISACA, COSO, DAMA, other licensed/proprietary standards, protected terminologies, or normative atomization, **read and apply `agents/normativos-licenciados.md` before preparing a plan, answering the owner or changing files**. The instruction encodes the owner's E0–E5 proportional-evidence agreement and forbids both unlicensed copying and indiscriminate HOLD of eligible metadata/technical work. It does **not** create or override an admitted Kernel policy and it does **not** relax any of the context-lock invariants above.
+

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 4,
+  "revision": 5,
   "updatedOn": "2026-10-23",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -117,8 +117,26 @@
       "updatedOn": "2026-10-23"
     },
     {
-      "id": "WO-HOM-001",
+      "id": "WO-CKO-COFEN-001",
       "order": 7,
+      "title": "Reconciliar 17 achados candidatos CKO/COREN/COFEN",
+      "status": "QUEUED",
+      "priority": "P0",
+      "owner": "ChatGPT + auditor documental",
+      "criteria": "Conferir fontes e integridade, revalidar schemas, revisar políticas e produzir WO admitida sem publicação normativa.",
+      "next": "Resolver itens P0 verificáveis; localizar ZIP CKO integral e PDFs para validação restante. Sem bypass de HOLD.",
+      "dependencies": [
+        "WO-CKO-001"
+      ],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/docs/audits/AUDITORIA_PENDENCIAS_CKO_COREN_COFEN_20261023.md"
+      ],
+      "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-HOM-001",
+      "order": 8,
       "title": "Homologação independente",
       "status": "HOLD_HUMAN",
       "priority": "P0",
@@ -178,6 +196,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-23",
       "reason": "Commit 9ce1226 com Zod 4.6.7, npm audit bloqueante, 200 testes e build aprovados; Vercel READY. Mantido FIND por limites de entrada/RBAC."
+    },
+    {
+      "seq": 7,
+      "workId": "WO-CKO-COFEN-001",
+      "to": "QUEUED",
+      "date": "2026-10-23",
+      "reason": "17 achados (9 P0, 8 P1) registrados como candidatos em quarentena; nova WO ao final da fila antes de homologação."
     }
   ]
 }

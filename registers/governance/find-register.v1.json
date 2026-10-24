@@ -1,8 +1,8 @@
 {
-  "as_of": "2026-10-22",
+  "as_of": "2026-10-23",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -26,8 +26,18 @@
         "contracts/entities/tool-bindings.v1.json#AB-ALDRETE-BAND-OK"
       ],
       "root_cause_status": "IDENTIFIED",
-      "remediation_task_refs": ["TASK-CTR-010"],
-      "blocking_policy_refs": ["UTC-001", "UTC-002", "UTC-051", "UTC-072", "UTC-097", "CKO-POL-R-002", "CKO-POL-R-005"],
+      "remediation_task_refs": [
+        "TASK-CTR-010"
+      ],
+      "blocking_policy_refs": [
+        "UTC-001",
+        "UTC-002",
+        "UTC-051",
+        "UTC-072",
+        "UTC-097",
+        "CKO-POL-R-002",
+        "CKO-POL-R-005"
+      ],
       "policy_ref": "CKO-POL-UT-001@1.2.0",
       "validator_ref": "PENDING_ADMISSION",
       "work_order": "NOT_ADMITTED",
@@ -39,7 +49,11 @@
       "version": "1.0.0",
       "status": "DRAFT_FOR_GOVERNED_REVIEW",
       "updated_at": "2026-10-22",
-      "provenance_refs": ["CKO-POL-UT-001@1.2.0", "src/lib/seo.ts", "src/lib/contract.ts"],
+      "provenance_refs": [
+        "CKO-POL-UT-001@1.2.0",
+        "src/lib/seo.ts",
+        "src/lib/contract.ts"
+      ],
       "finding_type": "CONTRACT_COLLISION",
       "severity": "HIGH",
       "fact": "canonical, hreflang e o rotulo de idioma sao derivados em src/lib/seo.ts por lista propria, e nao pelo Route Registry. A politica exige UTC-051: rota/canonical vem do Route Registry, nenhum canonical hardcoded em pagina. A fonte nao pode se limitar ao artefato: enquanto o valor nao vem do registro, ele pode divergir sem que nenhum gate veja.",
@@ -49,8 +63,13 @@
         "registers/canonical/route-contracts.v1.json"
       ],
       "root_cause_status": "IDENTIFIED",
-      "remediation_task_refs": ["TASK-CTR-011"],
-      "blocking_policy_refs": ["UTC-051", "CKO-POL-R-001"],
+      "remediation_task_refs": [
+        "TASK-CTR-011"
+      ],
+      "blocking_policy_refs": [
+        "UTC-051",
+        "CKO-POL-R-001"
+      ],
       "policy_ref": "CKO-POL-UT-001@1.2.0",
       "validator_ref": "PENDING_ADMISSION",
       "work_order": "NOT_ADMITTED",
@@ -62,7 +81,11 @@
       "version": "1.0.0",
       "status": "DRAFT_FOR_GOVERNED_REVIEW",
       "updated_at": "2026-10-22",
-      "provenance_refs": ["CKO-POL-UT-001@1.2.0", "src/components/tools/clinical-form.tsx", "src/lib/tools/privacy.ts"],
+      "provenance_refs": [
+        "CKO-POL-UT-001@1.2.0",
+        "src/components/tools/clinical-form.tsx",
+        "src/lib/tools/privacy.ts"
+      ],
       "finding_type": "PRIVACY_DEFECT",
       "severity": "CRITICAL",
       "fact": "O formulario de ferramenta pedia nome, idade, unidade/leito e data do paciente sem qualquer mascara, e o export DOCX escrevia esses valores EM CLARO no arquivo que o profissional baixa e compartilha. A politica v1.1.0 os proibia; a emenda v1.2.0 passa a permite-los como OPCIONAIS, desde que mascarados e sem captura LGPD. A correcao foi aplicada ao formulario, a ficha impressa e ao DOCX.",
@@ -73,8 +96,14 @@
         "docs/CKO-POL-UT-001-EMENDA-v1.2.0.md"
       ],
       "root_cause_status": "IDENTIFIED",
-      "remediation_task_refs": ["TASK-CTR-012"],
-      "blocking_policy_refs": ["UTC-016", "CKO-POL-R-003", "CKO-POL-R-005"],
+      "remediation_task_refs": [
+        "TASK-CTR-012"
+      ],
+      "blocking_policy_refs": [
+        "UTC-016",
+        "CKO-POL-R-003",
+        "CKO-POL-R-005"
+      ],
       "policy_ref": "CKO-POL-UT-001@1.2.0",
       "validator_ref": "PENDING_ADMISSION",
       "work_order": "NOT_ADMITTED",
@@ -86,7 +115,11 @@
       "version": "1.0.0",
       "status": "DRAFT_FOR_GOVERNED_REVIEW",
       "updated_at": "2026-10-22",
-      "provenance_refs": ["CKO-POL-UT-001@1.2.0", "src/lib/tools/catalog.ts", "src/lib/tools/contracts.ts"],
+      "provenance_refs": [
+        "CKO-POL-UT-001@1.2.0",
+        "src/lib/tools/catalog.ts",
+        "src/lib/tools/contracts.ts"
+      ],
       "finding_type": "SCHEMA_GAP",
       "severity": "MEDIUM",
       "fact": "O contrato CE-CONTRACT-CLINICAL-TOOLS carregava a nota 'cada ferramenta precisa de faixa de escore e referencia verificavel', mas o gate conferia apenas o slug. A nota era documentacao, nao verificacao. O contrato universal reescreveu o item no vocabulario do CKO (source + authority_binding por campo + formula + rule + interpretation + result), e o gate passou a cobrar o que a nota sempre prometeu.",
@@ -96,12 +129,77 @@
         "contracts/entities/tool-bindings.v1.json"
       ],
       "root_cause_status": "IDENTIFIED",
-      "remediation_task_refs": ["TASK-CTR-013"],
-      "blocking_policy_refs": ["UTC-002", "UTC-003", "CKO-POL-R-001", "CKO-POL-R-002"],
+      "remediation_task_refs": [
+        "TASK-CTR-013"
+      ],
+      "blocking_policy_refs": [
+        "UTC-002",
+        "UTC-003",
+        "CKO-POL-R-001",
+        "CKO-POL-R-002"
+      ],
       "policy_ref": "CKO-POL-UT-001@1.2.0",
       "validator_ref": "PENDING_ADMISSION",
       "work_order": "NOT_ADMITTED",
       "mutation_allowed": false
+    }
+  ],
+  "candidate_batches": [
+    {
+      "batch_id": "CKO-COREN-COFEN-AUDIT-20261023",
+      "status": "CANDIDATE_HOLD",
+      "admission": "NOT_ADMITTED",
+      "write_permission": false,
+      "source_archive": "CE_DOCS_COREN_COFEN_CANDIDATE_V1_20261023.zip",
+      "source_archive_sha256": "5d2485d7f983ece03cbf7d49bba4d6390fd399910070c6c46a6c0392c6a5c433",
+      "cko_workspace_sha256_expected": "61f3bc0ae65267c118eba94eb44f380177462e47e25d0eaef9b1a4244a612d91",
+      "cko_workspace_zip_received": false,
+      "count": 17,
+      "p0": 9,
+      "p1": 8,
+      "related_wo": "WO-CKO-COFEN-001",
+      "items_ref": "registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+      "csv_ref": "registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.csv",
+      "report_ref": "docs/audits/AUDITORIA_PENDENCIAS_CKO_COREN_COFEN_20261023.md",
+      "checksum_ref": "registers/governance/imports/cko-coren-cofen-20261023/CKO_WORKSPACE_FULL_ATOMICO_20261023.zip.sha256.txt",
+      "item_ids": [
+        "FIND-CKO-INPUT-001",
+        "FND-COFEN-001",
+        "FIND-CEPKG-001",
+        "FIND-CEPKG-002",
+        "FIND-CEPKG-003",
+        "FIND-CEPKG-004",
+        "FIND-CEPKG-005",
+        "FND-COFEN-003",
+        "FND-COFEN-002",
+        "FND-COFEN-004",
+        "FIND-CEPKG-006",
+        "FIND-CEPKG-007",
+        "FIND-CEPKG-008",
+        "FIND-CEPKG-009",
+        "FIND-CEPKG-010",
+        "FIND-CEPKG-011",
+        "FIND-CEPKG-012"
+      ],
+      "checked_content_sha256": [
+        {
+          "path": "registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+          "sha256": "713bb51edc3b0f52996197f505a17bf0f672912ff3f4fa9e793cfdf4ea5a7456"
+        },
+        {
+          "path": "registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.csv",
+          "sha256": "a425b6ef64c6f65677229edea530a8e47955ed6449335d42d92442b6d84d93e3"
+        },
+        {
+          "path": "docs/audits/AUDITORIA_PENDENCIAS_CKO_COREN_COFEN_20261023.md",
+          "sha256": "1196e907f246e4b22a76ccc15c4d18d8aa1023cfcdc2d23c1d4ae7dc80465d3b"
+        },
+        {
+          "path": "registers/governance/imports/cko-coren-cofen-20261023/CKO_WORKSPACE_FULL_ATOMICO_20261023.zip.sha256.txt",
+          "sha256": "0705938d4df6bfde6ac089f24ddf10d069c2362164c7c93c3d625397e6838599"
+        }
+      ],
+      "note": "17 achados documentais candidatos registrados sem promover conteúdo, alterar fontes oficiais, nem admitir ao Kernel."
     }
   ]
 }

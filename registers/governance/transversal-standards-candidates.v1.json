@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CKO-TRANS-REFERENCES-001",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "asOf": "2026-10-24",
   "status": "CANDIDATE_HOLD",
   "scope": "TRANSVERSAL_GOVERNANCE_NOT_CLINICAL_CONTENT",
@@ -14,14 +14,16 @@
     "metadataVerified": 18,
     "fullNormativeTextVerified": 0,
     "complianceAssessed": 0,
-    "additionalReferencesIdentified": 29,
+    "additionalReferencesIdentified": 28,
     "reconciledWithCKOWorkspace": false,
     "legalApplicabilityAssessed": 0,
     "runtimeGatesDerivedFromNewLawRefs": 0,
     "actualDocumentBytesArchived": 25,
     "remainingMetadataOnly": 22,
     "applicableCandidates": 46,
-    "metadataOnlyApplicableCandidates": 21
+    "metadataOnlyApplicableCandidates": 21,
+    "excludedFromActiveInventory": 1,
+    "currentActiveReferences": 46
   },
   "standards": [
     {
@@ -452,7 +454,7 @@
   "coverageExpansion": {
     "asOf": "2026-10-24",
     "purpose": "Ampliar lacunas transversais legais, acessibilidade, crianças e adolescentes, sustentabilidade, pesquisa e tecnologias de verificação sem redefinir taxonomia canônica.",
-    "nature": "INVENTORY_CANDIDATE_METADATA_ONLY",
+    "nature": "ACTIVE_CANDIDATE_INVENTORY_WITH_EXCLUSIONS_PRESERVED",
     "items": [
       {
         "officialIdentifier": "Lei 9.610/1998",
@@ -710,20 +712,6 @@
         "area": "Tecnologia de controle",
         "howItMayApply": "Validação de grafo semântico e relações Master Data/linhagem",
         "verificationNote": "Recomendação técnica, não substitui autoridade normativa"
-      },
-      {
-        "officialIdentifier": "IFRS S1 e IFRS S2",
-        "documentName": "Padrões internacionais de divulgação de sustentabilidade",
-        "publisher": "Fundação IFRS",
-        "officialSourceUrl": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/",
-        "area": "Sustentabilidade",
-        "howItMayApply": "Divulgações corporativas quando o produtor/usuário tem obrigação ou adota padrão",
-        "verificationNote": "Licença de integração em produtos não presumida; texto público ao registrado não garante uso comercial | Revisão 24/10/2026: referência excluída da aquisição por NÃO APLICABILIDADE JUSTIFICADA neste produto; erro da triagem anterior registrado.",
-        "applicabilityDecision": "NOT_APPLICABLE_JUSTIFIED",
-        "applicabilityContractRef": "contracts/cko-schemas/applicability.schema.json",
-        "applicabilityScope": "Produto público de calculadoras, bibliotecas e educação em enfermagem, neste repositório",
-        "applicabilityRationale": "IFRS S1/S2 são padrões de divulgação financeira de sustentabilidade, não requisitos técnicos ou clínicos do produto de enfermagem. Não há funcionalidade de elaboração de relatórios financeiros corporativos dentro do escopo. Inclusão anterior na lista de aquisições foi erro de seleção; preservar histórico e não manter demanda de licença. Reavaliar somente se escopo do produto for formalmente alterado.",
-        "acquisitionRequired": false
       }
     ],
     "openAreasToQualify": [
@@ -742,6 +730,26 @@
       "Não comprova execução de motor OPA nem admissão Kernel",
       "Não presume que norma dirigida a entidades públicas é vinculante a produto privado",
       "A existência de arquivos de schema ISO não comprova a aplicação da norma nem a existência de registros source, authority_binding e testes por cláusula."
+    ],
+    "excludedByApplicability": [
+      {
+        "officialIdentifier": "IFRS S1 e IFRS S2",
+        "documentName": "Padrões internacionais de divulgação de sustentabilidade",
+        "publisher": "Fundação IFRS",
+        "officialSourceUrl": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/",
+        "area": "Sustentabilidade",
+        "howItMayApply": "Divulgações corporativas quando o produtor/usuário tem obrigação ou adota padrão",
+        "verificationNote": "Licença de integração em produtos não presumida; texto público ao registrado não garante uso comercial | Revisão 24/10/2026: referência excluída da aquisição por NÃO APLICABILIDADE JUSTIFICADA neste produto; erro da triagem anterior registrado.",
+        "applicabilityDecision": "NOT_APPLICABLE_JUSTIFIED",
+        "applicabilityContractRef": "contracts/cko-schemas/applicability.schema.json",
+        "applicabilityScope": "Produto público de calculadoras, bibliotecas e educação em enfermagem, neste repositório",
+        "applicabilityRationale": "IFRS S1/S2 são padrões de divulgação financeira de sustentabilidade, não requisitos técnicos ou clínicos do produto de enfermagem. Não há funcionalidade de elaboração de relatórios financeiros corporativos dentro do escopo. Inclusão anterior na lista de aquisições foi erro de seleção; preservar histórico e não manter demanda de licença. Reavaliar somente se escopo do produto for formalmente alterado.",
+        "acquisitionRequired": false,
+        "exclusionDate": "2026-10-24",
+        "notDeletedFromHistory": true,
+        "exclusionReason": "FORA_DO_ESCOPO_DA_PLATAFORMA_DE_ENFERMAGEM",
+        "decisionSource": "FIND-TRANS-IFRS-20261024"
+      }
     ]
   },
   "acquisitionReadback20261024": {
@@ -821,6 +829,12 @@
     "normativeClauseTestsVerified": 0,
     "normativeFullTextsArchived": 0,
     "limitation": "A referência a contratos e seus schemas é mapeamento declarativo. Não comprova instâncias source com licença/integridade, requisitos por cláusula, implementação técnica nem admissão Kernel. Metadados públicos e documentação aberta continuam utilizáveis nos limites dos direitos verificados.",
-    "admission": "NOT_ADMITTED"
+    "admission": "NOT_ADMITTED",
+    "materializationStatus": "RUN_PENDING",
+    "materializationPath": "registers/governance/transversal-source-instances/",
+    "materializationScript": "scripts/materialize-transversal-iso.py",
+    "materializationScope": "Candidates only; no ISO clause texts or ISO compliance claims",
+    "currentActiveInventoryCount": 46,
+    "ifrsHistoricalCount": 1
   }
 }

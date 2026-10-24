@@ -54,3 +54,7 @@ Arquivamento histórico ≠ atualidade jurídica ≠ requisito de cláusula comp
 **Constatação:** 18 normas ISO/ISO/IEC no inventário; nenhuma instância de fonte, binding de cláusula ou teste normativo qualificados demonstrados nesta auditoria. Não apresentar preço zero do catálogo como licença de redistribuição. Metadados oficiais e atividades técnicas independentes continuam elegíveis; somente requisito que depende do texto integral fica pendente.
 
 Os dois achados de remediação foram registrados em `registers/governance/find-register.v1.json` como **candidatos**, sem admissão ou WO nova. Os 25 documentos já arquivados não foram alterados. O total histórico do catálogo permanece 47, dos quais 46 são candidatos de escopo e 21 continuam apenas em metadados.
+
+
+### Correção de inventário ativo — 24/10/2026
+IFRS S1/S2 saiu de `coverageExpansion.items`: **46 referências ativas**, 1 exclusão histórica em `coverageExpansion.excludedByApplicability`, 25 documentos preservados, 21 fontes ativas apenas com metadados. Nenhuma exclusão física de evidências. O snapshot histórico da aquisição mantém 47 entradas e não é alterado.

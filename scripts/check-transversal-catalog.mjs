@@ -7,6 +7,8 @@ assert.equal(r.status,'CANDIDATE_HOLD');
 assert.equal(r.kernelAdmission,'NOT_REQUESTED');
 assert.equal(r.summary.total,r.standards.length);
 assert.equal(r.summary.additionalReferencesIdentified,r.coverageExpansion.items.length);
+assert.equal(r.coverageExpansion.items.length,28);
+assert.equal(r.coverageExpansion.excludedByApplicability.length,1);
 assert.equal(r.summary.fullNormativeTextVerified,0);
 assert.equal(r.summary.runtimeGatesDerivedFromNewLawRefs,0);
 const keys=r.coverageExpansion.items.map(x=>x.officialIdentifier);
@@ -21,7 +23,8 @@ for(const x of r.coverageExpansion.items){
 }
 assert(r.coverageExpansion.notClaimed.some(x=>x.includes('conformidade')));
 
-const ifrs = r.coverageExpansion.items.find(x=>x.officialIdentifier==='IFRS S1 e IFRS S2');
+const ifrs = r.coverageExpansion.excludedByApplicability.find(x=>x.officialIdentifier==='IFRS S1 e IFRS S2');
+assert(!r.coverageExpansion.items.some(x=>x.officialIdentifier==='IFRS S1 e IFRS S2'),'IFRS indevidamente no inventário ativo');
 assert(ifrs,'IFRS precisa permanecer rastreável no histórico');
 assert.equal(ifrs.applicabilityDecision,'NOT_APPLICABLE_JUSTIFIED','IFRS não pode retornar à fila de aquisição de enfermagem');
 assert.equal(ifrs.acquisitionRequired,false);
@@ -42,5 +45,6 @@ assert.equal(r.sourceContractReview.canonicalSourceInstancesVerified,0,'Instânc
 assert.equal(r.sourceContractReview.canonicalRequirementBindingsVerified,0);
 assert.equal(r.sourceContractReview.normativeClauseTestsVerified,0);
 assert.equal(r.sourceContractReview.admission,'NOT_ADMITTED');
+assert(['RUN_PENDING','CANDIDATES_MATERIALIZED'].includes(r.sourceContractReview.materializationStatus));
 
 console.log('PASS inventário transversal candidato: '+r.standards.length+' anteriores + '+keys.length+' referências complementares; sem alegação de implementação ou Kernel.');

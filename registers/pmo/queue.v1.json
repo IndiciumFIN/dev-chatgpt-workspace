@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registryId": "CE-PMO-001",
-  "revision": 10,
+  "revision": 11,
   "updatedOn": "2026-10-24",
   "readOnly": true,
   "canonicalSource": "registers/pmo/queue.v1.json",
@@ -144,7 +144,7 @@
       "priority": "P0",
       "owner": "ChatGPT + auditor de normas técnicas",
       "criteria": "Inventário de referenciais e edições validado; domínios, owners e contratos existentes vinculados; FINDs e gaps testados; admissão Kernel sob controle.",
-      "next": "Corrigida inclusão IFRS como NÃO APLICÁVEL JUSTIFICADA ao produto; 25 fontes permanecem preservadas; 21 referências relevantes continuam somente com metadados. Aplicar os contratos já existentes a 18 normas ISO/ISO/IEC por fonte, direitos, aplicabilidade, requisito, evidência e validador; não exigir PDF pago globalmente nem declarar conformidade sem teste.",
+      "next": "IFRS excluída da lista ativa com histórico preservado; executar e validar a materialização de 18 fontes ISO/ISO-IEC usando os schemas existentes e hashes de snapshots locais, sem confundir metadado com texto licenciado ou requisito de cláusula.",
       "dependencies": [],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/transversal-standards-candidates.v1.json",
@@ -261,6 +261,13 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-24",
       "reason": "Triagem IFRS S1/S2 reprovada para o produto e marcada NOT_APPLICABLE_JUSTIFIED; contrato ISO/IEC confirmado em schemas, mas 18 vínculos por fonte/cláusula não implementados. Dois FINDs candidatos preservados."
+    },
+    {
+      "seq": 13,
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "IFRS S1/S2 excluída fisicamente do inventário ativo, preservada em excludedByApplicability; preparar materialização de 18 fontes ISO/ISO-IEC com contratos preexistentes e evidência local."
     }
   ]
 }

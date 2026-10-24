@@ -1,0 +1,42 @@
+name: Aquisição e arquivamento eMAG 3.1 — fonte oficial e licença
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/archive-emag-official.yml'
+jobs:
+  acquire:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Baixar eMAG 3.1 da fonte oficial com verificação da licença
+        run: python3 scripts/archive-emag-official.py
+      - name: Validar escopo e preservação de bytes
+        run: |
+          git add -- audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,hashlib,subprocess
+          root='audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag'
+          m=json.loads(Path(root+'/evidence.json').read_text())
+          for name,v in m['artifacts'].items():
+              raw=subprocess.run(['git','show',':'+root+'/'+name],capture_output=True,check=True).stdout
+              assert hashlib.sha256(raw).hexdigest()==v['sha256'],name
+          assert m['kernelAdmission'] is False
+          print('PASS source bytes in git staging area')
+          PY
+          ! git diff --cached --name-only | grep -v '^audit-evidence/transversal-acquisition/snapshots/20261024-extended/emag/'
+      - name: Preservar sem alterar outras fontes e sem force push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --cached --quiet && exit 1
+          git commit -m "audit(sources): preservar eMAG 3.1 da fonte oficial, sem admissao"
+          git push origin HEAD:main

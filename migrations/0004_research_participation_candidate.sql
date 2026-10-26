@@ -30,6 +30,14 @@ create table if not exists research_risk_candidate (
   status text not null check (status in ('OPEN','MITIGATING','HOLD_HUMAN','CLOSED_CANDIDATE')),
   created_at timestamptz not null default now()
 );
+create table if not exists research_skill_need_candidate (
+  id text primary key,
+  project_id text references research_project_candidate(id),
+  skill text not null,
+  priority text not null check (priority in ('LOW','MEDIUM','HIGH','CRITICAL')),
+  coverage_state text not null check (coverage_state in ('GAP','PARTIAL','COVERED','REVIEW_REQUIRED'))
+);
+
 create table if not exists participation_process_candidate (
   id text primary key,
   title text not null,

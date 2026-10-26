@@ -45,7 +45,6 @@ const s=(raw:unknown)=>raw as CkoSchema;
 const template=(key:string,label:string,raw:unknown,scope:string,gap?:string):FormTemplate=>({key,label,schema:s(raw),scope,gap});
 
 export const moduleFormTemplates:Record<AdminModuleId,readonly FormTemplate[]> = {
- M01:[template('monitoring','Indicador e monitoramento',monitoring,'Monitoramento técnico e alertas','Não substitui o cadastro corporativo de KPIs.')],
  M02:[template('workflow','Processo e fluxo de planejamento',workflow,'Etapas, responsáveis e restrições','Objetivos estratégicos e orçamento ainda exigem contratos próprios.')],
  M03:[template('task','Tarefa do PMO',task,'Planejamento da tarefa'),
       template('work_order','Ordem de Trabalho (WO)',workOrder,'WO, controles e admissão','Sem autorização para execução ou gravação no PMO.')],

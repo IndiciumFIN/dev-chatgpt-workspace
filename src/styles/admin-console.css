@@ -306,3 +306,13 @@
  .ce-admin .ce-admin-table td>*{max-width:100%;overflow-wrap:anywhere}
  .ce-admin .ce-admin-mobile-nav{top:calc(var(--chrome-total, 0px) + 4px)}
 }
+
+
+/* PMO: exposição progressiva para reduzir ruído e altura de rolagem no telefone. */
+.ce-admin .ce-admin-expand{display:flex;align-items:center;justify-content:center;min-height:44px;width:100%;margin-top:.75rem;padding:.55rem .85rem;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-ice);color:var(--color-navy);font:inherit;font-size:.79rem;font-weight:800}
+.ce-admin .ce-admin-disclosure{border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper);min-width:0;overflow-wrap:anywhere}
+.ce-admin .ce-admin-disclosure>summary{cursor:pointer;display:block;min-height:52px;padding:.9rem .8rem;font-size:.8rem;font-weight:800;color:var(--color-navy);line-height:1.4}
+.ce-admin .ce-admin-disclosure[open]>summary{border-bottom:1px solid var(--color-line);margin-bottom:.6rem}
+.ce-admin .ce-admin-disclosure>.ce-admin-detail-note{margin:.75rem}
+.ce-admin .ce-admin-disclosure>.ce-admin-pmo-list,.ce-admin .ce-admin-disclosure>.ce-admin-pmo-events{padding:.5rem .75rem 1rem}
+.ce-admin .ce-admin-expand:focus-visible,.ce-admin .ce-admin-disclosure>summary:focus-visible{outline:3px solid var(--color-navy);outline-offset:2px}

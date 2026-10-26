@@ -30,6 +30,17 @@ function wireErrors(page,tag) {
   page.on('pageerror',e=>errors.push({route:tag,error:e.message}));
   page.on('console',e=>{if(e.type()==='error') errors.push({route:tag,error:e.text()});});
 }
+async function selectModule(page,width,group,id) {
+  if(width<960) await page.locator('.ce-admin-mobile-launch').click();
+  const nav=width<960
+    ? page.getByRole('navigation',{name:'Módulos da administração — mobile'})
+    : page.getByRole('navigation',{name:'Módulos da administração',exact:true});
+  const groupPanel=nav.locator('[data-admin-group="'+group+'"]');
+  const toggle=groupPanel.locator('.ce-admin-tree-group-button');
+  if((await toggle.getAttribute('aria-expanded'))==='false') await toggle.click();
+  await groupPanel.locator('[data-admin-module="'+id+'"]').click();
+  if(width<960) await page.locator('.ce-admin-mobile-dialog').waitFor({state:'hidden'});
+}
 try{
   for(const width of widths){
     const mobile=width<680;
@@ -38,14 +49,15 @@ try{
     await p.goto(base+'/admin',{waitUntil:'networkidle'});
     await p.getByRole('heading',{name:'Centro de administração'}).waitFor();
     await p.getByRole('heading',{name:'Fila única de execução'}).waitFor();
-    const select=p.locator('#ce-admin-mobile-module');
-    const nav=p.getByRole('navigation',{name:'Módulos da administração'});
+    const desktopNav=p.getByRole('navigation',{name:'Módulos da administração',exact:true});
+    const mobileLaunch=p.locator('.ce-admin-mobile-launch');
     if(width<960) {
-      assert.equal(await select.isVisible(),true,'module selector absent at '+width);
-      assert.equal(await nav.isVisible(),false,'desktop nav exposed at '+width);
+      assert.equal(await mobileLaunch.isVisible(),true,'mobile drawer trigger absent at '+width);
+      assert.equal(await desktopNav.isVisible(),false,'desktop sidebar exposed at '+width);
     } else {
-      assert.equal(await select.isVisible(),false,'mobile select exposed at '+width);
-      assert.equal(await nav.isVisible(),true,'desktop nav absent at '+width);
+      assert.equal(await mobileLaunch.isVisible(),false,'mobile drawer trigger exposed at '+width);
+      assert.equal(await desktopNav.isVisible(),true,'desktop sidebar absent at '+width);
+      assert.equal(await desktopNav.locator('[data-admin-group]').count(),7,'seven groups required');
     }
     await assertNoOverflow(p,'admin-pmo-'+width);
     await screenshot(p,'admin-pmo-'+width+'.png');
@@ -59,23 +71,16 @@ try{
       await p.getByText(/Consultar achados em quarentena/).click();
       await p.getByText(/Consultar achados em quarentena/).click();
     }
-    if(width<960) await select.selectOption('modules');
-    else await nav.getByRole('button',{name:/Módulos/}).click();
-    await p.getByRole('heading',{name:'Macrogrupos e módulos'}).waitFor();
-    await p.getByRole('heading',{name:/M03 — PMO e Projetos/}).waitFor();
-    await assertNoOverflow(p,'admin-modules-'+width);
-    if([320,390,768,1440].includes(width)) await screenshot(p,'admin-modules-'+width+'.png');
-    if(width===390) {
-      await p.locator('#ce-modules-group').selectOption('G03');
-      await p.getByRole('button',{name:/M18.*Governança Clínica/}).click();
-      await p.getByRole('heading',{name:/M18 — Governança Clínica/}).waitFor();
-      await p.getByRole('button',{name:/M07 · Kernel e Conhecimento/}).click();
-      await p.getByRole('heading',{name:/M07 — Kernel e Conhecimento/}).waitFor();
-      await p.locator('#ce-modules-search').fill('validação');
-      await assertNoOverflow(p,'admin-modules-search-390');
+    await selectModule(p,width,'G03','M18');
+    await p.locator('#ce-module-fallback-title').getByText('Governança Clínica e Segurança').waitFor();
+    await assertNoOverflow(p,'admin-planned-module-'+width);
+    if([320,390,768,1440].includes(width)) await screenshot(p,'admin-module-M18-'+width+'.png');
+    if(width===390){
+      await selectModule(p,width,'G03','M07');
+      await p.locator('#ce-module-fallback-title').getByText('Kernel e Conhecimento').waitFor();
+      await assertNoOverflow(p,'admin-planned-module-M07-390');
     }
-    if(width<960) await select.selectOption('governance');
-    else await nav.getByRole('button',{name:/Governança/}).click();
+    await selectModule(p,width,'G01','M04');
     await p.getByRole('heading',{name:'Governança e evidências'}).waitFor();
     await assertNoOverflow(p,'admin-governance-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-governance-'+width+'.png');
@@ -87,8 +92,7 @@ try{
       await p.locator('#ce-gov-search').fill('8000');
       await assertNoOverflow(p,'admin-governance-search-390');
     }
-    if(width<960) await select.selectOption('templates');
-    else await nav.getByRole('button',{name:/Templates/}).click();
+    await selectModule(p,width,'G04','M10');
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();
     if(width===390){
       const initial=await p.locator('.ce-admin-table tbody tr').count();
@@ -99,20 +103,19 @@ try{
     }
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-templates-'+width+'.png');
     await assertNoOverflow(p,'admin-templates-'+width);
-    if(width<960) await select.selectOption('content');
-    else await nav.getByRole('button',{name:/Conteúdos/}).click();
+    await selectModule(p,width,'G04','M08');
     await p.locator('#admin-tool-title').waitFor();
     await assertNoOverflow(p,'admin-content-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-content-'+width+'.png');
     if(width===390){
       await p.locator('#admin-tool-title').fill('Escala de Braden · mobile-first QA');
       await p.getByRole('button',{name:'Salvar rascunho'}).click();
-      await select.selectOption('publication');
+      await selectModule(p,width,'G06','M15');
       await p.getByRole('checkbox',{name:/Entendo que esta publicação/}).check();
       await p.getByRole('button',{name:/Publicar rascunho salvo/}).click();
       await p.getByText(/Projeção LOCAL publicada/).waitFor();
       await p.reload({waitUntil:'networkidle'});
-      await p.locator('#ce-admin-mobile-module').selectOption('content');
+      await selectModule(p,width,'G04','M08');
       await p.getByRole('radio',{name:'Publicado local'}).check();
       await p.getByRole('heading',{name:'Escala de Braden · mobile-first QA',exact:true}).waitFor();
       await screenshot(p,'admin-editor-save-local-390.png');

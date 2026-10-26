@@ -48,6 +48,14 @@ function tileItems(
 }
 
 const pages: Record<string, Section> = {
+  pesquisa: {
+    slug: "pesquisa",
+    kicker: "Pesquisa",
+    title: "Research Hub",
+    lead: "Studio de pesquisa, instrumentos, ética, evidências, participação cidadã, consenso, devolutiva e impacto em uma única frente candidata.",
+    kind: "pages",
+    blocks: [],
+  },
   concurso: {
     slug: "concurso",
     kicker: "Guia de estudos",

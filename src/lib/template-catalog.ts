@@ -49,7 +49,7 @@ export const templateCatalogo: TemplateCatalogo[] = [
   { id: "editorial-longo", frame: "shell", note: "inline", nome: "Conteudo editorial (longo)", url: "/blog/mary-eliza-mahoney", kind: "artigo", situacao: "montagem", materiaPrima: "catalogo de artigos" },
   { id: "curiosidades", frame: "shell", note: "inline", nome: "Conteudo de curiosidades", url: null, kind: "artigo", situacao: "a-definir", materiaPrima: "87 slots reservados, sem conteudo escrito" },
   { id: "carreira-concursos", frame: "shell", note: "none", nome: "Carreira e concursos (+ gerador de curriculo)", url: "/secao/concurso", kind: "secao", situacao: "a-definir", materiaPrima: "secao de concurso + gerador de curriculo (a criar)" },
-  { id: "ferramentas-pesquisa", frame: "shell", note: "none", nome: "Ferramentas de pesquisa", url: null, kind: "ferramenta", situacao: "a-definir", materiaPrima: "a definir com o dono" },
+  { id: "ferramentas-pesquisa", frame: "shell", note: "none", nome: "Ferramentas de pesquisa", url: "/secao/pesquisa", kind: "ferramenta", situacao: "montagem", materiaPrima: "research_method + registry candidato Research/Participation" },
   { id: "forum", frame: "shell", note: "inline", nome: "Forum de enfermagem", url: null, kind: "editorial", situacao: "a-definir", materiaPrima: "a definir com o dono" },
   { id: "album", frame: "shell", note: "inline", nome: "Album de Enfermagem", url: null, kind: "biblioteca", situacao: "a-definir", materiaPrima: "a definir com o dono" },
 

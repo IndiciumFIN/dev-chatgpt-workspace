@@ -1,8 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ArrowRight, ChevronDown, ChevronRight, LockKeyhole, Network, ShieldCheck } from 'lucide-react';
+import { ChevronDown, ChevronRight, Network, ShieldCheck } from 'lucide-react';
 import { adminGroups, adminModules, getAdminModule, type AdminGroupId, type AdminModuleId } from '@/lib/admin-module-registry';
-import { AdminSchemaEditor } from '@/components/admin/admin-schema-editor';
 import '@/styles/admin-hierarchy.css';
 
 type Props={selectedId:AdminModuleId;onSelect:(id:AdminModuleId)=>void;onOverview:()=>void;overviewActive:boolean;idPrefix:'desktop'|'mobile'};
@@ -40,25 +39,4 @@ export function AdminSidebarTree({selectedId,onSelect,onOverview,overviewActive,
     })}
     <div className="ce-admin-tree-foot"><ShieldCheck size={16} aria-hidden="true"/><span>Prévias e módulos planejados seguem políticas e gates de homologação.</span></div>
   </nav>;
-}
-
-export function AdminModuleFallback({moduleId}:{moduleId:AdminModuleId}){
-  const module=getAdminModule(moduleId);
-  const group=adminGroups.find(g=>g.id===module.group);
-  return <section className="ce-admin-module-fallback" aria-labelledby="ce-module-fallback-title">
-    <p className="ce-admin-module-eyebrow">{module.group} · {group?.title} / {module.id}</p>
-    <h3 id="ce-module-fallback-title">{module.title}</h3>
-    <p>{module.purpose}</p>
-    <div className="ce-admin-module-hold"><LockKeyhole size={19} aria-hidden="true"/><div><strong>Módulo definido, operação não implementada.</strong>
-      <p>Não há acesso a backend, gravação de dados, homologação de controles nem permissão para execução nesta prévia.</p></div></div>
-    <h4>Submódulos previstos</h4>
-    <ul className="ce-admin-module-submodules">{module.submodules.map(name=><li key={name}>{name}</li>)}</ul>
-    <h4>Integrações previstas</h4>
-    <div className="ce-admin-module-edges">
-      <div><strong>Recebe informações de</strong>{module.receives.length?<ul>{module.receives.map(id=><li key={id}>{id} · {getAdminModule(id).title}</li>)}</ul>:<p>Não identificado</p>}</div>
-      <div><strong>Encaminha informações para</strong>{module.sends.length?<ul>{module.sends.map(id=><li key={id}>{id} · {getAdminModule(id).title}</li>)}</ul>:<p>Não identificado</p>}</div>
-    </div>
-    <p className="ce-admin-module-note">Fluxos documentais propostos: não correspondem a integrações executadas. Consulte as políticas e o PMO antes de promover qualquer implementação.</p>
-    <AdminSchemaEditor key={moduleId} moduleId={moduleId}/>
-  </section>;
 }

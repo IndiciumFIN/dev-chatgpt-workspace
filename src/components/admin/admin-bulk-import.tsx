@@ -110,7 +110,7 @@ export function AdminBulkImport(){
     download('modelo-'+profile.id+'.csv',csvTemplate(profile),'text/csv;charset=utf-8');
   }
   return <section className="ce-import" aria-labelledby="ce-import-title">
-    <header className="ce-import-intro"><div><h4 id="ce-import-title">Importação em lote</h4><p>Carregue um arquivo, associe as colunas ao cadastro existente e revise as linhas antes de gerar o pacote de staging.</p></div><span className="ce-import-locked"><LockKeyhole size={15}/> Gravação bloqueada</span></header>
+    <header className="ce-import-intro"><div><h4 id="ce-import-title">Preparar importação</h4><p>Carregue um arquivo, associe as colunas ao cadastro existente e revise as linhas antes de gerar o pacote de staging.</p></div><span className="ce-import-locked"><LockKeyhole size={15}/> Gravação bloqueada</span></header>
     <ol className="ce-import-steps" aria-label="Etapas da importação">
       <li aria-current={step==='choose'?'step':undefined}>1. Arquivo</li>
       <li aria-current={step==='map'?'step':undefined}>2. Mapeamento</li>

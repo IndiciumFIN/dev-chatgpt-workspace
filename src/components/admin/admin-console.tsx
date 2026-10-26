@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import {
   AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Check, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
-  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone,
+  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone, Menu,
   type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
@@ -154,6 +154,13 @@ export function AdminConsole() {
         <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
       </>}
     </div></div>
+    <div className="ce-admin-mobile-nav" aria-label="Navegação administrativa para dispositivos móveis">
+      <label htmlFor="ce-admin-mobile-module"><Menu size={17} aria-hidden="true" /><span>Módulo</span></label>
+      <select id="ce-admin-mobile-module" value={tab} onChange={event => setTab(event.target.value as Tab)}>
+        {tabs.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
+      </select>
+      <Link className="ce-admin-mobile-command" to="/central-comando"><span>Comando</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
+    </div>
     <div className="ce-admin-layout">
       <nav className="ce-admin-sidebar" aria-label="Módulos da administração">
         <p className="ce-admin-nav-label">ESPAÇO DE TRABALHO</p>
@@ -238,7 +245,7 @@ export function AdminConsole() {
         </>}
         {tab === 'templates' && <Panel title="Inventário canônico de templates" subtitle="Derivado diretamente de template-catalog.ts e template-contract.ts; os contratos não são alterados por este painel.">
           <div className="ce-admin-table-scroll"><table className="ce-admin-table"><thead><tr><th>Template / família</th><th>Contrato</th><th>Origem / matéria-prima</th><th>Disponibilidade</th></tr></thead><tbody>
-            {templateCatalogo.map(item => <tr key={item.id}><td><strong>{item.nome}</strong><small>{item.id}</small></td><td>{item.kind}<small>Frame: {item.frame}</small></td><td>{item.materiaPrima}</td><td>{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
+            {templateCatalogo.map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
           </tbody></table></div>
           <p className="ce-admin-detail-note">Contrato da área administrativa: hero <strong>{templateContracts.area.hero}</strong>, breadcrumbs <strong>{String(templateContracts.area.crumbs)}</strong>. A ausência de página não é aprovação de conteúdo.</p>
         </Panel>}
@@ -282,5 +289,11 @@ export function AdminConsole() {
         </>}
       </div>
     </div>
+    <nav className="ce-admin-mobile-dock" aria-label="Acesso rápido da administração">
+      <button type="button" aria-current={tab === 'pmo' ? 'page' : undefined} onClick={() => setTab('pmo')}><ListTodo size={19} aria-hidden="true" /><span>PMO</span></button>
+      <button type="button" aria-current={tab === 'content' ? 'page' : undefined} onClick={() => setTab('content')}><BookOpenText size={19} aria-hidden="true" /><span>Conteúdo</span></button>
+      <Link to="/central-comando"><LayoutDashboard size={19} aria-hidden="true" /><span>Comando</span></Link>
+      <button type="button" aria-current={tab === 'publication' ? 'page' : undefined} onClick={() => setTab('publication')}><FileClock size={19} aria-hidden="true" /><span>Publicação</span></button>
+    </nav>
   </main>;
 }

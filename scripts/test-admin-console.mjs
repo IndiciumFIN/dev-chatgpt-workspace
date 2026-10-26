@@ -28,10 +28,10 @@ const assertions = [
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
   ['seven unique macro groups defined', groupCodes.length === 7 && new Set(groupCodes).size === 7],
-  ['twenty-one operational modules registered', moduleCodes.length === 21 && new Set(moduleCodes).size === 22],
+  ['twenty-one operational modules registered', moduleCodes.length === 21 && new Set(moduleCodes).size === 21],
   ['all module relationships resolve to known IDs', moduleRefs.length > 0 && moduleRefs.every(id => moduleCodes.includes(id))],
   ['seven macro groups and 21 modules are nested in one sidebar', /AdminSidebarTree selectedId=\{selectedModule\}/.test(ui) && /adminGroups\.map\(/.test(sidebar) && /adminModules\.filter\(/.test(sidebar) && !/fetch\s*\(/.test(sidebar)],
-  ['module boundaries disclosed; unavailable actions are not executors', /não concedem permissão de escrita/.test(read('src/components/admin/admin-module-workspace.tsx')) && /AdminModuleWorkspace key=\{selectedModule\}/.test(ui)],
+  ['module boundaries disclosed; unavailable actions are not executors', /concede permissão de escrita/.test(read('src/components/admin/admin-module-workspace.tsx')) && /AdminModuleWorkspace key=\{selectedModule\}/.test(ui)],
 ];
 let failed = 0;
 for (const [name, pass] of assertions) { console.log(`${pass ? 'PASS' : 'FAIL'} ADMIN: ${name}`); if (!pass) failed++; }

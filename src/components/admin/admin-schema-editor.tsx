@@ -191,7 +191,7 @@ export function AdminSchemaEditor({moduleId,submodule,templateKeys}:{moduleId:Ad
   return <section className="ce-schema" aria-labelledby={uid+'-heading'}>
     <div className="ce-schema-head"><div>
       <span className="ce-modules-eyebrow">FORMULÁRIO GOVERNADO · SOMENTE RASCUNHO</span>
-      <h3 id={uid+'-heading'}>Campos e templates — {moduleId}</h3>
+      <h3 id={uid+'-heading'}>Formulário de cadastro</h3>
       <p>Campos derivados dos JSON Schemas existentes no repositório, com labels de apresentação e validação local.</p>
     </div><span className="ce-schema-state"><LockKeyhole size={15}/> Sem escrita remota</span></div>
     <div className="ce-schema-template-select">

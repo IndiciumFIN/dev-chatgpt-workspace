@@ -66,6 +66,25 @@ export const primaryNav: NavNode[] = [
     ],
   },
   {
+    id: "pesquisa",
+    label: "Pesquisa",
+    dest: { kind: "section", slug: "pesquisa" },
+    groups: [
+      { label: "Research Studio", items: [
+        { id: "research-studio", label: "Studio de pesquisa", dest: { kind: "section", slug: "pesquisa", hash: "studio" } },
+        { id: "research-instrumentos", label: "Instrumentos", dest: { kind: "section", slug: "pesquisa", hash: "instrumentos" } },
+        { id: "research-etica", label: "Ética, LGPD e COI", dest: { kind: "section", slug: "pesquisa", hash: "etica" } },
+        { id: "research-riscos", label: "Riscos e impacto", dest: { kind: "section", slug: "pesquisa", hash: "riscos-impacto" } },
+      ]},
+      { label: "Participação", items: [
+        { id: "research-escuta", label: "Escuta cidadã", dest: { kind: "section", slug: "pesquisa", hash: "participacao" } },
+        { id: "research-propostas", label: "Propostas e cocriação", dest: { kind: "section", slug: "pesquisa", hash: "propostas" } },
+        { id: "research-consenso", label: "Consenso", dest: { kind: "section", slug: "pesquisa", hash: "consenso" } },
+        { id: "research-devolutiva", label: "Devolutiva", dest: { kind: "section", slug: "pesquisa", hash: "devolutiva" } },
+      ]},
+    ],
+  },
+  {
     id: "conteudos",
     label: "Conteúdos",
     dest: { kind: "section", slug: "conteudos" },

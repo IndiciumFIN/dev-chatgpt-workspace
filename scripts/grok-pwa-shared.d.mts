@@ -54,6 +54,11 @@ export declare function resolveOgTitle(
   site?: OgSite,
   appName?: string,
   host?: string,
+): string;
+export declare function resolveShareTitle(
+  site?: OgSite,
+  appName?: string,
+  host?: string,
   documentTitle?: string,
 ): string;
 export declare function siteHasCustomCard(site?: OgSite): boolean;

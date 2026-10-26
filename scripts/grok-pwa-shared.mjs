@@ -307,19 +307,32 @@ export function resolveOgTitle(
   site = {},
   appName = DEFAULT_APP_NAME,
   host = "",
-  documentTitle = "",
 ) {
-  // O título da PÁGINA vale mais que o nome da marca. Um site com uma rota
-  // por página não pode mandar o mesmo cartão de compartilhamento em todas:
-  // o nome da marca é o padrão quando a página não tem título próprio.
-  const fromDoc = String(documentTitle ?? "").trim();
-  if (fromDoc) return fromDoc;
+  // A IDENTIDADE do app: marca, host, nome do argumento. É o que o PWA
+  // (manifest, ícone, nome sob o ícone da tela inicial) mostra — e isso é do
+  // aplicativo, não da página.
   const fromSite = String(site.title ?? "").trim();
   if (fromSite) return fromSite;
   const fromHost = appNameFromHost(host);
   if (fromHost && fromHost !== DEFAULT_APP_NAME) return fromHost;
   const fromArg = String(appName ?? "").trim();
   return fromArg || DEFAULT_APP_NAME;
+}
+
+/**
+ * O título do CARTÃO DE COMPARTILHAMENTO. Um site com uma rota por página não
+ * pode mandar o mesmo cartão em todas: o título da página vence e a marca é
+ * o padrão de quem não tem título próprio.
+ */
+export function resolveShareTitle(
+  site = {},
+  appName = DEFAULT_APP_NAME,
+  host = "",
+  documentTitle = "",
+) {
+  const fromDoc = String(documentTitle ?? "").trim();
+  if (fromDoc) return fromDoc;
+  return resolveOgTitle(site, appName, host);
 }
 
 export function siteHasCustomCard(site = {}) {
@@ -349,7 +362,7 @@ export function grokOgHeadTags({
   documentTitle = "",
   cwd = process.cwd(),
 } = {}) {
-  const title = resolveOgTitle(site, appName, host, documentTitle);
+  const title = resolveShareTitle(site, appName, host, documentTitle);
   const publicHost = resolvePublicHost(host);
   const tags = [
     `<meta name="twitter:card" content="summary_large_image">`,
@@ -442,12 +455,9 @@ export function injectGrokPwaHead(html, ctx = {}) {
   if (typeof html !== "string") return html;
   const { site, projectId, creator, creatorId, host, cwd } = normalizeHeadContext(ctx);
   const documentTitle = titleFromDocument(html);
-  const appName = resolveOgTitle(
-    site,
-    ctx.appName ?? DEFAULT_APP_NAME,
-    host,
-    documentTitle,
-  );
+  // O appName que alimenta as etiquetas do PWA é a identidade do app; o
+  // título da página só entra no cartão de compartilhamento.
+  const appName = resolveOgTitle(site, ctx.appName ?? DEFAULT_APP_NAME, host);
   let next = stripShareMetaTags(html);
   if (!readGrokExtensionsEnabled()) next = stripGrokExtensionsScript(next);
 

@@ -37,7 +37,7 @@ export function validateContinuity(manifest,{
   else for(const item of manifest.capabilities){
     if(!item.id || !Array.isArray(item.required_files)||!item.required_files.length)
       errors.push('Incomplete capability entry');
-    if(/PRODUCTION_DEPLOYED|CORPORATE_ADMITTED|REMOTE_WRITE_ACTIVE/.test(item.state??''))
+    if(/^(PRODUCTION_DEPLOYED|CORPORATE_ADMITTED|REMOTE_WRITE_ACTIVE)$/.test(item.state??''))
       errors.push('Unverified operational claim '+item.id);
     for(const p of item.required_files??[]){
       if(!safePath(p)||!pathExists(p))errors.push('Missing/unsafe artifact '+p);

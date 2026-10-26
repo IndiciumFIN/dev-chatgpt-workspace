@@ -28,7 +28,7 @@ A projeção YOUTH cobre descoberta de profissões, Enfermagem como carreira, re
 
 ## Cobertura DB-first ampliada
 
-Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 15 schemas candidatos.
+Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 23 schemas candidatos.
 
 ## Dados pessoais
 
@@ -52,3 +52,10 @@ Ambas permanecem `noindex, nofollow` até revisão e promoção formal.
 
 ## Pendências remanescentes
 O checklist escopado está em `docs/PENDENCIAS-CAREER-YOUTH-CANDIDATE-v0.1.0.md`. As maiores pendências são fontes externas atuais, revisão humana/Kernel, conteúdo editorial qualificado, jurisdições e governança multiusuário.
+
+
+## Source / Evidence / Acquisition
+
+A fundação agora reutiliza os contratos CKO existentes de `source`, `authority_binding`, `relation` e `projection`, além de `projection_request` / `resource_binding` editoriais. O banco materializa Source, Authority Binding, Ingestion Run, registros reais de Opportunity/Learning/Market, contratos de projeção e governança de capacidades.
+
+O validador `scripts/validate-career-acquisition-batch.mjs` exige fonte `SOURCE_QUALIFIED`, URI, SHA-256 fornecido, dedupe key e coerência temporal. Ele não grava no banco.

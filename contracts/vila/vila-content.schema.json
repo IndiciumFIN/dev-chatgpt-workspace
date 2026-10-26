@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vila:content:0.1.0",
+  "title": "Vila Candidate Content",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "summary",
+    "symbol",
+    "ageBand",
+    "sourceRef",
+    "state",
+    "templateId",
+    "steps"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^VILA\\\\.[A-Z]+\\\\.[0-9]{3}$"
+    },
+    "kind": {
+      "enum": [
+        "mission",
+        "story",
+        "emotion"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 5
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "ageBand": {
+      "enum": [
+        "6-9",
+        "10-12",
+        "all"
+      ]
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "const": "CANDIDATE"
+    },
+    "templateId": {
+      "const": "VILA.TPL.EDUCATIONAL-CARD"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    }
+  }
+}

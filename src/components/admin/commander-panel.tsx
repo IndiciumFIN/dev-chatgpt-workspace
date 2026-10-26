@@ -1,3 +1,5 @@
+import handoffs from '../../../registers/commander/lanes.v1.json';
+import queue from '../../../registers/pmo/queue.v1.json';
 import { useState, type FormEvent } from 'react';
 import {
   AlertTriangle,
@@ -108,6 +110,30 @@ export function CommanderPanel() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="ce-admin-panel" data-testid="commander-handoff-inbox" aria-labelledby="commander-handoff-heading">
+        <div className="ce-admin-panel-heading">
+          <div>
+            <h2 id="commander-handoff-heading">Atividades especializadas · entregas</h2>
+            <p>Ordens do PMO canônico. O GitHub recebe artefatos; ainda não existe despacho remoto de agentes.</p>
+          </div>
+          <span className="ce-admin-indicator ce-admin-indicator--warn">Não despachadas</span>
+        </div>
+        <div className="ce-commander-grid">
+          {handoffs.lanes.map(lane => {
+            const item = queue.items.find(wo => wo.id === lane.workOrderId);
+            return <article className="ce-commander-capability" key={lane.id}>
+              <span className="ce-commander-icon"><UsersRound size={18} aria-hidden="true" /></span>
+              <div>
+                <h3>{lane.id} · {lane.workOrderId}</h3>
+                <p>{lane.expectedArtifact}</p>
+                <small>PMO: {item?.status ?? 'WO ausente'} · Agente: não despachado · Papel: {lane.role}</small>
+                <p><a href={lane.issueUrl} target="_blank" rel="noopener noreferrer">Ver instruções e entregar artefatos no GitHub</a></p>
+              </div>
+            </article>;
+          })}
+        </div>
       </section>
 
       <section className="ce-admin-panel" aria-labelledby="commander-draft-heading">

@@ -161,7 +161,6 @@ export function AdminConsole() {
       <button type="button" className="ce-admin-mobile-launch" aria-label="Abrir macrogrupos e módulos" aria-haspopup="dialog" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen(true)}>
         <Menu size={19} aria-hidden="true" /><span><strong>{macroInView?.title ?? 'Menu'}</strong><small>{tab === 'overview' ? 'Visão geral' : moduleInView.title}</small></span><ChevronRight size={17} aria-hidden="true"/>
       </button>
-      <Link className="ce-admin-mobile-command" to="/central-comando"><span>Comando</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
     </div>
     <dialog ref={mobileDialogRef} className="ce-admin-mobile-dialog" aria-label="Navegar pelos macrogrupos" onClose={() => setMobileMenuOpen(false)} onClick={event => { if (event.target === mobileDialogRef.current) setMobileMenuOpen(false); }}>
       <div className="ce-admin-mobile-dialog-head"><strong>Administração · Navegação</strong><button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Fechar navegação"><X size={20} aria-hidden="true"/></button></div>

@@ -75,8 +75,7 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting,onEditRecord}:{mod
  function changeSub(s:string){setSub(s);setMode('records');setSearch('');setStatus('all');setLimit(12);}
  return <section className="ce-workspace" aria-labelledby="ce-workspace-title">
    <header className="ce-workspace-head">
-     <div><span className="ce-workspace-eyebrow">{module.group} · {group?.title} / {moduleId}</span><h3 id="ce-workspace-title">{module.title}</h3><p>{module.purpose}</p></div>
-     <span className="ce-workspace-state"><LockKeyhole size={15}/> Preview · acesso restrito</span>
+     <div><span className="ce-workspace-eyebrow">{group?.title}</span><h3 id="ce-workspace-title">{module.title}</h3><p>{module.purpose}</p></div>
    </header>
    <div className="ce-workspace-nav">
      <strong><FolderTree size={16}/> Submódulos</strong>
@@ -86,7 +85,7 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting,onEditRecord}:{mod
    </div>
    <div className="ce-workspace-main">
      <header className="ce-workspace-current">
-       <div><span className="ce-workspace-eyebrow">ÁREA DE TRABALHO</span><h4>{sub}</h4></div>
+       <div><span className="ce-workspace-eyebrow">{module.title}</span><h4>{sub}</h4></div>
        <span>{available.length?available.length+' registro(s) indexado(s)':'Sem registros indexados nesta fonte'}</span>
      </header>
      <div className="ce-workspace-views" role="tablist" aria-label="Visualizações do submódulo">

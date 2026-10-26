@@ -36,6 +36,7 @@ describe('import reconciliation SQL — isolated PGlite',()=>{
      await db.exec("insert into cko_staging.import_chunks(import_package_id,chunk_index,first_row,last_row,chunk_sha256) values('P1',0,1,1,repeat('d',64));");
      await db.exec("insert into cko_staging.import_row_candidates(import_package_id,chunk_index,row_number,row_sha256,profile_ref,profile_version,candidate_payload) values('P1',0,1,repeat('e',64),'sources','v1','{}');");
      await db.exec("insert into cko_staging.import_reconciliation_runs(reconciliation_id,import_package_id,profile_ref,profile_version,lookup_state) values('00000000-0000-4000-8000-000000000001','P1','sources','v1','NOT_RUN');");
+     await assert.rejects(db.exec("insert into cko_staging.import_reconciliation_rows(reconciliation_id,import_package_id,row_number,classification) values('00000000-0000-4000-8000-000000000001','P1',1,'NEW_CANDIDATE')"),/requires complete lookup/i);
      await db.exec("insert into cko_staging.import_reconciliation_rows(reconciliation_id,import_package_id,row_number,classification) values('00000000-0000-4000-8000-000000000001','P1',1,'HOLD_NO_CATALOG');");
      await db.exec("insert into cko_staging.import_lifecycle_events(import_package_id,reconciliation_id,event_type,actor_ref,event_evidence_ref) values('P1','00000000-0000-4000-8000-000000000001','RECONCILED','tester','evidence://test');");
      await assert.rejects(db.exec("update cko_staging.import_reconciliation_rows set classification='NEW_CANDIDATE' where row_number=1"),/append-only/);

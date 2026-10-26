@@ -451,3 +451,157 @@ insert into career_youth_activity_candidate(id,kind,title,description,linked_mod
 ('YACT-QUIZ','QUIZ','Quiz: conhecendo a Enfermagem','Quiz educativo alimentado por conteúdo previamente qualificado.','MOD-YOUTH-NURSING','HOLD_HUMAN'),
 ('YACT-GAME','GAME','Jogo de jornada profissional','Experiência lúdica que conecta etapas de formação, skills e oportunidades do mesmo banco.','MOD-YOUTH-GAMES','HOLD_HUMAN')
 on conflict(id) do nothing;
+
+
+-- Source/evidence/acquisition layer aligned to existing CKO source + authority_binding + projection contracts.
+create table if not exists career_source_candidate (
+  id text primary key,
+  source_type text not null check (source_type in ('OFFICIAL_LAW','REGULATOR','STANDARD','TERMINOLOGY','PRIMARY_STUDY','GUIDELINE','TEXTBOOK','DATASET_API','SOFTWARE','IMAGE','INTERNAL_GOVERNED')),
+  title text not null,
+  authority text not null,
+  uri text not null,
+  pinpoint text not null,
+  rights text not null check (rights in ('UNKNOWN','PERMITTED','RESTRICTED','LICENSED','PUBLIC_DOMAIN','NOT_APPLICABLE')),
+  jurisdiction text not null,
+  retrieved_at date not null,
+  sha256 text not null check (sha256 ~ '^[a-f0-9]{64}$'),
+  snapshot_ref text not null,
+  effective_from date,
+  effective_until date,
+  language text,
+  status text not null check (status in ('CANDIDATE','SOURCE_QUALIFIED','HOLD_HUMAN','RETIRED'))
+);
+
+create table if not exists career_authority_binding_candidate (
+  id text primary key,
+  field_path text not null,
+  requirement_id text not null,
+  source_id text not null references career_source_candidate(id),
+  authority_class text not null check (authority_class in ('REGULATORY','TECHNICAL_STANDARD','AUTHORITATIVE_TERMINOLOGY','CLINICAL_EVIDENCE','INTERNAL_NONCLINICAL')),
+  jurisdiction text not null,
+  applicable_from date not null,
+  applicable_until date,
+  decision text not null check (decision in ('ALLOW','HOLD_HUMAN','REJECT','NOT_APPLICABLE_JUSTIFIED')),
+  status text not null check (status in ('CANDIDATE','EVIDENCE_BOUND','HOLD_HUMAN','ASSURED'))
+);
+
+create table if not exists career_ingestion_run_candidate (
+  id text primary key,
+  source_id text not null references career_source_candidate(id),
+  object_family text not null check (object_family in ('OPPORTUNITY','LEARNING_RESOURCE','MARKET_OBSERVATION','JURISDICTION_REQUIREMENT','EDITORIAL_SOURCE')),
+  started_at timestamptz not null default now(),
+  completed_at timestamptz,
+  input_count integer not null default 0 check (input_count >= 0),
+  accepted_count integer not null default 0 check (accepted_count >= 0),
+  rejected_count integer not null default 0 check (rejected_count >= 0),
+  deduplicated_count integer not null default 0 check (deduplicated_count >= 0),
+  state text not null check (state in ('PLANNED','IMPORTED','VALIDATED','REJECTED','HOLD_HUMAN')),
+  evidence_ref text
+);
+
+create table if not exists career_opportunity_candidate (
+  id text primary key,
+  type_id text not null references career_opportunity_type_candidate(id),
+  source_id text not null references career_source_candidate(id),
+  ingestion_run_id text references career_ingestion_run_candidate(id),
+  title text not null,
+  organization text not null,
+  jurisdiction text not null,
+  location_text text,
+  source_locator text not null,
+  published_at timestamptz,
+  expires_at timestamptz,
+  dedupe_key text not null unique,
+  status text not null check (status in ('SOURCE_QUALIFIED','EVIDENCE_BOUND','EXPIRED','HOLD_HUMAN','RETIRED'))
+);
+
+create table if not exists career_learning_resource_candidate (
+  id text primary key,
+  resource_type_id text not null references career_learning_resource_type_candidate(id),
+  source_id text not null references career_source_candidate(id),
+  ingestion_run_id text references career_ingestion_run_candidate(id),
+  title text not null,
+  provider text not null,
+  modality text,
+  workload_text text,
+  price_text text,
+  jurisdiction text not null,
+  source_locator text not null,
+  available_from timestamptz,
+  available_until timestamptz,
+  dedupe_key text not null unique,
+  status text not null check (status in ('SOURCE_QUALIFIED','EVIDENCE_BOUND','EXPIRED','HOLD_HUMAN','RETIRED'))
+);
+
+create table if not exists career_market_observation_candidate (
+  id text primary key,
+  signal_id text not null references career_market_signal_candidate(id),
+  source_id text not null references career_source_candidate(id),
+  ingestion_run_id text references career_ingestion_run_candidate(id),
+  role_ref text references career_role_candidate(id),
+  jurisdiction text not null,
+  statistic_kind text not null check (statistic_kind in ('POSTED_SALARY','OFFICIAL_STATISTIC','SURVEY_ESTIMATE','MARKET_INDEX')),
+  observed_value numeric not null,
+  unit text not null,
+  period_start date,
+  period_end date,
+  methodology_note text not null,
+  status text not null check (status in ('SOURCE_QUALIFIED','EVIDENCE_BOUND','HOLD_HUMAN','RETIRED'))
+);
+
+create table if not exists career_projection_contract_candidate (
+  id text primary key,
+  projection_kind text not null check (projection_kind in ('CV','COVER_LETTER','PORTFOLIO','PROFESSIONAL_SUMMARY','EDITORIAL','YOUTH_GUIDE')),
+  audience text not null check (audience in ('PROFESSIONAL','YOUTH','BOTH')),
+  source_object_family text not null,
+  cko_projection_schema_ref text not null,
+  editorial_projection_schema_ref text,
+  allowed_channels text not null,
+  sources_gate text not null check (sources_gate in ('PASS','HOLD','FAIL','NOT_APPLICABLE')),
+  rights_gate text not null check (rights_gate in ('PASS','HOLD','FAIL','NOT_APPLICABLE')),
+  a11y_gate text not null check (a11y_gate in ('PASS','HOLD','FAIL','NOT_APPLICABLE')),
+  privacy_gate text not null check (privacy_gate in ('PASS','HOLD','FAIL','NOT_APPLICABLE')),
+  human_gate text not null check (human_gate in ('PASS','HOLD','FAIL','NOT_APPLICABLE')),
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN','ASSURED'))
+);
+
+create table if not exists career_capability_governance_candidate (
+  id text primary key,
+  capability_ref text not null,
+  identity_required boolean not null default false,
+  consent_required boolean not null default false,
+  moderation_required boolean not null default false,
+  report_required boolean not null default false,
+  block_required boolean not null default false,
+  audit_log_required boolean not null default true,
+  retention_policy_required boolean not null default true,
+  age_policy_required boolean not null default false,
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN','ASSURED'))
+);
+
+insert into career_projection_contract_candidate(
+  id,projection_kind,audience,source_object_family,cko_projection_schema_ref,editorial_projection_schema_ref,allowed_channels,
+  sources_gate,rights_gate,a11y_gate,privacy_gate,human_gate,status
+) values
+('PROJC-CV','CV','PROFESSIONAL','CareerProfile+CareerSkill+CareerCredential','contracts/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.schema.json','contracts/cko-editorial/schemas/projection_request.schema.json','WEB,PDF,PRINT','PASS','PASS','HOLD','PASS','HOLD','HOLD_HUMAN'),
+('PROJC-COVER','COVER_LETTER','PROFESSIONAL','CareerProfile+CareerOpportunity','contracts/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.schema.json','contracts/cko-editorial/schemas/projection_request.schema.json','WEB,PDF,PRINT','HOLD','PASS','HOLD','PASS','HOLD','HOLD_HUMAN'),
+('PROJC-PORTFOLIO','PORTFOLIO','PROFESSIONAL','CareerProfile+CareerSkill+CareerCredential+CareerMilestone','contracts/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.schema.json','contracts/cko-editorial/schemas/projection_request.schema.json','WEB,PDF,PRINT','PASS','PASS','HOLD','PASS','HOLD','HOLD_HUMAN'),
+('PROJC-YOUTH-GUIDE','YOUTH_GUIDE','YOUTH','CareerRole+CareerPath+CareerEditorialProjection','contracts/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.schema.json','contracts/cko-editorial/schemas/projection_request.schema.json','WEB,PDF,PRINT','HOLD','HOLD','HOLD','PASS','HOLD','HOLD_HUMAN')
+on conflict(id) do nothing;
+
+insert into career_capability_governance_candidate(
+  id,capability_ref,identity_required,consent_required,moderation_required,report_required,block_required,audit_log_required,retention_policy_required,age_policy_required,status
+) values
+('CG-NET-MENTOR','NET-MENTOR',true,true,true,true,true,true,true,false,'HOLD_HUMAN'),
+('CG-NET-NETWORK','NET-NETWORK',true,true,true,true,true,true,true,false,'HOLD_HUMAN'),
+('CG-NET-GROUP','NET-GROUP',true,true,true,true,true,true,true,true,'HOLD_HUMAN'),
+('CG-NET-SQUAD','NET-SQUAD',true,true,true,true,true,true,true,true,'HOLD_HUMAN'),
+('CG-YOUTH-REFLECT','MOD-YOUTH-REFLECT',false,false,false,false,false,true,false,true,'CANDIDATE'),
+('CG-YOUTH-GAMES','MOD-YOUTH-GAMES',false,false,false,false,false,true,false,true,'CANDIDATE'),
+('CG-WORKLIFE','MOD-WORKLIFE',false,false,false,false,false,true,true,false,'HOLD_HUMAN')
+on conflict(id) do nothing;
+
+create index if not exists idx_career_source_status on career_source_candidate(status,jurisdiction);
+create index if not exists idx_career_opportunity_type_status on career_opportunity_candidate(type_id,status);
+create index if not exists idx_career_learning_type_status on career_learning_resource_candidate(resource_type_id,status);
+create index if not exists idx_career_market_signal_status on career_market_observation_candidate(signal_id,status);

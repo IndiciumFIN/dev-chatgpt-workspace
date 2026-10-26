@@ -194,7 +194,9 @@ export const readInstPage = createServerFn({ method: "GET" })
     `;
     const blocks = sections
       .map((section, index) => ({ id: `${slug}-${index + 1}`, title: section.title, text: section.body.replace(/\s+/g, " ").trim(), items: [] }))
-      .filter((block) => block.text.length >= 24);
+      // O marcador DERBY (5 caracteres) é a pendência NOMEADA: some do texto, mas
+      // não pode sumir da tela. Filtro por tamanho escondia a pendência do visitante.
+      .filter((block) => block.text.length > 0);
     return { title: page.title, kicker: page.kicker, lead: page.lead.replace(/\s+/g, " ").trim(), blocks };
   });
 
@@ -350,7 +352,7 @@ export const readLiveSection = createServerFn({ method: "GET" })
               text: item.body.replace(/\s+/g, " ").trim(),
               items: [],
             }))
-            .filter((block) => block.text.length >= 24),
+            .filter((block) => block.text.length > 0),
         };
       }
     }

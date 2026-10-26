@@ -16,7 +16,7 @@ async function assertNoOverflow(page,label) {
   const m=await page.evaluate(()=>{
     const html=document.documentElement;
     const el=document.querySelector('.ce-admin, .cc-page');
-    return {viewport:window.innerWidth,documentWidth:html.scrollWidth,appWidth:Math.ceil(el?.scrollWidth??0),appClient:Math.ceil(el?.clientWidth??0)};
+    return {viewport:window.innerWidth,visual:Math.round(window.visualViewport?.width??0),documentWidth:html.scrollWidth,appWidth:Math.ceil(el?.scrollWidth??0),appClient:Math.ceil(el?.clientWidth??0),offenders:[...el.querySelectorAll('*')].filter(n=>{const r=n.getBoundingClientRect();const st=getComputedStyle(n);return st.display!=='none'&&(n.scrollWidth>n.clientWidth+4||r.right>el.clientWidth+4);}).sort((a,b)=>(b.scrollWidth-b.clientWidth)-(a.scrollWidth-a.clientWidth)).slice(0,12).map(n=>({tag:n.tagName,cls:typeof n.className==='string'?n.className.slice(0,80):'',scroll:n.scrollWidth,client:n.clientWidth,left:Math.round(n.getBoundingClientRect().left),right:Math.round(n.getBoundingClientRect().right)}))};
   });
   summary.push({label,...m});
   assert.ok(m.appClient>0,label+': main not rendered');
@@ -52,8 +52,8 @@ try{
     if(width<960) await select.selectOption('templates');
     else await nav.getByRole('button',{name:/Templates/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();
-    await assertNoOverflow(p,'admin-templates-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-templates-'+width+'.png');
+    await assertNoOverflow(p,'admin-templates-'+width);
     if(width<960) await select.selectOption('content');
     else await nav.getByRole('button',{name:/Conteúdos/}).click();
     await p.locator('#admin-tool-title').waitFor();

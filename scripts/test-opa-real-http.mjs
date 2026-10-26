@@ -4,23 +4,13 @@
  */
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdtemp, writeFile, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { createOpaImportReadEvaluator } from '../src/core/governance/import-opa-read.server.ts';
 
-const binary = process.argv[2];
-if (!binary) throw new Error('Provide a SHA256-verified OPA executable path.');
-const root = await mkdtemp(join(tmpdir(), 'cko-opa-http-'));
+const binary = process.argv[2], signedBundle = process.argv[3], verificationKey = process.argv[4];
+if (!binary || !signedBundle || !verificationKey)
+  throw new Error('Pass a SHA256-verified OPA binary, signed bundle and its verification key.');
 const address = 'http://127.0.0.1:18181';
-const policy = 'contracts/cko-governance/opa/import_read.rego';
 const expectedBundleSha256 = 'b'.repeat(64);
-const fixture = {
-  cko_trusted: {
-    bundle_sha256: expectedBundleSha256,
-    import_read_grants: { 'verified-ci-actor': { sources: true } },
-  },
-};
 const input = {
   actorId: 'verified-ci-actor',
   profileId: 'sources',
@@ -31,12 +21,11 @@ const input = {
 let processLog = '';
 let child;
 try {
-  const file = join(root,'trusted-data.json');
-  await writeFile(file, JSON.stringify(fixture), { mode: 0o600 });
   child = spawn(binary, [
     'run','--server','--addr','127.0.0.1:18181',
     '--set','decision_logs.console=true',
-    policy,file,
+    '--bundle',signedBundle,
+    '--verification-key',verificationKey,
   ], { stdio: ['ignore','pipe','pipe'] });
   child.stdout.on('data', part => {processLog = (processLog + String(part)).slice(-6000);});
   child.stderr.on('data', part => {processLog = (processLog + String(part)).slice(-6000);});
@@ -49,7 +38,7 @@ try {
     } catch { /* startup in progress */ }
     await new Promise(resolve => setTimeout(resolve,100));
   }
-  assert.ok(ready,'OPA loopback server did not start: '+processLog);
+  assert.ok(ready,'OPA signed-bundle loopback server did not start: '+processLog);
   // Test-only HTTPS-to-loopback shim. Production adapter still forbids HTTP.
   const evaluator = createOpaImportReadEvaluator({
     endpoint:'https://opa-ci-only.invalid/v1/data/cko/import_read',
@@ -76,7 +65,7 @@ try {
   assert.ok(invalidAction.ok);
   const payload = await invalidAction.json();
   assert.equal(payload?.result?.allow,false,'OPA must deny write escalation');
-  console.log('PASS OPA REAL REST: decision_id, scoped read, unknown actor denial, absent grant denial, write denial.');
+  console.log('PASS OPA SIGNED BUNDLE + REAL REST: decision_id, scoped read, unknown actor denial, absent grant denial, write denial.');
 } finally {
   if (child) {
     child.kill('SIGTERM');
@@ -86,5 +75,4 @@ try {
       setTimeout(resolve,1500);
     });
   }
-  await rm(root,{recursive:true,force:true});
 }

@@ -46,7 +46,7 @@ function secoes(): RouteEntry[] {
     kind: "secao" as const,
     title: section.title,
     description: section.lead,
-    indexavel: true,
+    indexavel: !["carreira","jovens"].includes(section.slug),
   }));
 }
 

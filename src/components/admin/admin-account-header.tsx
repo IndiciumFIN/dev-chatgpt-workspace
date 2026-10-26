@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { Bell, Check, LogIn, LogOut, Settings2, UserRound, X } from 'lucide-react';
+import { Bell, Check, LogIn, LogOut, Settings2, X } from 'lucide-react';
 import { authEnabled, signOut } from '@/lib/auth/client';
 import { hasGateSessionMarker } from '@/lib/auth/gate-session-marker';
 import { useCurrentUserState } from '@/lib/auth/use-current-user';

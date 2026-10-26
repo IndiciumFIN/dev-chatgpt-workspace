@@ -42,7 +42,7 @@ describe('import reconciliation SQL — isolated PGlite',()=>{
      await assert.rejects(db.exec("update cko_staging.import_reconciliation_rows set classification='NEW_CANDIDATE' where row_number=1"),/append-only/);
      await assert.rejects(db.exec("delete from cko_staging.import_lifecycle_events"),/append-only/);
      await db.exec("insert into cko_staging.import_reconciliation_runs(reconciliation_id,import_package_id,profile_ref,profile_version,lookup_state) values('00000000-0000-4000-8000-000000000002','P2','sources','v1','NOT_RUN');");
-     await assert.rejects(db.exec("insert into cko_staging.import_reconciliation_rows(reconciliation_id,import_package_id,row_number,classification) values('00000000-0000-4000-8000-000000000002','P1',1,'NEW_CANDIDATE')"),/foreign key/i);
+     await assert.rejects(db.exec("insert into cko_staging.import_reconciliation_rows(reconciliation_id,import_package_id,row_number,classification) values('00000000-0000-4000-8000-000000000002','P1',1,'HOLD_NO_CATALOG')"),/foreign key/i);
      await assert.rejects(db.exec("insert into cko_staging.import_reconciliation_runs(import_package_id,profile_ref,profile_version,lookup_state) values('P1','sources','v1','LOOKUP_COMPLETE_UNATTESTED')"),/check constraint/i);
    } finally {await db.close();}
  });

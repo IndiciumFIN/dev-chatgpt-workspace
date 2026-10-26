@@ -37,6 +37,11 @@ const required = [
   "schemas/career-projection-contract.schema.json",
   "schemas/career-capability-governance.schema.json",
   "scripts/validate-career-acquisition-batch.mjs",
+  "migrations/0005_career_editorial_content_candidate.sql",
+  "schemas/career-editorial-document.schema.json",
+  "schemas/career-editorial-block.schema.json",
+  "registers/career/source-snapshots.v1.json",
+  "scripts/check-career-editorial-content.mjs",
   "registers/career/candidate.v1.json",
   "registers/governance/candidates/WO-CAREER-YOUTH-001.json",
   "registers/governance/candidates/TASK-CAREER-YOUTH-001.json",
@@ -158,7 +163,7 @@ check(
 );
 check(
   "ui-consome-capacidades-estendidas",
-  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance"].every((key) => ui.includes("snapshot." + key)),
+  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance","editorialDocuments","editorialBlocks"].every((key) => ui.includes("snapshot." + key)),
 );
 check(
   "ui-sem-catalogo-paralelo",
@@ -186,8 +191,8 @@ check(
     registry.kernelAdmission === "NOT_SUBMITTED",
 );
 check(
-  "registry-23-schemas",
-  registry.schemas?.length === 23 && registry.schemas.every(existsSync),
+  "registry-25-schemas",
+  registry.schemas?.length === 25 && registry.schemas.every(existsSync),
   String(registry.schemas?.length ?? 0),
 );
 check(
@@ -203,6 +208,19 @@ check(
     existsSync(registry.acquisition.validator) &&
     registry.acquisition.writesPerformedByValidator === false &&
     registry.acquisition.requiresQualifiedSource === true,
+);
+check(
+  "editorial-content-pack",
+  registry.editorialContent?.documentCount === 17 &&
+    registry.editorialContent?.validator === "scripts/check-career-editorial-content.mjs" &&
+    registry.editorialContent?.humanGate === "HOLD" &&
+    registry.editorialContent?.publicReleaseAuthorized === false,
+);
+check(
+  "database-migrations",
+  Array.isArray(registry.database?.migrations) &&
+    registry.database.migrations.length === 2 &&
+    registry.database.migrations.every(existsSync),
 );
 check(
   "duas-projecoes",

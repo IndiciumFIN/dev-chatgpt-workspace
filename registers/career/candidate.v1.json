@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "0.1.0",
+  "registryId": "CE-CAREER-YOUTH-DBFIRST-CANDIDATE-001",
+  "status": "CANDIDATE_HOLD",
+  "branch": "feat/career-youth-db-first-20261026",
+  "publicationAuthorized": false,
+  "kernelAdmission": "NOT_SUBMITTED",
+  "database": {
+    "engine": "PGLite",
+    "scope": "local_ephemeral_candidate",
+    "remoteConnections": false,
+    "migration": "migrations/0004_career_youth_candidate.sql"
+  },
+  "projections": [
+    {
+      "id": "PROJ-CAREER",
+      "route": "/secao/carreira",
+      "audience": "PROFESSIONAL"
+    },
+    {
+      "id": "PROJ-YOUTH",
+      "route": "/secao/jovens",
+      "audience": "YOUTH"
+    }
+  ],
+  "schemas": [
+    "schemas/career-module.schema.json",
+    "schemas/career-role.schema.json",
+    "schemas/career-skill.schema.json",
+    "schemas/career-path.schema.json",
+    "schemas/career-opportunity.schema.json",
+    "schemas/career-profile.schema.json",
+    "schemas/career-application.schema.json",
+    "schemas/career-credential.schema.json",
+    "schemas/career-editorial-projection.schema.json"
+  ],
+  "canonicalObjects": [
+    "CareerModule",
+    "CareerRole",
+    "CareerSkill",
+    "CareerPath",
+    "CareerOpportunityType",
+    "CareerProfile",
+    "CareerApplication",
+    "CareerCredential",
+    "CareerEditorialProjection"
+  ],
+  "safeguards": [
+    "ui_reads_modules_from_database",
+    "editorial_separated_from_functional_objects",
+    "no_remote_database",
+    "no_identifying_profile_fields",
+    "no_live_job_without_verified_source",
+    "no_salary_without_verified_source",
+    "youth_reflection_not_psychometric",
+    "jurisdiction_requirements_source_bound"
+  ]
+}

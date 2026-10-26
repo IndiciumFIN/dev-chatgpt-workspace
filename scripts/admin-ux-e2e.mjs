@@ -73,6 +73,19 @@ try{
     }
     await selectModule(p,width,'G03','M18');
     await p.locator('#ce-module-fallback-title').getByText('Governança Clínica e Segurança').waitFor();
+    await p.getByRole('heading',{name:'Campos e templates — M18'}).waitFor();
+    if(width===390){
+      const form=p.locator('.ce-admin-module-fallback .ce-schema');
+      await form.getByRole('textbox',{name:/Identificador canônico/}).fill('ID com espaços!');
+      await form.getByText(/Use apenas letras, números/).waitFor();
+      await form.getByRole('textbox',{name:/Identificador canônico/}).fill('CKO:CLIN-001');
+      await form.getByRole('button',{name:/Revisar rascunho/}).click();
+      await form.getByText(/Há \d+ erro/).first().waitFor();
+      await form.getByRole('combobox',{name:/Template \/ contrato/}).selectOption('safety_check');
+      await form.getByRole('heading',{name:'Campos e templates — M18'}).waitFor();
+      const moduleTemplate=await form.getByRole('combobox',{name:/Template \/ contrato/}).inputValue();
+      assert.equal(moduleTemplate,'safety_check','schema template must update on selection');
+    }
     await assertNoOverflow(p,'admin-planned-module-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-module-M18-'+width+'.png');
     if(width===390){

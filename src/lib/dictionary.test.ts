@@ -6,7 +6,7 @@ import { PGlite } from "@electric-sql/pglite";
 test("o dicionário nomeia cada tabela e a coluna estrutural", async () => {
   const db = new PGlite();
   const base = new URL("../../migrations/", import.meta.url);
-  for (const name of ["0006_governance.sql", "0008_canonical.sql", "0025_dictionary.sql", "0026_control_plane.sql", "0027_kernel_admission.sql", "0028_order_policy_rules.sql", "0029_retire_duplicates.sql", "0030_stored_files.sql", "0032_public_files.sql", "0033_cross_keys.sql"]) {
+  for (const name of ["0006_governance.sql", "0008_canonical.sql", "0025_dictionary.sql", "0026_control_plane.sql", "0027_kernel_admission.sql", "0028_order_policy_rules.sql", "0029_retire_duplicates.sql", "0030_stored_files.sql", "0032_public_files.sql", "0033_cross_keys.sql", "0034_ops_record.sql"]) {
     await db.exec(await readFile(new URL(name, base), "utf8"));
   }
   await db.exec(await readFile(new URL("0025_dictionary.sql", base), "utf8"));

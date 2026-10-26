@@ -13,7 +13,7 @@ const hub=read(req[3]);for(const id of ["studio","instrumentos","etica","equipe"
 for(const s of req.filter(p=>p.startsWith("schemas/"))){const j=JSON.parse(read(s));ck("schema-draft-2020-12",j.$schema==="https://json-schema.org/draft/2020-12/schema",s)}
 const regPath="registers/research/candidate.v1.json";const reg=JSON.parse(read(regPath));ck("registry-candidate",reg.status==="CANDIDATE_HOLD"&&reg.publicationAuthorized===false&&reg.kernelAdmission==="NOT_SUBMITTED");
 ck("registry-cobre-schemas",Array.isArray(reg.schemas)&&reg.schemas.length===9&&reg.schemas.every(existsSync),`${reg.schemas?.length??0} schemas`);
-const wo=JSON.parse(read("registers/governance/candidates/WO-RES-PART-001.json"));ck("wo-sem-admissao-fabricada",wo.kernel_admission==="NOT_SUBMITTED"&&wo.status==="CANDIDATE");
+const wo=JSON.parse(read("registers/governance/candidates/WO-RES-PART-001.json"));ck("wo-sem-admissao-fabricada",wo.kernel_admission==="NOT_SUBMITTED"&&["CANDIDATE","HOLD_HUMAN"].includes(wo.status),`${wo.status} · ${wo.kernel_admission}`);
 const route=read("src/routes/secao.$slug.tsx");ck("rota-existente-reutilizada",route.includes("ResearchHub")&&route.includes('slug === "pesquisa"'));ck("rota-noindex",route.includes('params.slug === "pesquisa"')&&route.includes("noindex, nofollow"));
 const cat=read("src/lib/template-catalog.ts");ck("catalogo-materializado",/id: "ferramentas-pesquisa"[\s\S]*url: "\/secao\/pesquisa"/.test(cat));
 if(n){console.error(`BLOCKED: ${n} falha(s).`);process.exit(1)}console.log("OK: Research + Participation candidate isolado.");

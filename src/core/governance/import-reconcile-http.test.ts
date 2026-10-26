@@ -17,7 +17,7 @@ function deps():HttpDependencies{
  return {
   enabled:true,
   authenticate:async()=>{calls.auth++;return{id:'user-1'}},
-  authorize:async()=>{calls.opa++;return{allowed:true,decisionId:'OPA-REF',bundleSha256:bundle}},
+  authorize:async()=>{calls.opa++;return{allowed:true,decisionId:'OPA-REF',bundleSha256:bundle,requestNonce:'10000000-0000-4000-8000-000000000001'}},
   reconcile:async(_actor,profile,review)=>{
    calls.db++;
    return reconcileImportReview(review,profile,async ids=>({
@@ -69,9 +69,25 @@ describe('POST import reconcile — no canonical mutations',()=>{
    assert.equal(json.ok,true);assert.equal(json.operation,'READ_ONLY_RECONCILIATION');
    assert.equal(json.result.rows[0].classification,'NEW_CANDIDATE');
    assert.equal(json.canonical_writes,0);assert.equal(json.kernel_admitted,false);
+   assert.equal(json.receipt_state,'CANDIDATE_UNATTESTED');
+   assert.equal(json.opa_request_nonce,'10000000-0000-4000-8000-000000000001');
+   assert.match(json.mapping_sha256,/^[a-f0-9]{64}$/);
+   assert.match(json.comparison_sha256,/^[a-f0-9]{64}$/);
    assert.equal(json.result.databaseMutation,false);
    assert.equal(res.headers.get('cache-control'),'no-store');
    assert.deepEqual(calls,{auth:1,opa:1,db:1});
+ });
+ it('fails closed if the backend returns an inconsistent or forged candidate report',async()=>{
+   const d=deps();d.reconcile=async()=>({
+     type:'CKO_IMPORT_RECONCILIATION_CANDIDATE',destination:'public.users',
+     profileId:'policies',counts:{HOLD_INVALID_ROW:0,HOLD_NO_CATALOG:0,HOLD_INCOMPLETE_LOOKUP:0,
+       NEW_CANDIDATE:1,UNCHANGED_CANDIDATE:0,CONFLICT_HOLD:0},
+     rows:[{line:2,identifier:'POL-1',classification:'NEW_CANDIDATE',differingFields:[]}],
+     catalogReadPerformed:true,authorization:'NOT_REQUESTED',databaseMutation:false,admission:'NOT_SUBMITTED',
+   });
+   const res=await executeImportReconcileHttp(req(),d);
+   assert.equal(res.status,503);
+   assert.equal((await res.json()).code,'CATALOG_REPORT_INVALID');
  });
  it('fails closed if snapshot connection fails after OPA authorization',async()=>{
    const d=deps();d.reconcile=async()=>{throw Error('db offline')};

@@ -1,0 +1,18 @@
+import {test} from 'node:test';
+import {strict as assert} from 'node:assert';
+import {readFileSync} from 'node:fs';
+import {checkCommanderHandoffs} from './check-commander-handoffs.mjs';
+const d=JSON.parse(readFileSync('registers/commander/lanes.v1.json','utf8'));
+const p=JSON.parse(readFileSync('registers/pmo/queue.v1.json','utf8'));
+const s=JSON.parse(readFileSync('contracts/cko-schemas/agent.schema.json','utf8'));
+const copy=()=>structuredClone(d),issues=x=>checkCommanderHandoffs(x,p,s).join(' | ');
+test('agent handoff is valid read-only candidate',()=>assert.deepEqual(checkCommanderHandoffs(copy(),p,s),[]));
+test('refuse remote writes',()=>{let x=copy();x.governance.remoteWritesAllowed=true;assert.match(issues(x),/forbidden/)});
+test('refuse fake execution',()=>{let x=copy();x.lanes[0].dispatched=true;assert.match(issues(x),/falsely dispatched/)});
+test('refuse fake remote runtime',()=>{let x=copy();x.governance.dispatchImplemented=true;assert.match(issues(x),/not implemented/)});
+test('refuse nonexistent WO',()=>{let x=copy();x.lanes[0].workOrderId='WO-FAKE-123';assert.match(issues(x),/Unknown WO/)});
+test('refuse duplicate agent',()=>{let x=copy();x.lanes[1].id=x.lanes[0].id;assert.match(issues(x),/Duplicate agent/)});
+test('refuse noncanonical roles',()=>{let x=copy();x.lanes[0].role='SUPERUSER';assert.match(issues(x),/Noncanonical role/)});
+test('refuse duplicate issues',()=>{let x=copy();x.lanes[1].issueUrl=x.lanes[0].issueUrl;assert.match(issues(x),/duplicate issue/)});
+test('refuse shell allowance',()=>{let x=copy();x.lanes[1].allowlist.push('shell_exec');assert.match(issues(x),/Forbidden tool/)});
+test('refuse missing artifacts',()=>{let x=copy();x.governance.requiredOutputs.pop();assert.match(issues(x),/Missing required output/)});

@@ -47,7 +47,21 @@ try{
     const p=await browser.newPage({viewport:{width,height:mobile?780:900},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1,reducedMotion:'reduce'});
     wireErrors(p,'admin-'+width);
     await p.goto(base+'/admin',{waitUntil:'networkidle'});
-    await p.getByRole('heading',{name:'Centro de administração'}).waitFor();
+    await p.getByRole('banner',{name:'Cabeçalho da administração'}).waitFor();
+    assert.equal(await p.getByRole('button',{name:/Notificações/}).isVisible(),true,'notificações ausentes');
+    assert.equal(await p.getByRole('button',{name:'Configurações'}).isVisible(),true,'configurações ausentes');
+    assert.equal(await p.getByRole('button',{name:'Meu perfil'}).isVisible(),true,'avatar ausente');
+    assert.equal(await p.getByRole('button',{name:'Sair indisponível'}).isDisabled(),true,'prévia sem login não deve simular logout');
+    assert.equal(await p.getByText('Prévia administrativa local — não é a autoridade corporativa.').count(),0);
+    assert.equal(await p.getByText('Registro local carregado.').count(),0);
+    assert.equal(await p.getByText('MACROGRUPOS', {exact:true}).count(),0);
+    await p.getByRole('button',{name:'Configurações'}).click();
+    await p.getByRole('checkbox',{name:/Visualização compacta/}).check();
+    assert.equal(await p.locator('.ce-admin--compact').count(),1,'compact layout not active');
+    await p.getByRole('button',{name:'Configurações'}).click();
+    await p.getByRole('button',{name:/Notificações/}).click();
+    await p.getByRole('button',{name:'Consultar PMO'}).waitFor();
+    await p.getByRole('button',{name:/Notificações/}).click();
     await p.getByRole('heading',{name:'Visão geral'}).waitFor();
     const desktopNav=p.getByRole('navigation',{name:'Módulos da administração',exact:true});
     const mobileLaunch=p.locator('.ce-admin-mobile-launch');
@@ -78,7 +92,7 @@ try{
     await selectModule(p,width,'G03','M18');
     await p.getByRole('heading',{name:'Governança Clínica e Segurança'}).last().waitFor();
     await p.getByRole('tab',{name:'Formulários'}).click();
-    await p.getByRole('heading',{name:'Campos e templates — M18'}).waitFor();
+    await p.getByRole('heading',{name:'Formulário de cadastro'}).waitFor();
     if(width===390){
       const form=p.locator('.ce-workspace .ce-schema');
       await form.getByRole('textbox',{name:/Identificador canônico/}).fill('ID com espaços!');
@@ -87,7 +101,7 @@ try{
       await form.getByRole('button',{name:/Revisar rascunho/}).click();
       await form.getByText(/Há \d+ erro/).first().waitFor();
       await form.getByRole('combobox',{name:/Template \/ contrato/}).selectOption('safety_check');
-      await form.getByRole('heading',{name:'Campos e templates — M18'}).waitFor();
+      await form.getByRole('heading',{name:'Formulário de cadastro'}).waitFor();
       const moduleTemplate=await form.getByRole('combobox',{name:/Template \/ contrato/}).inputValue();
       assert.equal(moduleTemplate,'safety_check','schema template must update on selection');
     }

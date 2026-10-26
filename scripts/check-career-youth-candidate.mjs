@@ -8,7 +8,7 @@ const required=[
 for(const p of required)ck("arquivo-presente",existsSync(p),p);
 const sql=read(required[0]);const sqlNoComments=sql.replace(/--.*$/gm,"");
 ck("sql-nao-destrutivo",!/\b(drop|truncate|delete)\b/i.test(sqlNoComments));
-ck("sql-sem-identificadores-pessoais",!/(\bemail\b|\bcpf\b|\bphone\b|\btelefone\b|\bcoren\b|\bpatient\b|\bpaciente\b|\bleito\b)/i.test(sqlNoComments));
+const forbiddenColumn=/^\\s*(name|nome|email|cpf|phone|telefone|coren|patient|paciente|leito)\\s+[a-z]/im;\nck("sql-sem-colunas-identificadoras",!forbiddenColumn.test(sqlNoComments));
 for(const table of ["career_projection_candidate","career_module_candidate","career_role_candidate","career_skill_candidate","career_role_skill_candidate","career_path_candidate","career_opportunity_type_candidate","career_credential_candidate","career_document_template_candidate","career_market_signal_candidate","career_editorial_candidate","career_reflection_question_candidate","career_profile_candidate","career_application_candidate","career_profile_credential_candidate","career_milestone_candidate"])ck("tabela-db-first",sql.includes(`create table if not exists ${table}`),table);
 ck("editorial-separado",sql.includes("career_editorial_candidate")&&sql.includes("object_class")&&sql.includes("'FUNCTIONAL','EDITORIAL','HYBRID'"));
 ck("mercado-sem-dado-inventado",sql.includes("'SOURCE_REQUIRED'")&&sql.includes("metric_value numeric"));

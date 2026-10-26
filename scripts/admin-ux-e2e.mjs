@@ -191,7 +191,7 @@ try{
       assert.equal(await p.locator('#ce-import-col-policy_id').inputValue(),'policy_id','auto-mapping required');
       await p.getByRole('button',{name:'Validar lote'}).click();
       await p.getByRole('button',{name:/Exportar pacote JSON/}).waitFor();
-      assert.equal(await p.getByText('Bloqueadas',{exact:true}).count(),1,'HOLD counts should be visible');
+      assert.equal(await p.locator('.ce-import-stats').getByText('Bloqueadas',{exact:true}).count(),1,'HOLD counts should be visible');
       assert.equal(await p.locator('.ce-import-table tbody tr').count(),2,'review all lines');
       await assertNoOverflow(p,'admin-import-review-390');
       await screenshot(p,'admin-import-review-390.png');

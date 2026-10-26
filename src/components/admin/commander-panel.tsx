@@ -1,6 +1,7 @@
 import handoffs from '../../../registers/commander/lanes.v1.json';
 import queue from '../../../registers/pmo/queue.v1.json';
 import { useState, type FormEvent } from 'react';
+import { validateCommanderReadModel } from '../../lib/commander/read-model';
 import {
   AlertTriangle,
   Bot,
@@ -81,6 +82,8 @@ export function CommanderPanel() {
     setFeedback('Rascunho removido da memória desta página.');
   }
 
+  const modelIssues = validateCommanderReadModel(queue, handoffs);
+  if (modelIssues.length) return <section className="ce-admin-panel" role="alert"><h2>Commander indisponível</h2><p>Validação determinística de dados falhou; nenhuma atividade pode ser preparada.</p><code>{modelIssues.join(', ')}</code></section>;
   return (
     <div className="ce-commander">
       <section className="ce-admin-panel" aria-labelledby="commander-heading">

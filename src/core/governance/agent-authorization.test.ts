@@ -4,7 +4,7 @@ import { checkAgentToolPreflight, type AgentToolRequest } from "./agent-authoriz
 const base:AgentToolRequest = {
   agent: {
     canonicalId:"agent-A",reads:["source-read"],writes:[],toolAllowlist:["source-read"],
-    makerCheckerAuditorRole:"SPECIALIST" as never,
+    makerCheckerAuditorRole:"MAKER",
     failurePolicy:"FAIL_CLOSED",
   },
   grant: {

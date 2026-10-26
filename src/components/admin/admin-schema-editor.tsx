@@ -134,10 +134,12 @@ function downloadJson(filename:string,obj:unknown){
   const url=URL.createObjectURL(blob);
   const element=document.createElement('a');element.href=url;element.download=filename;element.click();URL.revokeObjectURL(url);
 }
-export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
+type SessionDraft = {id:string;templateKey:string;values:Values;updatedAt:string};
+export function AdminSchemaEditor({moduleId,submodule}:{moduleId:AdminModuleId;submodule:string}){
   const templates=moduleFormTemplates[moduleId];
-  const module=getAdminModule(moduleId);
-  const [selectedSub,setSelectedSub]=useState(module.submodules[0]);
+  const [drafts,setDrafts]=useState<SessionDraft[]>([]);
+  const [editing,setEditing]=useState<string|null>(null);
+  const [deletion,setDeletion]=useState<string|null>(null);
   const [templateKey,setTemplateKey]=useState(templates[0].key);
   const [values,setValues]=useState<Values>(()=>initialValues(flatten(templates[0].schema.properties,templates[0].schema.required??[])));
   const [review,setReview]=useState(false);
@@ -150,7 +152,26 @@ export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
   const valid=errors.length===0;
   const complete=visible.filter(f=>f.required&&hasContent(f,values[f.path]??'')).length;
   const required=visible.filter(f=>f.required).length;
-  function selectTemplate(key:string){setTemplateKey(key);const entry=getTemplate(moduleId,key);setValues(initialValues(flatten(entry.schema.properties,entry.schema.required??[])));setReview(false);setNotice('');}
+  function selectTemplate(key:string){setTemplateKey(key);const entry=getTemplate(moduleId,key);setValues(initialValues(flatten(entry.schema.properties,entry.schema.required??[])));setEditing(null);setDeletion(null);setReview(false);setNotice('');}
+  function newDraft(){setValues(initialValues(fields));setEditing(null);setDeletion(null);setReview(false);setNotice('Novo rascunho iniciado nesta sessão.');}
+  function saveSessionDraft(){
+    setReview(true);
+    if(!valid){setNotice('Corrija os campos destacados antes de salvar.');return;}
+    const id=(values.canonical_id??'').trim();
+    if(!id){setNotice('Informe um identificador canônico antes de salvar.');return;}
+    if(editing&&editing!==current.key+'::'+id){setNotice('Para alterar o identificador, crie outro rascunho.');return;}
+    const record:SessionDraft={id,templateKey:current.key,values:{...values},updatedAt:new Date().toISOString()};
+    setDrafts(old=>[...old.filter(x=>x.templateKey+'::'+x.id!==current.key+'::'+id),record]);
+    setEditing(current.key+'::'+id);setNotice('Rascunho salvo na memória desta tela, sem persistência remota.');
+  }
+  function loadDraft(entry:SessionDraft){
+    setTemplateKey(entry.templateKey);setValues({...entry.values});setEditing(entry.templateKey+'::'+entry.id);setDeletion(null);setReview(false);setNotice('Rascunho carregado para edição nesta sessão.');
+  }
+  function removeDraft(entry:SessionDraft){
+    const key=entry.templateKey+'::'+entry.id;
+    if(deletion!==key){setDeletion(key);setNotice('Confirme a exclusão do rascunho da sessão. Nenhum registro canônico será alterado.');return;}
+    setDrafts(old=>old.filter(x=>x.templateKey+'::'+x.id!==key));if(editing===key)newDraft();setDeletion(null);setNotice('Rascunho descartado desta sessão.');
+  }
   function set(path:string,value:string){
     setValues(old=>{
       const next={...old,[path]:value};
@@ -163,7 +184,7 @@ export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
     setReview(true);
     if(!valid){setNotice('Há campos inválidos ou obrigatórios pendentes. Corrija antes de exportar.');return;}
     const payload=outputTree(visible,values);
-    const draft={_preview_notice:'RASCUNHO LOCAL NAO ADMITIDO; sem aprovacoes, execucao ou persistencia no Kernel',_module_id:moduleId,_submodule:selectedSub,_schema_ref:current.schema.$id,_template_key:current.key,object:payload};
+    const draft={_preview_notice:'RASCUNHO LOCAL NAO ADMITIDO; sem aprovacoes, execucao ou persistencia no Kernel',_module_id:moduleId,_submodule:submodule,_schema_ref:current.schema.$id,_template_key:current.key,object:payload};
     downloadJson('rascunho-'+moduleId.toLowerCase()+'-'+current.key+'.json',draft);
     setNotice('Rascunho exportado neste dispositivo; nenhum serviço remoto foi acionado.');
   }
@@ -174,9 +195,7 @@ export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
       <p>Campos derivados dos JSON Schemas existentes no repositório, com labels de apresentação e validação local.</p>
     </div><span className="ce-schema-state"><LockKeyhole size={15}/> Sem escrita remota</span></div>
     <div className="ce-schema-template-select">
-      <label htmlFor={uid+'-sub'}>Submódulo
-        <select id={uid+'-sub'} value={selectedSub} onChange={e=>setSelectedSub(e.target.value)}>{module.submodules.map(s=><option key={s}>{s}</option>)}</select>
-      </label>
+      <div className="ce-schema-submodule"><strong>Submódulo selecionado</strong><span>{submodule}</span></div>
       <label htmlFor={uid+'-template'}>Template / contrato
         <select id={uid+'-template'} value={current.key} onChange={e=>selectTemplate(e.target.value)}>{templates.map(t=><option key={t.key} value={t.key}>{t.label}</option>)}</select>
       </label>
@@ -196,7 +215,8 @@ export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
     })}
     <div className="ce-schema-footer">
       <p><ShieldCheck size={17}/> IDs de referência não são verificados contra cadastros remotos nesta prévia. Campos condicionais são apresentação; aprovação e validação definitiva dependem dos contratos e serviços proprietários.</p>
-      <div className="ce-schema-actions"><button type="button" className="ce-schema-review" onClick={()=>{setReview(v=>!v);setNotice('')}}><ClipboardList size={16}/>{review?'Ocultar revisão':'Revisar rascunho'}</button>
+      <div className="ce-schema-drafts" aria-label="Rascunhos da sessão"><div><strong>Rascunhos nesta sessão ({drafts.length})</strong><small>São descartados ao sair desta tela. Exporte o JSON para guardar.</small></div><button type="button" onClick={newDraft}>Criar novo rascunho</button>{drafts.map(item=><div className="ce-schema-draft-row" key={item.templateKey+'::'+item.id}><span><strong>{item.id}</strong><small>{item.templateKey} · {item.updatedAt.slice(0,16).replace('T',' ')}</small></span><button type="button" onClick={()=>loadDraft(item)}>Editar</button><button type="button" onClick={()=>removeDraft(item)}>{deletion===item.templateKey+'::'+item.id?'Confirmar exclusão':'Excluir'}</button></div>)}</div>
+      <div className="ce-schema-actions"><button type="button" className="ce-schema-review" onClick={saveSessionDraft} disabled={!valid}>Salvar rascunho na sessão</button><button type="button" className="ce-schema-review" onClick={()=>{setReview(v=>!v);setNotice('')}}><ClipboardList size={16}/>{review?'Ocultar revisão':'Revisar rascunho'}</button>
         <button type="button" className="ce-schema-export" onClick={exportDraft} disabled={!valid}><Download size={16}/> Exportar JSON de rascunho</button></div>
       {review&&<div className="ce-schema-review-panel" role="status"><strong>Revisão local</strong><p>{valid?'Campos obrigatórios preenchidos de acordo com as verificações implementadas.':'Há '+errors.length+' erro(s) de formulário.'} Não são verificados vínculos, permissões, licenças, políticas, RLS ou homologação clínica.</p><pre>{JSON.stringify(valid?outputTree(visible,values):Object.fromEntries(errors.map(f=>[f.path,validate(f,values[f.path]??'')])),null,2)}</pre></div>}
       {notice&&<p role="status" className="ce-schema-notice">{notice}</p>}

@@ -66,6 +66,8 @@ jobs:
         run: npm audit --audit-level=high
       - name: Auditar fronteira DS do Commander (não homologa paleta)
         run: node scripts/check-commander-ds-boundary.mjs
+      - name: Testar controles negativos do DS canônico
+        run: node --test scripts/test-commander-ds-boundary.mjs
       - run: node scripts/test-admin-console.mjs
       - name: Testar delegação fail-closed do Commander
         run: |

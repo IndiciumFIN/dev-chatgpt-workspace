@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 
 const migration=readFileSync('migrations/candidates/20261026_governed_admin_bulk_import.sql','utf8');
-const setup=String.raw\`
+const setup=String.raw`
 create role anon nologin;
 create role authenticated nologin;
 create schema cko_staging;
@@ -15,7 +15,7 @@ create table cko_staging.import_packages(import_package_id text primary key);
 create table cko_validation.validators(validator_id text primary key);
 create table cko_governance.decisions(decision_id text primary key);
 create table cko_evidence.evidence_bundles(evidence_bundle_id text primary key);
-\`;
+`;
 
 describe('staging import migration — in-memory PostgreSQL only',()=>{
  it('creates seven unique private tables and the expected foreign keys',async()=>{

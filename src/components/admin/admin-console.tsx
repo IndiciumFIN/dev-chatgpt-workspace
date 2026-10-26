@@ -57,6 +57,7 @@ export function AdminConsole() {
   const [selected, setSelected] = useState<string>(() => initialWorkbench().tools[0]?.slug ?? '');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'publicado' | 'oculto'>('todos');
+  const [showAllTemplates, setShowAllTemplates] = useState(false);
   const [previewAudience, setPreviewAudience] = useState<PreviewAudience>('publico');
   const [previewVersion, setPreviewVersion] = useState<PreviewVersion>('draft');
   const [dirty, setDirty] = useState(false);
@@ -245,8 +246,9 @@ export function AdminConsole() {
         </>}
         {tab === 'templates' && <Panel title="Inventário canônico de templates" subtitle="Derivado diretamente de template-catalog.ts e template-contract.ts; os contratos não são alterados por este painel.">
           <div className="ce-admin-table-scroll"><table className="ce-admin-table"><thead><tr><th>Template / família</th><th>Contrato</th><th>Origem / matéria-prima</th><th>Disponibilidade</th></tr></thead><tbody>
-            {templateCatalogo.map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
+            {(showAllTemplates ? templateCatalogo : templateCatalogo.slice(0, 8)).map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
           </tbody></table></div>
+          {templateCatalogo.length > 8 && <button type="button" className="ce-admin-expand" aria-expanded={showAllTemplates} onClick={() => setShowAllTemplates(value => !value)}>{showAllTemplates ? 'Recolher inventário' : `Mostrar todos os ${templateCatalogo.length} templates`}</button>}
           <p className="ce-admin-detail-note">Contrato da área administrativa: hero <strong>{templateContracts.area.hero}</strong>, breadcrumbs <strong>{String(templateContracts.area.crumbs)}</strong>. A ausência de página não é aprovação de conteúdo.</p>
         </Panel>}
         {tab === 'sources' && <>

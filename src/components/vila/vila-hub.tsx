@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { vilaSections, getVilaSection } from "@/lib/vila-navigation";
 import { vilaCatalog, vilaKinds } from "@/lib/vila-canonical";
-import { VilaPage } from "./vila-page";
+import { VilaSourceHome } from "./vila-source-home";
 import "./vila.css";
 const placeholders: Record<string,string> = {
  discover:"Aqui serão vinculadas as descobertas aprovadas da Lia.",
@@ -26,7 +26,7 @@ export function VilaHub({section}: {section?:string}) {
  <nav id="vila-nav" className={"vila-global-nav"+(menuOpen?" vila-global-nav-open":"")} aria-label="Navegação da Vila">
  {vilaSections.map(item=><a key={item.id} href={item.path} aria-current={item.id===selected.id?"page":undefined}>{item.label}</a>)}
  </nav>
- {selected.id==="home" ? <VilaPage/> : <main className="vila-main" id="vila-conteudo">
+ {selected.id==="home" ? <VilaSourceHome/> : <main className="vila-main" id="vila-conteudo">
  <p className="vila-kicker">Vila do Cuidado · {selected.label}</p><h1>{selected.label}</h1>
  <p className="vila-section-lead">{placeholders[selected.id]??"Conheça as atividades da Vila."}</p>
  {entries.length>0 ? <div className="vila-grid">{entries.map(entry=><article className="vila-card" key={entry.id}><div className="vila-illustration" aria-hidden="true">{entry.symbol}</div><p className="vila-kind">{vilaKinds[entry.kind]} · candidato</p><h2>{entry.title}</h2><p>{entry.summary}</p><ol>{entry.steps.map(s=><li key={s}>{s}</li>)}</ol></article>)}</div> : <p className="vila-note">Conteúdo ainda não qualificado. Não exibir atividades fictícias como se fossem homologadas.</p>}

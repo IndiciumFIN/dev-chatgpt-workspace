@@ -27,6 +27,7 @@ const assertions = [
   ['Commander displays candidate agent issue links from the canonical PMO', commander.includes("../../../registers/pmo/queue.v1.json") && commander.includes("../../../registers/commander/lanes.v1.json") && commander.includes('commander-handoff-inbox') && handoffs.governance.dispatchImplemented === false && handoffs.lanes.every(lane => lane.dispatched === false)],
   ['Commander validates real PMO and lanes before rendering', /validateCommanderReadModel\(queue, handoffs\)/.test(commander) && /if \(modelIssues\.length\)/.test(commander) && /Commander indisponível/.test(commander)],
   ['Commander displays dependency and evidence provenance from canonical PMO', /item\?\.dependencies\?\.length/.test(commander) && /item\?\.evidence\?\.length/.test(commander) && /lane\.sourceCommit\.slice/.test(commander) && /item\?\.next/.test(commander)],
+  ['Commander derives unresolved dependencies solely from the canonical queue', /item\?\.dependencies\.filter\(id => queue\.items\.find/.test(commander) && /status !== 'DONE'/.test(commander) && /Prontidão por dependências:/.test(commander)],
   ['Commander has no simulated remote agent calls', !/\b(fetch|axios)\s*\(/.test(commander) && /não despachado/.test(commander)],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];

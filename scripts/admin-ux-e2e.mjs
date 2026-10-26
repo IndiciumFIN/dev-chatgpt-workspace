@@ -126,7 +126,7 @@ try{
     await assertNoOverflow(p,'admin-templates-'+width);
     await selectModule(p,width,'G04','M08');
     await p.getByRole('navigation',{name:'Submódulos de Produtos e Ferramentas'}).getByRole('button',{name:'Calculadoras'}).click();
-    await p.getByRole('button',{name:/Abrir funcionalidade existente de Calculadoras/}).click();
+    await p.getByRole('button',{name:'Editar metadados'}).first().click();
     await p.locator('#admin-tool-title').waitFor();
     await assertNoOverflow(p,'admin-content-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-content-'+width+'.png');
@@ -142,7 +142,7 @@ try{
       await p.reload({waitUntil:'networkidle'});
       await selectModule(p,width,'G04','M08');
       await p.getByRole('navigation',{name:'Submódulos de Produtos e Ferramentas'}).getByRole('button',{name:'Calculadoras'}).click();
-      await p.getByRole('button',{name:/Abrir funcionalidade existente de Calculadoras/}).click();
+      await p.getByRole('button',{name:'Editar metadados'}).first().click();
       await p.getByRole('radio',{name:'Publicado local'}).check();
       await p.getByRole('heading',{name:'Escala de Braden · mobile-first QA',exact:true}).waitFor();
       await screenshot(p,'admin-editor-save-local-390.png');

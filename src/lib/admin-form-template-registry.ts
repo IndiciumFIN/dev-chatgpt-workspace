@@ -108,6 +108,7 @@ export const EXTRA_FIELD_LABELS:Record<string,string>={
  population_ref:'População de aplicação',indications:'Indicações',exclusions:'Exclusões',source_refs:'Fontes relacionadas',scope_limitations:'Limitações de escopo',
  rule_refs:'Regras referenciadas',severity:'Severidade',trigger_states:'Estados de disparo',actions:'Ações previstas',disclosure_policy:'Política de divulgação',
  artifact_ref:'Artefato relacionado',input_sha256:'SHA-256 de entrada',runner_version:'Versão do executor',logs_ref:'Logs referenciados',limit_statement:'Declaração de limitações',
+ applicable_from:'Início da aplicabilidade',applicable_until:'Fim da aplicabilidade',conditions:'Condições',deprecated_aliases:'Aliases descontinuados',exceptions:'Exceções documentadas',export_profile_ref:'Perfil de exportação',height:'Altura',width:'Largura',inference_policy_ref:'Política de inferência',output_precision_policy_ref:'Política de precisão da saída',ui_profile_ref:'Perfil de interface',
  finding_type:'Tipo de achado',fact:'Fato constatado',evidence_refs:'Evidências referenciadas',root_cause_status:'Estado da análise de causa-raiz',remediation_task_refs:'Tarefas de remediação',blocking_policy_refs:'Políticas bloqueantes',
 };
 export function displayLabel(name:string):string{

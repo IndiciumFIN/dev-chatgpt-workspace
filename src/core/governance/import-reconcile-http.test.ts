@@ -21,7 +21,7 @@ function deps():HttpDependencies{
   reconcile:async(_actor,profile,review)=>{
    calls.db++;
    return reconcileImportReview(review,profile,async ids=>({
-    ...ids,rows:[],snapshotRef:'tested-transaction',capturedAt:'2026-10-26T12:00:00Z',
+    destination:ids.destination,primaryKey:ids.primaryKey,requestedIds:ids.identifiers,rows:[],snapshotRef:'tested-transaction',capturedAt:'2026-10-26T12:00:00Z',
    }));
   },
  };

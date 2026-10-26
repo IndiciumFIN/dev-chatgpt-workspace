@@ -49,7 +49,7 @@ function listFor(module:AdminModuleId,submodule:string):readonly RecordView[] {
  return noop;
 }
 function saveCsv(name:string,items:readonly RecordView[]){
- const quote=(s:string)=>'"'+String(s).replaceAll('"','""')+'"';
+ const quote=(s:string)=>{const raw=String(s);const safe=/^[\s]*[=+@\-]/.test(raw)?"'"+raw:raw;return '"'+safe.replaceAll('"','""')+'"';};
  const content='\uFEFF'+['ID','Título','Tipo','Estado','Observação'].map(quote).join(';')+'\r\n'+items.map(x=>[x.id,x.name,x.kind,x.status,x.note].map(quote).join(';')).join('\r\n');
  const url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8'}));
  const a=document.createElement('a');a.href=url;a.download='relatorio-'+name.toLowerCase()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);

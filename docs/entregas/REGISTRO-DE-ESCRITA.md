@@ -21,9 +21,11 @@ Arquivos **fora** de qualquer lista são de livre acesso — mas confira o `git 
 | Normas: confronto e captura | `audit-evidence/transversal-acquisition/**` · `docs/normativos/requisitos.md` · `docs/normativos/plano-de-captura.md` |
 | Normas: atomização | `scripts/capturar-normas.mjs` · `scripts/capturar-normas.test.mjs` · `migrations/0040_atomos.sql` · `docs/normativos/atomizacao.md` |
 | Especificação das mesas novas | `docs/admin/especificacao-mesas-novas.md` |
-| Área administrativa | `src/components/admin/**` · `src/lib/admin-catalog.ts` · `src/lib/normative-desk.ts` · `src/lib/admin/**` |
+| Área administrativa (admin-ux) | `src/components/admin/**` · `src/lib/admin-catalog.ts` · `src/lib/normative-desk.ts` · `src/lib/admin/**` |
+| Catálogo da fonte | `scripts/extrair-fonte.mjs` · `scripts/extrair-fonte.test.mjs` · `artifacts/fonte/**` · `docs/fonte/INVENTARIO.md` · `docs/fonte/PROVENIENCIA.md` |
+| Recuperação da fonte | `scripts/auditar-fonte.mjs` · `scripts/auditar-fonte.test.mjs` · `migrations/0042_recuperar_fonte.sql` · `docs/fonte/CONFRONTO.md` |
 | Verificação final | `docs/entregas/REGISTRO-POR-CHAVE.md` · `docs/entregas/REGISTRO-POR-CHAVE.json` · `deliverables/verificacao-final/**` |
-| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono |
+| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono · `scripts/status-projeto.mjs` · `docs/fonte/ONDE-MORA-O-CONTEUDO.md` · `src/lib/stored.functions.ts` |
 
 Cada tarefa também é dona do seu `deliverables/<tarefa>/entrega.md` e `deliverables/<tarefa>/entrega.json`.
 
@@ -40,6 +42,9 @@ As migrations são sequenciais e **nunca** se edita uma que já entrou. A reserv
 0040  atomos                  (atomização normativa)
 0041  passa_de_aprovacao      (dono — fecha os rascunhos das tabelas de
                                aprovação depois das migrations da rodada)
+0042  recuperar_fonte         (recuperação do conteúdo que existia no site
+                               de origem — 0041 é a última da fila da rodada
+                               anterior, 0042 abre a da recuperação)
 ```
 
 A 0041 é do dono e é a última da fila de propósito: ela fecha a fila de rascunhos das tabelas de aprovação (`business_rule`, `data_specification`, `governance_item`, `ai_control`) depois que todo mundo criou o que tinha que criar. Ela **não** toca `kernel_atom`, `kernel_claim`, `policy_package` nem `policy_rule` — a admissão de átomo é ato do kernel, e o pacote de política é do worker de doutrina.

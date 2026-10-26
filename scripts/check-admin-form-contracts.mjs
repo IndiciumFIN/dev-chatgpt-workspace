@@ -9,7 +9,7 @@ const map=registry.match(/export const moduleFormTemplates:[\s\S]+?\n\};/);
 assert.ok(map,'catálogo módulo-template ausente');
 const modules=[...map[0].matchAll(/(?:^|\n)\s*(M\d\d):\[/g)].map(m=>m[1]);
 assert.equal(modules.length,21,'cada um dos 21 módulos precisa de contrato');
-assert.equal(new Set(modules).size,22,'módulo duplicado');
+assert.equal(new Set(modules).size,21,'módulo duplicado');
 assert.equal(new Set(schemas).size,schemas.length,'schema importado mais de uma vez');
 const labelsSection=registry.slice(registry.indexOf('export const FIELD_LABELS:'),registry.indexOf('export function displayLabel'));
 const keys=new Set([...labelsSection.matchAll(/(?:^|[,\n])\s*([a-z]\w*):'/gm)].map(m=>m[1]));

@@ -111,7 +111,37 @@ function Market({snapshot}:{snapshot:CareerSnapshot}){
  return <><div className="ce-career-grid">{snapshot.market.map(m=><article className="ce-career-card" key={m.id}><h3>{m.label}</h3><p>{m.metricValue===null?"Nenhum valor promovido. Aguardando fonte atual verificável.":`${m.metricValue} ${m.unit??""}`}</p><footer><span className="ce-career-badge">{m.region}</span><span className="ce-career-badge">{m.status}</span></footer></article>)}</div><h3 style={{marginTop:18}}>Observações qualificadas</h3>{snapshot.marketObservations.length?<div className="ce-career-grid">{snapshot.marketObservations.map(o=><article className="ce-career-card" key={o.id}><h3>{o.statisticKind}</h3><p>{o.observedValue} {o.unit} · {o.jurisdiction}</p><p style={{marginTop:8}}>{o.methodologyNote}</p><footer><span className="ce-career-badge">{o.status}</span></footer></article>)}</div>:<div className="ce-career-empty">Nenhuma observação de mercado qualificada. O modelo impede misturar salário anunciado, estatística oficial, survey estimate e índice.</div>}</>
 }
 
-function Editorial({snapshot}:{snapshot:CareerSnapshot}){return <div className="ce-career-grid">{snapshot.editorial.map(e=><article className="ce-career-card" key={e.id}><h3>{e.title}</h3><p>{e.dek}</p><footer><span className="ce-career-badge">{e.contentType}</span><span className="ce-career-badge">{e.status}</span>{e.linkedObjectRef?<span className="ce-career-badge">{e.linkedObjectType}:{e.linkedObjectRef}</span>:null}</footer></article>)}</div>}
+function Editorial({snapshot}:{snapshot:CareerSnapshot}){
+ const docs=snapshot.editorialDocuments;
+ const[selected,setSelected]=useState(docs[0]?.id??"");
+ useEffect(()=>{if(!docs.some(d=>d.id===selected))setSelected(docs[0]?.id??"")},[docs,selected]);
+ const doc=docs.find(d=>d.id===selected)??docs[0];
+ if(!doc)return <div className="ce-career-empty">Nenhum documento editorial materializado para esta audiência.</div>;
+ const blocks=snapshot.editorialBlocks.filter(b=>b.documentId===doc.id).sort((a,b)=>a.blockOrder-b.blockOrder);
+ return <div className="ce-editorial-library">
+  <div className="ce-editorial-index" aria-label="Conteúdos disponíveis">
+   {docs.map(d=><button type="button" key={d.id} aria-current={d.id===doc.id?"page":undefined} onClick={()=>setSelected(d.id)}>
+    <small>{d.templateId.replace("TPL-","").replace("-001","")} · {d.status}</small>
+    <strong>{d.title}</strong>
+    <span>{d.lead}</span>
+   </button>)}
+  </div>
+  <article className="ce-editorial-reader">
+   <header><p className="ce-career-kicker">{doc.audience} · {doc.locale}</p><h3>{doc.title}</h3><p className="ce-editorial-lead">{doc.lead}</p><div className="ce-career-meta"><span className="ce-career-chip">fontes {doc.sourceGate}</span><span className="ce-career-chip">revisão humana {doc.humanGate}</span><span className="ce-career-chip">{doc.status}</span></div></header>
+   {blocks.map(block=><EditorialBlock key={block.blockId} block={block} snapshot={snapshot}/>)}
+  </article>
+ </div>
+}
+
+function EditorialBlock({block,snapshot}:{block:CareerSnapshot["editorialBlocks"][number];snapshot:CareerSnapshot}){
+ const items=Array.isArray(block.payload?.items)?block.payload.items.filter((x):x is string=>typeof x==="string"):[];
+ const refs=block.sourceRefs.map(id=>snapshot.sources.find(s=>s.id===id)).filter((x):x is CareerSnapshot["sources"][number]=>Boolean(x));
+ if(block.blockType==="steps")return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body?<p>{block.body}</p>:null}<ol>{items.map((item,i)=><li key={i}>{item}</li>)}</ol></section>;
+ if(block.blockType==="callout")return <Callout tone={block.semanticRole==="safety"?"warn":"note"}><b>{block.heading}</b>{block.body?<> {block.body}</>:null}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.authority}</a>)}</div>:null}</Callout>;
+ if(block.blockType==="references")return <section className="ce-editorial-block ce-editorial-references"><h4>{block.heading??"Referências"}</h4>{block.body?<p>{block.body}</p>:null}<ul>{refs.map(r=><li key={r.id}><a href={r.uri} target="_blank" rel="noreferrer">{r.title}</a><span>{r.authority} · {r.status}</span></li>)}</ul></section>;
+ if(block.blockType==="comparison"||block.blockType==="reflection")return <section className="ce-editorial-block ce-editorial-emphasis"><h4>{block.heading}</h4><p>{block.body}</p>{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}</section>;
+ return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body.split("\n\n").map((p,i)=><p key={i}>{p}</p>)}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}</section>;
+}
 
 function Roles({snapshot}:{snapshot:CareerSnapshot}){return <div className="ce-career-grid">{snapshot.roles.map(r=><article className="ce-career-card" key={r.id}><h3>{r.title}</h3><p>{r.summary}</p><p style={{marginTop:8}}><b>Caminho formativo:</b> {r.educationPath}</p><footer><span className="ce-career-badge">{r.family}</span></footer></article>)}</div>}
 

@@ -127,27 +127,20 @@
       "date": "2026-10-24",
       "reason": "21 atos indexados mecanicamente com 1.577 cabeçalhos Art. e spans byte-exatos; 16 sinalizados para revisão; FIND candidato registrado; nenhuma interpretação normativa ou admissão."
     },
-    {
-      "seq": 19,
-      "workId": "WO-E2E-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-24",
-      "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
-    },
-    {
-      "seq": 20,
-      "workId": "WO-ADM-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-26",
-      "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
-    },
-    {
-      "seq": 21,
-      "workId": "WO-MEM-CUR-001",
-      "to": "IN_PROGRESS",
-      "date": "2026-10-26",
-      "reason": "Design MEM ancorado na rota /blog/mary-eliza-mahoney e nos componentes ArticlePage, pieces.tsx e article.css. Snapshot 87 (43 NEEDS_REVIEW,44 BLOCKED_SOURCE), renderer sem publicação ou importação indevida."
-    }
+      {
+        "seq": 19,
+        "workId": "WO-E2E-001",
+        "to": "IN_PROGRESS",
+        "date": "2026-10-24",
+        "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
+      },
+      {
+        "seq": 20,
+        "workId": "WO-ADM-001",
+        "to": "IN_PROGRESS",
+        "date": "2026-10-26",
+        "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
+      }
   ],
   "items": [
     {
@@ -325,31 +318,11 @@
       "status": "HOLD_HUMAN",
       "title": "Homologação independente",
       "updatedOn": "2026-10-23"
-    },
-    {
-      "id": "WO-MEM-CUR-001",
-      "order": 10,
-      "priority": "P1",
-      "owner": "ChatGPT + revisão editorial",
-      "status": "IN_PROGRESS",
-      "title": "Curiosidades — projeção MEM (87 páginas)",
-      "criteria": "Renderizador tipado reutiliza ArticlePage/pieces.css, 87 itens reconciliados e gates de direitos, fontes, qualidade e publicação comprovados; nenhum HOLD indexado.",
-      "next": "Vincular leitura segura do content_json no ambiente editorial, aplicar revisão por página; executar typecheck, testes de blocos, acessibilidade, E2E e conferência visual antes de qualquer promoção.",
-      "dependencies": [
-        "WO-PMO-001",
-        "WO-E2E-001"
-      ],
-      "evidence": [
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/feat/curiosidades-mem-87-20261026/registers/curiosidades/mem-content-inventory.v1.json",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/feat/curiosidades-mem-87-20261026/src/components/templates/curiosity-view.tsx",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/feat/curiosidades-mem-87-20261026/docs/curiosidades/WORK_ORDER_MEM_20261026.md"
-      ],
-      "updatedOn": "2026-10-26"
     }
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 19,
+  "revision": 18,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

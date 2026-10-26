@@ -9,7 +9,7 @@ function Collection({id,title,items}:{id:string;title:string;items:readonly Vila
  {items.map(item=><article className="vila-source-card" key={item.id}>
  <div className="vila-source-illustration"><VilaAsset assetId={item.assetId} alt={item.title} fallback="✦" /></div>
  <h3>{item.title}</h3><p>{item.description}</p>
- <Link to={item.url} className="vila-source-link">Explorar seção</Link>
+ <a href={item.url} className="vila-source-link">Explorar seção</a>
  </article>)}
  </div></section>;
 }

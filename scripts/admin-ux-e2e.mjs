@@ -49,9 +49,26 @@ try{
     }
     await assertNoOverflow(p,'admin-pmo-'+width);
     await screenshot(p,'admin-pmo-'+width+'.png');
+    if(width===390){
+      const expand=p.getByRole('button',{name:/Mostrar todas as/});
+      assert.equal(await expand.isVisible(),true,'PMO expand action missing');
+      await expand.click();
+      assert.equal(await p.locator('[data-work-id]').count(),10,'expanded PMO should expose all orders');
+      await p.getByRole('button',{name:'Recolher lista'}).click();
+      assert.equal(await p.locator('[data-work-id]').count(),4,'collapsed PMO should be concise');
+      await p.getByText(/Consultar achados em quarentena/).click();
+      await p.getByText(/Consultar achados em quarentena/).click();
+    }
     if(width<960) await select.selectOption('templates');
     else await nav.getByRole('button',{name:/Templates/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();
+    if(width===390){
+      const initial=await p.locator('.ce-admin-table tbody tr').count();
+      assert.ok(initial<=8,'mobile templates should start with <=8 rows');
+      await p.getByRole('button',{name:/Mostrar todos os .* templates/}).click();
+      assert.ok(await p.locator('.ce-admin-table tbody tr').count()>8,'templates expansion did not work');
+      await p.getByRole('button',{name:'Recolher inventário'}).click();
+    }
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-templates-'+width+'.png');
     await assertNoOverflow(p,'admin-templates-'+width);
     if(width<960) await select.selectOption('content');
@@ -83,6 +100,11 @@ try{
     await assertNoOverflow(p,'command-'+width);
     await p.getByRole('button',{name:/Tabelas propostas/}).click();
     await p.getByRole('heading',{name:'Inventário lógico v1.0'}).waitFor();
+    if(width===390){
+      assert.equal(await p.locator('.cc-table-wrap tbody tr').count(),12,'catalog must show 12 records initially');
+      await p.getByRole('button',{name:/Mostrar mais 12 tabelas/}).click();
+      assert.equal(await p.locator('.cc-table-wrap tbody tr').count(),24,'catalog pagination did not reveal next page');
+    }
     await assertNoOverflow(p,'command-tables-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'command-tables-'+width+'.png');
     if(width===390){

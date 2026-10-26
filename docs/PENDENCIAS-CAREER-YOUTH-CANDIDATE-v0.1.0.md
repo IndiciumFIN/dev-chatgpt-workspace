@@ -24,17 +24,18 @@
 ## P1 — dados externos atuais
 
 ### Vagas, concursos, residências, estágios, bolsas, voluntariado e pesquisa
-- Modelo `CareerOpportunityType` concluído.
-- Falta pipeline de aquisição, deduplicação, validade, fonte e expiração.
+- Modelo de tipo + ocorrência + Source + Authority Binding + Ingestion Run concluído.
+- Deduplicação, validade/expiração, provenance e validator de lote estão materializados.
+- **Falta:** executar aquisição real a partir de fontes públicas elegíveis, qualificar cada fonte e operar atualização/expiração recorrente.
 - Nenhuma oportunidade real deve ser inventada.
 
 ### Cursos e educação permanente
-- Tipos de recurso concluídos.
-- Falta catálogo atual com instituição, disponibilidade, modalidade, direitos/licença e fonte.
+- Tipos + registros reais source-bound + dedupe/validade concluídos.
+- **Falta:** aquisição real do catálogo atual com instituição, disponibilidade, modalidade, direitos/licença e fonte qualificada.
 
 ### Mercado e salários
-- Contrato concluído com `SOURCE_REQUIRED`.
-- Falta fonte atual por localidade/papel e política estatística para não misturar salário anunciado, estimado e observado.
+- Sinal + `CareerMarketObservation` concluídos, separando `POSTED_SALARY`, `OFFICIAL_STATISTIC`, `SURVEY_ESTIMATE` e `MARKET_INDEX`.
+- **Falta:** aquisição de fontes atuais por localidade/papel e revisão metodológica antes de promover valores.
 
 ### Carreira internacional
 - Contrato de jurisdição concluído.
@@ -70,7 +71,7 @@ Os registros candidatos existem no banco quando já definidos; texto final não 
 
 ## P2 — experiências e outputs
 
-- Exportação final de currículo/carta/portfólio em PDF/DOCX requer contrato de documento e QA de impressão.
+- Contratos de projeção WEB/PDF/PRINT para currículo/carta/portfólio estão materializados e ligados aos schemas CKO de `projection` / `projection_request`; os gates A11y/Human continuam HOLD antes de habilitar exportação final. DOCX ainda requer contrato/canal específico.
 - Jogos/quizzes do Portal do Jovem estão modelados; conteúdo/regras ainda precisam ser qualificados.
 - Comparador já consome papéis/skills do banco; cobertura de requisitos por papel ainda é parcial.
 - Passaporte profissional candidato é pseudônimo; produção exige decisão sobre persistência e identidade.
@@ -108,4 +109,11 @@ Os registros candidatos existem no banco quando já definidos; texto final não 
 - Portal do Jovem;
 - reflexão educativa não psicométrica;
 - rotas candidatas e estado de publicação;
-- schemas/registry/gate/CI/E2E candidato.
+- schemas/registry/gate/CI/E2E candidato;
+- source/evidence acquisition layer;
+- authority binding por campo;
+- ingestion runs;
+- objetos reais de oportunidade/curso/observação de mercado sem dados inventados;
+- validator de lote com SHA-256, dedupe e validade;
+- projection contracts ligados ao CKO;
+- governança DB de identidade/consentimento/moderação/denúncia/bloqueio.

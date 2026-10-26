@@ -2,6 +2,7 @@
 /** Contract checks for the single canonical administrative console (no network / no mocks). */
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 const read = path => readFileSync(path, 'utf8');
 const ui = read('src/components/admin/admin-console.tsx');
 const shared = read('src/components/local/local-workbench-page.tsx');
@@ -36,3 +37,5 @@ let failed = 0;
 for (const [name, pass] of assertions) { console.log(`${pass ? 'PASS' : 'FAIL'} ADMIN: ${name}`); if (!pass) failed++; }
 assert.equal(failed, 0, `${failed} admin contracts failed`);
 console.log(`ADMIN console: ${assertions.length} static invariants PASS; browser/a11y not implied.`);
+
+execFileSync(process.execPath, ['scripts/check-admin-form-contracts.mjs'], { stdio: 'inherit' });

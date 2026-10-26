@@ -32,7 +32,8 @@ describe('OPA import reconciliation boundary',()=>{
    method=init.method??'';body=JSON.parse(String(init.body));return resultFrom(init);
   });
   const result=await evaluator(request);
-  assert.deepEqual(result,{allowed:true,decisionId:'OPA-READ-001',bundleSha256:bundle});
+  assert.equal(result.allowed,true);
+  if(result.allowed){assert.equal(result.decisionId,'OPA-READ-001');assert.equal(result.bundleSha256,bundle);assert.equal(result.requestNonce,body.input.request_nonce);}
   assert.equal(method,'POST');
   assert.equal(body.input.action,'imports.reconcile.read');
   assert.match(String(body.input.request_nonce),/^[0-9a-f]{8}-[0-9a-f-]{27}$/);

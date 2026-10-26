@@ -64,6 +64,8 @@ jobs:
       - run: npm ci
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
+      - name: Auditar fronteira DS do Commander (não homologa paleta)
+        run: node scripts/check-commander-ds-boundary.mjs
       - run: node scripts/test-admin-console.mjs
       - name: Testar delegação fail-closed do Commander
         run: |

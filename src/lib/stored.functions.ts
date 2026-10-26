@@ -207,7 +207,10 @@ export const readSectionPage = createServerFn({ method: "GET" })
     const { getSql } = await import("@/lib/db");
     const sql = await getSql();
     const pages = await sql<{ slug: string; kicker: string; title: string; lead: string; kind: "pages" | "contact" | "enter" | "subscribe" }>`
-      select slug, kicker, title, lead, kind from section_page where slug = ${slug}
+      select page.slug, page.kicker, page.title, page.lead, page.kind
+      from section_page as page
+      join content_object as object on object.origin_path = ${`/secao/${slug}`}
+      where page.slug = ${slug}
     `;
     const page = pages[0];
     if (!page) return null;
@@ -270,7 +273,10 @@ export const readLiveSection = createServerFn({ method: "GET" })
     const { getSql } = await import("@/lib/db");
     const sql = await getSql();
     const pages = await sql<{ slug: string; kicker: string; title: string; lead: string; kind: "pages" | "contact" | "enter" | "subscribe" }>`
-      select slug, kicker, title, lead, kind from section_page where slug = ${slug}
+      select page.slug, page.kicker, page.title, page.lead, page.kind
+      from section_page as page
+      join content_object as object on object.origin_path = ${`/secao/${slug}`}
+      where page.slug = ${slug}
     `;
     const page = pages[0];
     let section: {

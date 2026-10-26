@@ -115,7 +115,7 @@ export const readCatalog = createServerFn({ method: "GET" }).handler(async () =>
 
 export const readTool = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => {
-    if (!known.has(slug)) throw new Error("Ferramenta fora da fonte.");
+    if (!/^[a-z0-9-]{1,80}$/.test(slug)) throw new Error("Ferramenta fora da fonte.");
     return slug;
   })
   .handler(async ({ data: slug }) => {

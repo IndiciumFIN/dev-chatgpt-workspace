@@ -111,7 +111,7 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting}:{moduleId:AdminMo
        {existing==='command'?<Link to="/central-comando" className="ce-workspace-action">Abrir Central de Comando <ArrowRight size={16}/></Link>
          :existing&&<button type="button" className="ce-workspace-action" onClick={()=>onOpenExisting(existing)}>Abrir funcionalidade existente de {sub} <ArrowRight size={16}/></button>}
      </div>}
-     {mode==='form'&&<div className="ce-workspace-panel" role="tabpanel"><AdminSchemaEditor key={moduleId+':'+sub} moduleId={moduleId}/></div>}
+     {mode==='form'&&<div className="ce-workspace-panel" role="tabpanel"><AdminSchemaEditor key={moduleId+':'+sub} moduleId={moduleId} submodule={sub}/></div>}
      {mode==='reports'&&<div className="ce-workspace-panel" role="tabpanel">
        <div className="ce-workspace-report-top"><div><span className="ce-workspace-eyebrow">RELATÓRIO DO CATÁLOGO</span><strong>{available.length} registro(s)</strong><p>Apenas contagem dos registros disponíveis nesta versão. Sem análise de conformidade, execução ou datas em tempo real.</p></div><button type="button" disabled={!available.length} onClick={()=>saveCsv(moduleId+'-'+sub.replace(/\W/g,'-'),filtered)}><Download size={17}/> Exportar CSV</button></div>
        {totals.length?totals.map(x=><div className="ce-workspace-report-row" key={x.state}><span>{x.state}</span><div aria-hidden="true"><span style={{width:(x.count/Math.max(1,available.length)*100)+'%'}}/></div><strong>{x.count}</strong></div>):<p className="ce-workspace-empty">Não há métricas reais para este submódulo. Não exibimos valores simulados.</p>}

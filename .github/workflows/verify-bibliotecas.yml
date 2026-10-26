@@ -65,6 +65,10 @@ jobs:
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
       - run: node scripts/test-admin-console.mjs
+      - name: Testar delegação fail-closed do Commander
+        run: |
+          node scripts/check-commander-handoffs.mjs
+          node --test scripts/test-commander-handoffs.mjs
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs

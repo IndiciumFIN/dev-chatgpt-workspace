@@ -8,6 +8,8 @@ const shared = read('src/components/local/local-workbench-page.tsx');
 const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
+const handoffs = JSON.parse(read('registers/commander/lanes.v1.json'));
+
 const assertions = [
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
@@ -22,6 +24,7 @@ const assertions = [
   ['real end-user routes provided only for published local projection', /previewVersion === 'published' && <Link/.test(ui)],
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
+  ['Commander displays candidate agent issue links from the canonical PMO', commander.includes("../../../registers/pmo/queue.v1.json") && commander.includes("../../../registers/commander/lanes.v1.json") && commander.includes('commander-handoff-inbox') && handoffs.governance.dispatchImplemented === false && handoffs.lanes.every(lane => lane.dispatched === false)],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];
 let failed = 0;

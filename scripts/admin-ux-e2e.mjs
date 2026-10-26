@@ -48,7 +48,7 @@ try{
     wireErrors(p,'admin-'+width);
     await p.goto(base+'/admin',{waitUntil:'networkidle'});
     await p.getByRole('heading',{name:'Centro de administração'}).waitFor();
-    await p.getByRole('heading',{name:'Fila única de execução'}).waitFor();
+    await p.getByRole('heading',{name:'Visão geral'}).waitFor();
     const desktopNav=p.getByRole('navigation',{name:'Módulos da administração',exact:true});
     const mobileLaunch=p.locator('.ce-admin-mobile-launch');
     if(width<960) {
@@ -59,6 +59,10 @@ try{
       assert.equal(await desktopNav.isVisible(),true,'desktop sidebar absent at '+width);
       assert.equal(await desktopNav.locator('[data-admin-group]').count(),7,'seven groups required');
     }
+    await selectModule(p,width,'G02','M03');
+    await p.getByRole('navigation',{name:'Submódulos de PMO e Projetos'}).getByRole('button',{name:'Work Orders'}).click();
+    await p.getByRole('button',{name:/Abrir funcionalidade existente de Work Orders/}).click();
+    await p.getByRole('heading',{name:'Fila única de execução'}).waitFor();
     await assertNoOverflow(p,'admin-pmo-'+width);
     await screenshot(p,'admin-pmo-'+width+'.png');
     if(width===390){
@@ -72,10 +76,11 @@ try{
       await p.getByText(/Consultar achados em quarentena/).click();
     }
     await selectModule(p,width,'G03','M18');
-    await p.locator('#ce-module-fallback-title').getByText('Governança Clínica e Segurança').waitFor();
+    await p.getByRole('heading',{name:'Governança Clínica e Segurança'}).last().waitFor();
+    await p.getByRole('tab',{name:'Formulários'}).click();
     await p.getByRole('heading',{name:'Campos e templates — M18'}).waitFor();
     if(width===390){
-      const form=p.locator('.ce-admin-module-fallback .ce-schema');
+      const form=p.locator('.ce-workspace .ce-schema');
       await form.getByRole('textbox',{name:/Identificador canônico/}).fill('ID com espaços!');
       await form.getByText(/Use apenas letras, números/).waitFor();
       await form.getByRole('textbox',{name:/Identificador canônico/}).fill('CKO:CLIN-001');
@@ -90,10 +95,11 @@ try{
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-module-M18-'+width+'.png');
     if(width===390){
       await selectModule(p,width,'G03','M07');
-      await p.locator('#ce-module-fallback-title').getByText('Kernel e Conhecimento').waitFor();
+      await p.getByRole('heading',{name:'Kernel e Conhecimento'}).last().waitFor();
       await assertNoOverflow(p,'admin-planned-module-M07-390');
     }
     await selectModule(p,width,'G01','M04');
+    await p.getByRole('button',{name:/Abrir funcionalidade existente de Governança corporativa/}).click();
     await p.getByRole('heading',{name:'Governança e evidências'}).waitFor();
     await assertNoOverflow(p,'admin-governance-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-governance-'+width+'.png');
@@ -106,6 +112,8 @@ try{
       await assertNoOverflow(p,'admin-governance-search-390');
     }
     await selectModule(p,width,'G04','M10');
+    await p.getByRole('navigation',{name:'Submódulos de Design System e Interfaces'}).getByRole('button',{name:'Templates e slots'}).click();
+    await p.getByRole('button',{name:/Abrir funcionalidade existente de Templates e slots/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();
     if(width===390){
       const initial=await p.locator('.ce-admin-table tbody tr').count();
@@ -117,6 +125,8 @@ try{
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-templates-'+width+'.png');
     await assertNoOverflow(p,'admin-templates-'+width);
     await selectModule(p,width,'G04','M08');
+    await p.getByRole('navigation',{name:'Submódulos de Produtos e Ferramentas'}).getByRole('button',{name:'Calculadoras'}).click();
+    await p.getByRole('button',{name:/Abrir funcionalidade existente de Calculadoras/}).click();
     await p.locator('#admin-tool-title').waitFor();
     await assertNoOverflow(p,'admin-content-'+width);
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-content-'+width+'.png');
@@ -124,11 +134,15 @@ try{
       await p.locator('#admin-tool-title').fill('Escala de Braden · mobile-first QA');
       await p.getByRole('button',{name:'Salvar rascunho'}).click();
       await selectModule(p,width,'G06','M15');
+      await p.getByRole('navigation',{name:'Submódulos de Publicação e Distribuição'}).getByRole('button',{name:'Publicação'}).click();
+      await p.getByRole('button',{name:/Abrir funcionalidade existente de Publicação/}).click();
       await p.getByRole('checkbox',{name:/Entendo que esta publicação/}).check();
       await p.getByRole('button',{name:/Publicar rascunho salvo/}).click();
       await p.getByText(/Projeção LOCAL publicada/).waitFor();
       await p.reload({waitUntil:'networkidle'});
       await selectModule(p,width,'G04','M08');
+      await p.getByRole('navigation',{name:'Submódulos de Produtos e Ferramentas'}).getByRole('button',{name:'Calculadoras'}).click();
+      await p.getByRole('button',{name:/Abrir funcionalidade existente de Calculadoras/}).click();
       await p.getByRole('radio',{name:'Publicado local'}).check();
       await p.getByRole('heading',{name:'Escala de Braden · mobile-first QA',exact:true}).waitFor();
       await screenshot(p,'admin-editor-save-local-390.png');

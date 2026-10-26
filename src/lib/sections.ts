@@ -31,6 +31,7 @@ export type Section = {
   title: string;
   lead: string;
   kind: "pages" | "contact" | "enter" | "subscribe";
+  publicacao?: "publicada" | "candidata";
   blocks: SectionBlock[];
 };
 
@@ -54,6 +55,7 @@ const pages: Record<string, Section> = {
     title: "Carreira e Desenvolvimento",
     lead: "Passaporte profissional, skills, trilhas, oportunidades, candidaturas, credenciais, documentos, mercado e conteúdos projetados a partir do banco candidato.",
     kind: "pages",
+    publicacao: "candidata",
     blocks: [],
   },
   jovens: {
@@ -62,6 +64,7 @@ const pages: Record<string, Section> = {
     title: "Portal do Jovem",
     lead: "Profissões, Enfermagem como carreira, interesses, formação, oportunidades, primeiros passos e experiências educativas projetadas do mesmo banco de carreira.",
     kind: "pages",
+    publicacao: "candidata",
     blocks: [],
   },
   concurso: {

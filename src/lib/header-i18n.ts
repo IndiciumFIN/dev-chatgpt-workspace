@@ -11,19 +11,9 @@ export type HeaderLocale = typeof headerLocales[number]["id"];
 /**
  * Os idiomas que o SITE ENTREGA DE VERDADE.
  *
- * O vocabulario da barra de acessibilidade estar traduzido nao significa que
- * o site esteja traduzido: o dicionario do chrome (`src/lib/chrome.tsx`) so
- * tem `copy` em pt-BR/en/es/fr. Nos outros 15, o menu, a busca e os botoes
- * caem no fallback portugues — enquanto a barra de acessibilidade aparece
- * no idioma escolhido. O visitante recebe um site MEIO traduzido, que e pior
- * que os dois extremos: parece que traduzimos e nao terminamos.
- *
- * Por isso o seletor oferece so o que o site entrega. A lista vem do
- * REGISTRO (`interfaceDictionary`), nao e escrita a mao: quando o dicionario
- * de um idioma existir, ele entra aqui sozinho.
- *
- * Os 15 continuam registrados, com o vocabulario e a arte prontos. Nada se
- * perde — so deixa de se anunciar o que nao esta pronto.
+ * O chrome tem as 47 chaves nos 19 idiomas. O seletor lista quem tem dicionario.
+ * Nos 15 marcados interface_ready a pagina continua em portugues, entao o
+ * idioma do documento nao muda. Conteudo clinico e SEO nao entram aqui.
  */
 export const selectableLocales = localeRegistry.filter((item) => item.interfaceDictionary !== "missing");
 
@@ -73,7 +63,7 @@ export const headerWords: Record<HeaderLocale, Record<"accessibility" | "fontDow
     "dark": "Dunkelmodus",
     "shortcuts": "Tastenkürzel",
     "reset": "Zurücksetzen",
-    "search": "Suche",
+    "search": "Suchen",
     "language": "Sprache"
   },
   "it": {

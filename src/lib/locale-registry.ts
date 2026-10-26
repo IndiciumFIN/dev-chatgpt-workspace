@@ -38,7 +38,7 @@ export const localeRegistry = [
     "label": "Deutsch",
     "short": "DE",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -49,7 +49,7 @@ export const localeRegistry = [
     "label": "Italiano",
     "short": "IT",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -71,7 +71,7 @@ export const localeRegistry = [
     "label": "हिन्दी",
     "short": "HI",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -82,7 +82,7 @@ export const localeRegistry = [
     "label": "中文",
     "short": "ZH",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -93,7 +93,7 @@ export const localeRegistry = [
     "label": "العربية",
     "short": "AR",
     "direction": "rtl",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -104,7 +104,7 @@ export const localeRegistry = [
     "label": "日本語",
     "short": "JA",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -115,7 +115,7 @@ export const localeRegistry = [
     "label": "Русский",
     "short": "RU",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -126,7 +126,7 @@ export const localeRegistry = [
     "label": "한국어",
     "short": "KO",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -137,7 +137,7 @@ export const localeRegistry = [
     "label": "Türkçe",
     "short": "TR",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -148,7 +148,7 @@ export const localeRegistry = [
     "label": "Nederlands",
     "short": "NL",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -159,7 +159,7 @@ export const localeRegistry = [
     "label": "Polski",
     "short": "PL",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -170,7 +170,7 @@ export const localeRegistry = [
     "label": "Svenska",
     "short": "SV",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -181,7 +181,7 @@ export const localeRegistry = [
     "label": "Bahasa Indonesia",
     "short": "ID",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -192,7 +192,7 @@ export const localeRegistry = [
     "label": "Tiếng Việt",
     "short": "VI",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -203,7 +203,7 @@ export const localeRegistry = [
     "label": "Українська",
     "short": "UK",
     "direction": "ltr",
-    "interfaceDictionary": "missing",
+    "interfaceDictionary": "interface_ready",
     "headerAccessibility": "provided_unreviewed",
     "content": "not_verified",
     "seoEligibility": "blocked_pending_verified_localization",
@@ -221,10 +221,9 @@ export const legacySeoLocales = localeRegistry.filter(item => item.seoEligibilit
 /**
  * Idiomas que tem DICIONARIO DE INTERFACE proprio.
  *
- * `interfaceDictionary: "missing"` significa que o chrome NAO tem texto nesse
- * idioma e cai no fallback de `src/lib/chrome.tsx` — o visitante ve portugues.
- * Sao exatamente os 15 que o registro marca como
- * `blocked_pending_verified_localization`.
+ * `interfaceDictionary: "interface_ready"` significa que o chrome tem as 47
+ * chaves da interface. O conteudo clinico continua `not_verified` e o SEO
+ * desses 15 continua bloqueado.
  *
  * Importante: "interface dictionary" nao e "conteudo traduzido". O
  * `content` de todos os 19 continua `not_verified` — o texto clinico e
@@ -249,5 +248,8 @@ export function hasInterfaceDictionary(value: unknown): boolean {
  */
 export function contentLocale(value: unknown): string {
   if (typeof value !== "string") return defaultLocale;
+  const item = localeRegistry.find((entry) => entry.id === value);
+  if (!item) return defaultLocale;
+  if (item.interfaceDictionary === "interface_ready") return defaultLocale;
   return hasInterfaceDictionary(value) ? value : defaultLocale;
 }

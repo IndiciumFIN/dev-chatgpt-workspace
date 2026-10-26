@@ -33,6 +33,43 @@ jobs:
           "${RUNNER_TEMP}/opa" check --strict --v1-compatible contracts/cko-governance/opa
           "${RUNNER_TEMP}/opa" test --fail-on-empty --verbose contracts/cko-governance/opa
           echo "OPA REGO VERIFIED — candidato, nao autorizado para publicacao"
+      - name: Testar assinatura de bundle OPA em ambiente isolado (chaves efêmeras)
+        shell: bash
+        run: |
+          set -euo pipefail
+          BUNDLE="${RUNNER_TEMP}/cko-policy-bundle"
+          mkdir -p "${BUNDLE}"
+          cp contracts/cko-governance/opa/import_read.rego "${BUNDLE}/import_read.rego"
+          cp contracts/cko-governance/opa/kernel_admission.rego "${BUNDLE}/kernel_admission.rego"
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
+            -out "${RUNNER_TEMP}/opa-ci-private.pem" >/dev/null 2>&1
+          openssl pkey -in "${RUNNER_TEMP}/opa-ci-private.pem" -pubout \
+            -out "${RUNNER_TEMP}/opa-ci-public.pem" >/dev/null 2>&1
+          "${RUNNER_TEMP}/opa" build --bundle "${BUNDLE}" \
+            --signing-key "${RUNNER_TEMP}/opa-ci-private.pem" \
+            --output "${RUNNER_TEMP}/cko-signed.tar.gz"
+          "${RUNNER_TEMP}/opa" build --bundle "${RUNNER_TEMP}/cko-signed.tar.gz" \
+            --verification-key "${RUNNER_TEMP}/opa-ci-public.pem" \
+            --output "${RUNNER_TEMP}/cko-verified.tar.gz"
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
+            -out "${RUNNER_TEMP}/wrong-opa-key.pem" >/dev/null 2>&1
+          openssl pkey -in "${RUNNER_TEMP}/wrong-opa-key.pem" -pubout \
+            -out "${RUNNER_TEMP}/wrong-opa-public.pem" >/dev/null 2>&1
+          if "${RUNNER_TEMP}/opa" build --bundle "${RUNNER_TEMP}/cko-signed.tar.gz" \
+            --verification-key "${RUNNER_TEMP}/wrong-opa-public.pem" \
+            --output "${RUNNER_TEMP}/invalid.tar.gz"; then
+            echo "::error::OPA aceitou assinatura com chave incorreta"
+            exit 1
+          fi
+          "${RUNNER_TEMP}/opa" build --bundle "${BUNDLE}" \
+            --output "${RUNNER_TEMP}/cko-unsigned.tar.gz"
+          if "${RUNNER_TEMP}/opa" build --bundle "${RUNNER_TEMP}/cko-unsigned.tar.gz" \
+            --verification-key "${RUNNER_TEMP}/opa-ci-public.pem" \
+            --output "${RUNNER_TEMP}/invalid-unsigned.tar.gz"; then
+            echo "::error::OPA aceitou bundle sem assinatura"
+            exit 1
+          fi
+          echo "PASS: assinatura valida, chave indevida negada, bundle nao assinado negado"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"

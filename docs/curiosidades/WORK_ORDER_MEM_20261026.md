@@ -30,4 +30,4 @@ O repositório já possui `/blog/$slug`, `src/lib/content/articles`, geração d
 ## Evidências de execução CI
 - Gate de contratos e typecheck do MEM: https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40422244596 (conclusão SUCCESS verificada).
 - O workflow anterior de Curiosidades ainda depende de rotas reais dos candidatos bloqueados; não flexibilizar seus asserts para dar PASS.
-- O registro PMO canônico tem freeze validado por CI; sua alteração foi revertida na branch. Esta WO fica documentada sem modificar o PMO congelado.
+- O PMO contém divergência preexistente: o validador exige `WO-ADM-001=PAUSED`, enquanto a main de origem registra `IN_PROGRESS` após autorização do proprietário. A alteração provisória desta branch foi revertida, sem bypass. Ver `docs/curiosidades/FIND_PMO_BASELINE_20261026.md`. Esta WO permanece documentada, não integrada à fila canônica.

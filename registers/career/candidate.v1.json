@@ -9,7 +9,10 @@
     "engine": "PGLite",
     "scope": "local_ephemeral_candidate",
     "remoteConnections": false,
-    "migration": "migrations/0004_career_youth_candidate.sql"
+    "migrations": [
+      "migrations/0004_career_youth_candidate.sql",
+      "migrations/0005_career_editorial_content_candidate.sql"
+    ]
   },
   "projections": [
     {
@@ -46,7 +49,9 @@
     "schemas/career-learning-item.schema.json",
     "schemas/career-market-observation.schema.json",
     "schemas/career-projection-contract.schema.json",
-    "schemas/career-capability-governance.schema.json"
+    "schemas/career-capability-governance.schema.json",
+    "schemas/career-editorial-document.schema.json",
+    "schemas/career-editorial-block.schema.json"
   ],
   "canonicalObjects": [
     "CareerModule",
@@ -71,7 +76,9 @@
     "CareerLearningResource",
     "CareerMarketObservation",
     "CareerProjectionContract",
-    "CareerCapabilityGovernance"
+    "CareerCapabilityGovernance",
+    "CareerEditorialDocument",
+    "CareerEditorialBlock"
   ],
   "safeguards": [
     "ui_reads_modules_from_database",
@@ -97,5 +104,13 @@
     "requiresQualifiedSource": true,
     "deduplicationRequired": true,
     "expirySupported": true
+  },
+  "editorialContent": {
+    "documentCount": 17,
+    "locale": "pt-BR",
+    "sourceSnapshots": "registers/career/source-snapshots.v1.json",
+    "validator": "scripts/check-career-editorial-content.mjs",
+    "humanGate": "HOLD",
+    "publicReleaseAuthorized": false
   }
 }

@@ -6,6 +6,9 @@
 ## Implementado
 Research Studio; instrumentos; ética/LGPD/COI; fontes/evidências; equipe/skills; riscos e impactos; análise agregada; escuta cidadã; propostas/cocriação; consenso; devolutiva; relatório vivo e governança.
 
+## Objetos canônicos candidatos
+Schemas explícitos: ResearchProject, ResearchInstrument, ResearchRisk, ResearchSkillNeed, ParticipationProcess, ParticipationContribution, ParticipationProposal, ParticipationConsensusVote e ParticipationOutcome. Todos permanecem candidatos e vinculados ao registry de Research/Participation.
+
 ## Banco candidato
 `migrations/0004_research_participation_candidate.sql` + PGLite local/efêmero. O módulo candidato não lê `DATABASE_URL` e não conecta Neon/Supabase. Não há colunas de nome, e-mail, CPF, telefone, paciente, prontuário ou leito; campos livres rejeitam padrões óbvios de e-mail, CPF e telefone.
 
@@ -18,4 +21,4 @@ Research Studio; instrumentos; ética/LGPD/COI; fontes/evidências; equipe/skill
 - autorização do proprietário permite execução isolada nesta branch, mas não fabrica admissão do Kernel.
 
 ## Gate
-`npm run audit:research-candidate` verifica isolamento, schema, SQL, rota, noindex, catálogo e ausência de admissão fabricada. Workflow dedicado roda gate + typecheck + testes + build.
+`npm run audit:research-candidate` verifica isolamento, schema, SQL, rota, noindex, catálogo e ausência de admissão fabricada. Workflow dedicado roda gate + typecheck + testes + build + Chromium real em 360/768/1024/1440, com artefatos de evidência.

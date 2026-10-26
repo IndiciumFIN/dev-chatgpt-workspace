@@ -92,7 +92,7 @@ test("only a divergence warns the smoke verdict", () => {
 });
 
 test("the build side resolves the template's shipped app-env", (t) => {
-  if (semContratoDaPlataforma(t, "o app-env.json que a plataforma entrega")) return;
+  if (semContratoDaPlataforma(t, "o app-env.json que a plataforma entrega", [".grok/app-env.json"])) return;
   assert.equal(buildAuthEnabled(projectRoot(), {}), false);
   assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "true" }), true);
 });

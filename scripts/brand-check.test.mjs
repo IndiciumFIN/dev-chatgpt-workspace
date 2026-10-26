@@ -307,7 +307,7 @@ test("cli: a non-game with a compliant card passes", () => {
 const readDoc = (rel) => readFileSync(join(TEMPLATE_ROOT, rel), "utf8");
 
 test("SKILL.md and AGENTS.md name the marker path and bound this script uses", (t) => {
-  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma")) return;
+  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma", [".grok/skills/og/SKILL.md"])) return;
   // Prose wraps, so the minute count may straddle a line break.
   const bound = new RegExp(`${OG_PENDING_MAX_AGE_MS / 60_000}\\s+minutes`);
   for (const rel of [".grok/skills/og/SKILL.md", "AGENTS.md"]) {
@@ -346,7 +346,7 @@ function prohibitionSection({ rel, label, from, until }) {
 }
 
 test("the sections that own the brand-task prohibition never affirm a wait", (t) => {
-  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma")) return;
+  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma", [".grok/skills/og/SKILL.md"])) return;
   // Pinned on the shape of the prohibition, not on a negation being somewhere
   // nearby: "So: wait_tasks before the final verify, but never get_task_output"
   // keeps a negation in the sentence while instructing exactly the wait.
@@ -366,7 +366,7 @@ test("the sections that own the brand-task prohibition never affirm a wait", (t)
 });
 
 test("SKILL.md tells the pass to self-check with the flag this CLI accepts", (t) => {
-  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma")) return;
+  if (semContratoDaPlataforma(t, "o SKILL.md da plataforma", [".grok/skills/og/SKILL.md"])) return;
   const skill = readDoc(".grok/skills/og/SKILL.md");
   const invocations = skill.match(/node scripts\/brand-check\.mjs[^\n`]*/g) ?? [];
   assert.ok(invocations.length > 0);

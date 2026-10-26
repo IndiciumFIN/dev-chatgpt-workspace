@@ -20,19 +20,26 @@ export function projectRoot() {
   return join(dirname(fileURLToPath(import.meta.url)), "..");
 }
 
-/** O contrato da plataforma está neste checkout? */
-export function contratoDaPlataforma() {
-  return existsSync(join(projectRoot(), CONTRATO_DIR));
+/**
+ * O contrato da plataforma está neste checkout?
+ * @param {string[]} [rel] caminhos que precisam existir (relativos à raiz)
+ */
+export function contratoDaPlataforma(rel = []) {
+  if (!existsSync(join(projectRoot(), CONTRATO_DIR))) return false;
+  // O diretório `.grok/` pode existir sem os arquivos: o preview cria a pasta
+  // para o log. O que decide é o ARQUIVO pedido, não a pasta.
+  return rel.every((r) => existsSync(join(projectRoot(), r)));
 }
 
 /**
  * Pula o teste quando o contrato da plataforma não está no checkout.
  * @param {import("node:test").TestContext} t
  * @param {string} oQue
+ * @param {string[]} [rel] caminhos que precisam existir (relativos à raiz)
  * @returns {boolean} true quando o teste deve seguir
  */
-export function semContratoDaPlataforma(t, oQue) {
-  if (contratoDaPlataforma()) return false;
+export function semContratoDaPlataforma(t, oQue, rel = []) {
+  if (contratoDaPlataforma(rel)) return false;
   t.skip(
     `contrato da plataforma (${CONTRATO_DIR}/) ausente neste checkout — ${oQue} só pode ser medido dentro da plataforma`,
   );

@@ -166,7 +166,7 @@ test("cli: relative paths follow the script's root, not the caller's cwd", () =>
 });
 
 test("every hand-over the og skill prints is one this script accepts", (t) => {
-  if (semContratoDaPlataforma(t, "as referências do og skill")) return;
+  if (semContratoDaPlataforma(t, "as referências do og skill", [".grok/skills/og/references"])) return;
   // The card and banner recipes live in the skill's references/, not SKILL.md.
   const skillDir = join(TEMPLATE_ROOT, ".grok/skills/og");
   const docs = [

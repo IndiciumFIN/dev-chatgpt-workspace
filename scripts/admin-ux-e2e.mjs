@@ -59,6 +59,21 @@ try{
       await p.getByText(/Consultar achados em quarentena/).click();
       await p.getByText(/Consultar achados em quarentena/).click();
     }
+    if(width<960) await select.selectOption('modules');
+    else await nav.getByRole('button',{name:/Módulos/}).click();
+    await p.getByRole('heading',{name:'Macrogrupos e módulos'}).waitFor();
+    await p.getByRole('heading',{name:/M03 — PMO e Projetos/}).waitFor();
+    await assertNoOverflow(p,'admin-modules-'+width);
+    if([320,390,768,1440].includes(width)) await screenshot(p,'admin-modules-'+width+'.png');
+    if(width===390) {
+      await p.locator('#ce-modules-group').selectOption('G03');
+      await p.getByRole('button',{name:/M18.*Governança Clínica/}).click();
+      await p.getByRole('heading',{name:/M18 — Governança Clínica/}).waitFor();
+      await p.getByRole('button',{name:/M07 · Kernel e Conhecimento/}).click();
+      await p.getByRole('heading',{name:/M07 — Kernel e Conhecimento/}).waitFor();
+      await p.locator('#ce-modules-search').fill('validação');
+      await assertNoOverflow(p,'admin-modules-search-390');
+    }
     if(width<960) await select.selectOption('templates');
     else await nav.getByRole('button',{name:/Templates/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();

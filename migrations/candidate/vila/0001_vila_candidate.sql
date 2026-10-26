@@ -1,7 +1,7 @@
 -- CANDIDATE ONLY. Do not apply to production; requires kernel admission, authorized DB and migration review.
 CREATE SCHEMA IF NOT EXISTS vila_candidate;
 CREATE TABLE IF NOT EXISTS vila_candidate.content (
- id text PRIMARY KEY CHECK (id ~ '^VILA\\.[A-Z]+\\.[0-9]{3}$'),
+ id text PRIMARY KEY CHECK (id ~ '^VILA\.[A-Z]+\\.[0-9]{3}$'),
  kind text NOT NULL CHECK (kind IN ('mission','story','emotion')),
  title text NOT NULL, summary text NOT NULL, age_band text NOT NULL,
  template_id text NOT NULL, source_ref text NOT NULL,

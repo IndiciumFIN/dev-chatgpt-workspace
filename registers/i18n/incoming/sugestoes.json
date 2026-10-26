@@ -1,25 +1,23 @@
 {
   "id": "CE-I18N-SUGESTOES-1.0.0",
   "branch": "idioma/consolidado-19",
+  "aprovado": false,
   "implantado": [
     "As 47 chaves da interface dos 15 idiomas entram em src/lib/chrome.tsx.",
     "O registro marca esses 15 como interface_ready e o seletor passa a lista-los.",
-    "O idioma do documento desses 15 continua pt-BR, porque a pagina nao foi traduzida.",
+    "O idioma do documento desses 15 continua pt-BR.",
     "Alemao: Startseite, Optionale Cookies ablehnen, Institutionell, Suchen."
   ],
   "em_revisao": {
     "pacote": "registers/i18n/incoming/conteudo/",
-    "aprovado": false,
     "fila": "revisao",
     "status": "REVIEW_REQUIRED",
+    "translation_status": "DRAFT",
     "itens": 1171,
-    "clinicos": 520,
-    "nota": "Origem em pt-BR. Nenhuma traducao foi promovida nem aprovada."
+    "revisao_clinica_pending": 520,
+    "revisao_clinica_nao_aplicavel": 651,
+    "aprovado": false
   },
-  "nao_implantar_neste_branch": [
-    {"id": "acervo", "motivo": "1171 textos, dos quais 520 clinicos, estao na fila de revisao. Nao entram no site."},
-    {"id": "vitrines", "motivo": "15 paginas sem corpo. Nao ha texto para colocar na fila."},
-    {"id": "pt-PT", "motivo": "Fora dos 19. Branch idioma/pt-PT-v1."},
-    {"id": "seo", "motivo": "Nada disto autoriza hreflang novo."}
-  ]
+  "pendencias": "registers/i18n/incoming/pendencias.json",
+  "nao_aplicavel": "registers/i18n/incoming/nao-aplicavel.json"
 }

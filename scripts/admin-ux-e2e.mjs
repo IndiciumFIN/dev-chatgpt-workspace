@@ -47,7 +47,7 @@ try{
     const p=await browser.newPage({viewport:{width,height:mobile?780:900},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1,reducedMotion:'reduce'});
     wireErrors(p,'admin-'+width);
     await p.goto(base+'/admin',{waitUntil:'networkidle'});
-    await p.getByRole('banner',{name:'Cabeçalho da administração'}).waitFor();
+    await p.locator('.ce-account-bar').waitFor();
     assert.equal(await p.getByRole('button',{name:/Notificações/}).isVisible(),true,'notificações ausentes');
     assert.equal(await p.getByRole('button',{name:'Configurações'}).isVisible(),true,'configurações ausentes');
     assert.equal(await p.getByRole('button',{name:'Meu perfil'}).isVisible(),true,'avatar ausente');

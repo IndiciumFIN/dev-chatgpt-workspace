@@ -3,11 +3,14 @@
  * Sem chamadas remotas de mutação; não executa WO.
  */
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 const base = process.env.ADMIN_E2E_BASE_URL || 'http://127.0.0.1:4173';
 const dir = 'audit-evidence/admin-ux';
+const workOrders = JSON.parse(readFileSync('registers/pmo/queue.v1.json', 'utf8')).items;
+assert.ok(Array.isArray(workOrders) && workOrders.length > 0, 'PMO registry is missing');
+assert.equal(new Set(workOrders.map(item => item.id)).size, workOrders.length, 'PMO registry contains duplicate IDs');
 mkdirSync(dir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const summary = [], errors = [];
@@ -83,7 +86,8 @@ try{
       const expand=p.getByRole('button',{name:/Mostrar todas as/});
       assert.equal(await expand.isVisible(),true,'PMO expand action missing');
       await expand.click();
-      assert.equal(await p.locator('[data-work-id]').count(),10,'expanded PMO should expose all orders');
+      const renderedWorkIds = await p.locator('[data-work-id]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-work-id')));
+      assert.deepEqual(renderedWorkIds, workOrders.map(item => item.id), 'expanded PMO must render all canonical WO IDs in order');
       await p.getByRole('button',{name:'Recolher lista'}).click();
       assert.equal(await p.locator('[data-work-id]').count(),4,'collapsed PMO should be concise');
       await p.getByText(/Consultar achados em quarentena/).click();

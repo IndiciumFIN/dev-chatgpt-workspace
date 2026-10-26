@@ -10,7 +10,7 @@ export type ReadPolicyRequest={
   sourceSha256:string;recordCount:number;
 };
 export type ReadPolicyGrant={
-  allowed:true;decisionId:string;bundleSha256:string;
+  allowed:true;decisionId:string;bundleSha256:string;requestNonce:string;
 };
 export type ReadPolicyDecision={allowed:false;reason:string}|ReadPolicyGrant;
 export type PolicyPost=(url:string,init:RequestInit)=>Promise<Response>;
@@ -78,7 +78,7 @@ export function createOpaImportReadEvaluator(
          payload.result.context?.destination!==request.destination||
          payload.result.context?.source_sha256!==request.sourceSha256||
          payload.result.context?.record_count!==request.recordCount)return DENIED;
-      return {allowed:true,decisionId:payload.decision_id,bundleSha256:config.expectedBundleSha256};
+      return {allowed:true,decisionId:payload.decision_id,bundleSha256:config.expectedBundleSha256,requestNonce};
     }catch{return DENIED;}
     finally{clearTimeout(timeout);}
   };

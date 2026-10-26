@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronDown, ChevronRight, LockKeyhole, Network, ShieldCheck } from 'lucide-react';
 import { adminGroups, adminModules, getAdminModule, type AdminGroupId, type AdminModuleId } from '@/lib/admin-module-registry';
+import { AdminSchemaEditor } from '@/components/admin/admin-schema-editor';
 import '@/styles/admin-hierarchy.css';
 
 type Props={selectedId:AdminModuleId;onSelect:(id:AdminModuleId)=>void;idPrefix:'desktop'|'mobile'};
@@ -57,5 +58,6 @@ export function AdminModuleFallback({moduleId}:{moduleId:AdminModuleId}){
       <div><strong>Encaminha informações para</strong>{module.sends.length?<ul>{module.sends.map(id=><li key={id}>{id} · {getAdminModule(id).title}</li>)}</ul>:<p>Não identificado</p>}</div>
     </div>
     <p className="ce-admin-module-note">Fluxos documentais propostos: não correspondem a integrações executadas. Consulte as políticas e o PMO antes de promover qualquer implementação.</p>
+    <AdminSchemaEditor key={moduleId} moduleId={moduleId}/>
   </section>;
 }

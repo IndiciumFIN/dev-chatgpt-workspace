@@ -119,3 +119,34 @@ export function displayLabel(name:string):string{
 export function getTemplate(moduleId:AdminModuleId,key:string):FormTemplate{
  return moduleFormTemplates[moduleId].find(t=>t.key===key)??moduleFormTemplates[moduleId][0];
 }
+
+
+/** Binding explícito por submódulo. Ausência = formulário especializado ainda não definido.
+ * Não usar schema genérico de um domínio como se fosse CRUD validado de outro.
+ */
+export const submoduleTemplateBindings: Partial<Record<AdminModuleId,Record<string,readonly string[]>>> = {
+ M02: {'Roadmap':['workflow']},
+ M03: {'Backlog e tarefas':['task'],'Work Orders':['work_order']},
+ M04: {'Riscos e controles':['risk_control'],'Matriz RCM':['risk_control']},
+ M05: {'Entidades e relacionamentos':['canonical_object'],'Schemas e contratos':['field_definition']},
+ M06: {'Fontes e licenças':['source']},
+ M07: {'Claims e regras':['claim','clinical_rule']},
+ M08: {'Calculadoras':['tool','formula']},
+ M09: {'Citações e direitos':['reference'],'Protocolos e publicações':['publication']},
+ M10: {'Componentes e versões':['component'],'Iconografia e ativos':['media_asset']},
+ M11: {'Idiomas e tradução':['i18n'],'WCAG e eMAG':['accessibility']},
+ M12: {'Preferências':['user_state'],'Consentimentos':['privacy']},
+ M13: {'SEO':['metadata_seo'],'Analytics':['analytics_event']},
+ M14: {'Integração e E2E':['runtime_test'],'Homologações e gates':['release_gate']},
+ M15: {'Publicação':['publication'],'Promoções':['release_gate']},
+ M16: {'Telemetria':['monitoring'],'Pipelines':['workflow']},
+ M17: {'Aplicabilidade':['applicability']},
+ M18: {'Validação de fórmulas':['clinical_rule','safety_check'],'Alertas de segurança':['safety_check']},
+ M19: {'Catálogo de agentes':['agent']},
+ M20: {'LGPD e retenção':['privacy'],'Riscos cibernéticos':['safety_check']},
+ M21: {'Evidências':['audit_evidence'],'Achados e pareceres':['find']},
+};
+export function getSubmoduleTemplates(id:AdminModuleId,submodule:string):readonly FormTemplate[]{
+ const allowed=submoduleTemplateBindings[id]?.[submodule]??[];
+ return moduleFormTemplates[id].filter(t=>allowed.includes(t.key));
+}

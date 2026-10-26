@@ -68,7 +68,8 @@
     "content:generate": "node scripts/generate-article-index.mjs && node scripts/generate-entity-contracts.mjs",
     "build:spa": "node scripts/check-generated-fresh.mjs && node scripts/check-cko-packages.mjs && node scripts/test-admin-console.mjs && npm run typecheck && npm test && node scripts/audit-execution-gates.mjs && SPA_BUILD=1 node scripts/with-app-env.mjs vite build && node scripts/materialize-static-routes.mjs",
     "audit:brazil": "node scripts/audit-brazil-first.mjs",
-    "audit:templates": "node scripts/audit-templates.mjs"
+    "audit:templates": "node scripts/audit-templates.mjs",
+    "audit:career-candidate": "node scripts/check-career-youth-candidate.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",

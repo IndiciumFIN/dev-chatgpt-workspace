@@ -1,163 +1,118 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { buildManifest, canDeploy, canPreview, evaluateWorkOrder } from "./kernel.ts";
+import { buildManifest, canDeploy, canPreview, evaluateWorkOrder, type NamedValidator, type PolicyEvaluator } from "./kernel.ts";
+import type { Manifest, PolicyRule, WorkOrder } from "./types.ts";
 
-const policyRules = [
-  {
-    id: "p1",
-    code: "policy.require.source",
-    description: "source required",
-    version: "1.0.0",
-    active: true,
-    scope: "global",
-  },
-  {
-    id: "p2",
-    code: "policy.preview-required",
-    description: "preview required",
-    version: "1.0.0",
-    active: true,
-    scope: "preview",
-  },
-  {
-    id: "p3",
-    code: "policy.no-direct-deploy",
-    description: "no direct deploy",
-    version: "1.0.0",
-    active: true,
-    scope: "deploy",
-  },
-] as const;
+const hash = "a".repeat(64);
+const timestamp = "2026-10-26T12:00:00Z";
+const policies: PolicyRule[] = [
+  { id: "p1", code: "policy.require.source", description: "source", version: "1.0.0", active: true, scope: "global" },
+  { id: "p2", code: "policy.preview-required", description: "preview", version: "1.0.0", active: true, scope: "preview" },
+];
+const makeOrder = (): WorkOrder => ({
+  id: "wo-test", type: "pilot", title: "Teste isolado", objective: "avaliar gate",
+  scope: "public-backup", owner: "maker", approver: "reviewer", sourceRef: "source://test",
+  policySet: ["policy.require.source", "policy.preview-required"], riskLevel: "medium",
+  dataClassification: "internal", securityImpact: "low", environment: "pilot",
+  status: "pending" as WorkOrder["status"], dependencies: [], acceptanceCriteria: ["test"],
+  evidence: [], approvals: [{id:"approval-1",approver:"reviewer",decision:"approved",approvedAt:timestamp}],
+  createdAt:timestamp, updatedAt:timestamp, hash,
+});
+const makeManifest = (order = makeOrder()): Manifest => ({
+  ...buildManifest(order.id,"preview",hash,["schema","rights"],order.policySet),
+  status:"approved", approvedBy:"reviewer",approvedAt:timestamp,
+});
+const validators: NamedValidator[] = [
+  {id:"schema",run:async()=>true},
+  {id:"rights",run:async()=>true},
+];
+const policy: PolicyEvaluator = async()=>({
+  allow:true,decisionId:"opa-decision-001",bundleRef:"bundle://candidate/1.0.0",
+});
+const assess = (
+  order=makeOrder(),
+  manifest:Manifest|null=makeManifest(order),
+  checks:NamedValidator[]=validators,
+  evaluate?:PolicyEvaluator,
+)=>evaluateWorkOrder(order,manifest,policies,checks,evaluate??policy);
 
-describe("governance kernel", () => {
-  it("rejects work order without policy set", async () => {
-    const workOrder: any = {
-      id: "wo-1",
-      type: "planning",
-      title: "Planejamento do piloto",
-      objective: "validar fluxo",
-      scope: "pilot",
-      owner: "ops",
-      approver: "ops-lead",
-      sourceRef: "source://pilot",
-      policySet: [],
-      riskLevel: "medium",
-      dataClassification: "internal",
-      securityImpact: "low",
-      environment: "pilot",
-      status: "draft",
-      dependencies: [],
-      acceptanceCriteria: ["manifesto"],
-      evidence: [],
-      approvals: [],
-      createdAt: "2026-10-24T00:00:00Z",
-      updatedAt: "2026-10-24T00:00:00Z",
-    };
-
-    const decision = await evaluateWorkOrder(workOrder, null, [...policyRules], [async () => true]);
-    assert.equal(decision.outcome, "reject");
+describe("governance kernel — fail-closed local gate",()=>{
+  it("rejects missing policy set",async()=>{
+    const order=makeOrder();order.policySet=[];
+    assert.equal((await assess(order)).reason,"policy-set-required");
   });
-
-  it("holds work order without manifest", async () => {
-    const workOrder: any = {
-      id: "wo-2",
-      type: "pilot",
-      title: "Pilot de conteúdo",
-      objective: "validar fluxo ponta a ponta",
-      scope: "pilot",
-      owner: "ops",
-      approver: "ops-lead",
-      sourceRef: "source://pilot",
-      policySet: ["policy.require.source"],
-      riskLevel: "medium",
-      dataClassification: "internal",
-      securityImpact: "low",
-      environment: "pilot",
-      status: "pending",
-      dependencies: [],
-      acceptanceCriteria: ["manifesto"],
-      evidence: [],
-      approvals: [],
-      createdAt: "2026-10-24T00:00:00Z",
-      updatedAt: "2026-10-24T00:00:00Z",
-    };
-
-    const decision = await evaluateWorkOrder(workOrder, null, [...policyRules], [async () => true]);
-    assert.equal(decision.outcome, "hold");
+  it("holds without manifest",async()=>{
+    assert.deepEqual(await assess(makeOrder(),null),{outcome:"hold",reason:"manifest-required"});
   });
-
-  it("admits work order with approved manifest and valid validators", async () => {
-    const workOrder: any = {
-      id: "wo-3",
-      type: "pilot",
-      title: "Pilot de conteúdo",
-      objective: "validar fluxo ponta a ponta",
-      scope: "pilot",
-      owner: "ops",
-      approver: "ops-lead",
-      sourceRef: "source://pilot",
-      policySet: ["policy.require.source", "policy.preview-required"],
-      riskLevel: "medium",
-      dataClassification: "internal",
-      securityImpact: "low",
-      environment: "pilot",
-      status: "pending",
-      dependencies: [],
-      acceptanceCriteria: ["manifesto"],
-      evidence: [],
-      approvals: [],
-      createdAt: "2026-10-24T00:00:00Z",
-      updatedAt: "2026-10-24T00:00:00Z",
-    };
-
-    const manifest = buildManifest(
-      "wo-3",
-      "preview",
-      "sha256:abc",
-      ["schema", "policy"],
-      ["policy.require.source", "policy.preview-required"],
-    );
-
-    const decision = await evaluateWorkOrder(
-      workOrder,
-      manifest,
-      [...policyRules],
-      [async () => true, async () => true],
-    );
-
-    assert.equal(decision.outcome, "admit");
+  it("buildManifest never approves a candidate",()=>{
+    const built=buildManifest("WO-1","preview",hash,["schema"],["policy.require.source"]);
+    assert.equal(built.status,"draft");
+    assert.equal(built.approvedBy,undefined);
+    assert.equal(canPreview(built),false);
+    assert.equal(canDeploy(built),false);
   });
-
-  it("blocks preview without approved manifest", () => {
-    const manifest = buildManifest(
-      "wo-3",
-      "draft",
-      "sha256:abc",
-      ["schema"],
-      ["policy.require.source"],
-    );
-    assert.equal(canPreview(manifest), false);
+  it("rejects cross-WO manifest",async()=>{
+    const manifest=makeManifest();manifest.serviceOrderId="another-wo";
+    assert.equal((await assess(makeOrder(),manifest)).reason,"manifest-work-order-mismatch");
   });
-
-  it("allows preview only with approved manifest", () => {
-    const manifest = buildManifest(
-      "wo-3",
-      "preview",
-      "sha256:abc",
-      ["schema", "policy"],
-      ["policy.require.source"],
-    );
-    assert.equal(canPreview(manifest), true);
+  it("rejects hash mismatch and malformed hash",async()=>{
+    const manifest=makeManifest();manifest.hash="sha256:abc";
+    assert.equal((await assess(makeOrder(),manifest)).reason,"manifest-integrity-mismatch");
+    manifest.hash="b".repeat(64);
+    assert.equal((await assess(makeOrder(),manifest)).reason,"manifest-integrity-mismatch");
   });
-
-  it("allows deploy only with approved preview state", () => {
-    const manifest = buildManifest(
-      "wo-3",
-      "preview",
-      "sha256:abc",
-      ["schema", "policy"],
-      ["policy.require.source"],
-    );
-    assert.equal(canDeploy(manifest), true);
+  it("rejects changed/duplicated policy set",async()=>{
+    const manifest=makeManifest();manifest.policySet=["policy.require.source"];
+    assert.equal((await assess(makeOrder(),manifest)).reason,"manifest-policy-set-mismatch");
+  });
+  it("rejects missing, unnamed or bypassed validators",async()=>{
+    assert.equal((await assess(makeOrder(),makeManifest(),[])).reason,"validator-manifest-mismatch");
+    const manifest=makeManifest();manifest.validators=[];
+    assert.equal((await assess(makeOrder(),manifest,[])).reason,"validator-manifest-mismatch");
+    assert.equal((await assess(makeOrder(),makeManifest(),[{id:"schema",run:async()=>true}])).reason,"validator-manifest-mismatch");
+  });
+  it("holds without independent approval, including kernel self-approval",async()=>{
+    const manifest=makeManifest();manifest.approvedBy="kernel";
+    assert.equal((await assess(makeOrder(),manifest)).reason,"independent-approval-required");
+    const order=makeOrder();order.owner="reviewer";
+    assert.equal((await assess(order,makeManifest(order))).reason,"independent-approval-required");
+    const absent=makeOrder();absent.approvals=[];
+    assert.equal((await assess(absent,makeManifest(absent))).reason,"independent-approval-required");
+  });
+  it("holds if OPA evaluator is absent",async()=>{
+    const order=makeOrder();
+    assert.equal((await evaluateWorkOrder(order,makeManifest(order),policies,validators)).reason,"policy-evaluation-unavailable");
+  });
+  it("rejects explicit OPA denial",async()=>{
+    assert.equal((await assess(makeOrder(),makeManifest(),validators,async()=>({
+      allow:false,decisionId:"opa-2",bundleRef:"bundle://candidate",
+    }))).reason,"policy-denied");
+  });
+  it("holds if policy decision evidence is missing or evaluation throws",async()=>{
+    assert.equal((await assess(makeOrder(),makeManifest(),validators,async()=>({
+      allow:true,decisionId:"",bundleRef:"",
+    }))).reason,"policy-decision-evidence-missing");
+    assert.equal((await assess(makeOrder(),makeManifest(),validators,async()=>{throw new Error("offline");})).reason,"policy-evaluation-error");
+  });
+  it("rejects failed validator, holds unexpected exceptions",async()=>{
+    assert.equal((await assess(makeOrder(),makeManifest(),[
+      {id:"schema",run:async()=>false},validators[1],
+    ])).reason,"validator-failed:schema");
+    assert.equal((await assess(makeOrder(),makeManifest(),[
+      {id:"schema",run:async()=>{throw new Error("offline");}},validators[1],
+    ])).reason,"validator-error:schema");
+  });
+  it("admits ONLY a fully scoped positive evaluation and records decision ID",async()=>{
+    const result=await assess();
+    assert.deepEqual(result,{
+      outcome:"admit",reason:"independent-approval-policy-and-validators-passed",
+      evidenceHash:hash,policyDecisionRef:"opa-decision-001",
+    });
+    assert.equal(canPreview(makeManifest()),true);
+    assert.equal(canDeploy(makeManifest()),true);
+  });
+  it("never treats production as an eligible preview artifact",()=>{
+    const manifest=makeManifest();manifest.state="prod";
+    assert.equal(canDeploy(manifest),false);
   });
 });

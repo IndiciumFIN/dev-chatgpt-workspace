@@ -18,7 +18,7 @@ create table cko_evidence.evidence_bundles(evidence_bundle_id text primary key);
 `;
 
 describe('staging import migration — in-memory PostgreSQL only',()=>{
- it('creates seven unique private tables and the expected foreign keys',async()=>{
+ it('creates seven unique private tables and the expected foreign keys',{timeout:45000},async()=>{
    const db=new PGlite();
    try{
      await db.exec(setup);
@@ -36,5 +36,5 @@ describe('staging import migration — in-memory PostgreSQL only',()=>{
      await db.exec("insert into cko_staging.import_package_contracts(import_package_id,profile_ref,profile_version,original_sha256,source_format) values('P1','sources','v1',repeat('b',64),'csv');");
      await assert.rejects(db.exec("insert into cko_staging.import_column_mappings(import_package_id,profile_ref,profile_version,destination_field,source_column) values('P1','sources','WRONG','source_id','id');"),/foreign key/i);
    }finally{await db.close();}
- },{timeout:45000});
+ });
 });

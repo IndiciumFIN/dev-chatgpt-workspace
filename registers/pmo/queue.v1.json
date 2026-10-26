@@ -154,6 +154,13 @@
       "workId": "WO-CKO-LINK-010",
       "to": "QUEUED",
       "reason": "Integridade B3/B4 e 21 módulos, 22 arestas direcionais a reconciliar; issue #10."
+    },
+    {
+      "seq": 23,
+      "date": "2026-10-26",
+      "workId": "WO-CKO-ID-009",
+      "to": "IN_PROGRESS",
+      "reason": "SELECT cruzamento MD↔closure: 38 sem dossiê por slug; 12 com dossiê e UUID mas sem rota; novo SQL versionado; FIND na issue #9."
     }
   ],
   "items": [
@@ -347,9 +354,10 @@
       "evidence": [
         "docs/governance/audits/SO-009-B3-B4-TRACEABILITY-20261026.md",
         "scripts/audit-so009-b3-md-consistency.readonly.sql",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9",
+        "scripts/audit-so009-dossier-identity.readonly.sql"
       ],
-      "next": "Identificar fontes mestras dos 38 e completar validação cruzada de 12 e seis; revisão independente antes da admissão.",
+      "next": "Novo achado confirmado: 38/38 recuperados SEM dossiê correspondente por slug em cko_closure.tool_dossiers; avaliar alias e origem antes de materialização. 12/12 unresolved têm dossiê+UUID mas sem rota. 81/81 resolved com dossiê+UUID+rota. Executar verificação de aliases, duplicidade e versões, sem liberar HOLD.",
       "updatedOn": "2026-10-26"
     },
     {
@@ -374,7 +382,7 @@
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 18,
+  "revision": 19,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

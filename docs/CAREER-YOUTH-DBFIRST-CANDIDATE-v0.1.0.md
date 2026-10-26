@@ -59,3 +59,20 @@ O checklist escopado está em `docs/PENDENCIAS-CAREER-YOUTH-CANDIDATE-v0.1.0.md`
 A fundação agora reutiliza os contratos CKO existentes de `source`, `authority_binding`, `relation` e `projection`, além de `projection_request` / `resource_binding` editoriais. O banco materializa Source, Authority Binding, Ingestion Run, registros reais de Opportunity/Learning/Market, contratos de projeção e governança de capacidades.
 
 O validador `scripts/validate-career-acquisition-batch.mjs` exige fonte `SOURCE_QUALIFIED`, URI, SHA-256 fornecido, dedupe key e coerência temporal. Ele não grava no banco.
+
+
+## Editorial content pack
+
+A primeira coleção editorial está materializada em `migrations/0005_career_editorial_content_candidate.sql`.
+
+- 17 documentos pt-BR;
+- perfis Article e Pocket Guide reutilizados do `cko-editorial`;
+- corpo em blocos de banco, não hardcoded em React;
+- `static_nontechnical_copy` para orientação não factual;
+- `evidence` para afirmações profissionais/formativas;
+- 6 snapshots oficiais em `registers/career/source-snapshots.v1.json`;
+- SHA-256 conferido pelo gate `audit:career-content`;
+- todos os documentos permanecem com `human_gate=HOLD`;
+- o leitor editorial é renderizado a partir de `CareerEditorialDocument + CareerEditorialBlock`.
+
+Run validado desta wave: `40421504298`.

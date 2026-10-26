@@ -63,6 +63,13 @@ create table cko_orch.work_order_policy_evaluations (
   unique (work_order_id,decision_ref)
 );
 
+create table cko_orch.work_order_required_validators (
+  work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
+  validator_id text not null references cko_validation.validators(validator_id) on delete restrict,
+  pinned_version text not null check (length(trim(pinned_version)) > 0),
+  primary key(work_order_id,validator_id)
+);
+
 create table cko_orch.work_order_validator_results (
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   validator_id text not null references cko_validation.validators(validator_id) on delete restrict,
@@ -124,6 +131,8 @@ declare
   approved_human boolean;
   evaluated_allow boolean;
   validated_count bigint;
+  required_validator_count bigint;
+  invalid_validator_count bigint;
   policy_count bigint;
   missing_policies bigint;
 begin
@@ -144,14 +153,22 @@ begin
    where e.decision_ref = new.policy_decision_ref;
 
   select (d.human_required is true and d.human_status = 'APPROVED'
-          and d.decided_at is not null)
+          and d.decided_at is not null and d.scope_ref = new.work_order_id)
     into approved_human
     from cko_governance.decisions d
    where d.decision_id = new.human_decision_id;
 
-  select count(*) into validated_count
+  select count(*) into required_validator_count
+    from cko_orch.work_order_required_validators v
+   where v.work_order_id = new.work_order_id;
+
+  select count(distinct r.validator_id) filter (where r.result = 'PASS'),
+         count(*) filter (where r.result <> 'PASS' or v.validator_id is null)
+    into validated_count,invalid_validator_count
     from cko_orch.work_order_validator_results r
-   where r.work_order_id = new.work_order_id and r.result = 'PASS';
+    left join cko_orch.work_order_required_validators v
+      on v.work_order_id = r.work_order_id and v.validator_id = r.validator_id
+   where r.work_order_id = new.work_order_id;
 
   select count(*),count(*) filter(where p.active is not true or p.version <> b.pinned_version)
     into policy_count,missing_policies
@@ -160,7 +177,8 @@ begin
    where b.work_order_id = new.work_order_id;
 
   if evaluated_allow is distinct from true or approved_human is distinct from true
-     or policy_count < 1 or missing_policies > 0 or validated_count < 1
+     or policy_count < 1 or missing_policies > 0 or required_validator_count < 1 or validated_count <> required_validator_count
+     or invalid_validator_count > 0
      or record_maker is null or record_checker is null or record_maker = record_checker
      or new.admission_evidence_bundle_id is null then
     raise check_violation using message = 'Candidate admission fails closed: policy, validators, reviewer or evidence missing';
@@ -183,6 +201,8 @@ alter table cko_orch.policy_bundle_artifacts enable row level security;
 alter table cko_orch.policy_bundle_artifacts force row level security;
 alter table cko_orch.work_order_policy_evaluations enable row level security;
 alter table cko_orch.work_order_policy_evaluations force row level security;
+alter table cko_orch.work_order_required_validators enable row level security;
+alter table cko_orch.work_order_required_validators force row level security;
 alter table cko_orch.work_order_validator_results enable row level security;
 alter table cko_orch.work_order_validator_results force row level security;
 alter table cko_orch.kernel_admission_decisions enable row level security;
@@ -192,7 +212,8 @@ alter table cko_governance.agent_tool_scopes force row level security;
 
 revoke all on cko_orch.work_order_admission_requests,
   cko_orch.work_order_policy_bindings, cko_orch.policy_bundle_artifacts,
-  cko_orch.work_order_policy_evaluations, cko_orch.work_order_validator_results,
+  cko_orch.work_order_policy_evaluations, cko_orch.work_order_required_validators,
+  cko_orch.work_order_validator_results,
   cko_orch.kernel_admission_decisions, cko_governance.agent_tool_scopes
   from public, anon, authenticated;
 revoke all on function cko_orch.check_candidate_kernel_admission() from public, anon, authenticated;
@@ -204,6 +225,7 @@ create index wo_policy_by_policy on cko_orch.work_order_policy_bindings(policy_i
 create index policy_bundle_by_policy on cko_orch.policy_bundle_artifacts(policy_id);
 create index policy_evaluation_by_request on cko_orch.work_order_policy_evaluations(work_order_id,evaluated_at desc);
 create index policy_evaluation_by_bundle on cko_orch.work_order_policy_evaluations(bundle_ref);
+create index wo_required_validator_by_validator on cko_orch.work_order_required_validators(validator_id);
 create index wo_validator_by_validator on cko_orch.work_order_validator_results(validator_id);
 create index wo_validator_by_evidence on cko_orch.work_order_validator_results(evidence_bundle_id);
 create index admission_decision_by_request on cko_orch.kernel_admission_decisions(work_order_id,decided_at desc);

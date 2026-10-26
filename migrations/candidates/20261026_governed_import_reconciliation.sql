@@ -24,7 +24,8 @@ create table cko_staging.import_reconciliation_runs (
    references cko_staging.import_package_contracts(import_package_id,profile_ref,profile_version) on delete restrict,
  constraint reconciliation_catalog_fields check
    (lookup_state <> 'LOOKUP_COMPLETE_UNATTESTED'
-      or (catalog_snapshot_ref is not null and catalog_captured_at is not null))
+      or (catalog_snapshot_ref is not null and catalog_captured_at is not null
+          and completed_at is not null))
 );
 
 create table cko_staging.import_reconciliation_rows (
@@ -60,6 +61,40 @@ create table cko_staging.import_lifecycle_events (
  foreign key (reconciliation_id,import_package_id)
    references cko_staging.import_reconciliation_runs(reconciliation_id,import_package_id) on delete restrict
 );
+
+-- An asserted new/unchanged/conflict comparison must point to a completed
+-- (but still UNATTESTED) lookup and a non-held candidate row.
+-- This remains a validation of structured claims, not authorization.
+create function cko_staging.validate_import_reconciliation_row()
+returns trigger
+language plpgsql
+security invoker
+set search_path=''
+as $
+declare
+  run_state text;
+  candidate_state text;
+begin
+  select lookup_state into run_state from cko_staging.import_reconciliation_runs
+    where reconciliation_id = new.reconciliation_id
+      and import_package_id = new.import_package_id;
+  select status into candidate_state from cko_staging.import_row_candidates
+    where import_package_id = new.import_package_id
+      and row_number = new.row_number;
+
+  if new.classification in ('NEW_CANDIDATE','UNCHANGED_CANDIDATE','CONFLICT_HOLD')
+    and (run_state is distinct from 'LOOKUP_COMPLETE_UNATTESTED'
+         or candidate_state is distinct from 'CANDIDATE') then
+    raise check_violation using message =
+      'Comparison classification requires complete lookup and valid candidate';
+  end if;
+  return new;
+end;
+$;
+
+create trigger import_reconciliation_row_gate
+ before insert on cko_staging.import_reconciliation_rows
+ for each row execute function cko_staging.validate_import_reconciliation_row();
 
 -- This guard prevents ordinary UPDATE/DELETE of the event history. Elevated
 -- maintenance actors can bypass triggers: do not claim cryptographic immutability.
@@ -105,6 +140,7 @@ revoke all on
   cko_staging.import_reconciliation_rows,
   cko_staging.import_lifecycle_events
   from public, anon, authenticated;
+revoke all on function cko_staging.validate_import_reconciliation_row() from public, anon, authenticated;
 revoke all on function cko_staging.reject_import_history_mutation()
   from public, anon, authenticated;
 

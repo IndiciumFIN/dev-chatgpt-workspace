@@ -54,6 +54,7 @@ function CommandCenter() {
   const [filter,setFilter] = useState('');
   const [domain,setDomain] = useState('todos');
   const [phase,setPhase] = useState('todos');
+  const [visibleTableCount,setVisibleTableCount] = useState(12);
   const [onlyProblems,setOnlyProblems] = useState(false);
   const selected = queue.items.find(item=>item.id===selectedId) ?? queue.items[0];
   const filteredTables = useMemo(()=>proposedTables.filter(t=>
@@ -158,11 +159,12 @@ function CommandCenter() {
       <section className="cc-panel cc-detail" aria-live="polite" aria-labelledby="detail-title">
         <div className="cc-panel-title"><div><span className="cc-section-kicker">DETALHAMENTO · {metrics.find(x=>x.id===activeMetric)?.name}</span><h2 id="detail-title">{activeMetric==='tables'?'Inventário lógico v1.0':activeMetric==='finds'?'Achados candidatos':activeMetric==='agents'?'Conexão de agentes':activeMetric==='gates'?'Gates de execução':'Lista vinculada ao PMO'}</h2></div><span className="cc-source">{activeMetric==='tables'?'Catálogo proposto, não aplicado':'Leitura de registros locais do build'}</span></div>
         {activeMetric==='tables' ? <>
-          <div className="cc-filter-row"><label><Search size={17}/><span className="sr-only">Pesquisar tabela</span><input type="search" value={filter} onChange={e=>setFilter(e.target.value)} placeholder="Buscar tabela ou entidade"/></label>
-          <label>Domínio<select value={domain} onChange={e=>setDomain(e.target.value)}><option value="todos">Todos</option>{tableDomains.map(d=><option key={d} value={d}>{d}</option>)}</select></label>
-          <label>Onda<select value={phase} onChange={e=>setPhase(e.target.value)}><option value="todos">Todas</option><option value="B0">B0 · Fundação</option><option value="B1">B1 · Ampliação</option></select></label></div>
+          <div className="cc-filter-row"><label><Search size={17}/><span className="sr-only">Pesquisar tabela</span><input type="search" value={filter} onChange={e=>{setFilter(e.target.value);setVisibleTableCount(12)}} placeholder="Buscar tabela ou entidade"/></label>
+          <label>Domínio<select value={domain} onChange={e=>{setDomain(e.target.value);setVisibleTableCount(12)}}><option value="todos">Todos</option>{tableDomains.map(d=><option key={d} value={d}>{d}</option>)}</select></label>
+          <label>Onda<select value={phase} onChange={e=>{setPhase(e.target.value);setVisibleTableCount(12)}}><option value="todos">Todas</option><option value="B0">B0 · Fundação</option><option value="B1">B1 · Ampliação</option></select></label></div>
           <p className="cc-muted">Exibindo {filteredTables.length} de {proposedTables.length} tabelas propostas (B0: {proposedTables.filter(t=>t.phase==='B0').length}; B1: {proposedTables.filter(t=>t.phase==='B1').length}). Antes de qualquer migration, reconciliar com o schema existente.</p>
-          <div className="cc-table-wrap"><table><thead><tr><th>Domínio</th><th>Tabela lógica proposta</th><th>Fase</th><th>Estado de implantação</th></tr></thead><tbody>{filteredTables.map(t=><tr key={t.name}><td data-label="Domínio">{t.domain}</td><td data-label="Tabela"><code>{t.name}</code></td><td data-label="Fase">{t.phase}</td><td data-label="Estado">Não verificado</td></tr>)}</tbody></table></div>
+          <div className="cc-table-wrap"><table><thead><tr><th>Domínio</th><th>Tabela lógica proposta</th><th>Fase</th><th>Estado de implantação</th></tr></thead><tbody>{filteredTables.slice(0,visibleTableCount).map(t=><tr key={t.name}><td data-label="Domínio">{t.domain}</td><td data-label="Tabela"><code>{t.name}</code></td><td data-label="Fase">{t.phase}</td><td data-label="Estado">Não verificado</td></tr>)}</tbody></table></div>
+          {filteredTables.length>visibleTableCount && <button className="cc-load-more" type="button" onClick={()=>setVisibleTableCount(n=>n+12)}>Mostrar mais 12 tabelas ({Math.min(visibleTableCount,filteredTables.length)} de {filteredTables.length})</button>}
         </> : activeMetric==='agents'||activeMetric==='gates' ? <div className="cc-empty-detail"><LockKeyhole size={23}/><strong>Indicador indisponível</strong><p>Não há integração autenticada para apurar este total. Não exibimos números fictícios.</p></div>
         : activeMetric==='finds' ? <div className="cc-records">{candidates.items.map(item=><details key={item.id}><summary>{item.id} · {item.title}<span className="cc-state cc-state-hold">{item.priority}</span></summary><p><strong>Estado:</strong> {item.state}</p><p><strong>Ação:</strong> {item.next_action}</p></details>)}</div>
         : <><div className="cc-filter-checkbox"><label><input type="checkbox" checked={onlyProblems} onChange={e=>setOnlyProblems(e.target.checked)}/> Apenas pausadas e HOLD</label></div>

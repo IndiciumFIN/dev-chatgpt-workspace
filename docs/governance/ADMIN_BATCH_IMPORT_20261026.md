@@ -13,13 +13,14 @@ Leitura no Supabase `Calculadoras-Smart` em 26/10/2026:
 - `cko_orch.quarantine`, `public.ingest_intakes`, `vdc_ai.intake_batches`, `vdc_ai.intake_items`: estruturas de ingestão/quarentena já existentes, com responsabilidades distintas; não duplicar nem pressupor equivalência.
 - Cadastros existentes selecionados para a primeira onda: `cko_evidence.sources`, `cko_orch.policy_registry` e `cko_validation.validators`. Os campos vêm da inspeção de colunas dos mestres. **Nenhum desses mestres foi alterado**.
 
-Migração **candidata e NÃO APLICADA**: `migrations/candidates/20261026_governed_admin_bulk_import.sql`. Contém seis tabelas complementares:
+Migração **candidata e NÃO APLICADA**: `migrations/candidates/20261026_governed_admin_bulk_import.sql`. Contém sete tabelas complementares:
 1. `cko_staging.import_profile_versions` — contrato do perfil, desabilitado por padrão.
-2. `cko_staging.import_column_mappings` — mapeamentos coluna da origem → campo destino (unívocos por pacote).
-3. `cko_staging.import_chunks` — checkpoints de 250 linhas e hash SHA-256.
-4. `cko_staging.import_row_candidates` — registro por linha, estado candidato/HOLD/rejeitado, identidade e hash.
-5. `cko_staging.import_row_findings` — erros e evidências por linha/campo.
-6. `cko_staging.import_review_events` — revisão e proposta para WO, vinculada a evidências e decisão humana.
+2. `cko_staging.import_package_contracts` — vincula um pacote existente a um perfil/versionamento e hash da origem.
+3. `cko_staging.import_column_mappings` — mapeamentos coluna da origem → campo destino (unívocos por pacote).
+4. `cko_staging.import_chunks` — checkpoints de 250 linhas e hash SHA-256.
+5. `cko_staging.import_row_candidates` — registro por linha, estado candidato/HOLD/rejeitado, identidade e hash.
+6. `cko_staging.import_row_findings` — erros e evidências por linha/campo.
+7. `cko_staging.import_review_events` — revisão e proposta para WO, vinculada a evidências e decisão humana.
 
 FKs para as tabelas existentes, PKs/índices, RLS+FORCE, revogação de privilégios públicos. **Não existe UPDATE direto no objeto canônico**; os registros de staging também não concedem permissão de execução.
 

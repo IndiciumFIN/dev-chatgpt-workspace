@@ -179,6 +179,23 @@ try{
       await p.getByRole('heading',{name:'Escala de Braden · mobile-first QA',exact:true}).waitFor();
       await screenshot(p,'admin-editor-save-local-390.png');
     }
+    await selectModule(p,width,'G03','M06');
+    await p.getByRole('navigation',{name:'Submódulos de Fontes e Ingestão'}).getByRole('button',{name:'Importação em lote'}).click();
+    await p.getByRole('heading',{name:'Importação em lote'}).waitFor();
+    await assertNoOverflow(p,'admin-import-start-'+width);
+    if(width===390){
+      await p.locator('#ce-import-profile').selectOption('policies');
+      const csv='policy_id;version;category;description;severity_on_violation;action_on_violation;rule_json;active\nP-1;1.0.0;governance;Controle;D2;BLOCK;"{""deny"":true}";false\nP-2;1.0.0;governance;=2+2;D2;BLOCK;"{""deny"":true}";false\n';
+      await p.locator('#ce-import-file').setInputFiles({name:'policies.csv',mimeType:'text/csv',buffer:Buffer.from(csv)});
+      await p.locator('#ce-import-col-policy_id').waitFor();
+      assert.equal(await p.locator('#ce-import-col-policy_id').inputValue(),'policy_id','auto-mapping required');
+      await p.getByRole('button',{name:'Validar lote'}).click();
+      await p.getByRole('button',{name:/Exportar pacote JSON/}).waitFor();
+      assert.equal(await p.getByText('Bloqueadas',{exact:true}).count(),1,'HOLD counts should be visible');
+      assert.equal(await p.locator('.ce-import-table tbody tr').count(),2,'review all lines');
+      await assertNoOverflow(p,'admin-import-review-390');
+      await screenshot(p,'admin-import-review-390.png');
+    }
     await p.close();
   }
   for(const width of widths){

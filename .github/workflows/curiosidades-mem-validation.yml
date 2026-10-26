@@ -1,0 +1,61 @@
+name: Curiosidades — validação isolada (sem deploy)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/lib/content/curiosidades/**'
+      - 'src/components/article/curiosity-page.tsx'
+      - 'src/routes/blog.*.tsx'
+      - 'src/lib/route-registry.ts'
+      - 'scripts/prerender-routes.mjs'
+      - 'scripts/test-curiosidades-snapshot.mjs'
+      - '.github/workflows/curiosidades-mem-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-curiosities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      VITE_AUTH_ENABLED: 'false'
+      CI: 'true'
+    steps:
+      - name: Checkout branch em revisão
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Instalação determinística
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Integridade das 87 páginas, fontes e renderizadores
+        run: npm run audit:curiosidades
+      - name: Tipagem TypeScript
+        run: npm run typecheck
+      - name: Contratos gerados e cobertura de rotas
+        run: |
+          node scripts/check-generated-fresh.mjs
+          node scripts/check-contract-coverage.mjs
+      - name: Build SPA e materialização das 87 rotas
+        run: npm run build:spa
+      - name: Comprovar 87 páginas acessíveis mas não indexadas
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFileSync, existsSync } from 'node:fs';
+          const catalog=JSON.parse(readFileSync('src/lib/content/curiosidades/catalog.json','utf8'));
+          const output='.vercel/output/static';
+          for (const {slug} of catalog) {
+            assert.ok(existsSync(output+'/blog/'+slug+'/index.html'), 'Sem materialização: '+slug);
+          }
+          const sitemap=readFileSync(output+'/sitemap.xml','utf8');
+          assert.ok(!sitemap.includes('/blog/12-de-maio-e-o-dia-internacional-da-enfermagem'), 'Prévia indexada indevidamente');
+          console.log('PASS: '+catalog.length+' páginas materializadas fora do sitemap');
+          NODE

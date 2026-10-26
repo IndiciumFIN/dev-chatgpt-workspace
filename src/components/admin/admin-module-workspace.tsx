@@ -5,6 +5,7 @@ import { adminGroups, getAdminModule, type AdminModuleId } from '@/lib/admin-mod
 import { templateCatalogo } from '@/lib/template-catalog';
 import { tools } from '@/lib/tools/catalog';
 import { AdminSchemaEditor } from '@/components/admin/admin-schema-editor';
+import { AdminBulkImport } from '@/components/admin/admin-bulk-import';
 import { getSubmoduleTemplates } from '@/lib/admin-form-template-registry';
 import pmo from '../../../registers/pmo/queue.v1.json';
 import findings from '../../../registers/governance/find-register.v1.json';
@@ -86,8 +87,9 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting,onEditRecord}:{mod
    <div className="ce-workspace-main">
      <header className="ce-workspace-current">
        <div><span className="ce-workspace-eyebrow">{module.title}</span><h4>{sub}</h4></div>
-       <span>{available.length?available.length+' registro(s) indexado(s)':'Sem registros indexados nesta fonte'}</span>
+       {!(moduleId==='M06'&&sub==='Importação em lote')&&<span>{available.length?available.length+' registro(s) indexado(s)':'Sem registros indexados nesta fonte'}</span>}
      </header>
+     {moduleId==='M06'&&sub==='Importação em lote' ? <AdminBulkImport/> : <>
      <div className="ce-workspace-views" role="tablist" aria-label="Visualizações do submódulo">
        {([['records','Registros',Table2],['form','Formulários',FilePlus2],['reports','Relatórios',BarChart3],['flows','Relacionamentos',Boxes]] as const).map(([key,name,Icon])=><button key={key} type="button" role="tab" aria-selected={mode===key} onClick={()=>setMode(key)}><Icon size={16}/>{name}</button>)}
      </div>
@@ -120,6 +122,7 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting,onEditRecord}:{mod
        <div className="ce-workspace-flows"><div><h5>Entradas</h5>{module.receives.map(id=><span key={id}>{id} · {getAdminModule(id).title}</span>)}{!module.receives.length&&<p>Sem entrada catalogada.</p>}</div>
        <div><h5>Saídas</h5>{module.sends.map(id=><span key={id}>{id} · {getAdminModule(id).title}</span>)}{!module.sends.length&&<p>Sem saída catalogada.</p>}</div></div>
      </div>}
+     </>}
    </div>
  </section>;
 }

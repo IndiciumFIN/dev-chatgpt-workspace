@@ -116,7 +116,7 @@ try {
   check("proposal-and-reaction-flow", true);
   await capture(page, "01-proposals-1440");
 
-  await page.getByRole("button", { name: /^Consenso/ }).click();
+  await page.getByRole("button", { name: /Consenso/ }).click();
   await page.getByRole("button", { name: /^Concordo · 0$/ }).first().click();
   await page.getByRole("button", { name: /^Concordo · 1$/ }).first().waitFor();
   check("consensus-flow", true);
@@ -130,6 +130,7 @@ try {
   check("keyboard-focus-enters-interactive-control", ["A","BUTTON","INPUT","SELECT","TEXTAREA"].includes(tag || ""), String(tag));
 
   for (const vp of [
+    { id: "1024", width: 1024, height: 900 },
     { id: "768", width: 768, height: 1024 },
     { id: "360", width: 360, height: 800 },
   ]) {
@@ -144,7 +145,7 @@ try {
 
   check("no-browser-runtime-errors", evidence.runtimeErrors.length === 0, JSON.stringify(evidence.runtimeErrors));
   evidence.verdict = "PASS";
-  console.log("PASS RESEARCH E2E: journeys, negative validation, local draft, participation, proposal, consensus, keyboard, 360/768/1440.");
+  console.log("PASS RESEARCH E2E: journeys, negative validation, local draft, participation, proposal, consensus, keyboard, 360/768/1024/1440.");
 } catch (error) {
   evidence.failure = String(error?.stack || error);
   console.error(evidence.failure);

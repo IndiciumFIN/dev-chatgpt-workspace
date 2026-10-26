@@ -56,3 +56,26 @@ update kernel_atom set admitted_by = 'derby-normalizacao'
   where status = 'admitido' and admitted_by is null;
 update kernel_atom set admitted_at = now()
   where status = 'admitido' and admitted_at is null;
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- O dicionário acompanha o banco.
+-- A 0038 criou duas tabelas novas (o registro de aprovação e o registro de
+-- publicação) e elas nasceram fora do dicionário: a área admin as mostrava
+-- pelo nome técnico, e o portão do índice acusava 96 tabelas contra 94 no
+-- dicionário. A 0041 é a última da fila, então é aqui que a 0038 já rodou.
+--
+-- Idempotente: on conflict não faz nada na segunda passagem.
+-- ─────────────────────────────────────────────────────────────────────────────
+
+insert into schema_entity (name, layer_id, primary_key, purpose, links, label)
+values
+  ('kernel_approval', 'processo', 'id',
+   'Aprovação registrada. O kernel não é aprovador, nunca.',
+   'order_id → kernel_order.id', 'Aprovação de pessoa'),
+  ('source_publication', 'processo', 'id',
+   'Publicação de instrumento com o portão, a decisão e a evidência.',
+   'slug → source_tool.slug', 'Publicações com portão')
+on conflict (name) do nothing;
+
+update schema_entity set label = 'Aprovação de pessoa' where name = 'kernel_approval' and label = '';
+update schema_entity set label = 'Publicações com portão' where name = 'source_publication' and label = '';

@@ -18,6 +18,7 @@ jobs:
         with: { node-version: "22", cache: npm }
       - run: npm ci
       - run: npm run audit:career-candidate
+      - run: npm run audit:career-content
       - name: Validar CLI de aquisição sem gravação
         run: npm run validate:career-acquisition -- --help
       - run: npm run typecheck

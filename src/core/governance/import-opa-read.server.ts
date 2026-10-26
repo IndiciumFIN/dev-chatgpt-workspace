@@ -3,6 +3,8 @@
  * OPA must be deployed with independently verified/signed bundles. Matching
  * a bundle SHA-256 field is a pin, NOT signature verification by this code.
  */
+import { randomUUID } from 'node:crypto';
+
 export type ReadPolicyRequest={
   actorId:string;profileId:string;destination:string;
   sourceSha256:string;recordCount:number;
@@ -44,6 +46,7 @@ export function createOpaImportReadEvaluator(
       validators:'cko_validation.validators',
     };
     if(expectedDestinations[request.profileId]!==request.destination)return DENIED;
+    const requestNonce=randomUUID();
     const controller=new AbortController();
     const maxTimeout=Number.isFinite(config.timeoutMs) ? Math.min(5000,Math.max(500,config.timeoutMs!)) : 2500;
     const timeout=setTimeout(()=>controller.abort(),maxTimeout);
@@ -58,16 +61,23 @@ export function createOpaImportReadEvaluator(
           actor_id:request.actorId,action:'imports.reconcile.read',
           profile_id:request.profileId,destination:request.destination,
           source_sha256:request.sourceSha256,record_count:request.recordCount,
+          request_nonce:requestNonce,
         }}),
       });
       if(!response.ok)return DENIED;
       const payload=await response.json() as {
         decision_id?:unknown;
-        result?:{allow?:unknown;bundle_sha256?:unknown};
+        result?:{allow?:unknown;bundle_sha256?:unknown;context?:Record<string,unknown>};
       };
       if(payload?.result?.allow!==true||
          typeof payload.decision_id!=='string'||!payload.decision_id.trim()||
-         payload.result.bundle_sha256!==config.expectedBundleSha256)return DENIED;
+         payload.result.bundle_sha256!==config.expectedBundleSha256||
+         payload.result.context?.request_nonce!==requestNonce||
+         payload.result.context?.actor_id!==request.actorId||
+         payload.result.context?.profile_id!==request.profileId||
+         payload.result.context?.destination!==request.destination||
+         payload.result.context?.source_sha256!==request.sourceSha256||
+         payload.result.context?.record_count!==request.recordCount)return DENIED;
       return {allowed:true,decisionId:payload.decision_id,bundleSha256:config.expectedBundleSha256};
     }catch{return DENIED;}
     finally{clearTimeout(timeout);}

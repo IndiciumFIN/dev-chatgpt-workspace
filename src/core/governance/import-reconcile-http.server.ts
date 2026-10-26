@@ -4,9 +4,9 @@
  * identity, authz verdict, "current state", or raw SQL.
  */
 import {createHash} from 'node:crypto';
-import {importProfiles,parseBulkImport,reviewBulkImport,type ImportProfile} from './bulk-import';
-import type {ReadPolicyDecision,ReadPolicyRequest} from './import-opa-read.server';
-import type {ReconciliationReport} from './bulk-import-reconciliation';
+import {importProfiles,parseBulkImport,reviewBulkImport,type ImportProfile} from './bulk-import.ts';
+import type {ReadPolicyDecision,ReadPolicyRequest} from './import-opa-read.server.ts';
+import type {ReconciliationReport} from './bulk-import-reconciliation.ts';
 
 const MAX_BODY=7*1024*1024;
 type AuthenticatedActor={id:string};
@@ -108,8 +108,8 @@ export async function handleImportReconcileRequest(request:Request):Promise<Resp
  if(!enabled)return forbid(503,'IMPORT_RECONCILIATION_DISABLED');
  const [{auth,authConfigured},{createOpaImportReadEvaluator},{importDbSettings,withImportReadOnlySnapshot}]=await Promise.all([
   import('@/lib/auth/server'),
-  import('./import-opa-read.server'),
-  import('./import-read-db.server'),
+  import('./import-opa-read.server.ts'),
+  import('./import-read-db.server.ts'),
  ]);
  const settings=importDbSettings();
  if(!authConfigured||!settings)return forbid(503,'REQUIRED_SECURITY_CONFIGURATION_MISSING');

@@ -1,6 +1,6 @@
 import { useId, useMemo, useState } from 'react';
 import { AlertCircle, CheckCircle2, ChevronDown, ClipboardList, Download, FileJson, LockKeyhole, ShieldCheck } from 'lucide-react';
-import { getAdminModule, type AdminModuleId } from '@/lib/admin-module-registry';
+import { type AdminModuleId } from '@/lib/admin-module-registry';
 import { displayLabel, getTemplate, moduleFormTemplates, type JsonField } from '@/lib/admin-form-template-registry';
 import '@/styles/admin-schema-editor.css';
 

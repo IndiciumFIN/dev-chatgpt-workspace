@@ -70,7 +70,7 @@ returns trigger
 language plpgsql
 security invoker
 set search_path=''
-as $
+as $$
 declare
   run_state text;
   candidate_state text;
@@ -90,7 +90,7 @@ begin
   end if;
   return new;
 end;
-$;
+$$;
 
 create trigger import_reconciliation_row_gate
  before insert on cko_staging.import_reconciliation_rows

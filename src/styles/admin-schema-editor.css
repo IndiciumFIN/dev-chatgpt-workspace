@@ -56,3 +56,18 @@
 .ce-schema-notice{font-weight:750;margin:0}
 @media(min-width:720px){.ce-schema{padding:19px}.ce-schema-head{display:flex;align-items:start;justify-content:space-between}.ce-schema-template-select{grid-template-columns:repeat(2,minmax(0,1fr))}.ce-schema-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.ce-schema-actions{display:flex}.ce-schema-actions button{min-width:180px}}
 @media(prefers-reduced-motion:reduce){.ce-schema *{transition:none}}
+
+
+/* CRUD de rascunhos somente em memória, para não confundir com CRUD canônico. */
+.ce-schema-submodule{display:grid;align-content:center;gap:5px;border:1px solid var(--color-line);border-radius:var(--radius-control);padding:9px 11px;background:var(--color-pane);font-size:.77rem}
+.ce-schema-submodule strong{font-size:.68rem;color:var(--color-muted)}
+.ce-schema-submodule span{color:var(--color-ink);font-weight:750}
+.ce-schema-drafts{display:grid;gap:8px;border:1px solid var(--color-line);border-radius:var(--radius-control);padding:12px;background:var(--color-pane)}
+.ce-schema-drafts>div:first-child{display:grid;gap:4px}
+.ce-schema-drafts>div:first-child strong{font-size:.82rem;color:var(--color-ink)}
+.ce-schema-drafts small{font-size:.69rem;color:var(--color-slate);line-height:1.45}
+.ce-schema-drafts>button,.ce-schema-draft-row button{font:inherit;font-size:.76rem;font-weight:750;min-height:44px;padding:9px 12px;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper);color:var(--color-navy)}
+.ce-schema-draft-row{display:grid;gap:8px;padding:8px;border:1px solid var(--color-line);background:var(--color-paper);border-radius:var(--radius-control)}
+.ce-schema-draft-row>span{display:grid;gap:3px;overflow-wrap:anywhere}
+.ce-schema-draft-row strong{color:var(--color-ink);font-size:.8rem}
+@media(min-width:720px){.ce-schema-drafts>button{justify-self:start}.ce-schema-draft-row{grid-template-columns:minmax(0,1fr) auto auto;align-items:center}}

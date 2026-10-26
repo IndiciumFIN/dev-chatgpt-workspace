@@ -161,6 +161,13 @@
       "workId": "WO-CKO-ID-009",
       "to": "IN_PROGRESS",
       "reason": "SELECT cruzamento MD↔closure: 38 sem dossiê por slug; 12 com dossiê e UUID mas sem rota; novo SQL versionado; FIND na issue #9."
+    },
+    {
+      "seq": 24,
+      "date": "2026-10-26",
+      "workId": "WO-CKO-ID-009",
+      "to": "IN_PROGRESS",
+      "reason": "Identificado namespace instrumental tool_slug::campo (1.199/1.199), 17 discrepâncias entre nome legado e contrato; FIND de origem de campos documentado."
     }
   ],
   "items": [
@@ -355,9 +362,10 @@
         "docs/governance/audits/SO-009-B3-B4-TRACEABILITY-20261026.md",
         "scripts/audit-so009-b3-md-consistency.readonly.sql",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9",
-        "scripts/audit-so009-dossier-identity.readonly.sql"
+        "scripts/audit-so009-dossier-identity.readonly.sql",
+        "docs/governance/audits/SO-009-FIELD-ORIGIN-20261026.md"
       ],
-      "next": "Novo achado confirmado: 38/38 recuperados SEM dossiê correspondente por slug em cko_closure.tool_dossiers; avaliar alias e origem antes de materialização. 12/12 unresolved têm dossiê+UUID mas sem rota. 81/81 resolved com dossiê+UUID+rota. Executar verificação de aliases, duplicidade e versões, sem liberar HOLD.",
+      "next": "Origem dos 1.199 campos: IDs compostos tool_slug::campo; 1.182 exatos e 17 aliases/renomeações candidatos. Analisar 17 diferenças, catalogar namespaces instrumentais e conciliar 38 mestres por evidência; não aplicar FK direta ao field_catalog B1.",
       "updatedOn": "2026-10-26"
     },
     {
@@ -382,7 +390,7 @@
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 19,
+  "revision": 20,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

@@ -69,6 +69,7 @@ jobs:
         run: |
           node scripts/check-commander-handoffs.mjs
           node --test scripts/test-commander-handoffs.mjs
+          node --experimental-strip-types --test scripts/test-commander-read-model.mjs
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs

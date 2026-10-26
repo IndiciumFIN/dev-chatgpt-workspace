@@ -38,6 +38,7 @@ const indice = ler(`${RAIZ}/artifacts/db-indice.json`);
 const derby = ler(`${RAIZ}/artifacts/db-derby.json`);
 const source = ler(`${RAIZ}/artifacts/source-processo.json`);
 const catalogo = ler(`${RAIZ}/artifacts/fonte/catalogo.json`);
+const registro = ler(`${RAIZ}/artifacts/registro.json`);
 const recuperacao = ler(`${RAIZ}/artifacts/fonte/recuperacao.json`);
 const auditoriaFonte = ler(`${RAIZ}/artifacts/fonte/auditoria.json`);
 
@@ -116,8 +117,8 @@ const FRENTES = [
         booleano('a OPA nega por padrão',
           existe('contracts/cko-governance/opa/kernel_admission.rego'), 'kernel_admission.rego'),
         booleano('a doutrina que o kernel executa está escrita',
-          existe('migrations/0039_politicas.sql') || existe('docs/doutrina'),
-          'migrations/0039_politicas.sql ou docs/doutrina/'),
+          existe('migrations/0039_politicas.sql') || existe('docs/governance') || existe('docs/doutrina'),
+          'migrations/0039_politicas.sql, docs/governance/ ou docs/doutrina/'),
         booleano('um lote real atravessou o processo (captura → decisão → publicação)',
           (k.capturas ?? 0) > 0 && (k.decisoes ?? 0) > 0 && (k.publicacoes ?? 0) > 0,
           `capturas=${k.capturas ?? 0} · decisões=${k.decisoes ?? 0} · publicações=${k.publicacoes ?? 0}`),
@@ -189,10 +190,11 @@ const FRENTES = [
         ['DERBY', (derby?.violacoes?.length ?? 1) === 0],
         ['processo de source', (source?.violacoes?.length ?? 1) === 0],
         ['fonte', (auditoriaFonte?.violacoes?.length ?? 1) === 0],
+        ['registro do PMO', (registro?.violacoes?.length ?? 1) === 0],
       ];
       const verdes = portoes.filter(([, ok]) => ok).length;
       return [
-        c('os quatro portões passam', verdes, portoes.length,
+        c('os portões passam', verdes, portoes.length,
           `${verdes}/${portoes.length} verdes`),
         booleano('o registro por chave canônica existe',
           existe('docs/entregas/REGISTRO-POR-CHAVE.md'), 'docs/entregas/REGISTRO-POR-CHAVE.md'),

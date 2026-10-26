@@ -1,0 +1,65 @@
+name: Portões
+
+# Os portões são a prova de que o banco é o contrato e o código só renderiza.
+# Esta CI roda os quatro, a suíte, o typecheck e o build. Quem roda o build
+# localmente é o dono; a CI é a rede de segurança do pull request.
+
+on:
+  push:
+    branches: ["feat/**", "main", "grook_10_26"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: portoes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  portoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Código
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Dependências
+        run: npm ci --no-audit --no-fund
+
+      - name: Índice do banco — rótulo humano para tudo
+        run: node scripts/audit-indice-banco.mjs --check
+
+      - name: DERBY — nada fica retido
+        run: node scripts/preencher-derby.mjs --check
+
+      - name: Processo de source
+        run: node scripts/audit-source.mjs
+
+      - name: Fonte — o texto no banco é o texto da fonte
+        run: node scripts/auditar-fonte.mjs --check
+
+      - name: Registro — o mapa do PMO é verdade
+        run: node scripts/auditar-registro.mjs
+
+      - name: Suíte
+        # Os testes de scripts correm em série: cada um abre um PGlite (um
+        # Postgres em RAM) e, em paralelo, o runner mata o processo por
+        # memória — foi assim que um arquivo de teste morreu com SIGKILL.
+        run: npm test
+
+      - name: Tipos
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Segurança — dependências de produção
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Painel de status
+        run: node scripts/status-projeto.mjs --detalhe

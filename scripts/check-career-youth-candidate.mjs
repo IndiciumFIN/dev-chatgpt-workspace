@@ -22,6 +22,12 @@ const required = [
   "schemas/career-application.schema.json",
   "schemas/career-credential.schema.json",
   "schemas/career-editorial-projection.schema.json",
+  "schemas/career-learning-resource.schema.json",
+  "schemas/career-interview-scenario.schema.json",
+  "schemas/career-network-capability.schema.json",
+  "schemas/career-jurisdiction-requirement.schema.json",
+  "schemas/career-worklife-capability.schema.json",
+  "schemas/career-youth-activity.schema.json",
   "registers/career/candidate.v1.json",
   "registers/governance/candidates/WO-CAREER-YOUTH-001.json",
   "registers/governance/candidates/TASK-CAREER-YOUTH-001.json",
@@ -40,6 +46,12 @@ const personalTables = [
   "career_application_candidate",
   "career_profile_credential_candidate",
   "career_milestone_candidate",
+  "career_learning_resource_type_candidate",
+  "career_interview_scenario_candidate",
+  "career_network_capability_candidate",
+  "career_jurisdiction_requirement_candidate",
+  "career_worklife_capability_candidate",
+  "career_youth_activity_candidate",
 ];
 const personalSql = personalTables.map((table) => {
   const match = sqlNoComments.match(new RegExp("create table if not exists " + table + "\\s*\\(([\\s\\S]*?)\\);", "i"));
@@ -95,7 +107,13 @@ check(
   "snapshot-vem-do-banco",
   functions.includes("career_projection_item_candidate") &&
     functions.includes("career_module_candidate") &&
-    functions.includes("career_editorial_candidate"),
+    functions.includes("career_editorial_candidate") &&
+    functions.includes("career_learning_resource_type_candidate") &&
+    functions.includes("career_interview_scenario_candidate") &&
+    functions.includes("career_network_capability_candidate") &&
+    functions.includes("career_jurisdiction_requirement_candidate") &&
+    functions.includes("career_worklife_capability_candidate") &&
+    functions.includes("career_youth_activity_candidate"),
 );
 check(
   "texto-bloqueia-identificador",
@@ -106,6 +124,10 @@ const ui = read("src/components/career/career-hub.tsx");
 check(
   "ui-consome-snapshot",
   ui.includes("getCareerSnapshot") && ui.includes("snapshot.modules.map"),
+);
+check(
+  "ui-consome-capacidades-estendidas",
+  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities"].every((key) => ui.includes("snapshot." + key)),
 );
 check(
   "ui-sem-catalogo-paralelo",
@@ -133,8 +155,8 @@ check(
     registry.kernelAdmission === "NOT_SUBMITTED",
 );
 check(
-  "registry-9-schemas",
-  registry.schemas?.length === 9 && registry.schemas.every(existsSync),
+  "registry-15-schemas",
+  registry.schemas?.length === 15 && registry.schemas.every(existsSync),
   String(registry.schemas?.length ?? 0),
 );
 check(

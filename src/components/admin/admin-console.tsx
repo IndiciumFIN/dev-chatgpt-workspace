@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import {
   AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Check, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
-  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone, Menu,
+  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone, Menu, Network,
   type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
@@ -20,13 +20,15 @@ import {
   type PublicationEvent,
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
+import { AdminModuleDirectory } from '@/components/admin/module-directory';
 import '@/styles/admin-console.css';
 
-type Tab = 'overview' | 'pmo' | 'content' | 'templates' | 'sources' | 'publication';
+type Tab = 'overview' | 'pmo' | 'modules' | 'content' | 'templates' | 'sources' | 'publication';
 type PreviewAudience = 'publico' | 'assinante';
 type PreviewVersion = 'draft' | 'published';
 const tabs: { id: Tab; label: string; icon: LucideIcon; hint: string }[] = [
   { id: 'pmo', label: 'PMO · fila', icon: ListTodo, hint: 'Ordens, status e evidências' },
+  { id: 'modules', label: 'Módulos', icon: Network, hint: '7 macrogrupos · 22 módulos' },
   { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Protótipo congelado' },
   { id: 'content', label: 'Conteúdos', icon: BookOpenText, hint: 'Editar instrumentos' },
   { id: 'templates', label: 'Templates', icon: Layers3, hint: 'Contratos de apresentação' },
@@ -150,6 +152,9 @@ export function AdminConsole() {
       {tab === 'pmo' ? <>
         <strong>PMO oficial da execução — fonte versionada no GitHub.</strong>
         <span>A fila é somente leitura aqui. Alterações exigem commit, evidência e gates; não aprovações por inteligência artificial.</span>
+      </> : tab === 'modules' ? <>
+        <strong>Catálogo arquitetural — 7 macrogrupos e 22 módulos planejados.</strong>
+        <span>Relações e responsabilidades de referência, sem migração, integração remota ou novas permissões.</span>
       </> : <>
         <strong>Prévia administrativa local — não é a autoridade corporativa.</strong>
         <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
@@ -174,13 +179,14 @@ export function AdminConsole() {
         <div className="ce-admin-toolbar">
           <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{tabs.find(x => x.id === tab)?.label}</h2></div>
           <div className="ce-admin-toolbar-actions">
-            <Indicator tone={tab === 'pmo' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
+            <Indicator tone={tab === 'pmo' || tab === 'modules' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'modules' ? 'Arquitetura proposta' : tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
             <Link className="ce-admin-site-link" to="/central-comando">Central de Comando <ArrowUpRight size={15} aria-hidden="true" /></Link>
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
-        {tab !== 'pmo' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
+        {tab !== 'pmo' && tab !== 'modules' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
+        {tab === 'modules' && <AdminModuleDirectory openSurface={setTab} />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
             <Stat label="Instrumentos" value={model.tools.length} note="Catálogo existente" icon={BookOpenCheck} />
@@ -293,7 +299,7 @@ export function AdminConsole() {
     </div>
     <nav className="ce-admin-mobile-dock" aria-label="Acesso rápido da administração">
       <button type="button" aria-current={tab === 'pmo' ? 'page' : undefined} onClick={() => setTab('pmo')}><ListTodo size={19} aria-hidden="true" /><span>PMO</span></button>
-      <button type="button" aria-current={tab === 'content' ? 'page' : undefined} onClick={() => setTab('content')}><BookOpenText size={19} aria-hidden="true" /><span>Conteúdo</span></button>
+      <button type="button" aria-current={tab === 'modules' ? 'page' : undefined} onClick={() => setTab('modules')}><Network size={19} aria-hidden="true" /><span>Módulos</span></button>
       <Link to="/central-comando"><LayoutDashboard size={19} aria-hidden="true" /><span>Comando</span></Link>
       <button type="button" aria-current={tab === 'publication' ? 'page' : undefined} onClick={() => setTab('publication')}><FileClock size={19} aria-hidden="true" /><span>Publicação</span></button>
     </nav>

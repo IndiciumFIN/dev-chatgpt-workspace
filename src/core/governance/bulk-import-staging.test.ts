@@ -5,12 +5,15 @@ const ddl=readFileSync('migrations/candidates/20261026_governed_admin_bulk_impor
 const ui=readFileSync('src/components/admin/admin-bulk-import.tsx','utf8');
 const moduleTree=readFileSync('src/lib/admin-module-registry.ts','utf8');
 const sources=[
- 'import_profile_versions','import_column_mappings','import_chunks',
+ 'import_profile_versions','import_package_contracts','import_column_mappings','import_chunks',
  'import_row_candidates','import_row_findings','import_review_events'
 ];
 describe('candidate import staging and admin entry — fail closed',()=>{
  it('reuses CKO staging package registry rather than creating a duplicate',()=>{
   assert.match(ddl,/references cko_staging\.import_packages\(import_package_id\)/);
+  assert.equal([...ddl.matchAll(/create table cko_staging\.(\w+)/g)].length,7,'exactly seven tables');
+  assert.equal([...ddl.matchAll(/^commit;$/gm)].length,1,'one atomic transaction');
+  assert.match(ddl,/references cko_staging\.import_package_contracts\(import_package_id,profile_ref,profile_version\)/);
   assert.ok(!ddl.includes('create table cko_staging.import_packages'));
  });
  it('declares RLS and denies public, anonymous and authenticated direct access',()=>{

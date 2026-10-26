@@ -7,8 +7,10 @@ import findRegistry from '../../../registers/governance/find-register.v1.json';
 /** Projeção somente leitura: a fonte é o registro versionado no GitHub, não localStorage. */
 export function PmoPanel() {
   const [filter, setFilter] = useState<'all' | 'active' | 'holds'>('all');
+  const [showAllOrders, setShowAllOrders] = useState(false);
   const visible = queue.items.filter(item =>
     filter === 'all' || (filter === 'active' ? item.status === 'IN_PROGRESS' || item.status === 'QUEUED' : item.status === 'PAUSED' || item.status === 'HOLD_HUMAN'));
+  const displayOrders = showAllOrders ? visible : visible.slice(0, 4);
   const active = queue.items.filter(item => item.status === 'IN_PROGRESS').length;
   const pending = queue.items.filter(item => item.status === 'QUEUED').length;
   const statusLabels: Record<string, string> = {
@@ -25,23 +27,25 @@ export function PmoPanel() {
       <div className="ce-admin-panel-heading"><div><h2 id="admin-pmo-heading">Fila única de execução</h2><p>Atualizada por commits verificáveis. A visualização é leitura, não aprovação.</p></div></div>
       <div className="ce-admin-pmo-controls">
         <p>Protótipo administrativo congelado. A fila segue segurança, E2E, Design System, CKO, automação e homologação.</p>
-        <label>Exibir <select value={filter} onChange={event => setFilter(event.target.value as typeof filter)}>
+        <label>Exibir <select value={filter} onChange={event => { setFilter(event.target.value as typeof filter); setShowAllOrders(false); }}>
           <option value="all">Todas as ordens</option><option value="active">Em execução e na fila</option><option value="holds">Pausadas e aprovação humana</option>
         </select></label>
       </div>
       <ol className="ce-admin-pmo-list">
-        {visible.map(item => <li key={item.id} className="ce-admin-pmo-item" data-work-id={item.id}>
+        {displayOrders.map(item => <li key={item.id} className="ce-admin-pmo-item" data-work-id={item.id}>
           <div className="ce-admin-pmo-title"><span className="ce-admin-pmo-sequence">#{item.order}</span><div><h3>{item.title}</h3><small>{item.id} · {item.priority} · {item.owner}</small></div>
             <span className={item.status === 'IN_PROGRESS' ? 'ce-admin-indicator ce-admin-indicator--ok' : item.status === 'HOLD_HUMAN' ? 'ce-admin-indicator ce-admin-indicator--warn' : 'ce-admin-indicator ce-admin-indicator--neutral'}>{statusLabels[item.status] ?? item.status}</span></div>
           <details><summary>Critério, próxima ação e evidências</summary><p><strong>Critério de aceite:</strong> {item.criteria}</p><p><strong>Próximo passo:</strong> {item.next}</p><p><strong>Dependências:</strong> {item.dependencies.join(', ') || 'Nenhuma'}</p>
             {item.evidence.length ? <ul>{item.evidence.map((url, n) => <li key={url}><a href={url} target="_blank" rel="noopener noreferrer">Evidência {n + 1} <ArrowUpRight size={13} aria-hidden="true" /></a></li>)}</ul> : <p>Nenhuma evidência anexada: não é PASS.</p>}</details>
         </li>)}
       </ol>
+      {visible.length > 4 && <button type="button" className="ce-admin-expand" aria-expanded={showAllOrders} onClick={() => setShowAllOrders(v => !v)}>{showAllOrders ? 'Recolher lista' : `Mostrar todas as ${visible.length} ordens`}</button>}
       <p className="ce-admin-detail-note"><strong>Fonte da verdade do PMO:</strong> <code>{queue.canonicalSource}</code>. Atualizações chegam após o commit e o novo build. Não existe gravação administrativa remota aqui.</p>
     </section>
     <section className="ce-admin-panel" data-testid="pmo-candidate-finds" aria-labelledby="pmo-find-heading">
       <div className="ce-admin-panel-heading"><div><h2 id="pmo-find-heading">Achados candidatos — CKO / COREN / COFEN</h2>
         <p>{candidates.items.length} registros ({candidates.items.filter(x => x.priority === 'P0').length} P0 e {candidates.items.filter(x => x.priority === 'P1').length} P1) · {findRegistry.candidate_batches.find(x => x.batch_id === 'CKO-COREN-COFEN-AUDIT-20261023')?.related_wo}</p></div></div>
+      <details className="ce-admin-disclosure"><summary>Consultar achados em quarentena e suas evidências ({candidates.items.length})</summary>
       <p className="ce-admin-detail-note"><strong>Quarentena documental:</strong> estes FINDs não foram admitidos no Kernel. Falta o ZIP CKO integral; não há aprovação normativa nem liberação clínica.</p>
       <div className="ce-admin-pmo-list">
         {candidates.items.map(item => <details className="ce-admin-pmo-item" key={item.id} data-find-id={item.id}>
@@ -54,11 +58,14 @@ export function PmoPanel() {
         </details>)}
       </div>
       <p className="ce-admin-detail-note"><a href="https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/docs/audits/AUDITORIA_PENDENCIAS_CKO_COREN_COFEN_20261023.md" target="_blank" rel="noopener noreferrer">Relatório de auditoria versionado</a> · <a href="https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json" target="_blank" rel="noopener noreferrer">Lote original (JSON)</a></p>
+      </details>
     </section>
     <section className="ce-admin-panel" aria-labelledby="pmo-log-heading">
       <div className="ce-admin-panel-heading"><div><h2 id="pmo-log-heading">Decisões e movimentações</h2><p>Eventos versionados para reconstruir a fila e justificar alterações.</p></div></div>
+      <details className="ce-admin-disclosure"><summary>Consultar {queue.events.length} movimentações versionadas</summary>
       <ol className="ce-admin-pmo-events">{queue.events.map(event => <li key={event.seq}><strong>{event.workId} · {statusLabels[event.to] ?? event.to}</strong><span>{event.date} — {event.reason}</span></li>)}</ol>
       <p className="ce-admin-detail-note">O registro não substitui controle de acesso por perfil, auditoria imutável de servidor ou revisão humana obrigatória.</p>
+      </details>
     </section>
   </>;
 }

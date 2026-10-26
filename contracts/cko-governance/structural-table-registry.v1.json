@@ -1,0 +1,216 @@
+{
+  "schema_version": "0.1.0",
+  "scope": "CE_PUBLIC_BACKUP_ONLY",
+  "date": "2026-10-26",
+  "deployment_state": "CANDIDATE_NOT_APPLIED",
+  "approval_state": "HOLD_HUMAN",
+  "source_database": {
+    "project": "Calculadoras-Smart",
+    "inspection": "READ_ONLY",
+    "observed_schemas": {
+      "cko_governance": 88,
+      "cko_orch": 27,
+      "cko_validation": 21,
+      "cko_ai": 17,
+      "cko_evidence": 7
+    },
+    "migrations_observed": 240,
+    "notes": "Inventário pontual, não atesta validade ou qualidade dos registros."
+  },
+  "existing_reused": [
+    {
+      "table": "cko_governance.control_frameworks",
+      "purpose": "COSO/COSO ERM/COBIT frameworks existentes"
+    },
+    {
+      "table": "cko_governance.control_framework_nodes",
+      "purpose": "Componentes, objetivos e princípios; ligação aos controles"
+    },
+    {
+      "table": "cko_governance.control_framework_mappings",
+      "purpose": "Crosswalk e controles; não duplicar"
+    },
+    {
+      "table": "cko_governance.decisions",
+      "purpose": "Decisões e aprovação humana"
+    },
+    {
+      "table": "cko_governance.agent_registry",
+      "purpose": "Registro de agentes e segregação de responsabilidades"
+    },
+    {
+      "table": "cko_orch.policy_registry",
+      "purpose": "Fonte de políticas e suas versões"
+    },
+    {
+      "table": "cko_orch.workflow_instances",
+      "purpose": "Instâncias de workflow"
+    },
+    {
+      "table": "cko_orch.idempotency_keys",
+      "purpose": "Controle de idempotência existente"
+    },
+    {
+      "table": "cko_orch.outbox_events",
+      "purpose": "Mensageria transacional existente"
+    },
+    {
+      "table": "cko_validation.findings",
+      "purpose": "Achados/FINDs"
+    },
+    {
+      "table": "cko_validation.validators",
+      "purpose": "Catálogo canônico de validadores"
+    },
+    {
+      "table": "cko_evidence.evidence_bundles",
+      "purpose": "Bundles de evidências"
+    }
+  ],
+  "candidates": [
+    {
+      "table": "cko_orch.work_order_admission_requests",
+      "purpose": "Envelope estrutural de WO, FIND, tarefa, workflow, hash e segregação",
+      "pk": [
+        "work_order_id"
+      ],
+      "refs": [
+        "cko_orch.workflow_instances",
+        "cko_validation.findings",
+        "cko_evidence.evidence_bundles"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.work_order_policy_bindings",
+      "purpose": "Políticas aplicáveis e versões fixadas por WO",
+      "pk": [
+        "work_order_id",
+        "policy_id"
+      ],
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.policy_registry"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.policy_bundle_artifacts",
+      "purpose": "Manifestos de bundles OPA com hash e prova de assinatura",
+      "pk": [
+        "bundle_ref"
+      ],
+      "refs": [
+        "cko_orch.policy_registry"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.work_order_policy_evaluations",
+      "purpose": "Decisões OPA com prova de avaliação e versão",
+      "pk": [
+        "decision_ref"
+      ],
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.policy_bundle_artifacts"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.work_order_required_validators",
+      "purpose": "Validadores obrigatórios fixados por WO",
+      "pk": [
+        "work_order_id",
+        "validator_id"
+      ],
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_validation.validators"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.work_order_validator_results",
+      "purpose": "Resultados PASS/FAIL/HOLD e bundles",
+      "pk": [
+        "work_order_id",
+        "validator_id",
+        "run_ref"
+      ],
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_validation.validators",
+        "cko_evidence.evidence_bundles"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_orch.kernel_admission_decisions",
+      "purpose": "Decisões condicionadas a OPA, validadores, humano e evidências",
+      "pk": [
+        "decision_id"
+      ],
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.work_order_policy_evaluations",
+        "cko_governance.decisions",
+        "cko_evidence.evidence_bundles"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    },
+    {
+      "table": "cko_governance.agent_tool_scopes",
+      "purpose": "Escopos, prazos, políticas e autorização explícita por ferramenta/agente/WO",
+      "pk": [
+        "agent_id",
+        "tool_ref",
+        "policy_id",
+        "work_order_id"
+      ],
+      "refs": [
+        "cko_governance.agent_registry",
+        "cko_orch.policy_registry",
+        "cko_orch.work_order_admission_requests",
+        "cko_governance.decisions"
+      ],
+      "rls": true,
+      "allowed_operations": "Nenhuma operação autenticada habilitada"
+    }
+  ],
+  "decision_path": [
+    "FIND",
+    "policy binding",
+    "validator binding",
+    "task/WO",
+    "OPA decision + signed bundle",
+    "independent human approval",
+    "Kernel admission evidence",
+    "isolated executor",
+    "tests",
+    "independent audit",
+    "authorized promotion"
+  ],
+  "prohibitions": [
+    "No mutation in Calculadoras-Smart without a governed WO and migration review",
+    "No direct client/API grant",
+    "No synthetic Kernel approval",
+    "No auto-promotion of agents or clinical artifacts",
+    "No fabrication of normative clause evidence"
+  ],
+  "checks": {
+    "static_contracts": "scripts/governance-structure.test.mjs",
+    "kernel_unit_tests": "src/core/governance/kernel.test.ts",
+    "agent_unit_tests": "src/core/governance/agent-authorization.test.ts",
+    "opa_tests": "contracts/cko-governance/opa/kernel_admission_test.rego",
+    "opa_execution": "NOT_RUN_NO_OPA_CLI",
+    "database_ddl_execution": "NOT_RUN_CANDIDATE_ONLY"
+  }
+}

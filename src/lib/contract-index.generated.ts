@@ -38,6 +38,10 @@ export const contractRoutes = [
     "file": "src/routes/blog.$slug.tsx"
   },
   {
+    "id": "CE-ROUTE-central-comando",
+    "file": "src/routes/central-comando.tsx"
+  },
+  {
     "id": "CE-ROUTE-conta",
     "file": "src/routes/conta.tsx"
   },

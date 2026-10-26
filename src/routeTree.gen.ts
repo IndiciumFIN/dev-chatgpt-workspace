@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CentralComandoRouteImport } from './routes/central-comando'
 import { Route as AssinanteRouteImport } from './routes/assinante'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
@@ -44,6 +45,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CentralComandoRoute = CentralComandoRouteImport.update({
+  id: '/central-comando',
+  path: '/central-comando',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssinanteRoute = AssinanteRouteImport.update({
@@ -171,6 +177,7 @@ const InstitucionalHubPageRoute = InstitucionalHubPageRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/central-comando': typeof CentralComandoRoute
   '/assinante': typeof AssinanteRouteWithChildren
   '/conta': typeof ContaRoute
   '/institucional': typeof InstitucionalRouteWithChildren
@@ -199,6 +206,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/central-comando': typeof CentralComandoRoute
   '/assinante': typeof AssinanteRouteWithChildren
   '/conta': typeof ContaRoute
   '/login': typeof LoginRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/central-comando': typeof CentralComandoRoute
   '/assinante': typeof AssinanteRouteWithChildren
   '/conta': typeof ContaRoute
   '/institucional': typeof InstitucionalRouteWithChildren
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/central-comando'
     | '/assinante'
     | '/conta'
     | '/institucional'
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/central-comando'
     | '/assinante'
     | '/conta'
     | '/login'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/central-comando'
     | '/assinante'
     | '/conta'
     | '/institucional'
@@ -335,6 +347,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  CentralComandoRoute: typeof CentralComandoRoute
   AssinanteRoute: typeof AssinanteRouteWithChildren
   ContaRoute: typeof ContaRoute
   InstitucionalRoute: typeof InstitucionalRouteWithChildren
@@ -366,6 +379,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/central-comando': {
+      id: '/central-comando'
+      path: '/central-comando'
+      fullPath: '/central-comando'
+      preLoaderRoute: typeof CentralComandoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assinante': {
@@ -608,6 +628,7 @@ const BibliotecasSlugRouteWithChildren = BibliotecasSlugRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  CentralComandoRoute: CentralComandoRoute,
   AssinanteRoute: AssinanteRouteWithChildren,
   ContaRoute: ContaRoute,
   InstitucionalRoute: InstitucionalRouteWithChildren,

@@ -175,6 +175,13 @@
       "workId": "WO-CKO-ID-009",
       "to": "IN_PROGRESS",
       "reason": "Auditoria confirmou 1.199 IDs distintos e 17 diferenças fonte/nome; script determinístico de colisões de aliases criado; gate de colisões ainda sem resultado."
+    },
+    {
+      "date": "2026-10-26",
+      "reason": "Run 40392228088 no SHA 631d512: E2E isolado PASS, 29 capturas e 60 verificações; evidência parcial anexada sem aprovação independente nem autorização de produção.",
+      "seq": 26,
+      "to": "IN_PROGRESS",
+      "workId": "WO-E2E-001"
     }
   ],
   "items": [
@@ -232,15 +239,17 @@
       "dependencies": [
         "WO-PMO-001"
       ],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40392228088"
+      ],
       "id": "WO-E2E-001",
-      "next": "Reconciliar acesso ao deployment Vercel; executar capturas browser desktop/mobile, teclado/contraste e gates E2E; somente então liberar avaliação de WO-DS-001 pelo Kernel.",
+      "next": "E2E administrativo Chromium PASS no SHA 631d512 (7 viewports, 60 verificações). Revisar capturas, contraste, teclado, autenticação e aprovação independente antes de liberar WO-DS-001.",
       "order": 3,
       "owner": "ChatGPT + browser cloud",
       "priority": "P0",
       "status": "IN_PROGRESS",
       "title": "E2E, acessibilidade e visual",
-      "updatedOn": "2026-10-24"
+      "updatedOn": "2026-10-26"
     },
     {
       "criteria": "Inventário de desvios e correções sem componentes concorrentes.",
@@ -398,7 +407,7 @@
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 22,
+  "revision": 23,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

@@ -14,7 +14,7 @@ Componentes versionados na branch de prévia:
   em grants dentro de dados de política **confiáveis**, nunca em JSON importado,
   campos de usuário, URL ou credenciais vindos do cliente.
 - `contracts/cko-governance/opa/import_read_test.rego`: casos de deny / allow
-  **ainda sem execução no binário OPA**.
+  **executados no OPA real v1.21.4 em CI**, sem conectar a OPA de produção; evidência no relatório de validação de bundles.
 - `src/core/governance/import-read-db.server.ts`: pool PostgreSQL separado da
   autenticação, transação REPEATABLE READ READ ONLY, `statement_timeout`,
   papel `current_user` comparado com o papel provisionado, snapshot único para
@@ -99,7 +99,7 @@ admissão Kernel ou ativação de agente.
 
 - Código de preflight e testes isolados: implementados.
 - Rotas HTTP e interface de reconciliação online: **NÃO IMPLEMENTADAS**.
-- OPA instalado/com bundle assinado e policy tests reais: **NÃO COMPROVADOS**.
+- OPA CLI v1.21.4 real e testes Rego em CI: **COMPROVADOS**. Verificação positiva/negativa de bundle assinado com chaves efêmeras no CI: **COMPROVADA**. OPA corporativo, chave de produção e distribuição autenticada: **NÃO CONFIGURADOS**.
 - Papel somente leitura provisionado no Supabase: **NÃO COMPROVADO**.
 - Aplicação das 10 tabelas candidatas de staging/reconciliação:
   **NÃO EXECUTADA**.

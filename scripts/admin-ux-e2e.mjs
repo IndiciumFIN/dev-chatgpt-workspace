@@ -91,7 +91,7 @@ try{
       assert.equal(await p.getByRole('button',{name:/Executar WO/}).isDisabled(),true,'WO must be disabled');
       await p.locator('#command-prompt').fill('Consultar tarefas aprovadas');
       await p.getByRole('button',{name:/Pré-checar/}).click();
-      await p.getByText(/Nenhuma solicitação remota/).waitFor();
+      await p.getByText(/nenhuma solicitação remota/i).waitFor();
       await p.getByRole('tab',{name:'Agentes'}).click();
       await p.getByText(/Sem agente, permissões/).waitFor();
     }

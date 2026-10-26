@@ -8,13 +8,21 @@
 -- Esta migration é a última: ela fecha a fila de rascunhos das tabelas de
 -- aprovação, depois que todo mundo criou o que tinha que criar.
 --
--- O que ela NÃO toca, e por quê:
---   · kernel_atom e kernel_claim: a admissão de átomo é ato do kernel, com
---     evidência (trecho literal, pinpoint e hash). Aprovar às cegas aqui
---     esvaziaria o portão do processo de source. A 0040 e o portão cuidam
---     disso — e o que sobrar candidato é achado nomeado, não silêncio.
---   · policy_package e policy_rule: o pacote de política é do worker de
---     doutrina; o que decide se está em vigor é o worker e o kernel.
+-- O que ela NÃO faz, e por quê:
+--   · NÃO muda o ESTADO de kernel_atom e kernel_claim: a admissão de átomo é
+--     ato do kernel, com evidência (trecho literal, pinpoint e hash). Aprovar
+--     às cegas aqui esvaziaria o portão do processo de source. A 0040 e o
+--     portão cuidam disso — e o que sobrar candidato é achado nomeado, não
+--     silêncio.
+--   · NÃO toca policy_package e policy_rule: o pacote de política é do worker
+--     de doutrina; o que decide se está em vigor é o worker e o kernel.
+--
+-- O que ela FAZ em kernel_atom e kernel_claim (isto é carimbar, não admitir):
+--   · nas linhas que JÁ estão com status = 'admitido', ela grava quem
+--     admitiu (admitted_by) e quando (admitted_at). Um átomo admitido sem
+--     autor é um buraco na rastreabilidade — a coluna só existe a partir da
+--     0038, por isso a 0037 não podia preenchê-la. O estado continua sendo
+--     ato do kernel: esta migration não promove 'candidato' a 'admitido'.
 --
 -- A aprovação em massa é do DONO, nunca do kernel: o responsável é
 -- 'derby-normalizacao' e a data é a data da ordem. A evidência continua

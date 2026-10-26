@@ -57,17 +57,35 @@
 
 ## P1 — conteúdo editorial
 
-Ainda precisam de conteúdo qualificado, revisão e templates de publicação:
+### Primeira coleção editorial — MATERIALIZADA
+17 documentos completos estão no banco candidato, em blocos editoriais estruturados, incluindo:
 - Meu Primeiro Plantão;
 - Fui Aprovado;
 - Valorização profissional;
 - Carreira em Y;
-- negociação e posicionamento;
-- conteúdos de descoberta do Portal do Jovem;
-- saúde para jovens;
-- guias de formação, primeiro emprego, entrevistas, LinkedIn, portfólio e empreendedorismo.
+- negociação profissional;
+- primeiro emprego;
+- currículo;
+- entrevista;
+- portfólio;
+- presença profissional;
+- pesquisa como carreira;
+- carreira internacional — primeiros passos;
+- O que a Enfermagem faz?;
+- como funciona a formação;
+- como explorar áreas;
+- primeiros passos para jovens;
+- Técnico de Enfermagem ou graduação em Enfermagem.
 
-Os registros candidatos existem no banco quando já definidos; texto final não deve ser inventado para preencher slots.
+Todos permanecem com `human_gate=HOLD`. Conteúdos factuais usam `source_mode=evidence` e referências oficiais snapshotadas; conteúdo orientativo usa `static_nontechnical_copy`.
+
+### Ainda falta
+- revisão humana/editorial dos 17 documentos;
+- conteúdos específicos de empreendedorismo;
+- aprofundamentos por especialidade/profissão quando houver fonte qualificada;
+- conteúdo completo de saúde para jovens;
+- expansão para outros locales somente após o pt-BR ser homologado;
+- política editorial de manutenção/atualização para conteúdos factuais.
 
 ## P2 — experiências e outputs
 
@@ -116,4 +134,10 @@ Os registros candidatos existem no banco quando já definidos; texto final não 
 - objetos reais de oportunidade/curso/observação de mercado sem dados inventados;
 - validator de lote com SHA-256, dedupe e validade;
 - projection contracts ligados ao CKO;
-- governança DB de identidade/consentimento/moderação/denúncia/bloqueio.
+- governança DB de identidade/consentimento/moderação/denúncia/bloqueio;
+- migration editorial 0005;
+- 17 documentos editoriais completos;
+- editorial reader DB-driven;
+- source snapshots com SHA-256;
+- gate editorial dedicado;
+- links de referência oficial renderizados no browser.

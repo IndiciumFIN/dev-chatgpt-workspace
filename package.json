@@ -68,7 +68,12 @@
     "content:generate": "node scripts/generate-article-index.mjs && node scripts/generate-entity-contracts.mjs",
     "build:spa": "node scripts/check-generated-fresh.mjs && node scripts/check-cko-packages.mjs && node scripts/test-admin-console.mjs && npm run typecheck && npm test && node scripts/audit-execution-gates.mjs && SPA_BUILD=1 node scripts/with-app-env.mjs vite build && node scripts/materialize-static-routes.mjs",
     "audit:brazil": "node scripts/audit-brazil-first.mjs",
-    "audit:templates": "node scripts/audit-templates.mjs"
+    "audit:templates": "node scripts/audit-templates.mjs",
+    "gov:scan": "node scripts/gov-activities.mjs scan",
+    "gov:report": "node scripts/gov-activities.mjs report",
+    "gov:plan": "node scripts/gov-activities.mjs plan",
+    "gov:validate": "node scripts/gov-activities.mjs validate",
+    "gov:assist": "node scripts/gov-activities.mjs assist"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",

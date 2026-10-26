@@ -187,7 +187,7 @@ export function AdminSchemaEditor({moduleId}:{moduleId:AdminModuleId}){
     {(['identidade','atributos','referencias'] as const).map((g,i)=>{
       const members=visible.filter(f=>f.group===g);
       if(!members.length)return null;
-      return <details key={g} className="ce-schema-section" open={i===0?undefined:undefined} /* controlled default below */>
+      return <details key={g} className="ce-schema-section" open={i===0 || undefined}>
         <summary><span>{i+1} · {g==='identidade'?'Identificação e versionamento':g==='atributos'?'Dados do objeto':'Vínculos e referências'}</span><small>{members.length} campos</small><ChevronDown size={17}/></summary>
         <div className="ce-schema-fields">
           {members.map((f,j)=><FieldEditor key={f.path} id={uid+'-'+g+'-'+j} field={f} value={values[f.path]??''} onChange={v=>set(f.path,v)}/>)}

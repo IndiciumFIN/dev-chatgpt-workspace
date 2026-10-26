@@ -11,6 +11,7 @@ on:
       - 'src/routeTree.gen.ts'
       - 'scripts/prerender-routes.mjs'
       - 'scripts/test-curiosidades-snapshot.mjs'
+      - 'scripts/curiosidades-e2e.mjs'
       - '.github/workflows/curiosidades-mem-validation.yml'
   workflow_dispatch:
 
@@ -60,3 +61,26 @@ jobs:
           assert.ok(!sitemap.includes('/blog/12-de-maio-e-o-dia-internacional-da-enfermagem'), 'Prévia indexada indevidamente');
           console.log('PASS: '+catalog.length+' páginas materializadas fora do sitemap');
           NODE
+      - name: Preparar navegador real para QA (sem deploy)
+        run: npx playwright install --with-deps chromium
+      - name: Executar catálogo e artigos em desktop/mobile
+        run: |
+          node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 >/tmp/curiosidades-vite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 50); do
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/curiosidades-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4173/blog/ -o /dev/null 2>/dev/null; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:4173/blog/ -o /dev/null || { cat /tmp/curiosidades-vite.log; exit 1; }
+          node scripts/curiosidades-e2e.mjs
+      - name: Guardar capturas para revisão visual MEM
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: curiosidades-preview-evidence
+          path: |
+            audit-evidence/curiosidades/*.png
+          if-no-files-found: warn
+          retention-days: 7

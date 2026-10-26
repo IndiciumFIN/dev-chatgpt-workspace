@@ -335,3 +335,119 @@ create index if not exists idx_career_module_audience on career_module_candidate
 create index if not exists idx_career_editorial_audience on career_editorial_candidate(audience,sort_order);
 create index if not exists idx_career_role_family on career_role_candidate(family);
 create index if not exists idx_career_application_participant on career_application_candidate(participant_key,updated_at);
+
+
+-- Extended DB-first capabilities recovered from the Career/Youth plan.
+create table if not exists career_learning_resource_type_candidate (
+  id text primary key,
+  kind text not null unique,
+  title text not null,
+  description text not null,
+  source_required boolean not null default true,
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN'))
+);
+
+create table if not exists career_interview_scenario_candidate (
+  id text primary key,
+  kind text not null,
+  title text not null,
+  description text not null,
+  audience text not null check (audience in ('PROFESSIONAL','YOUTH','BOTH')),
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN'))
+);
+
+create table if not exists career_network_capability_candidate (
+  id text primary key,
+  kind text not null,
+  title text not null,
+  description text not null,
+  requires_identity boolean not null default true,
+  moderation_required boolean not null default true,
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN'))
+);
+
+create table if not exists career_jurisdiction_requirement_candidate (
+  id text primary key,
+  jurisdiction text not null,
+  requirement_kind text not null,
+  title text not null,
+  description text not null,
+  source_ref text,
+  status text not null check (status in ('SOURCE_REQUIRED','VERIFIED_CANDIDATE'))
+);
+
+create table if not exists career_worklife_capability_candidate (
+  id text primary key,
+  kind text not null,
+  title text not null,
+  description text not null,
+  normative_source_required boolean not null default true,
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN'))
+);
+
+create table if not exists career_youth_activity_candidate (
+  id text primary key,
+  kind text not null check (kind in ('QUIZ','GAME','CARD_SET','SCENARIO','GUIDED_REFLECTION')),
+  title text not null,
+  description text not null,
+  linked_module_ref text,
+  status text not null check (status in ('CANDIDATE','HOLD_HUMAN'))
+);
+
+insert into career_module_candidate(id,slug,title,description,object_class,audience,family,status,sort_order) values
+('MOD-LEARNING','aprendizagem','Cursos e desenvolvimento','Cursos, certificações, idioma, workshops e educação permanente como tipos de recurso com fonte/validade próprias.','HYBRID','BOTH','learning','CANDIDATE',4),
+('MOD-COMPARE','comparador','Comparador de caminhos','Comparar papéis, famílias e skills sem transformar diferenças em ranking de profissões.','FUNCTIONAL','BOTH','intelligence','CANDIDATE',5),
+('MOD-ENTREPRENEUR','empreendedorismo','Empreendedorismo','Explorar caminhos profissionais autônomos e projetos sem prometer renda ou substituir orientação jurídica/contábil.','HYBRID','PROFESSIONAL','journey','CANDIDATE',15),
+('MOD-YOUTH-HEALTH','saude-jovem','Saúde para jovens','Conteúdos de saúde e cidadania projetados para jovens, governados separadamente do domínio de carreira.','EDITORIAL','YOUTH','youth','CANDIDATE',7)
+on conflict(id) do nothing;
+
+insert into career_projection_item_candidate(projection_id,module_id,sort_order)
+select 'PROJ-CAREER',id,sort_order from career_module_candidate where audience in ('PROFESSIONAL','BOTH')
+on conflict do nothing;
+insert into career_projection_item_candidate(projection_id,module_id,sort_order)
+select 'PROJ-YOUTH',id,sort_order from career_module_candidate where audience in ('YOUTH','BOTH')
+on conflict do nothing;
+
+insert into career_learning_resource_type_candidate(id,kind,title,description,source_required,status) values
+('LEARN-FREE','FREE_COURSE','Cursos gratuitos','Cursos e recursos gratuitos cuja disponibilidade e origem precisam ser verificadas.',true,'CANDIDATE'),
+('LEARN-PAID','PAID_COURSE','Cursos e especializações','Formação complementar com instituição, carga, modalidade e condições verificáveis.',true,'CANDIDATE'),
+('LEARN-CERT','CERTIFICATION','Certificações','Recursos de preparação e certificações ligadas a emissores e requisitos concretos.',true,'CANDIDATE'),
+('LEARN-LANG','LANGUAGE','Idiomas e inglês técnico','Recursos de idioma conectados à jornada internacional e profissional.',true,'CANDIDATE'),
+('LEARN-CPD','CONTINUING_DEVELOPMENT','Educação permanente','Desenvolvimento contínuo ligado a gaps, objetivos e contexto profissional.',true,'CANDIDATE')
+on conflict(id) do nothing;
+
+insert into career_interview_scenario_candidate(id,kind,title,description,audience,status) values
+('INT-FIRST','FIRST_JOB','Primeiro emprego','Preparação para apresentar formação, experiências acadêmicas e potencial sem inventar experiência profissional.','BOTH','CANDIDATE'),
+('INT-TECH','TECHNICAL','Entrevista técnica','Preparação para raciocinar sobre situações e competências do cargo dentro do escopo permitido.','PROFESSIONAL','CANDIDATE'),
+('INT-LEAD','LEADERSHIP','Liderança e gestão','Preparação para discutir pessoas, processos, conflitos, qualidade e resultados com evidências próprias.','PROFESSIONAL','CANDIDATE'),
+('INT-RESEARCH','RESEARCH','Pesquisa e academia','Preparação para discutir pergunta, método, ética, evidências e contribuição em projetos.','BOTH','CANDIDATE')
+on conflict(id) do nothing;
+
+insert into career_network_capability_candidate(id,kind,title,description,requires_identity,moderation_required,status) values
+('NET-MENTOR','MENTORING','Mentoria','Matching e acompanhamento mentor/mentorado requerem identidade, privacidade, regras e moderação.',true,true,'HOLD_HUMAN'),
+('NET-NETWORK','NETWORKING','Networking','Conexões profissionais e interesses compartilhados dependem de identidade e controles de abuso.',true,true,'HOLD_HUMAN'),
+('NET-GROUP','COMMUNITY_GROUP','Grupos e comunidades','Comunidades por tema, etapa ou objetivo precisam de governança e moderação.',true,true,'HOLD_HUMAN'),
+('NET-SQUAD','SQUAD','Squads de desenvolvimento','Pequenos grupos orientados a estudo, carreira ou projetos, dependentes de identidade e regras.',true,true,'HOLD_HUMAN')
+on conflict(id) do nothing;
+
+insert into career_jurisdiction_requirement_candidate(id,jurisdiction,requirement_kind,title,description,source_ref,status) values
+('JUR-LANG','INTERNATIONAL_GENERIC','LANGUAGE','Idioma','Exigências de idioma variam por país, órgão e empregador.',null,'SOURCE_REQUIRED'),
+('JUR-DIPLOMA','INTERNATIONAL_GENERIC','DIPLOMA_RECOGNITION','Reconhecimento de formação','Processos de equivalência/reconhecimento devem vir da autoridade da jurisdição.',null,'SOURCE_REQUIRED'),
+('JUR-REG','INTERNATIONAL_GENERIC','PROFESSIONAL_REGISTRATION','Registro profissional','Requisitos de registro e licenciamento dependem da autoridade competente.',null,'SOURCE_REQUIRED'),
+('JUR-WORK','INTERNATIONAL_GENERIC','WORK_AUTHORIZATION','Autorização de trabalho','Requisitos migratórios e laborais variam por país e situação individual.',null,'SOURCE_REQUIRED')
+on conflict(id) do nothing;
+
+insert into career_worklife_capability_candidate(id,kind,title,description,normative_source_required,status) values
+('WL-LABOR','LABOR_CALCULATORS','Ferramentas trabalhistas','Cálculos de jornada, adicionais, desligamento e direitos exigem contratos e fontes normativas vigentes.',true,'HOLD_HUMAN'),
+('WL-ROSTER','SHIFT_PLANNER','Escala e plantão','Planejamento de carga, preferências, trocas e cobertura depende de regras institucionais e privacidade.',true,'HOLD_HUMAN'),
+('WL-NEGOTIATE','NEGOTIATION','Negociação profissional','Preparação editorial e ferramentas de comparação sem prometer resultados.',false,'CANDIDATE'),
+('WL-WELLBEING','WELLBEING','Descompressão e autocuidado','Pausas e recursos educativos sem diagnóstico, com encaminhamento seguro quando aplicável.',true,'HOLD_HUMAN')
+on conflict(id) do nothing;
+
+insert into career_youth_activity_candidate(id,kind,title,description,linked_module_ref,status) values
+('YACT-REFLECT','GUIDED_REFLECTION','Explorar interesses','Perguntas educativas para observar interesses sem finalidade psicométrica.','MOD-YOUTH-REFLECT','CANDIDATE'),
+('YACT-CARDS','CARD_SET','Cartões de profissões','Cartões reutilizáveis para comparar contextos, formação e possibilidades.','MOD-YOUTH-DISCOVER','CANDIDATE'),
+('YACT-SCENARIO','SCENARIO','Escolhas de caminho','Cenários educativos para explorar decisões e próximos passos sem resposta única.','MOD-YOUTH-FIRST','CANDIDATE'),
+('YACT-QUIZ','QUIZ','Quiz: conhecendo a Enfermagem','Quiz educativo alimentado por conteúdo previamente qualificado.','MOD-YOUTH-NURSING','HOLD_HUMAN'),
+('YACT-GAME','GAME','Jogo de jornada profissional','Experiência lúdica que conecta etapas de formação, skills e oportunidades do mesmo banco.','MOD-YOUTH-GAMES','HOLD_HUMAN')
+on conflict(id) do nothing;

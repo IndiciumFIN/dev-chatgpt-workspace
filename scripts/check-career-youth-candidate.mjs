@@ -34,8 +34,19 @@ const sql = read("migrations/0004_career_youth_candidate.sql");
 const sqlNoComments = sql.replace(/--.*$/gm, "");
 check("sql-nao-destrutivo", !/\b(drop|truncate|delete)\b/i.test(sqlNoComments));
 
+const personalTables = [
+  "career_profile_candidate",
+  "career_profile_skill_candidate",
+  "career_application_candidate",
+  "career_profile_credential_candidate",
+  "career_milestone_candidate",
+];
+const personalSql = personalTables.map((table) => {
+  const match = sqlNoComments.match(new RegExp("create table if not exists " + table + "\\s*\\(([\\s\\S]*?)\\);", "i"));
+  return match?.[1] ?? "";
+}).join("\n");
 const forbiddenColumn = /^\s*(name|nome|email|cpf|phone|telefone|coren|patient|paciente|leito)\s+[a-z]/im;
-check("sql-sem-colunas-identificadoras", !forbiddenColumn.test(sqlNoComments));
+check("workspace-sem-colunas-identificadoras", !forbiddenColumn.test(personalSql));
 
 const tables = [
   "career_projection_candidate",

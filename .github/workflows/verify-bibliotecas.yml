@@ -112,6 +112,8 @@ jobs:
           git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
       - run: npm ci
+      - name: Contrato HTTP real OPA/PDP local (sem serviço remoto)
+        run: node --experimental-strip-types scripts/test-opa-real-http.mjs "${RUNNER_TEMP}/opa"
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
       - run: node scripts/test-admin-console.mjs

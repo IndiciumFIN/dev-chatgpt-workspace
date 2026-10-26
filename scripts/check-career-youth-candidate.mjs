@@ -169,6 +169,10 @@ check(
   "sections-carreira-jovens",
   sections.includes("carreira: {") && sections.includes("jovens: {"),
 );
+check(
+  "sections-candidatas",
+  sections.includes('publicacao: "candidata"'),
+);
 
 const nav = read("src/lib/nav.ts");
 check(

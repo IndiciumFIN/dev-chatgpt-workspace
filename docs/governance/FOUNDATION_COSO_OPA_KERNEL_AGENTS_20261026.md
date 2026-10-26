@@ -55,7 +55,7 @@ O COSO ICIF (5 componentes) e COSO ERM servem como estrutura de controles e risc
 ## FINDs de arquitetura a formalizar antes de produção
 
 - **Kernel local:** `buildManifest` autorizava aprovação automática; `evaluateWorkOrder` aceitava zero validadores e verificava apenas presença de política ativa. Correção local feita; não demonstra conformidade do Kernel corporativo.
-- **OPA:** bundles Rego e testes são candidatos, ainda **não executados por um runner OPA** nem autenticados por serviço. O identificador de decisão passado por callback local pode ser simulado; exigir atestação verificável no servidor.
+- **OPA:** a compilação e os testes candidatos agora rodam no **OPA v1.21.4 real em CI**, com assinatura/verificação de bundles usando chaves de teste efêmeras. Ainda **não são autenticados nem aplicados pelo serviço OPA corporativo**. O identificador de decisão passado por callback local pode ser simulado; exigir atestação verificável no servidor.
 - **Migração:** DDL **não executado**, portanto não há prova de compilação SQL, transação ou comportamento do trigger no banco.
 - **Decisão humana:** tabela `cko_governance.decisions` registra decisão e estado, mas vínculo de identidade e segregação precisa ser comprovado por serviço de identidade e evidências de atuação, não por rótulo.
 - **Agentes:** pré-checagem não é autorização. Não existem integrações operacionais autorizadas entre agente, ferramenta e Kernel neste backup.
@@ -67,7 +67,7 @@ O COSO ICIF (5 componentes) e COSO ERM servem como estrutura de controles e risc
 2. Auditoria do inventário e compatibilidade do DDL com `Calculadoras-Smart` (somente leitura até homologação).
 3. Auditoria das funções PostgreSQL, lock/fencing/idempotência e integridade dos resultados de OPA.
 4. Teste de migração em banco de desenvolvimento isolado: FKs, triggers, RLS/GRANT, tentativas de bypass, transações e concorrência.
-5. Execução real de `opa test` e bundle verification (atualmente **NOT_RUN**).
+5. Execução real de `opa test` e verificação de bundle: **CI CONCLUÍDO, ambiente corporativo ainda HOLD**; ver `docs/governance/OPA_REAL_ENGINE_AND_SIGNED_BUNDLES_20261026.md`.
 6. Maker ≠ Checker ≠ Auditor; revisão de capacidade clínica/legal conforme aplicabilidade.
 7. Auditoria independente e promoção autorizada. Não fazer merge para `main` nem deploy de produção antes disso.
 

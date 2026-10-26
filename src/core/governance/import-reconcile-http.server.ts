@@ -90,11 +90,34 @@ export async function executeImportReconcileHttp(
  let report:ReconciliationReport;
  try{report=await dependencies.reconcile(actor.id,profile,reviewed);}
  catch{return forbid(503,'CATALOG_UNAVAILABLE');}
+ if(report?.type!=='CKO_IMPORT_RECONCILIATION_CANDIDATE'||
+    report.destination!==profile.destination||report.profileId!==profile.id||
+    report.databaseMutation!==false||report.admission!=='NOT_SUBMITTED'||
+    report.authorization!=='NOT_REQUESTED'||!Array.isArray(report.rows)||
+    report.rows.length!==reviewed.total||!report.counts||
+    Object.values(report.counts).some(n=>typeof n!=='number'||!Number.isInteger(n)||n<0)||
+    Object.values(report.counts).reduce((a,n)=>a+n,0)!==reviewed.total||
+    report.rows.some((r,i)=>r.line!==reviewed.records[i].line||
+      r.identifier!==reviewed.records[i].identifier))
+   return forbid(503,'CATALOG_REPORT_INVALID');
+ const canonical=(value:unknown):string=>{
+   if(value===null||typeof value!=='object')return JSON.stringify(value)??'null';
+   if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';
+   const keys=Object.keys(value as Record<string,unknown>).sort();
+   return '{'+keys.map(k=>JSON.stringify(k)+':'+canonical((value as Record<string,unknown>)[k])).join(',')+'}';
+ };
+ const sha=(value:string)=>createHash('sha256').update(value,'utf8').digest('hex');
+ const mappingHash=sha(canonical(submittedMapping));
+ const comparisonHash=sha(canonical(report));
  return reply(200,{
    ok:true,operation:'READ_ONLY_RECONCILIATION',
    source_sha256:sha256,
    policy_decision_ref:grant.decisionId,
+   opa_request_nonce:grant.requestNonce,
    bundle_sha256:grant.bundleSha256,
+   mapping_sha256:mappingHash,
+   comparison_sha256:comparisonHash,
+   receipt_state:'CANDIDATE_UNATTESTED',
    result:report,
    submitted:false,canonical_writes:0,kernel_admitted:false,
  });

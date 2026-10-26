@@ -198,7 +198,7 @@ export function AdminConsole() {
         </div>
         {tab !== 'pmo' && tab !== 'module-detail' && tab !== 'governance' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
-        {tab === 'module-detail' && <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule} onOpenExisting={view => setTab(view)} />}
+        {tab === 'module-detail' && <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule} onOpenExisting={view => setTab(view)} onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}} />}
         {tab === 'governance' && <GovernancePanel />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
@@ -225,19 +225,8 @@ export function AdminConsole() {
           </Panel>
         </>}
         {tab === 'content' && <>
-          <div className="ce-admin-content-grid">
-            <Panel title="Catálogo de instrumentos" subtitle={`${visibleTools.length} de ${model.tools.length} itens no registro local.`}>
-              <div className="ce-admin-filterbar">
-                <label className="ce-admin-search"><Search size={17} aria-hidden="true" /><span className="sr-only">Pesquisar instrumentos</span><input type="search" placeholder="Buscar por título ou identificador" value={query} onChange={e => setQuery(e.target.value)} /></label>
-                <label className="ce-admin-select"><SlidersHorizontal size={16} aria-hidden="true"/><span className="sr-only">Filtrar status</span><select value={statusFilter} onChange={e => setStatusFilter(e.target.value as typeof statusFilter)}><option value="todos">Todos</option><option value="publicado">Marcados para publicação</option><option value="oculto">Ocultos</option></select></label>
-              </div>
-              <div className="ce-admin-tool-list" role="list">
-                {visibleTools.map(item => <button role="listitem" type="button" key={item.slug} className={`ce-admin-tool-row${selected === item.slug ? ' is-selected' : ''}`} onClick={() => { setSelected(item.slug); setPreviewVersion('draft'); }} aria-pressed={selected === item.slug}>
-                  <span className="ce-admin-tool-glyph"><BookOpenText size={18} aria-hidden="true" /></span><span className="ce-admin-tool-meta"><strong>{item.title}</strong><small>{item.slug}</small></span><Indicator tone={item.published ? 'ok' : 'neutral'}>{item.published ? 'Visível' : 'Oculto'}</Indicator>
-                </button>)}
-                {visibleTools.length === 0 && <p className="ce-admin-empty">Nenhum instrumento atende aos filtros.</p>}
-              </div>
-            </Panel>
+          <button type="button" className="ce-admin-expand" onClick={() => setTab('module-detail')}>Voltar ao catálogo de Calculadoras</button>
+          <div className="ce-admin-content-grid ce-admin-content-grid--editor">
             <Panel title={edited ? `Editar · ${edited.title}` : 'Selecione um instrumento'} subtitle="Somente título, descrição e intenção de visibilidade são editáveis nesta fase. Regras clínicas não são editadas aqui.">
               {edited && <div className="ce-admin-editor">
                 <div className="ce-admin-keyline"><span>ID canônico</span><code>{edited.slug}</code><Indicator tone="neutral">Metadados editoriais</Indicator></div>

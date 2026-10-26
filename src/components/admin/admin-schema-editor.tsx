@@ -135,8 +135,8 @@ function downloadJson(filename:string,obj:unknown){
   const element=document.createElement('a');element.href=url;element.download=filename;element.click();URL.revokeObjectURL(url);
 }
 type SessionDraft = {id:string;templateKey:string;values:Values;updatedAt:string};
-export function AdminSchemaEditor({moduleId,submodule}:{moduleId:AdminModuleId;submodule:string}){
-  const templates=moduleFormTemplates[moduleId];
+export function AdminSchemaEditor({moduleId,submodule,templateKeys}:{moduleId:AdminModuleId;submodule:string;templateKeys:readonly string[]}){
+  const templates=moduleFormTemplates[moduleId].filter(t=>templateKeys.includes(t.key));
   const [drafts,setDrafts]=useState<SessionDraft[]>([]);
   const [editing,setEditing]=useState<string|null>(null);
   const [deletion,setDeletion]=useState<string|null>(null);

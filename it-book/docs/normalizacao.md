@@ -36,6 +36,7 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | cmd_command | id | — | ordem, modo, texto, ator, correlação, estado, motivo, data |
 | cmd_run | id | ordem + tentativa | comando, estado, chave de idempotência, ator, data |
 | cmd_event | id | execução + sequência | tipo, detalhe, ator, data |
+| ops_record | id | — | módulo, tipo, nome, estado, nota, data |
 | site_route | path | — | idioma, contrato, título, lead, corpo, estado, caminho de origem |
 | content_object | slug | origin_path | tipo, capa quando é instrumento |
 | content_alias | path | — | objeto, idioma, vista |

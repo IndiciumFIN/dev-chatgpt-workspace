@@ -4,6 +4,7 @@ import { mkdtempSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
+import { semContratoDaPlataforma } from "./contrato-plataforma.mjs";
 import { promisify } from "node:util";
 import {
   authEnabledFromEnvValue,
@@ -90,7 +91,8 @@ test("only a divergence warns the smoke verdict", () => {
   }
 });
 
-test("the build side resolves the template's shipped app-env", () => {
+test("the build side resolves the template's shipped app-env", (t) => {
+  if (semContratoDaPlataforma(t, "o app-env.json que a plataforma entrega")) return;
   assert.equal(buildAuthEnabled(projectRoot(), {}), false);
   assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "true" }), true);
 });

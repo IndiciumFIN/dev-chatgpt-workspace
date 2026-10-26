@@ -58,7 +58,14 @@ test("non-.sql entries are dropped (readdir also yields the auth/ directory)", (
 
 test("the auth schema ships outside the globbed directory", () => {
   const migrationsDir = join(projectRoot(), "migrations");
-  assert.deepEqual(pendingMigrations(readdirSync(migrationsDir), []), []);
+  // O subdiretório `auth/` não é migration: nenhum caminho com "/" entra no
+  // glob, e o schema de autenticação continua morando fora dele.
+  const pending = pendingMigrations(readdirSync(migrationsDir), []);
+  assert.equal(
+    pending.some((m) => m.path.includes("/")),
+    false,
+    "migrations/auth/ não pode entrar no glob de migrations/*.sql",
+  );
   assert.ok(readdirSync(join(migrationsDir, "auth")).includes("0001_auth.sql"));
 });
 

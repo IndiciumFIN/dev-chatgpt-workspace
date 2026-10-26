@@ -5,14 +5,15 @@ import { adminGroups, adminModules, getAdminModule, type AdminGroupId, type Admi
 import { AdminSchemaEditor } from '@/components/admin/admin-schema-editor';
 import '@/styles/admin-hierarchy.css';
 
-type Props={selectedId:AdminModuleId;onSelect:(id:AdminModuleId)=>void;idPrefix:'desktop'|'mobile'};
+type Props={selectedId:AdminModuleId;onSelect:(id:AdminModuleId)=>void;onOverview:()=>void;overviewActive:boolean;idPrefix:'desktop'|'mobile'};
 
-export function AdminSidebarTree({selectedId,onSelect,idPrefix}:Props){
+export function AdminSidebarTree({selectedId,onSelect,onOverview,overviewActive,idPrefix}:Props){
   const currentGroup=getAdminModule(selectedId).group;
   const [openGroups,setOpenGroups]=useState<AdminGroupId[]>([currentGroup]);
   useEffect(()=>setOpenGroups(old=>old.includes(currentGroup)?old:[...old,currentGroup]),[currentGroup]);
   return <nav className="ce-admin-tree" aria-label={idPrefix==='desktop'?'Módulos da administração':'Módulos da administração — mobile'}>
-    <div className="ce-admin-tree-heading"><Network size={16} aria-hidden="true"/><strong>MACROGRUPOS</strong><span>7 áreas · 22 módulos</span></div>
+    <button className="ce-admin-tree-overview" type="button" aria-current={overviewActive?'page':undefined} onClick={onOverview}>Visão geral <span>Painel global</span></button>
+    <div className="ce-admin-tree-heading"><Network size={16} aria-hidden="true"/><strong>MACROGRUPOS</strong><span>7 áreas · 21 módulos</span></div>
     {adminGroups.map(group=>{
       const items=adminModules.filter(item=>item.group===group.id).sort((a,b)=>a.id.localeCompare(b.id));
       const expanded=openGroups.includes(group.id);

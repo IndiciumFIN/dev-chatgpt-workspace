@@ -34,9 +34,9 @@ try {
   const file = join(root,'trusted-data.json');
   await writeFile(file, JSON.stringify(fixture), { mode: 0o600 });
   child = spawn(binary, [
-    'run','--server','--addr',address,
+    'run','--server','--addr','127.0.0.1:18181',
     '--set','decision_logs.console=true',
-    '--data',policy,'--data',file,
+    policy,file,
   ], { stdio: ['ignore','pipe','pipe'] });
   child.stdout.on('data', part => {processLog = (processLog + String(part)).slice(-6000);});
   child.stderr.on('data', part => {processLog = (processLog + String(part)).slice(-6000);});

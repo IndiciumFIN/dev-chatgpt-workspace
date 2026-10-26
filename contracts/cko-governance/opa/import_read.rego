@@ -18,6 +18,8 @@ allow if {
  }
  input.destination == supported[input.profile_id]
  regex.match("^[a-f0-9]{64}$",input.source_sha256)
+ is_string(input.request_nonce)
+ regex.match("^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$",input.request_nonce)
  is_number(input.record_count)
  input.record_count >= 1
  input.record_count <= 10000
@@ -28,3 +30,14 @@ allow if {
 # deployment controller. It is NOT cryptographic proof in the API response.
 bundle_sha256 := data.cko_trusted.bundle_sha256
 
+
+# Bind every allow response to the exact invocation; a cached or replayed
+# decision with another nonce/actor/file/operation must be rejected by the PEP.
+context := {
+ "request_nonce":input.request_nonce,
+ "actor_id":input.actor_id,
+ "profile_id":input.profile_id,
+ "destination":input.destination,
+ "source_sha256":input.source_sha256,
+ "record_count":input.record_count,
+} if allow

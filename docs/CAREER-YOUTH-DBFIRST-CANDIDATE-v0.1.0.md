@@ -26,6 +26,10 @@ Conteúdo editorial referencia objetos canônicos por `linked_object_type` / `li
 
 A projeção YOUTH cobre descoberta de profissões, Enfermagem como carreira, reflexão de interesses, formação/primeiros passos, oportunidades, skills/trilhas e jogos/quizzes. A reflexão implementada é **educativa e não psicométrica**.
 
+## Cobertura DB-first ampliada
+
+Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 15 schemas candidatos.
+
 ## Dados pessoais
 
 O workspace candidato aceita somente uma chave pseudônima e dados de carreira não identificáveis. Não há colunas de nome, e-mail, telefone, CPF ou COREN. O servidor rejeita padrões óbvios de contato em campos livres.
@@ -44,3 +48,7 @@ Vagas, concursos, salários, credenciais e requisitos por jurisdição não rece
 - `/secao/jovens`
 
 Ambas permanecem `noindex, nofollow` até revisão e promoção formal.
+
+
+## Pendências remanescentes
+O checklist escopado está em `docs/PENDENCIAS-CAREER-YOUTH-CANDIDATE-v0.1.0.md`. As maiores pendências são fontes externas atuais, revisão humana/Kernel, conteúdo editorial qualificado, jurisdições e governança multiusuário.

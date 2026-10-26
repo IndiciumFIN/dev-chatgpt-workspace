@@ -136,6 +136,7 @@ export function CommanderPanel() {
                 <p><strong>Prioridade:</strong> {item?.priority ?? 'Não definida'} · <strong>Ordem:</strong> {item?.order ?? '—'}</p>
                 <p><strong>Dependências:</strong> {item?.dependencies?.length ? item.dependencies.join(', ') : 'Nenhuma registrada'}</p>
                 <p role="status"><strong>Prontidão por dependências:</strong> {unresolvedDependencies.length ? `Aguardando ${unresolvedDependencies.join(', ')}` : 'Sem dependências pendentes no PMO'}</p>
+                <p><strong>Admissão:</strong> NÃO VERIFICADA · <strong>Despacho:</strong> NÃO REALIZADO · <strong>Execução:</strong> BLOQUEADA</p>
                 <p><strong>Evidências do PMO:</strong> {item?.evidence?.length ?? 0} · <strong>Origem da lane:</strong> <code>{lane.sourceCommit.slice(0, 12)}</code></p>
                 <p><strong>Próxima ação oficial:</strong> {item?.next ?? 'WO não localizada — HOLD'}</p>
                 <p><a href={lane.issueUrl} target="_blank" rel="noopener noreferrer">Ver instruções e entregar artefatos no GitHub</a></p>

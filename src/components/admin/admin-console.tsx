@@ -2,10 +2,10 @@ import { Link } from '@tanstack/react-router';
 import {
   AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Check, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
-  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone, Menu, Network,
+  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone, Menu, Network, X,
   type LucideIcon,
 } from 'lucide-react';
-import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode } from 'react';
 import { PageHero } from '@/components/site/page-hero';
 import { Breadcrumb } from '@/components/site/breadcrumb';
 import { tools } from '@/lib/tools/catalog';
@@ -20,24 +20,14 @@ import {
   type PublicationEvent,
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
-import { AdminModuleDirectory } from '@/components/admin/module-directory';
+import { AdminSidebarTree, AdminModuleFallback } from '@/components/admin/admin-sidebar-tree';
+import { adminGroups, adminModules, getAdminModule, type AdminModuleId } from '@/lib/admin-module-registry';
 import { GovernancePanel } from '@/components/admin/governance-panel';
 import '@/styles/admin-console.css';
 
-type Tab = 'overview' | 'pmo' | 'modules' | 'governance' | 'content' | 'templates' | 'sources' | 'publication';
+type Tab = 'overview' | 'pmo' | 'module-detail' | 'governance' | 'content' | 'templates' | 'sources' | 'publication';
 type PreviewAudience = 'publico' | 'assinante';
 type PreviewVersion = 'draft' | 'published';
-const tabs: { id: Tab; label: string; icon: LucideIcon; hint: string }[] = [
-  { id: 'pmo', label: 'PMO · fila', icon: ListTodo, hint: 'Ordens, status e evidências' },
-  { id: 'modules', label: 'Módulos', icon: Network, hint: '7 macrogrupos · 22 módulos' },
-  { id: 'governance', label: 'Governança', icon: ShieldCheck, hint: 'FINDs e normas candidatas' },
-  { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Protótipo congelado' },
-  { id: 'content', label: 'Conteúdos', icon: BookOpenText, hint: 'Editar instrumentos' },
-  { id: 'templates', label: 'Templates', icon: Layers3, hint: 'Contratos de apresentação' },
-  { id: 'sources', label: 'Fontes e controle', icon: ShieldCheck, hint: 'Rastreabilidade' },
-  { id: 'publication', label: 'Publicação', icon: FileClock, hint: 'Revisões e exportação' },
-];
-
 function Panel({ children, title, subtitle, action }: { children: ReactNode; title: string; subtitle?: string; action?: ReactNode }) {
   return <section className="ce-admin-panel">
     <div className="ce-admin-panel-heading"><div><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div>{action}</div>
@@ -58,6 +48,29 @@ export function AdminConsole() {
   const [revision, setRevision] = useState(0);
   const [events, setEvents] = useState<PublicationEvent[]>([]);
   const [tab, setTab] = useState<Tab>('pmo');
+  const [selectedModule, setSelectedModule] = useState<AdminModuleId>('M03');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileDialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    if (!dialog) return;
+    if (mobileMenuOpen && !dialog.open) dialog.showModal();
+    if (!mobileMenuOpen && dialog.open) dialog.close();
+  }, [mobileMenuOpen]);
+  useEffect(() => {
+    if (tab === 'module-detail') return;
+    setSelectedModule(current => getAdminModule(current).surface === tab
+      ? current
+      : (adminModules.find(item => item.surface === tab)?.id ?? 'M03'));
+  }, [tab]);
+  function navigateModule(id: AdminModuleId) {
+    setSelectedModule(id);
+    const module = getAdminModule(id);
+    setTab(module.surface && module.surface !== 'command' ? module.surface : 'module-detail');
+    setMobileMenuOpen(false);
+  }
+  const moduleInView = getAdminModule(selectedModule);
+  const macroInView = adminGroups.find(item => item.id === moduleInView.group);
   const [selected, setSelected] = useState<string>(() => initialWorkbench().tools[0]?.slug ?? '');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'publicado' | 'oculto'>('todos');
@@ -157,7 +170,7 @@ export function AdminConsole() {
       </> : tab === 'governance' ? <>
         <strong>Governança: somente registros versionados — sem admissão normativa.</strong>
         <span>FINDs e normas exibidos como evidências de estado datado. Não existem avaliações ou aprovações implícitas.</span>
-      </> : tab === 'modules' ? <>
+      </> : tab === 'module-detail' ? <>
         <strong>Catálogo arquitetural — 7 macrogrupos e 22 módulos planejados.</strong>
         <span>Relações e responsabilidades de referência, sem migração, integração remota ou novas permissões.</span>
       </> : <>
@@ -166,32 +179,31 @@ export function AdminConsole() {
       </>}
     </div></div>
     <div className="ce-admin-mobile-nav" aria-label="Navegação administrativa para dispositivos móveis">
-      <label htmlFor="ce-admin-mobile-module"><Menu size={17} aria-hidden="true" /><span>Módulo</span></label>
-      <select id="ce-admin-mobile-module" value={tab} onChange={event => setTab(event.target.value as Tab)}>
-        {tabs.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
-      </select>
+      <button type="button" className="ce-admin-mobile-launch" aria-label="Abrir macrogrupos e módulos" aria-haspopup="dialog" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen(true)}>
+        <Menu size={19} aria-hidden="true" /><span><strong>{macroInView?.title ?? 'Macrogrupos'}</strong><small>{selectedModule} · {moduleInView.title}</small></span><ChevronRight size={17} aria-hidden="true"/>
+      </button>
       <Link className="ce-admin-mobile-command" to="/central-comando"><span>Comando</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
     </div>
+    <dialog ref={mobileDialogRef} className="ce-admin-mobile-dialog" aria-label="Navegar pelos macrogrupos" onClose={() => setMobileMenuOpen(false)} onClick={event => { if (event.target === mobileDialogRef.current) setMobileMenuOpen(false); }}>
+      <div className="ce-admin-mobile-dialog-head"><strong>Administração · Navegação</strong><button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Fechar navegação"><X size={20} aria-hidden="true"/></button></div>
+      <AdminSidebarTree selectedId={selectedModule} onSelect={navigateModule} idPrefix="mobile"/>
+    </dialog>
     <div className="ce-admin-layout">
-      <nav className="ce-admin-sidebar" aria-label="Módulos da administração">
-        <p className="ce-admin-nav-label">ESPAÇO DE TRABALHO</p>
-        {tabs.map(({ id, label, icon: Icon, hint }) => <button key={id} type="button" className={tab === id ? 'ce-admin-navitem is-selected' : 'ce-admin-navitem'} aria-current={tab === id ? 'page' : undefined} onClick={() => setTab(id)}>
-          <Icon size={18} aria-hidden="true" /><span><strong>{label}</strong><small>{hint}</small></span><ChevronRight size={15} aria-hidden="true" />
-        </button>)}
-        <div className="ce-admin-sidebar-foot"><ShieldCheck size={18} aria-hidden="true" /><span>Fonte normativa, contratos e integridade permanecem sujeitos aos gates de aprovação.</span></div>
-      </nav>
+      <aside className="ce-admin-sidebar">
+        <AdminSidebarTree selectedId={selectedModule} onSelect={navigateModule} idPrefix="desktop"/>
+      </aside>
       <div className="ce-admin-body">
         <div className="ce-admin-toolbar">
-          <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{tabs.find(x => x.id === tab)?.label}</h2></div>
+          <div><span className="ce-admin-toolbar-caption">Administração / {macroInView?.title} / {selectedModule}</span><h2>{moduleInView.title}</h2></div>
           <div className="ce-admin-toolbar-actions">
-            <Indicator tone={tab === 'pmo' || tab === 'modules' || tab === 'governance' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'governance' ? 'Consulta governada' : tab === 'modules' ? 'Arquitetura proposta' : tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
+            <Indicator tone={tab === 'pmo' || tab === 'module-detail' || tab === 'governance' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'governance' ? 'Consulta governada' : tab === 'module-detail' ? 'Módulo planejado' : tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
             <Link className="ce-admin-site-link" to="/central-comando">Central de Comando <ArrowUpRight size={15} aria-hidden="true" /></Link>
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
-        {tab !== 'pmo' && tab !== 'modules' && tab !== 'governance' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
+        {tab !== 'pmo' && tab !== 'module-detail' && tab !== 'governance' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
-        {tab === 'modules' && <AdminModuleDirectory openSurface={setTab} />}
+        {tab === 'module-detail' && <AdminModuleFallback moduleId={selectedModule} />}
         {tab === 'governance' && <GovernancePanel />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
@@ -305,7 +317,7 @@ export function AdminConsole() {
     </div>
     <nav className="ce-admin-mobile-dock" aria-label="Acesso rápido da administração">
       <button type="button" aria-current={tab === 'pmo' ? 'page' : undefined} onClick={() => setTab('pmo')}><ListTodo size={19} aria-hidden="true" /><span>PMO</span></button>
-      <button type="button" aria-current={tab === 'modules' ? 'page' : undefined} onClick={() => setTab('modules')}><Network size={19} aria-hidden="true" /><span>Módulos</span></button>
+      <button type="button" onClick={() => setMobileMenuOpen(true)} aria-label="Abrir macrogrupos e módulos"><Network size={19} aria-hidden="true" /><span>Menu</span></button>
       <Link to="/central-comando"><LayoutDashboard size={19} aria-hidden="true" /><span>Comando</span></Link>
       <button type="button" aria-current={tab === 'publication' ? 'page' : undefined} onClick={() => setTab('publication')}><FileClock size={19} aria-hidden="true" /><span>Publicação</span></button>
     </nav>

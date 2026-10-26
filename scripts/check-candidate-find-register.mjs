@@ -18,7 +18,10 @@ assert(original.items.every(x=>['P0','P1'].includes(x.priority) && ['title','sta
 assert.equal(reg.finds.filter(x=>batch.item_ids.includes(x.canonical_id)).length,0,'Candidato promovido sem admissão');
 assert.equal(q.items.filter(x=>x.id===batch.related_wo).length,1);
 assert.equal(q.items.find(x=>x.id===batch.related_wo).status,'QUEUED');
-assert.equal(q.items.at(-1).id,'WO-HOM-001');
+// Homologação é um gate global, não a posição física final da fila PMO.
+const homologation=q.items.filter(x=>x.id==='WO-HOM-001');
+assert.equal(homologation.length,1,'WO-HOM-001 deve existir uma única vez');
+assert.equal(homologation[0].status,'HOLD_HUMAN','Homologação não pode ser liberada pelo validador de FIND candidato');
 for(const file of batch.checked_content_sha256) {
   assert.equal(createHash('sha256').update(readFileSync(file.path)).digest('hex'),file.sha256,'Divergência hash '+file.path);
 }

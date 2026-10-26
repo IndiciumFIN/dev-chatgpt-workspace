@@ -22,3 +22,7 @@ Schemas explícitos: ResearchProject, ResearchInstrument, ResearchRisk, Research
 
 ## Gate
 `npm run audit:research-candidate` verifica isolamento, schema, SQL, rota, noindex, catálogo e ausência de admissão fabricada. Workflow dedicado roda gate + typecheck + testes + build + Chromium real em 360/768/1024/1440, com artefatos de evidência.
+
+
+## Pendências remanescentes
+O registro escopado de pendências desta frente está em `docs/PENDENCIAS-RESEARCH-PARTICIPATION-CANDIDATE-v0.1.0.md`. A implementação técnica candidata está validada; promoção canônica continua bloqueada por P0 humanos/Kernel.

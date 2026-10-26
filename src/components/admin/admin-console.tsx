@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import {
-  AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Check, ChevronRight,
+  AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Bot, Check, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
   LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone,
   type LucideIcon,
@@ -20,14 +20,16 @@ import {
   type PublicationEvent,
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
+import { CommanderPanel } from '@/components/admin/commander-panel';
 import '@/styles/admin-console.css';
 
-type Tab = 'overview' | 'pmo' | 'content' | 'templates' | 'sources' | 'publication';
+type Tab = 'overview' | 'pmo' | 'commander' | 'content' | 'templates' | 'sources' | 'publication';
 type PreviewAudience = 'publico' | 'assinante';
 type PreviewVersion = 'draft' | 'published';
 const tabs: { id: Tab; label: string; icon: LucideIcon; hint: string }[] = [
   { id: 'pmo', label: 'PMO · fila', icon: ListTodo, hint: 'Ordens, status e evidências' },
   { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Protótipo congelado' },
+  { id: 'commander', label: 'Commander', icon: Bot, hint: 'Preparação e limites de execução' },
   { id: 'content', label: 'Conteúdos', icon: BookOpenText, hint: 'Editar instrumentos' },
   { id: 'templates', label: 'Templates', icon: Layers3, hint: 'Contratos de apresentação' },
   { id: 'sources', label: 'Fontes e controle', icon: ShieldCheck, hint: 'Rastreabilidade' },
@@ -149,6 +151,9 @@ export function AdminConsole() {
       {tab === 'pmo' ? <>
         <strong>PMO oficial da execução — fonte versionada no GitHub.</strong>
         <span>A fila é somente leitura aqui. Alterações exigem commit, evidência e gates; não aprovações por inteligência artificial.</span>
+      </> : tab === 'commander' ? <>
+        <strong>Commander em modo de preparação local.</strong>
+        <span>Esta tela não envia solicitações a LLM, Kernel ou agentes, não cria ordem de serviço e não persiste dados.</span>
       </> : <>
         <strong>Prévia administrativa local — não é a autoridade corporativa.</strong>
         <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
@@ -166,12 +171,13 @@ export function AdminConsole() {
         <div className="ce-admin-toolbar">
           <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{tabs.find(x => x.id === tab)?.label}</h2></div>
           <div className="ce-admin-toolbar-actions">
-            <Indicator tone={tab === 'pmo' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
+            <Indicator tone={tab === 'pmo' ? 'neutral' : tab === 'commander' ? 'warn' : showRisk ? 'warn' : 'ok'}>{tab === 'pmo' ? 'PMO versionado' : tab === 'commander' ? 'Execução não conectada' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
-        {tab !== 'pmo' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
+        {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
+        {tab === 'commander' && <CommanderPanel />}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
             <Stat label="Instrumentos" value={model.tools.length} note="Catálogo existente" icon={BookOpenCheck} />

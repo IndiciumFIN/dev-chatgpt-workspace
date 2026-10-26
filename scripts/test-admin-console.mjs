@@ -7,11 +7,12 @@ const ui = read('src/components/admin/admin-console.tsx');
 const shared = read('src/components/local/local-workbench-page.tsx');
 const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
+const commander = read('src/components/admin/commander-panel.tsx');
 const assertions = [
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
   ['templates derive from canonical registry', /templateCatalogo/.test(ui) && /templateContracts/.test(ui)],
-  ['four tab modules plus publication reachable', ['overview','content','templates','sources','publication'].every(tab => ui.includes(`id: '${tab}'`))],
+  ['all administrative tabs reachable', ['overview','pmo','commander','content','templates','sources','publication'].every(tab => ui.includes(`id: '${tab}'`))],
   ['draft and published shown distinctly', /setPreviewVersion\('published'\)/.test(ui) && /previewVersion === 'draft' \? model : published/.test(ui)],
   ['save and publish remain explicit independent actions', /saveLocalDraft\(model, revision\)/.test(ui) && /publishLocalDraft\(revision\)/.test(ui)],
   ['publish requires saved draft', /if \(dirty\) throw/.test(ui) && /disabled=\{dirty\}/.test(ui)],
@@ -21,6 +22,7 @@ const assertions = [
   ['real end-user routes provided only for published local projection', /previewVersion === 'published' && <Link/.test(ui)],
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
+  ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];
 let failed = 0;
 for (const [name, pass] of assertions) { console.log(`${pass ? 'PASS' : 'FAIL'} ADMIN: ${name}`); if (!pass) failed++; }

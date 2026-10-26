@@ -175,3 +175,25 @@
 .ce-admin-pmo-events span{display:block}
 .ce-admin-pmo-item .ce-admin-indicator{max-width:100%;white-space:normal;text-align:center}
 @media(max-width:530px){.ce-admin-pmo-title .ce-admin-indicator{margin-left:0}.ce-admin-pmo-controls label{width:100%}.ce-admin-pmo-controls select{flex:1;min-width:0}}
+
+/* Commander — painel local, sem executar integrações externas. */
+.ce-commander { display:grid; gap:1rem; min-width:0; }
+.ce-commander .ce-admin-panel-heading > svg { flex:none; color:var(--color-navy); }
+.ce-commander-notice { display:flex; align-items:flex-start; gap:.7rem; padding:.8rem .9rem; border:1px solid var(--color-line); border-left:4px solid var(--color-warn); border-radius:var(--radius-control); background:var(--color-pane); color:var(--color-body); }
+.ce-commander-notice > svg { flex:none; margin-top:2px; color:var(--color-navy); }
+.ce-commander-notice p { margin:0; font-size:.82rem; line-height:1.5; }
+.ce-commander-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; }
+.ce-commander-capability { display:flex; align-items:flex-start; gap:.7rem; min-width:0; padding:.9rem; border:1px solid var(--color-line); border-radius:var(--radius-panel); background:var(--color-paper); }
+.ce-commander-icon { display:grid; flex:none; place-items:center; width:36px; height:36px; border-radius:var(--radius-control); background:var(--color-ice); color:var(--color-navy); }
+.ce-commander-capability h3 { margin:0 0 .25rem; color:var(--color-ink); font-size:.86rem; }
+.ce-commander-capability p { margin:0; color:var(--color-slate); font-size:.77rem; line-height:1.45; }
+.ce-commander-form { display:grid; gap:.9rem; }
+.ce-commander-actions { display:flex; flex-wrap:wrap; gap:.6rem; }
+.ce-commander-feedback { margin:.8rem 0 0; color:var(--color-slate); font-size:.8rem; }
+.ce-commander-draft { display:grid; gap:.5rem; margin-top:1rem; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius-control); background:var(--color-pane); overflow-wrap:anywhere; }
+.ce-commander-draft p { margin:0; color:var(--color-body); font-size:.82rem; line-height:1.5; }
+.ce-commander-draft-heading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.4rem; }
+.ce-commander-draft-heading strong { color:var(--color-ink); font-size:.84rem; }
+.ce-commander-draft-heading small { color:var(--color-muted); font-size:.72rem; }
+.ce-commander-notice--compact { margin-top:.4rem; }
+@media(max-width:700px) { .ce-commander-grid { grid-template-columns:1fr; } .ce-commander-actions > button { flex:1 1 100%; } }

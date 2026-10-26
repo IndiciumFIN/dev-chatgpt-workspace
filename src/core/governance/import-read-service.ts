@@ -4,7 +4,7 @@
  * Authentication and role assignment must be VERIFIED by the host backend.
  * Do not construct VerifiedActor from browser-submitted JSON.
  */
-import { catalogLookupSql, type CatalogLookupResponse, type ReadOnlyCatalogLookup } from './bulk-import-reconciliation';
+import { catalogLookupSql, type CatalogLookupResponse, type ReadOnlyCatalogLookup } from './bulk-import-reconciliation.ts';
 import type { ImportProfile } from './bulk-import';
 
 export type ServerVerifiedActor = {

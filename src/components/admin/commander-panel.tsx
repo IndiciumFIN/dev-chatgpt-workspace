@@ -126,6 +126,7 @@ export function CommanderPanel() {
         <div className="ce-commander-grid">
           {handoffs.lanes.map(lane => {
             const item = queue.items.find(wo => wo.id === lane.workOrderId);
+            const unresolvedDependencies = item?.dependencies.filter(id => queue.items.find(wo => wo.id === id)?.status !== 'DONE') ?? [];
             return <article className="ce-commander-capability" key={lane.id}>
               <span className="ce-commander-icon"><UsersRound size={18} aria-hidden="true" /></span>
               <div>
@@ -134,6 +135,7 @@ export function CommanderPanel() {
                 <small>PMO: {item?.status ?? 'WO ausente'} · Agente: não despachado · Papel: {lane.role}</small>
                 <p><strong>Prioridade:</strong> {item?.priority ?? 'Não definida'} · <strong>Ordem:</strong> {item?.order ?? '—'}</p>
                 <p><strong>Dependências:</strong> {item?.dependencies?.length ? item.dependencies.join(', ') : 'Nenhuma registrada'}</p>
+                <p role="status"><strong>Prontidão por dependências:</strong> {unresolvedDependencies.length ? `Aguardando ${unresolvedDependencies.join(', ')}` : 'Sem dependências pendentes no PMO'}</p>
                 <p><strong>Evidências do PMO:</strong> {item?.evidence?.length ?? 0} · <strong>Origem da lane:</strong> <code>{lane.sourceCommit.slice(0, 12)}</code></p>
                 <p><strong>Próxima ação oficial:</strong> {item?.next ?? 'WO não localizada — HOLD'}</p>
                 <p><a href={lane.issueUrl} target="_blank" rel="noopener noreferrer">Ver instruções e entregar artefatos no GitHub</a></p>

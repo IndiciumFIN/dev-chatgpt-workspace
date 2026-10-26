@@ -27,7 +27,7 @@ Arquivos **fora** de qualquer lista são de livre acesso — mas confira o `git 
 | Recuperação da fonte | `scripts/auditar-fonte.mjs` · `scripts/auditar-fonte.test.mjs` · `migrations/0042_recuperar_fonte.sql` · `docs/fonte/CONFRONTO.md` |
 | Registro e portões da CI | `scripts/auditar-registro.mjs` · `scripts/auditar-registro.test.mjs` · `.github/workflows/portoes.yml` |
 | Avaliação das linhagens | `scripts/avaliar-linhagens.mjs` · `docs/branches/**` · `artifacts/branches/**` |
-| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono · `scripts/status-projeto.mjs` · `scripts/medir-pendencias.mjs` · `docs/fonte/ONDE-MORA-O-CONTEUDO.md` · `src/lib/stored.functions.ts` · `migrations/0043_listas_viram_tabelas.sql` |
+| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono · `scripts/status-projeto.mjs` · `scripts/medir-pendencias.mjs` · `scripts/auditar-diretorio.mjs` · `docs/fonte/ONDE-MORA-O-CONTEUDO.md` · `src/lib/stored.functions.ts` · `migrations/0043_listas_viram_tabelas.sql` |
 
 Cada tarefa também é dona do seu `deliverables/<tarefa>/entrega.md` e `deliverables/<tarefa>/entrega.json`.
 

@@ -22,21 +22,6 @@ export const Route = createFileRoute("/$")({
     const path = `/${params._splat ?? ""}`;
     const slug = toolSlugForSitemap(path);
     if (slug) throw redirect({ to: "/ferramentas/$slug", params: { slug } });
-    if (/^\/[a-z]{2}\/index\.html$/.test(path)) {
-      return {
-        path,
-        locale: path.slice(1, 3),
-        kind: "home" as const,
-        title: "Calculadoras de Enfermagem",
-        lead: "",
-        body: "",
-        status: "publicado" as const,
-        canonical_path: "/",
-        slug: "home",
-        view: "leitura",
-        editions: [],
-      };
-    }
     const row = await readPublishedContent({ data: path });
     if (!row) throw notFound();
     return row;

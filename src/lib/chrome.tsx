@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useRouter, useRouterState } from "@tanstack/react-router";
 import { parseLocale } from "@/lib/translate";
+import { useStored } from "@/lib/stored";
 
 export type Locale = "pt-BR" | "en" | "es" | "fr";
 export type FontStep = "sm" | "md" | "lg";
@@ -238,6 +239,7 @@ const copy = {
 const ChromeContext = createContext<ChromeState | null>(null);
 
 export function ChromeProvider({ children }: { children: ReactNode }) {
+  const stored = useStored();
   const router = useRouter();
   const routerRef = useRef(router);
   routerRef.current = router;
@@ -376,9 +378,9 @@ export function ChromeProvider({ children }: { children: ReactNode }) {
       resetA11y,
       consent,
       setConsent,
-      t: (key) => copy[locale][key],
+      t: (key) => stored.labels.find((row) => row.groupId === "chrome" && row.locale === locale && row.key === key)?.text ?? copy[locale][key],
     };
-  }, [locale, font, contrast, focus, dyslexia, theme, consent]);
+  }, [locale, font, contrast, focus, dyslexia, theme, consent, stored.labels]);
 
   return <ChromeContext.Provider value={value}>{children}</ChromeContext.Provider>;
 }

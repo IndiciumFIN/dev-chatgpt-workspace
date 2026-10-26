@@ -1,0 +1,50 @@
+
+  PENDÊNCIAS — 569a435
+  fechamento: 75 · conteúdo: 6967 · decisão do dono: 2 · ambiente: 1 · total bruto: 7045
+
+  Índice do banco  [audit-indice-banco.mjs] — 0
+      ✓ [fechamento] tabela do banco sem rótulo de uso: 0
+      ✓ [fechamento] violação do portão do índice: 0
+
+  DERBY — nada fica retido  [preencher-derby.mjs] — 0
+      ✓ [fechamento] pendência-alvo em aberto: 0
+      ✓ [fechamento] vazio estrutural sem declaração com razão: 0
+      ✓ [fechamento] violação do portão do DERBY: 0
+
+  Processo de source  [audit-source.mjs] — 5
+      · [fechamento] átomo sem a chave canônica da fonte (source_canonical_id): 4
+      · [fechamento] lote que atravessou o processo (captura → decisão → publicação): 1
+      ✓ [fechamento] captura registrada: 0
+      ✓ [fechamento] decisão de política registrada: 0
+      ✓ [fechamento] publicação com portão registrada: 0
+
+  Normativos  [auditar-fonte.mjs] — 1
+      · [fechamento] norma capturada e ainda não atomizada (migration 0040): 1
+      ✓ [fechamento] norma com o hash conferido no acervo: 0
+
+  Fonte — recuperação e corpus  [auditar-fonte.mjs] — 6909
+      · [fechamento] seção institucional com o marcador (achado nomeado): 18
+      ✓ [fechamento] gancho do autor em inst_section: 0
+      · [fechamento] gancho do autor em content_text: 1
+      · [conteudo] página do corpus sem lugar no app (medido por caminho): 6690
+      · [conteudo] página só na fonte, mapeada no confronto: 200
+
+  Área administrativa  [audit-indice-banco.mjs] — 124
+      · [fechamento] lugar de conteúdo sem objeto (sem mestre): 42
+      · [fechamento, detalhe] dentre eles, sem seção também (sem mestre nenhum): 26
+      · [fechamento] instrumento publicado sem campo (ficha): 3
+      · [fechamento] instrumento publicado com campo: 2
+      · [conteudo] instrumento catalogado e não publicado: 77
+
+  Verificação final (#9)  [auditar-registro.mjs] — 1
+      · [fechamento] registro por chave canônica: 1
+      ✓ [fechamento] relatório da verificação final: 0
+      ✓ [fechamento] violação do portão do registro do PMO: 0
+
+  Operação e entrega  [—] — 5
+      · [ambiente] PostgreSQL isolado com RLS e grants (não existe no sandbox: só PGlite): 1
+      · [fechamento] API autenticada de reconciliação: 1
+      · [fechamento] .vercelignore (o corpus sobe 120 MB no upload): 1
+      · [decisao] revogação do PAT colado no chat (ação do dono): 1
+      · [decisao] decisão de merge em main: 1
+

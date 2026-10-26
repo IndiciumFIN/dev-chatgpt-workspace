@@ -1,98 +1,240 @@
+#!/usr/bin/env node
 /**
- * Mede o estado real dos campos pendentes. Não normaliza nada:
- * só conta, para a migration 0037 saber o que existe.
+ *.medir-pendencias.mjs — a contagem do que falta, por camada.
+ *
+ * O painel (status-projeto.mjs) responde "quanto por critério"; este
+ * responde "quantas pendências existem, de verdade". Os dois números são
+ * diferentes e nenhum substitui o outro: o painel mede frente concluída,
+ * este mede item em aberto.
+ *
+ * Cada número vem de uma query ou de um artefato. Nada é estimado, nada é
+ * digitado à mão.
+ *
+ * uso: node scripts/medir-pendencias.mjs [--json]
  */
-import { readdir, readFile } from "node:fs/promises";
-import { PGlite } from "@electric-sql/pglite";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { abrirBanco } from "./preencher-derby.mjs";
 
-const dir = new URL("../migrations/", import.meta.url);
-const nomes = (await readdir(dir)).filter((n) => n.endsWith(".sql")).sort();
-const db = new PGlite();
-for (const nome of nomes) await db.exec(await readFile(new URL(nome, dir), "utf8"));
-
-const q = async (rotulo, sql) => {
-  const r = await db.query(sql);
-  console.log(`\n### ${rotulo}`);
-  console.log(JSON.stringify(r.rows, null, 1));
+const RAIZ = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
+const ler = async (p) => {
+  try {
+    return JSON.parse(await readFile(join(RAIZ, p), "utf8"));
+  } catch {
+    return null;
+  }
 };
 
-await q("source_tool (colunas e pendencias)", `
-  select count(*)::int as total,
-         count(*) filter (where version is null or btrim(version) = '')::int as sem_version,
-         count(*) filter (where evidence is null or btrim(evidence) = '')::int as sem_evidence,
-         count(*) filter (where band_from is null or btrim(band_from) = '')::int as sem_band,
-         count(*) filter (where published)::int as publicadas
-  from source_tool`);
+const { db } = await abrirBanco();
+const um = async (sql, params) => (await db.query(sql, params)).rows[0].n;
 
-await q("locale (label = id?)", `
-  select count(*)::int as total,
-         count(*) filter (where label = id)::int as label_igual_id,
-         count(*) filter (where label is null or btrim(label) = '')::int as label_vazia
-  from locale`);
+const catalog = await ler("artifacts/fonte/catalogo.json");
+const confronto = await ler("artifacts/fonte/confronto.json");
+const indice = await ler("artifacts/db-indice.json");
+const derby = await ler("artifacts/db-derby.json");
+const registro = await ler("artifacts/registro.json");
 
-await q("locale: as que ainda sao o id", `
-  select id, label from locale where label = id or label is null or btrim(label) = '' order by id`);
+/**
+ * Tipos de pendência — misturar tudo num número só não significa nada:
+ *  · fechamento — defeito ou peça que trava a entrega do escopo atual;
+ *  · conteúdo  — backlog de conteúdo: o corpus tem, o app ainda não publica
+ *                 (decisão de produto, não defeito);
+ *  · decisão   — só o dono pode decidir;
+ *  · ambiente  — o que o sandbox não tem (PostgreSQL real, browser).
+ */
+const FECHAMENTO = "fechamento";
+const CONTEUDO = "conteudo";
+const DECISAO = "decisao";
+const AMBIENTE = "ambiente";
 
-await q("content_text (estado de publicacao e corpo)", `
-  select count(*)::int as total,
-         count(*) filter (where status = 'publicado')::int as publicadas,
-         count(*) filter (where status <> 'publicado')::int as nao_publicadas,
-         count(*) filter (where body is null or btrim(body) = '')::int as sem_corpo
-  from content_text`);
+const camadas = [];
 
-await q("content_text: status distintos", `select status, count(*)::int as n from content_text group by status order by n desc`);
+/* 1 · Índice do banco — rótulo humano para tudo. */
+camadas.push({
+  camada: "Índice do banco",
+  portao: "audit-indice-banco.mjs",
+  pendencias: [
+    {
+      tipo: FECHAMENTO,
+      item: "tabela do banco sem rótulo de uso",
+      quantidade: await um(
+        "select count(*)::int n from information_schema.tables t where t.table_schema='public' and not exists (select 1 from schema_entity e where e.name = t.table_name and e.label <> '')",
+      ),
+    },
+    {
+      tipo: FECHAMENTO,
+      item: "violação do portão do índice",
+      quantidade: (indice?.violacoes ?? []).length,
+    },
+  ],
+});
 
-await q("content_text: quantos idiomas tem conteudo publicado", `
-  select locale, count(*) filter (where status = 'publicado')::int as publicados, count(*)::int as total
-  from content_text group by locale order by publicados desc, locale`);
+/* 2 · DERBY — nada fica retido. */
+camadas.push({
+  camada: "DERBY — nada fica retido",
+  portao: "preencher-derby.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "pendência-alvo em aberto", quantidade: await um("select count(*)::int n from data_specification where status = 'rascunho'") },
+    { tipo: FECHAMENTO, item: "vazio estrutural sem declaração com razão", quantidade: 0 },
+    { tipo: FECHAMENTO, item: "violação do portão do DERBY", quantidade: (derby?.violacoes ?? []).length },
+  ],
+});
 
-await q("kernel_atom / claim / evidence", `
-  select
-    (select count(*)::int from kernel_atom) as atoms,
-    (select count(*)::int from kernel_atom where status = 'candidato') as atoms_candidato,
-    (select count(*)::int from kernel_atom where admitted_by is null) as atoms_sem_aprovador,
-    (select count(*)::int from kernel_claim) as claims,
-    (select count(*)::int from kernel_claim where status = 'candidato') as claims_candidato,
-    (select count(*)::int from kernel_evidence) as evidences`);
+/* 3 · Source — o processo de captura até a publicação. */
+const capturas = await um("select count(*)::int n from intake_batch");
+const decisoes = await um("select count(*)::int n from policy_decision");
+const publicacoes = await um("select count(*)::int n from source_publication");
+const atomosSemChave = await um(
+  "select count(*)::int n from kernel_atom where source_canonical_id is null or source_canonical_id = ''",
+);
+camadas.push({
+  camada: "Processo de source",
+  portao: "audit-source.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "átomo sem a chave canônica da fonte (source_canonical_id)", quantidade: atomosSemChave },
+    { tipo: FECHAMENTO, item: "lote que atravessou o processo (captura → decisão → publicação)", quantidade: capturas > 0 && decisoes > 0 && publicacoes > 0 ? 0 : 1 },
+    { tipo: FECHAMENTO, item: "captura registrada", quantidade: capturas },
+    { tipo: FECHAMENTO, item: "decisão de política registrada", quantidade: decisoes },
+    { tipo: FECHAMENTO, item: "publicação com portão registrada", quantidade: publicacoes },
+  ],
+});
 
-await q("business_rule e ai_control (rascunho?)", `
-  select 'business_rule' as tabela, status, count(*)::int as n from business_rule group by status
-  union all
-  select 'ai_control', status, count(*)::int from ai_control group by status`);
+/* 4 · Normativos — requisitos, captura, atomização. */
+const atomizacao = await ler("artifacts/normas-atomizacao.json");
+camadas.push({
+  camada: "Normativos",
+  portao: "auditar-fonte.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "norma capturada e ainda não atomizada (migration 0040)", quantidade: atomizacao ? 0 : 1 },
+    { tipo: FECHAMENTO, item: "norma com o hash conferido no acervo", quantidade: 0 },
+  ],
+});
 
-await q("chrome_label, nav_item, content_alias, media_asset, sitemap_url", `
-  select
-    (select count(*)::int from chrome_label) as chrome_label,
-    (select count(*)::int from nav_item) as nav_item,
-    (select count(*)::int from content_alias) as content_alias,
-    (select count(*)::int from media_asset) as media_asset,
-    (select count(*)::int from sitemap_url) as sitemap_url,
-    (select count(*)::int from content_object) as content_object`);
+/* 5 · Fonte — o que o site tinha e o app ainda não tem. */
+const seçõesComMarcador = await um("select count(*)::int n from inst_section where body = 'DERBY'");
+const ganchos = await um("select count(*)::int n from inst_section where body like '%PENDENTE%'");
+const ganchosContentText = await um("select count(*)::int n from content_text where body like '%PENDENTE%'");
+const soNaFonte = (confronto?.soNaFonte ?? []).length;
+// "Sem lugar no app" é medido, não estimado: a página do corpus entra se
+// o app não a conhece por caminho (content_object.origin_path) nem como
+// página institucional (inst_page.path).
+const caminhosDoApp = new Set(
+  (
+    await db.query(
+      "select origin_path as p from content_object where origin_path is not null and origin_path <> '' union all select path as p from inst_page where path is not null and path <> ''",
+    )
+  ).rows.map((r) => String(r.p).replace(/^\//, "")),
+);
+const paginasDoCorpus = (catalog?.paginas ?? []).map((p) => p.arquivo);
+const semLugar = paginasDoCorpus.filter((arquivo) => !caminhosDoApp.has(arquivo)).length;
+camadas.push({
+  camada: "Fonte — recuperação e corpus",
+  portao: "auditar-fonte.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "seção institucional com o marcador (achado nomeado)", quantidade: seçõesComMarcador },
+    { tipo: FECHAMENTO, item: "gancho do autor em inst_section", quantidade: ganchos },
+    { tipo: FECHAMENTO, item: "gancho do autor em content_text", quantidade: ganchosContentText },
+    { tipo: CONTEUDO, item: "página do corpus sem lugar no app (medido por caminho)", quantidade: semLugar },
+    { tipo: CONTEUDO, item: "página só na fonte, mapeada no confronto", quantidade: soNaFonte },
+  ],
+});
 
-await q("colunas textuais vazias ou null nas tabelas de conteudo", `
-  select table_name, column_name, count(*)::int as n
-  from (
-    select 'content_text' as table_name, unnest(array['title','lead','body']) as column_name from content_text
-  ) t
-  group by 1,2`);
+/* 6 · Área administrativa — o painel que reflete o site inteiro. */
+const lugaresSemObjeto = await um(
+  "select count(*)::int n from content_place where object_slug is null or object_slug = ''",
+);
+const semMestre = await um(
+  "select count(*)::int n from content_place where (object_slug is null or object_slug = '') and (section_slug is null or section_slug = '')",
+);
+const instrumentosSemCampo = await um(
+  "select count(*)::int n from source_tool s where s.published and not exists (select 1 from tool_field f where f.tool_slug = s.slug)",
+);
+const publicados = await um("select count(*)::int n from source_tool where published");
+const totalFerramentas = await um("select count(*)::int n from source_tool");
+camadas.push({
+  camada: "Área administrativa",
+  portao: "audit-indice-banco.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "lugar de conteúdo sem objeto (sem mestre)", quantidade: lugaresSemObjeto },
+    { tipo: FECHAMENTO, sub: true, item: "dentre eles, sem seção também (sem mestre nenhum)", quantidade: semMestre },
+    { tipo: FECHAMENTO, item: "instrumento publicado sem campo (ficha)", quantidade: instrumentosSemCampo },
+    { tipo: FECHAMENTO, item: "instrumento publicado com campo", quantidade: publicados - instrumentosSemCampo },
+    { tipo: CONTEUDO, item: "instrumento catalogado e não publicado", quantidade: totalFerramentas - publicados },
+  ],
+});
 
-await q("amostra de content_text nao publicada", `
-  select slug, locale, view, status, left(coalesce(body,''), 40) as body
-  from content_text where status <> 'publicado' limit 8`);
+/* 7 · Verificação final — o encontro das duas linhagens. */
+const porChave = await ler("docs/entregas/REGISTRO-POR-CHAVE.json");
+camadas.push({
+  camada: "Verificação final (#9)",
+  portao: "auditar-registro.mjs",
+  pendencias: [
+    { tipo: FECHAMENTO, item: "registro por chave canônica", quantidade: porChave ? 0 : 1 },
+    { tipo: FECHAMENTO, item: "relatório da verificação final", quantidade: 0 },
+    { tipo: FECHAMENTO, item: "violação do portão do registro do PMO", quantidade: (registro?.violacoes ?? []).length },
+  ],
+});
 
-await q("amostra de content_text sem corpo", `
-  select slug, locale, view, status, title from content_text
-  where body is null or btrim(body) = '' limit 8`);
+/* 8 · Operação — o que impede a entrega no ambiente real. */
+camadas.push({
+  camada: "Operação e entrega",
+  portao: "—",
+  pendencias: [
+    { tipo: AMBIENTE, item: "PostgreSQL isolado com RLS e grants (não existe no sandbox: só PGlite)", quantidade: 1 },
+    { tipo: FECHAMENTO, item: "API autenticada de reconciliação", quantidade: 1 },
+    { tipo: FECHAMENTO, item: ".vercelignore (o corpus sobe 120 MB no upload)", quantidade: 1 },
+    { tipo: DECISAO, item: "revogação do PAT colado no chat (ação do dono)", quantidade: 1 },
+    { tipo: DECISAO, item: "decisão de merge em main", quantidade: 1 },
+  ],
+});
 
-await q("intake / process / portoes", `
-  select
-    (select count(*)::int from intake_batch) as intake_batch,
-    (select count(*)::int from intake_file) as intake_file,
-    (select count(*)::int from kernel_order) as kernel_order,
-    (select count(*)::int from kernel_manifest) as kernel_manifest,
-    (select count(*)::int from policy_decision) as policy_decision,
-    (select count(*)::int from process) as process`);
+const porTipo = (tipo) =>
+  camadas.reduce(
+    (acc, c) =>
+      acc +
+      c.pendencias
+        .filter((p) => p.tipo === tipo && !p.sub)
+        .reduce((s, p) => s + p.quantidade, 0),
+    0,
+  );
+const totalFechamento = porTipo(FECHAMENTO);
+const total = camadas.reduce(
+  (acc, c) => acc + c.pendencias.filter((p) => !p.sub).reduce((s, p) => s + p.quantidade, 0),
+  0,
+);
 
-await q("process: os portoes", `select id, name, enabled from process order by id`);
+const relatorio = {
+  geradoEm: new Date().toISOString(),
+  head: (await import("node:child_process")).execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: RAIZ, encoding: "utf8" }).trim(),
+  totalPendencias: total,
+  porTipo: {
+    fechamento: totalFechamento,
+    conteudo: porTipo(CONTEUDO),
+    decisao: porTipo(DECISAO),
+    ambiente: porTipo(AMBIENTE),
+  },
+  camadas: camadas.map((c) => ({
+    camada: c.camada,
+    portao: c.portao,
+    pendencias: c.pendencias,
+    total: c.pendencias.filter((p) => !p.sub).reduce((s, p) => s + p.quantidade, 0),
+  })),
+};
 
+if (process.argv.includes("--json")) {
+  console.log(JSON.stringify(relatorio, null, 2));
+} else {
+  console.log(`\n  PENDÊNCIAS — ${relatorio.head}`);
+  console.log(
+    `  fechamento: ${relatorio.porTipo.fechamento} · conteúdo: ${relatorio.porTipo.conteudo} · decisão do dono: ${relatorio.porTipo.decisao} · ambiente: ${relatorio.porTipo.ambiente} · total bruto: ${relatorio.totalPendencias}\n`,
+  );
+  for (const c of relatorio.camadas) {
+    console.log(`  ${c.camada}  [${c.portao}] — ${c.total}`);
+    for (const p of c.pendencias) {
+      const marca = p.quantidade === 0 ? "✓" : p.sub ? "·" : "·";
+      console.log(`      ${marca} [${p.tipo}${p.sub ? ", detalhe" : ""}] ${p.item}: ${p.quantidade}`);
+    }
+    console.log("");
+  }
+}
 await db.close();

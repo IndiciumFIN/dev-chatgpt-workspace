@@ -228,7 +228,7 @@
 .ce-admin .ce-admin-keyline { flex-wrap:wrap; min-width:0; }
 .ce-admin .ce-admin-preview-controls { min-width:0; }
 .ce-admin .ce-admin-table-scroll { overflow:visible; max-width:100%; }
-.ce-admin .ce-admin-table { display:block; width:100%; border:0; }
+.ce-admin .ce-admin-table { display:block; width:100%; min-width:0; max-width:100%; border:0; table-layout:fixed; }
 .ce-admin .ce-admin-table thead { display:none; }
 .ce-admin .ce-admin-table tbody { display:grid; gap:.6rem; }
 .ce-admin .ce-admin-table tr { display:block; min-width:0; border:1px solid var(--color-line); border-radius:var(--radius-control); background:var(--color-pane); padding:.2rem .75rem; }
@@ -293,4 +293,16 @@
 @media print{
   .ce-admin .ce-admin-mobile-nav,.ce-admin .ce-admin-mobile-dock { display:none!important; }
   .ce-admin { padding-bottom:1rem; }
+}
+
+/* Polimento da experiência em 320–679 px: menos redundância e prioridade operacional. */
+@media(max-width:679px){
+ .ce-admin .ce-admin-toolbar-actions .ce-admin-site-link{display:none}
+ .ce-admin .ce-admin-toolbar-actions{display:flex;flex-wrap:wrap;gap:.4rem}
+ .ce-admin .ce-admin-toolbar-actions .ce-admin-indicator{font-size:.72rem}
+ .ce-admin .ce-admin-stats--three > .ce-admin-stat:last-child:nth-child(odd){grid-column:1/-1}
+ .ce-admin .ce-admin-table-scroll,.ce-admin .ce-admin-table,.ce-admin .ce-admin-table tbody,.ce-admin .ce-admin-table tr,.ce-admin .ce-admin-table td{min-width:0;max-width:100%}
+ .ce-admin .ce-admin-table tr,.ce-admin .ce-admin-table td{white-space:normal;overflow-wrap:anywhere;word-break:normal}
+ .ce-admin .ce-admin-table td>*{max-width:100%;overflow-wrap:anywhere}
+ .ce-admin .ce-admin-mobile-nav{top:calc(var(--chrome-total, 0px) + 4px)}
 }

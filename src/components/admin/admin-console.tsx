@@ -21,6 +21,7 @@ import {
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
 import { AdminSidebarTree, AdminModuleFallback } from '@/components/admin/admin-sidebar-tree';
+import { AdminSchemaEditor } from '@/components/admin/admin-schema-editor';
 import { adminGroups, adminModules, getAdminModule, type AdminModuleId } from '@/lib/admin-module-registry';
 import { GovernancePanel } from '@/components/admin/governance-panel';
 import '@/styles/admin-console.css';
@@ -313,6 +314,10 @@ export function AdminConsole() {
             {events.length ? <ol className="ce-admin-history">{[...events].reverse().slice(0,20).map(event => <li key={event.id}><ClipboardCheck size={18}/><div><strong>{event.action === 'PUBLISHED' ? 'Publicação local' : 'Rascunho salvo'}</strong><small>{event.at} · Revisão {event.revision} · anterior {event.previousRevision}</small></div></li>)}</ol> : <p>Nenhuma alteração registrada nesta instalação.</p>}
           </Panel>
         </>}
+        {tab !== 'module-detail' && <details className="ce-admin-contract-editor">
+          <summary>Campos, labels e templates do módulo selecionado <span>{selectedModule} · {moduleInView.title}</span></summary>
+          <AdminSchemaEditor key={selectedModule} moduleId={selectedModule}/>
+        </details>}
       </div>
     </div>
     <nav className="ce-admin-mobile-dock" aria-label="Acesso rápido da administração">

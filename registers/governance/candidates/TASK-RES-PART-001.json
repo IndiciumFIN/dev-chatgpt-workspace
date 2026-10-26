@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1.0",
+  "canonical_id": "TASK-RES-PART-001",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "updated_at": "2026-10-26",
+  "provenance_refs": [
+    "WO-RES-PART-001",
+    "OWNER-AUTH-2026-10-26"
+  ],
+  "task_kind": "OTHER",
+  "find_ref": "FIND-RES-PART-001",
+  "policy_ref": "CKO-POL-UT-001",
+  "validator_ref": "scripts/check-research-participation-candidate.mjs",
+  "depends_on": [],
+  "acceptance_tests": [
+    "candidate-schema-check",
+    "non-destructive-sql",
+    "remote-db-isolation",
+    "typecheck",
+    "unit-tests",
+    "build"
+  ],
+  "executor_role": "ChatGPT + GitHub Actions",
+  "work_order_ref": "WO-RES-PART-001",
+  "estimated_effort_label": "candidate-wave-full"
+}

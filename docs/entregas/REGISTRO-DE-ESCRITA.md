@@ -27,7 +27,7 @@ Arquivos **fora** de qualquer lista são de livre acesso — mas confira o `git 
 | Recuperação da fonte | `scripts/auditar-fonte.mjs` · `scripts/auditar-fonte.test.mjs` · `migrations/0042_recuperar_fonte.sql` · `docs/fonte/CONFRONTO.md` |
 | Registro e portões da CI | `scripts/auditar-registro.mjs` · `scripts/auditar-registro.test.mjs` · `.github/workflows/portoes.yml` |
 | Avaliação das linhagens | `scripts/avaliar-linhagens.mjs` · `docs/branches/**` · `artifacts/branches/**` |
-| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono · `scripts/status-projeto.mjs` · `docs/fonte/ONDE-MORA-O-CONTEUDO.md` · `src/lib/stored.functions.ts` |
+| **Dono (esta sessão)** | `docs/entregas/**` · o merge da base · a verificação final do dono · `scripts/status-projeto.mjs` · `docs/fonte/ONDE-MORA-O-CONTEUDO.md` · `src/lib/stored.functions.ts` · `migrations/0043_listas_viram_tabelas.sql` |
 
 Cada tarefa também é dona do seu `deliverables/<tarefa>/entrega.md` e `deliverables/<tarefa>/entrega.json`.
 
@@ -65,6 +65,8 @@ As migrations são sequenciais e **nunca** se edita uma que já entrou. A reserv
 0042  recuperar_fonte         (recuperação do conteúdo que existia no site
                                de origem — 0041 é a última da fila da rodada
                                anterior, 0042 abre a da recuperação)
+0043  listas_viram_tabelas    (normaliza as três listas em text[] que a
+                               0038 deixou para tabelas filhas)
 ```
 
 A 0041 é do dono e é a última da fila de propósito: ela fecha a fila de rascunhos das tabelas de aprovação (`business_rule`, `data_specification`, `governance_item`, `ai_control`) depois que todo mundo criou o que tinha que criar. Ela **não** toca `kernel_atom`, `kernel_claim`, `policy_package` nem `policy_rule` — a admissão de átomo é ato do kernel, e o pacote de política é do worker de doutrina.

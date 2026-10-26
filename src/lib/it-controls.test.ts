@@ -10,9 +10,22 @@ test("as migrations não guardam lista nem JSON", async () => {
   for (const name of names) {
     const sql = await readFile(new URL(`../../migrations/${name}`, import.meta.url), "utf8");
     const body = sql.replace(/--.*$/gm, "");
-    assert.equal(/\bjsonb\b|\bjson\b|\[\]/i.test(body), false, name);
+    assert.equal(/\bjsonb?\b/i.test(body), false, name);
     if (/create table/i.test(body)) assert.match(body, /primary key/i);
   }
+  // A regra é sobre o SCHEMA, não sobre o texto de cada migration: uma
+  // migration pode criar uma coluna de lista e a seguinte tirá-la. O que
+  // não pode é o schema final guardar lista nem JSON. Conferir o texto de
+  // todas as migrations erraria a transição e não pegaria o schema.
+  const db = new PGlite();
+  for (const name of names.sort()) {
+    await db.exec(await readFile(new URL(`../../migrations/${name}`, import.meta.url), "utf8"));
+  }
+  const colunas = await db.query(
+    `select table_name, column_name, data_type from information_schema.columns
+     where table_schema = 'public' and data_type in ('ARRAY', 'json', 'jsonb')`,
+  );
+  assert.deepEqual(colunas.rows, []);
 });
 
 test("aplicar as migrations duas vezes não duplica o processo", async () => {

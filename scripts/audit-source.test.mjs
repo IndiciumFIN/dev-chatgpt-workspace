@@ -54,11 +54,14 @@ async function cadeiaSadia() {
      values ('lote-teste', 'apgar.html', 'pt-BR', 'instrumento', 'admitir', 'Capa já governada nesta mesa.')`,
   );
   await db.query(
-    `insert into kernel_order (id, title, status, approver_id, owner_id, source_ref, hash, acceptance_criteria)
+    `insert into kernel_order (id, title, status, approver_id, owner_id, source_ref, hash)
      values ('wo-teste', 'Pedido de teste', 'aberta', 'revisor', 'dono',
              'transversal-public.lei-12-965-2014.source',
-             'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-             array['atomo-com-pinpoint'])`,
+             'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')`,
+  );
+  await db.query(
+    `insert into kernel_order_criterion (order_id, position, criterion)
+     values ('wo-teste', 0, 'atomo-com-pinpoint')`,
   );
   await db.query(
     `insert into kernel_order_policy (order_id, package_id, rule_id)
@@ -69,10 +72,17 @@ async function cadeiaSadia() {
      values ('wo-teste', 'pinpoint', true, 'Conferido')`,
   );
   await db.query(
-    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, policy_set, validators, version)
+    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, version)
      values ('wo-teste', 'aprovado', 'revisor', '2026-10-26T12:00:00.000Z',
-             'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-             array['admin-publica-idioma'], array['pinpoint'], '1.0.0')`,
+             'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '1.0.0')`,
+  );
+  await db.query(
+    `insert into kernel_manifest_policy (order_id, policy_id)
+     values ('wo-teste', 'admin-publica-idioma')`,
+  );
+  await db.query(
+    `insert into kernel_manifest_validator (order_id, validator_id)
+     values ('wo-teste', 'pinpoint')`,
   );
   await db.query(
     `insert into kernel_approval (id, order_id, approver, decision, reason, approved_at)

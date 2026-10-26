@@ -74,11 +74,13 @@ function lerReservas(texto) {
   if (!bloco) return [];
   return bloco[1]
     .split("\n")
-    .map((l) => l.trim())
+    // Só as linhas de primeiro nível são reservas: a continuação de uma
+    // entrada é indentada, e uma continuação que começa com número
+    // ("0038 deixou para tabelas filhas") não é outra reserva.
     .filter((l) => /^\d{4}\s+\S/.test(l))
     .map((l) => ({
-      numero: l.split(/\s+/)[0],
-      nome: l.split(/\s+/)[1],
+      numero: l.trim().split(/\s+/)[0],
+      nome: l.trim().split(/\s+/)[1],
     }));
 }
 

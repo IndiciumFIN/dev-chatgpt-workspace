@@ -157,7 +157,6 @@ type KernelOrderRow = {
   owner_id: string | null;
   source_ref: string | null;
   hash: string | null;
-  acceptance_criteria: string[] | null;
 };
 
 type ManifestRow = {
@@ -166,8 +165,6 @@ type ManifestRow = {
   approved_by: string | null;
   approved_at: unknown;
   hash: string | null;
-  policy_set: string[] | null;
-  validators: string[] | null;
   version: string | null;
 };
 
@@ -199,15 +196,30 @@ const manifestStatusFromDb = (status: string): Manifest["status"] =>
  */
 export async function admitOrder(sql: Sql, orderId: string): Promise<AdmitDecision> {
   const orders = await sql.query<KernelOrderRow>(
-    `select id, title, status, approver_id, owner_id, source_ref, hash, acceptance_criteria
+    `select id, title, status, approver_id, owner_id, source_ref, hash
      from kernel_order where id = $1`,
     [orderId],
   );
   const order = orders[0];
   if (!order) return { outcome: "reject", reason: "work-order-missing-id" };
 
+  // As listas do pedido e do manifesto vivem em tabelas filhas: o schema não
+  // guarda lista em coluna (a prova de normalização é o que exige).
+  const criteria = await sql.query<{ criterion: string }>(
+    `select criterion from kernel_order_criterion where order_id = $1 order by position`,
+    [orderId],
+  );
+  const manifestPolicies = await sql.query<{ policy_id: string }>(
+    `select policy_id from kernel_manifest_policy where order_id = $1 order by policy_id`,
+    [orderId],
+  );
+  const manifestValidators = await sql.query<{ validator_id: string }>(
+    `select validator_id from kernel_manifest_validator where order_id = $1 order by validator_id`,
+    [orderId],
+  );
+
   const manifests = await sql.query<ManifestRow>(
-    `select order_id, status, approved_by, approved_at, hash, policy_set, validators, version
+    `select order_id, status, approved_by, approved_at, hash, version
      from kernel_manifest where order_id = $1`,
     [orderId],
   );
@@ -237,8 +249,8 @@ export async function admitOrder(sql: Sql, orderId: string): Promise<AdmitDecisi
         version: manifestRow.version ?? "1.0.0",
         state: "preview",
         hash: manifestRow.hash ?? "",
-        validators: manifestRow.validators ?? [],
-        policySet: manifestRow.policy_set ?? [],
+        validators: manifestValidators.map((row) => row.validator_id),
+        policySet: manifestPolicies.map((row) => row.policy_id),
         status: manifestStatusFromDb(manifestRow.status),
         approvedBy: manifestRow.approved_by ?? undefined,
         approvedAt: dataIso(manifestRow.approved_at),
@@ -272,7 +284,7 @@ export async function admitOrder(sql: Sql, orderId: string): Promise<AdmitDecisi
     status: "draft",
     hash: order.hash ?? undefined,
     dependencies: [],
-    acceptanceCriteria: order.acceptance_criteria ?? [],
+    acceptanceCriteria: criteria.map((row) => row.criterion),
     evidence: [],
     approvals: approvalRecords,
     createdAt: now,
@@ -326,15 +338,13 @@ export async function admitOrder(sql: Sql, orderId: string): Promise<AdmitDecisi
 
   const manifesto = manifestStatus(decision, order.approver_id);
   await sql.query(
-    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, policy_set, validators, version, evidence_ref)
-     values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, version, evidence_ref)
+     values ($1, $2, $3, $4, $5, $6, $7)
      on conflict (order_id) do update
      set status = excluded.status,
          approved_by = excluded.approved_by,
          approved_at = excluded.approved_at,
          hash = excluded.hash,
-         policy_set = excluded.policy_set,
-         validators = excluded.validators,
          version = excluded.version,
          evidence_ref = excluded.evidence_ref`,
     [
@@ -343,8 +353,6 @@ export async function admitOrder(sql: Sql, orderId: string): Promise<AdmitDecisi
       manifesto.approvedBy,
       manifesto.status === "approved" ? (manifest?.approvedAt ?? new Date().toISOString()) : null,
       manifest?.hash ?? null,
-      manifest?.policySet ?? [],
-      manifest?.validators ?? [],
       manifest?.version ?? "1.0.0",
       `policy_decision:${recordedDecisionId}`,
     ],
@@ -385,7 +393,7 @@ export async function aprovarManifesto(
   input: { orderId: string; approverId: string; hash?: string; reason?: string },
 ): Promise<{ ok: boolean; motivo: string; approvalId?: string; approvedAt?: string }> {
   const orders = await sql.query<KernelOrderRow>(
-    `select id, title, status, approver_id, owner_id, source_ref, hash, acceptance_criteria
+    `select id, title, status, approver_id, owner_id, source_ref, hash
      from kernel_order where id = $1`,
     [input.orderId],
   );
@@ -433,15 +441,13 @@ export async function aprovarManifesto(
   );
 
   await sql.query(
-    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, policy_set, validators, version)
-     values ($1, $2, $3, $4, $5, $6, $7, $8)
+    `insert into kernel_manifest (order_id, status, approved_by, approved_at, hash, version)
+     values ($1, $2, $3, $4, $5, $6)
      on conflict (order_id) do update
      set status = excluded.status,
          approved_by = excluded.approved_by,
          approved_at = excluded.approved_at,
          hash = excluded.hash,
-         policy_set = excluded.policy_set,
-         validators = excluded.validators,
          version = excluded.version`,
     [
       input.orderId,
@@ -449,11 +455,26 @@ export async function aprovarManifesto(
       approverId,
       approvedAt,
       hash,
-      rules.map((rule) => rule.code),
-      validators.map((row) => row.id),
       "1.0.0",
     ],
   );
+
+  // O conjunto de política e o de validadores são tabelas filhas: o schema
+  // não guarda lista em coluna.
+  await sql.query("delete from kernel_manifest_policy where order_id = $1", [input.orderId]);
+  await sql.query("delete from kernel_manifest_validator where order_id = $1", [input.orderId]);
+  for (const codigo of rules.map((rule) => rule.code)) {
+    await sql.query(
+      "insert into kernel_manifest_policy (order_id, policy_id) values ($1, $2) on conflict do nothing",
+      [input.orderId, codigo],
+    );
+  }
+  for (const validador of validators.map((row) => row.id)) {
+    await sql.query(
+      "insert into kernel_manifest_validator (order_id, validator_id) values ($1, $2) on conflict do nothing",
+      [input.orderId, validador],
+    );
+  }
 
   return { ok: true, motivo: "o manifesto foi aprovado por uma pessoa", approvalId, approvedAt };
 }

@@ -76,11 +76,16 @@ test("a admissão grava tabela, decide pelo kernel e não aprova sem validador",
   const db = await bancoDeTeste();
   const sql = asSql(db);
   await db.exec(`
-    insert into kernel_order (id, title, approver_id, owner_id, source_ref, hash, acceptance_criteria) values
-      ('wo-vazio', 'Sem validador', 'admin-1', 'dono-1', 'source://x', repeat('a', 64), array['tem-atestado']),
-      ('wo-sem-manifesto', 'Sem manifesto', 'admin-1', 'dono-1', 'source://x', repeat('a', 64), array['tem-atestado']),
-      ('wo-nega', 'Regra negada', 'admin-1', 'dono-1', 'source://x', repeat('a', 64), array['tem-atestado']),
-      ('wo-ok', 'Completa', 'revisor-1', 'dono-1', 'source://x', repeat('a', 64), array['tem-atestado']);
+    insert into kernel_order (id, title, approver_id, owner_id, source_ref, hash) values
+      ('wo-vazio', 'Sem validador', 'admin-1', 'dono-1', 'source://x', repeat('a', 64)),
+      ('wo-sem-manifesto', 'Sem manifesto', 'admin-1', 'dono-1', 'source://x', repeat('a', 64)),
+      ('wo-nega', 'Regra negada', 'admin-1', 'dono-1', 'source://x', repeat('a', 64)),
+      ('wo-ok', 'Completa', 'revisor-1', 'dono-1', 'source://x', repeat('a', 64));
+    insert into kernel_order_criterion (order_id, position, criterion) values
+      ('wo-vazio', 0, 'tem-atestado'),
+      ('wo-sem-manifesto', 0, 'tem-atestado'),
+      ('wo-nega', 0, 'tem-atestado'),
+      ('wo-ok', 0, 'tem-atestado');
     insert into kernel_order_policy (order_id, package_id, rule_id) values
       ('wo-vazio', 'acesso', 'admin-publica-idioma'),
       ('wo-sem-manifesto', 'acesso', 'admin-publica-idioma'),
@@ -163,8 +168,10 @@ test("o dono do pedido não aprova o próprio pedido", async () => {
   const db = await bancoDeTeste();
   const sql = asSql(db);
   await db.exec(`
-    insert into kernel_order (id, title, approver_id, owner_id, source_ref, hash, acceptance_criteria)
-    values ('wo-proprio', 'Do próprio dono', 'revisor-1', 'dono-1', 'source://x', repeat('a', 64), array['tem-atestado']);
+    insert into kernel_order (id, title, approver_id, owner_id, source_ref, hash)
+    values ('wo-proprio', 'Do próprio dono', 'revisor-1', 'dono-1', 'source://x', repeat('a', 64));
+    insert into kernel_order_criterion (order_id, position, criterion)
+    values ('wo-proprio', 0, 'tem-atestado');
     insert into kernel_order_policy (order_id, package_id, rule_id)
     values ('wo-proprio', 'acesso', 'admin-publica-idioma');
     insert into kernel_validator (order_id, id, passed, note)

@@ -107,6 +107,24 @@ test("a auditoria acusa reserva que já existe na árvore", async () => {
   }
 });
 
+test("continuação de uma reserva não vira outra reserva", async () => {
+  // A entrada da 0043 tem continuação que começa com número. Se o parser
+  // contasse a continuação, o 0038 apareceria reservado duas vezes.
+  const { registro, limpar } = await registroMutado((texto) =>
+    texto.replace(
+      "                               0038 deixou para tabelas filhas)",
+      "                               0038 deixou para tabelas filhas)",
+    ),
+  );
+  try {
+    const relatorio = await auditar({ registro });
+    const duplicados = relatorio.violacoes.filter((v) => v.tipo === "numero-reservado-duplicado");
+    assert.equal(duplicados.length, 0, `reserva contada duas vezes: ${JSON.stringify(duplicados)}`);
+  } finally {
+    await limpar();
+  }
+});
+
 test("a auditoria acusa número de migration reservado em colisão", async () => {
   // O 0036 já existe no disco como "indice_do_banco"; reservar o mesmo número
   // para outro nome é escrever por cima de uma migration que entrou.

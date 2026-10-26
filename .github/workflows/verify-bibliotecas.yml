@@ -41,6 +41,10 @@ jobs:
           mkdir -p "${BUNDLE}"
           cp contracts/cko-governance/opa/import_read.rego "${BUNDLE}/import_read.rego"
           cp contracts/cko-governance/opa/kernel_admission.rego "${BUNDLE}/kernel_admission.rego"
+          # CI-only trusted grant fixture, signed inside the ephemeral bundle.
+          cat > "${BUNDLE}/data.json" <<'JSON'
+          {"cko_trusted":{"bundle_sha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","import_read_grants":{"verified-ci-actor":{"sources":true}}}}
+          JSON
           openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
             -out "${RUNNER_TEMP}/opa-ci-private.pem" >/dev/null 2>&1
           openssl pkey -in "${RUNNER_TEMP}/opa-ci-private.pem" -pubout \
@@ -112,8 +116,8 @@ jobs:
           git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
           echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
       - run: npm ci
-      - name: Contrato HTTP real OPA/PDP local (sem serviço remoto)
-        run: node --experimental-strip-types scripts/test-opa-real-http.mjs "${RUNNER_TEMP}/opa"
+      - name: Contrato HTTP real com bundle assinado/verificado (loopback, sem deploy)
+        run: node --experimental-strip-types scripts/test-opa-real-http.mjs "${RUNNER_TEMP}/opa" "${RUNNER_TEMP}/cko-signed.tar.gz" "${RUNNER_TEMP}/opa-ci-public.pem"
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
       - run: node scripts/test-admin-console.mjs

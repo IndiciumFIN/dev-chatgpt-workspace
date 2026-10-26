@@ -16,7 +16,7 @@ export function AdminSidebarTree({selectedId,onSelect,idPrefix}:Props){
       const items=adminModules.filter(item=>item.group===group.id).sort((a,b)=>a.id.localeCompare(b.id));
       const expanded=openGroups.includes(group.id);
       const childId={'ce-nav-'+idPrefix+'-'+group.id};
-      return <section key={group.id} className={'ce-admin-tree-group'+(group.id===currentGroup?' is-active':'')}>
+      return <section key={group.id} data-admin-group={group.id} className={'ce-admin-tree-group'+(group.id===currentGroup?' is-active':'')}>
         <h3><button type="button" className="ce-admin-tree-group-button" aria-controls={childId} aria-expanded={expanded} onClick={()=>setOpenGroups(old=>expanded?old.filter(id=>id!==group.id):[...old,group.id])}>
           <span className="ce-admin-tree-group-number">{group.id.slice(1)}</span>
           <span className="ce-admin-tree-group-title">{group.title}<small>{items.length} módulos</small></span>

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/participation-outcome.candidate.v1.json",
+  "title": "CE | Participation Outcome Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "process_ref",
+    "title",
+    "summary",
+    "outcome_state",
+    "published_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string"
+    },
+    "process_ref": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome_state": {
+      "enum": [
+        "COMMUNITY_SYNTHESIS",
+        "REFERRED_CANDIDATE",
+        "OFFICIAL_RESPONSE_VERIFIED",
+        "CLOSED_CANDIDATE"
+      ]
+    },
+    "official_evidence_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

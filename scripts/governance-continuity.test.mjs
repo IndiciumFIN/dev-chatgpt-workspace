@@ -1,6 +1,6 @@
 import {describe,it} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import {validateContinuity} from './check-governance-continuity.mjs';
 
 const data=JSON.parse(readFileSync('docs/governance/FOUNDATION_CONTINUITY_MANIFEST_20261026.json','utf8'));
@@ -24,7 +24,7 @@ describe('governance continuity and deployment evidence — fail closed',()=>{
   it('detects unapproved HTTP route and deleted hold findings',()=>{
     const promoted=copy();
     const errors=validateContinuity(promoted,{
-      pathExists:(p)=>p==='src/routes/api/admin.import.reconcile.ts'||true,
+      pathExists:(p)=>existsSync(p)||p==='src/routes/api/admin.import.reconcile.ts',
     });
     // Existing checkout still wins; simulate a newly created route.
     assert.ok(errors.some(e=>e.includes('Unapproved import HTTP route')));

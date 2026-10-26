@@ -9,12 +9,19 @@ const adminCss = read('src/styles/admin-console.css');
 const command = read('src/routes/central-comando.tsx');
 const commandCss = read('src/styles/command-center.css');
 
-test('admin mobile navigation has a labelled, controlled selector and a task dock', () => {
-  assert.match(admin, /htmlFor="ce-admin-mobile-module"/);
-  assert.match(admin, /id="ce-admin-mobile-module" value=\{tab\}/);
+test('admin mobile navigation exposes the same seven-group sidebar in a native focus-trapping dialog', () => {
+  const tree = read('src/components/admin/admin-sidebar-tree.tsx');
+  const layout = read('src/styles/admin-hierarchy.css');
+  assert.match(admin, /aria-haspopup="dialog"/);
+  assert.match(admin, /<dialog ref=\{mobileDialogRef\}/);
+  assert.match(admin, /showModal\(\)/);
   assert.match(admin, /aria-label="Acesso rápido da administração"/);
   assert.match(admin, /aria-current=\{tab === 'pmo'/);
   assert.match(admin, /to="\/central-comando"/);
+  assert.match(tree, /adminGroups\.map\(/);
+  assert.match(tree, /adminModules\.filter\(/);
+  assert.match(tree, /aria-expanded=\{expanded\}/);
+  assert.match(layout, /\.ce-admin-mobile-dialog::backdrop/);
 });
 
 test('mobile is the starting admin composition, desktop expands progressively', () => {

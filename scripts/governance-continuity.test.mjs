@@ -11,15 +11,15 @@ describe('governance continuity and deployment evidence — fail closed',()=>{
   });
   it('rejects silent promotion and claimed database application',()=>{
     const promoted=copy();promoted.scope.release_gate='OPEN';
-    assert.match(validateContinuity(promoted).join(';'),'HOLD gate unexpectedly relaxed');
+    assert.match(validateContinuity(promoted).join(';'),/HOLD gate unexpectedly relaxed/);
     const db=copy();db.verified_remote_state.supabase.candidate_tables_verified_applied=true;
-    assert.match(validateContinuity(db).join(';'),'External availability claim');
+    assert.match(validateContinuity(db).join(';'),/External availability claim/);
   });
   it('rejects missing or suspiciously encoded source paths',()=>{
     const missing=copy();missing.capabilities[0].required_files.push('src/never-existed-governance.ts');
-    assert.match(validateContinuity(missing).join(';'),'Missing/unsafe artifact');
+    assert.match(validateContinuity(missing).join(';'),/Missing\/unsafe artifact/);
     const traversal=copy();traversal.capabilities[0].required_files.push('../private-key');
-    assert.match(validateContinuity(traversal).join(';'),'Missing/unsafe artifact');
+    assert.match(validateContinuity(traversal).join(';'),/Missing\/unsafe artifact/);
   });
   it('detects unapproved HTTP route and deleted hold findings',()=>{
     const promoted=copy();
@@ -29,7 +29,7 @@ describe('governance continuity and deployment evidence — fail closed',()=>{
     // Existing checkout still wins; simulate a newly created route.
     assert.ok(errors.some(e=>e.includes('Unapproved import HTTP route')));
     const findings=copy();findings.blocking_findings[0].state='DONE';
-    assert.match(validateContinuity(findings).join(';'),'Required blocking FIND lost');
+    assert.match(validateContinuity(findings).join(';'),/Required blocking FIND lost/);
   });
   it('rejects missing real-engine CI verification',()=>{
     const errors=validateContinuity(copy(),{

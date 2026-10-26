@@ -92,6 +92,8 @@ export const primaryNav: NavNode[] = [
         { id: "career-passport", label: "Passaporte profissional", dest: { kind: "section", slug: "carreira", hash: "passaporte" } },
         { id: "career-skills", label: "Skills e gaps", dest: { kind: "section", slug: "carreira", hash: "skills" } },
         { id: "career-paths", label: "Trilhas de carreira", dest: { kind: "section", slug: "carreira", hash: "trilhas" } },
+        { id: "career-learning", label: "Cursos e desenvolvimento", dest: { kind: "section", slug: "carreira", hash: "aprendizagem" } },
+        { id: "career-compare", label: "Comparar caminhos", dest: { kind: "section", slug: "carreira", hash: "comparador" } },
         { id: "career-docs", label: "Currículo e documentos", dest: { kind: "section", slug: "carreira", hash: "documentos" } },
       ]},
       { label: "Oportunidades", items: [
@@ -113,6 +115,7 @@ export const primaryNav: NavNode[] = [
         { id: "youth-reflect", label: "Explorar interesses", dest: { kind: "section", slug: "jovens", hash: "autoconhecimento" } },
         { id: "youth-first", label: "Primeiros passos", dest: { kind: "section", slug: "jovens", hash: "primeiros-passos" } },
         { id: "youth-games", label: "Jogos e quizzes", dest: { kind: "section", slug: "jovens", hash: "jogos-quizzes" } },
+        { id: "youth-health", label: "Saúde para jovens", dest: { kind: "section", slug: "jovens", hash: "saude-jovem" } },
       ]},
     ],
   },

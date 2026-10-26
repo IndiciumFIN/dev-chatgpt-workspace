@@ -78,6 +78,8 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Validar checkpoint de governança e bloqueios de promoção
+        run: node scripts/check-governance-continuity.mjs
       - name: Validar PMO canônico e histórico
         run: node scripts/check-pmo-queue.mjs
       - name: Verificar integridade do inventário transversal candidato (não conformidade)

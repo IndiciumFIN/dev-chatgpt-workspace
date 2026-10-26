@@ -6,8 +6,6 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode } from 'react';
-import { PageHero } from '@/components/site/page-hero';
-import { Breadcrumb } from '@/components/site/breadcrumb';
 import { tools } from '@/lib/tools/catalog';
 import { templateCatalogo } from '@/lib/template-catalog';
 import { templateContracts } from '@/lib/template-contract';
@@ -21,6 +19,7 @@ import {
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
 import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
+import { AdminAccountHeader } from '@/components/admin/admin-account-header';
 import { AdminModuleWorkspace } from '@/components/admin/admin-module-workspace';
 import { adminGroups, adminModules, getAdminModule, type AdminModuleId } from '@/lib/admin-module-registry';
 import { GovernancePanel } from '@/components/admin/governance-panel';
@@ -51,6 +50,8 @@ export function AdminConsole() {
   const [tab, setTab] = useState<Tab>('overview');
   const [selectedModule, setSelectedModule] = useState<AdminModuleId>('M03');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [actionStatus, setActionStatus] = useState(false);
   const mobileDialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = mobileDialogRef.current;
@@ -83,7 +84,7 @@ export function AdminConsole() {
     try {
       const register = readPublicationRegister();
       setModel(register.draft); setPublished(register.published); setRevision(register.revision);
-      setEvents(register.events); setDirty(false); setStatus('Registro local carregado.');
+      setEvents(register.events); setDirty(false); setStatus('');
       setSelected((s) => register.draft.tools.some(t => t.slug === s) ? s : register.draft.tools[0]?.slug ?? '');
     } catch {
       setLoadingFailed(true); setStatusError(true);
@@ -111,7 +112,7 @@ export function AdminConsole() {
     try {
       if (loadingFailed || externalChange) throw new Error('Registro indisponível ou alterado em outra aba. Recarregue antes de persistir.');
       const register = saveLocalDraft(model, revision);
-      applyRegister(register); setStatus('Rascunho salvo com nova revisão. A projeção publicada não foi alterada.');
+      applyRegister(register); setStatus('Rascunho salvo.'); setActionStatus(true);
     } catch (error) { setStatusError(true); setStatus(error instanceof Error ? error.message : 'Falha ao salvar o rascunho.'); }
   }
   function publish() {
@@ -120,12 +121,12 @@ export function AdminConsole() {
       if (dirty) throw new Error('Salve o rascunho antes de publicar.');
       if (!confirmation) throw new Error('Confirme que entende o alcance local desta publicação.');
       const register = publishLocalDraft(revision);
-      applyRegister(register); setPreviewVersion('published'); setStatus('Projeção LOCAL publicada. Não houve homologação clínica nem deploy remoto.');
+      applyRegister(register); setPreviewVersion('published'); setStatus('Projeção LOCAL publicada. Não houve homologação clínica nem deploy remoto.'); setActionStatus(true);
     } catch (error) { setStatusError(true); setStatus(error instanceof Error ? error.message : 'Publicação bloqueada.'); }
   }
   function edit(next: LocalToolPublication) {
     setModel((current) => ({ ...current, tools: current.tools.map((item) => item.slug === next.slug ? next : item) }));
-    setDirty(true); setConfirmation(false); setStatusError(false); setStatus('Há alterações não salvas.');
+    setDirty(true); setConfirmation(false); setStatusError(false); setStatus(''); setActionStatus(false);
   }
   async function importFile(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -135,7 +136,7 @@ export function AdminConsole() {
       if (file.size > 100_000) throw new Error('Arquivo excede 100 KB.');
       const imported = validateWorkbench(JSON.parse(await file.text()) as unknown);
       setModel(imported); setDirty(true); setConfirmation(false); setStatusError(false);
-      setStatus('JSON validado e carregado somente como rascunho. Nenhuma publicação foi realizada.');
+      setStatus('Arquivo importado para edição.'); setActionStatus(true);
       setTab('content');
     } catch (error) { setStatusError(true); setStatus(error instanceof Error ? error.message : 'Importação rejeitada.'); }
     event.target.value = '';
@@ -153,29 +154,12 @@ export function AdminConsole() {
   const publishedCount = published.tools.filter(x => x.published).length;
   const draftCount = model.tools.filter(x => x.published).length;
   const noPage = templateCatalogo.filter(t => t.url === null);
-  const showRisk = dirty || loadingFailed || externalChange || !dataIsValid;
 
-  return <main id="conteudo" className="page-wide ce-admin" aria-labelledby="admin-heading">
-    <Breadcrumb items={[{ label: 'Início', to: '/' }, { label: 'Administração' }]} />
-    <PageHero title="Centro de administração" titleId="admin-heading" eyebrow="Gestão canônica · ambiente isolado" lead="Organize, edite, confira evidências e veja o resultado como um usuário final — antes de qualquer publicação." />
-    <div className="ce-admin-scope" role="note"><LockKeyhole size={18} aria-hidden="true" /><div>
-      {tab === 'pmo' ? <>
-        <strong>PMO oficial da execução — fonte versionada no GitHub.</strong>
-        <span>A fila é somente leitura aqui. Alterações exigem commit, evidência e gates; não aprovações por inteligência artificial.</span>
-      </> : tab === 'governance' ? <>
-        <strong>Governança: somente registros versionados — sem admissão normativa.</strong>
-        <span>FINDs e normas exibidos como evidências de estado datado. Não existem avaliações ou aprovações implícitas.</span>
-      </> : tab === 'module-detail' ? <>
-        <strong>Área de trabalho por submódulo — 7 macrogrupos e 21 módulos operacionais.</strong>
-        <span>Registros, filtros, formulários e relatórios separados. Dados de referência sem integrações ou permissões novas.</span>
-      </> : <>
-        <strong>Prévia administrativa local — não é a autoridade corporativa.</strong>
-        <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
-      </>}
-    </div></div>
+  return <main id="conteudo" className={`page-wide ce-admin${compact ? " ce-admin--compact" : ""}`} aria-labelledby="admin-heading">
+    <AdminAccountHeader compact={compact} onCompactChange={setCompact} onShowPmo={() => { setSelectedModule('M03'); setTab('pmo'); }} />
     <div className="ce-admin-mobile-nav" aria-label="Navegação administrativa para dispositivos móveis">
       <button type="button" className="ce-admin-mobile-launch" aria-label="Abrir macrogrupos e módulos" aria-haspopup="dialog" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen(true)}>
-        <Menu size={19} aria-hidden="true" /><span><strong>{macroInView?.title ?? 'Macrogrupos'}</strong><small>{selectedModule} · {moduleInView.title}</small></span><ChevronRight size={17} aria-hidden="true"/>
+        <Menu size={19} aria-hidden="true" /><span><strong>{macroInView?.title ?? 'Menu'}</strong><small>{tab === 'overview' ? 'Visão geral' : moduleInView.title}</small></span><ChevronRight size={17} aria-hidden="true"/>
       </button>
       <Link className="ce-admin-mobile-command" to="/central-comando"><span>Comando</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
     </div>
@@ -189,14 +173,9 @@ export function AdminConsole() {
       </aside>
       <div className="ce-admin-body">
         <div className="ce-admin-toolbar">
-          <div><span className="ce-admin-toolbar-caption">{tab==='overview' ? 'Administração / Painel global' : 'Administração / '+macroInView?.title+' / '+selectedModule}</span><h2>{tab==='overview' ? 'Visão geral' : moduleInView.title}</h2></div>
-          <div className="ce-admin-toolbar-actions">
-            <Indicator tone={tab === 'pmo' || tab === 'module-detail' || tab === 'governance' || tab === 'overview' ? 'neutral' : showRisk ? 'warn' : 'ok'}>{tab === 'overview' ? 'Visão global local' : tab === 'governance' ? 'Consulta governada' : tab === 'module-detail' ? 'Submódulos e registros' : tab === 'pmo' ? 'PMO versionado' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
-            <Link className="ce-admin-site-link" to="/central-comando">Central de Comando <ArrowUpRight size={15} aria-hidden="true" /></Link>
-            <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
-          </div>
+          <h1 id="admin-heading">{tab === 'overview' ? 'Visão geral' : moduleInView.title}</h1>
         </div>
-        {tab !== 'pmo' && tab !== 'module-detail' && tab !== 'governance' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
+        {(statusError || actionStatus && (tab === 'content' || tab === 'publication')) && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role={statusError ? 'alert' : 'status'} aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
         {tab === 'module-detail' && <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule} onOpenExisting={view => setTab(view)} onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}} />}
         {tab === 'governance' && <GovernancePanel />}

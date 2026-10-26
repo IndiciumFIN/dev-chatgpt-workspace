@@ -132,6 +132,10 @@ export function CommanderPanel() {
                 <h3>{lane.id} · {lane.workOrderId}</h3>
                 <p>{lane.expectedArtifact}</p>
                 <small>PMO: {item?.status ?? 'WO ausente'} · Agente: não despachado · Papel: {lane.role}</small>
+                <p><strong>Prioridade:</strong> {item?.priority ?? 'Não definida'} · <strong>Ordem:</strong> {item?.order ?? '—'}</p>
+                <p><strong>Dependências:</strong> {item?.dependencies?.length ? item.dependencies.join(', ') : 'Nenhuma registrada'}</p>
+                <p><strong>Evidências do PMO:</strong> {item?.evidence?.length ?? 0} · <strong>Origem da lane:</strong> <code>{lane.sourceCommit.slice(0, 12)}</code></p>
+                <p><strong>Próxima ação oficial:</strong> {item?.next ?? 'WO não localizada — HOLD'}</p>
                 <p><a href={lane.issueUrl} target="_blank" rel="noopener noreferrer">Ver instruções e entregar artefatos no GitHub</a></p>
               </div>
             </article>;

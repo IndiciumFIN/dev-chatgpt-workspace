@@ -54,7 +54,7 @@ function saveCsv(name:string,items:readonly RecordView[]){
  const url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8'}));
  const a=document.createElement('a');a.href=url;a.download='relatorio-'+name.toLowerCase()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-export function AdminModuleWorkspace({moduleId,onOpenExisting}:{moduleId:AdminModuleId;onOpenExisting:(view:ExistingArea)=>void}){
+export function AdminModuleWorkspace({moduleId,onOpenExisting,onEditRecord}:{moduleId:AdminModuleId;onOpenExisting:(view:ExistingArea)=>void;onEditRecord:(id:string)=>void}){
  const module=getAdminModule(moduleId);
  const group=adminGroups.find(x=>x.id===module.group);
  const [sub,setSub]=useState(module.submodules[0]);
@@ -104,13 +104,13 @@ export function AdminModuleWorkspace({moduleId,onOpenExisting}:{moduleId:AdminMo
            </div>
          </div>
          <p className="ce-workspace-counter">{filtered.length} de {available.length} registros · dados provenientes dos catálogos versionados</p>
-         {layout==='cards'?<div className="ce-workspace-cards">{filtered.slice(0,limit).map(item=><article key={item.id} className="ce-workspace-record"><span className="ce-workspace-record-type">{item.kind}</span><h5>{item.name}</h5><code>{item.id}</code><p>{item.note}</p><span className="ce-workspace-record-status">{item.status}</span>{item.link&&<Link to={item.link as never} className="ce-workspace-link">Consultar página <ChevronRight size={15}/></Link>}</article>)}</div>
+         {layout==='cards'?<div className="ce-workspace-cards">{filtered.slice(0,limit).map(item=><article key={item.id} className="ce-workspace-record"><span className="ce-workspace-record-type">{item.kind}</span><h5>{item.name}</h5><code>{item.id}</code><p>{item.note}</p><span className="ce-workspace-record-status">{item.status}</span>{moduleId==='M08'&&sub==='Calculadoras'&&<button type="button" className="ce-workspace-edit-record" onClick={()=>onEditRecord(item.id)}>Editar metadados</button>}{item.link&&<Link to={item.link as never} className="ce-workspace-link">Consultar página <ChevronRight size={15}/></Link>}</article>)}</div>
            :<div className="ce-workspace-table-scroll"><table><thead><tr><th>ID</th><th>Registro</th><th>Tipo</th><th>Estado</th></tr></thead><tbody>{filtered.slice(0,limit).map(item=><tr key={item.id}><td data-label="ID">{item.id}</td><td data-label="Registro">{item.name}</td><td data-label="Tipo">{item.kind}</td><td data-label="Estado">{item.status}</td></tr>)}</tbody></table></div>}
          {filtered.length===0&&<p className="ce-workspace-empty">Nenhum registro corresponde aos filtros.</p>}
          {filtered.length>limit&&<button type="button" className="ce-workspace-more" onClick={()=>setLimit(n=>n+12)}>Mostrar mais registros ({Math.min(limit,filtered.length)} de {filtered.length})</button>}
        </>:<div className="ce-workspace-empty"><ClipboardList size={22}/><strong>Não há coleção canônica consultável para este submódulo.</strong><p>O catálogo de módulos descreve seu escopo, mas não comprova cadastro existente. Não foram fabricados registros ou habilitado CRUD remoto.</p></div>}
        {existing==='command'?<Link to="/central-comando" className="ce-workspace-action">Abrir Central de Comando <ArrowRight size={16}/></Link>
-         :existing&&<button type="button" className="ce-workspace-action" onClick={()=>onOpenExisting(existing)}>Abrir funcionalidade existente de {sub} <ArrowRight size={16}/></button>}
+         :existing && !(moduleId==='M08'&&sub==='Calculadoras')&&<button type="button" className="ce-workspace-action" onClick={()=>onOpenExisting(existing)}>Abrir funcionalidade existente de {sub} <ArrowRight size={16}/></button>}
      </div>}
      {mode==='form'&&<div className="ce-workspace-panel" role="tabpanel">{getSubmoduleTemplates(moduleId,sub).length?<AdminSchemaEditor key={moduleId+':'+sub} moduleId={moduleId} submodule={sub} templateKeys={getSubmoduleTemplates(moduleId,sub).map(x=>x.key)}/>:<div className="ce-workspace-empty"><LockKeyhole size={22}/><strong>Sem contrato de formulário específico para {sub}.</strong><p>Não reutilizamos um schema de outra função como se fosse um cadastro homologado. Este submódulo exige dicionário de campos, fontes autorizadas, CRUD, relações e validadores próprios.</p></div>}</div>}
      {mode==='reports'&&<div className="ce-workspace-panel" role="tabpanel">

@@ -46,12 +46,17 @@ function CareerModule({module,audience,snapshot,refresh,status}:{module:string;a
  if(module==="mercado")return <Market snapshot={snapshot}/>;
  if(module==="conteudos-carreira"||module==="conteudos-jovens")return <Editorial snapshot={snapshot}/>;
  if(module==="descobrir"||module==="enfermagem-carreira")return <Roles snapshot={snapshot}/>;
- if(module==="autoconhecimento"||module==="jogos-quizzes")return <Reflection snapshot={snapshot}/>;
- if(module==="entrevistas")return <ModuleNote title="Entrevistas e presença profissional" text="A arquitetura está classificada como HYBRID: ferramentas de preparação serão funcionais; guias, exemplos e conteúdos de LinkedIn/posicionamento são editoriais e devem vir do banco editorial."/>;
- if(module==="vida-profissional")return <ModuleNote title="Vida profissional" text="Agrupa ferramentas trabalhistas, escala/plantão, negociação e bem-estar. Regras trabalhistas e cálculos permanecem dependentes de fonte normativa e contratos próprios; não são inventados nesta branch."/>;
- if(module==="rede")return <ModuleNote title="Networking e mentoria" text="O domínio prevê conexões, grupos, mentoria e objetivos. Matching entre pessoas exige decisão posterior de autenticação, privacidade e moderação; aqui permanece modelado, sem simular usuários reais."/>;
- if(module==="exterior")return <ModuleNote title="Carreira internacional" text="A projeção organiza idioma, documentos, reconhecimento e registro, mas requisitos concretos devem ser materializados por jurisdição e fonte oficial antes de qualquer recomendação."/>;
- return <ModuleNote title={audience==="YOUTH"?"Portal do Jovem":"Carreira"} text="Módulo candidato alimentado pelo banco."/>
+ if(module==="autoconhecimento")return <Reflection snapshot={snapshot}/>;
+ if(module==="jogos-quizzes")return <YouthActivities snapshot={snapshot}/>;
+ if(module==="aprendizagem")return <Learning snapshot={snapshot}/>;
+ if(module==="comparador")return <RoleComparator snapshot={snapshot}/>;
+ if(module==="entrevistas")return <InterviewScenarios snapshot={snapshot}/>;
+ if(module==="vida-profissional")return <Worklife snapshot={snapshot}/>;
+ if(module==="rede")return <Network snapshot={snapshot}/>;
+ if(module==="exterior")return <International snapshot={snapshot}/>;
+ if(module==="saude-jovem")return <YouthHealth snapshot={snapshot}/>;
+ if(module==="empreendedorismo")return <DatabaseModule snapshot={snapshot} slug={module}/>;
+ return <DatabaseModule snapshot={snapshot} slug={module} audience={audience}/>;
 }
 
 function Overview({snapshot,status}:{snapshot:CareerSnapshot;status:string}){
@@ -111,4 +116,49 @@ function Reflection({snapshot}:{snapshot:CareerSnapshot}){
  return <><Callout tone="note"><b>Reflexão educativa.</b> Isto não é teste vocacional psicométrico, diagnóstico ou recomendação determinista. Serve para explorar interesses e gerar perguntas para conversa e pesquisa.</Callout><div className="ce-career-list">{snapshot.reflection.map(q=><article className="ce-career-question" key={q.id}><p>{q.prompt}</p><input aria-label={q.prompt} type="range" min="0" max="2" step="1" value={answers[q.id]??0} onChange={e=>setAnswers(v=>({...v,[q.id]:Number(e.target.value)}))}/><small>0 = pouco · 1 = talvez · 2 = muito</small></article>)}</div><h3 style={{marginTop:18}}>Dimensões para explorar</h3>{scores.map(([dim,score])=><div className="ce-career-dimension" key={dim}><span>{dim}</span><b>{score}</b></div>)}</>
 }
 
-function ModuleNote({title,text}:{title:string;text:string}){return <article className="ce-career-card"><h3>{title}</h3><p>{text}</p></article>}
+
+function Learning({snapshot}:{snapshot:CareerSnapshot}){
+ return <div className="ce-career-grid">{snapshot.learningResources.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.kind}</span><span className="ce-career-badge">{item.status}</span>{item.sourceRequired?<span className="ce-career-badge">fonte requerida</span>:null}</footer></article>)}</div>
+}
+
+function InterviewScenarios({snapshot}:{snapshot:CareerSnapshot}){
+ return <div className="ce-career-grid">{snapshot.interviewScenarios.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.kind}</span><span className="ce-career-badge">{item.status}</span></footer></article>)}</div>
+}
+
+function Network({snapshot}:{snapshot:CareerSnapshot}){
+ return <><div className="ce-career-grid">{snapshot.networkCapabilities.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.status}</span>{item.requiresIdentity?<span className="ce-career-badge">identidade requerida</span>:null}{item.moderationRequired?<span className="ce-career-badge">moderação requerida</span>:null}</footer></article>)}</div><p className="ce-career-status">Recursos multiusuário permanecem HOLD_HUMAN nesta branch local: o banco modela a capacidade, mas não inventa perfis, mentores ou conexões.</p></>
+}
+
+function International({snapshot}:{snapshot:CareerSnapshot}){
+ return <div className="ce-career-grid">{snapshot.jurisdictionRequirements.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.requirementKind}</span><span className="ce-career-badge">{item.jurisdiction}</span><span className="ce-career-badge">{item.status}</span></footer></article>)}</div>
+}
+
+function Worklife({snapshot}:{snapshot:CareerSnapshot}){
+ return <div className="ce-career-grid">{snapshot.worklifeCapabilities.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.kind}</span><span className="ce-career-badge">{item.status}</span>{item.normativeSourceRequired?<span className="ce-career-badge">fonte normativa requerida</span>:null}</footer></article>)}</div>
+}
+
+function YouthActivities({snapshot}:{snapshot:CareerSnapshot}){
+ return <><div className="ce-career-grid">{snapshot.youthActivities.map(item=><article className="ce-career-card" key={item.id}><h3>{item.title}</h3><p>{item.description}</p><footer><span className="ce-career-badge">{item.kind}</span><span className="ce-career-badge">{item.status}</span></footer></article>)}</div><p className="ce-career-status">Atividades em HOLD permanecem como contrato/candidato; não são apresentadas como jogo ou quiz homologado antes do conteúdo e das regras serem qualificados.</p></>
+}
+
+function YouthHealth({snapshot}:{snapshot:CareerSnapshot}){
+ const module=snapshot.modules.find(x=>x.slug==="saude-jovem");
+ return <><article className="ce-career-card"><h3>{module?.title??"Saúde para jovens"}</h3><p>{module?.description??"Conteúdo governado por fontes próprias."}</p><footer><span className="ce-career-badge">EDITORIAL</span><span className="ce-career-badge">conteúdo governado separadamente</span></footer></article><p className="ce-career-status">Esta projeção não cria conteúdo clínico novo. Materiais de saúde para jovens deverão consumir bibliotecas, políticas e fontes qualificadas do CKO.</p></>
+}
+
+function RoleComparator({snapshot}:{snapshot:CareerSnapshot}){
+ const[first,setFirst]=useState(snapshot.roles[0]?.id??"");
+ const[second,setSecond]=useState(snapshot.roles[1]?.id??"");
+ const a=snapshot.roles.find(x=>x.id===first);const b=snapshot.roles.find(x=>x.id===second);
+ const requirement=(roleId:string)=>new Map(snapshot.roleSkills.filter(x=>x.roleId===roleId).map(x=>[x.skillId,x.requiredLevel]));
+ const ar=requirement(first),br=requirement(second);
+ const skillIds=[...new Set([...ar.keys(),...br.keys()])];
+ return <><div className="ce-career-grid"><Field label="Caminho A"><select value={first} onChange={e=>setFirst(e.target.value)}>{snapshot.roles.map(r=><option key={r.id} value={r.id}>{r.title}</option>)}</select></Field><Field label="Caminho B"><select value={second} onChange={e=>setSecond(e.target.value)}>{snapshot.roles.map(r=><option key={r.id} value={r.id}>{r.title}</option>)}</select></Field></div><div className="ce-career-grid" style={{marginTop:12}}><article className="ce-career-card"><h3>{a?.title??"—"}</h3><p>{a?.summary??""}</p><p style={{marginTop:8}}>{a?.educationPath??""}</p></article><article className="ce-career-card"><h3>{b?.title??"—"}</h3><p>{b?.summary??""}</p><p style={{marginTop:8}}>{b?.educationPath??""}</p></article></div><h3 style={{marginTop:18}}>Skills explicitamente vinculadas no banco</h3>{skillIds.length?skillIds.map(id=>{const skill=snapshot.skills.find(x=>x.id===id);return <div className="ce-career-gap" key={id}><span>{skill?.name??id}</span><div className="ce-career-track"><div className="ce-career-fill" style={{width:`${Math.max(ar.get(id)??0,br.get(id)??0)*20}%`}}/></div><b>{ar.get(id)??"—"} / {br.get(id)??"—"}</b></div>}):<p className="ce-career-status">Ainda não há requisitos de skills vinculados para este par.</p>}<p className="ce-career-status">Comparar não significa classificar um caminho como melhor. O banco mostra diferenças declaradas e gaps conhecidos.</p></>
+}
+
+function DatabaseModule({snapshot,slug,audience}:{snapshot:CareerSnapshot;slug:string;audience?:"PROFESSIONAL"|"YOUTH"}){
+ const module=snapshot.modules.find(x=>x.slug===slug);
+ return <article className="ce-career-card"><h3>{module?.title??(audience==="YOUTH"?"Portal do Jovem":"Carreira")}</h3><p>{module?.description??"Módulo candidato alimentado pelo banco."}</p><footer><span className="ce-career-badge">{module?.objectClass??"CANDIDATE"}</span><span className="ce-career-badge">{module?.family??"db-first"}</span></footer></article>
+}
+
+

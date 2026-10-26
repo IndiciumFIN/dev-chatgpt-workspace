@@ -112,7 +112,19 @@ try{
       await assertNoOverflow(p,'admin-governance-search-390');
     }
     await selectModule(p,width,'G04','M10');
+    if(width===390){
+      await p.getByRole('tab',{name:'Formulários'}).click();
+      await p.getByText(/Sem contrato de formulário específico para Design tokens/).waitFor();
+      await p.getByRole('tab',{name:'Registros'}).click();
+    }
     await p.getByRole('navigation',{name:'Submódulos de Design System e Interfaces'}).getByRole('button',{name:'Templates e slots'}).click();
+    if(width===390){
+      await p.getByRole('tab',{name:'Relatórios'}).click();
+      assert.equal(await p.getByRole('button',{name:'Exportar CSV'}).isEnabled(),true,'real templates report must export');
+      await p.getByRole('tab',{name:'Registros'}).click();
+      await p.getByRole('button',{name:'Visualizar tabela'}).click();
+      await assertNoOverflow(p,'admin-templates-table-390');
+    }
     await p.getByRole('button',{name:/Abrir funcionalidade existente de Templates e slots/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();
     if(width===390){
@@ -125,6 +137,12 @@ try{
     if([320,390,768,1440].includes(width)) await screenshot(p,'admin-templates-'+width+'.png');
     await assertNoOverflow(p,'admin-templates-'+width);
     await selectModule(p,width,'G04','M08');
+    if(width===390){
+      await p.getByText(/Não há coleção canônica consultável para este submódulo/).waitFor();
+      await p.getByRole('tab',{name:'Formulários'}).click();
+      await p.getByText(/Sem contrato de formulário específico para Catálogo de produtos/).waitFor();
+      await p.getByRole('tab',{name:'Registros'}).click();
+    }
     await p.getByRole('navigation',{name:'Submódulos de Produtos e Ferramentas'}).getByRole('button',{name:'Calculadoras'}).click();
     await p.getByRole('button',{name:'Editar metadados'}).first().click();
     await p.locator('#admin-tool-title').waitFor();

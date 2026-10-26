@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, redirect, retainSearchParams } from "@tanstack/react-router";
 import { SectionPage } from "@/components/site/section-page";
+import { ResearchHub } from "@/components/research/research-hub";
 import { Shell } from "@/components/site/shell";
 import { getSection } from "@/lib/sections";
 import { parseLocale } from "@/lib/translate";
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/secao/$slug")({
     meta: [
       { title: loaderData ? `${loaderData.title} · Calculadoras de Enfermagem` : "Seção" },
       { name: "description", content: loaderData?.lead ?? "" },
+      ...(params.slug === "pesquisa" ? [{ name: "robots", content: "noindex, nofollow" }] : []),
     ],
     links: languageLinks(`/secao/${params.slug}`, (match.search as { lang?: unknown }).lang),
     scripts: loaderData ? [{ type: "application/ld+json", children: sectionJsonLd({ slug: params.slug, title: loaderData.title, lead: loaderData.lead }) }] : [],
@@ -43,6 +45,7 @@ function SectionRoute() {
   const { q } = Route.useSearch();
   const section = getSection(slug);
   if (!section) return null;
+  if (slug === "pesquisa") return <Shell><ResearchHub /></Shell>;
   return (
     <Shell>
       <SectionPage section={section} query={q} />

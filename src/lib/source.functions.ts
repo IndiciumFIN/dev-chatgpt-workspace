@@ -3,6 +3,7 @@ import { authMiddleware } from "@/lib/auth/middleware";
 import { approveItemTx, approveSpecificationTx, saveGovernanceDraftTx } from "@/lib/governance";
 import { decide } from "@/lib/policy-decision";
 import { assertProductionAuth } from "@/lib/publish-guard";
+import { sha256Hex } from "@/core/compliance/validators";
 import { assembleTool, hasStoredSheet, type ToolSheet } from "@/lib/tools/bridge";
 import { getTool, tools } from "@/lib/tools/catalog";
 import { restoreCopyTx, saveSheetTx } from "@/lib/tools/write-sheet";
@@ -49,6 +50,51 @@ async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
 async function requireAdmin(sql: Awaited<ReturnType<typeof sqlClient>>, userId: string) {
   const rows = await sql<{ role: string }>`select role from member where user_id = ${userId}`;
   if (rows[0]?.role !== "admin") throw new Error("Somente o administrador altera a fonte.");
+}
+
+/**
+ * O portão de publicação. Ele existe no banco em duas tabelas: `process` diz se
+ * o portão está ligado, `process_setting` diz quem pode escrever nele.
+ *
+ * Esta função não trava nada que já estava publicado: ela só exige que o
+ * caminho de gravação nova passe pelo portão e registre a decisão.
+ */
+async function exigirPortaoDePublicacao(
+  sql: Awaited<ReturnType<typeof sqlClient>>,
+  gateId: string,
+  role: string,
+) {
+  const gates = await sql<{ id: string; enabled: unknown }>`select id, enabled from process where id = ${gateId}`;
+  if (!gates[0]) throw new Error(`O processo ${gateId} não existe no banco.`);
+  if (!asBool(gates[0].enabled)) throw new Error(`O processo ${gateId} está desligado.`);
+  const settings = await sql<{ value: string }>`
+    select value from process_setting where process_id = ${gateId} and key = ${"escrita"}
+  `;
+  const escrita = settings[0]?.value?.trim();
+  if (escrita && escrita !== role) {
+    throw new Error(`O processo ${gateId} não abre para o papel ${role}.`);
+  }
+  return { gateId, escrita: escrita ?? null };
+}
+
+/** Registra a publicação: portão, decisão de política e evidência do que foi gravado. */
+async function registrarPublicacao(
+  sql: Awaited<ReturnType<typeof sqlClient>>,
+  input: { slug: string; gateId: string; decisionId: string; actorId: string; conteudo: string },
+) {
+  const evidenceRef = `sha256:${await sha256Hex(input.conteudo)}`;
+  await sql`
+    insert into source_publication (id, slug, gate_id, policy_decision_id, evidence_ref, actor_id)
+    values (
+      ${crypto.randomUUID()},
+      ${input.slug},
+      ${input.gateId},
+      ${input.decisionId},
+      ${evidenceRef},
+      ${input.actorId}
+    )
+  `;
+  return evidenceRef;
 }
 
 async function loadSheet(sql: Awaited<ReturnType<typeof sqlClient>>, slug: string): Promise<ToolSheet | null> {
@@ -188,14 +234,20 @@ export const saveTool = createServerFn({ method: "POST" })
     const { withSqlTransaction } = await import("@/lib/db");
     await withSqlTransaction(async (sql) => {
       await requireAdmin(sql, context.userId);
-      await decide(sql, { action: "gravar_ficha", role: "admin", actorId: context.userId });
-      const gate = await sql<{ enabled: unknown }>`select enabled from process where id = ${"publicar_ferramenta"}`;
-      if (!asBool(gate[0]?.enabled)) throw new Error("O processo publicar_ferramenta está desligado.");
+      const decisao = await decide(sql, { action: "gravar_ficha", role: "admin", actorId: context.userId });
+      const portao = await exigirPortaoDePublicacao(sql, "publicar_ferramenta", "admin");
       await sql`
         update source_tool
         set title = ${data.title}, lead = ${data.lead}, published = ${data.published}, updated_by = ${context.userId}, updated_at = now()
         where slug = ${data.slug}
       `;
+      await registrarPublicacao(sql, {
+        slug: data.slug,
+        gateId: portao.gateId,
+        decisionId: decisao.decisionId,
+        actorId: context.userId,
+        conteudo: `${data.slug}|${data.title}|${data.lead}|${data.published}`,
+      });
       await sql`
         insert into audit_event (id, actor_id, action, entity, entity_id)
         values (${crypto.randomUUID()}, ${context.userId}, ${"salvar_capa"}, ${"source_tool"}, ${data.slug})
@@ -219,9 +271,19 @@ export const saveClinicalSheet = createServerFn({ method: "POST" })
     if (!base) throw new Error("Ferramenta fora da fonte.");
     const sql = await sqlClient();
     await requireAdmin(sql, context.userId);
-    await decide(sql, { action: "gravar_ficha", role: "admin", actorId: context.userId });
     const { withSqlTransaction } = await import("@/lib/db");
-    await withSqlTransaction((tx) => saveSheetTx(tx, { ...base, title: data.title, lead: data.lead }, data.published, context.userId));
+    await withSqlTransaction(async (tx) => {
+      const decisao = await decide(tx, { action: "gravar_ficha", role: "admin", actorId: context.userId });
+      const portao = await exigirPortaoDePublicacao(tx, "publicar_ferramenta", "admin");
+      await saveSheetTx(tx, { ...base, title: data.title, lead: data.lead }, data.published, context.userId);
+      await registrarPublicacao(tx, {
+        slug: data.slug,
+        gateId: portao.gateId,
+        decisionId: decisao.decisionId,
+        actorId: context.userId,
+        conteudo: `${data.slug}|${data.title}|${data.lead}|${data.published}`,
+      });
+    });
     return { ok: true as const };
   });
 

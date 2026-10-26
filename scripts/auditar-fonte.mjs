@@ -15,7 +15,10 @@ import { join } from "node:path";
 import { abrirBanco, MARCADOR } from "./preencher-derby.mjs";
 
 const MAPA = new URL("../mappings/recuperacao-fonte.json", import.meta.url);
-const CATALOGO = "/workspace/fase1/catalogo-fonte/paginas";
+const CATALOGO = process.env.CATALOGO_FONTE ?? "/workspace/fase1/catalogo-fonte/paginas";
+// As provas que a recuperação usa viajam dentro do repo: sem elas, a CI
+// não consegue conferir nada (o catálogo inteiro tem 112 MB e vive fora).
+const PROVAS = new URL("../mappings/provas-fonte/", import.meta.url);
 const MIGRATION = new URL("../migrations/0042_recuperar_fonte.sql", import.meta.url);
 const RELATORIO = new URL("../artifacts/fonte/auditoria.json", import.meta.url);
 
@@ -23,10 +26,25 @@ const norm = (t) => (t ?? "").replace(/\s+/g, " ").trim();
 
 async function fontePorArquivo() {
   const porArquivo = new Map();
-  for (const nome of await readdir(CATALOGO)) {
-    const pagina = JSON.parse(await readFile(join(CATALOGO, nome), "utf8"));
+  const diretorios = [];
+  try {
+    for (const nome of await readdir(PROVAS)) {
+      if (nome.endsWith(".json")) diretorios.push(join(PROVAS.pathname, nome));
+    }
+  } catch {
+    // sem as provas no repo — segue só com o catálogo completo
+  }
+  try {
+    for (const nome of await readdir(CATALOGO)) {
+      if (nome.endsWith(".json")) diretorios.push(join(CATALOGO, nome));
+    }
+  } catch {
+    // sem o catálogo completo fora do repo — as provas bastam
+  }
+  for (const arquivo of diretorios) {
+    const pagina = JSON.parse(await readFile(arquivo, "utf8"));
     if (pagina.papel === "vivo" && (pagina.idioma ?? "").toLowerCase().startsWith("pt")) {
-      porArquivo.set(pagina.arquivo, pagina);
+      if (!porArquivo.has(pagina.arquivo)) porArquivo.set(pagina.arquivo, pagina);
     }
   }
   return porArquivo;

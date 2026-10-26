@@ -49,7 +49,8 @@ const EXTRA = (() => {
   const bloco = src.slice(src.indexOf("export const templateFamilies"));
   const ids = [...bloco.matchAll(/^\s{4}id:\s*"([^"]+)"/gm)].map((m) => m[1]);
   if (!ids.length) throw new Error("templateFamilies não encontrado em src/lib/templates.ts");
-  return ["/modelos", ...ids.map((id) => `/modelos/${id}`)];
+  const curiositySlugs = JSON.parse(readFileSync("src/lib/content/curiosidades/catalog.json", "utf8")).map((x) => x.slug);
+  return ["/blog", ...curiositySlugs.map((slug) => "/blog/" + slug), "/modelos", ...ids.map((id) => `/modelos/${id}`)];
 })();
 
 export const reachablePaths = [...publicPathsForPrerender, ...EXTRA.filter((p) => !publicPathsForPrerender.includes(p))];

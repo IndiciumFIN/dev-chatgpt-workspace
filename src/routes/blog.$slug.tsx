@@ -5,6 +5,9 @@ import { BiographyView } from "@/components/templates/biography-view";
 import { ArticlePage } from "@/components/article/article-page";
 import { RelatedContent } from "@/components/site/related-content";
 import { findArticle, type ArticleSlug } from "@/lib/content/articles/index";
+import { CuriosityPage } from "@/components/article/curiosity-page";
+import { findCuriosityMeta } from "@/lib/content/curiosidades/catalog";
+import { loadCuriosity } from "@/lib/content/curiosidades/load";
 import { languageLinks } from "@/lib/seo";
 import { parseLocale } from "@/lib/translate";
 
@@ -32,24 +35,37 @@ export const Route = createFileRoute("/blog/$slug")({
     const lang = parseLocale(search.lang);
     return lang ? { lang } : {};
   },
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const article = findArticle(params.slug);
-    // Um slug fora do catálogo é 404, não 500. `throw new Error` devolvia erro
-    // do servidor por erro do visitante.
-    if (!article) throw raiseNotFound();
-    return { slug: article.slug };
+    if (article) return { slug: article.slug, curiosity: null };
+    if (!findCuriosityMeta(params.slug)) throw raiseNotFound();
+    const curiosity = await loadCuriosity(params.slug);
+    if (!curiosity) throw raiseNotFound();
+    return { slug: curiosity.slug, curiosity };
   },
   head: ({ match, params }) => {
     const article = findArticle(params.slug);
-    if (!article) return {};
+    const curiosity = findCuriosityMeta(params.slug);
     const lang = (match.search as { lang?: unknown }).lang;
+    if (!article && curiosity) {
+      return {
+        meta: [
+          { title: curiosity.title + " · Curiosidades de Enfermagem" },
+          { name: "description", content: "Prévia editorial: " + curiosity.title },
+          { name: "robots", content: "noindex, nofollow, noarchive" },
+          { property: "og:type", content: "article" },
+        ],
+        links: languageLinks("/blog/" + curiosity.slug, lang),
+      };
+    }
+    if (!article) return {};
     return {
       meta: [
-        { title: `${article.seoTitle} · Calculadoras de Enfermagem` },
+        { title: article.seoTitle + " · Calculadoras de Enfermagem" },
         { name: "description", content: article.description },
         { property: "og:type", content: "article" },
       ],
-      links: languageLinks(`/blog/${article.slug}`, lang),
+      links: languageLinks("/blog/" + article.slug, lang),
       scripts: [
         {
           type: "application/ld+json",
@@ -71,6 +87,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function ArticleRouteView() {
   const { slug } = Route.useParams();
+  const { curiosity } = Route.useLoaderData();
+  if (curiosity) return <Shell><CuriosityPage record={curiosity} /></Shell>;
   const article = findArticle(slug);
   // O loader já garantiu que existe; este guard cobre o render direto.
   if (!article) return <ArticleMissing />;

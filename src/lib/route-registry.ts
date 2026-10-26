@@ -18,6 +18,7 @@
  */
 import { listSections } from "@/lib/sections";
 import { articleSlugs, findArticle } from "@/lib/content/articles/index";
+import { curiosityCatalog } from "@/lib/content/curiosidades/catalog";
 import { tools } from "@/lib/tools/catalog";
 import { localesWithInterface } from "@/lib/locale-registry";
 import { siteOrigin } from "@/lib/site-origin";
@@ -51,16 +52,27 @@ function secoes(): RouteEntry[] {
 }
 
 function artigos(): RouteEntry[] {
-  return articleSlugs.map((slug) => {
+  const preparedArticles = articleSlugs.map((slug) => {
     const article = findArticle(slug);
     return {
-      path: `/blog/${slug}`,
+      path: "/blog/" + slug,
       kind: "artigo" as const,
       title: article?.title ?? slug,
       description: article?.lead ?? "",
       indexavel: true,
     };
   });
+  const canonicalSlugs = new Set<string>(articleSlugs);
+  const curiosityPreviews = curiosityCatalog
+    .filter((item) => !canonicalSlugs.has(item.slug))
+    .map((item) => ({
+      path: "/blog/" + item.slug,
+      kind: "artigo" as const,
+      title: item.title,
+      description: "Prévia editorial pendente de validação.",
+      indexavel: false,
+    }));
+  return [...preparedArticles, ...curiosityPreviews];
 }
 
 function ferramentas(): RouteEntry[] {
@@ -84,6 +96,7 @@ export const routeRegistry: RouteEntry[] = [
     description: "Escalas, protocolos e calculadoras clínicas de enfermagem.",
     indexavel: true,
   },
+  { path: "/blog", kind: "secao", title: "Curiosidades de Enfermagem", description: "Prévia editorial.", indexavel: false },
   ...artigos(),
   ...secoes(),
   ...ferramentas(),

@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.0",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "updated_at": "2026-10-26",
+  "root_cause_status": "PENDING",
+  "remediation_task_refs": [],
+  "provenance_refs": [
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
+    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql"
+  ],
+  "blocking_policy_refs": [
+    "CKO-POL-UT-001@1.2.0"
+  ],
+  "canonical_id": "FIND-CKO-DB-FIRST-EVIDENCE-20261026",
+  "finding_type": "SOURCE_GAP",
+  "severity": "HIGH",
+  "fact": "No CKO atual, Apgar tem tres claims diretamente associados, todos CANDIDATE e com revisao humana pendente; seus seis evidence_refs nao resolvem diretamente para source_id, fragment_id ou snapshot_id nas tabelas cko_evidence inspecionadas. Fugulin nao possui claims diretamente vinculados ao ID clinico nessas consultas; seus dez campos candidatos visiveis sao contextuais/operacionais e nao provam criterios das variantes de 9 e 12 areas. Esses zeros e nao-correspondencias sao escopados as chaves testadas; procurar pacotes externos e lineage antes de declarar ausencia definitiva.",
+  "evidence_refs": [
+    "cko_evidence.claims:cko:tool:clinical:apgar@1",
+    "cko_governance.md_tool_field_contract_v2_candidate:fugulin",
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
+    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql"
+  ]
+}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { adminContract, type AdminRegion } from "@/lib/admin-contract";
-import { deskModules, statusTone, type DeskModule } from "@/lib/normative-desk";
+import { adminGroup, adminGroups, adminModule, adminModules, type AdminPick } from "@/lib/admin-catalog";
+import { statusTone, type DeskModule } from "@/lib/normative-desk";
 
 export function Status({ value }: { value: string }) {
   return <span className={`status-${statusTone(value)}`}>{value}</span>;
@@ -73,36 +74,54 @@ export function ModuleFrame({
 }
 
 export function AdminShell({
-  module,
-  onModule,
+  selection,
+  onSelect,
   error,
   ready,
   children,
 }: {
-  module: DeskModule;
-  onModule: (id: DeskModule) => void;
+  selection: AdminPick;
+  onSelect: (id: AdminPick) => void;
   error: string;
   ready: boolean;
   children: ReactNode;
 }) {
-  const title = deskModules.find((item) => item.id === module)?.label ?? "Administração";
+  const current = selection === "overview" ? null : adminModule(selection);
+  const group = current ? adminGroup(current.group) : null;
+  const title = current ? `${current.id} · ${current.title}` : "Visão geral";
   return (
     <div className="admin-shell">
       <label className="admin-jump">
-        <span className="sr-only">Seção</span>
-        <select aria-label="Seção da administração" value={module} onChange={(event) => onModule(event.target.value as DeskModule)}>
-          {deskModules.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+        <span className="sr-only">Módulo</span>
+        <select aria-label="Módulo da administração" value={selection} onChange={(event) => onSelect(event.target.value as AdminPick)}>
+          <option value="overview">Visão geral</option>
+          {adminGroups.map((item) => (
+            <optgroup key={item.id} label={`${item.id} · ${item.title}`}>
+              {adminModules.filter((module) => module.group === item.id).map((module) => (
+                <option key={module.id} value={module.id}>{module.id} · {module.title}</option>
+              ))}
+            </optgroup>
+          ))}
         </select>
       </label>
       <nav className="admin-side" aria-label="Administração">
-        {deskModules.map((item) => (
-          <button key={item.id} type="button" aria-current={module === item.id ? "page" : undefined} onClick={() => onModule(item.id)}>
-            {item.label}
-          </button>
+        <button type="button" aria-current={selection === "overview" ? "page" : undefined} onClick={() => onSelect("overview")}>Visão geral</button>
+        {adminGroups.map((item) => (
+          <section key={item.id}>
+            <p className="admin-group">{item.id} · {item.title}</p>
+            {adminModules.filter((module) => module.group === item.id).map((module) => (
+              <button key={module.id} type="button" aria-current={selection === module.id ? "page" : undefined} onClick={() => onSelect(module.id)}>
+                {module.id} {module.title}
+              </button>
+            ))}
+          </section>
         ))}
       </nav>
       <div className="admin-main">
+        <p className="admin-kicker">{group ? `${group.id} · ${group.title}` : "Sete macrogrupos"}</p>
         <h2>{title}</h2>
+        <p className="admin-lead">{current ? current.purpose : "Escolha o módulo. A mesa abre só quando o conteúdo já está no banco."}</p>
+        {current ? <p className="tool-help">{current.screen}</p> : null}
         {error ? <p className="err">{error}</p> : null}
         {!ready ? <p className="tool-help">Lendo o banco…</p> : children}
       </div>

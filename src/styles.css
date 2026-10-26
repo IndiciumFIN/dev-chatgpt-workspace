@@ -752,6 +752,14 @@ html[data-theme="dark"]:not([data-contrast="high"]) .desktop-nav .nav-guide {
   .admin-side { display: none; }
   .admin-main { min-width: 0; }
   .admin-main h2 { margin: 0 0 4px; font-size: 20px; }
+  .admin-kicker { margin: 0; color: var(--color-navy); font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .admin-lead { margin: 0 0 8px; color: var(--color-slate); }
+  .admin-group { margin: 14px 8px 4px; color: var(--color-muted); font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .mod-board h3 { margin: 16px 0 4px; font-size: 16px; }
+  .mod-grid { display: grid; gap: 8px; }
+  .mod-card { display: grid; gap: 4px; width: 100%; min-height: 44px; padding: 12px; text-align: left; background: var(--color-paper); border: 1px solid var(--color-line); border-radius: 6px; }
+  .mod-card b { color: var(--color-navy); }
+  .mod-card span { color: var(--color-muted); font-size: 13px; }
   .kpi-strip { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 12px 0; }
   .kpi { min-height: 64px; padding: 12px; background: var(--color-paper); border: 1px solid var(--color-line); }
   .kpi span { display: block; color: var(--color-muted); font-size: 12px; }
@@ -829,11 +837,12 @@ html[data-theme="dark"]:not([data-contrast="high"]) .desktop-nav .nav-guide {
   }
   @media (min-width: 960px) {
     .area-main:has(.admin-shell) { padding: 24px 20px 48px; }
-    .admin-shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .admin-shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; }
     .admin-jump { display: none; }
-    .admin-side { display: block; padding: 8px; background: var(--color-canvas); border: 1px solid var(--color-line); }
+    .admin-side { display: block; max-height: calc(100vh - 96px); overflow: auto; padding: 8px; background: var(--color-canvas); border: 1px solid var(--color-line); }
     .admin-side button { display: block; width: 100%; min-height: 44px; padding: 8px 10px; color: var(--color-slate); font-size: 14px; font-weight: 650; text-align: left; background: transparent; border: 0; border-radius: 6px; }
     .admin-side button[aria-current="page"] { color: var(--color-ink); background: var(--color-paper); }
+    .mod-grid { grid-template-columns: 1fr 1fr; }
     .kpi-strip { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   }
   .admin-card { display: grid; gap: 10px; }
@@ -871,13 +880,10 @@ html[data-theme="dark"]:not([data-contrast="high"]) .desktop-nav .nav-guide {
     color: #fff;
     font-size: 14px;
   }
-  .btn-line {
-    height: 36px;
-    padding: 0 12px;
-    background: transparent;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.5);
-    font-size: 13px;
+  .admin-shell .btn-line {
+    color: var(--color-navy);
+    background: #fff;
+    border-color: rgba(26, 62, 116, 0.35);
   }
   .btn-sm {
     height: 32px;

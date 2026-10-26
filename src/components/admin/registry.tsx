@@ -9,9 +9,9 @@ import { useStored } from "@/lib/stored";
 import { templateContracts } from "@/lib/template-contract";
 import { tools } from "@/lib/tools/catalog";
 
-export function ContentModule({ desk }: { desk: SourceTool[] }) {
+export function ContentModule({ desk, tab: forced = "paginas" }: { desk: SourceTool[]; tab?: string }) {
   const { templates, families, pages: storedPages } = useStored();
-  const [tab, setTab] = useState("paginas");
+  const [tab, setTab] = useState(forced);
   const [search, setSearch] = useState("");
   const [localeError, setLocaleError] = useState("");
   const published = new Map(desk.map((tool) => [tool.slug, tool]));
@@ -34,7 +34,7 @@ export function ContentModule({ desk }: { desk: SourceTool[] }) {
             <table className="admin-table">
               <thead><tr><th>Página</th><th>Rota</th><th>Estado</th></tr></thead>
               <tbody>
-                {pages.map((page) => <tr key={page.slug}><td data-label="Página"><Link to="/secao/$slug" params={{ slug: page.slug }}>{page.title}</Link></td><td data-label="Rota">/secao/{page.slug}</td><td></td></tr>)}
+                {pages.map((page) => <tr key={page.slug}><td data-label="Página"><Link to="/secao/$slug" params={{ slug: page.slug }}>{page.title}</Link></td><td data-label="Rota">/secao/{page.slug}</td><td data-label="Estado"><Status value="Na seção" /></td></tr>)}
                 {tools.filter((tool) => tool.title.toLowerCase().includes(needle)).map((tool) => {
                   const row = published.get(tool.slug);
                   const state = !row ? "Fora do banco" : row.published ? "Publicado" : "Oculto na fonte";
@@ -74,9 +74,9 @@ export function ContentModule({ desk }: { desk: SourceTool[] }) {
   );
 }
 
-export function SystemModule() {
+export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
   const { tokens } = useStored();
-  const [tab, setTab] = useState("visual");
+  const [tab, setTab] = useState(forced);
   const [search, setSearch] = useState("");
   const [files, setFiles] = useState<string[]>([]);
   const [mediaError, setMediaError] = useState("");

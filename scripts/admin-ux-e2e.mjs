@@ -74,6 +74,19 @@ try{
       await p.locator('#ce-modules-search').fill('validação');
       await assertNoOverflow(p,'admin-modules-search-390');
     }
+    if(width<960) await select.selectOption('governance');
+    else await nav.getByRole('button',{name:/Governança/}).click();
+    await p.getByRole('heading',{name:'Governança e evidências'}).waitFor();
+    await assertNoOverflow(p,'admin-governance-'+width);
+    if([320,390,768,1440].includes(width)) await screenshot(p,'admin-governance-'+width+'.png');
+    if(width===390) {
+      await p.getByRole('tab',{name:'Normativos'}).click();
+      assert.equal(await p.locator('.ce-gov-item').count(),8,'norms must start with eight records');
+      await p.getByRole('button',{name:/Mostrar mais 8/}).click();
+      assert.equal(await p.locator('.ce-gov-item').count(),16,'governance list must expand');
+      await p.locator('#ce-gov-search').fill('8000');
+      await assertNoOverflow(p,'admin-governance-search-390');
+    }
     if(width<960) await select.selectOption('templates');
     else await nav.getByRole('button',{name:/Templates/}).click();
     await p.getByRole('heading',{name:'Inventário canônico de templates'}).waitFor();

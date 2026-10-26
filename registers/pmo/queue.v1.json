@@ -133,6 +133,27 @@
       "to": "IN_PROGRESS",
       "date": "2026-10-24",
       "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
+    },
+    {
+      "seq": 20,
+      "date": "2026-10-26",
+      "workId": "WO-GOV-TRANS-001",
+      "to": "IN_PROGRESS",
+      "reason": "Decisão reafirmada pelo proprietário: 18 conjuntos ISO/ISO-IEC são documentos internos, não documentos ISO oficiais adquiridos; manter metadados/evidência separados, sem promover cláusulas."
+    },
+    {
+      "seq": 21,
+      "date": "2026-10-26",
+      "workId": "WO-CKO-ID-009",
+      "to": "IN_PROGRESS",
+      "reason": "Importados achados SO #9: 38 mestres, 12 identidades e 6 contratos sem campos; evidências versionadas."
+    },
+    {
+      "seq": 22,
+      "date": "2026-10-26",
+      "workId": "WO-CKO-LINK-010",
+      "to": "QUEUED",
+      "reason": "Integridade B3/B4 e 21 módulos, 22 arestas direcionais a reconciliar; issue #10."
     }
   ],
   "items": [
@@ -284,13 +305,13 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/scripts/verify-transversal-public-article-index.py"
       ],
       "id": "WO-GOV-TRANS-001",
-      "next": "Índice mecânico de 1.577 cabeçalhos de artigos em 21 atos públicos e hash conferido; 16 documentos sinalizados para revisão de anexos/duplicidades. Próximas fases: revisão humana de segmentação e vigência, delimitação de aplicabilidade e direitos, requisitos por cláusula confirmada, validação e eventual admissão Kernel. ISO permanece metadata-only.",
+      "next": "18 conjuntos ISO/ISO-IEC = documentação INTERNA derivada/estrutural para controle e planejamento, NÃO originais oficiais ISO nem declaração de conformidade. Preservar HOLD_HUMAN nos authority_bindings; priorizar 25 fontes públicas, revisão dos 21 atos e 16 sinalizações, vigência e direitos, junto ao CKO.",
       "order": 8,
       "owner": "ChatGPT + auditor de normas técnicas",
       "priority": "P0",
       "status": "IN_PROGRESS",
       "title": "Matriz transversal de governança e Master Data (CKO)",
-      "updatedOn": "2026-10-24"
+      "updatedOn": "2026-10-26"
     },
     {
       "criteria": "Aprovações humanas e requisitos técnicos completos e auditáveis.",
@@ -311,12 +332,50 @@
       "status": "HOLD_HUMAN",
       "title": "Homologação independente",
       "updatedOn": "2026-10-23"
+    },
+    {
+      "id": "WO-CKO-ID-009",
+      "order": 10,
+      "title": "Reconciliação de identidade canônica B3/B4 — 38 + 12 + 6",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "owner": "ChatGPT + revisor CKO independente",
+      "dependencies": [
+        "WO-GOV-TRANS-001"
+      ],
+      "criteria": "38 mestres rastreados e versões recuperadas ou HOLD justificado; 12 identidades semânticas resolvidas por prova; 6 objetos sem campos classificados por contrato; testes negativos; nenhum ID sintético nem promoção automática.",
+      "evidence": [
+        "docs/governance/audits/SO-009-B3-B4-TRACEABILITY-20261026.md",
+        "scripts/audit-so009-b3-md-consistency.readonly.sql",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9"
+      ],
+      "next": "Identificar fontes mestras dos 38 e completar validação cruzada de 12 e seis; revisão independente antes da admissão.",
+      "updatedOn": "2026-10-26"
+    },
+    {
+      "id": "WO-CKO-LINK-010",
+      "order": 11,
+      "title": "Integridade referencial e relações módulos→B3/B4→MDX",
+      "status": "QUEUED",
+      "priority": "P0",
+      "owner": "ChatGPT + MiniMax (arquivos distintos) + auditor independente",
+      "dependencies": [
+        "WO-CKO-ID-009",
+        "WO-SEC-001"
+      ],
+      "criteria": "21 módulos com semântica das 22 divergências decidida, ligações tipadas/versionadas, testes de integridade e revogação reversa, consumo de fontes únicas no MDX, sem duplicação de mestres.",
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/10",
+        "docs/governance/audits/SO-009-B3-B4-TRACEABILITY-20261026.md"
+      ],
+      "next": "Confrontar contrato de arestas com B3/B4, elaborar validação CI e revisar com MiniMax antes de alterar módulos.",
+      "updatedOn": "2026-10-26"
     }
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 17,
+  "revision": 18,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
-  "updatedOn": "2026-10-24"
+  "updatedOn": "2026-10-26"
 }

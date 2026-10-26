@@ -168,6 +168,13 @@
       "workId": "WO-CKO-ID-009",
       "to": "IN_PROGRESS",
       "reason": "Identificado namespace instrumental tool_slug::campo (1.199/1.199), 17 discrepâncias entre nome legado e contrato; FIND de origem de campos documentado."
+    },
+    {
+      "seq": 25,
+      "date": "2026-10-26",
+      "workId": "WO-CKO-ID-009",
+      "to": "IN_PROGRESS",
+      "reason": "Auditoria confirmou 1.199 IDs distintos e 17 diferenças fonte/nome; script determinístico de colisões de aliases criado; gate de colisões ainda sem resultado."
     }
   ],
   "items": [
@@ -363,9 +370,10 @@
         "scripts/audit-so009-b3-md-consistency.readonly.sql",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9",
         "scripts/audit-so009-dossier-identity.readonly.sql",
-        "docs/governance/audits/SO-009-FIELD-ORIGIN-20261026.md"
+        "docs/governance/audits/SO-009-FIELD-ORIGIN-20261026.md",
+        "scripts/audit-so009-field-alias-integrity.readonly.sql"
       ],
-      "next": "Origem dos 1.199 campos: IDs compostos tool_slug::campo; 1.182 exatos e 17 aliases/renomeações candidatos. Analisar 17 diferenças, catalogar namespaces instrumentais e conciliar 38 mestres por evidência; não aplicar FK direta ao field_catalog B1.",
+      "next": "17 candidatos de alias: 1.199 source_field_id distintos; executar gate de colisão por (tool_slug,field_name), verificar rastreio dos aliases e evidência de origem antes de homologar.",
       "updatedOn": "2026-10-26"
     },
     {
@@ -390,7 +398,7 @@
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 20,
+  "revision": 21,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

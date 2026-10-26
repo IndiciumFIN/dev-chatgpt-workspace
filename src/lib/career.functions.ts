@@ -9,6 +9,8 @@ const appStages=["SAVED","APPLIED","INTERVIEW","TECHNICAL_STAGE","OFFER","APPROV
 const credentialStates=["PLANNED","IN_PROGRESS","COMPLETED","RENEWAL_REVIEW"] as const;
 
 export type CareerAudience="PROFESSIONAL"|"YOUTH";
+export type CareerJsonValue=string|number|boolean|null|CareerJsonValue[]|{[key:string]:CareerJsonValue};
+export type CareerJsonObject={[key:string]:CareerJsonValue};
 export type CareerSnapshot={
  projection:{id:string;routeSlug:string;title:string;lead:string;audience:CareerAudience};
  modules:{id:string;slug:string;title:string;description:string;objectClass:string;family:string;sortOrder:number}[];
@@ -23,7 +25,7 @@ export type CareerSnapshot={
  market:{id:string;metricKey:string;label:string;region:string;metricValue:number|null;unit:string|null;status:string}[];
  editorial:{id:string;slug:string;title:string;dek:string;contentType:string;campaignKey:string|null;linkedObjectType:string|null;linkedObjectRef:string|null;status:string}[];
  editorialDocuments:{id:string;editorialId:string;slug:string;templateId:string;locale:string;audience:string;title:string;lead:string;sourceGate:string;humanGate:string;status:string}[];
- editorialBlocks:{documentId:string;blockOrder:number;blockId:string;blockType:string;semanticRole:string;heading:string|null;body:string;payload:Record<string,unknown>;sourceMode:string;sourceRefs:string[]}[];
+ editorialBlocks:{documentId:string;blockOrder:number;blockId:string;blockType:string;semanticRole:string;heading:string|null;body:string;payload:CareerJsonObject;sourceMode:string;sourceRefs:string[]}[];
  reflection:{id:string;prompt:string;dimension:string;weight:number;sortOrder:number}[];
  learningResources:{id:string;kind:string;title:string;description:string;sourceRequired:boolean;status:string}[];
  interviewScenarios:{id:string;kind:string;title:string;description:string;audience:string;status:string}[];
@@ -65,7 +67,7 @@ export const getCareerSnapshot=createServerFn({method:"GET"})
  const market=await sql.query<{id:string;metric_key:string;label:string;region:string;metric_value:number|null;unit:string|null;status:string}>("select id,metric_key,label,region,metric_value,unit,status from career_market_signal_candidate order by id");
  const editorial=await sql.query<{id:string;slug:string;title:string;dek:string;content_type:string;campaign_key:string|null;linked_object_type:string|null;linked_object_ref:string|null;status:string}>("select id,slug,title,dek,content_type,campaign_key,linked_object_type,linked_object_ref,status from career_editorial_candidate where audience in ($1,'BOTH') order by sort_order,title",[data.audience]);
  const editorialDocuments=await sql.query<{id:string;editorial_id:string;slug:string;template_id:string;locale:string;audience:string;title:string;lead:string;source_gate:string;human_gate:string;status:string}>("select id,editorial_id,slug,template_id,locale,audience,title,lead,source_gate,human_gate,status from career_editorial_document_candidate where audience in ($1,'BOTH') order by updated_at desc,title",[data.audience]);
- const editorialBlocks=await sql.query<{document_id:string;block_order:number;block_id:string;block_type:string;semantic_role:string;heading:string|null;body:string;payload_json:Record<string,unknown>;source_mode:string;source_refs_json:string[]}>("select b.document_id,b.block_order,b.block_id,b.block_type,b.semantic_role,b.heading,b.body,b.payload_json,b.source_mode,b.source_refs_json from career_editorial_block_candidate b join career_editorial_document_candidate d on d.id=b.document_id where d.audience in ($1,'BOTH') order by b.document_id,b.block_order",[data.audience]);
+ const editorialBlocks=await sql.query<{document_id:string;block_order:number;block_id:string;block_type:string;semantic_role:string;heading:string|null;body:string;payload_json:CareerJsonObject;source_mode:string;source_refs_json:string[]}>("select b.document_id,b.block_order,b.block_id,b.block_type,b.semantic_role,b.heading,b.body,b.payload_json,b.source_mode,b.source_refs_json from career_editorial_block_candidate b join career_editorial_document_candidate d on d.id=b.document_id where d.audience in ($1,'BOTH') order by b.document_id,b.block_order",[data.audience]);
  const reflection=data.audience==="YOUTH"?await sql.query<{id:string;prompt:string;dimension:string;weight:number;sort_order:number}>("select id,prompt,dimension,weight,sort_order from career_reflection_question_candidate where audience in ('YOUTH','BOTH') order by sort_order"):[];
  const learningResources=await sql.query<{id:string;kind:string;title:string;description:string;source_required:boolean;status:string}>("select id,kind,title,description,source_required,status from career_learning_resource_type_candidate order by title");
  const interviewScenarios=await sql.query<{id:string;kind:string;title:string;description:string;audience:string;status:string}>("select id,kind,title,description,audience,status from career_interview_scenario_candidate where audience in ($1,'BOTH') order by title",[data.audience]);

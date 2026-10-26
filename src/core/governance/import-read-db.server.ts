@@ -58,10 +58,24 @@ export async function withImportReadOnlySnapshot(
     transaction=true;
     await client.query("SET LOCAL statement_timeout = '3000ms'");
     await client.query("SET LOCAL idle_in_transaction_session_timeout = '10000ms'");
-    const proof=await client.query('select current_user::text as reader_role, txid_current_snapshot()::text as snapshot_ref');
+    const proof=await client.query(`select current_user::text as reader_role,
+      txid_current_snapshot()::text as snapshot_ref,
+      current_setting('transaction_read_only')::text as tx_mode,
+      (select (rolsuper or rolbypassrls or rolcreaterole or rolcreatedb)
+         from pg_roles where rolname=current_user) as elevated_role,
+      (has_table_privilege(current_user,'cko_evidence.sources','INSERT,UPDATE,DELETE,TRUNCATE')
+       or has_table_privilege(current_user,'cko_orch.policy_registry','INSERT,UPDATE,DELETE,TRUNCATE')
+       or has_table_privilege(current_user,'cko_validation.validators','INSERT,UPDATE,DELETE,TRUNCATE'))
+         as can_mutate_catalogs,
+      (has_schema_privilege(current_user,'cko_evidence','CREATE')
+       or has_schema_privilege(current_user,'cko_orch','CREATE')
+       or has_schema_privilege(current_user,'cko_validation','CREATE')) as can_create_in_catalogs`);
     const proofRow=proof.rows?.[0] as Record<string,unknown>|undefined;
     if(proofRow?.reader_role!==settings.expectedRole||typeof proofRow.snapshot_ref!=='string'||
-       !proofRow.snapshot_ref.trim())throw Error('Identidade ou snapshot da conexão de leitura não verificado.');
+       !proofRow.snapshot_ref.trim()||proofRow.tx_mode!=='on'||
+       proofRow.elevated_role!==false||proofRow.can_mutate_catalogs!==false||
+       proofRow.can_create_in_catalogs!==false)
+      throw Error('Perfil ou snapshot da conexão de leitura não verificado.');
     const snapshotRef=proofRow.snapshot_ref;
     const reader=createCatalogReconciliationReader(actor,profile,async()=>({
       snapshotRef,

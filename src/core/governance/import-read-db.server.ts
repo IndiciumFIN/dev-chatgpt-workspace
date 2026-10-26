@@ -5,8 +5,8 @@
  */
 import { Pool, type PoolClient } from 'pg';
 import type { ImportProfile, ImportReview } from './bulk-import';
-import { createCatalogReconciliationReader, type ServerVerifiedActor } from './import-read-service';
-import { reconcileImportReview, type ReconciliationReport } from './bulk-import-reconciliation';
+import { createCatalogReconciliationReader, type ServerVerifiedActor } from './import-read-service.ts';
+import { reconcileImportReview, type ReconciliationReport } from './bulk-import-reconciliation.ts';
 
 export type ReadCatalogSettings={
   databaseUrl:string; expectedRole:string;

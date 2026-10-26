@@ -48,7 +48,7 @@ describe('governed import preflight — no persistence',()=>{
   assert.deepEqual(out.records[0].data.rule_json,{deny:true});
  });
  it('flags missing required fields, duplicated IDs, invalid JSON and formula prefixes',()=>{
-  const invalid=good+'P-1;1.0.0;governance;=HYPERLINK("https://evil");D2;BLOCK;{};true\nP-2;1;gov;X;D2;BLOCK;not-json;true\n';
+  const invalid=good+'P-1;1.0.0;governance;=2+2;D2;BLOCK;{};true\nP-2;1;gov;X;D2;BLOCK;not-json;true\n';
   const result=reviewBulkImport(parseBulkImport('x.csv',invalid),policy,suggestedMapping(parseBulkImport('x.csv',invalid),policy));
   assert.equal(result.duplicates,1);
   assert.equal(result.held,2);

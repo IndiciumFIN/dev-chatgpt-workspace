@@ -48,6 +48,22 @@ function tileItems(
 }
 
 const pages: Record<string, Section> = {
+  carreira: {
+    slug: "carreira",
+    kicker: "Carreira",
+    title: "Carreira e Desenvolvimento",
+    lead: "Passaporte profissional, skills, trilhas, oportunidades, candidaturas, credenciais, documentos, mercado e conteúdos projetados a partir do banco candidato.",
+    kind: "pages",
+    blocks: [],
+  },
+  jovens: {
+    slug: "jovens",
+    kicker: "Jovens",
+    title: "Portal do Jovem",
+    lead: "Profissões, Enfermagem como carreira, interesses, formação, oportunidades, primeiros passos e experiências educativas projetadas do mesmo banco de carreira.",
+    kind: "pages",
+    blocks: [],
+  },
   concurso: {
     slug: "concurso",
     kicker: "Guia de estudos",
@@ -495,6 +511,8 @@ export function getSection(slug: string): Section | undefined {
 
 export function listSections() {
   return [
+    "carreira",
+    "jovens",
     "concurso",
     "sobre",
     "calculadoras",

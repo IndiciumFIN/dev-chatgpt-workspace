@@ -30,7 +30,7 @@ jobs:
           from pathlib import Path
           x=json.loads(Path('contracts/simulados-enfermagem/attempt-lifecycle.v0.1.0.schema.json').read_text())
           assert x['$schema']=='https://json-schema.org/draft/2020-12/schema'
-          assert 'STUDY_EXPLICIT' not in x['allOf'][0]['then']['properties']['answer_visibility'].get('enum', [])
+          assert x['allOf'][0]['then']['properties']['answer_visibility']['not']['const'] == 'STUDY_EXPLICIT'
           print('SCHEMA_STATIC_CHECK_PASS; this is not full JSON Schema validation')
           PY
       - name: Candidate extraction tests

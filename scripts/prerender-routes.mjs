@@ -49,8 +49,9 @@ const EXTRA = (() => {
   const bloco = src.slice(src.indexOf("export const templateFamilies"));
   const ids = [...bloco.matchAll(/^\s{4}id:\s*"([^"]+)"/gm)].map((m) => m[1]);
   if (!ids.length) throw new Error("templateFamilies não encontrado em src/lib/templates.ts");
-  const curiositySlugs = JSON.parse(readFileSync("src/lib/content/curiosidades/catalog.json", "utf8")).map((x) => x.slug);
-  return ["/blog", ...curiositySlugs.map((slug) => "/blog/" + slug), "/modelos", ...ids.map((id) => `/modelos/${id}`)];
+  // Apenas a entrada do blog fica materializada. As 87 páginas em HOLD não
+  // recebem artefatos de rota nem noindex-only público.
+  return ["/blog", "/modelos", ...ids.map((id) => `/modelos/${id}`)];
 })();
 
 export const reachablePaths = [...publicPathsForPrerender, ...EXTRA.filter((p) => !publicPathsForPrerender.includes(p))];

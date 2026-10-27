@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "agent_slug": {
+      "type": "string"
+    },
+    "anomalies_detected": {
+      "type": "number"
+    },
+    "baseline": {
+      "type": "object"
+    },
+    "envelope": {
+      "type": "object"
+    },
+    "last_updated": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "calibrating",
+        "active",
+        "review_required"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "BehaviorProfile"
+}

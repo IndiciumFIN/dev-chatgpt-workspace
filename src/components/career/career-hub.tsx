@@ -138,7 +138,7 @@ function EditorialBlock({block,snapshot}:{block:CareerSnapshot["editorialBlocks"
  const refs=block.sourceRefs.map(id=>snapshot.sources.find(s=>s.id===id)).filter((x):x is CareerSnapshot["sources"][number]=>Boolean(x));
  const bindings=snapshot.contentClaimBindings.filter(b=>b.documentId===block.documentId&&b.blockId===block.blockId);
  const claims=bindings.map(b=>({binding:b,claim:snapshot.claims.find(c=>c.id===b.claimId)})).filter((x):x is {binding:CareerSnapshot["contentClaimBindings"][number];claim:CareerSnapshot["claims"][number]}=>Boolean(x.claim));
- const trace=claims.length?<ClaimTrace claims={claims}/>:null;
+ const trace=claims.length?<ClaimTrace claims={claims} snapshot={snapshot}/>:null;
  if(block.blockType==="steps")return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body?<p>{block.body}</p>:null}<ol>{items.map((item,i)=><li key={i}>{item}</li>)}</ol>{trace}</section>;
  if(block.blockType==="callout")return <Callout tone={block.semanticRole==="safety"?"warn":"note"}><b>{block.heading}</b>{block.body?<> {block.body}</>:null}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.authority}</a>)}</div>:null}{trace}</Callout>;
  if(block.blockType==="references")return <section className="ce-editorial-block ce-editorial-references"><h4>{block.heading??"Referências"}</h4>{block.body?<p>{block.body}</p>:null}<ul>{refs.map(r=><li key={r.id}><a href={r.uri} target="_blank" rel="noreferrer">{r.title}</a><span>{r.authority} · {r.status}</span></li>)}</ul></section>;
@@ -146,8 +146,13 @@ function EditorialBlock({block,snapshot}:{block:CareerSnapshot["editorialBlocks"
  return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body.split("\n\n").map((p,i)=><p key={i}>{p}</p>)}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}{trace}</section>;
 }
 
-function ClaimTrace({claims}:{claims:{binding:CareerSnapshot["contentClaimBindings"][number];claim:CareerSnapshot["claims"][number]}[]}){
- return <details className="ce-claim-trace"><summary>Evidência atômica · {claims.length} claim{claims.length===1?"":"s"} · revisão pendente</summary><ul>{claims.map(({binding,claim})=><li key={claim.id} data-claim-id={claim.id}><code>{claim.id}</code><span>{binding.bindingRole} · {claim.assertionKey} · {claim.status}/{claim.review}</span></li>)}</ul></details>
+function ClaimTrace({claims,snapshot}:{claims:{binding:CareerSnapshot["contentClaimBindings"][number];claim:CareerSnapshot["claims"][number]}[];snapshot:CareerSnapshot}){
+ return <details className="ce-claim-trace"><summary>Evidência atômica · {claims.length} claim{claims.length===1?"":"s"} · revisão pendente</summary><ul>{claims.map(({binding,claim})=>{
+  const fact=snapshot.atomicFacts.find(f=>f.id===claim.atomicFactId);
+  const fragment=fact?snapshot.sourceFragments.find(f=>f.id===fact.fragmentId):undefined;
+  const evidence=snapshot.evidenceBundles.find(e=>e.claimId===claim.id);
+  return <li key={claim.id} data-claim-id={claim.id}><code>{claim.id}</code><span>{binding.bindingRole} · {claim.assertionKey} · {claim.status}/{claim.review}</span>{fragment?<span>Fragmento: {fragment.locator} · {fragment.locatorStatus}</span>:null}{fact?<span>Fato: {fact.subjectKey} → {fact.predicateKey} → {fact.objectValue} · {fact.status}/{fact.review}</span>:null}{evidence?<span>Evidence bundle: {evidence.id} · {evidence.status}/{evidence.review}</span>:null}</li>
+ })}</ul></details>
 }
 
 function Roles({snapshot}:{snapshot:CareerSnapshot}){return <div className="ce-career-grid">{snapshot.roles.map(r=><article className="ce-career-card" key={r.id}><h3>{r.title}</h3><p>{r.summary}</p><p style={{marginTop:8}}><b>Caminho formativo:</b> {r.educationPath}</p><footer><span className="ce-career-badge">{r.family}</span></footer></article>)}</div>}

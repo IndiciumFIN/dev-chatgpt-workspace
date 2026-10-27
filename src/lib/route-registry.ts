@@ -18,7 +18,6 @@
  */
 import { listSections } from "@/lib/sections";
 import { articleSlugs, findArticle } from "@/lib/content/articles/index";
-import { curiosityCatalog } from "@/lib/content/curiosidades/catalog";
 import { tools } from "@/lib/tools/catalog";
 import { localesWithInterface } from "@/lib/locale-registry";
 import { siteOrigin } from "@/lib/site-origin";
@@ -62,17 +61,8 @@ function artigos(): RouteEntry[] {
       indexavel: true,
     };
   });
-  const canonicalSlugs = new Set<string>(articleSlugs);
-  const curiosityPreviews = curiosityCatalog
-    .filter((item) => !canonicalSlugs.has(item.slug))
-    .map((item) => ({
-      path: "/blog/" + item.slug,
-      kind: "artigo" as const,
-      title: item.title,
-      description: "Prévia editorial pendente de validação.",
-      indexavel: false,
-    }));
-  return [...preparedArticles, ...curiosityPreviews];
+  // Curiosidades candidatas não entram no registro público até admissão governada.
+  return preparedArticles;
 }
 
 function ferramentas(): RouteEntry[] {

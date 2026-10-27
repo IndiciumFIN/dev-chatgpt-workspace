@@ -11,7 +11,8 @@
     "remoteConnections": false,
     "migrations": [
       "migrations/0004_career_youth_candidate.sql",
-      "migrations/0005_career_editorial_content_candidate.sql"
+      "migrations/0005_career_editorial_content_candidate.sql",
+      "migrations/0006_career_atomization_candidate.sql"
     ]
   },
   "projections": [
@@ -51,7 +52,11 @@
     "schemas/career-projection-contract.schema.json",
     "schemas/career-capability-governance.schema.json",
     "schemas/career-editorial-document.schema.json",
-    "schemas/career-editorial-block.schema.json"
+    "schemas/career-editorial-block.schema.json",
+    "schemas/career-source-fragment.schema.json",
+    "schemas/career-atomic-fact.schema.json",
+    "schemas/career-evidence-bundle.schema.json",
+    "schemas/career-content-claim-binding.schema.json"
   ],
   "canonicalObjects": [
     "CareerModule",
@@ -78,7 +83,11 @@
     "CareerProjectionContract",
     "CareerCapabilityGovernance",
     "CareerEditorialDocument",
-    "CareerEditorialBlock"
+    "CareerEditorialBlock",
+    "CareerSourceFragment",
+    "CareerAtomicFact",
+    "CareerEvidenceBundle",
+    "CareerContentClaimBinding"
   ],
   "safeguards": [
     "ui_reads_modules_from_database",
@@ -96,7 +105,10 @@
     "contracts/cko-skeletons/03-contratos-canonicos/fundamentos-e-evidencia/relation.schema.json",
     "contracts/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.schema.json",
     "contracts/cko-editorial/schemas/projection_request.schema.json",
-    "contracts/cko-editorial/schemas/resource_binding.schema.json"
+    "contracts/cko-editorial/schemas/resource_binding.schema.json",
+    "contracts/cko-schemas/claim.schema.json",
+    "contracts/cko-schemas/reference.schema.json",
+    "contracts/cko-schemas/field_definition.schema.json"
   ],
   "acquisition": {
     "validator": "scripts/validate-career-acquisition-batch.mjs",
@@ -111,6 +123,19 @@
     "sourceSnapshots": "registers/career/source-snapshots.v1.json",
     "validator": "scripts/check-career-editorial-content.mjs",
     "humanGate": "HOLD",
+    "publicReleaseAuthorized": false
+  },
+  "atomization": {
+    "registry": "registers/career/atomization.v1.json",
+    "validator": "scripts/check-career-atomization.mjs",
+    "sourceCount": 6,
+    "fragmentCount": 19,
+    "atomicFactCount": 19,
+    "claimCount": 19,
+    "evidenceBundleCount": 19,
+    "authorityBindingCount": 16,
+    "claimSchemaRef": "contracts/cko-schemas/claim.schema.json",
+    "humanReview": "PENDING",
     "publicReleaseAuthorized": false
   }
 }

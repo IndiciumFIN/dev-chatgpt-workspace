@@ -17,8 +17,11 @@
 - Revisar taxonomias de papéis, skills, trilhas, oportunidades, credenciais, linguagem para jovens e separação editorial/funcional.
 - Critério: aceite humano registrado ou FINDs documentados.
 
-### Fontes e aplicabilidade
-- Qualificar requisitos profissionais, formação, credenciais, trabalhista e jurisdição.
+### Fontes, claims e aplicabilidade
+- A atomização inicial está materializada: 19 fatos → 19 claims → 19 evidence bundles.
+- **Falta revisão humana dos 19 claims** antes de qualquer `EDITORIAL_APPROVED` / `ASSURED`.
+- 16 claims regulatórios têm authority binding candidato; os 3 claims CNCT permanecem sem binding temporal até validar edição/vigência/pinpoint.
+- Continuar qualificando requisitos profissionais, formação, credenciais, trabalhista e jurisdição nas próximas fontes.
 - Não promover requisito genérico como regra universal.
 
 ## P1 — dados externos atuais
@@ -140,4 +143,14 @@ Todos permanecem com `human_gate=HOLD`. Conteúdos factuais usam `source_mode=ev
 - editorial reader DB-driven;
 - source snapshots com SHA-256;
 - gate editorial dedicado;
-- links de referência oficial renderizados no browser.
+- links de referência oficial renderizados no browser;
+- migration de atomização `0006`;
+- 19 SourceFragments;
+- 19 AtomicFacts;
+- 19 CKO Claims;
+- 19 EvidenceBundles candidatos;
+- 16 AuthorityBindings regulatórios;
+- claim-level atomization 19/19;
+- bindings de claims para todos os blocos factuais não-referência;
+- gate `audit:career-atomization`;
+- linhagem Source → Fragment → Fact → Claim → Evidence → Authority → Content comprovada em PGLite e Chromium.

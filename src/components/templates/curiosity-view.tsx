@@ -14,12 +14,20 @@ import {
  * Só invocar após gate de autorização no servidor; conteúdo de HOLD não é público.
  */
 export function CuriosityView({
-  content, sources, publishedRelatedSlugs = [], status = "NEEDS_REVIEW",
+  content, sources, publishedRelatedSlugs = [], status = "NEEDS_REVIEW", alternatives = [],
 }: {
   content: CuriosityContent;
   sources: ReadonlyMap<string, CuriositySource>;
   publishedRelatedSlugs?: readonly string[];
   status?: string;
+  alternatives?: readonly {
+    originalSourceId: string;
+    disposition: "CANDIDATE_FOR_REVIEW" | "HOLD_NO_MATCH";
+    referenceLocation: "PAGE_REFERENCES" | "SECTION_ONLY";
+    alternative: { title: string | null; organization: string | null; url: string | null };
+    verification: string;
+    notes: string;
+  }[];
 }) {
   const citationNumbers = curiosityReferenceNumbers(content);
   const available = new Set(publishedRelatedSlugs);
@@ -80,6 +88,27 @@ export function CuriosityView({
             ? { author: source.organization, title: source.title, href: source.url || undefined }
             : { title: "Fonte pendente de identificação: " + id };
         })} />
+        {alternatives.length > 0 ? (
+          <details className="inst-history">
+            <summary>Alternativas bibliográficas para revisão ({alternatives.length})</summary>
+            <p className="inst-note"><strong>Não homologadas.</strong> As alternativas abaixo são propostas de conciliação, não substituições aprovadas. Os IDs originais permanecem preservados no banco.</p>
+            <ol>
+              {alternatives.map((item) => (
+                <li key={item.originalSourceId + "-" + item.referenceLocation}>
+                  <strong>{item.originalSourceId}</strong>
+                  {item.referenceLocation === "SECTION_ONLY" ? " (citação só na seção)" : ""}
+                  {" — "}
+                  {item.disposition === "HOLD_NO_MATCH" || !item.alternative.url
+                    ? <strong>Sem fonte defensável; HOLD_HUMAN</strong>
+                    : <a href={item.alternative.url} target="_blank" rel="noopener noreferrer">
+                        {item.alternative.organization ?? "Instituição"}: {item.alternative.title ?? "Abrir referência candidata"}
+                      </a>}
+                  <p className="inst-note">{item.notes} · Etapa: {item.verification}; claims e direitos não validados.</p>
+                </li>
+              ))}
+            </ol>
+          </details>
+        ) : null}
       </section>
     </ArticlePage>
   );

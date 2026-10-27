@@ -14,6 +14,7 @@ on:
       - 'scripts/curiosidades-e2e.mjs'
       - 'scripts/test-curiosidades-publication-gate.mjs'
       - 'scripts/curiosidades-audit-finds.mjs'
+      - 'scripts/export-curiosidades-source-alternatives-csv.mjs'
       - '.github/workflows/curiosidades-mem-validation.yml'
   workflow_dispatch:
 
@@ -49,6 +50,8 @@ jobs:
           node scripts/check-contract-coverage.mjs
       - name: Registrar FINDs dos 87 rascunhos sem os corpos dos textos
         run: node scripts/curiosidades-audit-finds.mjs
+      - name: Preparar CSV de revisão bibliográfica sem conteúdo clínico
+        run: node scripts/export-curiosidades-source-alternatives-csv.mjs
       - name: Build SPA público sem conteúdos não homologados
         run: npm run build:spa
       - name: Gate fail-closed — sem rotas, sitemap ou conteúdo público dos 87 HOLD
@@ -78,5 +81,6 @@ jobs:
           path: |
             audit-evidence/curiosidades/*.png
             audit-evidence/curiosidades/mem-editorial-find-register.v1.json
+            audit-evidence/curiosidades/mem-source-review.v1.csv
           if-no-files-found: warn
           retention-days: 7

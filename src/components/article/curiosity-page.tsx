@@ -2,6 +2,7 @@ import { CuriosityView } from "@/components/templates/curiosity-view";
 import type { CuriosityContent as MemCuriosityContent, CuriositySource as MemCuriositySource } from "@/lib/content/curiosidades/model";
 import type { CuriosityRecord, CuriositySource } from "@/lib/content/curiosidades/types";
 import sourceRegistry from "@/lib/content/curiosidades/sources.json";
+import alternativeRegistry from "../../../registers/curiosidades/mem-source-alternatives.v1.json";
 
 /**
  * Compatibilidade entre o snapshot de 87 páginas e o renderizador MEM único.
@@ -47,6 +48,14 @@ export function CuriosityPage({ record }: { record: CuriosityRecord }) {
       sources={sourceMap}
       status={record.content_status}
       publishedRelatedSlugs={[]}
+      alternatives={alternativeRegistry.items.filter((item) => item.slug === record.slug).map((item) => ({
+        originalSourceId: item.originalSourceId,
+        disposition: item.disposition as "CANDIDATE_FOR_REVIEW" | "HOLD_NO_MATCH",
+        referenceLocation: item.referenceLocation as "PAGE_REFERENCES" | "SECTION_ONLY",
+        alternative: item.alternative,
+        verification: item.verification,
+        notes: item.notes,
+      }))}
     />
   );
 }

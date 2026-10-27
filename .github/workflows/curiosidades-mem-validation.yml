@@ -12,6 +12,8 @@ on:
       - 'scripts/prerender-routes.mjs'
       - 'scripts/test-curiosidades-snapshot.mjs'
       - 'scripts/curiosidades-e2e.mjs'
+      - 'scripts/test-curiosidades-publication-gate.mjs'
+      - 'scripts/curiosidades-audit-finds.mjs'
       - '.github/workflows/curiosidades-mem-validation.yml'
   workflow_dispatch:
 
@@ -45,27 +47,19 @@ jobs:
         run: |
           node scripts/check-generated-fresh.mjs
           node scripts/check-contract-coverage.mjs
-      - name: Build SPA e materialização das 87 rotas
+      - name: Registrar FINDs dos 87 rascunhos sem os corpos dos textos
+        run: node scripts/curiosidades-audit-finds.mjs
+      - name: Build SPA público sem conteúdos não homologados
         run: npm run build:spa
-      - name: Comprovar 87 páginas acessíveis mas não indexadas
-        run: |
-          node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict';
-          import { readFileSync, existsSync } from 'node:fs';
-          const catalog=JSON.parse(readFileSync('src/lib/content/curiosidades/catalog.json','utf8'));
-          const output='.vercel/output/static';
-          for (const {slug} of catalog) {
-            assert.ok(existsSync(output+'/blog/'+slug+'/index.html'), 'Sem materialização: '+slug);
-          }
-          const sitemap=readFileSync(output+'/sitemap.xml','utf8');
-          assert.ok(!sitemap.includes('/blog/12-de-maio-e-o-dia-internacional-da-enfermagem'), 'Prévia indexada indevidamente');
-          console.log('PASS: '+catalog.length+' páginas materializadas fora do sitemap');
-          NODE
+      - name: Gate fail-closed — sem rotas, sitemap ou conteúdo público dos 87 HOLD
+        run: node scripts/test-curiosidades-publication-gate.mjs
       - name: Preparar navegador real para QA (sem deploy)
         run: npx playwright install --with-deps chromium
       - name: Executar catálogo e artigos em desktop/mobile
         run: |
           export PATH="$PWD/node_modules/.bin:$PATH"
+          # Prévia somente em servidor local efêmero do job, jamais no build público.
+          export VITE_CURIOSIDADES_MEM_PREVIEW=true
           node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 >/tmp/curiosidades-vite.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
@@ -83,5 +77,6 @@ jobs:
           name: curiosidades-preview-evidence
           path: |
             audit-evidence/curiosidades/*.png
+            audit-evidence/curiosidades/mem-editorial-find-register.v1.json
           if-no-files-found: warn
           retention-days: 7

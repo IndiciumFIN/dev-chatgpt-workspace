@@ -1,4 +1,5 @@
 import { ArticlePage } from "@/components/article/article-page";
+import { Callout } from "@/components/site/callout";
 import { ArticleFaq, Cite, ContextGrid, Keyline, ReferenceList } from "@/components/article/pieces";
 import { RelatedContent } from "@/components/site/related-content";
 import {
@@ -13,11 +14,12 @@ import {
  * Só invocar após gate de autorização no servidor; conteúdo de HOLD não é público.
  */
 export function CuriosityView({
-  content, sources, publishedRelatedSlugs = [],
+  content, sources, publishedRelatedSlugs = [], status = "NEEDS_REVIEW",
 }: {
   content: CuriosityContent;
   sources: ReadonlyMap<string, CuriositySource>;
   publishedRelatedSlugs?: readonly string[];
+  status?: string;
 }) {
   const citationNumbers = curiosityReferenceNumbers(content);
   const available = new Set(publishedRelatedSlugs);
@@ -44,6 +46,7 @@ export function CuriosityView({
     >
       <section className="inst-sec" id="introducao" aria-labelledby="curiosidade-intro-h">
         <h2 id="curiosidade-intro-h">Introdução</h2>
+        <Callout tone="warn"><strong>Prévia não homologada.</strong> Estado editorial: {status}. Este conteúdo não está aprovado para publicação pública ou orientação clínica.</Callout>
         {content.intro?.lead ? <p>{content.intro.lead}</p> : null}
         {content.intro?.bullets?.length ? (
           <ul className="inst-list">{content.intro.bullets.map((point, i) => <li key={i}>{point}</li>)}</ul>

@@ -5,6 +5,16 @@
 **Natureza:** diagnóstico técnico *live read-only* + inspeção estática do frontend + verificações offline do snapshot  
 **Decisão:** **HOLD_INCOMPLETE_GRAPH** para as duas ferramentas; não comprova nem autoriza cálculo clínico ou publicação.
 
+## Atualização executada na segunda rodada — 26/10/2026
+
+**A ligação dos seis evidence_refs de Apgar foi encontrada.** A primeira consulta verificava somente as chaves de `cko_evidence.sources/fragments/snapshots` e não resolvia a convenção `NDE-APGAR-AAP-ACOG-2015-CAND:REG-...`. Nova consulta `docs/audits/sql/CKO_APGAR_REQUIREMENT_BRIDGE_20261026.sql` percorreu `cko_governance.normative_document_extractions.extracted_requirements.requirements[]` e obteve **6/6 referências localizadas**. **Todas as seis** continuam associadas à extração `CANDIDATE_UNCHECKED`, requisitos `CANDIDATE`, sem checker, e claims sem revisão clínica. Corrigir a inferência de "sem referências no banco": havia linkage recuperável, mas ainda não homologado. Veja `FIND-CKO-DB-FIRST-EVIDENCE-20261026` atualizado.
+
+**Teste puramente matemático, no próprio Supabase:** `docs/audits/sql/CKO_APGAR_SYNTHETIC_ENUM_REPLAY_20261026.sql` percorreu os cinco campos pontuáveis candidatos, todos com enum `[0,1,2]`, e avaliou **243 combinações sintéticas** (3⁵); menor soma 0, maior 10, onze somas distintas, todas no intervalo. É apenas conferência aritmética de estrutura candidata, não teste clínico nem substituição de motor governado. `cko_governance.b6_clinical_train_v1_candidate.object_engine_ref` e `rule_pack_ref` continuam NULL. Em Fugulin, a consulta revelou 10 campos candidatos, **nenhum** com domínio enumerado de pontuação.
+
+**Reaproveitamento de histórico:** `cko_governance.object_versions.OV-APGAR-SUCCESSOR-0.2.0` registra `engine_test="1215/1215 PASS"`, `runtime_local="PASS"`, mas `release_authority=false`, `production_http_proof=false` e estado `CANDIDATE_AUDIT_PASS_WITH_SCOPED_HOLDS`. Esses valores são evidências declaradas do pacote anterior e requerem reexecução/verificação independente — não atribuir a elas execução na rodada atual.
+
+**Novos ativos verificáveis:** `audit-evidence/cko/db-first/20261026/apgar-requirement-bridge-replay.json`, `apgar-field-domains-from-db.json` e `scripts/cko-db-first-replay.test.mjs` (suíte versionada; sem execução de CI comprovada). Todas as conclusões de bloqueio abaixo permanecem válidas. 
+
 ## 1. Hipótese testada
 > Um único objeto canônico de ferramenta, nascido e governado no Supabase, deve resolver versão de escala, fontes primárias, claims, norma/contexto, campos/critério, regra de pontuação, cálculo determinístico, casos de teste e projeção editorial. O frontend não pode promover um conteúdo clínico independentemente do Kernel.
 
@@ -18,7 +28,7 @@ Foi executada a consulta `docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261
 | Dossiê em `cko_closure.tool_dossiers` | `HOLD` | `HOLD` | Release formalmente bloqueado |
 | Campos `md_tool_field_contract_v2_candidate` | 9 registrados | 10 registrados | Não estabelece por si só a completude da escala |
 | Claims `cko_evidence.claims` por `subject_ref` | 3, todos `CANDIDATE`, revisão requerida | 0 pelo ID exato | Claims clínicos não homologados; possível material fora dessas chaves |
-| Evidências diretamente resolvíveis | 6 refs dos claims de Apgar sem correspondência direta em `sources` / `fragments` / `snapshots` | Não aplicável à seleção: nenhum claim direto | Resolver lineage/identificadores antes de prosseguir |
+| Evidências diretamente resolvíveis | 6 refs sem correspondência **direta** em `sources` / `fragments` / `snapshots`; **6/6 recuperadas** via `normative_document_extractions.requirements[]` na atualização | Não aplicável à seleção: nenhum claim direto | Resolver lineage/identificadores antes de prosseguir |
 | Normativos por campo | 25 overlays ativos | 63 overlays ativos | Apenas contexto aplicável; não validar pontos/fórmulas por inferência |
 | Ligações master da ferramenta (`relationships`) | 0 por ID exato | 0 por ID exato | Não há grafo de relações diretas provado nesta consulta |
 | Motor específico B6 | `object_engine_ref=null` | `object_engine_ref=null` | Motor objeto não materializado nesta camada |

@@ -33,7 +33,18 @@ try {
       const url = base + "/blog/" + encodeURIComponent(item.slug);
       const response = await page.goto(url, { waitUntil: "networkidle" });
       assert.equal(response?.status(), 200, "HTTP para " + item.slug);
-      await page.getByRole("heading", { level: 1, name: item.title, exact: true }).waitFor();
+      try {
+        await page.getByRole("heading", { level: 1, name: item.title, exact: true }).waitFor({ timeout: 12000 });
+      } catch (error) {
+        const actualHeadings = await page.locator("h1").allTextContents().catch(() => []);
+        const documentTitle = await page.title().catch(() => "(not available)");
+        const routeStatus = response?.status();
+        await page.screenshot({ path: "audit-evidence/curiosidades/error-" + item.slug.slice(0,40) + "-" + viewport.width + ".png", fullPage: true }).catch(() => undefined);
+        throw new Error("MEM_ROUTE_RENDER_FAILURE " + JSON.stringify({
+          slug: item.slug, expectedTitle: item.title, actualHeadings, documentTitle,
+          routeStatus, browserErrors: errors.slice(-8), originalError: String(error),
+        }));
+      }
       await page.getByText("Prévia não homologada.").waitFor();
       const sections = await page.locator("section.inst-sec").count();
       assert.ok(sections >= 3, "Artigo com conteúdo em " + item.slug);

@@ -13,7 +13,12 @@ if(!Array.isArray(queue.items)||!Array.isArray(finds.finds))error.push('MISSING_
 for(const k of taskRequired)if(!taskSchema.required.includes(k))error.push('TASK_SCHEMA_MISSING_'+k);
 const workOrders=Array.isArray(queue.items)?queue.items:[];
 const findings=Array.isArray(finds.finds)?finds.finds:[];
-const gaps=workOrders.map(w=>({workOrderId:w.id,missingFormalFields:formal.filter(k=>w[k]===undefined),admitted:false}));
+const findIds=new Set(findings.map(f=>f.canonical_id));
+const gaps=workOrders.map(w=>{
+ const declared=Array.isArray(w.findRefs)?w.findRefs:[];
+ const unknownFindRefs=declared.filter(id=>!findIds.has(id));
+ return {workOrderId:w.id,missingFormalFields:formal.filter(k=>w[k]===undefined),declaredFindRefs:declared,unknownFindRefs,findTraceability:declared.length&&unknownFindRefs.length===0?'REFERENCES_EXIST':'UNVERIFIED',admitted:false};
+});
 const result={
  schemaVersion:'1.0.0',mode:'READ_ONLY_PRE_ADMISSION_AUDIT',
  authority:{pmo:queue.canonicalSource,finds:'registers/governance/find-register.v1.json',task:'contracts/cko-schemas/task.schema.json',formalWO:'docs/governance/04-work-order-model.md'},

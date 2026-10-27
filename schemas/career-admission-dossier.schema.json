@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Admission Dossier Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "status",
+    "updated_at",
+    "work_order_ref",
+    "kernel_admission",
+    "manifest_status",
+    "target_kernel_ref",
+    "cko_work_order_schema_ref",
+    "legacy_kernel_type_ref",
+    "compatibility",
+    "candidate_validators",
+    "evidence_refs",
+    "release_gate_ref",
+    "submission_blocker"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "HOLD_COMPATIBILITY"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "work_order_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kernel_admission": {
+      "const": "NOT_SUBMITTED"
+    },
+    "manifest_status": {
+      "const": "NOT_MATERIALIZED"
+    },
+    "target_kernel_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cko_work_order_schema_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "legacy_kernel_type_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compatible",
+        "findings"
+      ],
+      "properties": {
+        "compatible": {
+          "const": false
+        },
+        "findings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "candidate_validators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "release_gate_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "submission_blocker": {
+      "const": "KERNEL_WORK_ORDER_MODEL_ADAPTER_MISSING"
+    }
+  }
+}

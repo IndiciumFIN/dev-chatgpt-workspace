@@ -42,6 +42,14 @@ const required = [
   "schemas/career-editorial-block.schema.json",
   "registers/career/source-snapshots.v1.json",
   "scripts/check-career-editorial-content.mjs",
+  "migrations/0006_career_atomization_candidate.sql",
+  "registers/career/atomization.v1.json",
+  "schemas/career-source-fragment.schema.json",
+  "schemas/career-atomic-fact.schema.json",
+  "schemas/career-evidence-bundle.schema.json",
+  "schemas/career-content-claim-binding.schema.json",
+  "scripts/check-career-atomization.mjs",
+  "contracts/cko-schemas/claim.schema.json",
   "registers/career/candidate.v1.json",
   "registers/governance/candidates/WO-CAREER-YOUTH-001.json",
   "registers/governance/candidates/TASK-CAREER-YOUTH-001.json",
@@ -149,7 +157,12 @@ check(
     functions.includes("career_learning_resource_candidate") &&
     functions.includes("career_market_observation_candidate") &&
     functions.includes("career_projection_contract_candidate") &&
-    functions.includes("career_capability_governance_candidate"),
+    functions.includes("career_capability_governance_candidate") &&
+    functions.includes("career_source_fragment_candidate") &&
+    functions.includes("career_atomic_fact_candidate") &&
+    functions.includes("career_claim_candidate") &&
+    functions.includes("career_evidence_bundle_candidate") &&
+    functions.includes("career_content_claim_binding_candidate"),
 );
 check(
   "texto-bloqueia-identificador",
@@ -163,7 +176,7 @@ check(
 );
 check(
   "ui-consome-capacidades-estendidas",
-  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance","editorialDocuments","editorialBlocks"].every((key) => ui.includes("snapshot." + key)),
+  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","sourceFragments","atomicFacts","claims","evidenceBundles","contentClaimBindings","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance","editorialDocuments","editorialBlocks"].every((key) => ui.includes("snapshot." + key)),
 );
 check(
   "ui-sem-catalogo-paralelo",
@@ -191,8 +204,8 @@ check(
     registry.kernelAdmission === "NOT_SUBMITTED",
 );
 check(
-  "registry-25-schemas",
-  registry.schemas?.length === 25 && registry.schemas.every(existsSync),
+  "registry-29-schemas",
+  registry.schemas?.length === 29 && registry.schemas.every(existsSync),
   String(registry.schemas?.length ?? 0),
 );
 check(
@@ -219,8 +232,23 @@ check(
 check(
   "database-migrations",
   Array.isArray(registry.database?.migrations) &&
-    registry.database.migrations.length === 2 &&
+    registry.database.migrations.length === 3 &&
     registry.database.migrations.every(existsSync),
+);
+check(
+  "atomization-layer",
+  registry.atomization?.fragmentCount === 19 &&
+    registry.atomization?.atomicFactCount === 19 &&
+    registry.atomization?.claimCount === 19 &&
+    registry.atomization?.evidenceBundleCount === 19 &&
+    registry.atomization?.authorityBindingCount === 16 &&
+    registry.atomization?.validator === "scripts/check-career-atomization.mjs" &&
+    registry.atomization?.humanReview === "PENDING" &&
+    registry.atomization?.publicReleaseAuthorized === false,
+);
+check(
+  "cko-claim-contract",
+  registry.ckoContractRefs?.includes("contracts/cko-schemas/claim.schema.json"),
 );
 check(
   "duas-projecoes",

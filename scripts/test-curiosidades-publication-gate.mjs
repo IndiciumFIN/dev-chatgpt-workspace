@@ -19,11 +19,15 @@ for (const {slug} of catalog) {
 
 // Compilation must not include the article bodies, even as dynamically imported chunks.
 // Read only generated text assets. Match unique phrases from source JSON, not common titles.
-const samples = [
-  "Ana Néri não era enfermeira formal",
-  "A Farrand Training School liderou a proposta",
-  "Em 10 de agosto de 1938, o Decreto nº 2.956",
-];
+const anchors = catalog.map(({slug}) => {
+  const record = JSON.parse(readFileSync("src/lib/content/curiosidades/pages/" + slug + ".json", "utf8"));
+  const intro = record.content?.intro?.lead;
+  const firstParagraph = record.content?.sections?.[0]?.paragraphs?.[0];
+  // 70 caracteres quase sempre distinguem corpo editorial de título/metadata.
+  const anchor = (typeof firstParagraph === "string" ? firstParagraph : intro)?.slice(0,70);
+  assert(typeof anchor === "string" && anchor.length >= 35, "MISSING_LEAK_ANCHOR:" + slug);
+  return {slug,anchor};
+});
 const files = [];
 function scan(dir) {
   for (const item of readdirSync(dir)) {
@@ -36,8 +40,8 @@ function scan(dir) {
 scan(root);
 for (const path of files) {
   const text = readFileSync(path,"utf8");
-  for (const sample of samples) {
-    assert(!text.includes(sample), "DRAFT_BODY_LEAK:" + path + ":" + sample);
+  for (const {slug,anchor} of anchors) {
+    assert(!text.includes(anchor), "DRAFT_BODY_LEAK:" + path + ":" + slug);
   }
 }
 const route = readFileSync("src/routes/blog.$slug.tsx","utf8");
@@ -46,6 +50,6 @@ assert(route.includes('VITE_CURIOSIDADES_MEM_PREVIEW'), "Missing route deny-by-d
 assert(loader.includes('VITE_CURIOSIDADES_MEM_PREVIEW'), "Missing draft module gate");
 console.log(JSON.stringify({
   verdict:"PASS_PUBLICATION_GATE",checkedDrafts:catalog.length,publicDraftRoutes:0,
-  indexableDraftRoutes:0,bundleLeaks:0,assetsScanned:files.length,
+  indexableDraftRoutes:0,bundleLeaks:0,anchorsChecked:anchors.length,assetsScanned:files.length,
   publicCatalogStatus:"DRAFT_UNLISTED",approval:"NOT_GRANTED"
 }));

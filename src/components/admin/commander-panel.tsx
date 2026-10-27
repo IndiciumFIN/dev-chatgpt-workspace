@@ -3,6 +3,7 @@ import queue from '../../../registers/pmo/queue.v1.json';
 import taskContract from '../../../contracts/cko-schemas/task.schema.json';
 import { useState, type FormEvent } from 'react';
 import { validateCommanderReadModel } from '../../lib/commander/read-model';
+import { inspectFormalWoEvidence } from '../../lib/commander/formal-readiness';
 import {
   AlertTriangle,
   Bot,
@@ -54,6 +55,7 @@ const capabilityCards: CapabilityCard[] = [
 export function CommanderPanel() {
   const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>(queue.items[0]?.id ?? '');
   const selectedWorkOrder = queue.items.find(item => item.id === selectedWorkOrderId);
+  const formalEvidence = selectedWorkOrder ? inspectFormalWoEvidence(selectedWorkOrder) : null;
   const outstanding = selectedWorkOrder?.dependencies.filter(id => queue.items.find(item => item.id === id)?.status !== 'DONE') ?? [];
   const [objective, setObjective] = useState('');
   const [scope, setScope] = useState('');
@@ -123,6 +125,7 @@ export function CommanderPanel() {
           <p><strong>Estado:</strong> {selectedWorkOrder.status} · <strong>Prioridade:</strong> {selectedWorkOrder.priority} · <strong>Ordem:</strong> {selectedWorkOrder.order}</p>
           <p><strong>Dependências não concluídas:</strong> {outstanding.length ? outstanding.join(', ') : 'Nenhuma no PMO'}</p>
           <p><strong>Próxima ação registrada:</strong> {selectedWorkOrder.next}</p>
+          <p><strong>Campos formais sem evidência na entrada PMO:</strong> {formalEvidence?.missing.join(', ') || 'Nenhum campo ausente; admissão ainda não verificada'}</p>
           <p role="status"><strong>Execução:</strong> BLOQUEADA ATÉ ADMISSÃO FORMAL. Consultar o registro e seus vínculos não concede autorização.</p>
         </div>}
 

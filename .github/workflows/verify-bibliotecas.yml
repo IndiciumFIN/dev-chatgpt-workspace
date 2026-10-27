@@ -76,6 +76,8 @@ jobs:
         run: node --test scripts/test-agent-delivery.mjs
       - name: Testar validação de recebimento sem execução
         run: node --test scripts/test-check-commander-delivery.mjs
+      - name: Exercitar jornada real de handoff em diretório isolado
+        run: node --test scripts/test-rehearse-commander-handoff.mjs
       - name: Testar exportação determinística das WOs
         run: node --test scripts/test-export-commander-task.mjs
       - run: node scripts/test-admin-console.mjs

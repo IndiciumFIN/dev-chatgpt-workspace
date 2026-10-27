@@ -50,6 +50,14 @@ const required = [
   "schemas/career-content-claim-binding.schema.json",
   "scripts/check-career-atomization.mjs",
   "contracts/cko-schemas/claim.schema.json",
+  "migrations/0007_career_promotion_control_candidate.sql",
+  "registers/career/promotion-control.v1.json",
+  "registers/governance/candidates/ADMISSION-CAREER-YOUTH-001.json",
+  "schemas/career-review-item.schema.json",
+  "schemas/career-admission-dossier.schema.json",
+  "scripts/check-career-promotion-control.mjs",
+  "contracts/cko-schemas/release_gate.schema.json",
+  "contracts/cko-schemas/publication.schema.json",
   "registers/career/candidate.v1.json",
   "registers/governance/candidates/WO-CAREER-YOUTH-001.json",
   "registers/governance/candidates/TASK-CAREER-YOUTH-001.json",
@@ -162,7 +170,10 @@ check(
     functions.includes("career_atomic_fact_candidate") &&
     functions.includes("career_claim_candidate") &&
     functions.includes("career_evidence_bundle_candidate") &&
-    functions.includes("career_content_claim_binding_candidate"),
+    functions.includes("career_content_claim_binding_candidate") &&
+    functions.includes("career_review_item_candidate") &&
+    functions.includes("career_release_gate_candidate") &&
+    functions.includes("career_publication_candidate"),
 );
 check(
   "texto-bloqueia-identificador",
@@ -176,7 +187,7 @@ check(
 );
 check(
   "ui-consome-capacidades-estendidas",
-  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","sourceFragments","atomicFacts","claims","evidenceBundles","contentClaimBindings","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance","editorialDocuments","editorialBlocks"].every((key) => ui.includes("snapshot." + key)),
+  ["learningResources","interviewScenarios","networkCapabilities","jurisdictionRequirements","worklifeCapabilities","youthActivities","sources","sourceFragments","atomicFacts","claims","evidenceBundles","contentClaimBindings","reviewItems","releaseGates","publications","authorityBindings","ingestionRuns","opportunities","learningItems","marketObservations","projectionContracts","capabilityGovernance","editorialDocuments","editorialBlocks"].every((key) => ui.includes("snapshot." + key)),
 );
 check(
   "ui-sem-catalogo-paralelo",
@@ -204,8 +215,8 @@ check(
     registry.kernelAdmission === "NOT_SUBMITTED",
 );
 check(
-  "registry-29-schemas",
-  registry.schemas?.length === 29 && registry.schemas.every(existsSync),
+  "registry-31-schemas",
+  registry.schemas?.length === 31 && registry.schemas.every(existsSync),
   String(registry.schemas?.length ?? 0),
 );
 check(
@@ -232,7 +243,7 @@ check(
 check(
   "database-migrations",
   Array.isArray(registry.database?.migrations) &&
-    registry.database.migrations.length === 3 &&
+    registry.database.migrations.length === 4 &&
     registry.database.migrations.every(existsSync),
 );
 check(
@@ -249,6 +260,16 @@ check(
 check(
   "cko-claim-contract",
   registry.ckoContractRefs?.includes("contracts/cko-schemas/claim.schema.json"),
+);
+check(
+  "promotion-control-layer",
+  registry.promotionControl?.reviewItems === 36 &&
+    registry.promotionControl?.releaseGates === 6 &&
+    registry.promotionControl?.publications === 2 &&
+    registry.promotionControl?.kernelAdmission === "NOT_SUBMITTED" &&
+    registry.promotionControl?.failClosed === true &&
+    registry.promotionControl?.publicReleaseAuthorized === false &&
+    existsSync(registry.promotionControl?.admissionDossier ?? ""),
 );
 check(
   "duas-projecoes",

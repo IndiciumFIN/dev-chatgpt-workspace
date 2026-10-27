@@ -1,5 +1,5 @@
 # Candidatos técnicos v0.1.5–v0.1.9 (não aplicados)
-**Atenção:** Este arquivo arquiva a semântica dos patches; a versão byte-a-byte está nos ZIPs listados em `ARQUIVOS-LOCAIS.json`, não neste commit.
+**Atenção:** Este arquivo arquiva a semântica dos patches; as versões byte-a-byte foram agora armazenadas no ZIP agregado `archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip` no Git, além do índice em `ARQUIVOS-LOCAIS.json`. Os patches continuam **não aplicados** ao runtime.
 
 ## Reparos em código
 - `registers/governance/candidates/WO-RES-PART-001.json`: substituir `execution_status=VALIDATED_CANDIDATE` (inválido no enum) por `BLOCKED`; excluir campo `validation_evidence` não permitido e vincular run CI por `assurance_refs`/objeto `audit_evidence` canônico. Preservar `kernel_admission=NOT_SUBMITTED` e `HOLD_HUMAN`.

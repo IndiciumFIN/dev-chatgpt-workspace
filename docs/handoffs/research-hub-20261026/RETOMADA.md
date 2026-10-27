@@ -16,3 +16,7 @@ Decisão persistida do Kernel com escopo/assinatura, ou HOLD/FAIL formalmente re
 - Nenhuma aprovação por parte de agente ou commit.
 - Nenhuma inferência de produção a partir de PASS de teste sintético.
 - Nenhum merge da main, migração de banco ou falsa homologação.
+
+## Reconstituição dos ZIPs a partir do Git
+
+Baixar [archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip](archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip) e extrair a pasta `pacotes/`. Conferir SHA-256 de cada ZIP contra `PACOTES-RECUPERACAO.json`, depois validar conteúdo (por exemplo `unzip -t`). Não executar automaticamente nenhum patch sem WO admitida. A presença no Git é somente backup.

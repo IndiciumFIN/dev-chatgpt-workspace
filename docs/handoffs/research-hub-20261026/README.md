@@ -15,7 +15,7 @@
 ## Entregáveis versionados neste handoff
 - [PENDENCIAS.md](PENDENCIAS.md): FINDs, riscos, owners a definir e critérios de fechamento.
 - [CAPACIDADES-30.csv](CAPACIDADES-30.csv): matriz com denominador fixo, prioridade, status e âncora para reutilização.
-- [ARQUIVOS-LOCAIS.json](ARQUIVOS-LOCAIS.json): índice SHA-256 dos 10 ZIPs incrementais anteriores, **sem fingir que os ZIPs binários foram incluídos neste commit**.
+- [ARQUIVOS-LOCAIS.json](ARQUIVOS-LOCAIS.json): índice SHA-256 dos 10 ZIPs incrementais anteriores, agora preservados byte-a-byte dentro do arquivo agregado de 19 pacotes no Git.
 - [EVIDENCIAS-E-SHAs.json](EVIDENCIAS-E-SHAs.json): readback de origem e estado dos gates.
 - [RETOMADA.md](RETOMADA.md): ordem de execução em futuro ciclo governado.
 
@@ -24,3 +24,7 @@
 
 ## Cuidados de integridade
 Não criar segundo Hub nem novos schemas equivalentes sem crosswalk MD/REG; não alterar `main`; não modificar fila PMO manualmente; não converter `NOT_SUBMITTED` em `ADMITTED`; não confundir hashes SHA-256 de arquivo com assinatura ou aprovação humana. O próprio workspace é backup isolado e não Kernel corporativo autoritativo.
+
+## Arquivamento binário confirmado (2026-10-26)
+
+Todos os 19 ZIPs históricos foram armazenados no Git como entradas de [archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip](archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip), arquivo real de 263.473 bytes. Git blob `d53fab58f43ed9937fd246e2ccc6fd077658d6d3`, equivalente ao `git hash-object` do arquivo original; SHA-256 `57645b110ba4bbdb5b4e550b7042145d11a7750f20008601e09b1c1c8ea2b962`. O FIND `ARTIFACT-001` fica encerrado **somente para arquivamento dos bytes**. Isso não implica admissão, merge, deploy ou correção de código.

@@ -27,7 +27,7 @@
 | PRIV-001 | retenção, DPIA/RIPD quando aplicável, threat model, persistência de produção | decisões de finalidade, base legal, RBAC, RLS, backups, exclusão e segregação |
 | DATA-001 | PGLite temporário não é base persistente institucional | contrato de armazenamento e autorização antes de banco remoto |
 | INTEGRATION-001 | patches locais v0.1.5 a v0.1.9 não foram executados sobre uma árvore completa | aplicar após WO e executar typecheck, lint, build, E2E, testes negativos, rollback |
-| ARTIFACT-001 | ZIPs incrementais anteriores estão apenas na entrega local/conversa, não são blobs deste commit | upload separado se for exigida preservação byte-a-byte em Git; conferir SHA256 e licenças |
+
 
 ## P2 — capacidades e decisões de produto
 - Moderação e contestação de conteúdo/propostas; integridade de votos e prevenção a bots.
@@ -41,3 +41,11 @@
 **Kernel/PMO → WO válida → extrair reparo PMO PR #13 → integrar branch Research PR #19 em branch isolada aprovada → aplicar patches em fonte conferida → CI global e Research no mesmo SHA → revisão humana/regulatória/segurança → homologação e eventual publicação.**
 
 **Tarefa concluída:** inventário/conciliação/handoff. **Itens acima NÃO concluídos.**
+
+## Pendências concluídas exclusivamente nesta atividade
+
+| ID | Estado | Evidência |
+|---|---|---|
+| ARTIFACT-001 | **CLOSED_ARCHIVED** — 19 ZIPs preservados dentro de um ZIP agregado no Git | [archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip](archives/CKO_RESEARCH_HUB_TODOS_OS_PACOTES_20261026.zip); Git blob `d53fab58f43ed9937fd246e2ccc6fd077658d6d3`; SHA-256 `57645b110ba4bbdb5b4e550b7042145d11a7750f20008601e09b1c1c8ea2b962` |
+
+Todos os P0/P1/P2 técnicos e de admissão listados acima continuam abertos.

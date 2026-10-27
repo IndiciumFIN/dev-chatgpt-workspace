@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "affected_objects": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "applied_to_production": {
+      "type": "boolean"
+    },
+    "change_id": {
+      "type": "string"
+    },
+    "change_type": {
+      "enum": [
+        "new_evidence",
+        "correction",
+        "guideline_update",
+        "withdrawal",
+        "regulatory"
+      ],
+      "type": "string"
+    },
+    "cko_ref": {
+      "type": "string"
+    },
+    "from_version": {
+      "type": "string"
+    },
+    "recertified": {
+      "type": "boolean"
+    },
+    "retest_evidence_ref": {
+      "type": "string"
+    },
+    "revalidation_status": {
+      "enum": [
+        "not_started",
+        "in_progress",
+        "completed",
+        "blocked"
+      ],
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "to_version": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "KnowledgeChange"
+}

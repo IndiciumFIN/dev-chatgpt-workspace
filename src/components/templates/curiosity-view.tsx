@@ -3,7 +3,7 @@ import { Callout } from "@/components/site/callout";
 import { ArticleFaq, Cite, ContextGrid, Keyline, ReferenceList } from "@/components/article/pieces";
 import { RelatedContent } from "@/components/site/related-content";
 import {
-  curiosityReferenceNumbers, curiosityToc,
+  curiosityReferenceNumbers, curiosityToc, normalizeFaqParagraphs,
   type CuriosityBlock, type CuriosityContent, type CuriositySource,
 } from "@/lib/content/curiosidades/model";
 
@@ -125,7 +125,7 @@ function CuriosityBlockView({ block }: { block: CuriosityBlock }) {
     case "faq":
       return <ArticleFaq items={(block.items ?? []).map((item) => ({
         question: item.q ?? "Pergunta",
-        answer: <>{(item.paragraphs ?? []).map((paragraph, idx) => <p key={idx}>{paragraph}</p>)}</>,
+        answer: <>{normalizeFaqParagraphs(item.paragraphs).map((paragraph, idx) => <p key={idx}>{paragraph}</p>)}</>,
       }))} />;
     case "checkgrid":
       return (

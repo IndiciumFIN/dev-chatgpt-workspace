@@ -127,20 +127,27 @@
       "date": "2026-10-24",
       "reason": "21 atos indexados mecanicamente com 1.577 cabeçalhos Art. e spans byte-exatos; 16 sinalizados para revisão; FIND candidato registrado; nenhuma interpretação normativa ou admissão."
     },
-      {
-        "seq": 19,
-        "workId": "WO-E2E-001",
-        "to": "IN_PROGRESS",
-        "date": "2026-10-24",
-        "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
-      },
-      {
-        "seq": 20,
-        "workId": "WO-ADM-001",
-        "to": "IN_PROGRESS",
-        "date": "2026-10-26",
-        "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
-      }
+    {
+      "seq": 19,
+      "workId": "WO-E2E-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
+    },
+    {
+      "seq": 20,
+      "workId": "WO-ADM-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-26",
+      "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
+    },
+    {
+      "seq": 21,
+      "workId": "WO-CKO-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-26",
+      "reason": "Proprietário autorizou piloto completo. Diagnóstico SQL diretamente no Supabase, ponte de 6/6 requirements e 243 casos sintéticos; pacote canônico capturado; GitHub Actions CI 40426209660 PASS. Scoped technical evaluation only; authority, rights, engine and clinical homologation remain HOLD."
+    }
   ],
   "items": [
     {
@@ -228,15 +235,20 @@
         "WO-PMO-001",
         "WO-GOV-TRANS-001"
       ],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40426209660",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/work/editorial-canonical-learning-20261026/docs/audits/CKO_DB_FIRST_VERTICAL_SLICE_REPORT_20261026.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/work/editorial-canonical-learning-20261026/audit-evidence/cko/db-first/20261026/candidate-canonical-tool-graph.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/work/editorial-canonical-learning-20261026/docs/audits/CKO_PILOT_NORMATIVE_APPLICABILITY_20261026.md"
+      ],
       "id": "WO-CKO-001",
-      "next": "Aguardar matriz transversal qualificada (WO-GOV-TRANS-001); Medir cobertura e registrar pendências sem inventar autoridade.",
+      "next": "Piloto técnico READ_ONLY DB-first Apgar/Fugulin passou CI com gates fail-closed. Agora: fonte primária/rights, checker da extração Apgar, variantes de Fugulin e conflito de faixa, materializar rulepack+engine+test vectors em staging só após FIND→política→validador→WO→Kernel. Dependências WO-GOV-TRANS-001 e WO-HOM-001 permanecem; sem promoção clínica.",
       "order": 5,
       "owner": "ChatGPT + revisores especializados",
       "priority": "P1",
-      "status": "QUEUED",
+      "status": "IN_PROGRESS",
       "title": "CKO e fontes normativas",
-      "updatedOn": "2026-10-23"
+      "updatedOn": "2026-10-26"
     },
     {
       "criteria": "Jobs agendados, idempotentes, limites e alertas testados.",
@@ -322,7 +334,7 @@
   ],
   "readOnly": true,
   "registryId": "CE-PMO-001",
-  "revision": 18,
+  "revision": 19,
   "schemaVersion": 1,
   "scope": "IndiciumFIN/dev-chatgpt-workspace",
   "updatedOn": "2026-10-26"

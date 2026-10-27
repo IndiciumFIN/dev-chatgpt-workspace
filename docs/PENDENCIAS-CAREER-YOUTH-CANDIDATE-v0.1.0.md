@@ -11,7 +11,10 @@
 
 ### Admissão formal pelo Kernel
 - `WO-CAREER-YOUTH-001` ainda não foi submetida/admitida.
-- Critério: admissão pelo mecanismo autorizado, policy/validator/manifest resolvidos e evidência persistida.
+- Dossier candidato materializado em `ADMISSION-CAREER-YOUTH-001.json`.
+- Foi identificado drift entre o WorkOrder CKO atual e o tipo legado consumido pelo Kernel.
+- `kernel_admission=NOT_SUBMITTED` e `manifest_status=NOT_MATERIALIZED` são intencionais.
+- **Falta:** adapter/mecanismo sancionado + admissão real pelo Kernel.
 
 ### Revisão humana do domínio
 - Revisar taxonomias de papéis, skills, trilhas, oportunidades, credenciais, linguagem para jovens e separação editorial/funcional.
@@ -153,4 +156,12 @@ Todos permanecem com `human_gate=HOLD`. Conteúdos factuais usam `source_mode=ev
 - claim-level atomization 19/19;
 - bindings de claims para todos os blocos factuais não-referência;
 - gate `audit:career-atomization`;
-- linhagem Source → Fragment → Fact → Claim → Evidence → Authority → Content comprovada em PGLite e Chromium.
+- linhagem Source → Fragment → Fact → Claim → Evidence → Authority → Content comprovada em PGLite e Chromium;
+- migration de promotion control `0007`;
+- 36 review items materializados;
+- 6 release gates CKO em HOLD;
+- 2 publications CKO bloqueadas;
+- promotion control fail-closed;
+- admission dossier NOT_SUBMITTED;
+- gate `audit:career-promotion`;
+- bloqueio de release visível no runtime e validado no Chromium.

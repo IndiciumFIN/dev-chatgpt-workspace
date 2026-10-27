@@ -37,6 +37,11 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_spe_validate_extraction.py' -v
       - name: Attempt contract tests
         run: python contracts/simulados-enfermagem/tests/attempt-lifecycle.contract.test.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: W10 runtime policy unit checks
+        run: node --experimental-strip-types src/lib/simulados/attempt-policy.test.ts
       - name: Explicit DB/runtime hold
         run: |
           echo 'DB migrations: NOT_RUN (original source ZIP not in this repository)'

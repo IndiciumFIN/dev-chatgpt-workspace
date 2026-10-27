@@ -1,9 +1,9 @@
 export type CareerCandidateDb={query<T=Record<string,unknown>>(text:string,params?:unknown[]):Promise<T[]>};
 const g=globalThis as typeof globalThis&{__careerDb?:Promise<CareerCandidateDb>};
 function migrations(){
- const files=import.meta.glob("/migrations/000{4,5}_career_*.sql",{query:"?raw",import:"default",eager:true}) as Record<string,string>;
+ const files=import.meta.glob("/migrations/000{4,5,6}_career_*.sql",{query:"?raw",import:"default",eager:true}) as Record<string,string>;
  const ordered=Object.entries(files).sort(([a],[b])=>a.localeCompare(b)).map(([,sql])=>sql);
- if(ordered.length!==2)throw new Error(`CAREER_CANDIDATE_MIGRATIONS_MISSING:${ordered.length}`);
+ if(ordered.length!==3)throw new Error(`CAREER_CANDIDATE_MIGRATIONS_MISSING:${ordered.length}`);
  return ordered;
 }
 export function getCareerCandidateDb():Promise<CareerCandidateDb>{

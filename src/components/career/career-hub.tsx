@@ -136,11 +136,18 @@ function Editorial({snapshot}:{snapshot:CareerSnapshot}){
 function EditorialBlock({block,snapshot}:{block:CareerSnapshot["editorialBlocks"][number];snapshot:CareerSnapshot}){
  const items=Array.isArray(block.payload?.items)?block.payload.items.filter((x):x is string=>typeof x==="string"):[];
  const refs=block.sourceRefs.map(id=>snapshot.sources.find(s=>s.id===id)).filter((x):x is CareerSnapshot["sources"][number]=>Boolean(x));
- if(block.blockType==="steps")return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body?<p>{block.body}</p>:null}<ol>{items.map((item,i)=><li key={i}>{item}</li>)}</ol></section>;
- if(block.blockType==="callout")return <Callout tone={block.semanticRole==="safety"?"warn":"note"}><b>{block.heading}</b>{block.body?<> {block.body}</>:null}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.authority}</a>)}</div>:null}</Callout>;
+ const bindings=snapshot.contentClaimBindings.filter(b=>b.documentId===block.documentId&&b.blockId===block.blockId);
+ const claims=bindings.map(b=>({binding:b,claim:snapshot.claims.find(c=>c.id===b.claimId)})).filter((x):x is {binding:CareerSnapshot["contentClaimBindings"][number];claim:CareerSnapshot["claims"][number]}=>Boolean(x.claim));
+ const trace=claims.length?<ClaimTrace claims={claims}/>:null;
+ if(block.blockType==="steps")return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body?<p>{block.body}</p>:null}<ol>{items.map((item,i)=><li key={i}>{item}</li>)}</ol>{trace}</section>;
+ if(block.blockType==="callout")return <Callout tone={block.semanticRole==="safety"?"warn":"note"}><b>{block.heading}</b>{block.body?<> {block.body}</>:null}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.authority}</a>)}</div>:null}{trace}</Callout>;
  if(block.blockType==="references")return <section className="ce-editorial-block ce-editorial-references"><h4>{block.heading??"Referências"}</h4>{block.body?<p>{block.body}</p>:null}<ul>{refs.map(r=><li key={r.id}><a href={r.uri} target="_blank" rel="noreferrer">{r.title}</a><span>{r.authority} · {r.status}</span></li>)}</ul></section>;
- if(block.blockType==="comparison"||block.blockType==="reflection")return <section className="ce-editorial-block ce-editorial-emphasis"><h4>{block.heading}</h4><p>{block.body}</p>{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}</section>;
- return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body.split("\n\n").map((p,i)=><p key={i}>{p}</p>)}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}</section>;
+ if(block.blockType==="comparison"||block.blockType==="reflection")return <section className="ce-editorial-block ce-editorial-emphasis"><h4>{block.heading}</h4><p>{block.body}</p>{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}{trace}</section>;
+ return <section className="ce-editorial-block"><h4>{block.heading}</h4>{block.body.split("\n\n").map((p,i)=><p key={i}>{p}</p>)}{refs.length?<div className="ce-editorial-source-inline">{refs.map(r=><a key={r.id} href={r.uri} target="_blank" rel="noreferrer">{r.title}</a>)}</div>:null}{trace}</section>;
+}
+
+function ClaimTrace({claims}:{claims:{binding:CareerSnapshot["contentClaimBindings"][number];claim:CareerSnapshot["claims"][number]}[]}){
+ return <details className="ce-claim-trace"><summary>Evidência atômica · {claims.length} claim{claims.length===1?"":"s"} · revisão pendente</summary><ul>{claims.map(({binding,claim})=><li key={claim.id} data-claim-id={claim.id}><code>{claim.id}</code><span>{binding.bindingRole} · {claim.assertionKey} · {claim.status}/{claim.review}</span></li>)}</ul></details>
 }
 
 function Roles({snapshot}:{snapshot:CareerSnapshot}){return <div className="ce-career-grid">{snapshot.roles.map(r=><article className="ce-career-card" key={r.id}><h3>{r.title}</h3><p>{r.summary}</p><p style={{marginTop:8}}><b>Caminho formativo:</b> {r.educationPath}</p><footer><span className="ce-career-badge">{r.family}</span></footer></article>)}</div>}

@@ -15,11 +15,13 @@
   "canonical_id": "FIND-CKO-DB-FIRST-EVIDENCE-20261026",
   "finding_type": "SOURCE_GAP",
   "severity": "HIGH",
-  "fact": "No CKO atual, Apgar tem tres claims diretamente associados, todos CANDIDATE e com revisao humana pendente; seus seis evidence_refs nao resolvem diretamente para source_id, fragment_id ou snapshot_id nas tabelas cko_evidence inspecionadas. Fugulin nao possui claims diretamente vinculados ao ID clinico nessas consultas; seus dez campos candidatos visiveis sao contextuais/operacionais e nao provam criterios das variantes de 9 e 12 areas. Esses zeros e nao-correspondencias sao escopados as chaves testadas; procurar pacotes externos e lineage antes de declarar ausencia definitiva.",
+  "fact": "Teste vertical atualizado em 26/10/2026: os seis evidence_refs dos três claims Apgar não correspondem diretamente a IDs em cko_evidence.sources/fragments/snapshots, MAS foram resolvidos integralmente (6/6) por bridge determinística para o array requirements de cko_governance.normative_document_extractions (extração NDE-APGAR-AAP-ACOG-2015-CAND). A extração e os seis requisitos estão CANDIDATE_UNCHECKED/CANDIDATE, sem checker/checked_at, e os claims exigem revisão humana. A ligação foi recuperada; a validação científica, os direitos e a promoção continuam em HOLD. Fugulin segue sem claims associados por subject_ref exato; seus dez campos visíveis são contextuais/operacionais, não materializam suas variantes pontuáveis. Não abrir documento ou esquema paralelo por IDs recuperados.",
   "evidence_refs": [
     "cko_evidence.claims:cko:tool:clinical:apgar@1",
     "cko_governance.md_tool_field_contract_v2_candidate:fugulin",
     "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
-    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql"
+    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql",
+    "docs/audits/sql/CKO_APGAR_REQUIREMENT_BRIDGE_20261026.sql",
+    "audit-evidence/cko/db-first/20261026/apgar-requirement-bridge-replay.json"
   ]
 }

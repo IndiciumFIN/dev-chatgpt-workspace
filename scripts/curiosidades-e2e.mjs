@@ -39,10 +39,11 @@ try {
         const actualHeadings = await page.locator("h1").allTextContents().catch(() => []);
         const documentTitle = await page.title().catch(() => "(not available)");
         const routeStatus = response?.status();
+        const errorPanel = await page.locator("main p").allTextContents().catch(() => []);
         await page.screenshot({ path: "audit-evidence/curiosidades/error-" + item.slug.slice(0,40) + "-" + viewport.width + ".png", fullPage: true }).catch(() => undefined);
         throw new Error("MEM_ROUTE_RENDER_FAILURE " + JSON.stringify({
           slug: item.slug, expectedTitle: item.title, actualHeadings, documentTitle,
-          routeStatus, browserErrors: errors.slice(-8), originalError: String(error),
+          routeStatus, errorPanel: errorPanel.slice(0,3).map(s => s.slice(0,800)), browserErrors: errors.slice(-8), originalError: String(error),
         }));
       }
       await page.getByText("Prévia não homologada.").waitFor();

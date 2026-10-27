@@ -38,6 +38,7 @@ export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const article = findArticle(params.slug);
     if (article) return { slug: article.slug, curiosity: null };
+    if (!import.meta.env.DEV || import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW !== "true") throw raiseNotFound();
     if (!findCuriosityMeta(params.slug)) throw raiseNotFound();
     const curiosity = await loadCuriosity(params.slug);
     if (!curiosity) throw raiseNotFound();
@@ -45,7 +46,8 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ match, params }) => {
     const article = findArticle(params.slug);
-    const curiosity = findCuriosityMeta(params.slug);
+    const curiosity = import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true"
+      ? findCuriosityMeta(params.slug) : undefined;
     const lang = (match.search as { lang?: unknown }).lang;
     if (!article && curiosity) {
       return {
@@ -55,7 +57,7 @@ export const Route = createFileRoute("/blog/$slug")({
           { name: "robots", content: "noindex, nofollow, noarchive" },
           { property: "og:type", content: "article" },
         ],
-        links: languageLinks("/blog/" + curiosity.slug, lang),
+        // Sem canonical/hreflang para conteúdo ainda não homologado.
       };
     }
     if (!article) return {};

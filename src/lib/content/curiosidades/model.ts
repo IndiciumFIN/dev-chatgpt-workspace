@@ -137,6 +137,17 @@ export function mayPublishCuriosity(
   return Object.values(gates).every((passed) => passed === true);
 }
 
+/**
+ * A base histórica contém FAQs com um parágrafo representado como string,
+ * em vez de string[]. Normalizar somente na projeção e registrar FIND na
+ * auditoria; nunca reescrever o snapshot de origem silenciosamente.
+ */
+export function normalizeFaqParagraphs(value: unknown): string[] {
+  if (typeof value === "string") return value.trim() ? [value] : [];
+  if (Array.isArray(value)) return value.filter((item): item is string => typeof item === "string");
+  return [];
+}
+
 export function curiosityReferenceNumbers(page: CuriosityContent): Map<string, number> {
   return new Map((page.references ?? []).map((item, idx) => [item.id, idx + 1]));
 }

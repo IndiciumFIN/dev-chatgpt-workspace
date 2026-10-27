@@ -20,11 +20,28 @@ function BlogIndex() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const categories = Object.entries(curiosityCategoryLabels).filter(([id]) => curiosityCatalog.some((item) => item.category === id));
+  const previewEnabled = import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true";
   const filtered = curiosityCatalog.filter((item) => {
     const matchesCategory = category === "all" || item.category === category;
     const matchesQuery = (item.title + " " + item.category).toLocaleLowerCase("pt-BR").includes(query.trim().toLocaleLowerCase("pt-BR"));
     return matchesCategory && matchesQuery;
   });
+  if (!previewEnabled) {
+    return (
+      <Shell>
+        <ArticlePage kind="secao"
+          crumbs={[{ label: "Início", to: "/" }, { label: "Curiosidades" }]}
+          eyebrow="Blog de Enfermagem"
+          title="Curiosidades de Enfermagem"
+          lead="O acervo editorial está em preparação.">
+          <section className="inst-sec">
+            <h2>Acervo em revisão</h2>
+            <p>Os artigos estão em revisão de fontes, direitos e qualidade. Novos conteúdos aparecerão aqui após aprovação editorial.</p>
+          </section>
+        </ArticlePage>
+      </Shell>
+    );
+  }
   return (
     <Shell>
       <ArticlePage

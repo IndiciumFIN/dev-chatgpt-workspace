@@ -68,6 +68,8 @@ jobs:
         run: node scripts/check-commander-ds-boundary.mjs
       - name: Testar controles negativos do DS canônico
         run: node --test scripts/test-commander-ds-boundary.mjs
+      - name: Testar evidências formais de WO sem inferir admissão
+        run: node --experimental-strip-types --test scripts/test-commander-formal-readiness.mjs
       - name: Auditar pré-requisitos anteriores à Task (sem admissão)
         run: node --test scripts/test-audit-commander-upstream.mjs
       - name: Testar quarentena dos quatro artefatos de IA

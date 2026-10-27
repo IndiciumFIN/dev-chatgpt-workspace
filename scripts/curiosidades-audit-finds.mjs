@@ -7,6 +7,13 @@ import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 const root = "src/lib/content/curiosidades";
 const pages = JSON.parse(readFileSync(root+"/catalog.json","utf8"));
 const sources = JSON.parse(readFileSync(root+"/sources.json","utf8"));
+const alternativeRegister = JSON.parse(readFileSync("registers/curiosidades/mem-source-alternatives.v1.json","utf8"));
+const candidatesBySlug = new Map();
+for (const candidate of alternativeRegister.items) {
+  const items = candidatesBySlug.get(candidate.slug) ?? [];
+  items.push(candidate);
+  candidatesBySlug.set(candidate.slug,items);
+}
 const sourceMap = new Map(sources.map(s=>[s.source_id,s]));
 const missingSourceIds = new Set();
 const findings = [], totals = {pages:pages.length,sections:0,components:0,sourceReferences:0,pagesWithMissingSources:0,pagesWithMissingHash:0,provisionallyApproved:0};
@@ -59,6 +66,11 @@ for(const entry of pages){
    sections:content.sections?.length??0,componentBlocks:(content.sections??[]).reduce((n,s)=>n+(s.components?.length??0),0),
    referenceDeclarations:content.references?.length??0,
    unresolvedSourceIds:[...missing].sort(),
+   candidateAlternatives:(candidatesBySlug.get(entry.slug)??[]).map(c=>({
+      originalSourceId:c.originalSourceId,referenceLocation:c.referenceLocation,
+      disposition:c.disposition,candidateSourceId:c.candidateSourceId??null,
+      sourceUrl:c.alternative.url,claimLevel:"NOT_VALIDATED",rights:"NOT_ASSESSED",
+   })),
    issues:[...new Set(issues)].sort(),
    publicationDecision:"HOLD_HUMAN",
  });
@@ -70,6 +82,8 @@ const result = {
   status:"NOT_PUBLISHED",
   totals,
   missingSourceIds:[...missingSourceIds].sort(),
+  remediationSummary:alternativeRegister.counts,
+  sourceAlternativesState:"CANDIDATE_ONLY_NOT_APPROVED",
   findings,
   releaseGate:{automaticPublication:false,requiresOwnerApproval:true,rightsAndSourcesPending:true},
 };

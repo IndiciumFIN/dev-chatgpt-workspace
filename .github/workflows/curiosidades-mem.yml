@@ -1,0 +1,43 @@
+name: Curiosidades MEM — contratos e tipagem
+
+on:
+  push:
+    branches:
+      - feat/curiosidades-mem-87-20261026
+    paths:
+      - "src/lib/content/curiosidades/**"
+      - "src/components/templates/curiosity-view.tsx"
+      - "registers/curiosidades/**"
+      - "src/components/article/curiosity-page.tsx"
+      - "scripts/test-curiosidades-*"
+      - ".github/workflows/curiosidades-mem.yml"
+  pull_request:
+    paths:
+      - "src/lib/content/curiosidades/**"
+      - "src/components/templates/curiosity-view.tsx"
+      - "registers/curiosidades/**"
+      - "scripts/test-curiosidades-*"
+      - ".github/workflows/curiosidades-mem.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  mem-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Inventário e referência MEM
+        run: node scripts/test-curiosidades-mem.mjs
+      - name: Contrato fail-closed e dez blocos
+        run: node --experimental-strip-types scripts/test-curiosidades-model.mjs
+      - name: Conciliação de 48 usos de referências e estados HOLD
+        run: node scripts/test-curiosidades-source-alternatives.mjs
+      - name: Dependências isoladas
+        run: npm ci --ignore-scripts
+      - name: Tipagem do projeto
+        run: npm run typecheck

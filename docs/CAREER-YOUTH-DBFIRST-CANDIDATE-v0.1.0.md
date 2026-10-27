@@ -28,7 +28,7 @@ A projeção YOUTH cobre descoberta de profissões, Enfermagem como carreira, re
 
 ## Cobertura DB-first ampliada
 
-Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 29 schemas candidatos.
+Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 31 schemas candidatos.
 
 ## Dados pessoais
 
@@ -40,7 +40,7 @@ Vagas, concursos, salários, credenciais e requisitos por jurisdição não rece
 
 ## Banco
 
-As migrations `0004` (domínio), `0005` (conteúdo) e `0006` (atomização) são executadas em ordem pelo módulo PGLite candidato `src/lib/career-candidate-db.server.ts`. O módulo não lê `DATABASE_URL` e não conecta Neon/Supabase.
+As migrations `0004` (domínio), `0005` (conteúdo), `0006` (atomização) e `0007` (promotion control) são executadas em ordem pelo módulo PGLite candidato `src/lib/career-candidate-db.server.ts`. O módulo não lê `DATABASE_URL` e não conecta Neon/Supabase.
 
 ## Rotas candidatas
 
@@ -108,3 +108,35 @@ O gate `scripts/check-career-atomization.mjs` comprova 1:1:
 O leitor editorial candidato expõe a trilha diagnóstica de evidência atômica em `<details>`, incluindo locator, fato, claim e evidence bundle.
 
 Wave validada no workflow `40426337424`, HEAD `1602acbb7f15a87af4b876cf3e4ff28b61cca72a`.
+
+
+## Promotion control / release fail-closed
+
+A migration `migrations/0007_career_promotion_control_candidate.sql` transforma as pendências de homologação em controles executáveis.
+
+Fila de revisão:
+- 19 itens de revisão de claims;
+- 17 itens de revisão editorial;
+- 36/36 iniciam como `PENDING / REVIEW_REQUIRED`.
+
+Release gates CKO:
+1. `RG-CAREER-SOURCE`;
+2. `RG-CAREER-CLAIMS`;
+3. `RG-CAREER-EDITORIAL`;
+4. `RG-CAREER-A11Y`;
+5. `RG-CAREER-KERNEL`;
+6. `RG-CAREER-RELEASE`.
+
+Todos permanecem `HOLD / HOLD_HUMAN` e possuem replay hash determinístico.
+
+Duas publicações candidatas (`PROJ-CAREER` e `PROJ-YOUTH`) materializam o contrato CKO `publication.schema.json`, ambas com seis gate results em `HOLD` e `human_approval=PENDING`.
+
+O dossier `registers/governance/candidates/ADMISSION-CAREER-YOUTH-001.json` registra a incompatibilidade entre o WorkOrder CKO atual e o tipo legado usado por `src/core/governance/kernel.ts`. Por isso:
+- `kernel_admission=NOT_SUBMITTED`;
+- `manifest_status=NOT_MATERIALIZED`;
+- nenhuma admissão foi simulada;
+- a submissão permanece bloqueada até existir adapter/mecanismo sancionado.
+
+O gate `audit:career-promotion` passa somente se o sistema continuar fail-closed enquanto revisões, Kernel e aprovação humana estiverem pendentes.
+
+Wave validada no workflow `40429550836`, HEAD `4ed72b790f77b0d4ffeb24d484ea2c6a54003746`.

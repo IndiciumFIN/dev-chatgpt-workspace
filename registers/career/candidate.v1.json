@@ -12,7 +12,8 @@
     "migrations": [
       "migrations/0004_career_youth_candidate.sql",
       "migrations/0005_career_editorial_content_candidate.sql",
-      "migrations/0006_career_atomization_candidate.sql"
+      "migrations/0006_career_atomization_candidate.sql",
+      "migrations/0007_career_promotion_control_candidate.sql"
     ]
   },
   "projections": [
@@ -56,7 +57,9 @@
     "schemas/career-source-fragment.schema.json",
     "schemas/career-atomic-fact.schema.json",
     "schemas/career-evidence-bundle.schema.json",
-    "schemas/career-content-claim-binding.schema.json"
+    "schemas/career-content-claim-binding.schema.json",
+    "schemas/career-review-item.schema.json",
+    "schemas/career-admission-dossier.schema.json"
   ],
   "canonicalObjects": [
     "CareerModule",
@@ -87,7 +90,9 @@
     "CareerSourceFragment",
     "CareerAtomicFact",
     "CareerEvidenceBundle",
-    "CareerContentClaimBinding"
+    "CareerContentClaimBinding",
+    "CareerReviewItem",
+    "CareerAdmissionDossier"
   ],
   "safeguards": [
     "ui_reads_modules_from_database",
@@ -108,7 +113,10 @@
     "contracts/cko-editorial/schemas/resource_binding.schema.json",
     "contracts/cko-schemas/claim.schema.json",
     "contracts/cko-schemas/reference.schema.json",
-    "contracts/cko-schemas/field_definition.schema.json"
+    "contracts/cko-schemas/field_definition.schema.json",
+    "contracts/cko-schemas/release_gate.schema.json",
+    "contracts/cko-schemas/publication.schema.json",
+    "contracts/cko-schemas/workflow.schema.json"
   ],
   "acquisition": {
     "validator": "scripts/validate-career-acquisition-batch.mjs",
@@ -136,6 +144,17 @@
     "authorityBindingCount": 16,
     "claimSchemaRef": "contracts/cko-schemas/claim.schema.json",
     "humanReview": "PENDING",
+    "publicReleaseAuthorized": false
+  },
+  "promotionControl": {
+    "registry": "registers/career/promotion-control.v1.json",
+    "validator": "scripts/check-career-promotion-control.mjs",
+    "reviewItems": 36,
+    "releaseGates": 6,
+    "publications": 2,
+    "kernelAdmission": "NOT_SUBMITTED",
+    "admissionDossier": "registers/governance/candidates/ADMISSION-CAREER-YOUTH-001.json",
+    "failClosed": true,
     "publicReleaseAuthorized": false
   }
 }

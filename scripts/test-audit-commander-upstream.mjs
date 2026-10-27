@@ -12,5 +12,8 @@ test('upstream admission audit exposes prerequisites and refuses inferred admiss
  assert.ok(x.counts.pmoQueueEntries>0);
  assert.equal(x.gaps.length,x.counts.pmoQueueEntries);
  assert.ok(x.gaps.every(w=>w.admitted===false));
+ assert.ok(x.gaps.every(w=>Array.isArray(w.declaredFindRefs) && Array.isArray(w.unknownFindRefs)));
+ assert.ok(x.gaps.every(w=>w.findTraceability==='UNVERIFIED'||w.findTraceability==='REFERENCES_EXIST'));
+ assert.ok(x.gaps.every(w=>w.findTraceability!=='REFERENCES_EXIST'||w.declaredFindRefs.length>0));
  assert.ok(x.gaps.some(w=>w.missingFormalFields.length>0));
 });

@@ -13,6 +13,8 @@
 
 **Reaproveitamento de histórico:** `cko_governance.object_versions.OV-APGAR-SUCCESSOR-0.2.0` registra `engine_test="1215/1215 PASS"`, `runtime_local="PASS"`, mas `release_authority=false`, `production_http_proof=false` e estado `CANDIDATE_AUDIT_PASS_WITH_SCOPED_HOLDS`. Esses valores são evidências declaradas do pacote anterior e requerem reexecução/verificação independente — não atribuir a elas execução na rodada atual.
 
+**Execução independente adicional:** 12/12 verificações JavaScript executadas sobre o snapshot realmente lido do banco, incluindo recálculo independente das 243 combinações, rejeição de input inválido/incompleto, recuperação dos seis requisitos extraídos e testes negativos de promoção. Evidência: `audit-evidence/cko/db-first/20261026/independent-replay-checks.json`. Executadas em isolate JavaScript, **não** em GitHub Actions/CI e **não** homologam regras clínicas.
+
 **Novos ativos verificáveis:** `audit-evidence/cko/db-first/20261026/apgar-requirement-bridge-replay.json`, `apgar-field-domains-from-db.json` e `scripts/cko-db-first-replay.test.mjs` (suíte versionada; sem execução de CI comprovada). Todas as conclusões de bloqueio abaixo permanecem válidas. 
 
 ## 1. Hipótese testada

@@ -1,4 +1,4 @@
-import { canRevealAnswers, maySubmit, type AttemptContext } from "./attempt-policy";
+import { canRevealAnswers, maySubmit, type AttemptContext } from "./attempt-policy.ts";
 const baseline: AttemptContext = {
   mode: "SIMULADO", state: "IN_PROGRESS", visibility: "HIDDEN",
   ownerId: "owner", requesterId: "owner", ownershipVerified: true, policyVersion: "0.1.0"

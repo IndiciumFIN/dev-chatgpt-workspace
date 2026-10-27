@@ -6,10 +6,13 @@
 import assert from "node:assert/strict";
 import {
   CURIOSITY_BLOCK_TYPES, curiosityReferenceNumbers, curiosityToc,
-  mayPublishCuriosity, validateCuriosityContent,
+  mayPublishCuriosity, validateCuriosityContent, normalizeFaqParagraphs,
 } from "../src/lib/content/curiosidades/model.ts";
 
 assert.equal(CURIOSITY_BLOCK_TYPES.length, 10);
+assert.deepEqual(normalizeFaqParagraphs("Resposta isolada"), ["Resposta isolada"]);
+assert.deepEqual(normalizeFaqParagraphs(["P1", 1, "P2"]), ["P1", "P2"]);
+assert.deepEqual(normalizeFaqParagraphs(null), []);
 const page = {
   slug: "artigo-exemplo",
   title: "Artigo de teste",

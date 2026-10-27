@@ -52,6 +52,9 @@ const capabilityCards: CapabilityCard[] = [
 ];
 
 export function CommanderPanel() {
+  const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>(queue.items[0]?.id ?? '');
+  const selectedWorkOrder = queue.items.find(item => item.id === selectedWorkOrderId);
+  const outstanding = selectedWorkOrder?.dependencies.filter(id => queue.items.find(item => item.id === id)?.status !== 'DONE') ?? [];
   const [objective, setObjective] = useState('');
   const [scope, setScope] = useState('');
   const [draft, setDraft] = useState<CommanderDraft | null>(null);
@@ -110,6 +113,19 @@ export function CommanderPanel() {
         <p><strong>Fonte do PMO:</strong> <code>{queue.canonicalSource}</code> · <strong>Registros na fila:</strong> {queue.items.length}</p>
         <p><strong>Contrato da Task:</strong> <code>{taskContract.title}</code> · <strong>Vínculos obrigatórios:</strong> {taskContract.required.filter(field => ['find_ref', 'policy_ref', 'validator_ref', 'depends_on', 'acceptance_tests', 'executor_role', 'work_order_ref'].includes(field)).join(', ')}</p>
         <p role="status"><strong>Admissão formal:</strong> NÃO VERIFICADA. Um registro de fila não equivale a WO admitida; a interface não cria Task, política ou aprovação por inferência.</p>
+        <label className="ce-admin-field" htmlFor="commander-wo-inspector">
+          <span>Consultar atividade existente no PMO</span>
+          <select id="commander-wo-inspector" value={selectedWorkOrderId} onChange={event => setSelectedWorkOrderId(event.target.value)}>
+            {queue.items.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title}</option>)}
+          </select>
+        </label>
+        {selectedWorkOrder && <div data-testid="commander-wo-readiness">
+          <p><strong>Estado:</strong> {selectedWorkOrder.status} · <strong>Prioridade:</strong> {selectedWorkOrder.priority} · <strong>Ordem:</strong> {selectedWorkOrder.order}</p>
+          <p><strong>Dependências não concluídas:</strong> {outstanding.length ? outstanding.join(', ') : 'Nenhuma no PMO'}</p>
+          <p><strong>Próxima ação registrada:</strong> {selectedWorkOrder.next}</p>
+          <p role="status"><strong>Execução:</strong> BLOQUEADA ATÉ ADMISSÃO FORMAL. Consultar o registro e seus vínculos não concede autorização.</p>
+        </div>}
+
       </section>
 
       <section className="ce-commander-grid" aria-label="Condições atuais de integração">

@@ -30,6 +30,7 @@ const assertions = [
   ['Commander derives unresolved dependencies solely from the canonical queue', /item\?\.dependencies\.filter\(id => queue\.items\.find/.test(commander) && /status !== 'DONE'/.test(commander) && /Prontidão por dependências:/.test(commander)],
   ['Commander derives admission and dispatch labels from canonical governance', /handoffs\.governance\.kernelAdmission/.test(commander) && /lane\.dispatched/.test(commander) && /handoffs\.governance\.dispatchImplemented/.test(commander)],
   ['Commander displays pre-Task governance from canonical contracts', /commander-upstream-chain/.test(commander) && /taskContract\.required\.filter/.test(commander) && /queue\.canonicalSource/.test(commander) && /Um registro de fila não equivale a WO admitida/.test(commander)],
+  ['Commander can inspect real PMO activities without mutation', /selectedWorkOrderId/.test(commander) && /queue\.items\.map\(item => <option/.test(commander) && /commander-wo-readiness/.test(commander) && /BLOQUEADA ATÉ ADMISSÃO FORMAL/.test(commander)],
   ['Commander has no simulated remote agent calls', !/\b(fetch|axios)\s*\(/.test(commander) && /não despachado/.test(commander)],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];

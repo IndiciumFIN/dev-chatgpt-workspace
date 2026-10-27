@@ -41,6 +41,10 @@ for(const entry of pages){
    for(const block of sec.components??[]){
      totals.components++;
      if(!supported.has(block.type))issues.push("UNKNOWN_COMPONENT:"+block.type);
+     if(block.type==="faq") for(const item of block.items??[]){
+       if(typeof item.paragraphs==="string") issues.push("FAQ_PARAGRAPHS_SCALAR:"+sec.id);
+       else if(!Array.isArray(item.paragraphs)) issues.push("FAQ_PARAGRAPHS_INVALID:"+sec.id);
+     }
      if(["faq","cards","pair","stats","timeline","conflict","checkgrid"].includes(block.type) && !(block.items?.length))issues.push("EMPTY_BLOCK:"+block.type);
      if(["quote","evidence","callout"].includes(block.type) && !block.text)issues.push("EMPTY_BLOCK:"+block.type);
    }

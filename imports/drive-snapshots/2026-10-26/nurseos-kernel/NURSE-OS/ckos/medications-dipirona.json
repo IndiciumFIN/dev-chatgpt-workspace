@@ -1,0 +1,45 @@
+{
+  "identity": {
+    "cko_uri": "cko://medications/dipirona",
+    "domain": "medications",
+    "slug": "dipirona",
+    "version": "1.0.0",
+    "name": "Dipirona sódica",
+    "names": { "pt-BR": "Dipirona sódica", "en": "Metamizole sodium", "es": "Dipirona sódica" }
+  },
+  "classification": {
+    "atc": "N02BB02",
+    "who_essential": true,
+    "therapeutic_class": "analgésico não opioide / antipirético"
+  },
+  "official": {
+    "anvisa": { "registro": "1.1234.5678.001-1", "empresa": "exemplo", "situacao": "ativo" },
+    "fda": { "nota": "não comercializada nos EUA (agranulocitose risk — proibida)", "dailymed": null },
+    "descontinuada_em": ["US", "UK"]
+  },
+  "clinical": {
+    "indications": ["dor aguda leve a moderada", "febre", "dor pós-operatória"],
+    "contraindications": ["agranulocitose prévia", "hipersensibilidade a pirazolonas", "terceiro trimestre de gestação", "insuficiência hepática/renal grave"],
+    "warnings": ["risco de agranulocitose — monitorar febre/sinais de infecção", "hipotensão em administração IV rápida", "evitar em pacientes com asma por AINEs"],
+    "dosing": {
+      "adulto_oral": "500–1000 mg até 4x/dia (máx 4000 mg/dia)",
+      "adulto_iv": "1000–2000 mg diluído, infusão >= 15 min",
+      "pediatrico": "10–15 mg/kg/dose, máximo 4x/dia"
+    },
+    "oncologia_safety": "agranulocitose — alerta em pacientes imunossuprimidos",
+    "interactions": ["ciclosporina (reduz níveis)", "anticoagulantes (potencialização do efeito)"],
+    "monitoring": ["contagem de leucócitos em uso prolongado", "PA em via IV", "temperatura"]
+  },
+  "nursing": {
+    "nic_refs": ["cko://procedures/medication-administration-iv", "cko://procedures/pain-assessment"],
+    "safer_use": ["administrar IV lentamente", "orientar paciente a reportar febre/angina/sinais infecciosos"],
+    "high_alert": false,
+    "bula_summary": "analgésico e antipirético; atenção a agranulocitose"
+  },
+  "governance": {
+    "sources": ["ANVISA Consultas", "FDA", "WHO EML", "Bulas oficiais"],
+    "last_review": "2026-09-02",
+    "reviewer": "Leivis Lima"
+  },
+  "translations": { "pt-BR": "completo", "en": "completo", "es": "resumido" }
+}

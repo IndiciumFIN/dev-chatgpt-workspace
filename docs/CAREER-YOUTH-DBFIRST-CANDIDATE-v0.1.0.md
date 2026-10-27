@@ -28,7 +28,7 @@ A projeção YOUTH cobre descoberta de profissões, Enfermagem como carreira, re
 
 ## Cobertura DB-first ampliada
 
-Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 23 schemas candidatos.
+Além do núcleo inicial, o banco materializa tipos de recursos de aprendizagem, cenários de entrevista, capacidades de networking/mentoria, requisitos por jurisdição, capacidades de vida profissional e atividades do Portal do Jovem. O registry exige 29 schemas candidatos.
 
 ## Dados pessoais
 
@@ -40,7 +40,7 @@ Vagas, concursos, salários, credenciais e requisitos por jurisdição não rece
 
 ## Banco
 
-`migrations/0004_career_youth_candidate.sql` é executada apenas pelo módulo PGLite candidato `src/lib/career-candidate-db.server.ts`. O módulo não lê `DATABASE_URL` e não conecta Neon/Supabase.
+As migrations `0004` (domínio), `0005` (conteúdo) e `0006` (atomização) são executadas em ordem pelo módulo PGLite candidato `src/lib/career-candidate-db.server.ts`. O módulo não lê `DATABASE_URL` e não conecta Neon/Supabase.
 
 ## Rotas candidatas
 
@@ -76,3 +76,35 @@ A primeira coleção editorial está materializada em `migrations/0005_career_ed
 - o leitor editorial é renderizado a partir de `CareerEditorialDocument + CareerEditorialBlock`.
 
 Run validado desta wave: `40421504298`.
+
+
+## Atomização / claim-level evidence
+
+A terceira migration, `migrations/0006_career_atomization_candidate.sql`, fecha a linhagem:
+
+`Source → SourceFragment → AtomicFact → CKO Claim → EvidenceBundle → AuthorityBinding → EditorialBlock`.
+
+Estado candidato materializado:
+- 6 fontes oficiais snapshotadas;
+- 19 fragmentos;
+- 19 fatos atômicos;
+- 19 claims no formato do contrato CKO `claim.schema.json`;
+- 19 evidence bundles candidatos;
+- 16 authority bindings regulatórios;
+- 3 claims CNCT deliberadamente sem authority binding temporal enquanto edição/vigência permanecerem pendentes;
+- bindings claim-by-claim para todos os blocos editoriais factuais não-referência.
+
+`SourceFragment`, `AtomicFact` e `EvidenceBundle` são extensões candidatas desta frente. `Claim` reutiliza o contrato CKO existente; a branch não promove novos contratos globais do CKO.
+
+O gate `scripts/check-career-atomization.mjs` comprova 1:1:
+- snapshot factual → fragmento;
+- hash da fonte → hash do fragmento → hash do fato;
+- fato → claim;
+- claim → evidence bundle;
+- claim → authority binding quando a validade está qualificada;
+- bloco factual → ao menos um claim `SUPPORTS`;
+- nenhuma autoaprovação: claims permanecem `REVIEW_REQUIRED/PENDING`.
+
+O leitor editorial candidato expõe a trilha diagnóstica de evidência atômica em `<details>`, incluindo locator, fato, claim e evidence bundle.
+
+Wave validada no workflow `40426337424`, HEAD `1602acbb7f15a87af4b876cf3e4ff28b61cca72a`.

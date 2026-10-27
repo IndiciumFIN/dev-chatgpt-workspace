@@ -1,5 +1,6 @@
 import handoffs from '../../../registers/commander/lanes.v1.json';
 import queue from '../../../registers/pmo/queue.v1.json';
+import taskContract from '../../../contracts/cko-schemas/task.schema.json';
 import { useState, type FormEvent } from 'react';
 import { validateCommanderReadModel } from '../../lib/commander/read-model';
 import {
@@ -101,6 +102,14 @@ export function CommanderPanel() {
             um rascunho em memória para revisão; ao sair ou recarregar a página, ele desaparece.
           </p>
         </div>
+      </section>
+
+      <section className="ce-admin-panel" aria-labelledby="commander-upstream-heading" data-testid="commander-upstream-chain">
+        <h2 id="commander-upstream-heading">Da demanda à autorização · cadeia de governança</h2>
+        <p>Demanda → classificação → escopo → planejamento → fontes → FIND → política → validador → Task → WO → OPA → Kernel → testes → auditoria → promoção autorizada.</p>
+        <p><strong>Fonte do PMO:</strong> <code>{queue.canonicalSource}</code> · <strong>Registros na fila:</strong> {queue.items.length}</p>
+        <p><strong>Contrato da Task:</strong> <code>{taskContract.title}</code> · <strong>Vínculos obrigatórios:</strong> {taskContract.required.filter(field => ['find_ref', 'policy_ref', 'validator_ref', 'depends_on', 'acceptance_tests', 'executor_role', 'work_order_ref'].includes(field)).join(', ')}</p>
+        <p role="status"><strong>Admissão formal:</strong> NÃO VERIFICADA. Um registro de fila não equivale a WO admitida; a interface não cria Task, política ou aprovação por inferência.</p>
       </section>
 
       <section className="ce-commander-grid" aria-label="Condições atuais de integração">

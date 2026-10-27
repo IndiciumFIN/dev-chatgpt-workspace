@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/cko-*'
       - 'audit-evidence/cko/db-first/**'
+      - 'registers/governance/candidates/**'
+      - 'registers/pmo/queue.v1.json'
       - '.github/workflows/cko-canonical-pilot.yml'
   workflow_dispatch:
 
@@ -30,7 +32,8 @@ jobs:
         run: |
           node --test scripts/cko-canonical-pilot.test.mjs \
             scripts/cko-db-first-replay.test.mjs \
-            scripts/cko-db-first-evidence.test.mjs
+            scripts/cko-db-first-evidence.test.mjs \
+            scripts/cko-governance-pilot.test.mjs
       - name: Generate fail-closed candidate diagnostic
         run: node scripts/cko-canonical-pilot.mjs > /tmp/cko-candidate-pilot.json
       - name: Check no clinical release can be asserted

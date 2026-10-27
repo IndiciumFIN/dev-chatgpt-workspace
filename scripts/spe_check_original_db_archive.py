@@ -13,9 +13,9 @@ def inspect(path):
   return {"source_sha256":digest,"zip_crc_pass":crc is None,"migration_count":len(migrations),
     "migration_sequence_0001_0047":numbers==list(range(1,48)),
     "test_count":len(tests),
-    "tests_have_plan":all(re.search(r"select\\s+plan\\([0-9]+\\)",s,re.I) for s in test_sql),
-    "tests_have_rollback":all(re.search(r"\\brollback\\s*;",s,re.I) for s in test_sql),
-    "security_definer_occurrences":sum(len(re.findall(r"\\bsecurity\\s+definer\\b",s,re.I)) for s in sql),
+    "tests_have_plan":all(re.search(r"select\s+plan\([0-9]+\)",s,re.I) for s in test_sql),
+    "tests_have_rollback":all(re.search(r"\brollback\s*;",s,re.I) for s in test_sql),
+    "security_definer_occurrences":sum(len(re.findall(r"\bsecurity\s+definer\b",s,re.I)) for s in sql),
     "postgres_execution":"NOT_RUN"}
 if __name__=="__main__":
  if len(sys.argv)!=2:raise SystemExit("Usage: spe_check_original_db_archive.py original-v1.4.0.zip")

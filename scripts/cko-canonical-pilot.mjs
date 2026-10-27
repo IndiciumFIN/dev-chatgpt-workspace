@@ -22,7 +22,10 @@ export function loadCandidateSnapshot(path = snapshotPath) {
       !Array.isArray(data.records)) {
     throw Error("INVALID_OR_UNSCOPED_CKO_CANDIDATE_GRAPH");
   }
-  if (data.records.length !== 2 || new Set(data.records.map(r => r.tool_slug)).size !== 2) {
+  const names = data.records.map(r => r.tool_slug);
+  if (!names.length || new Set(names).size !== names.length ||
+      !Array.isArray(data.in_scope) || data.in_scope.length !== names.length ||
+      names.some(n => !data.in_scope.includes(n)) || data.records.some(r => r.candidate_only !== true)) {
     throw Error("PILOT_SCOPE_OR_DUPLICATE_ID");
   }
   return { data, sha256: createHash("sha256").update(bytes).digest("hex") };

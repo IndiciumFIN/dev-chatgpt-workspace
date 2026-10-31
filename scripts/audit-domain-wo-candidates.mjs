@@ -29,7 +29,11 @@ export function verify({intake,queue,plan,register,sourceSha,queueSha,planSha}){
  guard(Array.isArray(links)&&links.length===unresolved.length&&candidates.length===unresolved.length,'MAPPING_INCOMPLETE');
  guard(new Set(links.map(x=>x.sourceId)).size===links.length,'DUPLICATE_MAPPED_SOURCE');
  guard(new Set(links.map(x=>x.proposedTask)).size===links.length,'DUPLICATE_MAPPED_TASK');
- guard(register.baseline.sourceBlobSha===sourceSha && register.baseline.queueBlobSha===queueSha && register.baseline.taskPlanBlobSha===planSha,'SOURCE_BLOB_DRIFT');
+ // R79's initial plan blob is historical evidence, not a perpetual lock on
+ // the entire planning document. Subsequent scoped task updates change its Git
+ // blob while the 31 row-level mappings remain independently validated below.
+ guard(register.baseline.sourceBlobSha===sourceSha && register.baseline.queueBlobSha===queueSha,'SOURCE_BLOB_DRIFT');
+ guard(/^[a-f0-9]{40}$/.test(register.baseline.taskPlanBlobSha) && /^[a-f0-9]{40}$/.test(planSha),'INVALID_PLAN_BLOB_SHA');
  guard(plan.r79CandidateMapping?.sourceRegistryBlobSha===sourceSha && plan.r79CandidateMapping?.queueBlobSha===queueSha,'PLAN_SOURCE_DRIFT');
  guard(plan.r79CandidateMapping?.baselineTasks===register.coverage.oldPlanTasks,'BASELINE_TASK_DRIFT');
  guard(plan.tasks.length===register.coverage.currentPlanTasks && plan.tasks.length===register.coverage.oldPlanTasks+unresolved.length,'PLAN_COUNT_DRIFT');

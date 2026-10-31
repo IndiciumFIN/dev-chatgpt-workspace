@@ -7,7 +7,6 @@ import { brandLogo } from "@/lib/contracts";
 import { useChrome, type FocusColor, type Locale, type OptionalConsent } from "@/lib/chrome";
 import { navLabel } from "@/lib/translate";
 import { headerWords, selectableLocales } from "@/lib/header-i18n";
-import { authEnabled } from "@/lib/auth/client";
 import { fontControlVisual } from "@/lib/country-icon-rendering";
 import { focusColorName } from "@/lib/focus-color-i18n";
 
@@ -191,10 +190,12 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
         <div className="header-utility-end">
           <Link to="/secao/$slug" params={{ slug: "assinatura" }} className="utility-subscribe">{chrome.t("subscribe")}</Link>
-          {/* `VITE_AUTH_ENABLED=false` esconde a interface de entrada — e o que o
-              `.env.example` promete. Sem isso, o cabecalho anuncia "Entrar" para um
-              login que a propria pagina /login diz estar desligado. */}
-          {authEnabled ? <Link to="/assinante" className="utility-login">{chrome.t("enter")}</Link> : null}
+          {/* A topbar sempre oferece uma rota explícita para a entrada.
+              O formulário de autenticação permanece controlado por VITE_AUTH_ENABLED
+              na página /login. Nunca inferir sessão ou acesso autorizado. */}
+          <Link to="/login" className="utility-login" aria-label={chrome.t("enter")}>
+            {chrome.t("enter")}
+          </Link>
           <button ref={a11yBtn} className="a11y-mobile-toggle" type="button" aria-label={hw.accessibility} aria-controls="header-accessibility-controls" aria-expanded={a11yOpen} onClick={() => setA11yOpen((v) => !v)}><Accessibility size={19} aria-hidden="true" /><span>{hw.accessibility}</span></button>
         </div>
       </div>

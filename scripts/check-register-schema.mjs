@@ -69,8 +69,27 @@ for (const key of ["pmo", "simulados", "issues"]) {
 if (ss.pmo && typeof ss.pmo.revision !== "number") add("SNAPSHOT", "sourceSnapshots.pmo.revision deve ser número");
 if (ss.issues && typeof ss.issues.observedCount !== "number") add("SNAPSHOT", "sourceSnapshots.issues.observedCount deve ser número");
 
+/* Coleções precisam existir: omiti-las não pode produzir um falso OK. */
+for (const key of ["pmo", "simulados", "openIssues", "coverageGaps"]) {
+  if (!Array.isArray(doc[key])) add("COLECAO_AUSENTE", `${key} precisa ser um array explícito`);
+}
+if (Array.isArray(doc.openIssues) && ss.issues &&
+    ss.issues.observedCount !== doc.openIssues.length) {
+  add("SNAPSHOT_CONTAGEM", `observedCount=${ss.issues.observedCount}, openIssues=${doc.openIssues.length}`);
+}
+if (Array.isArray(doc.openIssues)) {
+  for (const it of doc.openIssues) {
+    const match = /^https:\/\/github\.com\/IndiciumFIN\/dev-chatgpt-workspace\/issues\/(\d+)$/.exec(it.url ?? "");
+    const id = typeof it.id === "string" ? /^(?:GH|ISSUE)-(\d+)$/.exec(it.id) : null;
+    if (!match || !id || match[1] !== id[1] ||
+        (it.number !== undefined && String(it.number) !== match[1])) {
+      add("ISSUE_IDENTIDADE", `id, number e URL divergem em ${JSON.stringify(it.id)}`);
+    }
+  }
+}
+
 /* coleções */
-const woIds = new Set((doc.pmo ?? []).map((w) => w.id));
+const woIds = new Set((Array.isArray(doc.pmo) ? doc.pmo : []).map((w) => w.id));
 function checkUnique(items, label, idKey = "id") {
   const seen = new Set();
   for (const it of items ?? []) {
@@ -81,26 +100,26 @@ function checkUnique(items, label, idKey = "id") {
   }
 }
 
-for (const it of doc.pmo ?? []) {
+for (const it of (Array.isArray(doc.pmo) ? doc.pmo : [])) {
   if (!WO_STATUS.has(it.status)) add("STATUS_INVALIDO", `pmo ${it.id}: status ${JSON.stringify(it.status)}`);
   if (typeof it.evidenceCount !== "number" || it.evidenceCount < 0) add("EVIDENCIA", `pmo ${it.id}: evidenceCount inválido`);
 }
 checkUnique(doc.pmo, "pmo");
 
-for (const it of doc.simulados ?? []) {
+for (const it of (Array.isArray(doc.simulados) ? doc.simulados : [])) {
   if (!it.status) add("STATUS_INVALIDO", `simulados ${it.id}: status ausente`);
   if (it.wo && it.wo !== "UNRECONCILED" && !woIds.has(it.wo)) add("WO_DESCONHECIDA", `simulados ${it.id}: wo ${it.wo} não existe na fila`);
 }
 checkUnique(doc.simulados, "simulados");
 
-for (const it of doc.openIssues ?? []) {
+for (const it of (Array.isArray(doc.openIssues) ? doc.openIssues : [])) {
   if (!it.url || !/^https:\/\/github\.com\/IndiciumFIN\/dev-chatgpt-workspace\/issues\/\d+$/.test(it.url)) add("URL", `openIssues ${it.id}: url inválida`);
   if (!["OPEN", "CLOSED"].includes(it.state)) add("STATUS_INVALIDO", `openIssues ${it.id}: state ${JSON.stringify(it.state)}`);
   if (it.wo && it.wo !== "UNRECONCILED" && !woIds.has(it.wo)) add("WO_DESCONHECIDA", `openIssues ${it.id}: wo ${it.wo} não existe na fila`);
 }
 checkUnique(doc.openIssues, "openIssues");
 
-for (const g of doc.coverageGaps ?? []) {
+for (const g of (Array.isArray(doc.coverageGaps) ? doc.coverageGaps : [])) {
   if (!GAP_STATUS.has(g.status)) add("GAP_STATUS", `${g.id}: status ${JSON.stringify(g.status)}`);
   if (typeof g.description !== "string" || g.description.trim().length < 10) add("GAP_DESCRICAO", `${g.id}: descrição ausente`);
 }
@@ -108,7 +127,7 @@ checkUnique(doc.coverageGaps, "coverageGaps");
 
 const counts = violations.reduce((a, v) => ((a[v.code] = (a[v.code] ?? 0) + 1), a), {});
 if (!violations.length) {
-  console.log(`[check-register-schema] OK — ${file} válido (${(doc.pmo ?? []).length} WOs · ${(doc.simulados ?? []).length} pendências · ${(doc.openIssues ?? []).length} issues · ${(doc.coverageGaps ?? []).length} gaps).`);
+  console.log(`[check-register-schema] OK — ${file} válido (${(Array.isArray(doc.pmo) ? doc.pmo : []).length} WOs · ${(Array.isArray(doc.simulados) ? doc.simulados : []).length} pendências · ${(Array.isArray(doc.openIssues) ? doc.openIssues : []).length} issues · ${(Array.isArray(doc.coverageGaps) ? doc.coverageGaps : []).length} gaps).`);
   process.exit(0);
 }
 console.error(`[check-register-schema] ${violations.length} violação(ões) em ${file}:`);

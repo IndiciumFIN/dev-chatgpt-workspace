@@ -34,6 +34,11 @@ test('database, security, clinical and i18n are not silently publishable',()=>{
   assert.equal(classifyCandidateRisk('src/lib/auth/client.ts'),'SECURITY_HOLD');
   assert.equal(classifyCandidateRisk('content/cko/medicamentos.json'),'CLINICAL_HOLD');
   assert.equal(classifyCandidateRisk('src/locales/de.json'),'I18N_VALIDATE');
+  assert.equal(classifyCandidateRisk('artifacts/fonte/corpus/paginas/abc.json'),'SOURCE_CORPUS_HOLD');
+  assert.equal(classifyCandidateRisk('artifacts/.tmp/mcp-results/a.json'),'TEMP_ARTIFACT_QUARANTINE');
+  assert.equal(classifyCandidateRisk('imports/drive/raw.json'),'SOURCE_IMPORT_HOLD');
+  assert.equal(classifyCandidateRisk('bibliotecas-corpus/library.md'),'SOURCE_LIBRARY_HOLD');
+  assert.equal(classifyCandidateRisk('package-lock.json'),'SECURITY_HOLD');
   assert.equal(classifyCandidateRisk('src/components/site/shell.tsx'),'CANDIDATE_REVIEW');
 });
 test('identical file hashes deduplicate and conflicting blobs block canonical overwrite',()=>{

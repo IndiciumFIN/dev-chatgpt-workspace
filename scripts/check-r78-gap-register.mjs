@@ -13,7 +13,7 @@ export function validate(r,plan) {
  const expected=r?.baseline?.taskPlanCount+extra;
  const scoped=plan.r87ScopedTaskExpansion;
  const add=plan.r86SupplementalTaskIntake;
- const additional=scoped ? scoped.extensionCount : add?.additionalAuditTaskCount??0;
+ const additional=scoped ? scoped.extensionCount+(plan.r89ScopedTaskReconciliation?.additionalTaskCount??0) : add?.additionalAuditTaskCount??0;
  if(!Number.isSafeInteger(extra)||extra<0||!Number.isSafeInteger(additional)||additional<0||plan.tasks.length!==expected+additional)fail('TASK_PLAN_DRIFT');
  if(new Set(plan.tasks.map(t=>t.id)).size!==plan.tasks.length)fail('TASK_ID_DUPLICATE');
  if(scoped){

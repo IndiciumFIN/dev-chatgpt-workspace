@@ -9,7 +9,7 @@ const current=()=>{
   plan:JSON.parse(readFileSync('docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json','utf8'))
  };
 };
-test('R78: persisted gap-WO dossier validates against 37 live tasks',()=>{
+test('R78: historical 37 plus 31 R79 candidates and four separately sourced specialist candidates',()=>{
  const {report,plan}=current();
  const v=validate(report,plan);
  assert.equal(v.gaps,4);
@@ -35,4 +35,27 @@ test('R78: no artificial closure for security, Kernel or main',()=>{
 test('R78: missing or changed gap count fails closed',()=>{
  const {report,plan}=current();report.gaps.pop();
  assert.throws(()=>validate(report,plan),/GAP_COUNT_INCOMPLETE/);
+});
+
+test('R86: unregistered fifth specialist task cannot bypass R78 register',()=>{
+ const {report,plan}=current();plan.tasks.push({...plan.tasks.at(-1),id:'TASK-PLAN-094'});
+ assert.throws(()=>validate(report,plan),/TASK_PLAN_DRIFT/);
+});
+test('R86: no silent specialist completion or unverified Kernel admission',()=>{
+ const a=current();a.plan.tasks.find(t=>t.id==='TASK-PLAN-090').status='DONE';
+ assert.throws(()=>validate(a.report,a.plan),/R86_SPECIALIST_TASK_DRIFT/);
+ const b=current();b.plan.r86SupplementalTaskIntake.kernelAdmission='ADMITTED';
+ assert.throws(()=>validate(b.report,b.plan),/R86_SPECIALIST_INTAKE_UNVERIFIED/);
+});
+test('R86: unpinned specialist source or task title cannot pass',()=>{
+ const a=current();a.plan.r86SupplementalTaskIntake.sourceCommit='0'.repeat(40);
+ assert.throws(()=>validate(a.report,a.plan),/R86_SPECIALIST_INTAKE_UNVERIFIED/);
+ const b=current();b.plan.r86SupplementalTaskIntake.tasks[2].title='unreviewed changed scope';
+ assert.throws(()=>validate(b.report,b.plan),/R86_SPECIALIST_TASK_DRIFT/);
+});
+test('R86: cannot bypass unchanged R79 31-domain source mapping',()=>{
+ const a=current();a.plan.r79CandidateMapping.candidateTasksAdded=30;
+ assert.throws(()=>validate(a.report,a.plan),/TASK_PLAN_DRIFT|R79_CANDIDATE_UNVERIFIED/);
+ const b=current();b.plan.tasks.find(t=>t.id==='TASK-PLAN-059').authorization.kernelAdmission='ADMITTED';
+ assert.throws(()=>validate(b.report,b.plan),/R79_FALSE_CANDIDATE_AUTHORITY/);
 });

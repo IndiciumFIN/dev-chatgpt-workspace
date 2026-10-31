@@ -17,6 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 31 pendências (13 Simulados + 18 issues) estão cobertas. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham).",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -31,7 +32,7 @@
         "GAP-02"
       ],
       "artifacts": [],
-      "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; README do plano coerente."
+      "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
     {
       "id": "TASK-PLAN-002",
@@ -86,7 +87,7 @@
     {
       "id": "TASK-PLAN-005",
       "phase": "F0",
-      "title": "Land do inventário CE-CROSS-SOURCE-PENDING-INTAKE e validar o schema do register",
+      "title": "Land do inventário CE-CROSS-SOURCE-PENDING-INTAKE",
       "wo": "WO-PMO-001",
       "deps": [
         "TASK-PLAN-001"
@@ -100,12 +101,60 @@
       "artifacts": [
         "registers/pmo/cross-source-pending-intake.v1.json"
       ],
-      "acceptance": "Register no main com registerId/schemaVersion/completeness validados por script fail-closed."
+      "acceptance": "Register no main com registerId/schemaVersion/completeness validados por script fail-closed (TASK-PLAN-017)."
+    },
+    {
+      "id": "TASK-PLAN-015",
+      "phase": "F0",
+      "title": "Medir a superfície de segurança (Dependabot, code scanning, secret scanning)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-04"
+      ],
+      "artifacts": [],
+      "acceptance": "As três ferramentas falham com erro de conector: estado é 'não medido', nunca 'zero alertas'. Alertas lidos e registrados por severidade + SHA dos artefatos afetados."
+    },
+    {
+      "id": "TASK-PLAN-016",
+      "phase": "F0",
+      "title": "Destravar os workflows do PR #24 parados em action_required",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "'SPE Candidate Static Gates', 'Simulados RPC static regressions' e 'Remediate better-auth candidate safely' executam (hoje conclude action_required = aguardam aprovação, logo o PR #24 não tem veredito de CI). Evidência: URLs dos runs."
+    },
+    {
+      "id": "TASK-PLAN-017",
+      "phase": "F0",
+      "title": "Validador de schema do inventário transversal",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-005"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "DONE",
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "scripts/check-register-schema.mjs",
+        "scripts/check-register-schema.test.mjs"
+      ],
+      "acceptance": "Falha fechada em schemaVersion/registerId/snapshotDate/completeness/releaseGate/policy ausentes ou inválidos, id duplicado, WO desconhecida, URL fora do repo e incoerência completeness x releaseGate. 7 testes negativos verdes; validado contra o inventário real (10 WOs, 13 pendências, 18 issues, 4 gaps) => OK."
     },
     {
       "id": "TASK-PLAN-010",
       "phase": "F1",
-      "title": "Gate de cobertura que re-deriva WOs x pendências x tasks",
+      "title": "Gate de cobertura que re-deriva WOs × pendências × tasks",
       "wo": "WO-PMO-001",
       "deps": [
         "TASK-PLAN-005"
@@ -119,7 +168,7 @@
       "artifacts": [
         "scripts/check-pending-coverage.mjs"
       ],
-      "acceptance": "Violações TASK_SEM_WO, TASK_WO_INEXISTENTE, WO_SEM_TASK, PENDENCIA_ORFA, DONE_SEM_EVIDENCIA, TASK_SEM_ARTEFATO e GAP_ABERTO detectadas."
+      "acceptance": "Violações TASK_SEM_WO, TASK_WO_INEXISTENTE, WO_SEM_TASK, PENDENCIA_ORFA, DONE_SEM_EVIDENCIA, TASK_SEM_ARTEFATO e GAP_ABERTO detectadas; ids de issue aceitos em formato GH-<n> e ISSUE-<n>."
     },
     {
       "id": "TASK-PLAN-011",
@@ -136,12 +185,12 @@
       "artifacts": [
         "scripts/check-pending-coverage.test.mjs"
       ],
-      "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 7 testes verdes, incluindo SKIP por insumo ausente."
+      "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 9 testes verdes (SKIP por insumo ausente, órfã por formato GH-<n>, falso-verde barrado)."
     },
     {
       "id": "TASK-PLAN-012",
       "phase": "F1",
-      "title": "Ativar o gate de cobertura no CI",
+      "title": "Ativar o gate no CI",
       "wo": "WO-PMO-001",
       "deps": [
         "TASK-PLAN-005",
@@ -158,12 +207,12 @@
         "ci/pending-coverage-gate.yml",
         "ci/README.md"
       ],
-      "acceptance": "ci/pending-coverage-gate.yml copiado para .github/workflows/ (escrita nessa pasta e bloqueada para a API do plugin, exige owner) e gate falhando fechado quando houver gaps. Ordem obrigatoria: T0.005 (inventario) -> T0.013 (vinculos) -> T0.001 (gaps fechados) -> so entao GAP_ABERTO como erro. NAO ligar ao verify-bibliotecas.yml antes disso: quebraria o CI das 7 PRs drafts enquanto os gaps estiverem abertos."
+      "acceptance": "ci/pending-coverage-gate.yml copiado para .github/workflows/ (escrita nessa pasta é bloqueada para a API do plugin, exige owner) e gate falhando fechado quando houver gaps. Ordem obrigatória: T0.005 -> T0.013 -> T0.001 -> só então GAP_ABERTO como erro. NÃO ligar ao verify-bibliotecas.yml antes disso."
     },
     {
       "id": "TASK-PLAN-013",
       "phase": "F1",
-      "title": "Vincular as 18 issues abertas e as 13 pendências dos Simulados a WO/task",
+      "title": "Vincular as 18 issues e as 13 pendências dos Simulados a WO/task",
       "wo": "WO-PMO-001",
       "deps": [
         "TASK-PLAN-010",
@@ -173,40 +222,40 @@
       "language": "JS",
       "status": "PROPOSTO",
       "covers": [
-        "ISSUE-2",
-        "ISSUE-3",
-        "ISSUE-4",
-        "ISSUE-5",
-        "ISSUE-6",
-        "ISSUE-7",
-        "ISSUE-8",
-        "ISSUE-9",
-        "ISSUE-10",
-        "ISSUE-11",
-        "ISSUE-12",
-        "ISSUE-14",
-        "ISSUE-15",
-        "ISSUE-16",
-        "ISSUE-17",
-        "ISSUE-18",
-        "ISSUE-23",
-        "ISSUE-25",
-        "simulados:P0-01",
-        "simulados:P0-02",
-        "simulados:P0-03",
-        "simulados:P0-04",
-        "simulados:P0-05",
-        "simulados:P0-06",
-        "simulados:P0-07",
-        "simulados:P0-08",
-        "simulados:P0-09",
-        "simulados:P0-10",
-        "simulados:P1-11",
-        "simulados:P1-12",
-        "simulados:P1-13"
+        "GH-2",
+        "GH-3",
+        "GH-4",
+        "GH-5",
+        "GH-6",
+        "GH-7",
+        "GH-8",
+        "GH-9",
+        "GH-10",
+        "GH-11",
+        "GH-12",
+        "GH-14",
+        "GH-15",
+        "GH-16",
+        "GH-17",
+        "GH-18",
+        "GH-23",
+        "GH-25",
+        "P0-01",
+        "P0-02",
+        "P0-03",
+        "P0-04",
+        "P0-05",
+        "P0-06",
+        "P0-07",
+        "P0-08",
+        "P0-09",
+        "P0-10",
+        "P1-11",
+        "P1-12",
+        "P1-13"
       ],
       "artifacts": [],
-      "acceptance": "PENDENCIA_ORFA = 0 no gate; cada issue aberta e cada pendência Simulados tem task viva e WO correspondente."
+      "acceptance": "PENDENCIA_ORFA = 0 no gate contra a fila rev20 e o inventário real; cada issue aberta e cada pendência Simulados tem task viva e WO correspondente."
     },
     {
       "id": "TASK-PLAN-014",
@@ -228,7 +277,7 @@
     {
       "id": "TASK-PLAN-020",
       "phase": "F2",
-      "title": "Catálogo de 13 cenários de auditoria mapeados ao repositório",
+      "title": "Catálogo de cenários de auditoria mapeados ao repositório",
       "wo": "WO-SEC-001",
       "deps": [],
       "owner": "Mavis",
@@ -240,7 +289,7 @@
       "artifacts": [
         "docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md"
       ],
-      "acceptance": "Cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real, limitação e modo (estático ou DB). Precisao: o CI instala pip de forma pontual (jsonschema), sem lockfile - a justificativa para motor stdlib-only e evitar divergencia entre ambiente local e gate, nao 'o CI nao instala pip'."
+      "acceptance": "Cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real, limitação e modo (estático ou DB)."
     },
     {
       "id": "TASK-PLAN-021",
@@ -262,36 +311,35 @@
     {
       "id": "TASK-PLAN-022",
       "phase": "F2",
-      "title": "Popular a política com o inventário real (Supabase, Drive, fontes)",
-      "wo": "WO-SEC-001",
-      "deps": [
-        "TASK-PLAN-021",
-        "TASK-PLAN-005"
-      ],
-      "owner": "DataEng",
-      "language": "DOC",
-      "status": "PROPOSTO",
-      "covers": [
-        "GAP-03",
-        "GAP-04"
-      ],
-      "artifacts": [],
-      "acceptance": "populationStatus = COMPLETE com evidência por item; o motor passa a produzir achado real em vez de aviso de política vazia."
-    },
-    {
-      "id": "TASK-PLAN-023",
-      "phase": "F2",
       "title": "Ligar cada regra do motor a uma WO e a um critério de aceite",
       "wo": "WO-SEC-001",
       "deps": [
-        "TASK-PLAN-022"
+        "TASK-PLAN-021"
       ],
       "owner": "PMO",
       "language": "DOC",
       "status": "PROPOSTO",
       "covers": [],
       "artifacts": [],
-      "acceptance": "Cobertura de cenários: cada regra KER/MST/SEC/I18N/SEO/JSD tem WO, artefato e critério verificável."
+      "acceptance": "Cobertura de cenários: cada regra KER/MST/SEC/I18N/SEO/JSD tem WO, artefato e critério verificável (tabela do catálogo de cenários)."
+    },
+    {
+      "id": "TASK-PLAN-026",
+      "phase": "F2",
+      "title": "Cobrir a matriz transversal de governança e Master Data pelo motor",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-021"
+      ],
+      "owner": "DataEng",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [],
+      "acceptance": "Cenários KER/MST/SEC rodam sobre a matriz transversal com a política populada (populationStatus=COMPLETE) e o relatório do motor passa a produzir achados reais, não aviso de política vazia."
     },
     {
       "id": "TASK-PLAN-030",
@@ -373,19 +421,49 @@
       "language": "PY",
       "status": "PROPOSTO",
       "covers": [
-        "simulados:P0-02",
-        "simulados:P0-03"
+        "P0-02",
+        "P0-03"
       ],
       "artifacts": [],
       "acceptance": "Replay em PostgreSQL descartável com relatório do motor; divergências catalogadas e vinculadas a WO."
     },
     {
+      "id": "TASK-PLAN-027",
+      "phase": "F3",
+      "title": "Reconciliar CKO, fontes normativas e o corpus de bibliotecas",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-034"
+      ],
+      "owner": "DataEng",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Os 17 achados candidatos CKO/COREN/COFEN, os 240 CSV de staging/bibliotecas-corpus-20261026 e as 1577 recortes de audit-hardening-2026-10-24 rastreados a fonte (SHA + ponteiro JSON), sem duplicidade e sem órfão."
+    },
+    {
+      "id": "TASK-PLAN-028",
+      "phase": "F3",
+      "title": "Reconciliar os 17 achados CKO/COREN/COFEN com a fila PMO",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-034"
+      ],
+      "owner": "PMO",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Os 17 itens do lote (registers/governance/find-register.v1.json, candidate_batches) têm task e evidência; check-candidate-find-register.mjs permanece verde e nenhum item fica com admission=NOT_ADMITTED sem caminho de decisão."
+    },
+    {
       "id": "TASK-PLAN-040",
       "phase": "F4",
-      "title": "Gate de paridade de locales, SEO, slug e alt sobre o conteúdo publicado",
+      "title": "Gate de paridade de locales, SEO, slug e alt sobre o conteúdo",
       "wo": "WO-SEC-001",
       "deps": [
-        "TASK-PLAN-022",
+        "TASK-PLAN-021",
         "TASK-PLAN-030"
       ],
       "owner": "Mavis",
@@ -424,6 +502,21 @@
       "covers": [],
       "artifacts": [],
       "acceptance": "sources.json com chaves únicas; validador impede o verde falso de 87/87 (FIND-CURI-R38/R40)."
+    },
+    {
+      "id": "TASK-PLAN-029",
+      "phase": "F4",
+      "title": "Consolidar o Design System e os templates canônicos",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "As branches fix/shell-consolidation e grook_10_26 (chrome, home, desks por módulo, sem DS concorrente) têm decisão única de identidade visual registrada, com gate de contrato de surface (registers/canonical/surface-contracts.v2.json) verde."
     },
     {
       "id": "TASK-PLAN-050",
@@ -507,6 +600,36 @@
       "covers": [],
       "artifacts": [],
       "acceptance": "Preview disponível em todas as PRs ativas; hoje há 8 falhas por limite de plano em 5 PRs."
+    },
+    {
+      "id": "TASK-PLAN-055",
+      "phase": "F5",
+      "title": "Definir a automação recorrente com orçamento e rastreabilidade",
+      "wo": "WO-AUTO-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Owner",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada rotina recorrente (aquisição transversal, indexação de artigos, auditoria de dados) tem custo máximo declarado, intervalo, fonte de estado e critério de parada; orçamento do WO-AUTO-001 medido em execuções."
+    },
+    {
+      "id": "TASK-PLAN-056",
+      "phase": "F5",
+      "title": "Preservar o bloqueio de homologação até a admissão",
+      "wo": "WO-HOM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Kernel",
+      "language": "DOC",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "WO-HOM-001 permanece HOLD_HUMAN em todas as revisões da fila; nenhum merge, deploy ou migração aplicada antes de decisão verificável de admissão (TASK-PLAN-002)."
     }
   ]
 }

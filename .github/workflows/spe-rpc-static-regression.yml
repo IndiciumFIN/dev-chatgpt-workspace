@@ -12,6 +12,7 @@ on:
       - '.github/workflows/spe-rpc-static-regression.yml'
       - 'docs/simulados-enfermagem/W12_FIND_RPC_SCHEMA_GRANTS_20261031.md'
       - 'docs/simulados-enfermagem/W15_FIND_ORIGINAL_ARCHIVE_INTEGRITY_20261031.md'
+      - 'docs/simulados-enfermagem/W16_FIND_SQL_LEXICAL_SPOOFING_20261031.md'
   pull_request:
     paths:
       - 'scripts/spe_audit_rpc_answers.py'
@@ -21,6 +22,7 @@ on:
       - '.github/workflows/spe-rpc-static-regression.yml'
       - 'docs/simulados-enfermagem/W12_FIND_RPC_SCHEMA_GRANTS_20261031.md'
       - 'docs/simulados-enfermagem/W15_FIND_ORIGINAL_ARCHIVE_INTEGRITY_20261031.md'
+      - 'docs/simulados-enfermagem/W16_FIND_SQL_LEXICAL_SPOOFING_20261031.md'
 
 permissions:
   contents: read
@@ -45,5 +47,5 @@ jobs:
       - name: Preserve private archive and runtime HOLD
         run: |
           echo 'Original private ZIP is NOT committed to the repository or downloaded by CI.'
-          echo '47 migrations and 17 pgTAP tests: SOURCE_INTEGRITY_VERIFIED_LOCALLY; DB_EXECUTION_NOT_RUN.'
+          echo '47 migrations and 17 pgTAP tests: W15 SOURCE_INTEGRITY_VERIFIED_LOCALLY; W16 LEXICAL_PREFLIGHT_RECHECK_PENDING; DB_EXECUTION_NOT_RUN.'
           echo 'Kernel admission, independent review and release: HOLD_HUMAN.'

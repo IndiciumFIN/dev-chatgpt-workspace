@@ -170,6 +170,14 @@
         "src/core/governance/kernel.ts and type contracts",
         "German registry index/entry and 57 draft translation candidates"
       ]
+    },
+    "collisionMapping": {
+      "status": "CANDIDATE_MAPPING_COMPLETE",
+      "candidateMappedPaths": 115,
+      "candidateUnmappedPaths": 0,
+      "releaseApprovals": 0,
+      "canonicalMergesPerformed": 0,
+      "notHomologated": true
     }
   },
   "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required.",
@@ -190,6 +198,52 @@
     "limitation": "Semantic equivalence is not approval of DRAFT translations, canonical-owner election or permission for main. The 58 others are not necessarily all textually distinct: most were outside the narrow allowlist.",
     "sourceScript": "scripts/audit-i18n-collisions.mjs",
     "tests": "scripts/semantic-collision-audit.test.mjs",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "collisionTriage": {
+    "version": "1.1.0",
+    "scope": "115 conflicting Git paths across 23 branches; distinct from total content corpus",
+    "workflow": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41228484305",
+    "result": "PASS_READ_ONLY_NOT_KERNEL_ADMITTED",
+    "sourceCommit": "05d390f60b83746acadc9d3414d6bb38f4f43a2d",
+    "artifactName": "ce-main-migration-source-collision-report",
+    "artifactSha256": "2fc393069cc70978301732fb79cc995d7595c8c6129ace2bc4ec1d14386e34a7",
+    "counts": {
+      "total": 115,
+      "semanticEquivalent": 57,
+      "remainingNonEquivalentOrNonAllowlisted": 58,
+      "candidateWoMappings": 115,
+      "unresolvedWoMappings": 0,
+      "sourceSuggestions": 3,
+      "formallyApproved": 0
+    },
+    "candidateWoCounts": {
+      "WO-PMO-001": 9,
+      "WO-AUTO-001": 7,
+      "WO-GOV-TRANS-001": 8,
+      "WO-CKO-001": 11,
+      "WO-SEC-001": 6,
+      "WO-ADM-001": 9,
+      "WO-DS-001": 63,
+      "WO-E2E-001": 2
+    },
+    "sourceFiles": [
+      "scripts/lib/canonical-conflict-triage.mjs",
+      "scripts/canonical-conflict-triage.test.mjs",
+      "scripts/audit-conflict-triage.mjs"
+    ],
+    "evidenceFiles": [
+      "audit-evidence/main-migration/runtime-report.json",
+      "audit-evidence/main-migration/semantic-i18n-collisions.v1.json",
+      "audit-evidence/main-migration/canonical-conflict-triage.v1.json"
+    ],
+    "limitations": [
+      "Each mapping is a deterministic PMO CANDIDATE to an already-existing WO, not a recorded Kernel authorization or signed assignment.",
+      "All 115 paths remain blocked for main promotion pending independent acceptance and source integrity.",
+      "57 semantic equivalence records compare JSON object keys and provenance_refs order only; translation human sign-off remains absent.",
+      "58 other conflicts remain in review, some are structurally different registries and were never compared semantically.",
+      "Artifacts retained 30 days; scripts and versioned summary reproduce the workflow; SHA-256 pins the exact run output."
+    ],
     "releaseGate": "HOLD_HUMAN"
   }
 }

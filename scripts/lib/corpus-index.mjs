@@ -4,6 +4,15 @@ export const SOURCE_CORPUS_SCHEMA='CE-SOURCE-CORPUS-INDEX-v1';
 const HASH64=/^[a-f0-9]{64}$/;
 const ACCEPTED_SOURCE='https://www.calculadorasdeenfermagem.com.br/';
 
+export function classifySourceKind(documentPath) {
+  const p=String(documentPath||'').toLowerCase();
+  if(/(?:^|\/)(?:backups?[-_\/]|backup)/.test(p))return 'BACKUP_QUARANTINE';
+  if(p.includes('template') || p.endsWith('.template.html'))return 'TEMPLATE_QUARANTINE';
+  if(p.includes('menu-global.html') || p==='header.html' || p==='footer.html')return 'SHARED_FRAGMENT_HOLD';
+  if(p.startsWith('automacoes/') || p.startsWith('automation/'))return 'AUTOMATION_HOLD';
+  return 'CONTENT_CANDIDATE_HOLD';
+}
+
 export function examineSourcePage(filePath, raw, options={}) {
   const sha256=createHash('sha256').update(raw).digest('hex');
   const blobSha=createHash('sha1').update('blob '+raw.length+'\0').update(raw).digest('hex');
@@ -20,7 +29,8 @@ export function examineSourcePage(filePath, raw, options={}) {
   if(!Array.isArray(doc.secoes))problems.push('SECTIONS_MISSING');
   if(typeof doc.textoCompleto!=='string')problems.push('FULL_TEXT_MISSING');
   const canonical=typeof doc.metadados?.canonical==='string'?doc.metadados.canonical:null;
-  if(canonical && !canonical.startsWith(ACCEPTED_SOURCE))problems.push('CANONICAL_OUTSIDE_PROJECT');
+  if(canonical?.includes('{{') || canonical?.includes('}}'))problems.push('UNRESOLVED_CANONICAL_TEMPLATE');
+  else if(canonical && !canonical.startsWith(ACCEPTED_SOURCE))problems.push('CANONICAL_OUTSIDE_PROJECT');
   const sourceDocumentPath=typeof doc.arquivo==='string'?doc.arquivo:'';
   const locale=typeof doc.idioma==='string'?doc.idioma:'';
   // The file-level JSON hash is verified above; doc.sha256 is a CLAIM about
@@ -28,7 +38,7 @@ export function examineSourcePage(filePath, raw, options={}) {
   return {
     sourceFile:filePath,sourceBlobSha:blobSha,sourceJsonSha256:sha256,
     sourceHtmlSha256Claim:HASH64.test(String(doc.sha256||''))?doc.sha256:null,
-    documentPath:sourceDocumentPath,locale,role:typeof doc.papel==='string'?doc.papel:null,
+    documentPath:sourceDocumentPath,locale,kind:classifySourceKind(sourceDocumentPath),role:typeof doc.papel==='string'?doc.papel:null,
     canonical,sourceTitle:typeof doc.titulo==='string'?doc.titulo:null,
     sectionsCount:Array.isArray(doc.secoes)?doc.secoes.length:0,
     textLength:typeof doc.textoCompleto==='string'?doc.textoCompleto.length:0,
@@ -40,11 +50,13 @@ export function examineSourcePage(filePath, raw, options={}) {
 }
 export function summarizeSourceIndex(entries, expectedCount) {
   const byLocale={};
+  const byKind={};
   const issues={};
   const identities=new Map();
   let structuralValid=0,emptyTexts=0,licenseEvidenced=0;
   for(const e of entries){
     byLocale[e.locale||'UNKNOWN']=(byLocale[e.locale||'UNKNOWN']||0)+1;
+    byKind[e.kind||'UNKNOWN']=(byKind[e.kind||'UNKNOWN']||0)+1;
     for(const p of e.structuralProblems)issues[p]=(issues[p]||0)+1;
     if(!e.structuralProblems.length)structuralValid++;
     if(!e.textLength)emptyTexts++;
@@ -55,7 +67,7 @@ export function summarizeSourceIndex(entries, expectedCount) {
   return {expectedCount,observedCount:entries.length,complete:entries.length===expectedCount,
     structurallyValid:structuralValid,structuralProblemCount:entries.length-structuralValid,
     emptyTexts,licenseEvidenced,licenseUnverified:entries.length-licenseEvidenced,
-    locales:byLocale,problems:issues,duplicateIdentityGroups:duplicateIdentities.length,
+    locales:byLocale,kinds:byKind,problems:issues,duplicateIdentityGroups:duplicateIdentities.length,
     duplicateIdentities:duplicateIdentities.slice(0,100),
     publicationAllowed:false,clinicalGate:'HOLD_HUMAN',rightsGate:'NOT_VERIFIED'};
 }

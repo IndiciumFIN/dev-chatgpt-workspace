@@ -66,9 +66,14 @@ test('R86: PR head drift and foreign repository fail closed',()=>{
  const y=data();y.pr.head.repo.full_name='foreign/repo';
  assert.throws(()=>assess(y),/WRONG_HEAD_REPOSITORY/);
 });
-test('R86: merged or draft PR cannot claim checked candidate state',()=>{
+test('R86: merge rejected; draft remains HOLD with zero candidate approvals',()=>{
  const x=data();x.pr.merged=true;assert.throws(()=>assess(x),/UNAUTHORIZED_MERGE/);
- const y=data();y.pr.draft=true;assert.throws(()=>assess(y),/PR_NOT_READY_FOR_REVIEW/);
+ const y=data();y.pr.draft=true;y.reviews=[rv(2,'independent')];
+ const result=assess(y);
+ assert.equal(result.reviewState,'DRAFT_HOLD');
+ assert.equal(result.independentCurrentHeadGithubApprovalCandidates,0);
+ assert.equal(result.mergingAuthorized,false);
+ assert.equal(result.releaseGate,'HOLD_HUMAN');
 });
 test('R86: review completeness and branch protection evidence are required',()=>{
  const x=data();x.reviews='not-a-list';assert.throws(()=>assess(x),/REVIEWS_NOT_AN_ARRAY/);

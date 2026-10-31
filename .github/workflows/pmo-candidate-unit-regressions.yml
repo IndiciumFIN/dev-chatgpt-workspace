@@ -4,6 +4,8 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/audit-pending-lineage*'
+      - 'scripts/check-r78-gap-register*'
+      - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
       - 'scripts/check-register-schema*'
       - 'scripts/check-approval-pmokernel-record*'
       - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
@@ -17,6 +19,8 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/audit-pending-lineage*'
+      - 'scripts/check-r78-gap-register*'
+      - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
       - 'scripts/check-register-schema*'
       - 'scripts/check-approval-pmokernel-record*'
       - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
@@ -48,6 +52,10 @@ jobs:
         run: node --test scripts/check-pending-coverage.test.mjs
       - name: Run per-pendency source-lineage regressions (candidate only)
         run: node --test scripts/audit-pending-lineage.test.mjs
+      - name: Validate R78 4-gap WO register (candidate only)
+        run: |
+          node scripts/check-r78-gap-register.mjs
+          node --test scripts/check-r78-gap-register.test.mjs
       - name: Run register schema regressions
         run: node --test scripts/check-register-schema.test.mjs
       - name: Verify persisted owner approval and negative authorization regressions

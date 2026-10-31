@@ -52,6 +52,10 @@ BEGIN
 END
 $checks$;
 ROLLBACK;
-SELECT CASE WHEN EXISTS (
-  SELECT 1 FROM spe_candidate.sources WHERE source_id = 'SPE.SRC.ci_smoke'
-) THEN 1 / 0 ELSE 1 END AS rollback_verified;
+DO $checks$
+BEGIN
+  IF EXISTS (SELECT 1 FROM spe_candidate.sources WHERE source_id = 'SPE.SRC.ci_smoke') THEN
+    RAISE EXCEPTION 'Candidate fixture persisted despite ROLLBACK';
+  END IF;
+END
+$checks$;

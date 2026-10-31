@@ -46,6 +46,14 @@ class RpcExposureAuditTests(unittest.TestCase):
         result = self.scan({name: split, NAMES[1]: "", NAMES[2]: ""})
         self.assertEqual(result["checks"][name]["public_roles"], ["anon", "authenticated"])
 
+    def test_postgresql_public_role_exposes_anonymous_and_authenticated(self):
+        name = NAMES[0]
+        result = self.scan({name: sql(name, "PUBLIC"), NAMES[1]: "", NAMES[2]: ""})
+        self.assertTrue(result["confirmed_static"])
+        self.assertEqual(result["exposed_migrations"], [name])
+        self.assertTrue(result["checks"][name]["anon_grant"])
+        self.assertTrue(result["checks"][name]["authenticated_grant"])
+
     def test_missing_grant_excludes_only_that_migration(self):
         result = self.scan({NAMES[2]: sql(NAMES[2], "")})
         self.assertTrue(result["confirmed_static"])

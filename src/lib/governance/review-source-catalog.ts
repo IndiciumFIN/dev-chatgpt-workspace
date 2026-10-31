@@ -26,6 +26,21 @@ const APPROVAL_RECORD_URL = REPO_PREFIX +
 const ISSUE_URL = REPO_PREFIX + 'issues/25';
 const MAX_OPTIONS = 100;
 
+/** Validate the parsed destination, not a raw prefix that URL traversal can escape. */
+export function isCanonicalRepoEvidenceUrl(value: string): boolean {
+  if (!value || /[\s\\]/.test(value) || /%(?:2e|2f|5c)/i.test(value)) return false;
+  try {
+    const parsed = new URL(value);
+    const prefix = '/IndiciumFIN/dev-chatgpt-workspace/';
+    return parsed.protocol === 'https:' && parsed.hostname === 'github.com' &&
+      !parsed.username && !parsed.password && !parsed.port &&
+      parsed.pathname.startsWith(prefix) && parsed.pathname.length > prefix.length &&
+      !parsed.pathname.includes('//');
+  } catch {
+    return false;
+  }
+}
+
 export function normalizeReviewSearch(value: string): string {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim();
 }
@@ -45,7 +60,7 @@ export function evidenceSuggestions(item: ReviewWorkOrder): ReviewEvidenceOption
   const output: ReviewEvidenceOption[] = [];
   const seen = new Set<string>();
   function push(url: string, label: string, origin: ReviewEvidenceOption['origin']) {
-    if (!url.startsWith(REPO_PREFIX) || /\s/.test(url) || seen.has(url) || output.length >= MAX_OPTIONS) return;
+    if (!isCanonicalRepoEvidenceUrl(url) || seen.has(url) || output.length >= MAX_OPTIONS) return;
     seen.add(url);
     output.push({ id: `evidence-${output.length + 1}`, label, url, origin, advisory: true });
   }

@@ -42,3 +42,16 @@ test('R81 must retain the link to P0-04 evidence row',()=>{
  const a=load();a.r80.rows.find(x=>x.sourceId==='P0-04').relatedSecurityFindCandidate='UNRELATED';
  assert.throws(()=>validate(a),/MISSING_R80_FIND_MAPPING/);
 });
+
+test('R82: ACL timeline does not mistake PUBLIC revoke for anon revocation',()=>{
+ let a=load();a.report.aclTimeline.functions[0].changes[1].role='PUBLIC';
+ assert.throws(()=>validate(a),/ACL_EVENT_SEQUENCE_DRIFT/);
+ a=load();a.report.aclTimeline.functions[0].laterTargetRevokeFound=true;
+ assert.throws(()=>validate(a),/ACL_REVOKE_EVIDENCE_DRIFT/);
+});
+test('R82: partial 47 migration scan cannot claim complete ACL review',()=>{
+ let a=load();a.report.aclTimeline.filesScanned=3;
+ assert.throws(()=>validate(a),/INCOMPLETE_ACL_MIGRATIONS/);
+ a=load();a.report.aclTimeline.status='E2E_PASSED';
+ assert.throws(()=>validate(a),/FALSE_RUNTIME_PROOF/);
+});

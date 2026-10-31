@@ -41,7 +41,12 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx"
+        "src/components/admin/pmo-review-intake.tsx",
+        "registers/governance/r86-independent-review-readiness-20261031.v1.json",
+        "scripts/verify-r86-pr-review-evidence.mjs",
+        "scripts/verify-r86-pr-review-evidence.test.mjs",
+        "scripts/check-r86-review-readiness.mjs",
+        "scripts/check-r86-review-readiness.test.mjs"
       ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
@@ -66,7 +71,12 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx"
+        "src/components/admin/pmo-review-intake.tsx",
+        "registers/governance/r86-independent-review-readiness-20261031.v1.json",
+        "scripts/verify-r86-pr-review-evidence.mjs",
+        "scripts/verify-r86-pr-review-evidence.test.mjs",
+        "scripts/check-r86-review-readiness.mjs",
+        "scripts/check-r86-review-readiness.test.mjs"
       ],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
@@ -2019,5 +2029,24 @@
     "mainChanged": false,
     "sourceQueueChanged": false,
     "releaseGate": "HOLD_HUMAN"
+  },
+  "r86IndependentReviewerReadiness": {
+    "date": "2026-10-31",
+    "state": "TECHNICAL_CHECKS_IMPLEMENTED_HUMAN_REVIEW_NOT_STARTED",
+    "snapshotDossier": "registers/governance/r86-independent-review-readiness-20261031.v1.json",
+    "liveVerifier": "scripts/verify-r86-pr-review-evidence.mjs",
+    "liveTests": "scripts/verify-r86-pr-review-evidence.test.mjs",
+    "dossierVerifier": "scripts/check-r86-review-readiness.mjs",
+    "dossierTests": "scripts/check-r86-review-readiness.test.mjs",
+    "githubReviewSnapshot": "NO_REVIEWS_OBSERVED",
+    "ownerInstructionsRecorded": 4,
+    "independentCorporateCheckerReviewsVerified": 0,
+    "kernelAdmissionsVerified": 0,
+    "reviewerAssignment": "NOT_VERIFIED",
+    "canonicalElection": false,
+    "eventsReplayed": 0,
+    "mainChanged": false,
+    "releaseGate": "HOLD_HUMAN",
+    "taskCountObservedAtUpdate": 72
   }
 }

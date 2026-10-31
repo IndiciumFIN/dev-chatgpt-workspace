@@ -11,7 +11,7 @@
 
 | spec original | decisão neste repo | motivo |
 |---|---|---|
-| `pandas`, `pydantic`, `Great Expectations`, `psycopg2`, `yaml` | **eliminados** | o CI roda `npm ci` e não instala pip; dependência nova = código morto |
+| `pandas`, `pydantic`, `Great Expectations`, `psycopg2`, `yaml` | **eliminados** | o CI instala pip de forma pontual e sem lockfile; dependência nova sem lock = divergência entre ambiente local e gate |
 | `policy.yaml` | `audit-policy.v1.json` | JSON é stdlib; YAML exigiria PyYAML |
 | tabelas `core.produtos`, `core.produtos_i18n`, `clientes` | `review_item`, `source`, `audit_log`, `ce_curiosidades_v1.pages` | a spec citava tabelas que não existem aqui |
 | `pg_cron` + tabela `audit.logs_execucao` | **relatório em arquivo** (JSON/Markdown) + gate de CI | sem escrita no banco; rastreabilidade em git |

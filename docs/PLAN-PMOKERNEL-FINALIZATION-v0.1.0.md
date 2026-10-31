@@ -98,7 +98,7 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 |---|---|---|---|---|---|---|
 | TASK-PLAN-010 | `scripts/check-pending-coverage.mjs` — re-deriva WOs × pendências × tasks | WO-PMO-001 | 005 | JS | violações `TASK_SEM_WO`, `TASK_WO_INEXISTENTE`, `WO_SEM_TASK`, `PENDENCIA_ORFA`, `DONE_SEM_EVIDENCIA`, `TASK_SEM_ARTEFATO`, `GAP_ABERTO` | **DONE** (neste PR) |
 | TASK-PLAN-011 | Testes negativos do gate | WO-PMO-001 | 010 | JS | 7 testes verdes (`node --test scripts/check-pending-coverage.test.mjs`), incluindo SKIP-when-absent | **DONE** (neste PR) |
-| TASK-PLAN-012 | Ativar o gate no CI (workflow `pending-coverage-gate.yml`) | WO-PMO-001 | 005, 010, 011 | CI | roda em PR; **falha fechada** quando houver gaps; `paths:` evita ruído antes do inventário aterrissar. **Ordem obrigatória:** T0.005 (inventário) → T0.013 (vínculos) → T0.001 (gaps fechados) → só então `GAP_ABERTO` como erro | PROPOSTO (arquivo pronto; **não** ligado ao `verify-bibliotecas.yml` para não quebrar o CI das outras PRs) |
+| TASK-PLAN-012 | Ativar o gate no CI | WO-PMO-001 | 005, 010, 011 | CI | `ci/pending-coverage-gate.yml` copiado para `.github/workflows/` (escrita nessa pasta é bloqueada para a API do plugin) e gate **falhando fechado** quando houver gaps. **Ordem obrigatória:** T0.005 → T0.013 → T0.001 → só então `GAP_ABERTO` como erro | PROPOSTO (arquivo pronto em `ci/`; cópia exige owner) |
 | TASK-PLAN-013 | Vínculo das **18 issues** + **13 pendências Simulados** a WO/task | WO-PMO-001, WO-SEC-001 | 010, 005 | JS | `PENDENCIA_ORFA = 0` no gate; cada issue aberta tem task e cada task tem WO | PROPOSTO |
 | TASK-PLAN-014 | Consolidar os ~35 FINDs (R14–R47, CURI-R36–R40, SPE-R14–R35) em **uma baseline commitada por PR** | WO-PMO-001 | 012 | JS+PY | para cada PR auditado: um validador no repo, testes negativos, e o texto do FIND referenciando o blob **commitado** (hoje aponta para blobs que só existem em comentário) | PROPOSTO |
 
@@ -186,7 +186,9 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 | `scripts/check-pending-coverage.test.mjs` | 7 testes negativos | JS |
 | `scripts/audit_data_kernel.py` | motor de auditoria (estático + postgres read-only) | PY |
 | `tests/test_audit_data_kernel.py` | 17 testes | PY |
-| `.github/workflows/pending-coverage-gate.yml` | gate no CI (paths-filtered) | CI |
+| `ci/pending-coverage-gate.yml` (+ `ci/README.md`) | gate no CI (paths-filtered) — **fora de `.github/workflows/` porque a API do plugin bloqueia escrita nessa pasta** | CI |
+
+**Limite medido (31/10):** a API do plugin **bloqueia escrita em `.github/workflows/`** (`connector_tool_error` em todas as tentativas; um push anterior chegou a reportar OK com saída vazia e **não** criou o ficheiro — 9 dos 10 arquivos do PR estão presentes, o workflow é o único fora). O ficheiro do gate vive em `ci/pending-coverage-gate.yml` e a activação é uma cópia de uma linha pelo owner (instruções em `ci/README.md`).
 
 **Verificação local (executada):** `node --test scripts/check-pending-coverage.test.mjs` → **7/7 verdes** · `python3 -m unittest discover -s tests -p 'test_*.py' -q` → **17/17 verdes**.
 

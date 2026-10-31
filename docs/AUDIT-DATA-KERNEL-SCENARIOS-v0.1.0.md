@@ -140,23 +140,25 @@
 
 ## 7. Cobertura e lacunas desta matriz
 
-| cenário | modo | estado | bloqueado por |
-|---|---|---|---|
-| KER-01 | DB | implementado | inventário de tabelas reais (T2.022) |
-| KER-02 | estático + DB | implementado | — |
-| KER-03 | estático + DB | implementado | classificação de mutabilidade real (T2.022) |
-| MST-01 | estático/DB | especificado | inventário de dados |
-| MST-02 | DB | especificado | tabelas com chave de negócio e `is_active` |
-| MST-03 | estático | implementado | — |
-| SEC-01 | DB | implementado | lista real de colunas PII (T2.022) |
-| SEC-02 | DB | implementado | lista real de tabelas multi-tenant (T2.022) |
-| SEC-03 | estático | implementado | — |
-| I18N-01 | estático | implementado | — |
-| I18N-02 | estático | implementado | — |
-| SEO-01 | estático | implementado | — |
-| SEO-02 | estático | implementado | — |
-| SEO-03 | estático | especificado | campo `alt_text` no conteúdo |
-| JSD-01 | estático | especificado | gerador (T4.041) |
-| JSD-02 | estático | implementado | — |
+| cenário | modo | estado | WO | task | bloqueado por |
+|---|---|---|---|---|---|
+| KER-01 | DB | implementado | WO-SEC-001 | T3.031 | inventário de tabelas reais (T2.022) |
+| KER-02 | estático + DB | implementado | WO-SEC-001 | T3.030, T3.031 | — |
+| KER-03 | estático + DB | implementado | WO-SEC-001 | T3.030, T3.031 | classificação de mutabilidade real (T2.022) |
+| MST-01 | estático/DB | especificado | WO-CKO-001 | T3.027 | inventário de dados |
+| MST-02 | DB | especificado | WO-CKO-001 | T3.027 | tabelas com chave de negócio e `is_active` |
+| MST-03 | estático | implementado | WO-SEC-001 | T3.030 | — |
+| SEC-01 | DB | implementado | WO-SEC-001 | T3.031, T0.015 | lista real de colunas PII (T2.022) |
+| SEC-02 | DB | implementado | WO-SEC-001 | T3.031, T0.015 | listas reais (T2.022) |
+| SEC-03 | estático | implementado | WO-PMO-001 | T1.010, T1.011 | — |
+| I18N-01 | estático | implementado | WO-SEC-001 | T4.040 | — |
+| I18N-02 | estático | implementado | WO-SEC-001 | T4.040 | — |
+| SEO-01 | estático | implementado | WO-SEC-001 | T4.040 | — |
+| SEO-02 | estático | implementado | WO-SEC-001 | T4.040 | — |
+| SEO-03 | estático | especificado | WO-SEC-001 | T4.040 | campo `alt_text` no conteúdo |
+| JSD-01 | estático | especificado | WO-SEC-001 | T4.041 | gerador (T4.041) |
+| JSD-02 | estático | implementado | WO-SEC-001 | T4.041 | — |
 
 **Cobertura de execução sem banco: 10 de 16** — e todos os 6 restantes estão explicitamente bloqueados por um insumo de inventário, não por falta de código.
+
+**Mapeamento cenário → WO → task** (execução parcial da T2.022): cada regra tem WO e task no registro `docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json`; o gate `scripts/check-pending-coverage.mjs` reprova se uma WO ativa ficar sem task.

@@ -60,19 +60,42 @@ BEGIN
 END
 $checks$;
 
--- Defense-in-depth: even if a future migration accidentally grants SELECT,
--- an unprivileged role must see zero candidate rows under enabled RLS.
--- All grants and fixture data below are reverted by ROLLBACK.
+-- Defense-in-depth: a real answer-key fixture must be invisible even if a
+-- future migration accidentally grants SELECT to a public-facing role.
+-- Grant + data are deliberately transaction-local and rolled back.
 BEGIN;
 INSERT INTO spe_candidate.sources (source_id, title, source_kind)
 VALUES ('SPE.SRC.rls_fixture', 'RLS fixture only', 'OTHER_DOCUMENT');
+INSERT INTO spe_candidate.exams (exam_id, institution, position_title, exam_source_id)
+VALUES ('SPE.EXAM.rls_fixture', 'CI only', 'RLS fixture', 'SPE.SRC.rls_fixture');
+INSERT INTO spe_candidate.questions (question_id, exam_id, ordinal_in_source, stem)
+VALUES ('SPE.Q.rls_fixture', 'SPE.EXAM.rls_fixture', 1, 'Private question fixture');
+INSERT INTO spe_candidate.choices (question_id, choice_key, choice_text, ordinal)
+VALUES ('SPE.Q.rls_fixture', 'A', 'Private choice fixture', 1);
+INSERT INTO spe_candidate.answer_keys (answer_key_id, exam_id, source_id)
+VALUES ('SPE.AK.rls_fixture', 'SPE.EXAM.rls_fixture', 'SPE.SRC.rls_fixture');
+INSERT INTO spe_candidate.answer_key_items (answer_key_id, exam_id, question_id, choice_key)
+VALUES ('SPE.AK.rls_fixture', 'SPE.EXAM.rls_fixture', 'SPE.Q.rls_fixture', 'A');
+DO $checks$
+BEGIN
+  IF (SELECT count(*) FROM spe_candidate.sources WHERE source_id = 'SPE.SRC.rls_fixture') <> 1
+     OR (SELECT count(*) FROM spe_candidate.answer_key_items WHERE answer_key_id = 'SPE.AK.rls_fixture') <> 1 THEN
+    RAISE EXCEPTION 'Missing private fixture: zero visible rows would be false assurance';
+  END IF;
+END
+$checks$;
 GRANT USAGE ON SCHEMA spe_candidate TO anon, authenticated;
-GRANT SELECT ON spe_candidate.sources TO anon, authenticated;
+GRANT SELECT ON spe_candidate.sources, spe_candidate.answer_key_items TO anon, authenticated;
 SET ROLE anon;
 DO $checks$
 BEGIN
-  IF (SELECT count(*) FROM spe_candidate.sources) <> 0 THEN
-    RAISE EXCEPTION 'anon bypassed candidate source RLS';
+  IF NOT has_table_privilege(current_user, 'spe_candidate.answer_key_items', 'SELECT')
+     OR NOT row_security_active('spe_candidate.answer_key_items'::regclass) THEN
+    RAISE EXCEPTION 'anon negative test not exercising granted SELECT under active RLS';
+  END IF;
+  IF (SELECT count(*) FROM spe_candidate.sources) <> 0
+     OR (SELECT count(*) FROM spe_candidate.answer_key_items) <> 0 THEN
+    RAISE EXCEPTION 'anon bypassed candidate source or answer-key RLS';
   END IF;
 END
 $checks$;
@@ -80,10 +103,27 @@ RESET ROLE;
 SET ROLE authenticated;
 DO $checks$
 BEGIN
-  IF (SELECT count(*) FROM spe_candidate.sources) <> 0 THEN
-    RAISE EXCEPTION 'authenticated bypassed candidate source RLS';
+  IF NOT has_table_privilege(current_user, 'spe_candidate.answer_key_items', 'SELECT')
+     OR NOT row_security_active('spe_candidate.answer_key_items'::regclass) THEN
+    RAISE EXCEPTION 'authenticated negative test not exercising granted SELECT under active RLS';
+  END IF;
+  IF (SELECT count(*) FROM spe_candidate.sources) <> 0
+     OR (SELECT count(*) FROM spe_candidate.answer_key_items) <> 0 THEN
+    RAISE EXCEPTION 'authenticated bypassed candidate source or answer-key RLS';
   END IF;
 END
 $checks$;
 RESET ROLE;
 ROLLBACK;
+DO $checks$
+BEGIN
+  IF EXISTS (SELECT 1 FROM spe_candidate.sources WHERE source_id = 'SPE.SRC.rls_fixture')
+     OR EXISTS (SELECT 1 FROM spe_candidate.answer_key_items WHERE answer_key_id = 'SPE.AK.rls_fixture') THEN
+    RAISE EXCEPTION 'Private fixture persisted after rollback';
+  END IF;
+  IF has_table_privilege('anon', 'spe_candidate.answer_key_items', 'SELECT')
+     OR has_table_privilege('authenticated', 'spe_candidate.answer_key_items', 'SELECT') THEN
+    RAISE EXCEPTION 'Temporary answer-key grants persisted after rollback';
+  END IF;
+END
+$checks$;

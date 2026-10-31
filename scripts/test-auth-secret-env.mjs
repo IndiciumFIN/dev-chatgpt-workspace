@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs';
 
 const preview=readFileSync('src/lib/auth/preview.ts','utf8');
 const server=readFileSync('src/lib/auth/server.ts','utf8');
+const providers=readFileSync('src/lib/auth/providers.ts','utf8');
 const client=readFileSync('src/lib/auth/client.ts','utf8');
 
 test('preview OAuth credential is not committed as a literal',()=>{
@@ -27,4 +28,11 @@ test('sign-in uses Better Auth 1.7 social client, not removed generic OAuth clie
   assert.match(client,/authClient\.signIn\.social\(/);
   assert.doesNotMatch(client,/signIn\.oauth2\(/);
   assert.doesNotMatch(client,/genericOAuthClient/);
+});
+
+test('Better Auth 1.7 callback contract is documented without obsolete 1.6 route',()=>{
+  assert.match(providers,/\/api\/auth\/callback\/<providerId>/);
+  assert.match(preview,/\/api\/auth\/callback\/\*/);
+  assert.doesNotMatch(providers,/\/api\/auth\/oauth2\/callback\//);
+  assert.doesNotMatch(preview,/\/api\/auth\/oauth2\/callback\//);
 });

@@ -3,12 +3,18 @@ import { ArrowUpRight, ClipboardCheck, FileClock, ListTodo } from 'lucide-react'
 import queue from '../../../registers/pmo/queue.v1.json';
 import candidates from '../../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json';
 import findRegistry from '../../../registers/governance/find-register.v1.json';
+import { PmoReviewIntake } from './pmo-review-intake';
+import { queryPmo, type ListSort } from '@/lib/admin/list-query';
 
 /** Projeção somente leitura: a fonte é o registro versionado no GitHub, não localStorage. */
 export function PmoPanel() {
   const [filter, setFilter] = useState<'all' | 'active' | 'holds'>('all');
-  const visible = queue.items.filter(item =>
-    filter === 'all' || (filter === 'active' ? item.status === 'IN_PROGRESS' || item.status === 'QUEUED' : item.status === 'PAUSED' || item.status === 'HOLD_HUMAN'));
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<ListSort>('order');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<5 | 10 | 20 | 50>(10);
+  const queried = queryPmo(queue.items, {search, filter, sort, page, pageSize});
+  const visible = queried.items;
   const active = queue.items.filter(item => item.status === 'IN_PROGRESS').length;
   const pending = queue.items.filter(item => item.status === 'QUEUED').length;
   const statusLabels: Record<string, string> = {
@@ -25,10 +31,32 @@ export function PmoPanel() {
       <div className="ce-admin-panel-heading"><div><h2 id="admin-pmo-heading">Fila única de execução</h2><p>Atualizada por commits verificáveis. A visualização é leitura, não aprovação.</p></div></div>
       <div className="ce-admin-pmo-controls">
         <p>Protótipo administrativo congelado. A fila segue segurança, E2E, Design System, CKO, automação e homologação.</p>
-        <label>Exibir <select value={filter} onChange={event => setFilter(event.target.value as typeof filter)}>
-          <option value="all">Todas as ordens</option><option value="active">Em execução e na fila</option><option value="holds">Pausadas e aprovação humana</option>
-        </select></label>
+        <label htmlFor="pmo-search">Buscar
+          <input id="pmo-search" type="search" value={search} maxLength={150}
+            placeholder="ID, título, responsável, critério…"
+            onChange={event => {setSearch(event.target.value);setPage(1);}} />
+        </label>
+        <label htmlFor="pmo-filter">Exibir
+          <select id="pmo-filter" value={filter} onChange={event => {setFilter(event.target.value as typeof filter);setPage(1);}}>
+            <option value="all">Todas as ordens</option><option value="active">Em execução e na fila</option><option value="holds">Pausadas e aprovação humana</option>
+          </select>
+        </label>
+        <label htmlFor="pmo-sort">Ordenação
+          <select id="pmo-sort" value={sort} onChange={event => {setSort(event.target.value as ListSort);setPage(1);}}>
+            <option value="order">Ordem canônica</option><option value="priority">Prioridade</option><option value="title">Título (A–Z)</option>
+          </select>
+        </label>
+        <label htmlFor="pmo-page-size">Por página
+          <select id="pmo-page-size" value={pageSize} onChange={event => {setPageSize(Number(event.target.value) as 5 | 10 | 20 | 50);setPage(1);}}>
+            <option value={5}>5</option><option value={10}>10</option><option value={20}>20</option><option value={50}>50</option>
+          </select>
+        </label>
       </div>
+      <p role="status" aria-live="polite" className="ce-admin-detail-note" data-testid="pmo-filter-count">
+        Exibindo {queried.start}–{queried.end} de {queried.total} ordem(ns) encontrada(s) · página {queried.page} de {queried.pages}.
+        A filtragem não altera o registro oficial.
+      </p>
+      {queried.total === 0 && <p className="ce-admin-list-empty">Nenhuma ordem corresponde à consulta. Ajuste a busca ou os filtros.</p>}
       <ol className="ce-admin-pmo-list">
         {visible.map(item => <li key={item.id} className="ce-admin-pmo-item" data-work-id={item.id}>
           <div className="ce-admin-pmo-title"><span className="ce-admin-pmo-sequence">#{item.order}</span><div><h3>{item.title}</h3><small>{item.id} · {item.priority} · {item.owner}</small></div>
@@ -37,8 +65,14 @@ export function PmoPanel() {
             {item.evidence.length ? <ul>{item.evidence.map((url, n) => <li key={url}><a href={url} target="_blank" rel="noopener noreferrer">Evidência {n + 1} <ArrowUpRight size={13} aria-hidden="true" /></a></li>)}</ul> : <p>Nenhuma evidência anexada: não é PASS.</p>}</details>
         </li>)}
       </ol>
+      <nav className="ce-admin-pager" aria-label="Navegação das páginas do PMO">
+        <button type="button" disabled={queried.page <= 1} onClick={() => setPage(current => Math.max(1,current-1))}>Anterior</button>
+        <span aria-live="polite">Página {queried.page} / {queried.pages}</span>
+        <button type="button" disabled={queried.page >= queried.pages} onClick={() => setPage(current => Math.min(queried.pages,current+1))}>Próxima</button>
+      </nav>
       <p className="ce-admin-detail-note"><strong>Fonte da verdade do PMO:</strong> <code>{queue.canonicalSource}</code>. Atualizações chegam após o commit e o novo build. Não existe gravação administrativa remota aqui.</p>
     </section>
+    <PmoReviewIntake />
     <section className="ce-admin-panel" data-testid="pmo-candidate-finds" aria-labelledby="pmo-find-heading">
       <div className="ce-admin-panel-heading"><div><h2 id="pmo-find-heading">Achados candidatos — CKO / COREN / COFEN</h2>
         <p>{candidates.items.length} registros ({candidates.items.filter(x => x.priority === 'P0').length} P0 e {candidates.items.filter(x => x.priority === 'P1').length} P1) · {findRegistry.candidate_batches.find(x => x.batch_id === 'CKO-COREN-COFEN-AUDIT-20261023')?.related_wo}</p></div></div>

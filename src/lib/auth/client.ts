@@ -1,4 +1,3 @@
-import { genericOAuthClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { runPreSignInSignOut, runSignOut } from "../../../scripts/sign-out-plan.mjs";
 import { GROK_PROVIDERS } from "./providers";
@@ -18,7 +17,6 @@ import { GROK_PROVIDERS } from "./providers";
  * the visitor stays signed in.
  */
 export const authClient = createAuthClient({
-  plugins: [genericOAuthClient()],
   fetchOptions: {
     onRequest(ctx) {
       const token = getBearerToken();
@@ -35,7 +33,7 @@ export const authClient = createAuthClient({
  * with the key removed, sign-in is real in preview (baked preview client) and
  * when deployed (injected per-app client).
  */
-export const authEnabled = import.meta.env.VITE_AUTH_ENABLED !== "false";
+export const authEnabled = import.meta.env.VITE_AUTH_ENABLED === "true";
 
 /** The upstream providers to render sign-in buttons for. */
 export { GROK_PROVIDERS };
@@ -143,8 +141,8 @@ export async function signIn(
     return;
   }
 
-  const { data, error } = await authClient.signIn.oauth2({
-    providerId,
+  const { data, error } = await authClient.signIn.social({
+    provider: providerId,
     callbackURL,
     errorCallbackURL,
   });

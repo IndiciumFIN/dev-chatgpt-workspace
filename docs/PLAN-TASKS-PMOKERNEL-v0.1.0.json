@@ -1,0 +1,3300 @@
+{
+  "schemaVersion": "0.1.0",
+  "registerId": "CE-PLAN-TASKS-PMOKERNEL",
+  "snapshotDate": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "state": "PROPOSTO",
+  "releaseGate": "HOLD_HUMAN",
+  "policy": {
+    "chain": "FIND -> Política -> Validador -> TASK -> WO -> Kernel -> Execução -> Testes -> Auditoria -> Homologação",
+    "noConversationOnlyFindings": true,
+    "doNotTouch": [
+      "main",
+      "supabase-producao",
+      "secrets",
+      "permissions",
+      "WO-HOM-001"
+    ]
+  },
+  "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113. | 31/10 21:25Z: auditoria do pacote Commander (39/40 hashes OK; src/App.tsx divergente; matriz M01-M22 localizada em fix/governed-activities-cli-20261026) -> T0.114 a T0.119 + actualizacao medida de T0.090/091/092/107/113. | 31/10 21:45Z: esqueleto CE local gerado e verificado (45 familias/410 servicos/201 capabilities/70 testes verdes/gate 8-8) -> T0.120 a T0.124. | 31/10 22:05Z: lacunas do esqueleto CE medidas contra o plano canonico da PR #21 -> T0.125 a T0.131. | 31/10 22:15Z: comparacao CE lancada com equipa especializada (6 frentes + sintese) -> T0.132 e T0.133. | 31/10 22:11Z: equipa de comparacao CE cancelada a pedido do dono; estado completo em backup-ce-estado-2026-10-31.zip (verificado: zip integro, gate 11/11, testes 0 falhas).",
+  "tasks": [
+    {
+      "id": "TASK-PLAN-001",
+      "phase": "F0",
+      "title": "Reconciliar as 5 revisões da fila PMO (18 main / 19 editorial / 20 Commander / 21 idioma / 23 preview)",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "PMO",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-02"
+      ],
+      "artifacts": [
+        "registers/governance/pmo-r77-arbitration-20261031.v1.json",
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+        "scripts/verify-pmo-fork-lineage.mjs",
+        "scripts/verify-pmo-fork-lineage.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+        "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+        "scripts/verify-r84-pmo-decision-intake.mjs",
+        "scripts/verify-r84-pmo-decision-intake.test.mjs",
+        "src/components/admin/pmo-review-intake.tsx"
+      ],
+      "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
+    },
+    {
+      "id": "TASK-PLAN-002",
+      "phase": "F0",
+      "title": "Decisão de admissão do Kernel (WO-ADM-001 / PR #13)",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Kernel",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [
+        "ISSUE-25",
+        "ISSUE-23"
+      ],
+      "artifacts": [
+        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+        "scripts/verify-pmo-fork-lineage.mjs",
+        "scripts/verify-pmo-fork-lineage.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+        "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+        "scripts/verify-r84-pmo-decision-intake.mjs",
+        "scripts/verify-r84-pmo-decision-intake.test.mjs",
+        "src/components/admin/pmo-review-intake.tsx"
+      ],
+      "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
+    },
+    {
+      "id": "TASK-PLAN-003",
+      "phase": "F0",
+      "title": "Land do gate relaxado (PAUSED|IN_PROGRESS) em branch própria",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "scripts/check-pmo-queue.mjs",
+        "scripts/check-pmo-queue.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/43682e6447854b3f683c41a59e18fa5660d4400b",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
+      ],
+      "acceptance": "node scripts/check-pmo-queue.mjs verde no main; PR aberto contra main; fila PMO não alterada."
+    },
+    {
+      "id": "TASK-PLAN-004",
+      "phase": "F0",
+      "title": "Proteger main e provar o enforcement (issue #12)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-003"
+      ],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [
+        "ISSUE-12"
+      ],
+      "artifacts": [],
+      "acceptance": "Ruleset com PR + verify verde + review; evidência (log do GitHub) de push direto recusado."
+    },
+    {
+      "id": "TASK-PLAN-005",
+      "phase": "F0",
+      "title": "Land do inventário CE-CROSS-SOURCE-PENDING-INTAKE",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "registers/pmo/cross-source-pending-intake.v1.json"
+      ],
+      "acceptance": "Register no main com registerId/schemaVersion/completeness validados por script fail-closed (TASK-PLAN-017)."
+    },
+    {
+      "id": "TASK-PLAN-015",
+      "phase": "F0",
+      "title": "Medir a superfície de segurança (Dependabot, code scanning, secret scanning)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-04"
+      ],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-better-auth-lock.test.mjs",
+        "scripts/test-auth-secret-env.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
+      ],
+      "acceptance": "As três ferramentas falham com erro de conector: estado é 'não medido', nunca 'zero alertas'. Alertas lidos e registrados por severidade + SHA dos artefatos afetados."
+    },
+    {
+      "id": "TASK-PLAN-016",
+      "phase": "F0",
+      "title": "Destravar os workflows do PR #24 parados em action_required",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "'SPE Candidate Static Gates', 'Simulados RPC static regressions' e 'Remediate better-auth candidate safely' executam (hoje conclude action_required = aguardam aprovação, logo o PR #24 não tem veredito de CI). Evidência: URLs dos runs."
+    },
+    {
+      "id": "TASK-PLAN-017",
+      "phase": "F0",
+      "title": "Validador de schema do inventário transversal",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-005"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "DONE",
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "scripts/check-register-schema.mjs",
+        "scripts/check-register-schema.test.mjs"
+      ],
+      "acceptance": "Falha fechada em schemaVersion/registerId/snapshotDate/completeness/releaseGate/policy ausentes ou inválidos, id duplicado, WO desconhecida, URL fora do repo e incoerência completeness x releaseGate. 10 testes negativos verdes; validado contra o inventário real (10 WOs, 13 pendências, 18 issues, 4 gaps) => OK."
+    },
+    {
+      "id": "TASK-PLAN-010",
+      "phase": "F1",
+      "title": "Gate de cobertura que re-deriva WOs × pendências × tasks",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-005"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "DONE",
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "scripts/check-pending-coverage.mjs",
+        "scripts/audit-pending-lineage.mjs",
+        "scripts/audit-pending-lineage.test.mjs"
+      ],
+      "acceptance": "Violações TASK_SEM_WO, TASK_WO_INEXISTENTE, WO_SEM_TASK, PENDENCIA_ORFA, DONE_SEM_EVIDENCIA, TASK_SEM_ARTEFATO e GAP_ABERTO detectadas; ids de issue aceitos em formato GH-<n> e ISSUE-<n>."
+    },
+    {
+      "id": "TASK-PLAN-011",
+      "phase": "F1",
+      "title": "Testes negativos do gate de cobertura",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-010"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "scripts/check-pending-coverage.test.mjs"
+      ],
+      "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 12 testes verdes (SKIP por insumo ausente, órfã por formato GH-<n>, falso-verde barrado)."
+    },
+    {
+      "id": "TASK-PLAN-012",
+      "phase": "F1",
+      "title": "Ativar o gate no CI",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-005",
+        "TASK-PLAN-010",
+        "TASK-PLAN-011"
+      ],
+      "owner": "Mavis",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "ci/pending-coverage-gate.yml",
+        "ci/README.md",
+        "scripts/check-pending-coverage.mjs"
+      ],
+      "acceptance": "ci/pending-coverage-gate.yml copiado para .github/workflows/ (escrita nessa pasta é bloqueada para a API do plugin, exige owner) e gate falhando fechado quando houver gaps. Ordem obrigatória: T0.005 -> T0.013 -> T0.001 -> só então GAP_ABERTO como erro. NÃO ligar ao verify-bibliotecas.yml antes disso."
+    },
+    {
+      "id": "TASK-PLAN-013",
+      "phase": "F1",
+      "title": "Vincular as 18 issues e as 13 pendências dos Simulados a WO/task",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-010",
+        "TASK-PLAN-005"
+      ],
+      "owner": "PMO",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-2",
+        "GH-3",
+        "GH-4",
+        "GH-5",
+        "GH-6",
+        "GH-7",
+        "GH-8",
+        "GH-9",
+        "GH-10",
+        "GH-11",
+        "GH-12",
+        "GH-14",
+        "GH-15",
+        "GH-16",
+        "GH-17",
+        "GH-18",
+        "GH-23",
+        "GH-25",
+        "P0-01",
+        "P0-02",
+        "P0-03",
+        "P0-04",
+        "P0-05",
+        "P0-06",
+        "P0-07",
+        "P0-08",
+        "P0-09",
+        "P0-10",
+        "P1-11",
+        "P1-12",
+        "P1-13"
+      ],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "scripts/audit-pending-lineage.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41232931971"
+      ],
+      "acceptance": "PENDENCIA_ORFA = 0 no gate contra a fila rev20 e o inventário real; cada issue aberta e cada pendência Simulados tem task viva e WO correspondente."
+    },
+    {
+      "id": "TASK-PLAN-014",
+      "phase": "F1",
+      "title": "Consolidar os FINDs em uma baseline commitada por PR (#13, #22, #24)",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-012"
+      ],
+      "owner": "Mavis",
+      "language": "JS+PY",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [],
+      "acceptance": "Para cada PR auditado: um validador no repo com testes negativos; FINDs referenciando blob commitado, não apenas comentário."
+    },
+    {
+      "id": "TASK-PLAN-020",
+      "phase": "F2",
+      "title": "Catálogo de cenários de auditoria mapeados ao repositório",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "DONE",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        "docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md"
+      ],
+      "acceptance": "Cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real, limitação e modo (estático ou DB)."
+    },
+    {
+      "id": "TASK-PLAN-021",
+      "phase": "F2",
+      "title": "Política como código (audit-policy.v1.json)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-020"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "registers/governance/audit-policy.v1.json"
+      ],
+      "acceptance": "JSON sem dependências; campos de locales, SEO, PII, RLS, mutabilidade, FKs lógicas e tipagem; populationStatus explícito."
+    },
+    {
+      "id": "TASK-PLAN-022",
+      "phase": "F2",
+      "title": "Ligar cada regra do motor a uma WO e a um critério de aceite",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-021"
+      ],
+      "owner": "PMO",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cobertura de cenários: cada regra KER/MST/SEC/I18N/SEO/JSD tem WO, artefato e critério verificável (tabela do catálogo de cenários)."
+    },
+    {
+      "id": "TASK-PLAN-026",
+      "phase": "F2",
+      "title": "Cobrir a matriz transversal de governança e Master Data pelo motor",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-021"
+      ],
+      "owner": "DataEng",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+      ],
+      "acceptance": "Cenários KER/MST/SEC rodam sobre a matriz transversal com a política populada (populationStatus=COMPLETE) e o relatório do motor passa a produzir achados reais, não aviso de política vazia."
+    },
+    {
+      "id": "TASK-PLAN-030",
+      "phase": "F3",
+      "title": "Motor de auditoria - modo estático (SQL, conteúdo, registers)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-021"
+      ],
+      "owner": "Mavis",
+      "language": "PY",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "scripts/audit_data_kernel.py"
+      ],
+      "acceptance": "Executa sem banco e sem dependências externas; exit 1 com erro, 2 com insumo ausente, 0 com warning."
+    },
+    {
+      "id": "TASK-PLAN-031",
+      "phase": "F3",
+      "title": "Modo PostgreSQL read-only e bootstrap PGlite sem ENOENT",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "scripts/audit_data_kernel.py"
+      ],
+      "acceptance": "resolve_pg_target() cria o diretório de dados; transação READ ONLY com rollback; psycopg ausente gera aviso, nunca crash."
+    },
+    {
+      "id": "TASK-PLAN-032",
+      "phase": "F3",
+      "title": "Suíte de testes do motor de auditoria",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-031"
+      ],
+      "owner": "Mavis",
+      "language": "PY",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "tests/test_audit_data_kernel.py"
+      ],
+      "acceptance": "python3 -m unittest discover -s tests -p 'test_*.py' -q => 17 testes verdes."
+    },
+    {
+      "id": "TASK-PLAN-033",
+      "phase": "F3",
+      "title": "Corrigir a fixture contraditória do PR #24 (attempt-policy.test.ts:12)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "JS+PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Workflow SPE Candidate Static Gates verde; o teste deixa de afirmar duas coisas contraditórias para o mesmo input."
+    },
+    {
+      "id": "TASK-PLAN-034",
+      "phase": "F3",
+      "title": "Auditar as 47 migrations e os 17 testes do banco original dos Simulados",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-031",
+        "TASK-PLAN-033"
+      ],
+      "owner": "DataEng",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-02",
+        "P0-03"
+      ],
+      "artifacts": [],
+      "acceptance": "Replay em PostgreSQL descartável com relatório do motor; divergências catalogadas e vinculadas a WO."
+    },
+    {
+      "id": "TASK-PLAN-027",
+      "phase": "F3",
+      "title": "Reconciliar CKO, fontes normativas e o corpus de bibliotecas",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-034"
+      ],
+      "owner": "DataEng",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Os 17 achados candidatos CKO/COREN/COFEN, os 240 CSV de staging/bibliotecas-corpus-20261026 e as 1577 recortes de audit-hardening-2026-10-24 rastreados a fonte (SHA + ponteiro JSON), sem duplicidade e sem órfão."
+    },
+    {
+      "id": "TASK-PLAN-028",
+      "phase": "F3",
+      "title": "Reconciliar os 17 achados CKO/COREN/COFEN com a fila PMO",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-034"
+      ],
+      "owner": "PMO",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Os 17 itens do lote (registers/governance/find-register.v1.json, candidate_batches) têm task e evidência; check-candidate-find-register.mjs permanece verde e nenhum item fica com admission=NOT_ADMITTED sem caminho de decisão."
+    },
+    {
+      "id": "TASK-PLAN-040",
+      "phase": "F4",
+      "title": "Gate de paridade de locales, SEO, slug e alt sobre o conteúdo",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-021",
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "87 páginas do PR #22 auditadas sem erro em I18N-01 e SEO-02; registers/i18n/locale-register.v1.json como fonte de verdade."
+    },
+    {
+      "id": "TASK-PLAN-041",
+      "phase": "F4",
+      "title": "Gerador JSON-LD estrito e validação Schema.org por @type",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "JSD-01 e JSD-02 no motor; gerador sem dependência externa, com validação própria por tipo."
+    },
+    {
+      "id": "TASK-PLAN-042",
+      "phase": "F4",
+      "title": "Fechar a divergência de fontes do PR #22 (colisão de identidade em 12 citações)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-040"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "sources.json com chaves únicas; validador impede o verde falso de 87/87 (FIND-CURI-R38/R40)."
+    },
+    {
+      "id": "TASK-PLAN-029",
+      "phase": "F4",
+      "title": "Consolidar o Design System e os templates canônicos",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "As branches fix/shell-consolidation e grook_10_26 (chrome, home, desks por módulo, sem DS concorrente) têm decisão única de identidade visual registrada, com gate de contrato de surface (registers/canonical/surface-contracts.v2.json) verde."
+    },
+    {
+      "id": "TASK-PLAN-050",
+      "phase": "F5",
+      "title": "Registro de descomissionamento do que não serve mais",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "docs/DECOMMISSION-REGISTER-v0.1.0.json"
+      ],
+      "acceptance": "Cada item com motivo, substituidoPor, acao, decisor e status (FINALIZADO ou PROPOSTO)."
+    },
+    {
+      "id": "TASK-PLAN-051",
+      "phase": "F5",
+      "title": "Eliminar as branches duplicadas archivamento e planning",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [],
+      "acceptance": "Ambas apontam para 87c537fe, contida em main; apagadas via git push origin --delete (a API do plugin não expõe delete de branch)."
+    },
+    {
+      "id": "TASK-PLAN-052",
+      "phase": "F5",
+      "title": "Consolidar as issues em 3 trilhas e fechar as absorvidas",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-013"
+      ],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [
+        "ISSUE-23",
+        "ISSUE-10",
+        "ISSUE-11"
+      ],
+      "artifacts": [],
+      "acceptance": "#23 absorvida pela #25; #10 e #11 absorvidas pelo inventário; as demais mantidas com referência à task correspondente."
+    },
+    {
+      "id": "TASK-PLAN-053",
+      "phase": "F5",
+      "title": "Nomear dono por task e por issue",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-013"
+      ],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada task do registro tem owner; cada issue aberta tem assignee (hoje são zero em 18 issues)."
+    },
+    {
+      "id": "TASK-PLAN-054",
+      "phase": "F5",
+      "title": "Normalizar o limite de deploy do Vercel (100 por dia)",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-012"
+      ],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Preview disponível em todas as PRs ativas; hoje há 8 falhas por limite de plano em 5 PRs."
+    },
+    {
+      "id": "TASK-PLAN-055",
+      "phase": "F5",
+      "title": "Definir a automação recorrente com orçamento e rastreabilidade",
+      "wo": "WO-AUTO-001",
+      "deps": [
+        "TASK-PLAN-001"
+      ],
+      "owner": "Owner",
+      "language": "PY",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada rotina recorrente (aquisição transversal, indexação de artigos, auditoria de dados) tem custo máximo declarado, intervalo, fonte de estado e critério de parada; orçamento do WO-AUTO-001 medido em execuções."
+    },
+    {
+      "id": "TASK-PLAN-056",
+      "phase": "F5",
+      "title": "Preservar o bloqueio de homologação até a admissão",
+      "wo": "WO-HOM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Kernel",
+      "language": "DOC",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "WO-HOM-001 permanece HOLD_HUMAN em todas as revisões da fila; nenhum merge, deploy ou migração aplicada antes de decisão verificável de admissão (TASK-PLAN-002)."
+    },
+    {
+      "id": "TASK-PLAN-057",
+      "phase": "F0",
+      "title": "Revogar e rotacionar credencial de prévia do broker e revalidar OAuth 1.7",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Responsável autorizado pelo broker + revisor de segurança",
+      "language": "SECURITY",
+      "status": "BLOCKED",
+      "covers": [
+        "GH-28",
+        "GAP-04"
+      ],
+      "artifacts": [
+        "registers/governance/find-oauth-preview-secret-20261031.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-better-auth-lock.test.mjs",
+        "scripts/test-auth-secret-env.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
+      ],
+      "acceptance": "Revogação da credencial histórica comprovada sem revelar valores; preview acessa segredo somente por variáveis seguras; callback e PKCE Better Auth 1.7 confirmados no broker; E2E de sign-in/out e segregação aprovado; Kernel e gates de produção formalmente liberados."
+    },
+    {
+      "id": "TASK-PLAN-058",
+      "phase": "F1",
+      "title": "Reconciliar o baseline de colisoes i18n (115 -> 118) no gate canonical-inventory",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-014"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        ".github/workflows/ce-main-migration-audit.yml",
+        "scripts/audit-conflict-triage.mjs",
+        "scripts/lib/canonical-conflict-triage.mjs",
+        "scripts/canonical-conflict-triage.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41232027627"
+      ],
+      "acceptance": "O gate canonical-inventory deixa de reprovar com CHANGED_COLLISION_BASELINE: o baseline passa a ser derivado da classificacao vigente (118 colisoes, 57 semanticamente equivalentes, 61 substantivas, 0 unverifiable) e continua falhando fechado quando a contagem divergir. Nenhuma colisao e reclassificada para forcar o verde."
+    },
+    {
+      "id": "TASK-PLAN-059",
+      "phase": "F1",
+      "title": "Vincular GH-25 à WO de domínio: [P0][PMO×KERNEL][HOLD] Reconciliar cobertura integral das frentes e contrato de admissão verificável",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-013"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-25"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25"
+      ],
+      "origin": {
+        "sourceId": "GH-25",
+        "sourceType": "issue",
+        "sourceTitle": "[P0][PMO×KERNEL][HOLD] Reconciliar cobertura integral das frentes e contrato de admissão verificável",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-25 com a origem versionada; validar a pertinência de WO-PMO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-060",
+      "phase": "F1",
+      "title": "Vincular GH-23 à WO de domínio: [P0][HOLD] Solicitar admissão Kernel/PMO para integração isolada do Research Hub (PR #19 + gate PR #13)",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-23"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/23"
+      ],
+      "origin": {
+        "sourceId": "GH-23",
+        "sourceType": "issue",
+        "sourceTitle": "[P0][HOLD] Solicitar admissão Kernel/PMO para integração isolada do Research Hub (PR #19 + gate PR #13)",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-23 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-061",
+      "phase": "F1",
+      "title": "Vincular GH-18 à WO de domínio: [COMMANDER][CHECKER/AUDITOR] Testes negativos, provenance e segregação da equipe de IAs",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-18"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/18"
+      ],
+      "origin": {
+        "sourceId": "GH-18",
+        "sourceType": "issue",
+        "sourceTitle": "[COMMANDER][CHECKER/AUDITOR] Testes negativos, provenance e segregação da equipe de IAs",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-18 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-062",
+      "phase": "F1",
+      "title": "Vincular GH-17 à WO de domínio: [COMMANDER][DEEPSEEK][REASONING] Contrato seguro de sugestões estruturadas sem autonomia de escrita",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-17"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/17"
+      ],
+      "origin": {
+        "sourceId": "GH-17",
+        "sourceType": "issue",
+        "sourceTitle": "[COMMANDER][DEEPSEEK][REASONING] Contrato seguro de sugestões estruturadas sem autonomia de escrita",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-17 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-063",
+      "phase": "F1",
+      "title": "Vincular GH-16 à WO de domínio: [COMMANDER][MANUS][UX] Entregar desenho administrativo completo e contrato de componentes",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-16"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/16"
+      ],
+      "origin": {
+        "sourceId": "GH-16",
+        "sourceType": "issue",
+        "sourceTitle": "[COMMANDER][MANUS][UX] Entregar desenho administrativo completo e contrato de componentes",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-16 com a origem versionada; validar a pertinência de WO-ADM-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-064",
+      "phase": "F1",
+      "title": "Vincular GH-15 à WO de domínio: [COMMANDER][MINIMAX][MAKER] Integração de atividades no painel sem backend e sem DS concorrente",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-15"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/15"
+      ],
+      "origin": {
+        "sourceId": "GH-15",
+        "sourceType": "issue",
+        "sourceTitle": "[COMMANDER][MINIMAX][MAKER] Integração de atividades no painel sem backend e sem DS concorrente",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-15 com a origem versionada; validar a pertinência de WO-ADM-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-065",
+      "phase": "F1",
+      "title": "Vincular GH-14 à WO de domínio: [COMMANDER][CANDIDATE] Centro de atividades, contratos de delegação e integração controlada das IAs",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-14"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/14"
+      ],
+      "origin": {
+        "sourceId": "GH-14",
+        "sourceType": "issue",
+        "sourceTitle": "[COMMANDER][CANDIDATE] Centro de atividades, contratos de delegação e integração controlada das IAs",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-14 com a origem versionada; validar a pertinência de WO-ADM-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-066",
+      "phase": "F1",
+      "title": "Vincular GH-12 à WO de domínio: [P0][G02][HOLD_HUMAN] Proteger main e comprovar enforcement de PR/CI antes de merges",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-12"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/12"
+      ],
+      "origin": {
+        "sourceId": "GH-12",
+        "sourceType": "issue",
+        "sourceTitle": "[P0][G02][HOLD_HUMAN] Proteger main e comprovar enforcement de PR/CI antes de merges",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-12 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-067",
+      "phase": "F1",
+      "title": "Vincular GH-11 à WO de domínio: [EXTRAÇÕES][HOLD] Entregar arquivos efetivos dos agentes e completar proveniência, hashes e handoffs",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-11"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/11"
+      ],
+      "origin": {
+        "sourceId": "GH-11",
+        "sourceType": "issue",
+        "sourceTitle": "[EXTRAÇÕES][HOLD] Entregar arquivos efetivos dos agentes e completar proveniência, hashes e handoffs",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-11 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-068",
+      "phase": "F1",
+      "title": "Vincular GH-10 à WO de domínio: [SO #9][FIND] 14 arestas de módulos sem reciprocidade no catálogo Preview",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-10"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/10"
+      ],
+      "origin": {
+        "sourceId": "GH-10",
+        "sourceType": "issue",
+        "sourceTitle": "[SO #9][FIND] 14 arestas de módulos sem reciprocidade no catálogo Preview",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-10 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-069",
+      "phase": "F1",
+      "title": "Vincular GH-9 à WO de domínio: [SO CANDIDATE][HOLD_HUMAN] Auditoria cruzada Preview × CKO × Supabase e reconciliação de chaves",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-9"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9"
+      ],
+      "origin": {
+        "sourceId": "GH-9",
+        "sourceType": "issue",
+        "sourceTitle": "[SO CANDIDATE][HOLD_HUMAN] Auditoria cruzada Preview × CKO × Supabase e reconciliação de chaves",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-9 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-070",
+      "phase": "F1",
+      "title": "Vincular GH-8 à WO de domínio: [HOLD_HUMAN] Source/Snapshot/Claim — auditoria de chaves e dados reais (157/78/41)",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-8"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/8"
+      ],
+      "origin": {
+        "sourceId": "GH-8",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Source/Snapshot/Claim — auditoria de chaves e dados reais (157/78/41)",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-8 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-071",
+      "phase": "F1",
+      "title": "Vincular GH-7 à WO de domínio: [HOLD_HUMAN] Evidência READ_ONLY — 161 tabelas, 175 FKs; reconciliação integral de chaveamento",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-7"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/7"
+      ],
+      "origin": {
+        "sourceId": "GH-7",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Evidência READ_ONLY — 161 tabelas, 175 FKs; reconciliação integral de chaveamento",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-7 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-072",
+      "phase": "F1",
+      "title": "Vincular GH-6 à WO de domínio: [HOLD_HUMAN] Invariante global de chaveamento e integridade referencial entre todas as camadas",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-6"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/6"
+      ],
+      "origin": {
+        "sourceId": "GH-6",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Invariante global de chaveamento e integridade referencial entre todas as camadas",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-6 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-073",
+      "phase": "F1",
+      "title": "Vincular GH-5 à WO de domínio: [HOLD_HUMAN] Integração Source → atomização → metamodelos → bindings por módulo → projeções MDX",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-027"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-5"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/5"
+      ],
+      "origin": {
+        "sourceId": "GH-5",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Integração Source → atomização → metamodelos → bindings por módulo → projeções MDX",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-5 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-074",
+      "phase": "F1",
+      "title": "Vincular GH-4 à WO de domínio: [HOLD_HUMAN] Auditoria de segregação e revogação de grants de agentes",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-4"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/4"
+      ],
+      "origin": {
+        "sourceId": "GH-4",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Auditoria de segregação e revogação de grants de agentes",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-4 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-075",
+      "phase": "F1",
+      "title": "Vincular GH-3 à WO de domínio: [HOLD_HUMAN] Pré-homologação das 5 migrações candidatas e papel PG restrito",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-3"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/3"
+      ],
+      "origin": {
+        "sourceId": "GH-3",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] Pré-homologação das 5 migrações candidatas e papel PG restrito",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-3 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-076",
+      "phase": "F1",
+      "title": "Vincular GH-2 à WO de domínio: [HOLD_HUMAN] FIND-CKO-IMPORT-ROUTE — decisão sobre API privada e runtime autorizado",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "GH-2"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/2"
+      ],
+      "origin": {
+        "sourceId": "GH-2",
+        "sourceType": "issue",
+        "sourceTitle": "[HOLD_HUMAN] FIND-CKO-IMPORT-ROUTE — decisão sobre API privada e runtime autorizado",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir GH-2 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-077",
+      "phase": "F1",
+      "title": "Vincular P0-01 à WO de domínio: Original database v1.4.0 as sole canonical baseline",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-01"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-01",
+        "sourceType": "simulados",
+        "sourceTitle": "Original database v1.4.0 as sole canonical baseline",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-01 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-078",
+      "phase": "F1",
+      "title": "Vincular P0-02 à WO de domínio: Disposable PostgreSQL migration replay",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-02"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-02",
+        "sourceType": "simulados",
+        "sourceTitle": "Disposable PostgreSQL migration replay",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-02 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-079",
+      "phase": "F1",
+      "title": "Vincular P0-03 à WO de domínio: Original database tests + new RLS regressions",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-03"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-03",
+        "sourceType": "simulados",
+        "sourceTitle": "Original database tests + new RLS regressions",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-03 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-080",
+      "phase": "F1",
+      "title": "Vincular P0-04 à WO de domínio: Public grading RPCs reveal answers",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-04"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24",
+        "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+        "scripts/check-r81-original-rpc-find.mjs",
+        "scripts/check-r81-original-rpc-find.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
+      ],
+      "origin": {
+        "sourceId": "P0-04",
+        "sourceType": "simulados",
+        "sourceTitle": "Public grading RPCs reveal answers",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-04 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-081",
+      "phase": "F1",
+      "title": "Vincular P0-05 à WO de domínio: W10 runtime integration",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-054"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-05"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-05",
+        "sourceType": "simulados",
+        "sourceTitle": "W10 runtime integration",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-05 com a origem versionada; validar a pertinência de WO-E2E-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-082",
+      "phase": "F1",
+      "title": "Vincular P0-06 à WO de domínio: Full Drive PDF inventory",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-027"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-06"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-06",
+        "sourceType": "simulados",
+        "sourceTitle": "Full Drive PDF inventory",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-06 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-083",
+      "phase": "F1",
+      "title": "Vincular P0-07 à WO de domínio: SHA dedup and source recovery",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-027"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-07"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-07",
+        "sourceType": "simulados",
+        "sourceTitle": "SHA dedup and source recovery",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-07 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-084",
+      "phase": "F1",
+      "title": "Vincular P0-08 à WO de domínio: Evidence/rights review and question admission",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-027"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-08"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-08",
+        "sourceType": "simulados",
+        "sourceTitle": "Evidence/rights review and question admission",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-08 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-085",
+      "phase": "F1",
+      "title": "Vincular P0-09 à WO de domínio: Kernel Work Order approval",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-026"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-09"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-09",
+        "sourceType": "simulados",
+        "sourceTitle": "Kernel Work Order approval",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-09 com a origem versionada; validar a pertinência de WO-GOV-TRANS-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-086",
+      "phase": "F1",
+      "title": "Vincular P0-10 à WO de domínio: Production merge/deploy",
+      "wo": "WO-HOM-001",
+      "deps": [
+        "TASK-PLAN-056"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P0-10"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P0-10",
+        "sourceType": "simulados",
+        "sourceTitle": "Production merge/deploy",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P0-10 com a origem versionada; validar a pertinência de WO-HOM-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-087",
+      "phase": "F1",
+      "title": "Vincular P1-11 à WO de domínio: Published website live audit",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-054"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P1-11"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P1-11",
+        "sourceType": "simulados",
+        "sourceTitle": "Published website live audit",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P1-11 com a origem versionada; validar a pertinência de WO-E2E-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-088",
+      "phase": "F1",
+      "title": "Vincular P1-12 à WO de domínio: GitHub CI gate execution",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-015"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P1-12"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P1-12",
+        "sourceType": "simulados",
+        "sourceTitle": "GitHub CI gate execution",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P1-12 com a origem versionada; validar a pertinência de WO-SEC-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-089",
+      "phase": "F1",
+      "title": "Vincular P1-13 à WO de domínio: Original crosswalk artifact portability",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-027"
+      ],
+      "owner": "Responsável de domínio a designar pelo PMO",
+      "language": "GOV",
+      "status": "PROPOSTO",
+      "covers": [
+        "P1-13"
+      ],
+      "artifacts": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+      ],
+      "origin": {
+        "sourceId": "P1-13",
+        "sourceType": "simulados",
+        "sourceTitle": "Original crosswalk artifact portability",
+        "sourceBranch": "simulados-enfermagem-db-canonico",
+        "sourceRegistryPath": "registers/pmo/cross-source-pending-intake.v1.json",
+        "sourceBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9"
+      },
+      "authorization": {
+        "mappingType": "DOMAIN_WO_CANDIDATE",
+        "kernelAdmission": "NOT_VERIFIED",
+        "sourceWoUnreconciled": true,
+        "approval": "NOT_APPROVED",
+        "releaseGate": "HOLD_HUMAN"
+      },
+      "acceptance": "Conferir P1-13 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-090",
+      "phase": "F3",
+      "title": "Integrar os testes do pacote no glob oficial do repo",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-04"
+      ],
+      "artifacts": [
+        "scripts/impact-engine.test.mjs",
+        "scripts/list-query.test.mjs"
+      ],
+      "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado. | MEDIDO 31/10 21:20Z: o repo usa a convencao scripts/**/*.test.mjs (6 ficheiros no main; ex.: test-route-registry.test.mjs). O problema do ZIP e que os seus ficheiros se chamam test-*.mjs SEM o sufixo .test.mjs. Estado: nao existe nenhum ficheiro de teste para impact-engine, list-query ou admin-topbar (verificado por listagem de scripts/ e search_code)."
+    },
+    {
+      "id": "TASK-PLAN-091",
+      "phase": "F2",
+      "title": "Declarar as entidades novas nos contratos canonicos",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        "registers/canonical/surface-contracts.v2.json",
+        "contracts/entities/design-tokens.v1.json"
+      ],
+      "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build). | MEDIDO 31/10 21:20Z: registers/canonical/surface-contracts.v2.json EXISTE (275 linhas) mas nao declara impact-engine, list-query, admin-topbar nem PmoReviewIntake (0 ocorrencias de cada chave). check-contract-coverage nao os apanha: os tokens ainda nao tem contrato."
+    },
+    {
+      "id": "TASK-PLAN-092",
+      "phase": "F3",
+      "title": "Preservar o PmoReviewIntake e adicionar list-query como camada de consulta",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "DELIVERED_PENDING_GATE",
+      "covers": [],
+      "artifacts": [
+        "src/components/admin/pmo-panel.tsx",
+        "src/lib/admin/list-query.ts",
+        "src/lib/admin/list-query.test.ts",
+        "src/components/admin/pmo-review-intake.tsx",
+        "src/styles/admin-console.css",
+        "scripts/test-admin-console.mjs"
+      ],
+      "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI. | MEDIDO 31/10 21:20Z: src/components/admin/pmo-review-intake.tsx PRESENTE (132 linhas) e importado por src/components/admin/pmo-panel.tsx (import { PmoReviewIntake } from './pmo-review-intake') + queryPmo de @/lib/admin/list-query (54 linhas). A superficie de decisao foi preservada e a listagem e camada de consulta, nao substituto. DELIVERED, pendente de correr o gate oficial."
+    },
+    {
+      "id": "TASK-PLAN-093",
+      "phase": "F3",
+      "title": "Rotular a auditoria local como nao atestada (hash-chain -> log append-only rotulado)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "src/lib/impact/impact-engine.ts"
+      ],
+      "acceptance": "A cadeia SHA-256 em localStorage e mantida apenas como tamper-evidence local, com rotulo explicito de que nao e prova de autoria nem auditoria imutavel de servidor; o registo exportavel carrega ator manual, timestamp, decisao humana e estado PENDING/HOLD. Nenhuma rota produz DONE/APPROVED sem acao humana explicita. Prova: audit-execution-gates.mjs verde e o rotulo presente no registo."
+    },
+    {
+      "id": "TASK-PLAN-094",
+      "phase": "F0",
+      "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+    },
+    {
+      "id": "TASK-PLAN-095",
+      "phase": "F3",
+      "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+    },
+    {
+      "id": "TASK-PLAN-096",
+      "phase": "F3",
+      "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+    },
+    {
+      "id": "TASK-PLAN-097",
+      "phase": "F3",
+      "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao (T0.095) nao tem severidade autoritativa. Nao inventar SLAs."
+    },
+    {
+      "id": "TASK-PLAN-098",
+      "phase": "F0",
+      "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas. Bloqueia T0.093, T0.106 e o item 'perfil e saida' do roadmap."
+    },
+    {
+      "id": "TASK-PLAN-099",
+      "phase": "F1",
+      "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner / fonte canonica",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
+    },
+    {
+      "id": "TASK-PLAN-100",
+      "phase": "F3",
+      "title": "Estender o list-query as restantes listas (fontes, templates, achados/FINDs, auditoria)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-059",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "As 4 listas reusam list-query e os estilos ce-admin-listbar*/chip*/pager ja entregues, sem duplicar biblioteca. Prova: os testes do list-query correm no gate oficial (T0.090) e cada lista nova tem teste estatico de invariantes."
+    },
+    {
+      "id": "TASK-PLAN-101",
+      "phase": "F4",
+      "title": "Auditoria de acessibilidade real (teclado + viewports 320/390/768/1280)",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-094"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O repo tem playwright 1.62 e testes de a11y proprios (test-country-icon-a11y.mjs, test-focus-colors-i18n.mjs), mas NAO tem axe-core: ou se instala axe-core como devDependency com lockfile, ou a alegacao fica 'teclado + testes proprios, axe nao verificado'. Medir antes de afirmar."
+    },
+    {
+      "id": "TASK-PLAN-102",
+      "phase": "F4",
+      "title": "Biblioteca unica de componentes administrativos (17 familias)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-029",
+        "TASK-PLAN-091"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "DataTable, FilterBar, Tabs de detalhe, Drawer/Modal com foco preso, FormField com label visivel e resumo de erros, DiffViewer, Timeline, GraphView, Toast, Skeleton, ErrorState, PermissionDenied, SourceStamp, DisabledAction, StatusBadge, Stepper e KeyValueList. Regra: uma unica biblioteca, sem duplicar o que ja existe, tokens derivados dos canonicos e cada componente com contrato (check-contract-coverage)."
+    },
+    {
+      "id": "TASK-PLAN-103",
+      "phase": "F3",
+      "title": "Backlog dos 5 modulos propostos (APIs e fornecedores; midia/redirecionamentos/SEO; registo clinico e testes de referencia; selo de proveniencia e maquina do tempo; simulador 'e se' de revogacao; modo auditor e playbooks)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-102"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada modulo entra com escopo, dados necessarios, gate que o prova e o que fica por decision. Nenhum comeca sem o contrato de dados e o registo de proveniencia correspondentes."
+    },
+    {
+      "id": "TASK-PLAN-104",
+      "phase": "F2",
+      "title": "Ligar o Commander ao Kernel (apos admissao)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002",
+        "TASK-PLAN-098"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Hoje o Commander e preparacao local: nenhum provedor conectado, o avaliador deterministico existe no codigo mas o Commander nao o invoca, e as instrucoes em agents/ sao documentos, nao executores registrados (src/components/admin/commander-panel.tsx). Ligar so apos admissao do Kernel, com escopo, plano, validacao de OS/politicas/manifesto e encaminhamento apenas a agente/equipe registrada; o LLM nao decide impacto clinico/legal nem aprova publicacao."
+    },
+    {
+      "id": "TASK-PLAN-105",
+      "phase": "F4",
+      "title": "Composicao e configuracao do site (idioma, rotas, SEO, JSON-LD, templates, manifesto, aprovacao, preview, publicacao, retirada, rollback)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-091",
+        "TASK-PLAN-100"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada versao canonica e a sua publicacao sao registadas; retirada e rollback por versao, nao por reescrita. Prova: gates de superficie (check-contract-coverage) + build:spa + materializacao de rotas estaticas."
+    },
+    {
+      "id": "TASK-PLAN-106",
+      "phase": "F3",
+      "title": "Identidade, persistencia e trilha de auditoria duravel no servidor",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-098"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decidir e implementar backend, sessao, RBAC e trilha append-only atestada antes de qualquer mutacao remota. A hash-chain local (SHA-256 em localStorage) e apenas tamper-evidence client-side e tem de ficar rotulada como nao atestada."
+    },
+    {
+      "id": "TASK-PLAN-107",
+      "phase": "F1",
+      "title": "Registar FIND-MOD-001 (matriz M01-M22) e a divergencia de hash no find-register",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-099"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo. | FONTE ENCONTRADA 31/10 21:10Z: a matriz existe no repo em docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ branch fix/governed-activities-cli-20261026 (NAO esta no main); search_code so indexa a branch por defeito, razao do HOLD do mockup. Evidencia: issue #16 comentario 6427776320. Divergencia de hash medida por mim: 40 entradas declaradas, 39 OK, 1 divergente = src/App.tsx (declarado c75313ee..., medido a16223547...)."
+    },
+    {
+      "id": "TASK-PLAN-108",
+      "phase": "F0",
+      "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+    },
+    {
+      "id": "TASK-PLAN-109",
+      "phase": "F3",
+      "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+    },
+    {
+      "id": "TASK-PLAN-110",
+      "phase": "F3",
+      "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+    },
+    {
+      "id": "TASK-PLAN-111",
+      "phase": "F3",
+      "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao nao tem severidade autoritativa. Nao inventar SLAs."
+    },
+    {
+      "id": "TASK-PLAN-112",
+      "phase": "F0",
+      "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas."
+    },
+    {
+      "id": "TASK-PLAN-113",
+      "phase": "F1",
+      "title": "Reconciliar M01-M22 com a matriz canonica localizada (7 macrogrupos / 22 modulos)",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner / fonte canonica",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Fonte localizada em 31/10: docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ fix/governed-activities-cli-20261026 (copia com proveniencia em docs/evidence/commander-2026-10-31/). Contem os 7 macrogrupos e os 22 modulos COM NOMES (M01 Visao Geral ... M22 Gestao Corporativa e Terceiros) e o layout obrigatorio 65/35. Entregaveis: (a) crosswalk entre as sete abas do AdminConsole e os sete macrogrupos propostos, classificado PRESENT/CANDIDATE/HOLD; (b) os nomes dos 22 modulos aplicados onde fizer sentido, sem declarar 22 rotas implementadas e sem usar as abas como substituto dos macrogrupos; (c) Central de Comando registada como transversal a M01/M03/M07/M16/M19/M20/M14 e nao como Kernel/PMO/storage concorrente; (d) comprovacao de autoridade do DOCX original (ver TASK-PLAN-119). A matriz e transcricao-resumo PROPOSTO: nao e homologacao."
+    },
+    {
+      "id": "TASK-PLAN-114",
+      "phase": "F1",
+      "title": "Verificador de integridade que recalcula os hashes do delivery-manifest",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-107"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O validador que o pacote entrega (scripts/validate-manifest.mjs) so valida JSON contra schema AJV e NAO recalcula um unico hash; por isso a divergencia de src/App.tsx passou despercebida. Entregar script que recalcula SHA-256 dos 40 declarados e falha fechada em qualquer divergencia, e regenerar o manifesto com o ficheiro entregue. Prova: executar contra o pacote recebido e obter 39 OK + 1 divergente antes do conserto, 40 OK depois."
+    },
+    {
+      "id": "TASK-PLAN-115",
+      "phase": "F1",
+      "title": "Clarificar a linhagem do pacote Commander (manifesto vs adaptador de host)",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O ZIP reenviado e a linhagem com delivery-manifest/validation/handoff e NAO inclui a linhagem 'continuidade local' do comentario 6428694625 (CommanderReadModel, src/ce-ds-bridge.candidate.css, scripts/test-host-adapter.mjs, INTEGRATION_README.md, candidate-manifest.json). O src/App.tsx recebido nao tem CommanderReadModel. Decisao do dono: qual linhagem e a entrega final, e onde fica o adaptador de host (repo ou fora). A divergencia de hash de App.tsx e a pista."
+    },
+    {
+      "id": "TASK-PLAN-116",
+      "phase": "F4",
+      "title": "Port do redesign do workspace da outra sessao para o repo (admin-console, commander-panel, catalogo)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-091",
+        "TASK-PLAN-117"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido: workspace admin-console.tsx 485 linhas vs repo 291; commander-panel.tsx 280 vs 175; o workspace importa @/core/governance/catalog e a fila directamente e acrescenta icones e superficies de monitor WO/run. Portar por fiacao, nao por copia, mantendo o repo como autoridade, com design-tokens.v1.json e queue.v1.json INTACTOS (identicos ao workspace) e o wireframe rotulado NOT_HOMOLOGATED ate WO-DS-001. Prova: typecheck + npm test + build:spa verdes e delta registado."
+    },
+    {
+      "id": "TASK-PLAN-117",
+      "phase": "F4",
+      "title": "Reconciliar o estado de WO-DS-001 (fila QUEUED vs HOLD_HUMAN do proprietario)",
+      "wo": "WO-DS-001",
+      "deps": [],
+      "owner": "Owner / PMO",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "registers/pmo/queue.v1.json no main regista WO-DS-001=QUEUED (rev. 18, updatedOn 2026-10-26) e o comentario do proprietario na issue #16 (#6427869597) pergunta se o comentario deve ser lido como HOLD separado. A pergunta continua sem resposta. Decisao registada e versionada; ate la, DS continua HOLD_HUMAN e nenhum token canonico e alterado."
+    },
+    {
+      "id": "TASK-PLAN-118",
+      "phase": "F3",
+      "title": "Entregar o motor de impacto e a topbar, e reconciliar o CSS de lista vazia",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-090",
+        "TASK-PLAN-091"
+      ],
+      "owner": "Mavis",
+      "language": "TS+CSS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido 31/10: src/lib/impact/impact-engine.ts e src/components/admin/admin-topbar.tsx AUSENTES no repo. O repo ja tem src/lib/admin/list-query.ts (54 linhas) e src/components/admin/pmo-review-intake.tsx (132 linhas). Reconciliar no CSS a duplicacao semantica entre .ce-admin-empty e .ce-admin-list-empty (ambas existem em src/styles/admin-console.css); os estilos do ZIP (ce-admin-listbar, ce-admin-chip, ce-admin-topbar) tem 0 ocorrencias e nao foram portados. Prova: testes no glob oficial e contratos declarados."
+    },
+    {
+      "id": "TASK-PLAN-119",
+      "phase": "F1",
+      "title": "Confirmar autoridade e integridade do DOCX original da matriz",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz M01-M22 declara origem em Especificacao_Final_Central_de_Comando_e_Tabelas_Iniciais.docx v1.0 (26/10, 19 pag.), proposta NAO homologada, que NAO esta no checkout do repo. Antes de qualquer promocao da matriz: obter o original, conferir a contagem 4+2+4+4+2+4+2=22 e a autoria, e registar a procedencia. A proposta de 215 tabelas nao e autorizacao para criar tabelas."
+    },
+    {
+      "id": "TASK-PLAN-120",
+      "phase": "F4",
+      "title": "Esqueleto CE local: catalogo de 410 servicos + 201 capabilities + piloto executavel",
+      "wo": "WO-DS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/experience-platform-skeleton-2026-10-31/AVALIACAO-ESQUELETO-CE-2026-10-31.md",
+        "docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json",
+        "tools/experience-skeleton/generate-skeleton.mjs",
+        "tools/experience-skeleton/check-skeleton.mjs"
+      ],
+      "acceptance": "Entregue e verificado LOCAL: 45 familias, 410 servicos, 201 capabilities, 16 bindings, 3 schemas de piloto; 905 ficheiros gerados por script deterministico; 70/70 testes verdes; gate 8/8; zero drift. Tudo em CANDIDATE_HOLD: nenhum servico executa, nenhum mock finge sucesso. Nao foi portado para o repo canonico (sem WO de admissao) e nao altera main."
+    },
+    {
+      "id": "TASK-PLAN-121",
+      "phase": "F4",
+      "title": "Reduzir e fundir o vocabulario de 410 servicos por camada antes de qualquer admissao",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-120"
+      ],
+      "owner": "Owner / arquitetura",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido: 274 DOMAIN + 97 PLATFORM + 39 CROSS_CUTTING, com sobreposicoes (Connector Registry em Source & Acquisition e em Integrations; Registry Management, Policy Registry e Workflow Engine a tocar dominios vizinhos). Entregar proposta de fusao por camada com o catalogo final, preservando a contagem de capacidades (201) e os 16 bindings. Nenhuma admissao de WO antes desta reducao."
+    },
+    {
+      "id": "TASK-PLAN-122",
+      "phase": "F3",
+      "title": "Definir os schemas centrais do metamodelo a partir dos 3 piloto (Article, LibraryEntity, ClinicalTool)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-120"
+      ],
+      "owner": "Mavis",
+      "language": "JSON+TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Os 3 schemas existem como proposta CANDIDATE_HOLD (schemas/*.v1.json). Falta: ligá-los ao registo de contratos canonicos (surface-contracts) e a um validador que reprova registos sem provenance, sem authorityBinding ou sem evidence. Prova: check-contract-coverage a passar e um FIND por entidade sem contrato."
+    },
+    {
+      "id": "TASK-PLAN-123",
+      "phase": "F4",
+      "title": "Medir acessibilidade real do esqueleto do piloto (teclado + viewports 320/390/768/1280)",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-120"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Nao medido: o sandbox nao tem browser. Os contratos declaram accessibility_contract REQUIRED, mas isso e declaracao, nao prova. Executar Playwright (o repo canonico tem playwright 1.62; o repo nao tem axe-core) e registar NOT_RUN para o que nao rodar. Nao alegar conformidade WCAG sem execucao."
+    },
+    {
+      "id": "TASK-PLAN-124",
+      "phase": "F4",
+      "title": "Decidir o port do esqueleto CE para o repo canonico (ou manter local ate existir WO)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-121",
+        "TASK-PLAN-122"
+      ],
+      "owner": "Owner / Kernel",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar."
+    },
+    {
+      "id": "TASK-PLAN-125",
+      "phase": "F1",
+      "title": "Registar no find-register os 16 FINDs da PR #21 (Experience Canonicalization)",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/experience-platform-skeleton-2026-10-31/GAPS-2026-10-31.md"
+      ],
+      "acceptance": "Medido: docs/FIND-EXPERIENCE-CANONICALIZATION-v0.1.0.md na PR #21 (branch feat/career-youth-db-first-20261026 @ ad4c683890) tem 16 FINDs; nenhum existe em registers/governance/find-register.v1.json (que tem 11, nenhumExperience). Exemplos: template-contract mistura favorite/print/pdf/docx/listen/readingTime; PageTools e LibraryActions duplicam acoes; Favorite so estado de visita; ToolViewBar grava em sessionStorage; Hint trata Tooltip como conteudo; preview e infra de embed e nao Product Preview. Regista cada um como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED. Sem baseline nao ha como provar nao-regressao."
+    },
+    {
+      "id": "TASK-PLAN-126",
+      "phase": "F1",
+      "title": "Reconciliar o registo de capabilities/bindings com o metamodelo canonico (11 + 5 campos em falta)",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-125"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido: o registo candidato traz 14 campos por capability e 7 por binding; o metamodelo do plano exige 20 e 10+. Faltam na capability: state_contract_ref, action_contract_ref, supported_channels, storage_policy, sync_policy, permission_policy, accessibility_contract_ref, telemetry_contract_ref, help_profile_ref, preview_profile_ref, output_profile_refs (e ha duplicacao status/release_status). Faltam no binding: audiences, permissions, state_constraints, format_constraints, policy_refs. Entregar a versao reconciliada OU um FIND por divergencia; nunca preencher por inferencia."
+    },
+    {
+      "id": "TASK-PLAN-127",
+      "phase": "F4",
+      "title": "Implementar os 6 modulos P0 do roadmap como contrato + teste (capabilities, action-bar, preview, settings, help, output)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-126"
+      ],
+      "owner": "Mavis",
+      "language": "TS+TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Estado medido: 2 de 10 modulos-alvo existem (resolver, state). Faltam capabilities.ts (fonte compilada das 201), action-bar.tsx, preview.ts, settings.ts, help.ts, output.ts. Cada um: contrato + testes, sem UI de producao; profiles de settings (5 scopes), output (6 formatos) e preview (5 perfis) com conteudo aprovado pelo dono. Prova: suite verde e registo em module-status.ts."
+    },
+    {
+      "id": "TASK-PLAN-128",
+      "phase": "F4",
+      "title": "Fechar os 13 schemas de objeto em falta e os perfis transversais",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-126"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Dos 16 tipos de objecto com bindings, so 3 tem schema (Article, LibraryEntity, ClinicalTool). Faltam: Guide, Course, Trail, JobOpportunity, Competition, Residency, Question, Simulation, ResearchProject, Norm, CareerRole, Organization, MediaAsset. Cada schema com provenance, authorityBinding e evidence obrigatorios, em CANDIDATE_HOLD."
+    },
+    {
+      "id": "TASK-PLAN-129",
+      "phase": "F4",
+      "title": "Implementar P1 do roadmap: Saved Views, Saved Search, Collections/Basket, Lifecycle/Recovery e Event Backbone",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-127"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Faltam os modulos views.ts e events.ts e as semanticas de archive/trash/undo/redo/version-history/diff/restore/conflict-resolution, mais collections e basket como objectos distintos de saved views. O event backbone define formato, ordenacao, idempotencia e retencao (ALCOA+); substitui a hash-chain local, que e tamper-evidence client-side e nao auditoria."
+    },
+    {
+      "id": "TASK-PLAN-130",
+      "phase": "F4",
+      "title": "Implementar P2 do roadmap: Capture/Inbox, Follow/Alerts/Calendar, Collaboration, search semantico e sync",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-129"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Sync e a peca mais cara e a que mais decisao do dono exige (modelo de identidade/backend, T0.112). Nao comeca sem essa decisao."
+    },
+    {
+      "id": "TASK-PLAN-131",
+      "phase": "F4",
+      "title": "Criterios de nao-regressao, rollback e gate de CI para o esqueleto CE",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-127"
+      ],
+      "owner": "Mavis",
+      "language": "CI",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada."
+    },
+    {
+      "id": "TASK-PLAN-132",
+      "phase": "F4",
+      "title": "Comparacao do esqueleto CE com producao, repo publico, normativos e plataformas de referencia",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-121"
+      ],
+      "owner": "Mavis + equipa especializada",
+      "language": "MD",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
+        "docs/evidence/ce-comparacao-2026-10-31/E2-repo-branches.md",
+        "docs/evidence/ce-comparacao-2026-10-31/E3-normativos.md",
+        "docs/evidence/ce-comparacao-2026-10-31/E4-benchmarks.md",
+        "docs/evidence/ce-comparacao-2026-10-31/E5-esqueleto.md",
+        "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
+        "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml"
+      ],
+      "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido."
+    },
+    {
+      "id": "TASK-PLAN-133",
+      "phase": "F1",
+      "title": "Registar as 3 correccoes de medicao do owner (182 branches, tokens/idiomas fora do main, packaging da API)",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Tres erros meus, medidos e corrigidos: (1) list_branches com 'per_page' em vez de 'perPage' devolvia 30 em vez de 182 branches (repo publico) - a lista completa esta em docs/evidence/ce-comparacao-2026-10-31/branches-todas.json; (2) src/lib/locale-registry.ts e src/lib/site-data.ts nao estao no main do repo publico nem do repo privado - onde vivem fica NOT_RUN; (3) o parametro correcto da API do Senado e tipo+numero+ano ('palavras' e ignorado). Regista em FIND para que a medicao errada nao volte a alastrar."
+    }
+  ],
+  "candidateVerification": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41230322427",
+    "date": "2026-10-31",
+    "coverageTests": {
+      "passed": 12,
+      "total": 12
+    },
+    "schemaTests": {
+      "passed": 10,
+      "total": 10
+    },
+    "kernelTests": {
+      "passed": 17,
+      "total": 17
+    },
+    "realData": {
+      "pmoWos": 10,
+      "tasks": 36,
+      "simulados": 13,
+      "issues": 19,
+      "pending": 32,
+      "orphanPendencies": 0,
+      "wosWithoutTask": 0,
+      "openGaps": 4,
+      "coverageExitCode": 1,
+      "releaseGate": "HOLD_HUMAN"
+    },
+    "note": "Real intake rev20: 36 tasks / 32 pending, GH28 included; 0 orphans, 0 WOs without task, four GAP_ABERTO fail closed. No Kernel admission or production release."
+  },
+  "snapshotRevalidation": {
+    "date": "2026-10-31",
+    "previousCount": 31,
+    "expectedCount": 32,
+    "newIssue": "GH-28",
+    "newTask": "TASK-PLAN-057",
+    "state": "CONFIRMED_BY_GITHUB_ACTIONS",
+    "releaseGate": "HOLD_HUMAN",
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41230322427"
+  },
+  "r78Verification": {
+    "type": "CANDIDATE_TECHNICAL_PROGRESS_NOT_RELEASE",
+    "date": "2026-10-31",
+    "workOrders": [
+      "WO-PMO-001",
+      "WO-SEC-001",
+      "WO-GOV-TRANS-001",
+      "WO-HOM-001"
+    ],
+    "evidenceRegister": "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+    "lineageAudit": "scripts/audit-pending-lineage.mjs",
+    "coverage": "32/32 task-covered; 31 source WOs UNRECONCILED; 24 missing domain-specific candidate; 0 Kernel admitted",
+    "releaseGate": "HOLD_HUMAN",
+    "approvalOrPromotion": false,
+    "securityScope": "Supabase advisors observed read-only; GitHub scanning not measured; broker rotation not performed"
+  },
+  "r79CandidateMapping": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_ONLY",
+    "baselineTasks": 37,
+    "candidateTasksAdded": 31,
+    "currentTasks": 68,
+    "sourceRef": "fix/governed-activities-cli-20261026",
+    "sourceRegistryBlobSha": "ef96288fec35ce56645a9ac8a6bf53d4519c5dc9",
+    "queueBlobSha": "80c5d327411287132f23caa0ace817d7d356edb8",
+    "sourceUnreconciledAtSnapshot": 31,
+    "distinctSourceIds": 31,
+    "domainCandidateCoverage": 31,
+    "sourceWosMutated": false,
+    "canonicalQueueMutated": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "releaseGate": "HOLD_HUMAN",
+    "newTaskRange": [
+      "TASK-PLAN-059",
+      "TASK-PLAN-089"
+    ],
+    "targetWorkOrders": {
+      "WO-ADM-001": 3,
+      "WO-CKO-001": 5,
+      "WO-E2E-001": 2,
+      "WO-GOV-TRANS-001": 9,
+      "WO-HOM-001": 1,
+      "WO-PMO-001": 1,
+      "WO-SEC-001": 10
+    }
+  },
+  "r82Evidence": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_TECHNICAL_IMPROVEMENTS",
+    "pmoGate": {
+      "task": "TASK-PLAN-003",
+      "code": "scripts/check-pmo-queue.mjs",
+      "tests": "scripts/check-pmo-queue.test.mjs",
+      "sourceImplementationBranch": "fix/governed-activities-cli-20261026",
+      "sourceBlobSha": "96f76963fd6aa9aa3a064b18256962178d746f4c",
+      "authorityCheck": "OWNER_LOCAL_COMMANDER_ONLY",
+      "release": "HOLD_HUMAN"
+    },
+    "simulados": {
+      "task": "TASK-PLAN-080",
+      "sourceOriginalZipSha256": "5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47",
+      "evidence": "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+      "aclTimeline": "SIX_STMTS_IN_47_ORIGINAL_MIGRATIONS",
+      "dbReplay": "NOT_RUN",
+      "liveGrants": "NOT_VERIFIED"
+    },
+    "mainChanged": false,
+    "sourceWosReconciled": false,
+    "formalStatusesChanged": false,
+    "releaseGate": "HOLD_HUMAN",
+    "dependencySecurity": {
+      "sourceBranch": "fix/governed-activities-cli-20261026",
+      "targetVersion": "better-auth@1.7.14",
+      "changes": "package.json and corresponding 15-package lock chain; client/server/preview/provider code adapted",
+      "packageLockSha": "f576a666ce59590113e06d8c0cb68bf7b17d0b86",
+      "verifiedNoHardcodedPreviewSecretInCandidate": true,
+      "externalBrokerCredentialRotation": "NOT_DONE",
+      "npmAuditGate": "PASS_AUDIT_LEVEL_HIGH_CANDIDATE",
+      "githubSecurityScanning": "NOT_MEASURED",
+      "releaseGate": "HOLD_HUMAN"
+    },
+    "ci": {
+      "firstGlobalSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
+      "latestObservedGlobalSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540",
+      "latestObservedPmoSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235980220",
+      "mainChange": false,
+      "formalAdmission": false
+    },
+    "currentPlanTasks": 68
+  },
+  "r83ForkVerification": {
+    "date": "2026-10-31",
+    "scope": "CANDIDATE_EVIDENCE_RECONSTRUCTION",
+    "sourceQueues": 5,
+    "sourceOccurrences": 112,
+    "uniqueEventPayloads": 28,
+    "baseEvents": 20,
+    "exclusiveEvents": 8,
+    "originalSeqConflicts": [
+      20,
+      21
+    ],
+    "workOrders": 12,
+    "additionalWosStillCandidate": 2,
+    "variantWos": 7,
+    "decisionsAwaitingAuthority": 4,
+    "reconciliationGate": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+    "packet": "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+    "canonicalRevision": "NOT_ELECTED",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceQueuesModified": false,
+    "eventsReplayed": false,
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "r84DecisionIntake": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_REVIEW_UNSUBMITTED",
+    "ownerDecisionsAwaited": 4,
+    "ownerIdentityVerified": false,
+    "checkerReviewsVerified": 0,
+    "kernelAdmissionsVerified": 0,
+    "reviewPacket": "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+    "ui": "src/components/admin/pmo-review-intake.tsx",
+    "validator": "scripts/verify-r84-pmo-decision-intake.mjs",
+    "tests": "scripts/verify-r84-pmo-decision-intake.test.mjs",
+    "reviewAction": "DOWNLOAD_UNSIGNED_LOCAL_DRAFT_ONLY",
+    "electedCanonicalRevision": null,
+    "mainChanged": false,
+    "sourceQueueChanged": false,
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "r87ScopedTaskExpansion": {
+    "date": "2026-10-31",
+    "recordType": "CONCURRENT_AUDIT_TASKS_CANDIDATE_INTAKE",
+    "state": "CANDIDATE_ONLY_NOT_ADMITTED",
+    "canonicalBaselineCount": 37,
+    "r79DomainCandidateCount": 31,
+    "extensionCount": 24,
+    "planTotal": 92,
+    "sourceCommits": [
+      "516a33b74b486494e80cbe429b1821b92ed315a6",
+      "c64b6e029776d92b64966b4184bfb227d12db2d9",
+      "c36967de651fe3196cc78b6430801ac6a67c803b"
+    ],
+    "duplicatedScopeCandidates": [
+      {
+        "earlier": "TASK-PLAN-094",
+        "later": "TASK-PLAN-108",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      },
+      {
+        "earlier": "TASK-PLAN-095",
+        "later": "TASK-PLAN-109",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      },
+      {
+        "earlier": "TASK-PLAN-096",
+        "later": "TASK-PLAN-110",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      },
+      {
+        "earlier": "TASK-PLAN-097",
+        "later": "TASK-PLAN-111",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      },
+      {
+        "earlier": "TASK-PLAN-098",
+        "later": "TASK-PLAN-112",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      },
+      {
+        "earlier": "TASK-PLAN-099",
+        "later": "TASK-PLAN-113",
+        "state": "DUPLICATE_SCOPE_CANDIDATE_REQUIRES_HUMAN_RECONCILIATION"
+      }
+    ],
+    "unadmittedWoIds": [
+      "WO-DS-001"
+    ],
+    "approval": "NOT_APPROVED",
+    "kernelAdmission": "NOT_VERIFIED",
+    "authorizedWoStatusChanges": false,
+    "originalR79MappingMutated": false,
+    "formalTaskStatusPromotionAllowed": false,
+    "releaseGate": "HOLD_HUMAN",
+    "tasks": [
+      {
+        "id": "TASK-PLAN-090",
+        "title": "Integrar os testes do pacote no glob oficial do repo",
+        "status": "PROPOSTO",
+        "wo": "WO-SEC-001",
+        "deps": [
+          "TASK-PLAN-059"
+        ],
+        "artifacts": [
+          "scripts/impact-engine.test.mjs",
+          "scripts/list-query.test.mjs"
+        ],
+        "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado."
+      },
+      {
+        "id": "TASK-PLAN-091",
+        "title": "Declarar as entidades novas nos contratos canonicos",
+        "status": "PROPOSTO",
+        "wo": "WO-PMO-001",
+        "deps": [
+          "TASK-PLAN-059"
+        ],
+        "artifacts": [
+          "registers/canonical/surface-contracts.v2.json",
+          "contracts/entities/design-tokens.v1.json"
+        ],
+        "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build)."
+      },
+      {
+        "id": "TASK-PLAN-092",
+        "title": "Preservar o PmoReviewIntake e adicionar list-query como camada de consulta",
+        "status": "PROPOSTO",
+        "wo": "WO-PMO-001",
+        "deps": [
+          "TASK-PLAN-059"
+        ],
+        "artifacts": [
+          "src/components/admin/pmo-panel.tsx",
+          "src/lib/admin/list-query.ts",
+          "src/lib/admin/list-query.test.ts",
+          "src/components/admin/pmo-review-intake.tsx",
+          "src/styles/admin-console.css",
+          "scripts/test-admin-console.mjs"
+        ],
+        "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI."
+      },
+      {
+        "id": "TASK-PLAN-093",
+        "title": "Rotular a auditoria local como nao atestada (hash-chain -> log append-only rotulado)",
+        "status": "PROPOSTO",
+        "wo": "WO-SEC-001",
+        "deps": [
+          "TASK-PLAN-059"
+        ],
+        "artifacts": [
+          "src/lib/impact/impact-engine.ts"
+        ],
+        "acceptance": "A cadeia SHA-256 em localStorage e mantida apenas como tamper-evidence local, com rotulo explicito de que nao e prova de autoria nem auditoria imutavel de servidor; o registo exportavel carrega ator manual, timestamp, decisao humana e estado PENDING/HOLD. Nenhuma rota produz DONE/APPROVED sem acao humana explicita. Prova: audit-execution-gates.mjs verde e o rotulo presente no registo."
+      },
+      {
+        "id": "TASK-PLAN-094",
+        "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+        "status": "PROPOSTO",
+        "wo": "WO-E2E-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+      },
+      {
+        "id": "TASK-PLAN-095",
+        "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+        "status": "PROPOSTO",
+        "wo": "WO-ADM-001",
+        "deps": [
+          "TASK-PLAN-030",
+          "TASK-PLAN-090"
+        ],
+        "artifacts": [],
+        "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+      },
+      {
+        "id": "TASK-PLAN-096",
+        "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+        "status": "PROPOSTO",
+        "wo": "WO-GOV-TRANS-001",
+        "deps": [
+          "TASK-PLAN-030"
+        ],
+        "artifacts": [],
+        "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+      },
+      {
+        "id": "TASK-PLAN-097",
+        "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+        "status": "BLOCKED",
+        "wo": "WO-ADM-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao (T0.095) nao tem severidade autoritativa. Nao inventar SLAs."
+      },
+      {
+        "id": "TASK-PLAN-098",
+        "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+        "status": "BLOCKED",
+        "wo": "WO-SEC-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas. Bloqueia T0.093, T0.106 e o item 'perfil e saida' do roadmap."
+      },
+      {
+        "id": "TASK-PLAN-099",
+        "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+        "status": "BLOCKED",
+        "wo": "WO-ADM-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
+      },
+      {
+        "id": "TASK-PLAN-100",
+        "title": "Estender o list-query as restantes listas (fontes, templates, achados/FINDs, auditoria)",
+        "status": "PROPOSTO",
+        "wo": "WO-ADM-001",
+        "deps": [
+          "TASK-PLAN-059",
+          "TASK-PLAN-090"
+        ],
+        "artifacts": [],
+        "acceptance": "As 4 listas reusam list-query e os estilos ce-admin-listbar*/chip*/pager ja entregues, sem duplicar biblioteca. Prova: os testes do list-query correm no gate oficial (T0.090) e cada lista nova tem teste estatico de invariantes."
+      },
+      {
+        "id": "TASK-PLAN-101",
+        "title": "Auditoria de acessibilidade real (teclado + viewports 320/390/768/1280)",
+        "status": "PROPOSTO",
+        "wo": "WO-E2E-001",
+        "deps": [
+          "TASK-PLAN-094"
+        ],
+        "artifacts": [],
+        "acceptance": "O repo tem playwright 1.62 e testes de a11y proprios (test-country-icon-a11y.mjs, test-focus-colors-i18n.mjs), mas NAO tem axe-core: ou se instala axe-core como devDependency com lockfile, ou a alegacao fica 'teclado + testes proprios, axe nao verificado'. Medir antes de afirmar."
+      },
+      {
+        "id": "TASK-PLAN-102",
+        "title": "Biblioteca unica de componentes administrativos (17 familias)",
+        "status": "PROPOSTO",
+        "wo": "WO-DS-001",
+        "deps": [
+          "TASK-PLAN-029",
+          "TASK-PLAN-091"
+        ],
+        "artifacts": [],
+        "acceptance": "DataTable, FilterBar, Tabs de detalhe, Drawer/Modal com foco preso, FormField com label visivel e resumo de erros, DiffViewer, Timeline, GraphView, Toast, Skeleton, ErrorState, PermissionDenied, SourceStamp, DisabledAction, StatusBadge, Stepper e KeyValueList. Regra: uma unica biblioteca, sem duplicar o que ja existe, tokens derivados dos canonicos e cada componente com contrato (check-contract-coverage)."
+      },
+      {
+        "id": "TASK-PLAN-103",
+        "title": "Backlog dos 5 modulos propostos (APIs e fornecedores; midia/redirecionamentos/SEO; registo clinico e testes de referencia; selo de proveniencia e maquina do tempo; simulador 'e se' de revogacao; modo auditor e playbooks)",
+        "status": "PROPOSTO",
+        "wo": "WO-ADM-001",
+        "deps": [
+          "TASK-PLAN-102"
+        ],
+        "artifacts": [],
+        "acceptance": "Cada modulo entra com escopo, dados necessarios, gate que o prova e o que fica por decision. Nenhum comeca sem o contrato de dados e o registo de proveniencia correspondentes."
+      },
+      {
+        "id": "TASK-PLAN-104",
+        "title": "Ligar o Commander ao Kernel (apos admissao)",
+        "status": "BLOCKED",
+        "wo": "WO-ADM-001",
+        "deps": [
+          "TASK-PLAN-002",
+          "TASK-PLAN-098"
+        ],
+        "artifacts": [],
+        "acceptance": "Hoje o Commander e preparacao local: nenhum provedor conectado, o avaliador deterministico existe no codigo mas o Commander nao o invoca, e as instrucoes em agents/ sao documentos, nao executores registrados (src/components/admin/commander-panel.tsx). Ligar so apos admissao do Kernel, com escopo, plano, validacao de OS/politicas/manifesto e encaminhamento apenas a agente/equipe registrada; o LLM nao decide impacto clinico/legal nem aprova publicacao."
+      },
+      {
+        "id": "TASK-PLAN-105",
+        "title": "Composicao e configuracao do site (idioma, rotas, SEO, JSON-LD, templates, manifesto, aprovacao, preview, publicacao, retirada, rollback)",
+        "status": "PROPOSTO",
+        "wo": "WO-DS-001",
+        "deps": [
+          "TASK-PLAN-091",
+          "TASK-PLAN-100"
+        ],
+        "artifacts": [],
+        "acceptance": "Cada versao canonica e a sua publicacao sao registadas; retirada e rollback por versao, nao por reescrita. Prova: gates de superficie (check-contract-coverage) + build:spa + materializacao de rotas estaticas."
+      },
+      {
+        "id": "TASK-PLAN-106",
+        "title": "Identidade, persistencia e trilha de auditoria duravel no servidor",
+        "status": "BLOCKED",
+        "wo": "WO-SEC-001",
+        "deps": [
+          "TASK-PLAN-098"
+        ],
+        "artifacts": [],
+        "acceptance": "Decidir e implementar backend, sessao, RBAC e trilha append-only atestada antes de qualquer mutacao remota. A hash-chain local (SHA-256 em localStorage) e apenas tamper-evidence client-side e tem de ficar rotulada como nao atestada."
+      },
+      {
+        "id": "TASK-PLAN-107",
+        "title": "Registar FIND-MOD-001 (matriz M01-M22 sem fonte) e a divergencia dos 36 hashes no find-register",
+        "status": "PROPOSTO",
+        "wo": "WO-PMO-001",
+        "deps": [
+          "TASK-PLAN-099"
+        ],
+        "artifacts": [],
+        "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo."
+      },
+      {
+        "id": "TASK-PLAN-108",
+        "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+        "status": "PROPOSTO",
+        "wo": "WO-E2E-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+      },
+      {
+        "id": "TASK-PLAN-109",
+        "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+        "status": "PROPOSTO",
+        "wo": "WO-ADM-001",
+        "deps": [
+          "TASK-PLAN-030",
+          "TASK-PLAN-090"
+        ],
+        "artifacts": [],
+        "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+      },
+      {
+        "id": "TASK-PLAN-110",
+        "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+        "status": "PROPOSTO",
+        "wo": "WO-GOV-TRANS-001",
+        "deps": [
+          "TASK-PLAN-030"
+        ],
+        "artifacts": [],
+        "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+      },
+      {
+        "id": "TASK-PLAN-111",
+        "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+        "status": "BLOCKED",
+        "wo": "WO-ADM-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao nao tem severidade autoritativa. Nao inventar SLAs."
+      },
+      {
+        "id": "TASK-PLAN-112",
+        "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+        "status": "BLOCKED",
+        "wo": "WO-SEC-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas."
+      },
+      {
+        "id": "TASK-PLAN-113",
+        "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+        "status": "BLOCKED",
+        "wo": "WO-ADM-001",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
+      }
+    ]
+  },
+  "r87ExecutionEvidence": {
+    "date": "2026-10-31",
+    "taskId": "TASK-PLAN-092",
+    "state": "IMPLEMENTED_CANDIDATE_NOT_PRODUCTION",
+    "engine": "src/lib/admin/list-query.ts",
+    "unitTests": "src/lib/admin/list-query.test.ts",
+    "expectedUnitTests": 14,
+    "ui": "src/components/admin/pmo-panel.tsx",
+    "reviewPreserved": "src/components/admin/pmo-review-intake.tsx",
+    "contractChecks": "scripts/test-admin-console.mjs",
+    "sourceWosModified": false,
+    "mainModified": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "technicalVerification": "CI_PENDING_NEW_HEAD",
+    "visualE2E": "NOT_RUN",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "r89ScopedTaskReconciliation": {
+    "recordType": "R89_READ_ONLY_RECONCILIATION_OF_CONCURRENT_CANDIDATE_TASKS",
+    "state": "CANDIDATE_ONLY_NOT_ADMITTED",
+    "sourcePlanBlobSha": "b1fadfcb68717d5086ca4630498d0b6dddf9fbf5",
+    "sourceBranchHeadSha": "35f603277ec3dde4f7de703ad0f870f4f2dae065",
+    "historicalTaskCount": 92,
+    "additionalTaskCount": 20,
+    "totalTaskCount": 112,
+    "preservedR79SourceCandidates": 31,
+    "preservedR87Candidates": 24,
+    "sourceType": "PINNED_GIT_BLOB_SNAPSHOT_NOT_CORPORATE_APPROVAL",
+    "amendments": [
+      {
+        "id": "TASK-PLAN-090",
+        "changes": {
+          "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado. | MEDIDO 31/10 21:20Z: o repo usa a convencao scripts/**/*.test.mjs (6 ficheiros no main; ex.: test-route-registry.test.mjs). O problema do ZIP e que os seus ficheiros se chamam test-*.mjs SEM o sufixo .test.mjs. Estado: nao existe nenhum ficheiro de teste para impact-engine, list-query ou admin-topbar (verificado por listagem de scripts/ e search_code)."
+        }
+      },
+      {
+        "id": "TASK-PLAN-091",
+        "changes": {
+          "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build). | MEDIDO 31/10 21:20Z: registers/canonical/surface-contracts.v2.json EXISTE (275 linhas) mas nao declara impact-engine, list-query, admin-topbar nem PmoReviewIntake (0 ocorrencias de cada chave). check-contract-coverage nao os apanha: os tokens ainda nao tem contrato."
+        }
+      },
+      {
+        "id": "TASK-PLAN-092",
+        "changes": {
+          "status": "DELIVERED_PENDING_GATE",
+          "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI. | MEDIDO 31/10 21:20Z: src/components/admin/pmo-review-intake.tsx PRESENTE (132 linhas) e importado por src/components/admin/pmo-panel.tsx (import { PmoReviewIntake } from './pmo-review-intake') + queryPmo de @/lib/admin/list-query (54 linhas). A superficie de decisao foi preservada e a listagem e camada de consulta, nao substituto. DELIVERED, pendente de correr o gate oficial."
+        }
+      },
+      {
+        "id": "TASK-PLAN-107",
+        "changes": {
+          "title": "Registar FIND-MOD-001 (matriz M01-M22) e a divergencia de hash no find-register",
+          "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo. | FONTE ENCONTRADA 31/10 21:10Z: a matriz existe no repo em docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ branch fix/governed-activities-cli-20261026 (NAO esta no main); search_code so indexa a branch por defeito, razao do HOLD do mockup. Evidencia: issue #16 comentario 6427776320. Divergencia de hash medida por mim: 40 entradas declaradas, 39 OK, 1 divergente = src/App.tsx (declarado c75313ee..., medido a16223547...)."
+        }
+      },
+      {
+        "id": "TASK-PLAN-113",
+        "changes": {
+          "title": "Reconciliar M01-M22 com a matriz canonica localizada (7 macrogrupos / 22 modulos)",
+          "status": "PROPOSTO",
+          "acceptance": "Fonte localizada em 31/10: docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ fix/governed-activities-cli-20261026 (copia com proveniencia em docs/evidence/commander-2026-10-31/). Contem os 7 macrogrupos e os 22 modulos COM NOMES (M01 Visao Geral ... M22 Gestao Corporativa e Terceiros) e o layout obrigatorio 65/35. Entregaveis: (a) crosswalk entre as sete abas do AdminConsole e os sete macrogrupos propostos, classificado PRESENT/CANDIDATE/HOLD; (b) os nomes dos 22 modulos aplicados onde fizer sentido, sem declarar 22 rotas implementadas e sem usar as abas como substituto dos macrogrupos; (c) Central de Comando registada como transversal a M01/M03/M07/M16/M19/M20/M14 e nao como Kernel/PMO/storage concorrente; (d) comprovacao de autoridade do DOCX original (ver TASK-PLAN-119). A matriz e transcricao-resumo PROPOSTO: nao e homologacao."
+        }
+      }
+    ],
+    "additionalTasks": [
+      {
+        "id": "TASK-PLAN-114",
+        "title": "Verificador de integridade que recalcula os hashes do delivery-manifest",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "phase": "F1",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-107"
+        ],
+        "artifacts": [],
+        "acceptance": "O validador que o pacote entrega (scripts/validate-manifest.mjs) so valida JSON contra schema AJV e NAO recalcula um unico hash; por isso a divergencia de src/App.tsx passou despercebida. Entregar script que recalcula SHA-256 dos 40 declarados e falha fechada em qualquer divergencia, e regenerar o manifesto com o ficheiro entregue. Prova: executar contra o pacote recebido e obter 39 OK + 1 divergente antes do conserto, 40 OK depois."
+      },
+      {
+        "id": "TASK-PLAN-115",
+        "title": "Clarificar a linhagem do pacote Commander (manifesto vs adaptador de host)",
+        "wo": "WO-ADM-001",
+        "status": "BLOCKED",
+        "phase": "F1",
+        "owner": "Owner",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "O ZIP reenviado e a linhagem com delivery-manifest/validation/handoff e NAO inclui a linhagem 'continuidade local' do comentario 6428694625 (CommanderReadModel, src/ce-ds-bridge.candidate.css, scripts/test-host-adapter.mjs, INTEGRATION_README.md, candidate-manifest.json). O src/App.tsx recebido nao tem CommanderReadModel. Decisao do dono: qual linhagem e a entrega final, e onde fica o adaptador de host (repo ou fora). A divergencia de hash de App.tsx e a pista."
+      },
+      {
+        "id": "TASK-PLAN-116",
+        "title": "Port do redesign do workspace da outra sessao para o repo (admin-console, commander-panel, catalogo)",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-091",
+          "TASK-PLAN-117"
+        ],
+        "artifacts": [],
+        "acceptance": "Medido: workspace admin-console.tsx 485 linhas vs repo 291; commander-panel.tsx 280 vs 175; o workspace importa @/core/governance/catalog e a fila directamente e acrescenta icones e superficies de monitor WO/run. Portar por fiacao, nao por copia, mantendo o repo como autoridade, com design-tokens.v1.json e queue.v1.json INTACTOS (identicos ao workspace) e o wireframe rotulado NOT_HOMOLOGATED ate WO-DS-001. Prova: typecheck + npm test + build:spa verdes e delta registado."
+      },
+      {
+        "id": "TASK-PLAN-117",
+        "title": "Reconciliar o estado de WO-DS-001 (fila QUEUED vs HOLD_HUMAN do proprietario)",
+        "wo": "WO-DS-001",
+        "status": "BLOCKED",
+        "phase": "F4",
+        "owner": "Owner / PMO",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "registers/pmo/queue.v1.json no main regista WO-DS-001=QUEUED (rev. 18, updatedOn 2026-10-26) e o comentario do proprietario na issue #16 (#6427869597) pergunta se o comentario deve ser lido como HOLD separado. A pergunta continua sem resposta. Decisao registada e versionada; ate la, DS continua HOLD_HUMAN e nenhum token canonico e alterado."
+      },
+      {
+        "id": "TASK-PLAN-118",
+        "title": "Entregar o motor de impacto e a topbar, e reconciliar o CSS de lista vazia",
+        "wo": "WO-ADM-001",
+        "status": "PROPOSTO",
+        "phase": "F3",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-090",
+          "TASK-PLAN-091"
+        ],
+        "artifacts": [],
+        "acceptance": "Medido 31/10: src/lib/impact/impact-engine.ts e src/components/admin/admin-topbar.tsx AUSENTES no repo. O repo ja tem src/lib/admin/list-query.ts (54 linhas) e src/components/admin/pmo-review-intake.tsx (132 linhas). Reconciliar no CSS a duplicacao semantica entre .ce-admin-empty e .ce-admin-list-empty (ambas existem em src/styles/admin-console.css); os estilos do ZIP (ce-admin-listbar, ce-admin-chip, ce-admin-topbar) tem 0 ocorrencias e nao foram portados. Prova: testes no glob oficial e contratos declarados."
+      },
+      {
+        "id": "TASK-PLAN-119",
+        "title": "Confirmar autoridade e integridade do DOCX original da matriz",
+        "wo": "WO-PMO-001",
+        "status": "BLOCKED",
+        "phase": "F1",
+        "owner": "Owner",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "A matriz M01-M22 declara origem em Especificacao_Final_Central_de_Comando_e_Tabelas_Iniciais.docx v1.0 (26/10, 19 pag.), proposta NAO homologada, que NAO esta no checkout do repo. Antes de qualquer promocao da matriz: obter o original, conferir a contagem 4+2+4+4+2+4+2=22 e a autoria, e registar a procedencia. A proposta de 215 tabelas nao e autorizacao para criar tabelas."
+      },
+      {
+        "id": "TASK-PLAN-120",
+        "title": "Esqueleto CE local: catalogo de 410 servicos + 201 capabilities + piloto executavel",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [],
+        "artifacts": [
+          "docs/evidence/experience-platform-skeleton-2026-10-31/AVALIACAO-ESQUELETO-CE-2026-10-31.md",
+          "docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json",
+          "tools/experience-skeleton/generate-skeleton.mjs",
+          "tools/experience-skeleton/check-skeleton.mjs"
+        ],
+        "acceptance": "Entregue e verificado LOCAL: 45 familias, 410 servicos, 201 capabilities, 16 bindings, 3 schemas de piloto; 905 ficheiros gerados por script deterministico; 70/70 testes verdes; gate 8/8; zero drift. Tudo em CANDIDATE_HOLD: nenhum servico executa, nenhum mock finge sucesso. Nao foi portado para o repo canonico (sem WO de admissao) e nao altera main."
+      },
+      {
+        "id": "TASK-PLAN-121",
+        "title": "Reduzir e fundir o vocabulario de 410 servicos por camada antes de qualquer admissao",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Owner / arquitetura",
+        "deps": [
+          "TASK-PLAN-120"
+        ],
+        "artifacts": [],
+        "acceptance": "Medido: 274 DOMAIN + 97 PLATFORM + 39 CROSS_CUTTING, com sobreposicoes (Connector Registry em Source & Acquisition e em Integrations; Registry Management, Policy Registry e Workflow Engine a tocar dominios vizinhos). Entregar proposta de fusao por camada com o catalogo final, preservando a contagem de capacidades (201) e os 16 bindings. Nenhuma admissao de WO antes desta reducao."
+      },
+      {
+        "id": "TASK-PLAN-122",
+        "title": "Definir os schemas centrais do metamodelo a partir dos 3 piloto (Article, LibraryEntity, ClinicalTool)",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F3",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-120"
+        ],
+        "artifacts": [],
+        "acceptance": "Os 3 schemas existem como proposta CANDIDATE_HOLD (schemas/*.v1.json). Falta: ligá-los ao registo de contratos canonicos (surface-contracts) e a um validador que reprova registos sem provenance, sem authorityBinding ou sem evidence. Prova: check-contract-coverage a passar e um FIND por entidade sem contrato."
+      },
+      {
+        "id": "TASK-PLAN-123",
+        "title": "Medir acessibilidade real do esqueleto do piloto (teclado + viewports 320/390/768/1280)",
+        "wo": "WO-E2E-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-120"
+        ],
+        "artifacts": [],
+        "acceptance": "Nao medido: o sandbox nao tem browser. Os contratos declaram accessibility_contract REQUIRED, mas isso e declaracao, nao prova. Executar Playwright (o repo canonico tem playwright 1.62; o repo nao tem axe-core) e registar NOT_RUN para o que nao rodar. Nao alegar conformidade WCAG sem execucao."
+      },
+      {
+        "id": "TASK-PLAN-124",
+        "title": "Decidir o port do esqueleto CE para o repo canonico (ou manter local ate existir WO)",
+        "wo": "WO-DS-001",
+        "status": "BLOCKED",
+        "phase": "F4",
+        "owner": "Owner / Kernel",
+        "deps": [
+          "TASK-PLAN-121",
+          "TASK-PLAN-122"
+        ],
+        "artifacts": [],
+        "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar."
+      },
+      {
+        "id": "TASK-PLAN-125",
+        "title": "Registar no find-register os 16 FINDs da PR #21 (Experience Canonicalization)",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "phase": "F1",
+        "owner": "Mavis",
+        "deps": [],
+        "artifacts": [
+          "docs/evidence/experience-platform-skeleton-2026-10-31/GAPS-2026-10-31.md"
+        ],
+        "acceptance": "Medido: docs/FIND-EXPERIENCE-CANONICALIZATION-v0.1.0.md na PR #21 (branch feat/career-youth-db-first-20261026 @ ad4c683890) tem 16 FINDs; nenhum existe em registers/governance/find-register.v1.json (que tem 11, nenhumExperience). Exemplos: template-contract mistura favorite/print/pdf/docx/listen/readingTime; PageTools e LibraryActions duplicam acoes; Favorite so estado de visita; ToolViewBar grava em sessionStorage; Hint trata Tooltip como conteudo; preview e infra de embed e nao Product Preview. Regista cada um como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED. Sem baseline nao ha como provar nao-regressao."
+      },
+      {
+        "id": "TASK-PLAN-126",
+        "title": "Reconciliar o registo de capabilities/bindings com o metamodelo canonico (11 + 5 campos em falta)",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "phase": "F1",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-125"
+        ],
+        "artifacts": [],
+        "acceptance": "Medido: o registo candidato traz 14 campos por capability e 7 por binding; o metamodelo do plano exige 20 e 10+. Faltam na capability: state_contract_ref, action_contract_ref, supported_channels, storage_policy, sync_policy, permission_policy, accessibility_contract_ref, telemetry_contract_ref, help_profile_ref, preview_profile_ref, output_profile_refs (e ha duplicacao status/release_status). Faltam no binding: audiences, permissions, state_constraints, format_constraints, policy_refs. Entregar a versao reconciliada OU um FIND por divergencia; nunca preencher por inferencia."
+      },
+      {
+        "id": "TASK-PLAN-127",
+        "title": "Implementar os 6 modulos P0 do roadmap como contrato + teste (capabilities, action-bar, preview, settings, help, output)",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-126"
+        ],
+        "artifacts": [],
+        "acceptance": "Estado medido: 2 de 10 modulos-alvo existem (resolver, state). Faltam capabilities.ts (fonte compilada das 201), action-bar.tsx, preview.ts, settings.ts, help.ts, output.ts. Cada um: contrato + testes, sem UI de producao; profiles de settings (5 scopes), output (6 formatos) e preview (5 perfis) com conteudo aprovado pelo dono. Prova: suite verde e registo em module-status.ts."
+      },
+      {
+        "id": "TASK-PLAN-128",
+        "title": "Fechar os 13 schemas de objeto em falta e os perfis transversais",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-126"
+        ],
+        "artifacts": [],
+        "acceptance": "Dos 16 tipos de objecto com bindings, so 3 tem schema (Article, LibraryEntity, ClinicalTool). Faltam: Guide, Course, Trail, JobOpportunity, Competition, Residency, Question, Simulation, ResearchProject, Norm, CareerRole, Organization, MediaAsset. Cada schema com provenance, authorityBinding e evidence obrigatorios, em CANDIDATE_HOLD."
+      },
+      {
+        "id": "TASK-PLAN-129",
+        "title": "Implementar P1 do roadmap: Saved Views, Saved Search, Collections/Basket, Lifecycle/Recovery e Event Backbone",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-127"
+        ],
+        "artifacts": [],
+        "acceptance": "Faltam os modulos views.ts e events.ts e as semanticas de archive/trash/undo/redo/version-history/diff/restore/conflict-resolution, mais collections e basket como objectos distintos de saved views. O event backbone define formato, ordenacao, idempotencia e retencao (ALCOA+); substitui a hash-chain local, que e tamper-evidence client-side e nao auditoria."
+      },
+      {
+        "id": "TASK-PLAN-130",
+        "title": "Implementar P2 do roadmap: Capture/Inbox, Follow/Alerts/Calendar, Collaboration, search semantico e sync",
+        "wo": "WO-DS-001",
+        "status": "PROPOSTO",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-129"
+        ],
+        "artifacts": [],
+        "acceptance": "Sync e a peca mais cara e a que mais decisao do dono exige (modelo de identidade/backend, T0.112). Nao comeca sem essa decisao."
+      },
+      {
+        "id": "TASK-PLAN-131",
+        "title": "Criterios de nao-regressao, rollback e gate de CI para o esqueleto CE",
+        "wo": "WO-E2E-001",
+        "status": "BLOCKED",
+        "phase": "F4",
+        "owner": "Mavis",
+        "deps": [
+          "TASK-PLAN-127"
+        ],
+        "artifacts": [],
+        "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada."
+      },
+      {
+        "id": "TASK-PLAN-132",
+        "title": "Comparacao do esqueleto CE com producao, repo publico, normativos e plataformas de referencia",
+        "wo": "WO-DS-001",
+        "status": "BLOCKED",
+        "phase": "F4",
+        "owner": "Mavis + equipa especializada",
+        "deps": [
+          "TASK-PLAN-121"
+        ],
+        "artifacts": [
+          "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
+          "docs/evidence/ce-comparacao-2026-10-31/E2-repo-branches.md",
+          "docs/evidence/ce-comparacao-2026-10-31/E3-normativos.md",
+          "docs/evidence/ce-comparacao-2026-10-31/E4-benchmarks.md",
+          "docs/evidence/ce-comparacao-2026-10-31/E5-esqueleto.md",
+          "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
+          "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml"
+        ],
+        "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido."
+      },
+      {
+        "id": "TASK-PLAN-133",
+        "title": "Registar as 3 correccoes de medicao do owner (182 branches, tokens/idiomas fora do main, packaging da API)",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "phase": "F1",
+        "owner": "Mavis",
+        "deps": [],
+        "artifacts": [],
+        "acceptance": "Tres erros meus, medidos e corrigidos: (1) list_branches com 'per_page' em vez de 'perPage' devolvia 30 em vez de 182 branches (repo publico) - a lista completa esta em docs/evidence/ce-comparacao-2026-10-31/branches-todas.json; (2) src/lib/locale-registry.ts e src/lib/site-data.ts nao estao no main do repo publico nem do repo privado - onde vivem fica NOT_RUN; (3) o parametro correcto da API do Senado e tipo+numero+ano ('palavras' e ignorado). Regista em FIND para que a medicao errada nao volte a alastrar."
+      }
+    ],
+    "authority": {
+      "ownerIdentityVerified": false,
+      "independentCheckerVerified": false,
+      "kernelAdmission": "NOT_VERIFIED",
+      "canonicalPmoElected": false,
+      "taskCompletionAuthorized": false,
+      "releaseGate": "HOLD_HUMAN"
+    },
+    "pendingDuplicateScopes": [
+      "094/108",
+      "095/109",
+      "096/110",
+      "097/111",
+      "098/112",
+      "099/113"
+    ],
+    "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
+  }
+}

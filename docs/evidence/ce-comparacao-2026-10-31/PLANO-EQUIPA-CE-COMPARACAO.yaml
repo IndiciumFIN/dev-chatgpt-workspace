@@ -1,0 +1,340 @@
+version: 1
+plan:
+  name: 'Esqueleto CE × produção × repo público × normativos × plataformas de excelência'
+  max_concurrency: 8
+  max_consecutive_failures: 2
+  max_cycles: 6
+tasks:
+  # ---------- 6 frentes paralelas ----------
+  - id: producao-conta-funil
+    title: 'Produção: conta, login, assinatura e o conflito com o modelo guest-first do esqueleto'
+    prompt: |
+      És o auditor de conversão do produto Calculadoras de Enfermagem. Trabalha APENAS sobre o
+      evidence pack fornecido — não assumes acesso a repositórios ou browsers que não tenhas.
+
+      PACK (lê integralmente): /workspace/evidence_pack/E1-producao.md e /workspace/evidence_pack/E5-esqueleto.md
+
+      CONTEXTO ESSENCIAL (já medido pelo owner, não repitas a recolha):
+      - Produção em www.calculadorasdeenfermagem.com.br: 16+ calculadoras, 12 categorias clínicas,
+        12+ simulados, biblioteca "+400 conteúdos", "+60 escalas em branco para imprimir", quizzes,
+        "Assine já" (Premium), login Google-only, checkout via Asaas, métricas públicas, política de
+        privacidade que promete uso SEM cadastro e SEM dados pessoais.
+      - Branches do repo público confirmam: `chatgpt/login-google-email-only-20261004`,
+        `chatgpt/assinatura-layout-20261004`, `chore/sync-asaas-checkout-v106`,
+        `audit/billing-ads-final-20260914` (+4 de billing/ads), `codex/admin-developer-premium`,
+        `chatgpt/desenvolvedor-funil-24h-20261004`.
+      - O esqueleto CE local tem 201 capabilities (todas CANDIDATE) e um `ExperienceState` canónico
+        com `owner_scope` SESSION | LOCAL_DEVICE | ACCOUNT | WORKSPACE e guest-first por invariante
+        ("Guest baseline must not require authentication"). NÃO há backend, NÃO há sync, NÃO há
+        billing, NÃO há entitlement no esqueleto.
+
+      TUA PERGUNTA: o guest-first do esqueleto e a realidade de produção (login Google, Premium,
+      Asaas, ads, métricas) são a mesma coisa? Onde se contradizem, onde se complementam, e o que
+      falta modelar.
+
+      FAZ:
+      1. Tabela de 12-18 linhas: (promessa/estado de produção) → (capability/família do esqueleto
+         envolvida) → (coincide / divergência / ausente) → (risco: clinically misleading? dark
+         pattern? privacy?) → evidência (URL/branch do pack).
+      2. Tabela específica: login/entrada → sessão → device → sync → conta → assinatura → pagamento →
+         entitlement → privacidade, com o que existe em produção e o que o esqueleto declara.
+      3. As 8-12 capabilities do esqueleto que a produção JÁ exercise (ex.: favoritar, continuar, ver
+         depois, alerted, histórico, partilhar, exportar/print) — marca as que são CANDIDATE sem
+         qualquer implementação, porque isso é divergência deUUA, não só de Gap.
+      4. Veredito: o que o esqueleto tem de mudar AGORA (estrutura) e o que depende de decisão do dono.
+
+      ENTREGÁVEL: `deliverable.md` na tua pasta de tarefa, com as tabelas acima, mais uma secção
+      "O que NÃO foi medido" (NOT_RUN com motivo — a medição em browser foi timeout do owner).
+      Português do Brasil, seco, tabular. Sem push, sem commit, sem alterações fora de deliverables/.
+    assigned_to: conversion-funnel
+    verified_by: verifier
+    verify_prompt: |
+      Re-deriva contra o pack (/workspace/evidence_pack/E1-producao.md e E5-esqueleto.md), sem
+      confiar no resumo do produtor: (a) toda capability citada existe no registo de 201? (b) toda
+      promessa de produção citada existe no pack? (c) algum veredicto "coincide" nasce de leitura
+      ('a política promete sem cadastro' NÃO é o mesmo que 'o produto tem guest-first')?
+      FAIL se encontrares capability inventada, promessa não sustentada pelo pack, ou se a
+      divergência clínica/privacidade do guest-first ficar diluída. PASS exige tabela verificável.
+    timeout_ms: 1500000
+
+  - id: producao-superficie-busca
+    title: 'Produção: superfície real (biblioteca, escalas, simulados, busca, i18n) contra as 201 capabilities'
+    prompt: |
+      És o auditor de busca e descoberta do produto Calculadoras de Enfermagem. Trabalha APENAS
+      sobre o evidence pack — não assumes acesso a repositórios ou browsers que não tenhas.
+
+      PACK (lê integralmente): /workspace/evidence_pack/E1-producao.md, /workspace/evidence_pack/E2-repo-branches.md,
+      /workspace/evidence_pack/E5-esqueleto.md
+
+      CONTEXTO ESSENCIAL (medido pelo owner):
+      - Produção: biblioteca "+400 conteúdos", "+60 escalas assistenciais em branco", 12+ simulados
+        com cronómetro e avaliação final, quiz interativo, "Biblioteca de Provas", escalas por
+        especialidade, 12 categorias de calculadoras, "Escala Mensal de Plantão e Folga" com
+        pré-estatística automatizada, métricas públicas do site.
+      - 19 idiomas no registo do repo (pt-BR, en, es, de, it, fr, hi, zh, ar, ja, ru, ko, tr, nl, pl,
+        sv, id, vi, uk); 243 ícones FA em SVG; branches `chatgpt/sync-menu-auth-layout-locales-20261004`,
+        `backup/menus-19-antes-*` (4 baselines de menu), `chatgpt/index-extensoes-chrome-20261004`.
+      - Esqueleto: 201 capabilities em 20 famílias; famílias de serviço: 45 (36 domínio + 9
+        transversais) e 410 serviços; Discovery tem 9 serviços declarados; "Área" = composição
+        configurável de projeções (Favoritos, Continuar, Recentes, Ler depois, Coleções, Cesta,
+        Trilhas, Cursos, Simulados, Concursos, Vagas, Candidaturas, Alertas, Calendário, Passaporte).
+
+      TUA PERGUNTA: que superfícies reais do produto NÃO estão representadas nas 201 capabilities
+      nem nos 410 serviços; e o que o esqueleto declara que a produção ainda não tem.
+
+      FAZ:
+      1. Inventário da superfície de produção agrupada por categoria (conteúdo, escala, simulado,
+         calculadora, prova, busca, conta, métrica) → para cada: existe capability? em que família?
+         falta contrato, objeto ou serviço?
+      2. As 10-15 capabilities de maior valor de produto (ex.: Question/Simulation/Collection/
+         SavedSearch/SavedView/Course/Trail/CalendarEvent/Alert/Credential/Opportunity) — para cada:
+         tem schema (só 3 de 16 tipos têm), tem serviço, tem binding, e é coerente com a produção.
+      3. O caso dos SIMULADOS: o blueprint define Concursos/Simulados como Composition
+         (Selection Process + Edital + Cargo + Calendar + Exam + Question Bank + Answer Key +
+         Appeal + Result + Convocation + Alert + Simulados). A produção tem simulados por banca e
+         provas de concursos encerrados. Qual é o delta real, em serviços e objetos?
+      4. Tabela "já existe em produção" vs "o esqueleto declara HOLD" vs "o esqueleto não menciona".
+
+      ENTREGÁVEL: `deliverable.md` com as tabelas, mais "O que NÃO foi medido" (NOT_RUN com motivo).
+      Português do Brasil, seco, tabular. Sem push, sem commit, sem alterações fora de deliverables/.
+    assigned_to: search-experience
+    verified_by: verifier
+    verify_prompt: |
+      Re-deriva contra E1/E2/E5: cada capability e cada objeto citado existe nos registos do pack?
+      Os números ("+400", "+60", 16+, 12+) batem com o que o pack diz? Alguma superfície foi
+      declarada "ausente do esqueleto" quando o pack mostra que ela existe?
+      Confirma em especial que o delta dos simulados não inventa serviços que o blueprint não
+      listou. FAIL se houver capability, objeto ou número inventado.
+    timeout_ms: 1500000
+
+  - id: repo-publico-branches
+    title: 'Repositório público e as 30 branches: o que existe, o que ficou órfão e o que é baseline'
+    prompt: |
+      És o especialista em extração/inventário do repositório de origem do Calculadoras de
+      Enfermagem. Trabalha sobre o evidence pack; se tiveres acesso a um clone local do repo
+      público (`https://github.com/kauesp0007/calculadoras-de-enfermagem`), usa-o APENAS para
+      confirmar o que o pack já diz; se não tiveres, workinga com o pack e declarando NOT_RUN.
+
+      PACK: /workspace/evidence_pack/E2-repo-branches.md (+ E5 para o esqueleto)
+
+      CONTEXTO: repo público com 30 branches (ver lista completa no pack), 31 commits à frente do
+      main; clusters `chatgpt/` (produto: simulados em 3 etapas, checkout, login, extensões Chrome,
+      alinhamento Figma, guia de gotejamento, menus/locales), `audit/` (billing/ads/concurrency/a11y),
+      `backup/` (6 baselines antes de mudanças visuais + page-comments + pre-clinical-audit),
+      `base44/setup-*` (2), `codex/admin-developer-premium`, `chore/sync-asaas-checkout-v106`.
+      No repo de governança público, a branch `feat/career-youth-db-first-20261026` (PR #21, draft,
+      146 commits, 70 ficheiros) traz a Experience Platform candidata.
+
+      TUA PERGUNTA: o repo público + as suas branches já contêm a experiência que o esqueleto vai
+      redesenhar? O que está implemented, o que está só em branch, o que está abandonedado, e o que
+      é baseline (backup) que não pode ser perdido.
+
+      FAZ:
+      1. Tabela por branch (30 linhas): branch → tema inferido pelo nome → hipótese de conteúdo →
+         estado (merged? abandoned? baseline? produto?) → risco de perda. **Marca como inferência
+         tudo o que for inferido do nome** — não afirme conteúdo que não foi verificado.
+      2. O que do produto de hoje (login Google, Premium/Asaas, simulados, extensões Chrome,
+         Figma-alignment, menus 19 idiomas, billing/ads) TEM equivalente no esqueleto CE? Tabela
+         (produto → service/capability do esqueleto → existe?).
+      3. Riscos de bifurcação: quais branches parecem並 divergentes entre si (ex.: menus-19-antes-*
+         com 4 baselines, ads vs billing-clean) e o que isso implica para um port do esqueleto.
+      4. O que NÃO se deve portar (ex.: UI rival, kit de UI duplicado, código de checkout sem
+         entitlement model) e porquê, ancorado nas regras do repo.
+
+      ENTREGÁVEL: `deliverable.md` com as tabelas e a secção "O que NÃO foi verificado" (NOT_RUN).
+      Português do Brasil, seco, tabular. Sem push, sem commit, sem alterações fora de deliverables/.
+    assigned_to: extrator-fonte
+    verified_by: verifier
+    verify_prompt: |
+      Re-deriva contra E2: as 30 branches estão todas listadas com sha? Alguma afirmação sobre
+      conteúdo de branch vai além do que o nome permite? O produtor distinguiu inferência de
+      facto verificado? Verifica que a lista de "o que não portar" não contradiz E5 (o esqueleto
+      é catálogo + contratos, sem UI). FAIL se houver conteúdo inventado ou branch omitida.
+    timeout_ms: 1500000
+
+  - id: normativos-enfermagem
+    title: 'Normativos de enfermagem: o que a produção afirma e que fonte sustenta cada afirmação'
+    prompt: |
+      És o especialista em normas de enfermagem (COFEN, COREN, MS, OMS, NANDA/NIC/NOC) e em
+      sites de normativos: o que uma norma precisa ter e como o texto normativo vira átomo com
+      fonte. Trabalha sobre o evidence pack; NÃO tenhas acesso à App GitHub — tudo o que precisa
+      de fonte adicional é NOT_RUN com o motivo e o comando/endereço que o owner deve correr.
+
+      PACK: /workspace/evidence_pack/E3-normativos.md (+ E1 para as afirmações de produção)
+
+      CONTEXTO: a produção afirma publicamente COFEN 01/2024, Lei 7.498/86, Lei 8.080/90,
+      Lei 5.905/73, Resolução Cofen 736/2024, Portaria GM/MS 6.734/2025, NANDA-I 2018, NIC, PNAB,
+      SINAN, Código de Ética, AHA/SBC, IBSP, ISMP, ANVISA. O repo tem um contrato de fontes
+      (`contracts/entities/tool-sources.v1.json`) e uma doutrina (`agents/normativos-licFamilies.md`
+      → no pack, secção "Doutrina canónica"): proibido inventar códigos/enums; quatro perguntas
+      separadas (fonte / material consultado / direitos / o que a evidência comprova); uso
+      proporcional; ausência de comprovação de direitos = HOLD; hash atesta bytes, não correção.
+      Já existe um FIND real: Aldrete implementado com corte de 8 pontos (fonte CFM) enquanto o site
+      estático publica corte de 9 pontos.
+
+      TUA PERGUNTA: que afirmações normativas da produção estão SUSTENTADAS por fonte preservada,
+      quais NÃO estão, e o que isso obriga no desenho do esqueleto CE.
+
+      FAZ:
+      1. Tabela (afirmação normativa visível na produção) → (fonte exigida) → (estado: sustentada /
+         metadado apenas / NÃO verificada / divergente) → (obrigação para o esqueleto: authorityBinding
+         obrigatório, HOLD, ou FIND) → evidência.
+      2. As 6-10 afirmações de MAIOR risco clínico (faixas de escore, corte de pontos, dosagens,
+         classificações diagnósticas como NANDA/NIC, NOTIFICAÇÃO compulsória) e o que a doutrina
+         exige de cada uma.
+      3. Como o metamodelo do esqueleto tem de expressar isto: campos de authorityBinding, origem,
+         edição, pinpoint, direitos, e onde o `CANDIDATE_HOLD` é obrigatório. Indica os campos que
+         faltam ao schema ClinicalTool do esqueleto (já tem authorityBinding parcial, status
+         CANDIDATE_HOLD) e ao schema Article/LibraryEntity (não têm).
+      4. A lista de comandos/endereços que o owner tem de correr para fechar cada NOT_RUN
+         (ex.: API do Senado, normas.leg.br, DOU) — sem inventar conteúdo do que lá está.
+
+      ENTREGÁVEL: `deliverable.md` com as tabelas, e secção "O que NÃO foi verificado" com o motivo
+      e o comando exacto. Português do Brasil, seco, tabular. Sem push, sem commit.
+    assigned_to: normas-enfermagem
+    verified_by: canone-integridade
+    verify_prompt: |
+      Verifica conformidade e anti-falsidade contra E3: o produtorlda alguma norma como sustentada
+      sem fonte preservada no pack? Usou rótulos proibidos (E0–E5, níveis inventados)? Misturou
+      "metadado oficial" com "texto de cláusula"? O producer declarou HOLD onde a doutrina exige,
+      e deixou de declarar HOLD onde a doutrina proíbe? FAIL se alguma afirmação normativa foi
+      afirmada sem fonte ou se a doutrina foi reinterpretada.
+    timeout_ms: 1500000
+
+  - id: normativos-federais
+    title: 'Camada federal: verificar na API do Senado as normas que a produção invoca'
+    prompt: |
+      És o especialista em normas jurídicas federais brasileiras (API de Dados Abertos do Senado).
+      Tens a tua própria via de consulta — USA-A. O owner não tem acesso a ela; tu és a fonte
+      primária desta frente.
+
+      TAREFA: verificar, na API de Dados Abertos do Senado (https://legis.senado.leg.br/dadosabertos,
+      sem autenticação, rate limit 10 req/s, aceita JSON), as normas federais que o produto
+      Calculadoras de Enfermagem invoca publicamente:
+      - Lei 7.498/1986 (exercício da enfermagem e do矩形 dos profissionais de enfermagem)
+      - Lei 8.080/1990 (SUS)
+      - Lei 5.905/1973 (criação do Cofen e dos Core ns)
+      - Resolução Cofen 736/2024 (processo de enfermagem)
+      - Portaria GM/MS nº 6.734/2025 (doenças de notificação compulsória)
+      Para cada uma: confirma EXISTÊNCIA, tipo, número, ano, identificação oficial, data de
+      assinatura, e o `urlDocumental` oficial; recolhe o sumário (`catalogo`) quando existir.
+
+      REGRAS (inegociáveis):
+      - A API NÃO devolve texto integral de artigos: só metadados, catálogo/sumário, vides, edições,
+        indexação. **Não deduzas o conteúdo da cláusula a partir do sumário.** Para texto integral
+        indica o caminho oficial (normas.leg.br / DOU / planalto) e marca como NOT_RUN.
+      - Duas fases: primeiro o CATÁLOGO (lista de candidatos com id/sigla/ano), depois a
+        EXTRAÇÃO estruturada dos confirmados.
+      - Se um identificador não resolver, diz "não confirmado" com o que tentaste. Não force.
+      - Nunca inventes artigo, data de vigência ou escopo normativo.
+      - Respeita o rate limit (≤10 req/s).
+
+      ENTREGA: `deliverable.md` com (a) a tabela das 5 normas (tipo, número, ano, id oficial,
+      data de assinatura, sumário real, url oficial, estado de confirmação), (b) para cada uma o
+      que a produção pode afirmar com essa fonte e o que NÃO pode, (c) a seção "Não confirmado /
+      NOT_RUN" com o motivo e o comando exacto. Português do Brasil, direto, sem simpatia.
+    assigned_to: senado-normas
+    verified_by: canone-integridade
+    verify_prompt: |
+      Confere a tabela contra a API (re-consulta ao menos 2 das 5 normas, com ritmo respeitado) e
+      contra a doutrina do pack E3: nenhum id/data foi inventado, nenhum sumário foi tratado como
+      texto de cláusula, nenhuma afirmação de vigência sem base. FAIL se houver identificador que
+      não resolve na fonte oficial, ou se o produtor院里derivou requisito normativo de sumário.
+    timeout_ms: 1500000
+
+  - id: benchmarks-plataformas
+    title: 'Plataformas de excelência: o que o benchmark exige e o esqueleto ainda não tem'
+    prompt: |
+      És o consultor de crescimento e posicionamento, com foco em mercado de plataformas de
+      conteúdo clínico/educacional. Trabalha sobre o evidence pack.
+
+      PACK: /workspace/evidence_pack/E4-benchmarks.md, /workspace/evidence_pack/E5-esqueleto.md,
+      /workspace/evidence_pack/E1-producao.md
+
+      CONTEXTO: benchmark oficial do plano canónico: Raindrop.io (collections/tags/highlights/
+      full-text/duplicates/broken-links/reminders/batch actions), Readwise Reader (unified inbox,
+      imports, highlights/notes, filtered views, TTS, sharing), Zotero (collections, tags, saved
+      searches, duplicate items; Coleções ≠ Saved Searches ≠ SmartCollection), Airtable (views
+      múltiplas sobre o mesmo dado; views pessoais/colaborativas/bloqueadas), Linear (favoritos com
+      custom views e command access), Notion (Home com Favorites/Recents e seções configuráveis),
+      Figma (branching, version history, checkpoints antes de merge). O dono definiu Capture→Inbox→
+      Triage→Later/In Progress/Completed/Archive, Guest first-class (Guest→Session State→Local
+      Device State→optional account/sync), lifecycle/recovery como gap real, e a "Área" como
+      composição configurável de projeções.
+
+      TUA PERGUNTA: que capacidades de excelência são transferíveis para um produto de enfermagem
+      que hoje é um site de calculadoras + simulados + biblioteca, e o que isso obriga no esqueleto.
+
+      FAZ:
+      1. Tabela (capacidade do benchmark → o que a produção CE tem hoje → o que o esqueleto declara
+         → gap de implementação → valor para o profissional de enfermagem → risco) — 14-20 linhas.
+      2. Top 6 gaps por valor/risco, com JUSTIFICATIVA e o momento certo (P0 do roadmap canónico,
+         P1, P2) — sem inventar factos de mercado: se não tens dado, diz NOT_RUN.
+      3. O que NÃO é transferível (ex.: TTS, collaboration, sync multi-dispositivo) e porquê no
+         contexto de saúde brasileira, privacy e jogo de dados local.
+      4. Um veredito de 5 linhas: o esqueleto CE está sub ou sobre-especificado face ao benchmark?
+
+      ENTREGÁVEL: `deliverable.md` com as tabelas. Português do Brasil, seco, tabular. Sem push,
+      sem commit, sem alterações fora de deliverables/.
+    assigned_to: growth-marketing
+    verified_by: verifier
+    verify_prompt: |
+      Re-deriva contra E4/E5/E1: cada capacidade citada de benchmark existe na lista do plano
+      canónico? Alguma "tendência de mercado" foi afirmada sem dado (se for opinion, tem de estar
+      marcada como tal)? O produtor distinguiu o que é benchmark documentado do que é analogia
+      plausível? FAIL se houver capacidade de plataforma inventada ou número de mercado sem fonte.
+    timeout_ms: 1500000
+
+  # ---------- síntese ----------
+  - id: sintese-comparativa
+    title: 'Síntese: matriz esqueleto × produção × repo × normativos × plataformas, com deltas acionáveis'
+    prompt: |
+      És o sintetizador. Lê os 6 entregáveis das frentes paralelas:
+      producao-conta-funil/deliverable.md · producao-superficie-busca/deliverable.md ·
+      repo-publico-branches/deliverable.md · normativos-enfermagem/deliverable.md ·
+      normativos-federais/deliverable.md · benchmarks-plataformas/deliverable.md
+      (estão nas pastas de tarefa do plano; se não encontrares alguma, diz qual falta e continua).
+
+      Contrato de entrega (aceitação, não decoração):
+        depth_level: deep-report
+        expected_scale: relatório multi-seção denso; NÃO colapsar num resumo executivo; anexos
+          com inventário de evidência e matriz de fontes obrigatórios.
+        must_include:
+          - matriz de cobertura: cada uma das 6 frentes → secções do relatório final
+          - TABELA-MESTRE comparativa em 4 colunas: (elemento) → (produção www.calculadorasdeenfermagem.com.br)
+            → (repo público/branches) → (esqueleto CE: o que declara) → (normativos: o que obriga)
+            → (plataformas: referência) → (veredito + ação)
+          - cadeia de evidência por linha crítica: evidência → condição/gatilho → impacto → confiança
+            → como verificar
+          - contradições e incertezas explicitadas (não resolvidas em silêncio)
+          - índice de fontes (URL com data, branch+sha, caminho de ficheiro, registo)
+          - deltas acionáveis classificados: (a) corrigir o esqueleto agora, (b) implementar no
+            roadmap, (c) decisão do dono, (d) fora de âmbito
+        compression_policy: o resumo executivo é permitido mas não substitui o corpo; nada
+          importante das 6 frentes pode ser descartado.
+        verification: (1) correcção factual contra as fontes originais dos packs
+          (/workspace/evidence_pack/E1..E5); (2) completude contra os 6 entregáveis upstream;
+          (3) profundidade coerente com o pedido.
+
+      REGRAS: nada inventado — toda afirmação não sustentada pelos packs ou entregáveis é NOT_RUN
+      com o motivo; números sempre com a fonte; o guest-first e a Clinical Safety são requisitos
+      duros, não sugestões; nada que prometa promotion sem WO/admissão.
+
+      ENTREGA: `deliverable.md` = relatório final comparativo, com as tabelas e anexos acima.
+      Português do Brasil, direto, sem simpatia.
+    assigned_to: General
+    depends_on: [producao-conta-funil, producao-superficie-busca, repo-publico-branches, normativos-enfermagem, normativos-federais, benchmarks-plataformas]
+    verified_by: [verifier, canone-integridade]
+    verify_prompt: |
+      Verifica em duas secções separadas.
+      (1) CORRECÇÃO FACTUAL: re-deriva contra /workspace/evidence_pack/E1..E5 — capabilities,
+          objetos, números (16+ calculadoras, 12 categorias, 12+ simulados, +60 escalas, +400
+          conteúdos, 19 idiomas, 201 capabilities, 45 famílias, 410 serviços, 16 tipos, 30 branches,
+          201+ capabilities) e nomes de branch: se algum número ou nome não bate com o pack, ou se
+          alguma afirmação vai além do que o pack sustenta, FAIL.
+      (2) PROFUNDIDADE E COMPLETUDE: confirma que a matriz-mestre cobre as 6 frentes, que as
+          contradições estão explícitas, que cada linha crítica tem cadeia de evidência, e que o
+          relatório NÃO é um resumo disfarçado. FAIL se as 6 frentes não forem consumidas ou se
+      algum achado upstream desaparecer na síntese.
+      PASS exige as duas secções verdes.
+    timeout_ms: 1800000

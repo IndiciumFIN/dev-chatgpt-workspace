@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-PMO-R77-ARBITRATION-20261031",
+  "date": "2026-10-31",
+  "recordType": "CANDIDATE_DECISION_DOSSIER",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "source": {
+    "path": "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
+    "blobSha": "50b0af510c54729e0cdea3718122dc01558ba220",
+    "sourceBranches": [
+      {
+        "branch": "main",
+        "sourceBlobSha": "c713557a808857eab9952e511d1f2a10bfa6f828",
+        "revision": 18
+      },
+      {
+        "branch": "fix/governed-activities-cli-20261026",
+        "sourceBlobSha": "80c5d327411287132f23caa0ace817d7d356edb8",
+        "revision": 20
+      },
+      {
+        "branch": "work/editorial-canonical-learning-20261026",
+        "sourceBlobSha": "84f9e1ad8ffa8baf785eb8370facbf258ada3160",
+        "revision": 19
+      },
+      {
+        "branch": "idioma/consolidado-19",
+        "sourceBlobSha": "e7d77e9467ee6f6c6a7483de0d8b2b64f673cef5",
+        "revision": 21
+      },
+      {
+        "branch": "preview/central-comando-20261026",
+        "sourceBlobSha": "e60a017b0ffd55d8d0976abea76fa3f0b15fb8cb",
+        "revision": 23
+      }
+    ]
+  },
+  "scope": {
+    "baselineQueue": "registers/pmo/queue.v1.json",
+    "canonicalRevisionElected": false,
+    "baselineWOs": 10,
+    "candidateWOs": 12,
+    "baselineEvents": 20,
+    "distinctEvents": 28,
+    "exclusiveEvents": 8,
+    "originalSeqCollisions": [
+      20,
+      21
+    ],
+    "variantWOs": 7,
+    "statusConflictWOs": [
+      "WO-ADM-001",
+      "WO-CKO-001"
+    ],
+    "additionalCandidateWOs": [
+      "WO-CKO-ID-009",
+      "WO-CKO-LINK-010"
+    ]
+  },
+  "decisionCandidates": [
+    {
+      "workOrder": "WO-ADM-001",
+      "observedVariants": [
+        {
+          "source": "main",
+          "status": "IN_PROGRESS",
+          "scope": "Commander local, authorized 2026-10-26; not external execution",
+          "recordUpdatedOn": "2026-10-26"
+        },
+        {
+          "source": "idioma/consolidado-19",
+          "status": "PAUSED",
+          "scope": "Earlier frozen prototype",
+          "recordUpdatedOn": "2026-10-23"
+        }
+      ],
+      "proposedTreatment": "KEEP_MAIN_STATUS_PENDING_AUTHORITY_REVIEW",
+      "rationale": "Later scoped local authorization does not retroactively unfreeze all admin or external automation work.",
+      "releaseAuthority": false
+    },
+    {
+      "workOrder": "WO-CKO-001",
+      "observedVariants": [
+        {
+          "source": "main",
+          "status": "QUEUED",
+          "scope": "Normative content gated by WO-GOV-TRANS-001 and WO-PMO-001",
+          "recordUpdatedOn": "2026-10-23"
+        },
+        {
+          "source": "work/editorial-canonical-learning-20261026",
+          "status": "IN_PROGRESS",
+          "scope": "Read-only DB-first Apgar/Fugulin pilot; no clinical publication",
+          "recordUpdatedOn": "2026-10-26"
+        }
+      ],
+      "proposedTreatment": "KEEP_MAIN_STATUS_PENDING_AUTHORITY_REVIEW_WITH_PILOT_EVIDENCE",
+      "rationale": "Technical pilot evidence must be preserved but is not admission, normative clearance or clinical release.",
+      "releaseAuthority": false
+    }
+  ],
+  "eventArbitration": {
+    "method": "DEDUP_BY_FULL_PAYLOAD_EXCLUDING_ORIGINAL_SEQ",
+    "collisions": [
+      {
+        "seq": 20,
+        "meaning": "Two distinct events share the original sequence number across branches"
+      },
+      {
+        "seq": 21,
+        "meaning": "Two distinct events share the original sequence number across branches"
+      }
+    ],
+    "proposedReplayIsChronology": false,
+    "authorizedReplay": false,
+    "dropEvents": false,
+    "sourceOccurrencesPreserved": true
+  },
+  "decisionsRequired": [
+    {
+      "id": "R77-PMO-001",
+      "decision": "Elect canonical revision and approve a documented event transition policy",
+      "state": "NOT_ELECTED",
+      "authority": "Owner plus Kernel governance"
+    },
+    {
+      "id": "R77-PMO-002",
+      "decision": "Resolve exact WO-ADM-001 scoped status/title and carry forward prior frozen provenance",
+      "state": "NOT_ELECTED",
+      "authority": "Owner plus Kernel governance"
+    },
+    {
+      "id": "R77-PMO-003",
+      "decision": "Resolve exact WO-CKO-001 status separately from clinical admission",
+      "state": "NOT_ELECTED",
+      "authority": "Owner plus Kernel governance"
+    },
+    {
+      "id": "R77-PMO-004",
+      "decision": "Review seven WO record variants and admit additional WO IDs if authorized",
+      "state": "NOT_ELECTED",
+      "authority": "Owner plus Kernel governance"
+    }
+  ],
+  "ownerOperationalAuthorizationPreviouslyRecorded": true,
+  "requiresAnotherGenericOperationalApproval": false,
+  "requiresSpecificCanonicalDecision": true,
+  "controls": {
+    "mainChanged": false,
+    "officialQueueChanged": false,
+    "eventsDeleted": false,
+    "newWOsAdmitted": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "promotionAllowed": false,
+    "releaseGate": "HOLD_HUMAN",
+    "scope": "REVIEW_ONLY"
+  },
+  "relatedPullRequest": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26"
+}

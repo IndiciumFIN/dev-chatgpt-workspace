@@ -80,7 +80,7 @@ check(
 );
 
 // 5. bindings por tipo de objeto declarados
-const bindingSrc = readFileSync(resolve(ROOT, 'src/core/capability-resolver.ts'), 'utf8');
+const bindingSrc = readFileSync(resolve(ROOT, 'src/core/experience/resolver.ts'), 'utf8');
 const missingObjects = binding.bindings
   .filter((b) => !bindingSrc.includes(`'${b.object_type}'`) && !bindingSrc.includes(`"${b.object_type}"`))
   .map((b) => b.object_type);
@@ -111,6 +111,26 @@ check('toolchain alinhada com o canónico do repo', drift.length === 0, drift.le
 // 8. invariantes do registo preservadas
 const invariantsOk = catalog.invariants.length === registry.invariants.length && catalog.invariants.every((i) => registry.invariants.includes(i));
 check('invariantes do registo candidato copiadas sem alteração', invariantsOk, `${catalog.invariants.length} invariantes`);
+
+
+// 9. cobertura face ao plano canónico: cada módulo/objeto do plano tem de estar declarado
+const moduleStatusSrc = readFileSync(resolve(ROOT, 'src/core/experience/module-status.ts'), 'utf8');
+const declaredModules = [...moduleStatusSrc.matchAll(/id: '([^']+)'/g)].map((m) => m[1]);
+const canonicalModules = ['capabilities','resolver','state','action-bar','preview','settings','help','output','views','events'];
+const undeclared = canonicalModules.filter((m) => !declaredModules.includes(m));
+check('módulos canónicos todos declarados (nada em silêncio)', undeclared.length === 0, undeclared.length ? undeclared.join(', ') : `${canonicalModules.length} módulos declarados`);
+
+const declaredObjects = [...moduleStatusSrc.matchAll(/'([A-Z][A-Za-z]+)'/g)].map((m) => m[1]);
+const canonicalObjects = ['Article','Guide','LibraryEntity','ClinicalTool','Course','Trail','JobOpportunity','Competition','Residency','Question','Simulation','ResearchProject','Norm','CareerRole','Organization','MediaAsset'];
+const missingObjects2 = canonicalObjects.filter((o) => !declaredObjects.includes(o));
+check('tipos de objeto canónicos todos cobertos pelo registo de cobertura', missingObjects2.length === 0, missingObjects2.length ? missingObjects2.join(', ') : `${canonicalObjects.length} tipos`);
+
+// 10. o metamodelo canónico tem de estar presente (ExperienceCapability / ObjectCapabilityBinding / ExperienceState)
+const mm = readFileSync(resolve(ROOT, 'src/core/experience/metamodel.ts'), 'utf8');
+const stateSrc = readFileSync(resolve(ROOT, 'src/core/experience/state.ts'), 'utf8');
+const mmOk = ['ExperienceCapability','ObjectCapabilityBinding','missingCapabilityFields','missingBindingFields'].every((k) => mm.includes(k));
+const stateOk = ['state_id','owner_scope','object_ref','object_type','capability_id','state_payload','created_at','updated_at','sync_state','privacy_class','retention_policy_ref'].every((k) => stateSrc.includes(k));
+check('metamodelo canónico (capability, binding, state polimórfico) presente', mmOk && stateOk, mmOk && stateOk ? '21 campos + 9 campos + 11 campos verificados' : 'metamodelo incompleto');
 
 const failed = results.filter((r) => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} checks verdes${failed.length ? ` · ${failed.length} FALHAM` : ''}`);

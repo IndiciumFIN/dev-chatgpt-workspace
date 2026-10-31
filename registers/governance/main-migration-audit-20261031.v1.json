@@ -178,7 +178,9 @@
       "releaseApprovals": 0,
       "canonicalMergesPerformed": 0,
       "notHomologated": true
-    }
+    },
+    "historicalCountsNotCurrent": true,
+    "runtimeGateAuthority": "scripts/audit-main-migration.mjs + complete current branch-population CI evidence, never static 115/258 snapshot"
   },
   "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required.",
   "semanticCollisionAudit": {
@@ -256,6 +258,31 @@
     "seqConflicts": 2,
     "contestedStatuses": 2,
     "revisionChosen": false,
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "snapshotSemantics": {
+    "classification": "HISTORICAL_SUPERSEDED_FOR_CURRENT_PATH_COUNTS",
+    "originalStatisticsValidFor": "2026-10-31 earlier source snapshot; do not treat audit.diffPaths, releasePolicy.branchConflictsTotal, semanticCollisionAudit, or collisionTriage counts as current",
+    "historicalDataPreserved": true,
+    "currentMeasurementsMustBeRecomputed": true,
+    "lastReviewedSnapshot": {
+      "sourceHeadSha": "0b0daf95cc7a12084dc83e639bd2befb3204c724",
+      "mainSha": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+      "runUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41250529047",
+      "sourceBranches": 23,
+      "sourcePaths": 11424,
+      "pendingPaths": 11422,
+      "distinctPendingPaths": 10796,
+      "collisions": 118,
+      "duplicates": 260,
+      "semanticEquivalentCandidates": 57,
+      "remainingReview": 61,
+      "releaseAuthorized": false
+    },
+    "sourceOfCurrentTruth": "Re-run scripts/audit-main-migration.mjs at current SHA after complete live branch ref enumeration; use corresponding GitHub Actions artifact and check explicit fail-closed status. These figures are a dated last-reviewed snapshot only, not a release metric.",
+    "reviewFinding": "FIND-IR-05",
+    "independentReviewUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26#issuecomment-6550484028",
+    "newHeadRequiresRevalidation": true,
     "releaseGate": "HOLD_HUMAN"
   }
 }

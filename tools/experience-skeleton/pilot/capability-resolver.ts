@@ -2243,7 +2243,8 @@ export function resolveCapabilities(
       const channelOk = cap.channels.includes(context.channel);
       const identityOk = context.authenticated ? cap.authenticated !== 'BLOCKED' : cap.guest !== 'BLOCKED';
       const policyOk = context.authenticated || context.policyAllowsGuest;
-      const available = channelOk && identityOk && policyOk && cap.support !== 'BLOCKED';
+      // CANDIDATE_HOLD nunca disponibiliza recursos, independentemente do contexto.
+      const available = false;
       const reason = !channelOk
         ? `canal ${context.channel} fora do contrato da capability`
         : !identityOk
@@ -2252,7 +2253,9 @@ export function resolveCapabilities(
             ? 'policy não permite guest para esta capability'
             : cap.support === 'BLOCKED'
               ? 'capability bloqueada na fonte'
-              : 'disponível enquanto a fonte for CANDIDATE (sem promoção)';
+              : cap.support === 'PROPOSED'
+                ? 'capability PROPOSED: implementação e admissão ainda não verificadas'
+                : 'fonte CANDIDATE_HOLD: autorização e implementação não verificadas';
       return { ...cap, available, reason };
     }),
   );

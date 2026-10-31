@@ -127,20 +127,20 @@
       "date": "2026-10-24",
       "reason": "21 atos indexados mecanicamente com 1.577 cabeçalhos Art. e spans byte-exatos; 16 sinalizados para revisão; FIND candidato registrado; nenhuma interpretação normativa ou admissão."
     },
-      {
-        "seq": 19,
-        "workId": "WO-E2E-001",
-        "to": "IN_PROGRESS",
-        "date": "2026-10-24",
-        "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
-      },
-      {
-        "seq": 20,
-        "workId": "WO-ADM-001",
-        "to": "IN_PROGRESS",
-        "date": "2026-10-26",
-        "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
-      }
+    {
+      "seq": 19,
+      "workId": "WO-E2E-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-24",
+      "reason": "Proprietário autorizou continuidade da auditoria e correções visuais em 2026-10-24. Triagem E2E iniciada; sem validação do deployment via conexão Vercel nem captura de browser atual. WO-DS-001 permanece QUEUED e subordinada aos gates."
+    },
+    {
+      "seq": 20,
+      "workId": "WO-ADM-001",
+      "to": "IN_PROGRESS",
+      "date": "2026-10-26",
+      "reason": "Proprietário autorizou retomar e subir a evolução administrativa em 2026-10-26; escopo desta iteração limitado ao Commander local, sem execução externa, LLM, autenticação ou banco."
+    }
   ],
   "items": [
     {
@@ -181,10 +181,11 @@
       ],
       "evidence": [
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031113963",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031635438"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40031635438",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25#issuecomment-6544689413"
       ],
       "id": "WO-SEC-001",
-      "next": "Zod 4.6.7 implantado e audit limpo. Investigar limites de entrada (arrays/maps/sets), RBAC e LGPD; FIND aberto.",
+      "next": "Tratar SPE-RPC-ANSWER-EXPOSURE: migrar consumidores, testar anon/authenticated e ownership em banco isolado; não aplicar 0003_rpc_grade_gate_HOLD.sql isoladamente.",
       "order": 2,
       "owner": "ChatGPT + revisão independente",
       "priority": "P0",
@@ -288,10 +289,13 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40071147473",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/scripts/verify-transversal-public-materialization.py",
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/tree/main/audit-evidence/transversal-acquisition/article-index/20261024",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/scripts/verify-transversal-public-article-index.py"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/main/scripts/verify-transversal-public-article-index.py",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25#issuecomment-6544680827",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25#issuecomment-6544696980",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25#issuecomment-6544702846"
       ],
       "id": "WO-GOV-TRANS-001",
-      "next": "Índice mecânico de 1.577 cabeçalhos de artigos em 21 atos públicos e hash conferido; 16 documentos sinalizados para revisão de anexos/duplicidades. Próximas fases: revisão humana de segmentação e vigência, delimitação de aplicabilidade e direitos, requisitos por cláusula confirmada, validação e eventual admissão Kernel. ISO permanece metadata-only.",
+      "next": "Reconciliar os contratos candidatos FIND-RES-PART-001/TASK-RES-PART-001/WO-RES-PART-001 e WO-SPE-DB-FIRST-20261026-001; exigir admissão corporativa persistida antes de execução externa. Evidências R56-R59 na issue #25.",
       "order": 8,
       "owner": "ChatGPT + auditor de normas técnicas",
       "priority": "P0",

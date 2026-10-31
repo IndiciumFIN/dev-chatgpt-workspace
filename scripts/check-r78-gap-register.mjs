@@ -6,7 +6,16 @@ import {fileURLToPath} from 'node:url';
 export function validate(r,plan) {
  const fail=(code)=>{throw Error(code);};
  if(r?.schemaVersion!=='1.0.0'||r?.recordType!=='READ_ONLY_DIAGNOSTIC_AND_CANDIDATE_CORRECTIONS')fail('R78_SCHEMA_INVALID');
- if(!Array.isArray(plan?.tasks)||plan.tasks.length!==r?.baseline?.taskPlanCount)fail('TASK_PLAN_DRIFT');
+ if(!Array.isArray(plan?.tasks))fail('TASK_PLAN_DRIFT');
+ const expansion=plan.r79CandidateMapping;
+ const extra=expansion?.candidateTasksAdded??0;
+ const expected=r?.baseline?.taskPlanCount+extra;
+ if(!Number.isSafeInteger(extra)||extra<0||plan.tasks.length!==expected)fail('TASK_PLAN_DRIFT');
+ if(extra){
+  if(expansion.state!=='CANDIDATE_ONLY'||expansion.currentTasks!==expected||expansion.baselineTasks!==r.baseline.taskPlanCount||expansion.sourceRegistryBlobSha!==r.baseline.sourceIntake.blobSha||expansion.queueBlobSha?.length!==40||expansion.canonicalQueueMutated!==false||expansion.kernelAdmission!=='NOT_VERIFIED'||expansion.releaseGate!=='HOLD_HUMAN')fail('R79_CANDIDATE_UNVERIFIED');
+  const proposed=plan.tasks.filter(t=>/^TASK-PLAN-0(?:5[9]|[6-8][0-9])$/.test(t.id));
+  if(proposed.length!==extra||new Set(proposed.map(t=>t.id)).size!==extra||proposed.some(t=>t.status!=='PROPOSTO'||t.authorization?.mappingType!=='DOMAIN_WO_CANDIDATE'||t.authorization?.approval!=='NOT_APPROVED'||t.authorization?.kernelAdmission!=='NOT_VERIFIED'||t.authorization?.releaseGate!=='HOLD_HUMAN'))fail('R79_FALSE_CANDIDATE_AUTHORITY');
+ }
  const taskIds=new Set(plan.tasks.map(t=>t.id));
  const validWos=new Set(['WO-PMO-001','WO-SEC-001','WO-GOV-TRANS-001','WO-CKO-001','WO-HOM-001']);
  if(!Array.isArray(r?.gaps)||r.gaps.length!==4)fail('GAP_COUNT_INCOMPLETE');

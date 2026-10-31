@@ -20,3 +20,14 @@ test('CLI unknown options and IDs rejected',async()=>{assert.throws(()=>parseCli
 test('DeepSeek by default transfers nothing',async()=>{let p=await run(['assist','--wo=WO-ADM-001'],io(fixture()));assert.equal(p.apiCall,false);assert.deepEqual(Object.keys(p.request),['work_order_id','priority','disposition','pending_dependency_count','task']);assert.equal(JSON.stringify(p.request).includes('Owner approved'),false)});
 test('DeepSeek send without explicit opt-in or API key fails',async()=>{await assert.rejects(run(['assist','--wo=WO-ADM-001','--send'],io(fixture())),/confirm/);await assert.rejects(run(['assist','--wo=WO-ADM-001','--send','--confirm-public-metadata'],io(fixture())),/DEEPSEEK_API_KEY/)});
 test('DeepSeek response is untrusted candidate only',async()=>{const f=io(fixture());f.env.DEEPSEEK_API_KEY='test-key';f.transport=async(url,options)=>{assert.equal(url,'https://api.deepseek.com/chat/completions');const sent=JSON.parse(options.body);assert(!JSON.stringify(sent).includes('Owner approved'));return {ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify({microtasks:[{description:'Check evidence',verification:'Read source index'}]})}}]})}};const x=await run(['assist','--wo=WO-ADM-001','--send','--confirm-public-metadata'],f);assert.equal(x.status,'UNTRUSTED_CANDIDATE_ONLY');assert.equal(x.approved,false);assert.equal(x.remoteWrites,0)});
+test('DONE with unfinished dependency fails closed in activity planner',async()=>{
+ const q=fixture();q.items[2].status='DONE';q.items[2].evidence=['https://github.com/example/evidence'];
+ q.events[2].to='DONE';
+ assert.match(validatePmo(q).join(' '),/DONE with unfinished dependency/);
+ await assert.rejects(run(['plan','--wo=WO-DS-001'],io(q)),/DONE with unfinished dependency/);
+});
+test('release HOLD cannot be removed by an untrusted PMO event',async()=>{
+ const q=fixture();q.items[3].status='QUEUED';q.events[3].to='QUEUED';
+ assert.match(validatePmo(q).join(' '),/Release HOLD bypassed/);
+ await assert.rejects(run(['report'],io(q)),/Release HOLD bypassed/);
+});

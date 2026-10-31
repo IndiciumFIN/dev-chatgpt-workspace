@@ -7,6 +7,9 @@ on:
       - 'scripts/audit-main-migration.mjs'
       - 'scripts/lib/main-migration-core.mjs'
       - 'scripts/main-migration-core.test.mjs'
+      - 'scripts/lib/corpus-index.mjs'
+      - 'scripts/corpus-index.test.mjs'
+      - 'scripts/index-source-corpus.mjs'
       - '.github/workflows/ce-main-migration-audit.yml'
   pull_request:
     paths:
@@ -14,6 +17,9 @@ on:
       - 'scripts/audit-main-migration.mjs'
       - 'scripts/lib/main-migration-core.mjs'
       - 'scripts/main-migration-core.test.mjs'
+      - 'scripts/lib/corpus-index.mjs'
+      - 'scripts/corpus-index.test.mjs'
+      - 'scripts/index-source-corpus.mjs'
       - '.github/workflows/ce-main-migration-audit.yml'
 permissions:
   contents: read
@@ -49,6 +55,43 @@ jobs:
           console.log('PASS: all 23 branch source refs audited, migration still HOLD_HUMAN');
           console.log('SUMMARY:',JSON.stringify(r.summary));
           NODE
+      - name: Test source-corpus provenance and licensing fail-closed rules
+        run: node --test scripts/corpus-index.test.mjs
+      - name: Extract 8250 source pages from unrelated branch into temporary workspace (read only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/ce-source-intake
+          git archive --format=tar 'refs/remotes/origin/feat/projection-unica-f0-suite-real' artifacts/fonte/corpus/paginas | tar -xf - -C .tmp/ce-source-intake
+      - name: Index the entire source corpus with 250-page progress checkpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_sha="$(git rev-parse refs/remotes/origin/feat/projection-unica-f0-suite-real)"
+          node scripts/index-source-corpus.mjs \
+            --source-root .tmp/ce-source-intake/artifacts/fonte/corpus/paginas \
+            --expected 8250 \
+            --source-commit "$source_sha" \
+            --output audit-evidence/corpus-intake/source-index.v1.jsonl \
+            --summary audit-evidence/corpus-intake/source-summary.v1.json
+      - name: Assert full index coverage without authorizing publication
+        run: |
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const r=JSON.parse(readFileSync('audit-evidence/corpus-intake/source-summary.v1.json','utf8'));
+          if(r.validation.observedCount!==8250 || !r.validation.complete)throw Error('INCOMPLETE_CORPUS');
+          if(r.publicationAllowed!==false || r.releaseGate!=='HOLD_HUMAN')throw Error('INVALID_RELEASE_CLAIM');
+          console.log('PASS: all 8250 source JSON pages indexed as candidates; rights and clinical review remain blocked');
+          console.log('CORPUS:',JSON.stringify(r.validation));
+          NODE
+      - name: Upload indexed corpus metadata and audit summary (GitHub Actions artifact)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-source-corpus-candidate-index
+          path: |
+            audit-evidence/corpus-intake/source-index.v1.jsonl
+            audit-evidence/corpus-intake/source-summary.v1.json
+          retention-days: 30
       - name: Upload versioned-method candidate report (GitHub Actions artifact)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

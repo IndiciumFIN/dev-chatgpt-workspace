@@ -69,7 +69,7 @@ test('R77: arbitration record is bound to an unchanged Git blob and preserves al
  const src = readFileSync(new URL('../registers/governance/pmo-fork-reconciliation-20261031.v1.json', import.meta.url));
  const record = JSON.parse(readFileSync(new URL('../registers/governance/pmo-r77-arbitration-20261031.v1.json', import.meta.url),'utf8'));
  const pmo = JSON.parse(src.toString('utf8'));
- const blobSha = createHash('sha1').update('blob '+src.length+'\\0').update(src).digest('hex');
+ const blobSha = createHash('sha1').update('blob '+src.length+String.fromCharCode(0)).update(src).digest('hex');
  assert.equal(record.source.blobSha, blobSha, 'versioned decision must bind to actual immutable source blob');
  assert.deepEqual(record.scope.originalSeqCollisions, [20,21]);
  assert.equal(record.scope.distinctEvents,pmo.counts.distinctEventPayloads);

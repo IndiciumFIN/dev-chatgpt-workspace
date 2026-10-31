@@ -1,0 +1,55 @@
+name: Gate de cobertura de pendências (PMO × Kernel)
+
+# Gate que transforma a diretriz da issue #25 em invariante verificável:
+# toda WO ativa precisa de task, toda task precisa de WO, toda pendência
+# precisa estar vinculada e nenhum gap de cobertura pode ficar aberto.
+#
+# Regra de ausencia (D-02 do plano): insumo ausente NAO e aprovacao — o gate
+# imprime SKIP com a task que falta e sai 0. A ativacao efectiva depende de
+# o inventario aterrissar no main (T0.005) — por isso o filtro de paths.
+
+on:
+  pull_request:
+    paths:
+      - "registers/pmo/**"
+      - "docs/PLAN-TASKS-*.json"
+      - "scripts/check-pending-coverage.mjs"
+      - "scripts/check-pending-coverage.test.mjs"
+      - ".github/workflows/pending-coverage-gate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "registers/pmo/**"
+      - "docs/PLAN-TASKS-*.json"
+      - "scripts/check-pending-coverage.mjs"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pending-coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cobertura:
+    name: Cobertura WO x task x pendência
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 (pin por SHA)
+
+      - name: Node
+        uses: actions/setup-node@49923ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0 (pin por SHA)
+        with:
+          node-version: "22"
+
+      - name: Testes do gate
+        run: node --test scripts/check-pending-coverage.test.mjs
+
+      - name: Cobertura de pendências
+        run: node scripts/check-pending-coverage.mjs
+
+      - name: Testes do motor de auditoria
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -q

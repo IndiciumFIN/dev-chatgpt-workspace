@@ -504,26 +504,50 @@
       "commit_blocks": 1,
       "tables": 9
     },
-    "final_candidate_head": "f01e040556ee4045696c705ed0d519be08dc93ae",
+    "final_candidate_head": "46eb4bf8afc764b832010b4a7f8147199c81184e",
     "ci": [
       {
         "workflow": "SPE candidate PostgreSQL isolation (disposable only)",
         "run_id": 41234998730,
         "head_sha": "f01e040556ee4045696c705ed0d519be08dc93ae",
         "conclusion": "success",
-        "scope": "candidate migrations 0001/0002; 13 RLS tables; anon/authenticated denied; constraint and rollback"
+        "scope": "candidate migrations 0001/0002; 13 RLS tables; anon/authenticated denied; constraint and rollback",
+        "evidence_at_prior_head": true
       },
       {
         "workflow": "Simulados RPC static regressions",
         "run_id": 41234998753,
         "head_sha": "f01e040556ee4045696c705ed0d519be08dc93ae",
         "conclusion": "success",
-        "scope": "static only"
+        "scope": "static only",
+        "evidence_at_prior_head": true
       },
       {
         "workflow": "SPE Candidate Static Gates",
         "run_id": 41234998722,
         "head_sha": "f01e040556ee4045696c705ed0d519be08dc93ae",
+        "conclusion": "success",
+        "scope": "candidate only",
+        "evidence_at_prior_head": true
+      },
+      {
+        "workflow": "SPE candidate PostgreSQL isolation (disposable only)",
+        "run_id": 41235103697,
+        "head_sha": "46eb4bf8afc764b832010b4a7f8147199c81184e",
+        "conclusion": "success",
+        "scope": "RLS denial even after temporary SELECT grants, reverted by rollback"
+      },
+      {
+        "workflow": "Simulados RPC static regressions",
+        "run_id": 41235107183,
+        "head_sha": "46eb4bf8afc764b832010b4a7f8147199c81184e",
+        "conclusion": "success",
+        "scope": "static only"
+      },
+      {
+        "workflow": "SPE Candidate Static Gates",
+        "run_id": 41235107193,
+        "head_sha": "46eb4bf8afc764b832010b4a7f8147199c81184e",
         "conclusion": "success",
         "scope": "candidate only"
       }
@@ -539,7 +563,15 @@
     ],
     "kernel_admission": "NOT_SUBMITTED",
     "human_approvals": [],
-    "decision": "HOLD_HUMAN_NO_MERGE"
+    "decision": "HOLD_HUMAN_NO_MERGE",
+    "followup_candidate_test": {
+      "commit": "46eb4bf8afc764b832010b4a7f8147199c81184e",
+      "scope": "RLS defense-in-depth: temporarily grant schema USAGE and SELECT in rollback; anon/authenticated must still see zero source rows",
+      "workflow": "SPE candidate PostgreSQL isolation (disposable only)",
+      "run_id": 41235103697,
+      "result": "success",
+      "note": "Candidate-only ephemeral PostgreSQL, not historical migration/pgTAP validation"
+    }
   },
   "next_microtask": "Obtain approved historical SQL source in isolated CI and run 47 original migrations, 17 pgTAP tests and negative grading RPC tests; do not apply candidate 0003 revoke without caller migration and Kernel admission.",
   "no_merges": true,

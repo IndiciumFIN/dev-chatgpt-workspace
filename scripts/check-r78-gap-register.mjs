@@ -10,7 +10,21 @@ export function validate(r,plan) {
  const expansion=plan.r79CandidateMapping;
  const extra=expansion?.candidateTasksAdded??0;
  const expected=r?.baseline?.taskPlanCount+extra;
- if(!Number.isSafeInteger(extra)||extra<0||plan.tasks.length!==expected)fail('TASK_PLAN_DRIFT');
+ const add=plan.r86SupplementalTaskIntake;
+ const additional=add?.additionalAuditTaskCount??0;
+ if(!Number.isSafeInteger(extra)||extra<0||!Number.isSafeInteger(additional)||additional<0||plan.tasks.length!==expected+additional)fail('TASK_PLAN_DRIFT');
+ if(new Set(plan.tasks.map(t=>t.id)).size!==plan.tasks.length)fail('TASK_ID_DUPLICATE');
+ if(additional){
+  const ids=['TASK-PLAN-090','TASK-PLAN-091','TASK-PLAN-092','TASK-PLAN-093'];
+  if(additional!==4||add.state!=='CANDIDATE_ONLY_NOT_KERNEL_ADMITTED'||add.originalBaselineTasks!==r.baseline.taskPlanCount||add.r79SourceCandidateTasks!==extra||add.resultingTaskCount!==expected+additional||add.sourceCommit!=='d5ca82bf99499878a4b4c034078f9edd7089d9bf'||!Array.isArray(add.sourcePlanIntakeCommits)||add.sourcePlanIntakeCommits.length!==2||add.kernelAdmission!=='NOT_VERIFIED'||add.approval!=='NOT_APPROVED'||add.releaseGate!=='HOLD_HUMAN'||add.authorizedWoStatusChanges!==false||add.additionalWosAdmitted!==0)fail('R86_SPECIALIST_INTAKE_UNVERIFIED');
+  if(!Array.isArray(add.tasks)||add.tasks.length!==4||add.tasks.map(t=>t.id).join(',')!==ids.join(','))fail('R86_SPECIALIST_IDS_DRIFT');
+  for(let i=0;i<4;i++){
+   const d=add.tasks[i],item=plan.tasks.find(t=>t.id===ids[i]);
+   if(!item||item.status!=='PROPOSTO'||item.wo!==d.wo||item.title!==d.title||d.status!=='PROPOSTO'||!['WO-SEC-001','WO-PMO-001'].includes(d.wo)||JSON.stringify(item.artifacts)!==JSON.stringify(d.artifacts)||!Array.isArray(d.artifacts)||d.artifacts.length<1||item.authorization?.approval==='APPROVED'||item.authorization?.kernelAdmission==='ADMITTED')fail('R86_SPECIALIST_TASK_DRIFT:'+ids[i]);
+  }
+  const afterR79=plan.tasks.slice(expected);
+  if(afterR79.map(t=>t.id).join(',')!==ids.join(','))fail('R86_EXTRA_TASK_ORDER_DRIFT');
+ }
  if(extra){
   if(expansion.state!=='CANDIDATE_ONLY'||expansion.currentTasks!==expected||expansion.baselineTasks!==r.baseline.taskPlanCount||expansion.sourceRegistryBlobSha!==r.baseline.sourceIntake.blobSha||expansion.queueBlobSha?.length!==40||expansion.canonicalQueueMutated!==false||expansion.kernelAdmission!=='NOT_VERIFIED'||expansion.releaseGate!=='HOLD_HUMAN')fail('R79_CANDIDATE_UNVERIFIED');
   const proposed=plan.tasks.filter(t=>/^TASK-PLAN-0(?:5[9]|[6-8][0-9])$/.test(t.id));

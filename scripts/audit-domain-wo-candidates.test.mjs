@@ -61,3 +61,34 @@ test('R82: source and queue blob pins remain immutable on later revisions',()=>{
  const b=fixture();b.queueSha='e'.repeat(40);
  assert.throws(()=>verify(b),/SOURCE_BLOB_DRIFT/);
 });
+
+function withSpecialistTasks(){
+ const x=fixture();
+ const ids=['TASK-PLAN-090','TASK-PLAN-091','TASK-PLAN-092','TASK-PLAN-093'];
+ const wos=['WO-SEC-001','WO-SEC-001','WO-SEC-001','WO-SEC-001'];
+ const tasks=ids.map((id,i)=>({id,title:'Specialist task '+id,wo:wos[i],status:'PROPOSTO',artifacts:['scripts/specialist-'+i+'.mjs']}));
+ x.plan.tasks.push(...tasks);
+ x.plan.r86SupplementalTaskIntake={
+  state:'CANDIDATE_ONLY_NOT_KERNEL_ADMITTED',additionalAuditTaskCount:4,
+  originalBaselineTasks:1,r79SourceCandidateTasks:1,resultingTaskCount:6,
+  sourceCommit:'d5ca82bf99499878a4b4c034078f9edd7089d9bf',
+  approval:'NOT_APPROVED',kernelAdmission:'NOT_VERIFIED',releaseGate:'HOLD_HUMAN',
+  authorizedWoStatusChanges:false,additionalWosAdmitted:0,
+  tasks:tasks.map(({id,title,wo,status,artifacts})=>({id,title,wo,status,artifacts}))
+ };
+ return x;
+}
+test('R86: four documented specialist proposals do not alter historic R79 mapping',()=>{
+ const x=verify(withSpecialistTasks());
+ assert.equal(x.domainCandidates,1);
+ assert.equal(x.unresolvedSourceWos,1);
+ assert.equal(x.formalAdmittedWos,0);
+});
+test('R86: fifth task, forged admission or changed source must fail closed',()=>{
+ const a=withSpecialistTasks();a.plan.tasks.push({...a.plan.tasks.at(-1),id:'TASK-PLAN-094'});
+ assert.throws(()=>verify(a),/PLAN_COUNT_DRIFT/);
+ const b=withSpecialistTasks();b.plan.tasks.at(-1).status='DONE';
+ assert.throws(()=>verify(b),/ADDITIONAL_TASK_SCOPE_DRIFT/);
+ const c=withSpecialistTasks();c.plan.r86SupplementalTaskIntake.sourceCommit='0'.repeat(40);
+ assert.throws(()=>verify(c),/UNVERIFIED_ADDITIONAL_AUDIT_TASKS/);
+});

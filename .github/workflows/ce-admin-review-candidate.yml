@@ -40,6 +40,8 @@ jobs:
         run: node scripts/test-admin-console.mjs
       - name: Validate Entrar topbar and auth-off behavior
         run: node --test scripts/header-entry.test.mjs
+      - name: Verify authentication invariant
+        run: node --test scripts/test-auth-secret-env.mjs
       - name: Validate TypeScript
         run: npx tsc --noEmit
       - name: Verify decision-draft negative tests

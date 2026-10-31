@@ -29,6 +29,21 @@ for(const [i,item] of q.items.entries()){
   assert(item.evidence.every(url=>/^https:\/\/github\.com\/IndiciumFIN\/dev-chatgpt-workspace\//.test(url)),'Evidência de origem não autorizada');
   if(item.status==='DONE')assert(item.evidence.length>0,'DONE sem evidência: '+item.id);
 }
+const visiting = new Set();
+const visited = new Set();
+const byId = new Map(q.items.map(item => [item.id, item]));
+function visit(id) {
+  assert(!visiting.has(id), 'Ciclo de dependências: '+id);
+  if (visited.has(id)) return;
+  visiting.add(id);
+  for (const dep of byId.get(id).dependencies) visit(dep);
+  visiting.delete(id);
+  visited.add(id);
+}
+for (const item of q.items) {
+  assert.equal(new Set(item.evidence).size, item.evidence.length, 'Evidência duplicada: '+item.id);
+  visit(item.id);
+}
 // Allow exactly the owner's documented LOCAL Commander preparation; no remote execution.
 const adm=q.items.find(item=>item.id==='WO-ADM-001');
 assert(adm&&['PAUSED','IN_PROGRESS'].includes(adm.status),'Unauthorized prototype state');

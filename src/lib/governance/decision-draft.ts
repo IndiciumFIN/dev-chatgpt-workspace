@@ -1,3 +1,4 @@
+import { isCanonicalRepoEvidenceUrl } from './review-source-catalog.ts';
 /** A local review proposal is not a PMO transition or a signed Kernel admission. */
 export type DecisionChoice = 'REVIEW' | 'REQUEST_CHANGES' | 'APPROVE_WITH_RESERVATIONS' | 'APPROVE';
 export type DecisionInput = {
@@ -17,7 +18,6 @@ export const DECISION_LABELS: Record<DecisionChoice, string> = {
   APPROVE_WITH_RESERVATIONS: 'Aprovar com ressalvas',
   APPROVE: 'Aprovar',
 };
-const GITHUB_REPO = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/';
 const ALLOWED = new Set<DecisionChoice>(['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE']);
 
 export function buildDecisionDraft(input: DecisionInput): DecisionResult {
@@ -33,7 +33,7 @@ export function buildDecisionDraft(input: DecisionInput): DecisionResult {
     errors.push('Informe as ressalvas com pelo menos 12 caracteres.');
   }
   if (caveats.length > 1200) errors.push('Ressalvas excedem 1200 caracteres.');
-  if (evidenceUrl && (!evidenceUrl.startsWith(GITHUB_REPO) || /\s/.test(evidenceUrl))) {
+  if (evidenceUrl && !isCanonicalRepoEvidenceUrl(evidenceUrl)) {
     errors.push('Evidência deve ser um link do repositório GitHub do projeto.');
   }
   if ((input.choice === 'APPROVE' || input.choice === 'APPROVE_WITH_RESERVATIONS') && !evidenceUrl) {

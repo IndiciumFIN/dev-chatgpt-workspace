@@ -244,3 +244,48 @@ O workflow **não liberador** `.github/workflows/pmo-candidate-unit-regressions.
 Verificação em arquivos reais do repositório (fila PMO rev20 em `fix/governed-activities-cli-20261026`, inventário transversal e este plano): `check-register-schema` **PASS** (10 WOs, 13 Simulados, 18 issues, 4 gaps); `check-pending-coverage` **exit 1 esperado** (10 WOs, 35 tasks, 31 pendências, **0 PENDENCIA_ORFA**, **0 WO_SEM_TASK**, **4 GAP_ABERTO**). A validação não encerra os quatro gaps; prova que o bloqueio é real e explícito.
 
 Outros limites: CI geral do PR ainda não homologado; o workflow de release `pending-coverage-gate.yml` segue propositalmente fora de `.github/workflows`; `main`, segurança em produção e admissão Kernel permanecem sem alterações por este PR.
+
+
+---
+
+## 8. Estado do jogo — 31/10 18:56Z (remedição)
+
+**O plano foi adotado como espinha do trabalho.** Entre 18:06 e 18:56Z, ~30 commits foram推送 para a branch deste plano (`plan/pmokernel-finalization-20261031`, tip `85d513a3`), entre eles `docs(pmo): persist GH28 coverage proof, 36 tasks and 32 live pendencies`. O registro de tasks passou de **35 → 36** tasks e as pendências vivas de **31 → 32** (entrou `GH-28`).
+
+### Deltas medidos
+
+| item | 14:20Z | **18:56Z** |
+|---|---|---|
+| branches | 23 | **24** (+ esta branch do plano) |
+| PRs | 7 | **9** (+#26 plano, **+#27 topbar/Entrar**) |
+| issues abertas | 18 | **19** (+**#28** P0/HOLD rotação de credencial OAuth) |
+| inventário transversal | 18 issues | **19 issues** (`GH-28` rastreado; commit `3a0b2fca`) |
+| fila PMO (branch de governança) | rev 20 | **rev 20** (inalterada) |
+| `main` | `6c62bb61` | **`6c62bb61` (inalterada)** |
+| PRs merged | 0 | **0** |
+
+### Avanço real (verde novo)
+
+- **PR #24 (Simulados) está 100% verde**: `verify` ✅, `candidate-unit-gates` ✅, `rpc-static-regression` ✅, `remediate` ✅ (16:23–16:26Z). Antes (14:20Z) tinha **2 falhas** (`SPE Candidate Static Gates` + `verify`). Causa: a branch passou a carregar o **gate relaxado** (`adm=find(...)` + `['PAUSED','IN_PROGRESS']`) — o conserto do P1, que existia só no PR #13, **espalhou-se**.
+- **PR #27 (novo)**: `header-candidate` ✅; `verify` ❌ (mesmo P1).
+- **PR #13**: `verify` ✅ + `verify-review-candidate` ✅ (18:56Z).
+
+### Um achado que muda o diagnóstico do P1
+
+O `pull_request` do GitHub faz checkout do **commit de merge** (base `main` + head da branch). Logo, o gate lê a fila **do `main`** (rev 18, `ADM-001=IN_PROGRESS`) com o **script da branch**:
+- branch com script **duro** (`assert ... === 'PAUSED'`) → **falha**, mesmo que a fila da branch seja `PAUSED` (é o caso do PR #27, fila rev16);
+- branch com o script **relaxado** → **passa** (é o caso do PR #24).
+
+Ou seja: **o conserto precisa ir para o `main`**, e uma branch que o carregue já fica verde. Isso confirma que `TASK-PLAN-003` não é opcional — é o que fecha 5 PRs de uma vez.
+
+### Pendência nova (descoberta nesta remedição)
+
+`canonical-inventory` no PR #26 falha com **`Error: CHANGED_COLLISION_BASELINE`**: o auditor `scripts/audit-i18n-collisions.mjs` produziu `sourceCollisions: 118` e o gate exige `!== 115` → reprova. É **a mesma doença do gate do PMO**: baseline hardcoded que deixou de refletir o fato. O baseline está no gate (não no dado), então ele precisa ser reconciliado com a classificação vigente (115 → 118) — sem inventar classificação. Registrada como `TASK-PLAN-058`.
+
+### Validação do gate contra o estado real (18:56Z)
+
+```
+check-pending-coverage → 10 WOs · 36 tasks · 32 pendências
+                         → 0 PENDENCIA_ORFA · 0 WO_SEM_TASK · 4 GAP_ABERTO
+check-register-schema  → OK (10 WOs · 13 pendências · 19 issues · 4 gaps)
+```

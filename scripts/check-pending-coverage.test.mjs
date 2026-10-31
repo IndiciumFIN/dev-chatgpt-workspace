@@ -59,7 +59,7 @@ const PLAN = {
 const INTAKE = {
   schemaVersion: 1,
   simulados: [{ id: "P0-04", title: "Public grading RPCs reveal answers", status: "SECURITY_FIND", wo: "UNRECONCILED" }],
-  openIssues: [{ number: 25, title: "Reconciliar cobertura", state: "OPEN" }],
+  openIssues: [{ id: "GH-25", title: "Reconciliar cobertura", state: "OPEN", wo: "UNRECONCILED" }],
   coverageGaps: [],
 };
 
@@ -91,7 +91,7 @@ test("violação: pendência órfã (sem task e sem WO) falha fechado", () => {
     const r = run(root);
     assert.equal(r.code, 1);
     assert.match(r.out, /PENDENCIA_ORFA/);
-    assert.match(r.out, /ISSUE-25/);
+    assert.match(r.out, /GH-25/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -171,7 +171,7 @@ test("verde: cobertura completa, task ativa com artefato e sem gaps", () => {
     const plan = {
       schemaVersion: 1,
       tasks: [
-        { id: "TASK-PLAN-001", wo: "WO-ADM-001", status: "IN_PROGRESS", covers: ["ISSUE-25"], artifacts: ["docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md"] },
+        { id: "TASK-PLAN-001", wo: "WO-ADM-001", status: "IN_PROGRESS", covers: ["GH-25"], artifacts: ["docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md"] },
         { id: "TASK-PLAN-002", wo: "WO-SEC-001", status: "PROPOSTO", covers: ["simulados:P0-04"], artifacts: [] },
         { id: "TASK-PLAN-003", wo: "WO-PMO-001", status: "DONE", covers: [], artifacts: ["registers/pmo/queue.v1.json"] },
       ],
@@ -185,6 +185,41 @@ test("verde: cobertura completa, task ativa com artefato e sem gaps", () => {
     const r = run(root);
     assert.equal(r.code, 0, r.out);
     assert.match(r.out, /OK/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("aceita o formato antigo de issue ({number}) sem criar falso verde", () => {
+  const root = tmp();
+  try {
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": QUEUE,
+      "registers/pmo/cross-source-pending-intake.v1.json": { ...INTAKE, openIssues: [{ number: 25, title: "Reconciliar cobertura", state: "OPEN" }] },
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": PLAN,
+    });
+    const r = run(root);
+    assert.equal(r.code, 1);
+    assert.match(r.out, /PENDENCIA_ORFA/);
+    assert.match(r.out, /ISSUE-25/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("nao Creates falso verde: task que cobre outra issue não cobre a pendencia", () => {
+  const root = tmp();
+  try {
+    const plan = { ...PLAN, tasks: [{ id: "TASK-PLAN-001", wo: "WO-ADM-001", status: "IN_PROGRESS", covers: ["GH-24"], artifacts: ["x.md"] }] };
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": QUEUE,
+      "registers/pmo/cross-source-pending-intake.v1.json": INTAKE,
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": plan,
+    });
+    const r = run(root);
+    assert.equal(r.code, 1);
+    assert.match(r.out, /PENDENCIA_ORFA/);
+    assert.match(r.out, /GH-25/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

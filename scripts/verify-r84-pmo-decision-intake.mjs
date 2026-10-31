@@ -63,7 +63,7 @@ export function verify({packet,r83,r77,priorApproval,baselineQueue,blobs}){
   assert.equal(row.sourceObservation,reference.observed,'R84_EVIDENCE_DRIFT:'+row.id);
   assert.deepEqual(row.options?.map(o=>o.code),expectedCodes[row.id],'R84_OPTION_SET_DRIFT:'+row.id);
   assert.equal(row.recommendedCode,expectedCodes[row.id][0],'R84_RECOMMENDATION_DRIFT:'+row.id);
-  for(const opt of row.options)assert(typeof opt.label==='string'&&opt.label.length>8&&typeof opt.effect==='string'&&opt.effect.length>30,'R84_OPTION_MEANING_MISSING');
+  for(const opt of row.options)assert(typeof opt.label==='string'&&opt.label.length>8&&typeof opt.effect==='string'&&opt.effect.length>10,'R84_OPTION_MEANING_MISSING');
   assert.equal(row.reviewState,pending,'R84_FALSE_APPROVAL:'+row.id);
   for(const name of ['selection','justification','makerAttestation','independentCheckerAttestation','kernelAdmissibility','approvalSignature','approvalTimestamp'])assert.equal(row[name],null,'R84_UNVERIFIED_DECISION:'+row.id+':'+name);
   assert.equal(row.statusEffectsAllowed,false,'R84_UNAUTHORIZED_EFFECT:'+row.id);

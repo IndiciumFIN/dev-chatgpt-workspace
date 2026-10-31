@@ -59,7 +59,7 @@ jobs:
       - name: Test inventory fail-closed contract
         run: node --test scripts/main-migration-core.test.mjs
       - name: Fetch source branches for read-only comparison
-        run: git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+        run: git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
       - name: Check PMO fork reconciliation rules
         run: node --test scripts/reconcile-pmo-forks.test.mjs
       - name: Index PMO events across five real branches
@@ -84,15 +84,20 @@ jobs:
           retention-days: 30
       - name: Generate exhaustive Git blob/path collision candidate report
         run: node scripts/audit-main-migration.mjs --output audit-evidence/main-migration/runtime-report.json
-      - name: Assert 23 branches inspected and release still blocked
+      - name: Assert all live branches audited and release still blocked
         run: |
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
           const r=JSON.parse(readFileSync('audit-evidence/main-migration/runtime-report.json','utf8'));
-          if(r.summary.branchesExpected!==23 || r.summary.branchesInspected!==23) throw Error('INCOMPLETE_BRANCH_INVENTORY');
-          if(r.summary.sourceFailures) throw Error('DRIFT_OR_MISSING_SOURCES');
+          const scope=JSON.parse(readFileSync('registers/governance/main-migration-scope.v1.json','utf8'));
+          if(r.summary.branchesExpected!==scope.branches.length ||
+             r.summary.branchesObserved!==scope.branches.length ||
+             r.summary.branchesInspected!==r.summary.branchesObserved ||
+             r.summary.sourceCoverageComplete!==true ||
+             r.branchPopulation?.complete!==true) throw Error('INCOMPLETE_BRANCH_INVENTORY');
+          if(r.summary.sourceFailures || r.main.changedSinceSnapshot) throw Error('DRIFT_OR_MISSING_SOURCES');
           if(r.releaseGate!=='HOLD_HUMAN' || r.migrationComplete!==false) throw Error('INVALID_RELEASE_CLAIM');
-          console.log('PASS: all 23 branch source refs audited, migration still HOLD_HUMAN');
+          console.log('PASS: all',r.summary.branchesObserved,'current branch source refs audited; migration HOLD_HUMAN');
           console.log('SUMMARY:',JSON.stringify(r.summary));
           NODE
       - name: Verify semantic comparison safeguards
@@ -180,6 +185,7 @@ jobs:
             audit-evidence/corpus-intake/source-summary.v1.json
           retention-days: 30
       - name: Upload versioned-method candidate report (GitHub Actions artifact)
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ce-main-migration-source-collision-report

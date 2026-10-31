@@ -73,7 +73,7 @@ jobs:
           set -e
           cat "$root/coverage.log"
           test "$code" -eq 1
-          grep -Fq '10 WOs · 35 tasks · 31 pendências · 4 gaps' "$root/coverage.log"
+          grep -Fq '10 WOs · 36 tasks · 32 pendências · 4 gaps' "$root/coverage.log"
           grep -Fq 'GAP_ABERTO: 4' "$root/coverage.log"
           ! grep -Eq 'PENDENCIA_ORFA:|WO_SEM_TASK:|TASK_SEM_WO:|TASK_WO_INEXISTENTE:|ENTRADA_INCOMPLETA:' "$root/coverage.log"
           echo 'PASS: gate rejeitou corretamente os quatro gaps; nenhuma pendência órfã ou WO sem task'

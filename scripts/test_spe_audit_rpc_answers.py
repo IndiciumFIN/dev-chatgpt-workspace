@@ -54,6 +54,27 @@ class RpcExposureAuditTests(unittest.TestCase):
         self.assertTrue(result["checks"][name]["anon_grant"])
         self.assertTrue(result["checks"][name]["authenticated_grant"])
 
+    def test_schema_wide_execute_grant_exposes_rpc(self):
+        name = NAMES[2]
+        source = sql(name, "") + "\nGRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA api TO PUBLIC;"
+        result = self.scan({NAMES[0]: "", NAMES[1]: "", name: source})
+        self.assertTrue(result["confirmed_static"])
+        self.assertEqual(result["exposed_migrations"], [name])
+        self.assertEqual(result["checks"][name]["public_roles"], ["public"])
+
+    def test_schema_grant_to_other_schema_does_not_count(self):
+        name = NAMES[2]
+        source = sql(name, "") + "\nGRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA private TO PUBLIC;"
+        result = self.scan({NAMES[0]: "", NAMES[1]: "", name: source})
+        self.assertFalse(result["confirmed_static"])
+
+    def test_grant_option_does_not_hide_public_grantee(self):
+        name = NAMES[0]
+        source = sql(name, "anon WITH GRANT OPTION")
+        result = self.scan({name: source, NAMES[1]: "", NAMES[2]: ""})
+        self.assertEqual(result["exposed_migrations"], [name])
+        self.assertTrue(result["checks"][name]["anon_grant"])
+
     def test_missing_grant_excludes_only_that_migration(self):
         result = self.scan({NAMES[2]: sql(NAMES[2], "")})
         self.assertTrue(result["confirmed_static"])

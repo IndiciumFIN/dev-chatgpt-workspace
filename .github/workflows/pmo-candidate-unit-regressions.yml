@@ -5,6 +5,8 @@ on:
       - 'scripts/check-pending-coverage*'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
+      - 'scripts/verify-r80-evidence-chain*'
+      - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
       - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
       - 'scripts/check-r78-gap-register*'
       - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
@@ -22,6 +24,8 @@ on:
       - 'scripts/check-pending-coverage*'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
+      - 'scripts/verify-r80-evidence-chain*'
+      - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
       - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
       - 'scripts/check-r78-gap-register*'
       - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
@@ -58,6 +62,10 @@ jobs:
         run: node --test scripts/audit-pending-lineage.test.mjs
       - name: Validate 31 scoped WO mapping candidates with negative regressions
         run: node --test scripts/audit-domain-wo-candidates.test.mjs
+      - name: Validate R80 FIND-policy-validator candidate evidence snapshots
+        run: |
+          node --check scripts/verify-r80-evidence-chain.mjs
+          node --test scripts/verify-r80-evidence-chain.test.mjs
       - name: Validate R78 4-gap WO register (candidate only)
         run: |
           node scripts/check-r78-gap-register.mjs
@@ -74,6 +82,16 @@ jobs:
           ref: fix/governed-activities-cli-20261026
           path: pmo-source
           persist-credentials: false
+      - name: Checkout Simulados evidence source (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: simulados-enfermagem-db-canonico
+          path: spe-source
+          persist-credentials: false
+      - name: Reconcile R80 source documents against original Git blobs
+        run: node scripts/verify-r80-evidence-chain.mjs . spe-source
+      - name: Run isolated Simulados RPC static validator tests (not E2E or admission)
+        run: python3 -m unittest discover -s spe-source/scripts -p 'test_spe_audit_rpc_answers.py' -v
       - name: Assert real-data coverage is blocked only by the four known gaps
         shell: bash
         run: |

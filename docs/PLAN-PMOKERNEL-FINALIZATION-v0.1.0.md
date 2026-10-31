@@ -390,3 +390,27 @@ Foram despachados 3 auditores especializados (divergência/regressão · DS-cont
 | DS: "a divergência com a direção preto/branco continua em HOLD (WO-DS-001)" | `TASK-PLAN-029` — mantém `HOLD_HUMAN`, não se resolve por inferência |
 
 **Nada disto foi aplicado ao código.** Tudo registado como task com acceptance verificável; o registo remoto vai de 72 → **86 tasks**.
+
+---
+
+## 18. R87 — Lista PMO operável e reconciliação de 24 tarefas simultâneas (31/10/2026)
+
+### Implementação efetiva
+
+- Criado `src/lib/admin/list-query.ts`, motor puro/read-only para busca sem acentos (ID, título, responsável, critérios, ação), filtros `all/active/holds`, ordenação estável (posição, P0..Pn, título pt-BR) e paginação determinística. Sem alteração na fila e com veto a IDs duplicados ou parâmetros inválidos.
+- Criado `src/lib/admin/list-query.test.ts` com **14 testes** (normalização Unicode, buscas múltiplas, filtros, ordenação, overflow de página, lista vazia, falhas fechadas). O runner oficial descobre `src/**/*.test.ts` e executa com `--experimental-strip-types`, sem depender de scripts de testes fora do glob.
+- A interface `src/components/admin/pmo-panel.tsx` agora fornece input de busca com label, filtros, ordenação, quantidade de itens por página, paginação Anterior/Próxima, `aria-live` para contagem e estado vazio acessível. `PmoReviewIntake` **continua presente**; nenhuma ação concede aprovação ou acesso remoto.
+- `src/styles/admin-console.css` reutiliza as variáveis do Design System e estabelece alvos mínimos de 44 px e foco visível; `scripts/test-admin-console.mjs` acrescentou controles estáticos de acessibilidade e de preservação do intake.
+- `TASK-PLAN-092` recebeu os artefatos rastreáveis, mantendo `status=PROPOSTO` até teste visual/homologação independente. Não é alegado que as outras listas, motor de impacto ou backend estejam implementados.
+
+### Divergência real encontrada e saneada sem perda de origem
+
+A integração paralela adicionou **24 tarefas** `TASK-PLAN-090..113` além da população histórica R78/R79 `37+31=68`, elevando o plano a **92**. A versão paralela havia descartado o registro `r86SupplementalTaskIntake` de quatro tarefas e introduzido seis pares com escopos sobrepostos (`094/108`, `095/109`, `096/110`, `097/111`, `098/112`, `099/113`). Nenhuma dessas tarefas foi removida, aprovada ou agrupada silenciosamente.
+
+O plano agora registra `r87ScopedTaskExpansion` com 24 identidades, títulos, estados, WO, critérios de aceite, artefatos e commits de origem, além dos seis alertas de possível duplicidade. `WO-DS-001` já existe entre as dez WOs da fila (a presença no cadastro **não** equivale à admissão formal do Kernel); apenas `TASK-PLAN-102` e `105` são referências novas ao DS. O guard `scripts/validate-r87-task-extension.mjs` confere essa população exata, vetando tarefas adicionais, falsos `DONE`, alterações de escopo e fonte, liberação e quaisquer WO IDs desconhecidos.
+
+`scripts/check-r78-gap-register.mjs` e `scripts/audit-domain-wo-candidates.mjs` agora aceitam o registro R87 validado ou a extensão histórica R86 de quatro tarefas, **sem alterar** a semântica das 31 vinculações R79, seus SHAs, dependências e o veto de admissão. Há novas regressões `scripts/validate-r87-task-extension.test.mjs` e ajustes nos testes R78. Não houve mudança na fila canônica ou na branch principal.
+
+### Autoridade e limitações
+
+CI técnico valida regressão e compilação, não a origem de aprovação; o PR #26 está em modo `DRAFT/HOLD`, e a leitura R86 passou a distinguir esse estado seguro de uma falha operacional. `GAP-01..04` continuam abertos, `WO-HOM-001=HOLD_HUMAN`; não foi concedida nenhuma assinatura, admissão Kernel, release, merge ou deploy. Os seis pares sobrepostos dependem de reconciliação formal em processo separado, sem inventar eleição da fila.

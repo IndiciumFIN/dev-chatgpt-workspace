@@ -46,7 +46,9 @@
     "Four proposal choices with validation and reservations",
     "No claim that decisions were submitted, signed or promoted",
     "Typecheck, negative unit tests, static admin gate and build green",
-    "All decisions and test results persisted via GitHub commit evidence"
+    "All decisions and test results persisted via GitHub commit evidence",
+    "WO and evidence search use real local PMO data and prevent cross-WO stale references",
+    "All selectors have labels/help text, keyboard-friendly native controls and candidate tests"
   ],
   "kernelAdmission": "NOT_VERIFIED",
   "releaseGate": "HOLD_HUMAN",
@@ -73,6 +75,49 @@
       "result": "SUCCESS",
       "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41221085087",
       "commit": "784e6468bbb68ed1cd49359cec6f72b807380e40"
+    }
+  },
+  "enhancements": {
+    "version": "1.1.0-candidate",
+    "date": "2026-10-31",
+    "implementation": [
+      "Search locally over real PMO WOs by ID, title, status, owner, priority, criteria and next action (accent/case-insensitive)",
+      "Explicit labels and help text for work-order search, selection, source search, evidence selection and URL",
+      "Dropdowns populated only from the versioned PMO queue and scoped governance links",
+      "Evidence selection fills the URL without validating admission or compliance",
+      "Changing the WO clears reason, reservations and evidence to prevent stale cross-WO references",
+      "Context insertion quotes criteria and next action with independent-review warning",
+      "Accessible focus, status feedback and responsive layout using existing CE Design System tokens"
+    ],
+    "sourceFiles": [
+      "registers/pmo/queue.v1.json",
+      "registers/governance/find-approval-ux-20261031.v1.json"
+    ],
+    "sourceBranch": "fix/governed-activities-cli-20261026",
+    "codeFiles": [
+      "src/lib/governance/review-source-catalog.ts",
+      "src/lib/governance/review-source-catalog.test.ts",
+      "src/components/admin/governed-review-panel.tsx",
+      "src/styles/admin-console.css",
+      "scripts/test-admin-console.mjs"
+    ],
+    "invariant": "Search results are local suggestions; do not infer formal evidence validity, Kernel admission or authorization; user approval already recorded, no repeat.",
+    "verifiedCI": {
+      "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41222029052",
+      "result": "SUCCESS",
+      "headCommit": "19f5980baa06d167ad62cffac2eca12aaf25749c",
+      "checks": [
+        "30 static admin invariants PASS",
+        "TypeScript PASS",
+        "npm test PASS",
+        "SPA build PASS",
+        "Search/catalog tests exercise actual versioned PMO queue; 10 tests PASS"
+      ],
+      "caveats": [
+        "No browser E2E or independent accessibility review",
+        "No durable write and no authenticated signed decision",
+        "Deploy of later changes needs separate verification"
+      ]
     }
   }
 }

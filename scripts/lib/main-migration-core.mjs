@@ -49,6 +49,14 @@ export function parseNameStatus(text) {
 }
 export function classifyCandidateRisk(path) {
   const s=path.toLowerCase();
+  // 8k+ pages are SOURCE CORPUS, not disposable build artifacts. Keep fully
+  // traceable in quarantine until lineage, licensing, dedup and clinical checks.
+  if(s.startsWith('artifacts/fonte/corpus/')) return 'SOURCE_CORPUS_HOLD';
+  if(s.startsWith('artifacts/.tmp/') || s==='.node_modules.lock') return 'TEMP_ARTIFACT_QUARANTINE';
+  if(s.startsWith('artifacts/')) return 'AUDIT_ARTIFACT_REVIEW';
+  if(s.startsWith('imports/')) return 'SOURCE_IMPORT_HOLD';
+  if(s.startsWith('bibliotecas-corpus/')) return 'SOURCE_LIBRARY_HOLD';
+  if(s==='package.json'||s==='package-lock.json') return 'SECURITY_HOLD';
   if(/(?:^|\/)(?:migrations?|supabase|drizzle|prisma)(?:\/|$)|\.sql$/.test(s))return 'DATABASE_HOLD';
   if(/(?:^|\/)(?:auth|security|kernel|permissions?|secrets?)(?:\/|$)|(?:^|\/)(?:\.env|\.github\/workflows)/.test(s))return 'SECURITY_HOLD';
   if(/(?:^|\/)(?:cko|clinical|nanda|nic|noc|cofen|coren|medicamentos?|protocolos?|normativos?)(?:\/|$)/.test(s))return 'CLINICAL_HOLD';

@@ -9,7 +9,7 @@ const current=()=>{
   plan:JSON.parse(readFileSync('docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json','utf8'))
  };
 };
-test('R78: historical 37 plus 31 R79 candidates and four separately sourced specialist candidates',()=>{
+test('R78: historical 37 plus 31 R79 candidates and 24 concurrently sourced R87 proposals',()=>{
  const {report,plan}=current();
  const v=validate(report,plan);
  assert.equal(v.gaps,4);
@@ -43,15 +43,15 @@ test('R86: unregistered fifth specialist task cannot bypass R78 register',()=>{
 });
 test('R86: no silent specialist completion or unverified Kernel admission',()=>{
  const a=current();a.plan.tasks.find(t=>t.id==='TASK-PLAN-090').status='DONE';
- assert.throws(()=>validate(a.report,a.plan),/R86_SPECIALIST_TASK_DRIFT/);
- const b=current();b.plan.r86SupplementalTaskIntake.kernelAdmission='ADMITTED';
- assert.throws(()=>validate(b.report,b.plan),/R86_SPECIALIST_INTAKE_UNVERIFIED/);
+ assert.throws(()=>validate(a.report,a.plan),/R87_FALSE_TASK_COMPLETION/);
+ const b=current();b.plan.r87ScopedTaskExpansion.kernelAdmission='ADMITTED';
+ assert.throws(()=>validate(b.report,b.plan),/R87_UNAUTHORIZED_PROMOTION/);
 });
 test('R86: unpinned specialist source or task title cannot pass',()=>{
- const a=current();a.plan.r86SupplementalTaskIntake.sourceCommit='0'.repeat(40);
+ const a=current();a.plan.r87ScopedTaskExpansion.sourceCommits[0]='0'.repeat(40);
  assert.throws(()=>validate(a.report,a.plan),/R86_SPECIALIST_INTAKE_UNVERIFIED/);
- const b=current();b.plan.r86SupplementalTaskIntake.tasks[2].title='unreviewed changed scope';
- assert.throws(()=>validate(b.report,b.plan),/R86_SPECIALIST_TASK_DRIFT/);
+ const b=current();b.plan.r87ScopedTaskExpansion.tasks[2].title='unreviewed changed scope';
+ assert.throws(()=>validate(b.report,b.plan),/R87_TASK_EVIDENCE_DRIFT/);
 });
 test('R86: cannot bypass unchanged R79 31-domain source mapping',()=>{
  const a=current();a.plan.r79CandidateMapping.candidateTasksAdded=30;

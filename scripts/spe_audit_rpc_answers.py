@@ -19,10 +19,20 @@ def public_grants(source, function):
         + re.escape(function)
         + r"\s*\([^;]*?\)\s*to\s+([^;]+);"
     )
+    # PostgreSQL also permits schema-wide grants on all *existing* functions.
+    # This is a conservative static signal, not a substitute for live ACL checks.
+    schema = function.split(".")[0]
+    schema_pattern = (
+        r"\bgrant\s+execute\s+on\s+all\s+functions\s+in\s+schema\s+"
+        + re.escape(schema)
+        + r"\s+to\s+([^;]+);"
+    )
     found = set()
-    for match in re.finditer(pattern, source, re.I | re.S):
-        roles = {role.strip().lower().strip('"') for role in match.group(1).split(",")}
-        found.update(roles & PUBLIC_ROLES)
+    for grant_pattern in (pattern, schema_pattern):
+        for match in re.finditer(grant_pattern, source, re.I | re.S):
+            grantees = re.split(r"\s+with\s+grant\s+option\b", match.group(1), maxsplit=1, flags=re.I)[0]
+            roles = {role.strip().lower().strip('"') for role in grantees.split(",")}
+            found.update(roles & PUBLIC_ROLES)
     return sorted(found)
 
 def audit(archive):
@@ -59,7 +69,7 @@ def audit(archive):
         "confirmed_static": bool(exposed),
         "exposed_migrations": exposed,
         "checks": checks,
-        "limitations": "Static evidence only; SQL comments, privileges, and live DB behavior require independent verification.",
+        "limitations": "Static evidence only; SQL comments, grant/revoke ordering, default PUBLIC EXECUTE privileges, role inheritance, and live DB behavior require independent verification.",
     }
 
 if __name__ == "__main__":

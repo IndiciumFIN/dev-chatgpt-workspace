@@ -9,6 +9,6 @@ assert(!canRevealAnswers({...baseline,state:"SUBMITTED",visibility:"POST_COMPLET
 assert(canRevealAnswers({...baseline,state:"GRADED",visibility:"POST_COMPLETION"}).allow,"complete owner may review");
 assert(!canRevealAnswers({...baseline,state:"GRADED",visibility:"POST_COMPLETION",requesterId:"other"}).allow,"no other owner");
 assert(!canRevealAnswers({...baseline,state:"GRADED",visibility:"POST_COMPLETION",ownershipVerified:false}).allow,"no client-side ownership assertion");
-assert(!canRevealAnswers({...baseline,mode:"ESTUDO",visibility:"STUDY_EXPLICIT"}).allow,"no study permissions in simulation");
+assert(!canRevealAnswers({...baseline,mode:"SIMULADO",visibility:"STUDY_EXPLICIT"}).allow,"no study permissions in simulation");
 assert(canRevealAnswers({...baseline,mode:"ESTUDO",visibility:"STUDY_EXPLICIT"}).allow,"explicit study access");
 assert(!maySubmit("CREATED").allow && maySubmit("IN_PROGRESS").allow,"submit state check");

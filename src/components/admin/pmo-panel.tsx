@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GovernedReviewPanel } from './governed-review-panel';
 import { ArrowUpRight, ClipboardCheck, FileClock, ListTodo } from 'lucide-react';
 import queue from '../../../registers/pmo/queue.v1.json';
 import candidates from '../../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json';
@@ -21,6 +22,7 @@ export function PmoPanel() {
       <div className="ce-admin-stat"><span className="ce-admin-stat-icon"><ClipboardCheck size={19} aria-hidden="true" /></span><span className="ce-admin-stat-label">Em execução / aguardando</span><strong>{active} / {pending}</strong><small>Sem percentuais presumidos</small></div>
       <div className="ce-admin-stat"><span className="ce-admin-stat-icon"><FileClock size={19} aria-hidden="true" /></span><span className="ce-admin-stat-label">Revisão PMO</span><strong>#{queue.revision}</strong><small>Atualização: {queue.updatedOn}</small></div>
     </div>
+    <GovernedReviewPanel />
     <section className="ce-admin-panel" data-testid="admin-pmo" aria-labelledby="admin-pmo-heading">
       <div className="ce-admin-panel-heading"><div><h2 id="admin-pmo-heading">Fila única de execução</h2><p>Atualizada por commits verificáveis. A visualização é leitura, não aprovação.</p></div></div>
       <div className="ce-admin-pmo-controls">

@@ -3,6 +3,7 @@
 import {readFileSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {checkR87Extension} from './validate-r87-task-extension.mjs';
 export function validate(r,plan) {
  const fail=(code)=>{throw Error(code);};
  if(r?.schemaVersion!=='1.0.0'||r?.recordType!=='READ_ONLY_DIAGNOSTIC_AND_CANDIDATE_CORRECTIONS')fail('R78_SCHEMA_INVALID');
@@ -10,11 +11,15 @@ export function validate(r,plan) {
  const expansion=plan.r79CandidateMapping;
  const extra=expansion?.candidateTasksAdded??0;
  const expected=r?.baseline?.taskPlanCount+extra;
+ const scoped=plan.r87ScopedTaskExpansion;
  const add=plan.r86SupplementalTaskIntake;
- const additional=add?.additionalAuditTaskCount??0;
+ const additional=scoped ? scoped.extensionCount : add?.additionalAuditTaskCount??0;
  if(!Number.isSafeInteger(extra)||extra<0||!Number.isSafeInteger(additional)||additional<0||plan.tasks.length!==expected+additional)fail('TASK_PLAN_DRIFT');
  if(new Set(plan.tasks.map(t=>t.id)).size!==plan.tasks.length)fail('TASK_ID_DUPLICATE');
- if(additional){
+ if(scoped){
+  const canonical=new Set(['WO-ADM-001','WO-PMO-001','WO-SEC-001','WO-E2E-001','WO-DS-001','WO-CKO-001','WO-AUTO-001','WO-CKO-COFEN-001','WO-GOV-TRANS-001','WO-HOM-001']);
+  if(checkR87Extension(plan,canonical)!==24)fail('R87_EXTENSION_INCOMPLETE');
+ }else if(additional){
   const ids=['TASK-PLAN-090','TASK-PLAN-091','TASK-PLAN-092','TASK-PLAN-093'];
   if(additional!==4||add.state!=='CANDIDATE_ONLY_NOT_KERNEL_ADMITTED'||add.originalBaselineTasks!==r.baseline.taskPlanCount||add.r79SourceCandidateTasks!==extra||add.resultingTaskCount!==expected+additional||add.sourceCommit!=='d5ca82bf99499878a4b4c034078f9edd7089d9bf'||!Array.isArray(add.sourcePlanIntakeCommits)||add.sourcePlanIntakeCommits.length!==2||add.kernelAdmission!=='NOT_VERIFIED'||add.approval!=='NOT_APPROVED'||add.releaseGate!=='HOLD_HUMAN'||add.authorizedWoStatusChanges!==false||add.additionalWosAdmitted!==0)fail('R86_SPECIALIST_INTAKE_UNVERIFIED');
   if(!Array.isArray(add.tasks)||add.tasks.length!==4||add.tasks.map(t=>t.id).join(',')!==ids.join(','))fail('R86_SPECIALIST_IDS_DRIFT');

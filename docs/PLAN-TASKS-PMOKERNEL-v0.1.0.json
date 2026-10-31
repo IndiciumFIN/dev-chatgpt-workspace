@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113. | 31/10 21:25Z: auditoria do pacote Commander (39/40 hashes OK; src/App.tsx divergente; matriz M01-M22 localizada em fix/governed-activities-cli-20261026) -> T0.114 a T0.119 + actualizacao medida de T0.090/091/092/107/113. | 31/10 21:45Z: esqueleto CE local gerado e verificado (45 familias/410 servicos/201 capabilities/70 testes verdes/gate 8-8) -> T0.120 a T0.124.",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113. | 31/10 21:25Z: auditoria do pacote Commander (39/40 hashes OK; src/App.tsx divergente; matriz M01-M22 localizada em fix/governed-activities-cli-20261026) -> T0.114 a T0.119 + actualizacao medida de T0.090/091/092/107/113. | 31/10 21:45Z: esqueleto CE local gerado e verificado (45 familias/410 servicos/201 capabilities/70 testes verdes/gate 8-8) -> T0.120 a T0.124. | 31/10 22:05Z: lacunas do esqueleto CE medidas contra o plano canonico da PR #21 -> T0.125 a T0.131.",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -2308,6 +2308,111 @@
       "covers": [],
       "artifacts": [],
       "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar."
+    },
+    {
+      "id": "TASK-PLAN-125",
+      "phase": "F1",
+      "title": "Registar no find-register os 16 FINDs da PR #21 (Experience Canonicalization)",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/experience-platform-skeleton-2026-10-31/GAPS-2026-10-31.md"
+      ],
+      "acceptance": "Medido: docs/FIND-EXPERIENCE-CANONICALIZATION-v0.1.0.md na PR #21 (branch feat/career-youth-db-first-20261026 @ ad4c683890) tem 16 FINDs; nenhum existe em registers/governance/find-register.v1.json (que tem 11, nenhumExperience). Exemplos: template-contract mistura favorite/print/pdf/docx/listen/readingTime; PageTools e LibraryActions duplicam acoes; Favorite so estado de visita; ToolViewBar grava em sessionStorage; Hint trata Tooltip como conteudo; preview e infra de embed e nao Product Preview. Regista cada um como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED. Sem baseline nao ha como provar nao-regressao."
+    },
+    {
+      "id": "TASK-PLAN-126",
+      "phase": "F1",
+      "title": "Reconciliar o registo de capabilities/bindings com o metamodelo canonico (11 + 5 campos em falta)",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-125"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido: o registo candidato traz 14 campos por capability e 7 por binding; o metamodelo do plano exige 20 e 10+. Faltam na capability: state_contract_ref, action_contract_ref, supported_channels, storage_policy, sync_policy, permission_policy, accessibility_contract_ref, telemetry_contract_ref, help_profile_ref, preview_profile_ref, output_profile_refs (e ha duplicacao status/release_status). Faltam no binding: audiences, permissions, state_constraints, format_constraints, policy_refs. Entregar a versao reconciliada OU um FIND por divergencia; nunca preencher por inferencia."
+    },
+    {
+      "id": "TASK-PLAN-127",
+      "phase": "F4",
+      "title": "Implementar os 6 modulos P0 do roadmap como contrato + teste (capabilities, action-bar, preview, settings, help, output)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-126"
+      ],
+      "owner": "Mavis",
+      "language": "TS+TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Estado medido: 2 de 10 modulos-alvo existem (resolver, state). Faltam capabilities.ts (fonte compilada das 201), action-bar.tsx, preview.ts, settings.ts, help.ts, output.ts. Cada um: contrato + testes, sem UI de producao; profiles de settings (5 scopes), output (6 formatos) e preview (5 perfis) com conteudo aprovado pelo dono. Prova: suite verde e registo em module-status.ts."
+    },
+    {
+      "id": "TASK-PLAN-128",
+      "phase": "F4",
+      "title": "Fechar os 13 schemas de objeto em falta e os perfis transversais",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-126"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Dos 16 tipos de objecto com bindings, so 3 tem schema (Article, LibraryEntity, ClinicalTool). Faltam: Guide, Course, Trail, JobOpportunity, Competition, Residency, Question, Simulation, ResearchProject, Norm, CareerRole, Organization, MediaAsset. Cada schema com provenance, authorityBinding e evidence obrigatorios, em CANDIDATE_HOLD."
+    },
+    {
+      "id": "TASK-PLAN-129",
+      "phase": "F4",
+      "title": "Implementar P1 do roadmap: Saved Views, Saved Search, Collections/Basket, Lifecycle/Recovery e Event Backbone",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-127"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Faltam os modulos views.ts e events.ts e as semanticas de archive/trash/undo/redo/version-history/diff/restore/conflict-resolution, mais collections e basket como objectos distintos de saved views. O event backbone define formato, ordenacao, idempotencia e retencao (ALCOA+); substitui a hash-chain local, que e tamper-evidence client-side e nao auditoria."
+    },
+    {
+      "id": "TASK-PLAN-130",
+      "phase": "F4",
+      "title": "Implementar P2 do roadmap: Capture/Inbox, Follow/Alerts/Calendar, Collaboration, search semantico e sync",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-129"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Sync e a peca mais cara e a que mais decisao do dono exige (modelo de identidade/backend, T0.112). Nao comeca sem essa decisao."
+    },
+    {
+      "id": "TASK-PLAN-131",
+      "phase": "F4",
+      "title": "Criterios de nao-regressao, rollback e gate de CI para o esqueleto CE",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-127"
+      ],
+      "owner": "Mavis",
+      "language": "CI",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada."
     }
   ],
   "candidateVerification": {

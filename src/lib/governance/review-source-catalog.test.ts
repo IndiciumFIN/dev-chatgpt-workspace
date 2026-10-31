@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { evidenceSuggestions, searchEvidenceSuggestions, searchReviewWorkOrders, selectReviewEvidence, type ReviewWorkOrder } from './review-source-catalog.ts';
+import { isCanonicalRepoEvidenceUrl, evidenceSuggestions, searchEvidenceSuggestions, searchReviewWorkOrders, selectReviewEvidence, type ReviewWorkOrder } from './review-source-catalog.ts';
 
 const WO: ReviewWorkOrder[] = [
   { id:'WO-SEC-001', title:'Segurança, dependências e LGPD', status:'IN_PROGRESS', priority:'P0',
@@ -71,4 +71,25 @@ test('real canonical PMO queue supplies actual searchable WOs and their evidence
   assert.ok(options.length > 0, 'registered PMO security evidence should be discoverable');
   assert.ok(options.every(option => selected.evidence.includes(option.url)));
   assert.equal(selectReviewEvidence(options,'not-a-option'),null);
+});
+
+test('reject traversal, encoded traversal and deceptive repository evidence URLs', () => {
+  const prefix = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/';
+  const good = prefix + 'issues/25#issuecomment-123';
+  assert.equal(isCanonicalRepoEvidenceUrl(good), true);
+  for (const bad of [
+    prefix + '../../other/repo/issues/1',
+    prefix + '%2e%2e/%2e%2e/other/repo',
+    prefix + '%2f%2fother',
+    prefix + 'docs\\\\other',
+    'https://github.com/IndiciumFIN/other-repo/issues/25',
+    'https://github.com.evil.invalid/IndiciumFIN/dev-chatgpt-workspace/issues/25',
+    'https://github.com/IndiciumFIN/dev-chatgpt-workspace/',
+  ]) {
+    assert.equal(isCanonicalRepoEvidenceUrl(bad), false, bad);
+  }
+  const options = evidenceSuggestions({...WO[0], evidence: [
+    good, prefix + '../../other/repo/issues/1', prefix + '%2e%2e/%2e%2e/other/repo'
+  ]});
+  assert.deepEqual(options.map(option => option.url), [good]);
 });

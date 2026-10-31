@@ -31,7 +31,10 @@
       "covers": [
         "GAP-02"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "registers/governance/pmo-r77-arbitration-20261031.v1.json",
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+      ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
     {
@@ -115,7 +118,9 @@
       "covers": [
         "GAP-04"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+      ],
       "acceptance": "As três ferramentas falham com erro de conector: estado é 'não medido', nunca 'zero alertas'. Alertas lidos e registrados por severidade + SHA dos artefatos afetados."
     },
     {
@@ -166,7 +171,9 @@
         "GAP-01"
       ],
       "artifacts": [
-        "scripts/check-pending-coverage.mjs"
+        "scripts/check-pending-coverage.mjs",
+        "scripts/audit-pending-lineage.mjs",
+        "scripts/audit-pending-lineage.test.mjs"
       ],
       "acceptance": "Violações TASK_SEM_WO, TASK_WO_INEXISTENTE, WO_SEM_TASK, PENDENCIA_ORFA, DONE_SEM_EVIDENCIA, TASK_SEM_ARTEFATO e GAP_ABERTO detectadas; ids de issue aceitos em formato GH-<n> e ISSUE-<n>."
     },
@@ -205,7 +212,8 @@
       ],
       "artifacts": [
         "ci/pending-coverage-gate.yml",
-        "ci/README.md"
+        "ci/README.md",
+        "scripts/check-pending-coverage.mjs"
       ],
       "acceptance": "ci/pending-coverage-gate.yml copiado para .github/workflows/ (escrita nessa pasta é bloqueada para a API do plugin, exige owner) e gate falhando fechado quando houver gaps. Ordem obrigatória: T0.005 -> T0.013 -> T0.001 -> só então GAP_ABERTO como erro. NÃO ligar ao verify-bibliotecas.yml antes disso."
     },
@@ -254,7 +262,11 @@
         "P1-12",
         "P1-13"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "scripts/audit-pending-lineage.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41232931971"
+      ],
       "acceptance": "PENDENCIA_ORFA = 0 no gate contra a fila rev20 e o inventário real; cada issue aberta e cada pendência Simulados tem task viva e WO correspondente."
     },
     {
@@ -338,7 +350,9 @@
       "covers": [
         "GAP-03"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+      ],
       "acceptance": "Cenários KER/MST/SEC rodam sobre a matriz transversal com a política populada (populationStatus=COMPLETE) e o relatório do motor passa a produzir achados reais, não aviso de política vazia."
     },
     {
@@ -712,5 +726,21 @@
     "state": "CONFIRMED_BY_GITHUB_ACTIONS",
     "releaseGate": "HOLD_HUMAN",
     "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41230322427"
+  },
+  "r78Verification": {
+    "type": "CANDIDATE_TECHNICAL_PROGRESS_NOT_RELEASE",
+    "date": "2026-10-31",
+    "workOrders": [
+      "WO-PMO-001",
+      "WO-SEC-001",
+      "WO-GOV-TRANS-001",
+      "WO-HOM-001"
+    ],
+    "evidenceRegister": "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+    "lineageAudit": "scripts/audit-pending-lineage.mjs",
+    "coverage": "32/32 task-covered; 31 source WOs UNRECONCILED; 24 missing domain-specific candidate; 0 Kernel admitted",
+    "releaseGate": "HOLD_HUMAN",
+    "approvalOrPromotion": false,
+    "securityScope": "Supabase advisors observed read-only; GitHub scanning not measured; broker rotation not performed"
   }
 }

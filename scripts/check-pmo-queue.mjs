@@ -27,7 +27,11 @@ for(const [i,item] of q.items.entries()){
   assert(item.dependencies.every(dep=>ids.has(dep)&&dep!==item.id),'Dependência inválida: '+item.id);
   assert(Array.isArray(item.evidence));
   assert(item.evidence.every(url=>/^https:\/\/github\.com\/IndiciumFIN\/dev-chatgpt-workspace\//.test(url)),'Evidência de origem não autorizada');
-  if(item.status==='DONE')assert(item.evidence.length>0,'DONE sem evidência: '+item.id);
+  if(item.status==='DONE') {
+    assert(item.evidence.length>0,'DONE sem evidência: '+item.id);
+    assert(item.dependencies.every(dep=>q.items.find(x=>x.id===dep)?.status==='DONE'),
+      'DONE com dependência pendente: '+item.id);
+  }
 }
 const visiting = new Set();
 const visited = new Set();

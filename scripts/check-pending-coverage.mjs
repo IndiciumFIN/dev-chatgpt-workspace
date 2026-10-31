@@ -1,0 +1,190 @@
+#!/usr/bin/env node
+/**
+ * Gate de cobertura de pendências — PMO × Kernel.
+ *
+ * Fecha o ciclo "cobertura integral" da issue #25:
+ * toda WO ativa precisa de TASK, toda TASK precisa de WO,
+ * toda pendência registrada precisa estar vinculada a uma WO/TASK
+ * e nenhuma lacuna de cobertura pode ficar aberta.
+ *
+ * O gate é NÃO-CIRCULAR: ele re-deriva as WOs do registro canônico
+ * (`registers/pmo/queue.v1.json`), re-deriva as pendências do inventário
+ * (`registers/pmo/cross-source-pending-intake.v1.json`) e re-deriva as tasks
+ * do plano (`docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json`). Nenhuma das três
+ * fontes é consideradaautoridade sobre a outra: uma pendência "coberta" por
+ * um snapshot que ninguém re-derivou conta como órfã.
+ *
+ * Modos de entrada (--root <dir>, default "."):
+ *   node scripts/check-pending-coverage.mjs
+ *   node scripts/check-pending-coverage.mjs --root tests/fixtures/coverage
+ *
+ * Códigos de saída:
+ *   0 = sem violações (ou SKIP declarado quando falta insumo ainda não aterrissado)
+ *   1 = violações bloqueantes (o gate falha fechado)
+ *   2 = uso incorreto
+ *
+ * Regra de ausência: entrada ausente NÃO é aprovação. Quando o insumo ainda
+ * não aterrissou no branch, o gate imprime SKIP com o ID da task que falta e
+ * sai 0 — a ativação do gate no CI é a task T1.3, dependente de T0.2.
+ */
+
+import { readFileSync, existsSync } from "node:fs";
+import { resolve, join } from "node:path";
+
+const REL = {
+  queue: "registers/pmo/queue.v1.json",
+  intake: "registers/pmo/cross-source-pending-intake.v1.json",
+  plan: "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json",
+};
+
+const args = process.argv.slice(2);
+let root = ".";
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === "--root") {
+    root = args[++i] ?? null;
+    if (!root) fail(2, "--root exige um caminho");
+  } else if (args[i] === "--help" || args[i] === "-h") {
+    console.log("uso: node scripts/check-pending-coverage.mjs [--root <dir>]");
+    process.exit(0);
+  } else {
+    fail(2, `argumento desconhecido: ${args[i]}`);
+  }
+}
+const ROOT = resolve(process.cwd(), root);
+
+function fail(code, msg) {
+  console.error(`[check-pending-coverage] ${msg}`);
+  process.exit(code);
+}
+
+function readJson(rel) {
+  const p = join(ROOT, rel);
+  if (!existsSync(p)) return null;
+  try {
+    return JSON.parse(readFileSync(p, "utf8"));
+  } catch (e) {
+    fail(1, `JSON inválido em ${rel}: ${e.message}`);
+  }
+}
+
+const queue = readJson(REL.queue);
+const intake = readJson(REL.intake);
+const plan = readJson(REL.plan);
+
+const missing = [];
+if (!queue) missing.push({ rel: REL.queue, task: "T0.2" });
+if (!intake) missing.push({ rel: REL.intake, task: "T0.2" });
+if (!plan) missing.push({ rel: REL.plan, task: "T0.5" });
+
+if (missing.length) {
+  console.log("[check-pending-coverage] SKIP — insumo ainda não aterrissado neste branch:");
+  for (const m of missing) console.log(`  - ${m.rel} (depende de ${m.task})`);
+  console.log("  Ausência de insumo não é aprovação. Ative o gate após T0.2/T0.5 (task T1.3).");
+  process.exit(0);
+}
+
+const violations = [];
+const add = (code, detail) => violations.push({ code, detail });
+
+/* ---------- re-derivação 1: WOs canônicas ---------- */
+const wos = Array.isArray(queue.items) ? queue.items : [];
+const woIds = new Set(wos.map((w) => w.id));
+if (!wos.length) add("FILA_VAZIA", "registers/pmo/queue.v1.json não possui itens");
+
+/* ---------- re-derivação 2: tasks do plano ---------- */
+const tasks = Array.isArray(plan.tasks) ? plan.tasks : [];
+const taskById = new Map(tasks.map((t) => [t.id, t]));
+if (!tasks.length) add("PLANO_VAZIO", "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json não possui tasks");
+
+const OPEN_WO_STATUS = new Set(["PAUSED", "IN_PROGRESS", "QUEUED", "HOLD_HUMAN", "BLOCKED"]);
+// Task "PROPOSTO" ou "BLOCKED" ainda é uma task viva: o que define cobertura
+// é existir vínculo task↔WO, não o estágio de execução. Só vínculo morto
+// (SUPERSEDED/CANCELLED) deixa de cobrir.
+const CLOSED_TASK_STATUS = new Set(["SUPERSEDED", "CANCELLED"]);
+
+/* ---------- re-derivação 3: pendências do inventário ---------- */
+const pending = [];
+for (const item of intake.simulados ?? []) {
+  pending.push({ group: "simulados", id: item.id, title: item.title ?? "", status: item.status ?? "", wo: item.wo ?? "" });
+}
+for (const item of intake.openIssues ?? []) {
+  pending.push({ group: "issue", id: `ISSUE-${item.number}`, title: item.title ?? "", status: item.state ?? "OPEN", wo: item.wo ?? "" });
+}
+
+/* ---------- regra 1: task sem WO ---------- */
+for (const t of tasks) {
+  if (!t.wo) {
+    add("TASK_SEM_WO", `${t.id} não declara WO`);
+  } else if (!woIds.has(t.wo)) {
+    add("TASK_WO_INEXISTENTE", `${t.id} aponta para ${t.wo}, ausente em ${REL.queue}`);
+  }
+}
+
+/* ---------- regra 2: WO ativa sem task ---------- */
+const tasksByWo = new Map();
+for (const t of tasks) {
+  if (!t.wo) continue;
+  if (!tasksByWo.has(t.wo)) tasksByWo.set(t.wo, []);
+  tasksByWo.get(t.wo).push(t.id);
+}
+for (const w of wos) {
+  const status = w.status ?? "";
+  if (!OPEN_WO_STATUS.has(status)) continue;
+  const covered = tasksByWo.get(w.id) ?? [];
+  const active = covered.filter((id) => {
+    const t = taskById.get(id);
+    return t && !CLOSED_TASK_STATUS.has(t.status);
+  });
+  if (!active.length) {
+    add("WO_SEM_TASK", `${w.id} (${status}) não tem task ativa no plano`);
+  }
+}
+
+/* ---------- regra 3: pendência órfã ---------- */
+for (const p of pending) {
+  const covered = tasks.some((t) => {
+    const covers = Array.isArray(t.covers) ? t.covers : [];
+    return covers.includes(p.id) || covers.includes(`${p.group}:${p.id}`);
+  });
+  const linked = p.wo && p.wo !== "UNRECONCILED" && woIds.has(p.wo);
+  if (!covered && !linked) {
+    add("PENDENCIA_ORFA", `${p.group}:${p.id} "${p.title.slice(0, 70)}" não está coberta por task nem vinculada a WO`);
+  }
+}
+
+/* ---------- regra 4: WO DONE sem evidência ---------- */
+for (const w of wos) {
+  if ((w.status ?? "") !== "DONE") continue;
+  const evidence = Array.isArray(w.evidence) ? w.evidence : [];
+  if (!evidence.length) add("DONE_SEM_EVIDENCIA", `${w.id} está DONE sem evidência`);
+}
+
+/* ---------- regra 5: task executada sem artefato ---------- */
+for (const t of tasks) {
+  const status = t.status ?? "";
+  if (status === "DONE" || status === "IN_PROGRESS") {
+    const artifacts = Array.isArray(t.artifacts) ? t.artifacts : [];
+    if (!artifacts.length) add("TASK_SEM_ARTEFATO", `${t.id} está ${status} sem artefato registrado`);
+  }
+}
+
+/* ---------- regra 6: lacunas de cobertura abertas ---------- */
+for (const gap of intake.coverageGaps ?? []) {
+  if ((gap.status ?? "") === "OPEN") {
+    add("GAP_ABERTO", `${gap.id}: ${gap.description}`);
+  }
+}
+
+/* ---------- relatório ---------- */
+const counts = violations.reduce((acc, v) => ((acc[v.code] = (acc[v.code] ?? 0) + 1), acc), {});
+console.log(
+  `[check-pending-coverage] ${wos.length} WOs · ${tasks.length} tasks · ${pending.length} pendências · ${(intake.coverageGaps ?? []).length} gaps`,
+);
+if (!violations.length) {
+  console.log("[check-pending-coverage] OK — cobertura integral sem violações.");
+  process.exit(0);
+}
+console.error(`[check-pending-coverage] ${violations.length} violação(ões):`);
+for (const [code, n] of Object.entries(counts)) console.error(`  ${code}: ${n}`);
+for (const v of violations) console.error(`  - ${v.code}: ${v.detail}`);
+process.exit(1);

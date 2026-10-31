@@ -33,4 +33,9 @@ mkdirSync(dirname(outPath),{recursive:true});
 writeFileSync(outPath,JSON.stringify(output,null,2)+'\n');
 console.log('[semantic-collision] '+JSON.stringify(output.counts));
 console.log('[semantic-collision] report='+outPath+' gate=HOLD_HUMAN');
-if(audit.unableToVerify.length)process.exit(2);
+if(audit.unableToVerify.length) {
+  console.log('[semantic-collision] REQUIRE_REVIEW '+JSON.stringify(audit.unableToVerify));
+  // Inventory succeeds with findings; never authorize a canonical winner.
+  // Strict callers may demand zero unresolved items and receive a nonzero exit.
+  if(args.includes('--require-clean'))process.exit(2);
+}

@@ -75,3 +75,13 @@ test('all 28 initially unmapped paths have explicit candidate WO owners, never f
   assert.equal(candidate.releaseGate,'HOLD_HUMAN');
  }
 });
+
+test('source suggestions must exist in actual collision lineages, never be invented',()=>{
+ const shell='src/components/site/shell.tsx';
+ const c=[{path:shell,sources:[{branch:'other-branch',blob:'a'.repeat(40)},{branch:'older-branch',blob:'b'.repeat(40)}]}];
+ assert.throws(()=>buildCanonicalTriage(c,{equivalent:[]}),/CANDIDATE_SOURCE_NOT_IN_CONFLICT/);
+});
+test('missing or non-Git blob source cannot become an approved conflict',()=>{
+ const c=[{path:'package.json',sources:[{branch:'A',blob:'not-a-blob'},{branch:'B',blob:'b'.repeat(40)}]}];
+ assert.throws(()=>buildCanonicalTriage(c,{equivalent:[]}),/INVALID_BLOB_LINEAGE/);
+});

@@ -74,9 +74,18 @@ export function buildCanonicalTriage(collisions,semantic){
   const equivalentPaths=new Set(semantic.equivalent.map(x=>x.path));
   const knownPaths=new Set(collisions.map(x=>x.path));
   if([...equivalentPaths].some(p=>!knownPaths.has(p)))throw Error('UNKNOWN_SEMANTIC_PATH');
-  const items=collisions.map(x=>({...triageCanonicalConflict(x.path,{equivalent:equivalentPaths.has(x.path)}),
-    sources:x.sources.map(s=>({branch:s.branch,blob:s.blob})),
-  })).sort((a,b)=>a.path.localeCompare(b.path));
+  const items=collisions.map(x=>{
+    if(!Array.isArray(x.sources)||x.sources.length<2)throw Error('MISSING_CONFLICT_LINEAGE');
+    if(x.sources.some(source=>typeof source.branch!=='string'||!/^([a-f0-9]{40}|[a-f0-9]{64})$/.test(source.blob??''))){
+      throw Error('INVALID_BLOB_LINEAGE');
+    }
+    const row=triageCanonicalConflict(x.path,{equivalent:equivalentPaths.has(x.path)});
+    if(row.candidateSource&&row.candidateSource.sourceBranch!=='main' &&
+       !x.sources.some(source=>source.branch===row.candidateSource.sourceBranch)){
+      throw Error('CANDIDATE_SOURCE_NOT_IN_CONFLICT');
+    }
+    return {...row,sources:x.sources.map(source=>({branch:source.branch,blob:source.blob}))};
+  }).sort((a,b)=>a.path.localeCompare(b.path));
   const counts={
     total:items.length,
     semanticEquivalent:items.filter(x=>x.preliminaryDisposition==='SEMANTIC_EQUIVALENT_NOT_ADMITTED').length,

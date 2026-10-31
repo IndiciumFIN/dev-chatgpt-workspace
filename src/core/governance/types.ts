@@ -61,9 +61,6 @@ export type WorkOrder = {
   owner: string;
   approver: string;
   sourceRef: string;
-  /** Legacy drafts may omit these, but admission requires both. */
-  findRef?: string;
-  taskRef?: string;
   policySet: string[];
   riskLevel: RiskLevel;
   dataClassification: DataClassification;
@@ -95,6 +92,6 @@ export type Manifest = {
 };
 
 export type KernelDecision =
-  | { outcome: "admit"; reason: string; evidenceHash: string; policyDecisionRef?: string }
+  | { outcome: "admit"; reason: string; evidenceHash: string }
   | { outcome: "hold"; reason: string; evidenceHash?: string }
   | { outcome: "reject"; reason: string; evidenceHash?: string };

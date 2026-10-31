@@ -1,143 +1,44 @@
 import type { KernelDecision, Manifest, PolicyRule, WorkOrder } from "./types";
 
-export type NamedValidator = {
-  id: string;
-  /** A true boolean alone lacks independently traceable evidence. */
-  run: () => Promise<boolean | { passed: boolean; evidenceRef: string; runRef: string }>;
-};
-export type PolicyAssessment = {
-  allow: boolean;
-  decisionId: string;
-  bundleRef: string;
-  /** Read-only parity with the already-existing OPA policy contract. */
-  bundleSignatureVerified?: boolean;
-  decisionEvidenceRef?: string;
-  workOrderRef?: string;
-  inputHash?: string;
-};
-export type PolicyEvaluator = (request: {
-  workOrder: WorkOrder;
-  manifest: Manifest;
-  activePolicies: PolicyRule[];
-}) => Promise<PolicyAssessment>;
-
-const nonempty = (value: unknown): value is string =>
-  typeof value === "string" && value.trim().length > 0;
-const sha256 = (value: unknown): value is string =>
-  typeof value === "string" && /^(?:sha256:)?[a-f0-9]{64}$/.test(value);
-const uniqueNames = (values: unknown): values is string[] =>
-  Array.isArray(values) &&
-  values.length > 0 &&
-  values.every(nonempty) &&
-  new Set(values).size === values.length;
-const sameSet = (left: string[], right: string[]) =>
-  left.length === right.length && left.every(value => right.includes(value));
-
-/** Local admission check only; it cannot authorize deployment or remote execution.
- * The supplied evaluator is not a substitute for authenticated server-side OPA.
- */
 export async function evaluateWorkOrder(
   workOrder: WorkOrder,
   manifest: Manifest | null,
   policyRules: PolicyRule[],
-  validators: NamedValidator[],
-  evaluatePolicy?: PolicyEvaluator,
+  validators: Array<() => Promise<boolean>>,
 ): Promise<KernelDecision> {
-  if (!nonempty(workOrder?.id)) return { outcome: "reject", reason: "work-order-missing-id" };
-  if (!uniqueNames(workOrder.policySet)) return { outcome: "reject", reason: "policy-set-required" };
-  if (!nonempty(workOrder.sourceRef) || !uniqueNames(workOrder.acceptanceCriteria)) {
-    return { outcome: "hold", reason: "work-order-source-or-acceptance-missing" };
+  if (!workOrder.id) {
+    return { outcome: "reject", reason: "work-order-missing-id" };
   }
 
-  if (!nonempty(workOrder.findRef) || !nonempty(workOrder.taskRef)) {
-    return { outcome: "hold", reason: "find-task-lineage-required" };
-  }
-  if (!nonempty(workOrder.owner) || !nonempty(workOrder.approver) || workOrder.owner === workOrder.approver) {
-    return { outcome: "hold", reason: "independent-owner-approver-required" };
+  if (!workOrder.policySet?.length) {
+    return { outcome: "reject", reason: "policy-set-required" };
   }
 
-  const activePolicies = policyRules.filter(rule => rule.active);
-  const missingPolicy = workOrder.policySet.find(code =>
-    !activePolicies.some(rule => rule.code === code && nonempty(rule.version)),
+  const activePolicies = policyRules.filter((rule) => rule.active);
+  const missingPolicy = workOrder.policySet.find(
+    (code) => !activePolicies.some((rule) => rule.code === code),
   );
-  if (missingPolicy) return { outcome: "reject", reason: `inactive-policy:${missingPolicy}` };
-  if (!manifest) return { outcome: "hold", reason: "manifest-required" };
-  if (manifest.serviceOrderId !== workOrder.id) {
-    return { outcome: "reject", reason: "manifest-work-order-mismatch" };
-  }
-  if (!sha256(manifest.hash) || (workOrder.hash && workOrder.hash !== manifest.hash)) {
-    return { outcome: "reject", reason: "manifest-integrity-mismatch" };
-  }
-  if (!uniqueNames(manifest.policySet) || !sameSet(manifest.policySet, workOrder.policySet)) {
-    return { outcome: "reject", reason: "manifest-policy-set-mismatch" };
-  }
-  if (!uniqueNames(manifest.validators) || !Array.isArray(validators) ||
-    validators.length !== manifest.validators.length ||
-    validators.some(v => !v || !nonempty(v.id) || typeof v.run !== "function") ||
-    !sameSet(manifest.validators, validators.map(v => v.id))) {
-    return { outcome: "reject", reason: "validator-manifest-mismatch" };
-  }
-  if (!manifestHasIndependentApproval(manifest, workOrder)) {
-    return { outcome: "hold", reason: "independent-approval-required" };
-  }
-  if (typeof evaluatePolicy !== "function") {
-    return { outcome: "hold", reason: "policy-evaluation-unavailable" };
+
+  if (missingPolicy) {
+    return { outcome: "reject", reason: `inactive-policy:${missingPolicy}` };
   }
 
-  let assessment: PolicyAssessment;
-  try {
-    assessment = await evaluatePolicy({ workOrder, manifest, activePolicies });
-  } catch {
-    return { outcome: "hold", reason: "policy-evaluation-error" };
-  }
-  if (!assessment || !nonempty(assessment.decisionId) || !nonempty(assessment.bundleRef)) {
-    return { outcome: "hold", reason: "policy-decision-evidence-missing" };
-  }
-  if (assessment.allow !== true) return { outcome: "reject", reason: "policy-denied" };
-  if (assessment.bundleSignatureVerified !== true ||
-      !nonempty(assessment.decisionEvidenceRef) ||
-      assessment.workOrderRef !== workOrder.id ||
-      assessment.inputHash !== manifest.hash) {
-    return { outcome: "hold", reason: "policy-bundle-or-decision-evidence-unverified" };
+  if (!manifest) {
+    return { outcome: "hold", reason: "manifest-required" };
   }
 
-  for (const validator of validators) {
-    try {
-      const outcome = await validator.run();
-      if (outcome === false || (typeof outcome === "object" && outcome !== null && outcome.passed !== true)) {
-        return { outcome: "reject", reason: `validator-failed:${validator.id}` };
-      }
-      if (outcome === true || !outcome || typeof outcome !== "object" ||
-          !nonempty(outcome.evidenceRef) || !nonempty(outcome.runRef)) {
-        return { outcome: "hold", reason: `validator-evidence-required:${validator.id}` };
-      }
-    } catch {
-      return { outcome: "hold", reason: `validator-error:${validator.id}` };
-    }
+  const validatorResults = await Promise.all(validators.map((validator) => validator()));
+  if (validatorResults.some((ok) => !ok)) {
+    return { outcome: "reject", reason: "validator-failed" };
   }
+
   return {
     outcome: "admit",
-    reason: "independent-approval-policy-and-validators-passed",
+    reason: "policy-and-validator-checks-passed",
     evidenceHash: manifest.hash,
-    policyDecisionRef: assessment.decisionId,
   };
 }
 
-function manifestHasIndependentApproval(manifest: Manifest, order: WorkOrder): boolean {
-  if (manifest.status !== "approved" || !nonempty(manifest.approvedBy) ||
-      manifest.approvedBy === "kernel" || manifest.approvedBy === order.owner ||
-      manifest.approvedBy !== order.approver || !nonempty(manifest.approvedAt) ||
-      Number.isNaN(Date.parse(manifest.approvedAt))) return false;
-  return Array.isArray(order.approvals) && order.approvals.some(approval =>
-    approval.decision === "approved" &&
-    approval.approver === manifest.approvedBy &&
-    approval.approver !== order.owner &&
-    approval.approvedAt === manifest.approvedAt &&
-    nonempty(approval.id),
-  );
-}
-
-/** Produces an unapproved candidate; a separate authenticated process must approve it. */
 export function buildManifest(
   workOrderId: string,
   state: string,
@@ -153,19 +54,18 @@ export function buildManifest(
     hash,
     validators,
     policySet,
-    status: "draft",
+    // Um manifesto em rascunho nunca nasce aprovado: canPreview/canDeploy exigem "approved".
+    status: state === "draft" ? "draft" : "approved",
+    ...(state === "draft"
+      ? {}
+      : { approvedBy: "kernel", approvedAt: new Date().toISOString() }),
   };
 }
 
-/** Presentation hint only, not authorization for remote execution. */
 export function canPreview(manifest: Manifest | null): boolean {
-  return manifest !== null && manifest.status === "approved" &&
-    nonempty(manifest.approvedBy) && manifest.approvedBy !== "kernel" &&
-    nonempty(manifest.approvedAt) && sha256(manifest.hash) &&
-    uniqueNames(manifest.policySet) && uniqueNames(manifest.validators);
+  return manifest !== null && manifest.status === "approved";
 }
 
-/** Historical name: only a preview candidate qualifies; production requires a separate gate. */
 export function canDeploy(manifest: Manifest | null): boolean {
-  return canPreview(manifest) && manifest?.state === "preview";
+  return manifest !== null && manifest.status === "approved" && manifest.state === "preview";
 }

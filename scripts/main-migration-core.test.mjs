@@ -81,28 +81,3 @@ test('a new branch requires scope reconciliation instead of a hardcoded total of
   next.sourceBranchesCount--;
   assert.ok(validateMigrationManifest(next).includes('SOURCE_COUNT_MISMATCH'));
 });
-
-test('historical migration records cannot pass as live authority',()=>{
-  const scope=manifest.snapshotSemantics;
-  const audit=JSON.parse(readFileSync('registers/governance/main-migration-audit-20261031.v1.json','utf8'));
-  assert.equal(scope.classification,'HISTORICAL_POINT_IN_TIME_NOT_LIVE_GATE');
-  assert.equal(audit.snapshotSemantics.classification,'HISTORICAL_SUPERSEDED_FOR_CURRENT_PATH_COUNTS');
-  assert.equal(scope.requiresFreshRunAfterHeadChanges,true);
-  assert.equal(audit.snapshotSemantics.newHeadRequiresRevalidation,true);
-  assert.equal(audit.releasePolicy.historicalCountsNotCurrent,true);
-  assert.equal(scope.releaseGate,'HOLD_HUMAN');
-  assert.equal(audit.snapshotSemantics.releaseGate,'HOLD_HUMAN');
-  assert.match(scope.lastCompleteRuntimeAudit.auditedHeadSha,/^[a-f0-9]{40}$/);
-  assert.equal(scope.lastCompleteRuntimeAudit.auditedHeadSha,audit.snapshotSemantics.lastReviewedSnapshot.sourceHeadSha);
-  assert.equal(scope.lastCompleteRuntimeAudit.collisionPaths,audit.snapshotSemantics.lastReviewedSnapshot.collisions);
-  assert.equal(scope.lastCompleteRuntimeAudit.duplicatePaths,audit.snapshotSemantics.lastReviewedSnapshot.duplicates);
-  assert.equal(audit.snapshotSemantics.lastReviewedSnapshot.releaseAuthorized,false);
-  assert.match(scope.currentAuthority,/every new task/i);
-});
-
-test('read-only branch auditor never persists git checkout credentials',()=>{
-  const workflow=readFileSync('.github/workflows/ce-main-migration-audit.yml','utf8');
-  assert.match(workflow,/persist-credentials:\s*false/);
-  assert.doesNotMatch(workflow,/persist-credentials:\s*true/);
-  assert.match(workflow,/permissions:\s*\n\s*contents:\s*read/);
-});

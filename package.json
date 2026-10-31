@@ -13,9 +13,6 @@
     "audit:clean:check": "node scripts/clean-directory.mjs",
     "audit:context": "node scripts/check-context-invariants.mjs",
     "audit:navigation": "node scripts/audit-navigation-contracts.mjs",
-    "audit:branches:canonical": "node scripts/audit-branch-canonicalization.mjs",
-    "audit:branches:triage": "node scripts/audit-live-branch-triage.mjs",
-    "canonicalize:i18n:verified-drafts": "node scripts/canonicalize-semantic-i18n-drafts.mjs",
     "predev": "node scripts/version-register.mjs snapshot dev before",
     "postdev": "node scripts/version-register.mjs snapshot dev after",
     "prebuild": "node scripts/version-register.mjs snapshot build before && node scripts/generate-sitemap.mjs",
@@ -67,12 +64,15 @@
     "audit:focus-colors:i18n": "node scripts/test-focus-colors-i18n.mjs",
     "contracts:generate": "node scripts/generate-entity-contracts.mjs",
     "audit:contracts": "node scripts/check-contract-coverage.mjs",
-    "audit:curiosidades": "node scripts/test-curiosidades-snapshot.mjs",
     "audit:country-icons": "node --experimental-strip-types --import ./scripts/alias-hook.mjs scripts/test-country-icons.mjs",
     "content:generate": "node scripts/generate-article-index.mjs && node scripts/generate-entity-contracts.mjs",
     "build:spa": "node scripts/check-generated-fresh.mjs && node scripts/check-cko-packages.mjs && node scripts/test-admin-console.mjs && npm run typecheck && npm test && node scripts/audit-execution-gates.mjs && SPA_BUILD=1 node scripts/with-app-env.mjs vite build && node scripts/materialize-static-routes.mjs",
     "audit:brazil": "node scripts/audit-brazil-first.mjs",
-    "audit:templates": "node --experimental-strip-types --import ./scripts/alias-hook.mjs scripts/audit-templates.mjs"
+    "audit:templates": "node --experimental-strip-types --import ./scripts/alias-hook.mjs scripts/audit-templates.mjs",
+    "audit:branches:canonical": "node scripts/audit-branch-canonicalization.mjs",
+    "audit:branches:triage": "node scripts/audit-live-branch-triage.mjs",
+    "canonicalize:i18n:verified-drafts": "node scripts/canonicalize-semantic-i18n-drafts.mjs",
+    "audit:curiosidades": "node scripts/test-curiosidades-snapshot.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",

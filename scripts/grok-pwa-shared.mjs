@@ -450,8 +450,14 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   const missing = grokPwaHeadTags(appName)
     .filter(([key]) => {
-      if (key === "manifest") return !next.includes('href="/__grok/manifest.webmanifest"');
-      if (key === "apple-touch-icon") return !next.includes('href="/__grok/icon-180.png"');
+      // A checagem é pela TAG, não pelo href. Antes ela perguntava "o documento
+      // já tem ESTE href?" — então um documento que declarava o próprio ícone
+      // ainda recebia o ícone padrão da plataforma por baixo, e como iOS costuma
+      // ficar com a última ocorrência, o ícone errado vencia.
+      // O ícone e o manifest da plataforma são PADRÃO, não override: só entram
+      // quando o documento realmente não declara nenhum.
+      if (key === "manifest") return !/<link[^>]+rel=["']manifest["']/.test(next);
+      if (key === "apple-touch-icon") return !/<link[^>]+rel=["']apple-touch-icon["']/.test(next);
       return !next.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);

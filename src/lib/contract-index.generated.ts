@@ -38,14 +38,6 @@ export const contractRoutes = [
     "file": "src/routes/blog.$slug.tsx"
   },
   {
-    "id": "CE-ROUTE-blog.index",
-    "file": "src/routes/blog.index.tsx"
-  },
-  {
-    "id": "CE-ROUTE-central-comando",
-    "file": "src/routes/central-comando.tsx"
-  },
-  {
     "id": "CE-ROUTE-conta",
     "file": "src/routes/conta.tsx"
   },
@@ -76,18 +68,6 @@ export const contractRoutes = [
   {
     "id": "CE-ROUTE-institucional",
     "file": "src/routes/institucional.tsx"
-  },
-  {
-    "id": "CE-ROUTE-kids.$section",
-    "file": "src/routes/kids.$section.tsx"
-  },
-  {
-    "id": "CE-ROUTE-kids.index",
-    "file": "src/routes/kids.index.tsx"
-  },
-  {
-    "id": "CE-ROUTE-kids",
-    "file": "src/routes/kids.tsx"
   },
   {
     "id": "CE-ROUTE-login",
@@ -124,10 +104,6 @@ export const contractRoutes = [
   {
     "id": "CE-ROUTE-sistema",
     "file": "src/routes/sistema.tsx"
-  },
-  {
-    "id": "CE-ROUTE-viladocuidado",
-    "file": "src/routes/viladocuidado.tsx"
   }
 ] as const;
 export const contractTools = [

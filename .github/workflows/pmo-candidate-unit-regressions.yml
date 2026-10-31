@@ -4,6 +4,11 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/check-pmo-queue*'
+      - 'scripts/check-auth-invariant*'
+      - 'scripts/test-auth-secret-env.mjs'
+      - 'src/lib/auth/**'
+      - 'package.json'
+      - 'package-lock.json'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
@@ -27,6 +32,11 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/check-pmo-queue*'
+      - 'scripts/check-auth-invariant*'
+      - 'scripts/test-auth-secret-env.mjs'
+      - 'src/lib/auth/**'
+      - 'package.json'
+      - 'package-lock.json'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
@@ -68,6 +78,8 @@ jobs:
         run: |
           node scripts/check-pmo-queue.mjs
           node --test scripts/check-pmo-queue.test.mjs
+      - name: Verify Better Auth 1.7 client/server opt-in and no literal preview secret
+        run: node --test scripts/check-auth-invariant.test.mjs scripts/test-auth-secret-env.mjs
       - name: Run fail-closed coverage regressions
         run: node --test scripts/check-pending-coverage.test.mjs
       - name: Run per-pendency source-lineage regressions (candidate only)

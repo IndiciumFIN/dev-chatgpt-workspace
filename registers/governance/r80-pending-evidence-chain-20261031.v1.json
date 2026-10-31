@@ -8,7 +8,7 @@
     "r79Path": "registers/governance/r79-domain-wo-mapping-20261031.v1.json",
     "r79BlobSha": "6617b358f5774ed1a0299a38204dee0129c46e0e",
     "findRegisterPath": "registers/governance/find-register.v1.json",
-    "findRegisterBlobSha": "b6907c5ad9b8c39c6c3a0513a99cc3d3b25a1c2e",
+    "findRegisterBlobSha": "3982bf81720581ff9ceb75a644bd190533090710",
     "findRegisterStatus": "DRAFT_FOR_GOVERNED_REVIEW",
     "policyPath": "registers/governance/audit-policy.v1.json",
     "policyBlobSha": "258cf1eff0b5d53a323cdf0b69281ac194b3e302",
@@ -25,7 +25,8 @@
     "validatedApplicablePolicies": 0,
     "independentValidatorsExecuted": 0,
     "kernelAdmitted": 0,
-    "sourceWoUnreconciled": 31
+    "sourceWoUnreconciled": 31,
+    "registeredDraftFindMatches": 2
   },
   "rows": [
     {
@@ -41,7 +42,9 @@
         "declaredFindIds": [
           "FIND-PMO-COVERAGE-20261031"
         ],
-        "findIdsInOfficialRegister": [],
+        "findIdsInOfficialRegister": [
+          "FIND-PMO-COVERAGE-20261031"
+        ],
         "bodyPresent": true
       },
       "policy": {
@@ -638,7 +641,9 @@
         "declaredFindIds": [
           "FIND-CKO-IMPORT-ROUTE"
         ],
-        "findIdsInOfficialRegister": [],
+        "findIdsInOfficialRegister": [
+          "FIND-CKO-IMPORT-ROUTE"
+        ],
         "bodyPresent": true
       },
       "policy": {
@@ -1117,7 +1122,8 @@
     "The source evidence exists, but no per-item FIND/policy/validator/Kernel chain is admitted.",
     "Current audit policy populationStatus TODO; listing its file is not proof of rule applicability.",
     "The P0-04 scanner exists in an independent Simulados branch, but execution is not asserted by this record.",
-    "Issue updates after observedAt require revalidation; Git source blobs are pinned."
+    "Issue updates after observedAt require revalidation; Git source blobs are pinned.",
+    "R81: FIND-PMO-COVERAGE-20261031 and FIND-CKO-IMPORT-ROUTE now in candidate find-register as DRAFT_FOR_GOVERNED_REVIEW; officialRegisteredAdmittedFindMatches remains zero."
   ],
   "verification": {
     "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213",
@@ -1131,6 +1137,19 @@
     },
     "securityInterpretation": "RPC scanner unit tests do not show original PostgreSQL permissions safe; direct anon/authenticated E2E and 47 migration replay still NOT_RUN",
     "admission": "NOT_VERIFIED",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "r81FindCandidates": {
+    "date": "2026-10-31",
+    "count": 2,
+    "ids": [
+      "FIND-PMO-COVERAGE-20261031",
+      "FIND-CKO-IMPORT-ROUTE"
+    ],
+    "status": "DRAFT_FOR_GOVERNED_REVIEW",
+    "policyApplicability": "NOT_VALIDATED",
+    "validatorAdmission": "NOT_VERIFIED",
+    "kernelAdmission": "NOT_VERIFIED",
     "releaseGate": "HOLD_HUMAN"
   }
 }

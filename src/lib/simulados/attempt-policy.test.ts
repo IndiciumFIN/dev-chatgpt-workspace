@@ -12,3 +12,10 @@ assert(!canRevealAnswers({...baseline,state:"GRADED",visibility:"POST_COMPLETION
 assert(!canRevealAnswers({...baseline,mode:"SIMULADO",visibility:"STUDY_EXPLICIT"}).allow,"no study permissions in simulation");
 assert(canRevealAnswers({...baseline,mode:"ESTUDO",visibility:"STUDY_EXPLICIT"}).allow,"explicit study access");
 assert(!maySubmit("CREATED").allow && maySubmit("IN_PROGRESS").allow,"submit state check");
+
+assert(!canRevealAnswers({...baseline,policyVersion:""}).allow,"policy version is required");
+assert(!canRevealAnswers({...baseline,requesterId:null,state:"GRADED",visibility:"POST_COMPLETION"}).allow,"anonymous caller cannot reveal");
+assert(!canRevealAnswers({...baseline,state:"VOID",visibility:"POST_COMPLETION"}).allow,"void attempt cannot reveal");
+assert(!canRevealAnswers({...baseline,state:"CLOSED",visibility:"HIDDEN"}).allow,"hidden answers stay hidden after closing");
+assert(canRevealAnswers({...baseline,state:"CLOSED",visibility:"POST_COMPLETION"}).allow,"closed owner may review");
+assert(!maySubmit("SUBMITTED").allow && !maySubmit("GRADED").allow && !maySubmit("VOID").allow,"no repeated or void submissions");

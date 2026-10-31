@@ -19,7 +19,7 @@ export function assess({pr,reviews,main,expectedHead}){
  assert.equal(pr?.head?.ref,'plan/pmokernel-finalization-20261031','WRONG_CANDIDATE_BRANCH');
  assert.equal(pr?.state,'open','PR_NO_LONGER_OPEN_RECHECK_AUTHORITY');
  assert.equal(pr?.merged,false,'UNAUTHORIZED_MERGE');
- assert.equal(pr?.draft,false,'PR_NOT_READY_FOR_REVIEW');
+ assert.equal(typeof pr?.draft,'boolean','PR_DRAFT_STATUS_UNKNOWN');
  assert(HEAD_SHA.test(pr?.head?.sha??''),'HEAD_SHA_INVALID');
  assert(HEAD_SHA.test(expectedHead??''),'EXPECTED_SHA_INVALID');
  assert.equal(pr.head.sha,expectedHead,'PR_HEAD_DRIFT_FAIL_CLOSED');
@@ -59,9 +59,10 @@ export function assess({pr,reviews,main,expectedHead}){
  // identity signature, or Kernel admission. No output can auto-enable release.
  return {
   source:'GITHUB_LIVE_READ_ONLY',repository:REPO,pullRequest:26,headSha:expectedHead,baseSha:main.commit.sha,
-  reviewState:reviews.length===0?'NO_PR_REVIEWS':'PR_REVIEWS_REQUIRE_AUTHORIZED_HUMAN_INSPECTION',
+  reviewState:pr.draft?'DRAFT_HOLD':reviews.length===0?'NO_PR_REVIEWS':'PR_REVIEWS_REQUIRE_AUTHORIZED_HUMAN_INSPECTION',
+  draft:pr.draft,
   observedReviewRecords:reviews.length,reviewerRequests:requested.length,
-  independentCurrentHeadGithubApprovalCandidates:independentCurrentHead.length,
+  independentCurrentHeadGithubApprovalCandidates:pr.draft?0:independentCurrentHead.length,
   independentAnyHeadGithubApprovalCandidates:independentAnyHead.length,
   changesRequested:changesRequested.length,
   changedFiles:pr.changed_files,commits:pr.commits,mainProtected:main.protected,

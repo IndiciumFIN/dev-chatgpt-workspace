@@ -19,6 +19,70 @@ MAX_UNCOMPRESSED = 50 * 1024 * 1024
 MAX_ENTRY = 10 * 1024 * 1024
 
 
+
+def sql_executable_only(sql):
+    """Mask comments, literals and quoted identifiers; reject unclosed constructs.
+
+    This is a lexical preflight, not a SQL parser or evidence of pgTAP execution.
+    """
+    output = []
+    i = 0
+    while i < len(sql):
+        if sql.startswith("--", i):
+            end = sql.find("\n", i + 2)
+            if end < 0:
+                output.append(" ")
+                break
+            output.append("\n")
+            i = end + 1
+            continue
+        if sql.startswith("/*", i):
+            depth = 1
+            i += 2
+            while i < len(sql) and depth:
+                if sql.startswith("/*", i):
+                    depth += 1
+                    i += 2
+                elif sql.startswith("*/", i):
+                    depth -= 1
+                    i += 2
+                else:
+                    i += 1
+            if depth:
+                return None
+            output.append(" ")
+            continue
+        if sql[i] in ("'", '"'):
+            quote = sql[i]
+            i += 1
+            closed = False
+            while i < len(sql):
+                if sql[i] == quote:
+                    if i + 1 < len(sql) and sql[i + 1] == quote:
+                        i += 2
+                    else:
+                        i += 1
+                        closed = True
+                        break
+                else:
+                    i += 1
+            if not closed:
+                return None
+            output.append(" ")
+            continue
+        if sql[i] == "$":
+            tag = re.match(r"\$(?:[A-Za-z_][A-Za-z_0-9]*)?\$", sql[i:])
+            if tag:
+                end = sql.find(tag.group(), i + len(tag.group()))
+                if end < 0:
+                    return None
+                i = end + len(tag.group())
+                output.append(" ")
+                continue
+        output.append(sql[i])
+        i += 1
+    return "".join(output)
+
 def inspect(path):
     path = Path(path)
     with path.open("rb") as stream:
@@ -48,6 +112,7 @@ def inspect(path):
         plans = False
         rollbacks = False
         definer_count = 0
+        lexical_pass = False
         if safe_archive:
             try:
                 crc_pass = archive.testzip() is None
@@ -55,8 +120,10 @@ def inspect(path):
                     migration_sql = [archive.read(name).decode("utf-8") for name in migration_files]
                     test_sql = [archive.read(name).decode("utf-8") for name in test_files]
                     valid_utf8 = True
-                    plans = all(re.search(r"\bselect\s+plan\s*\(\s*\d+\s*\)", sql, re.I) for sql in test_sql)
-                    rollbacks = all(re.search(r"\brollback\s*;", sql, re.I) for sql in test_sql)
+                    test_code = [sql_executable_only(sql) for sql in test_sql]
+                    lexical_pass = all(code is not None for code in test_code)
+                    plans = lexical_pass and all(re.search(r"\bselect\s+plan\s*\(\s*\d+\s*\)", code, re.I) for code in test_code)
+                    rollbacks = lexical_pass and all(re.search(r"\brollback\s*;", code, re.I) for code in test_code)
                     definer_count = sum(len(re.findall(r"\bsecurity\s+definer\b", sql, re.I)) for sql in migration_sql)
             except (UnicodeDecodeError, zipfile.BadZipFile, RuntimeError, OSError):
                 crc_pass = False
@@ -75,6 +142,7 @@ def inspect(path):
             "zip_encrypted_entries": len(encrypted),
             "zip_size_limits_pass": size_safe,
             "sql_utf8_pass": valid_utf8,
+            "test_sql_lexical_pass": lexical_pass,
             "migration_count": len(migration_files),
             "migration_sequence_0001_0047": migration_complete,
             "test_count": len(test_files),

@@ -9,7 +9,7 @@ const cp=()=>({catalog:structuredClone(source),record:structuredClone(ledger)});
 const run=({catalog,record})=>validateR90(catalog,record,{sourceBytes:raw});
 test('R90: 410 source-derived service identities and six unresolved boundary groups',()=>{
  const result=run(cp());
- assert.deepEqual(result,{families:45,services:410,qualifiedKeys:410,ambiguousRawIds:4,semanticBoundaryGroups:6,releaseGate:'HOLD_HUMAN'});
+ assert.deepEqual(result,{families:45,catalogEntries:410,logicalServices:305,experienceCapabilityGroups:105,qualifiedKeys:410,ambiguousRawIds:4,semanticBoundaryGroups:6,releaseGate:'HOLD_HUMAN'});
  assert.deepEqual(Object.keys(EXACT_ID_COLLISIONS),['connector-registry','read-later','subscription','print']);
 });
 test('R90: source Git blob and sha256 pins cannot be forged',()=>{
@@ -70,4 +70,14 @@ test('R90: generated logical services remain CANDIDATE_HOLD, no fake PASS',()=>{
  assert.throws(()=>run(x),/R90_SERVICE_PROMOTION/);
  const y=cp();y.catalog.families[0].status='ADMITTED';
  assert.throws(()=>run(y),/R90_FAMILY_DRIFT/);
+});
+
+test('R90: 105 experience groups cannot be reclassified as 105 backend services',()=>{
+ const x=cp();
+ const f=x.catalog.families.find(x=>x.id==='preview');
+ assert.equal(f.services[0].kind,'EXPERIENCE_CAPABILITY_GROUP');
+ f.services[0].kind='LOGICAL_SERVICE';
+ assert.throws(()=>run(x),/R90_POPULATION_DRIFT/);
+ const y=cp();y.record.coverage.logicalServiceCount=410;
+ assert.throws(()=>run(y),/R90_COVERAGE_DRIFT/);
 });

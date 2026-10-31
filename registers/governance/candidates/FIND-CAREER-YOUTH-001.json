@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "canonical_id": "FIND-CAREER-YOUTH-001",
+  "version": "0.1.0",
+  "status": "OPEN_CANDIDATE",
+  "updated_at": "2026-10-26",
+  "title": "Carreira fragmentada e Portal do Jovem ausente no runtime",
+  "fact": "O repositório oficial possuía seção de concurso, Sites de Emprego e item de catálogo Carreira/concursos, mas não havia um domínio DB-first unificado de carreira nem projeção Portal do Jovem.",
+  "evidence_refs": [
+    "src/lib/template-catalog.ts#carreira-concursos",
+    "src/lib/sections.ts#emprego",
+    "src/lib/sections.ts#concurso"
+  ],
+  "treatment": "Materializar em branch isolada um domínio DB-first com projeções PROFESSIONAL e YOUTH, mantendo conteúdo editorial separado de objetos funcionais e sem banco remoto.",
+  "related_wo": "WO-CAREER-YOUTH-001"
+}

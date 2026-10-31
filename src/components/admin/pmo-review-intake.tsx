@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Download, FileCheck2 } from 'lucide-react';
 import review from '../../../registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json';
+import ownerAssent from '../../../registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json';
 
 /**
  * Local, non-binding preparation only. It never mutates the PMO queue, calls
@@ -59,13 +60,13 @@ export function PmoReviewIntake() {
     <section className="ce-admin-panel" data-testid="pmo-decision-review" aria-labelledby="pmo-decision-review-heading">
       <div className="ce-admin-panel-heading">
         <div>
-          <h2 id="pmo-decision-review-heading">Arbitragem PMO — quatro decisões pendentes</h2>
-          <p>Revisão preparatória da divergência entre cinco filas. Nenhuma revisão foi eleita.</p>
+          <h2 id="pmo-decision-review-heading">Arbitragem PMO — encaminhamentos registrados</h2>
+          <p>Quatro orientações aceitas na conversa, ainda sem assinatura, revisão independente ou admissão Kernel.</p>
         </div>
         <span className="ce-admin-indicator ce-admin-indicator--warn">HOLD_HUMAN</span>
       </div>
       <p className="ce-admin-detail-note">
-        Este formulário prepara uma <strong>minuta local, não uma aprovação</strong>. A decisão válida exige identidade verificada,
+        O registro <strong>R85 preserva a manifestação “aprovado”</strong> como concordância conversacional com as recomendações R84. Isto não é uma aprovação corporativa assinada. Este formulário prepara uma <strong>minuta local, não uma aprovação</strong>. A decisão com efeitos executivos exige identidade verificada,
         revisão independente e admissão assinada do Kernel. Os dados não são enviados nem persistidos.
       </p>
       <div className="ce-admin-review-list">
@@ -73,6 +74,11 @@ export function PmoReviewIntake() {
           <fieldset key={item.id} className="ce-admin-review-item" data-review-id={item.id}>
             <legend><strong>{index + 1}. {item.subject}</strong> <small>{item.id}</small></legend>
             <p className="ce-admin-review-observation">{item.sourceObservation}</p>
+            <p className="ce-admin-review-note" data-testid={'owner-assent-' + item.id}>
+              <strong>Orientação registrada em conversa:</strong>{' '}
+              {ownerAssent.choices.find(choice => choice.decisionId === item.id)?.selectedLabel ?? 'Sem declaração vinculada'}.
+              {' '}Identidade e assinatura não verificadas; sem efeito na WO.
+            </p>
             <label htmlFor={item.id + '-choice'}>Encaminhamento proposto</label>
             <select
               id={item.id + '-choice'}
@@ -115,6 +121,11 @@ export function PmoReviewIntake() {
           <FileCheck2 size={16} aria-hidden="true" /> Consultar o dossiê no GitHub
         </a>
       </div>
+      <p className="ce-admin-detail-note">
+        <strong>Encaminhamentos:</strong> {ownerAssent.outcome.ownerRecommendationsRecorded}/4 declarados na conversa;
+        {' '}0/4 assinados. <a href="https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json"
+        target="_blank" rel="noopener noreferrer">Consultar registro R85</a>.
+      </p>
       <p role="status" aria-live="polite" className="ce-admin-detail-note">{message || 'Sem decisão assinada; sem escrita remota.'}</p>
     </section>
   );

@@ -119,7 +119,7 @@ jobs:
         if: github.event_name == 'push' || github.event.pull_request.number == 26
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          R86_EXPECTED_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: node scripts/verify-r86-pr-review-evidence.mjs
       - name: Verify Better Auth 1.7 client/server opt-in and no literal preview secret
         run: node --test scripts/check-auth-invariant.test.mjs scripts/test-auth-secret-env.mjs

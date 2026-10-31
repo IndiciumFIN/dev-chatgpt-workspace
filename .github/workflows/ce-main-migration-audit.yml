@@ -145,7 +145,7 @@ jobs:
           if(r.counts.unresolvedWoMappings!==0||r.counts.candidateWoMappings!==expected)throw Error('UNASSIGNED_COLLISION_WO');
           if(r.counts.formallyApproved!==0||r.releaseGate!=='HOLD_HUMAN'||r.mainUpdated!==false)throw Error('FALSE_PROMOTION');
           if(r.items.some(x=>x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'||x.kernelAdmission!=='NOT_VERIFIED'))throw Error('FALSE_ITEM_DECISION');
-          console.log('PASS: all 115 mapped to explicit decision state (57 semantic), 0 authorized merges',JSON.stringify(r.counts));
+          console.log('PASS: all '+expected+' collision paths mapped; '+r.counts.semanticEquivalent+' semantic candidates; 0 authorized merges',JSON.stringify(r.counts));
           NODE
       - name: Test source-corpus provenance and licensing fail-closed rules
         run: node --test scripts/corpus-index.test.mjs

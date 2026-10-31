@@ -45,3 +45,19 @@ test('R79 unauthorized promotion and missing dependencies are vetoed',()=>{
 test('R79 proposed source name must match actual candidate record',()=>{
  const a=fixture();a.intake.openIssues[0].title='Other issue';assert.throws(()=>verify(a),/SOURCE_SCOPE_DRIFT/);
 });
+
+test('R82: independent R79 row integrity survives valid later planning revisions',()=>{
+ const a=fixture();
+ a.planSha='d'.repeat(40); // R79 initial plan blob stays pinned in register
+ a.plan.tasks[0].title='An unrelated later planning description';
+ const result=verify(a);
+ assert.equal(result.domainCandidates,1);
+ assert.equal(result.unmappedDomainCandidates,0);
+ assert.equal(result.formalAdmittedWos,0);
+});
+test('R82: source and queue blob pins remain immutable on later revisions',()=>{
+ const a=fixture();a.sourceSha='d'.repeat(40);
+ assert.throws(()=>verify(a),/SOURCE_BLOB_DRIFT/);
+ const b=fixture();b.queueSha='e'.repeat(40);
+ assert.throws(()=>verify(b),/SOURCE_BLOB_DRIFT/);
+});

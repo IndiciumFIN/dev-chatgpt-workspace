@@ -149,7 +149,7 @@
         "scripts/check-register-schema.mjs",
         "scripts/check-register-schema.test.mjs"
       ],
-      "acceptance": "Falha fechada em schemaVersion/registerId/snapshotDate/completeness/releaseGate/policy ausentes ou inválidos, id duplicado, WO desconhecida, URL fora do repo e incoerência completeness x releaseGate. 7 testes negativos verdes; validado contra o inventário real (10 WOs, 13 pendências, 18 issues, 4 gaps) => OK."
+      "acceptance": "Falha fechada em schemaVersion/registerId/snapshotDate/completeness/releaseGate/policy ausentes ou inválidos, id duplicado, WO desconhecida, URL fora do repo e incoerência completeness x releaseGate. 10 testes negativos verdes; validado contra o inventário real (10 WOs, 13 pendências, 18 issues, 4 gaps) => OK."
     },
     {
       "id": "TASK-PLAN-010",
@@ -185,7 +185,7 @@
       "artifacts": [
         "scripts/check-pending-coverage.test.mjs"
       ],
-      "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 9 testes verdes (SKIP por insumo ausente, órfã por formato GH-<n>, falso-verde barrado)."
+      "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 12 testes verdes (SKIP por insumo ausente, órfã por formato GH-<n>, falso-verde barrado)."
     },
     {
       "id": "TASK-PLAN-012",
@@ -631,5 +631,34 @@
       "artifacts": [],
       "acceptance": "WO-HOM-001 permanece HOLD_HUMAN em todas as revisões da fila; nenhum merge, deploy ou migração aplicada antes de decisão verificável de admissão (TASK-PLAN-002)."
     }
-  ]
+  ],
+  "candidateVerification": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41218965895",
+    "date": "2026-10-31",
+    "coverageTests": {
+      "passed": 12,
+      "total": 12
+    },
+    "schemaTests": {
+      "passed": 10,
+      "total": 10
+    },
+    "kernelTests": {
+      "passed": 17,
+      "total": 17
+    },
+    "realData": {
+      "pmoWos": 10,
+      "tasks": 35,
+      "simulados": 13,
+      "issues": 18,
+      "pending": 31,
+      "orphanPendencies": 0,
+      "wosWithoutTask": 0,
+      "openGaps": 4,
+      "coverageExitCode": 1,
+      "releaseGate": "HOLD_HUMAN"
+    },
+    "note": "Candidate tests PASS; real-data gate intentionally exits 1 on 4 unresolved gaps; no Kernel admission or release."
+  }
 }

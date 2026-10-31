@@ -6,6 +6,7 @@ import {readFileSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
+import {checkR87Extension} from './validate-r87-task-extension.mjs';
 function guard(ok,code){if(!ok)throw Error(code);}
 export function gitBlobSha(raw){
  return createHash('sha1').update(Buffer.from('blob '+raw.length+'\0')).update(raw).digest('hex');
@@ -39,10 +40,12 @@ export function verify({intake,queue,plan,register,sourceSha,queueSha,planSha}){
  // Historical R79 mapping covers exactly the initial 37+31 tasks.
  // Later specialist tasks may exist only through their separately guarded
  // provenance register; never redefine the original 31 candidate coverage.
- const historic=register.coverage.currentPlanTasks,addon=plan.r86SupplementalTaskIntake;
- const additional=addon?.additionalAuditTaskCount??0;
+ const historic=register.coverage.currentPlanTasks,addon=plan.r86SupplementalTaskIntake,scoped=plan.r87ScopedTaskExpansion;
+ const additional=scoped ? scoped.extensionCount : addon?.additionalAuditTaskCount??0;
  guard(historic===register.coverage.oldPlanTasks+unresolved.length && Number.isSafeInteger(additional) && additional>=0 && plan.tasks.length===historic+additional,'PLAN_COUNT_DRIFT');
- if(additional){
+ if(scoped){
+  guard(checkR87Extension(plan,woIds)===24,'R87_EXTENSION_INCOMPLETE');
+ }else if(additional){
   const ids=['TASK-PLAN-090','TASK-PLAN-091','TASK-PLAN-092','TASK-PLAN-093'];
   guard(additional===4 && addon.state==='CANDIDATE_ONLY_NOT_KERNEL_ADMITTED' && addon.originalBaselineTasks===register.coverage.oldPlanTasks && addon.r79SourceCandidateTasks===unresolved.length && addon.resultingTaskCount===historic+additional && addon.sourceCommit==='d5ca82bf99499878a4b4c034078f9edd7089d9bf' && addon.approval==='NOT_APPROVED' && addon.kernelAdmission==='NOT_VERIFIED' && addon.releaseGate==='HOLD_HUMAN' && addon.authorizedWoStatusChanges===false && addon.additionalWosAdmitted===0,'UNVERIFIED_ADDITIONAL_AUDIT_TASKS');
   guard(Array.isArray(addon.tasks) && addon.tasks.length===4 && addon.tasks.map(t=>t.id).join(',')===ids.join(',') && plan.tasks.slice(historic).map(t=>t.id).join(',')===ids.join(','),'ADDITIONAL_TASK_IDS_DRIFT');

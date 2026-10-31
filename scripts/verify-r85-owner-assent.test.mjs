@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {load,validate} from './verify-r85-owner-assent.mjs';
-const sample=()=>structuredClone(load());
+const sample=()=>{const x=structuredClone(load());x.pinnedBytes=Object.fromEntries(Object.entries(x.pinnedBytes).map(([k,v])=>[k,Buffer.from(v)]));return x;};
 test('R85 four recommended paths recorded as conversation assent, zero formal admission',()=>{
  const r=validate(load());
  assert.equal(r.conversationRecommendationsRecorded,4);

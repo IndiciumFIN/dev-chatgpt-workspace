@@ -1118,5 +1118,19 @@
     "Current audit policy populationStatus TODO; listing its file is not proof of rule applicability.",
     "The P0-04 scanner exists in an independent Simulados branch, but execution is not asserted by this record.",
     "Issue updates after observedAt require revalidation; Git source blobs are pinned."
-  ]
+  ],
+  "verification": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213",
+    "sha": "2793f70774898512d92b2bfd26af671f4ac4f584",
+    "result": "PASS_CANDIDATE_ONLY",
+    "checks": {
+      "r80NegativeAndPositiveTests": "8/8 PASS",
+      "simuladosRpcStaticUnitTests": "11/11 PASS",
+      "fullBlobPinRevalidation": "13/13 doc rows + 2 scanner files verified",
+      "githubIssueSnapshots": "18 issue metadata read; no GitHub API live re-fetch inside CI"
+    },
+    "securityInterpretation": "RPC scanner unit tests do not show original PostgreSQL permissions safe; direct anon/authenticated E2E and 47 migration replay still NOT_RUN",
+    "admission": "NOT_VERIFIED",
+    "releaseGate": "HOLD_HUMAN"
+  }
 }

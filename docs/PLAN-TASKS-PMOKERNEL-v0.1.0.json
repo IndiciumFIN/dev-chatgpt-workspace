@@ -37,7 +37,11 @@
         "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
         "scripts/verify-pmo-fork-lineage.mjs",
         "scripts/verify-pmo-fork-lineage.test.mjs",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+        "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+        "scripts/verify-r84-pmo-decision-intake.mjs",
+        "scripts/verify-r84-pmo-decision-intake.test.mjs",
+        "src/components/admin/pmo-review-intake.tsx"
       ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
@@ -58,7 +62,11 @@
         "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
         "scripts/verify-pmo-fork-lineage.mjs",
         "scripts/verify-pmo-fork-lineage.test.mjs",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+        "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+        "scripts/verify-r84-pmo-decision-intake.mjs",
+        "scripts/verify-r84-pmo-decision-intake.test.mjs",
+        "src/components/admin/pmo-review-intake.tsx"
       ],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
@@ -1919,6 +1927,23 @@
     "kernelAdmission": "NOT_VERIFIED",
     "sourceQueuesModified": false,
     "eventsReplayed": false,
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "r84DecisionIntake": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_REVIEW_UNSUBMITTED",
+    "ownerDecisionsAwaited": 4,
+    "ownerIdentityVerified": false,
+    "checkerReviewsVerified": 0,
+    "kernelAdmissionsVerified": 0,
+    "reviewPacket": "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+    "ui": "src/components/admin/pmo-review-intake.tsx",
+    "validator": "scripts/verify-r84-pmo-decision-intake.mjs",
+    "tests": "scripts/verify-r84-pmo-decision-intake.test.mjs",
+    "reviewAction": "DOWNLOAD_UNSIGNED_LOCAL_DRAFT_ONLY",
+    "electedCanonicalRevision": null,
+    "mainChanged": false,
+    "sourceQueueChanged": false,
     "releaseGate": "HOLD_HUMAN"
   }
 }

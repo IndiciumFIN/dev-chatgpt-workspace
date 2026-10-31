@@ -7,6 +7,9 @@ on:
       - 'scripts/audit-main-migration.mjs'
       - 'scripts/lib/main-migration-core.mjs'
       - 'scripts/main-migration-core.test.mjs'
+      - 'scripts/lib/semantic-collision-audit.mjs'
+      - 'scripts/semantic-collision-audit.test.mjs'
+      - 'scripts/audit-i18n-collisions.mjs'
       - 'scripts/lib/corpus-index.mjs'
       - 'scripts/corpus-index.test.mjs'
       - 'scripts/index-source-corpus.mjs'
@@ -17,6 +20,9 @@ on:
       - 'scripts/audit-main-migration.mjs'
       - 'scripts/lib/main-migration-core.mjs'
       - 'scripts/main-migration-core.test.mjs'
+      - 'scripts/lib/semantic-collision-audit.mjs'
+      - 'scripts/semantic-collision-audit.test.mjs'
+      - 'scripts/audit-i18n-collisions.mjs'
       - 'scripts/lib/corpus-index.mjs'
       - 'scripts/corpus-index.test.mjs'
       - 'scripts/index-source-corpus.mjs'
@@ -54,6 +60,24 @@ jobs:
           if(r.releaseGate!=='HOLD_HUMAN' || r.migrationComplete!==false) throw Error('INVALID_RELEASE_CLAIM');
           console.log('PASS: all 23 branch source refs audited, migration still HOLD_HUMAN');
           console.log('SUMMARY:',JSON.stringify(r.summary));
+          NODE
+      - name: Verify semantic comparison safeguards
+        run: node --test scripts/semantic-collision-audit.test.mjs
+      - name: Inspect every cross-branch collision for approved German registry candidates
+        run: |
+          node scripts/audit-i18n-collisions.mjs \
+            --report audit-evidence/main-migration/runtime-report.json \
+            --output audit-evidence/main-migration/semantic-i18n-collisions.v1.json
+      - name: Verify semantic audit leaves release authority untouched
+        run: |
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const r=JSON.parse(readFileSync('audit-evidence/main-migration/semantic-i18n-collisions.v1.json','utf8'));
+          if(r.counts.sourceCollisions!==115)throw Error('CHANGED_COLLISION_BASELINE');
+          if(r.counts.unverifiable!==0)throw Error('UNVERIFIED_SOURCE_BLOB');
+          if(r.counts.semanticEquivalents+r.counts.substantiveOrNonAllowlisted!==115)throw Error('INCOMPLETE_COLLISION_SEMANTICS');
+          if(r.canonicalWinnerSelected!==false||r.releaseGate!=='HOLD_HUMAN')throw Error('UNAUTHORIZED_CANONICAL_DECISION');
+          console.log('PASS: i18n conflicts evaluated by content, not blob hash alone',JSON.stringify(r.counts));
           NODE
       - name: Test source-corpus provenance and licensing fail-closed rules
         run: node --test scripts/corpus-index.test.mjs
@@ -96,6 +120,8 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ce-main-migration-source-collision-report
-          path: audit-evidence/main-migration/runtime-report.json
+          path: |
+            audit-evidence/main-migration/runtime-report.json
+            audit-evidence/main-migration/semantic-i18n-collisions.v1.json
           retention-days: 30
 # No merge, no file contents exported, no DB writes or production release.

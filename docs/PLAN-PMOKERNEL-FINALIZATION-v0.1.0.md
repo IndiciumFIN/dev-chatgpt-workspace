@@ -335,3 +335,36 @@ Este checkpoint amplia R79 **sem considerar qualquer vínculo candidato como adm
 - [CI R80 #41234365213](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213) **SUCCESS**: verificador `scripts/verify-r80-evidence-chain.mjs` fez readback dos blobs dos Simulados; **8/8** testes R80 e **11/11** regressões estáticas RPC PASS. Isso valida o scanner e a integridade das fontes, **não** as ACLs, a segurança do banco original, a aplicação das 47 migrations ou testes end-to-end anon/authenticated.
 - Permanecem **31/31 source WOs `UNRECONCILED`**, apesar de 31 tarefas com WO candidata; `GAP-01..04` abertos, `WO-HOM-001=HOLD_HUMAN`, política por item não vinculada/aprovada. Sem merge/deploy/SQL/rotação OAuth.
 - Próximos passos: registrar FINDs não promovidos no fluxo canônico, analisar aplicabilidade das políticas e validadores por escopo e executar os testes de banco isolado, com autorização; para `GAP-02`, eleger revisão canônica da fila e obter admissão Kernel assinada antes de mudar qualquer WO oficial.
+
+---
+
+## 12. R81 — FINDs candidatos + exame direto do ZIP original dos Simulados (31/10/2026)
+
+### Registro de FIND sem promoção
+
+O registro existente `registers/governance/find-register.v1.json` passou de 8 para **11 FINDs**, com três novas entradas `DRAFT_FOR_GOVERNED_REVIEW`, `work_order=NOT_ADMITTED`, `mutation_allowed=false`, `policy_ref=PENDING_APPLICABILITY_REVIEW` e `validator_ref=PENDING_ADMISSION`:
+
+- `FIND-PMO-COVERAGE-20261031` — issue #25, fila/coverage/admissão; tasks `TASK-PLAN-005/013/059`.
+- `FIND-CKO-IMPORT-ROUTE` — issue #2, rota privada e identidade/runtime ainda não comprovados; tasks `TASK-PLAN-026/076`.
+- `FIND-SPE-RPC-ANSWER-EXPOSURE-20261031` — segurança do Simulados `P0-04`, mapeada a `TASK-PLAN-080` / WO de domínio candidata `WO-SEC-001`. Atenção: `WO-SPE-DB-FIRST-20261026-001` segue como outra WO documental candidata, ainda sem admissão corporativa.
+
+### Aquisição e avaliação real da fonte ZIP
+
+- O arquivo original `simulados-platform-next-cms-v1.4.0.zip` foi obtido **somente leitura** pela conta Google Drive que possui acesso ao ID `1O2drLtDpNoSl5Lk-GeOPRdaKzpsOJ2i9` (não disponível pela segunda conta).
+- SHA-256 calculado da fonte: `5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47`. Coincide com `docs/simulados-enfermagem/W11_EXECUTION_EVIDENCE_v0.1.0.json`.
+- Integridade ZIP (CRC): **PASS**; presença física: **47 SQL de migration**, sequência `0001..0047` sem lacunas, e **17 arquivos de teste SQL**. Esses dados não representam execução.
+- Varredura independente de leitura de conteúdo confirma em `0024_api_functions.sql` e `0031_cms_working_copies_option_lifecycle.sql` a declaração `api.evaluate_question`, retorno `correct_option_ids` e GRANT EXECUTE a `anon/authenticated`; em `0038_api_assessment_runtime.sql`, a `api.evaluate_question_set` é pública a esses papéis e chama `evaluate_question`.
+- Hash SHA-256 de cada uma dessas três SQL está preservado em `registers/governance/r81-simulados-original-rpc-static-20261031.v1.json`. O arquivo ZIP e os SQL integrais **não** foram introduzidos na branch pública.
+- A inspeção prova o **padrão vulnerável na fonte original**, **não** que a instância atual o deployou ou que as ACLs efetivas mantenham o comportamento. O scanner estático está sujeito a mudanças de privilégios, ordem de GRANT/REVOKE, `SECURITY DEFINER`, papéis e comportamento de runtime.
+
+### Validação CI — candidata, não de release
+
+- [GitHub Actions #41235128696](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235128696) **SUCCESS**. Gate `scripts/check-r81-original-rpc-find.mjs` confronta o registro R81 e a versão histórica de `W11`, veta afirmações de execução DB, homologação ou promoção, e passa **7 regressões**.
+- Cadeia de FIND R80 novamente conferida: **11 testes R80 PASS**, 2 FINDs declarados em issues agora registrados como DRAFT, 0 FINDs admitidos; **11 testes Python** do scanner estático dos Simulados PASS.
+- O CI **não obtém o ZIP privado do Drive**: compara evidências registradas, versão histórica e valida o scanner em fixtures. O exame dos bytes originais foi realizado somente nesta rodada, em ambiente de trabalho separado.
+
+### Estado de decisão
+
+`GAP-01..04` **OPEN**; `main` sem alterações; `WO-HOM-001=HOLD_HUMAN`. O trabalho restante de `P0-04` exige acesso autorizado a PostgreSQL isolado com 47 migrations e 17 testes, validação de grants/RLS por `anon` e `authenticated`, correção dos consumidores e aprovação de segurança independente. Não executar um `REVOKE` isolado em produção: pode quebrar os consumidores que chamam as funções legadas.
+
+Para `GAP-02`, nenhuma versão de fila foi eleita, não houve replay dos 28 eventos nem WO admitida. Falta proteger a `main`, revogar/rotacionar o segredo histórico do broker OAuth (#28) e executar os gates gerais sem falhas antes de qualquer promoção.

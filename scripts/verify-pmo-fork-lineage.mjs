@@ -123,16 +123,57 @@ export function verify({dossier,arbitration,sources}){
  assert(arbitration.decisionsRequired.every(x=>x.state==='NOT_ELECTED'),'AUTHORITY_DECISION_FORGED');
  return {sourceBranches:5,sourceOccurrences:[...occurrenceByPayload.values()].reduce((n,arr)=>n+arr.length,0),uniqueEvents:28,exclusiveEvents:8,seqCollisions:[20,21],workOrders:12,woVariants:7,authority:'NOT_ELECTED',replay:'NOT_AUTHORIZED',releaseGate:'HOLD_HUMAN'};
 }
+export function verifyDecisionPacket({packet,dossier,arbitration}){
+ assert.equal(packet?.recordId,'CE-R83-PMO-FORK-REVIEW-PACKET-20261031','DECISION_PACKET_ID_DRIFT');
+ assert.equal(packet.recordType,'DETERMINISTIC_RECONCILIATION_CANDIDATE_ONLY','DECISION_PACKET_NOT_CANDIDATE');
+ assert.equal(packet.reconstruction?.sourceEventOccurrences,112,'DECISION_OCCURRENCE_DRIFT');
+ assert.equal(packet.reconstruction?.distinctEventPayloads,28,'DECISION_EVENT_COUNT_DRIFT');
+ assert.equal(packet.reconstruction?.exclusiveEvents,8,'DECISION_EXCLUSIVE_COUNT_DRIFT');
+ assert.deepEqual(packet.reconstruction?.collidingSequenceNumbers,[20,21],'DECISION_COLLISION_DRIFT');
+ assert.equal(packet.reconstruction?.distinctWos,12,'DECISION_WO_DRIFT');
+ assert.equal(packet.candidateNonReplayEvents?.length,8,'NON_REPLAY_EVENTS_INCOMPLETE');
+ for(let i=0;i<8;i++){
+  const row=packet.candidateNonReplayEvents[i],event=dossier.eventLedger[20+i];
+  assert.equal(row.ledgerIndex,event.proposedSeq,'UNMATCHED_FORK_EVENT');
+  assert.equal(row.workOrder,event.payload.workId,'FORK_EVENT_WO_MISMATCH');
+  assert.equal(row.to,event.payload.to,'FORK_EVENT_STATUS_MISMATCH');
+  assert.equal(row.eventDate,event.payload.date,'FORK_EVENT_DATE_MISMATCH');
+  assert.deepEqual(row.originalOccurrences,event.originalOccurrences.map(x=>({
+   sourceBranch:x.sourceBranch,sourceBlobSha:x.sourceBlobSha,originalSeq:x.seq
+  })),'FORK_ORIGINAL_OCCURRENCE_MISMATCH');
+  assert.equal(row.treatment,'SOURCE_EVIDENCE_ONLY_NOT_REPLAYED','UNAUTHORIZED_EVENT_REPLAY');
+  assert.equal(row.replayAllowed,false,'UNAUTHORIZED_EVENT_REPLAY');
+  assert.equal(row.authorization,'NOT_ADMITTED','UNAUTHORIZED_EVENT_ADMISSION');
+ }
+ const required=arbitration.decisionsRequired.map(x=>x.id).sort();
+ assert.deepEqual(packet.decisionMatrix?.map(x=>x.id).sort(),required,'DECISION_MATRIX_INCOMPLETE');
+ assert(packet.decisionMatrix.every(x=>x.status==='NOT_ELECTED'&&x.recommendation&&x.requires),'DECISION_FALSE_APPROVAL');
+ assert.equal(packet.election?.chosenCanonicalRevision,null,'UNAUTHORIZED_CANONICAL_REVISION');
+ assert.equal(packet.election?.kernelAdmission,'NOT_VERIFIED','UNAUTHORIZED_KERNEL_ADMISSION');
+ assert.equal(packet.election?.eventReplay,'NOT_AUTHORIZED','UNAUTHORIZED_EVENT_REPLAY');
+ assert.equal(packet.election?.proposedEventIndexIsChronology,false,'FALSE_EVENT_CHRONOLOGY');
+ assert.equal(packet.election?.officialQueueModified,false,'UNAUTHORIZED_QUEUE_MUTATION');
+ assert.equal(packet.election?.unresolvedDecisions,4,'FALSE_DECISION_COMPLETION');
+ assert.equal(packet.policy?.noAutomaticReplay,true,'UNAUTHORIZED_REPLAY_POLICY');
+ assert.equal(packet.deletedOriginalEvents,0,'EVENT_HISTORY_LOST');
+ assert.equal(packet.admittedNewWos,0,'UNAUTHORIZED_WO_ADMISSION');
+ assert.equal(packet.mainChanged,false,'UNAUTHORIZED_MAIN');
+ assert.equal(packet.releaseGate,'HOLD_HUMAN','UNAUTHORIZED_RELEASE');
+ return {forkOnlyEvents:8,decisionsAwaitingAuthority:4,kernel:'NOT_VERIFIED',replay:'NOT_AUTHORIZED'};
+}
 export function load(root){
  const src=Object.fromEntries(SOURCES.map(x=>[x.branch,readFileSync(join(root,x.filename))]));
  const path=resolve('.');
  return {
   sources:src,
   dossier:JSON.parse(readFileSync(join(path,'registers/governance/pmo-fork-reconciliation-20261031.v1.json'),'utf8')),
-  arbitration:JSON.parse(readFileSync(join(path,'registers/governance/pmo-r77-arbitration-20261031.v1.json'),'utf8'))
+  arbitration:JSON.parse(readFileSync(join(path,'registers/governance/pmo-r77-arbitration-20261031.v1.json'),'utf8')),
+  packet:JSON.parse(readFileSync(join(path,'registers/governance/r83-pmo-fork-review-packet-20261031.v1.json'),'utf8'))
  };
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  assert(process.argv[2],'usage: node scripts/verify-pmo-fork-lineage.mjs <source-directory>');
- console.log('[R83-fork-lineage] PASS '+JSON.stringify(verify(load(resolve(process.argv[2])))));
+ const input=load(resolve(process.argv[2]));
+ console.log('[R83-fork-lineage] PASS '+JSON.stringify(verify(input)));
+ console.log('[R83-election-packet] PASS '+JSON.stringify(verifyDecisionPacket(input)));
 }

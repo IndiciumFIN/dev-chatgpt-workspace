@@ -40,7 +40,7 @@ const OWNERSHIP=Object.freeze({
 });
 const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function reject(code){throw Error(code);}
-const blobHash=b=>createHash('sha1').update(Buffer.from('blob '+b.length+'\\0')).update(b).digest('hex');
+const blobHash=b=>createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex');
 export function validateR90(catalog,record,{sourceBytes}={}){
  if(record?.schemaVersion!=='1.0.0'||record?.recordId!=='CE-R90-SERVICE-BOUNDARY-CANDIDATES-20261031'||record.recordType!=='GIT_PINNED_CANDIDATE_INVENTORY_NOT_ADMISSION'||record.state!=='OPEN_REVIEW_HOLD')reject('R90_RECORD_UNTRUSTED');
  if(sourceBytes && (blobHash(sourceBytes)!==SOURCE_GIT_BLOB_SHA||createHash('sha256').update(sourceBytes).digest('hex')!==SOURCE_SHA256))reject('R90_SOURCE_BYTES_DRIFT');

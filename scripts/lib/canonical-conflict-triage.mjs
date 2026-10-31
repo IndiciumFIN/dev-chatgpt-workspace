@@ -40,6 +40,8 @@ export function triageCanonicalConflict(path,{equivalent=false}={}){
   if(!wo){
     if(path==='.gitignore'||/^scripts\/(?:alias-hook|grok-pwa-plugin|grok-pwa-shared|migration-plan|with-app-env|write-atomic)(?:\.test)?\.mjs$/.test(path)){
       wo='WO-AUTO-001';priority='P1';domain='BUILD_AUTOMATION';
+    }else if(path==='scripts/header-entry.test.mjs'){
+      wo='WO-ADM-001';priority='P1';domain='ADMIN_HEADER_TEST';
     }else if(/^scripts\/(?:admin-ux-e2e|test-admin-console)\.mjs$/.test(path)){
       wo='WO-E2E-001';priority='P1';domain='ADMIN_TESTING';
     }else if(/^scripts\/brand-check\.test\.mjs$/.test(path)||/^src\/lib\/(?:chrome\.tsx|dictionary\.test\.ts)$/.test(path)){

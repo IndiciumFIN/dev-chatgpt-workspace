@@ -4,6 +4,9 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/check-pmo-queue*'
+      - 'scripts/verify-pmo-fork-lineage*'
+      - 'registers/governance/pmo-fork-reconciliation-20261031.v1.json'
+      - 'registers/governance/pmo-r77-arbitration-20261031.v1.json'
       - 'scripts/check-auth-invariant*'
       - 'scripts/check-better-auth-lock*'
       - 'scripts/test-auth-secret-env.mjs'
@@ -33,6 +36,9 @@ on:
     paths:
       - 'scripts/check-pending-coverage*'
       - 'scripts/check-pmo-queue*'
+      - 'scripts/verify-pmo-fork-lineage*'
+      - 'registers/governance/pmo-fork-reconciliation-20261031.v1.json'
+      - 'registers/governance/pmo-r77-arbitration-20261031.v1.json'
       - 'scripts/check-auth-invariant*'
       - 'scripts/check-better-auth-lock*'
       - 'scripts/test-auth-secret-env.mjs'
@@ -116,12 +122,49 @@ jobs:
           ref: fix/governed-activities-cli-20261026
           path: pmo-source
           persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-main (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          path: pmo-fork-main
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-editorial (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: work/editorial-canonical-learning-20261026
+          path: pmo-fork-editorial
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-idioma (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: idioma/consolidado-19
+          path: pmo-fork-idioma
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-preview (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: preview/central-comando-20261026
+          path: pmo-fork-preview
+          persist-credentials: false
       - name: Checkout Simulados evidence source (read only)
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: simulados-enfermagem-db-canonico
           path: spe-source
           persist-credentials: false
+      - name: Reconstruct R83 five-source fork lineage without replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$(mktemp -d)"
+          trap 'rm -rf "$root"' EXIT
+          cp pmo-fork-main/registers/pmo/queue.v1.json "$root/main.json"
+          cp pmo-source/registers/pmo/queue.v1.json "$root/governed.json"
+          cp pmo-fork-editorial/registers/pmo/queue.v1.json "$root/editorial.json"
+          cp pmo-fork-idioma/registers/pmo/queue.v1.json "$root/idioma.json"
+          cp pmo-fork-preview/registers/pmo/queue.v1.json "$root/preview.json"
+          node scripts/verify-pmo-fork-lineage.mjs "$root"
+          PMO_FORK_SOURCE_DIR="$root" node --test scripts/verify-pmo-fork-lineage.test.mjs
       - name: Reconcile R80 source documents against original Git blobs
         run: node scripts/verify-r80-evidence-chain.mjs . spe-source
       - name: Cross-check R81 ZIP risk against historical original inventory W11

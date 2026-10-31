@@ -26,9 +26,9 @@ function tree(ref){
 function rev(ref){return git('rev-parse','--verify',ref);}
 function remoteBranchRefs(){
   const refs=new Map();
-  for(const line of git('for-each-ref','--format=%(refname:short) %(objectname)','refs/remotes/origin').split('\\n')) {
+  for(const line of git('for-each-ref','--format=%(refname:short) %(objectname)','refs/remotes/origin').split('\n')) {
     if(!line) continue;
-    const m=/^origin\\/([^ ]+) ([a-f0-9]{40,64})$/.exec(line);
+    const m=/^origin\/([^ ]+) ([a-f0-9]{40,64})$/.exec(line);
     if(!m) throw Error('INVALID_REMOTE_REF:'+line);
     if(m[1]==='HEAD') continue;
     if(refs.has(m[1])) throw Error('DUPLICATE_REMOTE_REF:'+m[1]);

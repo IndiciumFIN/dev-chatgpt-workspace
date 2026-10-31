@@ -399,3 +399,40 @@ Para `GAP-02`, nenhuma versão de fila foi eleita, não houve replay dos 28 even
 - Dossiê: `registers/governance/r82-pmo-security-execution-20261031.v1.json`.
 - Todas as WOs oficiais preservadas; `TASK-PLAN-003`, `TASK-PLAN-015`, `TASK-PLAN-057`, `TASK-PLAN-080` tiveram evidências atualizadas no plano de **68 tasks**, sem alteração de `status`. `GAP-01..04` permanecem **OPEN**; aprovação/Kernel **NOT_VERIFIED**; `WO-HOM-001=HOLD_HUMAN`.
 - `main` não alterada, sem branch protection e sem merge/deploy. Antes de promover: rotação OAuth externa, decisão sobre revisão PMO, autorização assinada do Kernel, confirmação independente da segurança RPC, migrations/testes em DB descartável e homologação.
+
+---
+
+## 14. R83 — Reconciliação determinística dos cinco forks da fila PMO (31/10/2026)
+
+### Fonte e identidade
+
+Foram reabertas cinco cópias reais de `registers/pmo/queue.v1.json` pelo conector GitHub, sem modificar nenhum arquivo original. Foram conferidos os blob SHAs:
+
+| Branch | Revisão | WOs | Eventos | Blob SHA |
+|---|---:|---:|---:|---|
+| `main` | 18 | 10 | 20 | `c713557a808857eab9952e511d1f2a10bfa6f828` |
+| `fix/governed-activities-cli-20261026` | 20 | 10 | 20 | `80c5d327411287132f23caa0ace817d7d356edb8` |
+| `work/editorial-canonical-learning-20261026` | 19 | 10 | 21 | `84f9e1ad8ffa8baf785eb8370facbf258ada3160` |
+| `idioma/consolidado-19` | 21 | 12 | 25 | `e7d77e9467ee6f6c6a7483de0d8b2b64f673cef5` |
+| `preview/central-comando-20261026` | 23 | 12 | 26 | `e60a017b0ffd55d8d0976abea76fa3f0b15fb8cb` |
+
+O verificador `scripts/verify-pmo-fork-lineage.mjs` reconstitui **112 ocorrências**, compara **28 eventos distintos** linha a linha com os originais, prova a preservação dos **20 eventos base**, identifica **8 eventos adicionais** e verifica as colisões nos números de sequência **20 e 21**. Compara as **12 WOs distintas** e sete variantes de cadastro. A posição `proposedSeq` é índice de evidência, *não* sequência de replay autorizada.
+
+### Tratamento dos conflitos
+
+- `WO-ADM-001`: `PAUSED` na variante antiga × `IN_PROGRESS` com autorização limitada ao Commander local; não generalizar a autorização.
+- `WO-CKO-001`: `QUEUED` no baseline × `IN_PROGRESS` para piloto técnico Apgar/Fugulin; piloto não equivale à homologação clínica.
+- `WO-CKO-ID-009` e `WO-CKO-LINK-010`: presentes apenas nas variantes posteriores; não são WOs admitidas do Kernel.
+- A auditoria de sequência conserva todas as ocorrências, incluindo ramos com números originais iguais e payloads distintos, e nunca escolhe implicitamente o evento mais recente.
+
+O novo pacote `registers/governance/r83-pmo-fork-review-packet-20261031.v1.json` documenta os oito eventos adicionais, fontes/SHAs, o tratamento `SOURCE_EVIDENCE_ONLY_NOT_REPLAYED` e as quatro decisões pendentes (`R77-PMO-001..004`). **A proposta técnica é preservar a rev18 como referência provisória**, carregar as evidências das demais branches em sidecar e obter decisão específica do proprietário e do Kernel antes de qualquer escolha/replay/WO adicional. `chosenCanonicalRevision=null`; `eventReplay=NOT_AUTHORIZED`.
+
+### Testes
+
+[GitHub Actions R83 #41237098599](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599) **SUCCESS**: reconstrução real dos cinco arquivos e **13 testes R83**, incluindo falsificação de SHA, origem, evento, WO, estado, replay, cronologia, admissão e eleição. O validador também veta documento de decisão alterado. O primeiro CI encontrou uma asserção de erro desatualizada em um teste negativo; a correção não mudou o comportamento do gate e a suíte foi reexecutada com sucesso.
+
+`TASK-PLAN-001` foi atualizada para explicitar cinco revisões (antes citava quatro); `TASK-PLAN-001/002` receberam links para os artefatos. Plano permanece com **68 tasks**, sem promoção de estados formais.
+
+### Autoridade
+
+`GAP-02` **continua OPEN / NOT_ELECTED**, e `GAP-01/03/04` continuam abertos. Não houve alteração na fila oficial, exclusão ou replay dos eventos, admissão Kernel, merge, deploy ou operação de banco. As decisões eletivas e a assinatura Kernel **não podem ser substituídas por um CI verde**. `WO-HOM-001=HOLD_HUMAN`.

@@ -329,3 +329,26 @@ O esqueleto traz **tokens próprios** e é uma aplicação separada (rotas, stor
 ### Registo
 
 Evidência persistida em `docs/evidence/admin-area-2026-10-31/` (relatório + roadmap recebidos, sem alteração de conteúdo). Tarefas: `TASK-PLAN-059` (aplicar por reconciliação), `TASK-PLAN-060` (esqueleto x DS canônico), `TASK-PLAN-061` (provar os gates NOT_RUN).
+
+---
+
+## 16. R85 — Manifestação “aprovado” registrada para quatro encaminhamentos R84 (31/10/2026)
+
+O usuário respondeu **“aprovado”** imediatamente após a apresentação de quatro encaminhamentos recomendados na R84 e da necessidade de manifestação específica. Essa resposta é tratada como **concordância contextual com os quatro encaminhamentos** — não como mensagem enumerada individualmente, identidade autenticada, assinatura criptográfica ou admissão Kernel.
+
+A manifestação foi preservada no documento `registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json`, que aponta por Git blob SHA para as fontes R84, R83, aprovação operacional anterior e fila rev18. Quatro códigos foram registrados:
+
+1. `R77-PMO-001 = KEEP_REV18_PENDING_KERNEL`: manter a fila rev18 **somente como referência provisória**, sem eleição canônica, exclusão das variantes ou replay de eventos.
+2. `R77-PMO-002 = KEEP_LOCAL_COMMANDER_SCOPED`: manter `WO-ADM-001=IN_PROGRESS` somente para Commander **local**, sem nova autorização de IA externa, OAuth, banco ou execução de agentes remotos.
+3. `R77-PMO-003 = KEEP_CKO_QUEUED`: manter `WO-CKO-001=QUEUED` na fonte de referência e conservar o piloto técnico Apgar/Fugulin como evidência paralela, sem homologação clínica.
+4. `R77-PMO-004 = HOLD_EXTRA_WOS`: preservar `WO-CKO-ID-009` e `WO-CKO-LINK-010` e sete variantes como candidatas, sem admissão automática.
+
+**Estado:** `ownerRecommendationsRecorded=4`, mas `ownerAuthenticatedDecisions=0`, `independentCheckerApprovals=0`, `kernelAdmissionsVerified=0`. A declaração não contém timestamp preciso, ID fictício de mensagem, identidade confirmada nem assinatura. As quatro seleções no pacote R84 permanecem `null` intencionalmente, pois o R84 é a entrada **não assinada** e continua falhando fechado contra elevação de status. A R85 é o comprovante separado de manifestação na conversa.
+
+O verificador `scripts/verify-r85-owner-assent.mjs` reconcilia a declaração com a R84/R83 e com os Git blobs de origem, veta seleções diferentes, identidade/assinatura inventadas, checker/Kernel aprovados artificialmente e qualquer tentativa de eleger a fila, mover WOs, liberar CKO, publicar ou efetuar replay. `scripts/verify-r85-owner-assent.test.mjs` cobre nove cenários com casos positivos e negativos; ambos estão registrados no workflow PMO candidato.
+
+O painel `src/components/admin/pmo-review-intake.tsx` apresenta as quatro orientações aceitas na conversa e distingue **declaração de intenção** de **aprovação corporativa assinada**. O usuário ainda pode exportar uma minuta local não vinculante para revisão, sem chamada remota. `TASK-PLAN-001` permanece `PROPOSTO` e `TASK-PLAN-002` permanece `BLOCKED`; não foram alteradas as **68 tasks** nem a fila oficial.
+
+### Próximos gates obrigatórios, não dispensados pelo “aprovado”
+
+Autenticar identidade e escopo do proprietário → obter revisão independente maker/checker → validar política, manifesto, risco e evidências → conferir assinatura/admissão Kernel por decisão e WO → somente então executar transição versionada autorizada e verificar efeito. Enquanto isso: `GAP-01..04=OPEN`, `canonicalRevision=NOT_ELECTED`, `WO-HOM-001=HOLD_HUMAN`, sem merge, deploy, mudança em Supabase, rotação de segredo ou promoção clínica.

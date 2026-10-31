@@ -114,7 +114,18 @@
     "generalCIResult": "FAILURE_PMO_VALIDATION",
     "knownMergeRisk": "The PR includes older large src/styles.css changes unrelated to the login change; selective integration and diff review required.",
     "loginBehavior": "Entrar always visible and links to /login; when VITE_AUTH_ENABLED=false the page says sign-in is unavailable, no fake session.",
-    "releaseGate": "HOLD_HUMAN"
+    "releaseGate": "HOLD_HUMAN",
+    "newCandidate": {
+      "pr": 13,
+      "branch": "fix/governed-activities-cli-20261026",
+      "sha": "337b0338fd639762dc1ec3740cdfb4f0877a34bc",
+      "note": "Entrar moved to governed admin candidate without unrelated CSS diff; actual auth continues gated by VITE_AUTH_ENABLED",
+      "ciRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41227928335",
+      "ciResult": "SUCCESS",
+      "latestPreviewAttempt": "BLOCKED_VERCEL_FREE_DAILY_DEPLOYMENT_LIMIT",
+      "vercelError": "402 payment_required/api-deployments-free-per-day (more than 100 daily deployments) - preview not created",
+      "releaseGate": "HOLD_HUMAN"
+    }
   },
   "releasePolicy": {
     "mainUpdatedByThisAudit": false,
@@ -145,7 +156,40 @@
         "Editorial corpus/backup dedup and source rights",
         "Product modules, DB staging and clinical governance"
       ]
+    },
+    "semanticDedup": {
+      "equivalentPaths": 57,
+      "remainingPathReview": 58,
+      "resolvedForRelease": 0,
+      "doNotMergeReason": "No source authorization, PMO election or Kernel admission recorded for these paths",
+      "reviewPriority": [
+        "package.json and lockfile security",
+        "contracts/cko-governance/opa/kernel_admission.rego",
+        "registers/pmo/queue.v1.json",
+        "src/components/site/shell.tsx and src/routes/login.tsx",
+        "src/core/governance/kernel.ts and type contracts",
+        "German registry index/entry and 57 draft translation candidates"
+      ]
     }
   },
-  "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required."
+  "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required.",
+  "semanticCollisionAudit": {
+    "version": "1.0.0",
+    "date": "2026-10-31",
+    "method": "Normalize JSON object keys and order of unique provenance_refs only. Compare full normalized documents; never ignore value, status, other arrays or canonical IDs.",
+    "sourceRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41227985734",
+    "result": "CANDIDATE_AUDIT_PASS_RELEASE_HOLD",
+    "pathsInitiallyConflicting": 115,
+    "semanticEquivalentGermanTranslationContracts": 57,
+    "stillRequiringIndependentReconciliation": 58,
+    "unverifiable": 0,
+    "nonTranslationGermanRegistryFiles": [
+      "registers/i18n/incoming/de/index.json",
+      "registers/i18n/incoming/de/register-entry.json"
+    ],
+    "limitation": "Semantic equivalence is not approval of DRAFT translations, canonical-owner election or permission for main. The 58 others are not necessarily all textually distinct: most were outside the narrow allowlist.",
+    "sourceScript": "scripts/audit-i18n-collisions.mjs",
+    "tests": "scripts/semantic-collision-audit.test.mjs",
+    "releaseGate": "HOLD_HUMAN"
+  }
 }

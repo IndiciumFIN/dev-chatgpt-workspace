@@ -91,17 +91,17 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-005 | Land do inventário `CE-CROSS-SOURCE-PENDING-INTAKE` + validação de schema | WO-PMO-001 | 001 | JS | register no `main`; `registerId`/`schemaVersion`/`completeness` validados por script (fail-closed) | PROPOSTO |
 | TASK-PLAN-015 | Medir a superfície de segurança (Dependabot, code scanning, secret scanning) | WO-SEC-001 | — | CI | as 3 ferramentas falham com erro de conector ⇒ hoje é **"não medido"**, nunca "zero alertas"; registrar alertas por severidade + SHA afetado | PROPOSTO |
 | TASK-PLAN-016 | Destravar os 3 workflows do PR #24 em `action_required` | WO-SEC-001 | — | CI | `SPE Candidate Static Gates`, `Simulados RPC static regressions` e `Remediate better-auth candidate safely` executam (hoje aguardam aprovação ⇒ o PR #24 não tem veredito de CI) | PROPOSTO |
-| TASK-PLAN-017 | Validador de schema do inventário transversal | WO-PMO-001 | 005 | JS | falha fechada em campo ausente/inválido, id duplicado, WO desconhecida, URL fora do repo, incoerência `completeness`×`releaseGate`; **7 testes verdes**; validado contra o inventário real → OK | **DONE** (neste PR) |
+| TASK-PLAN-017 | Validador de schema do inventário transversal | WO-PMO-001 | 005 | JS | falha fechada em campo ausente/inválido, id duplicado, WO desconhecida, URL fora do repo, incoerência `completeness`×`releaseGate`; **12 testes verdes**; validado contra o inventário real → OK | **DONE** (neste PR) |
 
 ### Fase 1 — Gate de cobertura: de snapshot para invariante
 
-> **Nota de ativação (medida em 31/10):** um workflow **novo** só é despachado pelo GitHub depois de existir na branch padrão. Por isso o `pending-coverage-gate.yml` deste PR **não roda** no próprio PR #26 — e é por isso que ele **não** foi ligado ao `verify-bibliotecas.yml` (workflow já existente): alterá-lo agora colocaria o gate em todas as PRs do repositório **antes** de o inventário aterrissar, quebrando o CI de quem tem PR aberto. A sequência correta é `T0.005 → T0.013 → T0.001 → T0.012`. A verificação desta rodada foi **local** (`node --test` → 7/7; `python3 -m unittest` → 17/17) e o gate em si rodou no `verify` do PR #26: ele falha pelo motivo **pré-existente** `Protótipo deve permanecer congelado` (P1), sem falha nova causada pelos artefatos deste plano.
+> **Nota revisada em 31/10:** o workflow de **testes candidatos** `.github/workflows/pmo-candidate-unit-regressions.yml` roda na branch do PR #26 e confirmou 39/39 regressões, sem autorizar release. O **gate de cobertura para integração** `ci/pending-coverage-gate.yml` permanece não ativado: o resultado contra dados reais é vermelho por quatro GAP_ABERTO. Sequência de ativação mantida: T0.005 → T0.013 → T0.001 → T0.012. A falha do `verify` geral por contrato antigo do Commander não é aprovação de CI integral.
 
 
 | task | título | WO | deps | ling. | aceite | status |
 |---|---|---|---|---|---|---|
 | TASK-PLAN-010 | `scripts/check-pending-coverage.mjs` — re-deriva WOs × pendências × tasks | WO-PMO-001 | 005 | JS | violações `TASK_SEM_WO`, `TASK_WO_INEXISTENTE`, `WO_SEM_TASK`, `PENDENCIA_ORFA`, `DONE_SEM_EVIDENCIA`, `TASK_SEM_ARTEFATO`, `GAP_ABERTO` | **DONE** (neste PR) |
-| TASK-PLAN-011 | Testes negativos do gate | WO-PMO-001 | 010 | JS | 7 testes verdes (`node --test scripts/check-pending-coverage.test.mjs`), incluindo SKIP-when-absent | **DONE** (neste PR) |
+| TASK-PLAN-011 | Testes negativos do gate | WO-PMO-001 | 010 | JS | 12 testes verdes (`node --test scripts/check-pending-coverage.test.mjs`), incluindo SKIP-when-absent | **DONE** (neste PR) |
 | TASK-PLAN-012 | Ativar o gate no CI | WO-PMO-001 | 005, 010, 011 | CI | `ci/pending-coverage-gate.yml` copiado para `.github/workflows/` (escrita nessa pasta é bloqueada para a API do plugin) e gate **falhando fechado** quando houver gaps. **Ordem obrigatória:** T0.005 → T0.013 → T0.001 → só então `GAP_ABERTO` como erro | PROPOSTO (arquivo pronto em `ci/`; cópia exige owner) |
 | TASK-PLAN-013 | Vínculo das **18 issues** + **13 pendências Simulados** a WO/task | WO-PMO-001, WO-SEC-001 | 010, 005 | JS | `PENDENCIA_ORFA = 0` no gate; cada issue aberta tem task e cada task tem WO | PROPOSTO |
 | TASK-PLAN-014 | Consolidar os ~35 FINDs (R14–R47, CURI-R36–R40, SPE-R14–R35) em **uma baseline commitada por PR** | WO-PMO-001 | 012 | JS+PY | para cada PR auditado: um validador no repo, testes negativos, e o texto do FIND referenciando o blob **commitado** (hoje aponta para blobs que só existem em comentário) | PROPOSTO |
@@ -125,7 +125,7 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 |---|---|---|---|---|---|---|
 | TASK-PLAN-030 | `scripts/audit_data_kernel.py` — modo estático (SQL + conteúdo + registers) | WO-SEC-001 | 021 | PY | roda sem banco e sem dependências; exit 1 em erro, 2 em insumo ausente, 0 em warning | **DONE** (neste PR) |
 | TASK-PLAN-031 | Modo PostgreSQL read-only + **bootstrap PGlite que mata o ENOENT** | WO-SEC-001 | 030 | PY | `resolve_pg_target()` cria o dir; transação `READ ONLY` + rollback; psycopg ausente ⇒ warning, nunca crash | **DONE** (neste PR) |
-| TASK-PLAN-032 | Suíte de testes do motor | WO-SEC-001 | 030, 031 | PY | 17 testes verdes (`python3 -m unittest discover -s tests -p 'test_*.py' -q`) | **DONE** (neste PR) |
+| TASK-PLAN-032 | Suíte de testes do motor | WO-SEC-001 | 030, 031 | PY | 112 testes verdes (`python3 -m unittest discover -s tests -p 'test_*.py' -q`) | **DONE** (neste PR) |
 | TASK-PLAN-033 | Corrigir a fixture contraditória do PR #24 (`attempt-policy.test.ts:12`) | WO-SEC-001 | 030 | PY/JS | `SPE Candidate Static Gates` verde; o teste deixa de afirmar duas coisas contraditórias para o mesmo input | PROPOSTO |
 | TASK-PLAN-034 | Auditar as **47 migrations + 17 testes** do banco original dos Simulados | WO-SEC-001 | 031, 033 | PY | replay em PostgreSQL descartável com relatório do motor; divergências catalogadas | PROPOSTO |
 | TASK-PLAN-027 | Reconciliar CKO, fontes normativas e o corpus de bibliotecas | WO-CKO-001 | 034 | PY | 17 achados CKO/COREN/COFEN + 240 CSV (`staging/bibliotecas-corpus`) + 1577 recortes (`audit-hardening`) rastreados a fonte (SHA + ponteiro JSON), sem duplicidade nem órfão | PROPOSTO |
@@ -217,7 +217,7 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 | `registers/governance/audit-policy.v1.json` | política como código (JSON, sem deps) | DOC |
 | `scripts/check-pending-coverage.mjs` | gate de cobertura (fail-closed) | JS |
 | `scripts/check-register-schema.mjs` (+ `.test.mjs`) | validador de schema do inventário (fail-closed) | JS |
-| `scripts/check-pending-coverage.test.mjs` | 7 testes negativos | JS |
+| `scripts/check-pending-coverage.test.mjs` | 12 testes negativos | JS |
 | `scripts/audit_data_kernel.py` | motor de auditoria (estático + postgres read-only) | PY |
 | `tests/test_audit_data_kernel.py` | 17 testes | PY |
 | `ci/pending-coverage-gate.yml` (+ `ci/README.md`) | gate no CI (paths-filtered) — **fora de `.github/workflows/` porque a API do plugin bloqueia escrita nessa pasta** | CI |
@@ -225,8 +225,8 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 **Limite medido (31/10):** a API do plugin **bloqueia escrita em `.github/workflows/`** (`connector_tool_error` em todas as tentativas; um push anterior chegou a reportar OK com saída vazia e **não** criou o ficheiro — 9 dos 10 arquivos do PR estão presentes, o workflow é o único fora). O ficheiro do gate vive em `ci/pending-coverage-gate.yml` e a activação é uma cópia de uma linha pelo owner (instruções em `ci/README.md`).
 
 **Verificação local (executada):**
-- `node --test scripts/check-pending-coverage.test.mjs` → **9/9 verdes**
-- `node --test scripts/check-register-schema.test.mjs` → **7/7 verdes** (e o validador passa contra o inventário real: 10 WOs, 13 pendências, 18 issues, 4 gaps)
+- `node --test scripts/check-pending-coverage.test.mjs` → **12/12 verdes**
+- `node --test scripts/check-register-schema.test.mjs` → **10/10 verdes** (e o validador passa contra o inventário real: 10 WOs, 13 pendências, 18 issues, 4 gaps)
 - `python3 -m unittest discover -s tests -p 'test_*.py' -q` → **17/17 verdes**
 - **Gate contra dados reais** (fila rev 20 + inventário `1ab0561` + este registro): 10 WOs · 35 tasks · 31 pendências → **0 órfã, 0 WO sem task, 4 GAP_ABERTO** (os gaps reais, ainda abertos).
 
@@ -235,3 +235,12 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 ## 7. Nota de honestidade
 
 Este plano **não** afirma que a cobertura está resolvida — o próprio inventário declara `completeness: NOT_VERIFIED` e `GAP-01…GAP-04` abertos, e o gate deste PR ainda reporta `SKIP` enquanto o inventário não aterrissar no `main`. Ele **não** fecha issues, **não** apaga branches, **não** mexe em `main`, `Supabase`, segredos ou permissões. O que ele faz é tornar a cadeia `FIND → … → Homologação` **verificável por máquina** — que era exatamente o que faltava e que a diretriz da issue #25 exige.
+
+
+### Adendo de verificação — 31/10/2026 (PR #26)
+
+O workflow **não liberador** `.github/workflows/pmo-candidate-unit-regressions.yml` foi executado no GitHub Actions [run 41218965895](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41218965895): **12/12** testes de cobertura, **10/10** testes de schema, **17/17** testes do Data Kernel, total **39/39 PASS**. Os novos testes cobrem task cancelada que falsamente cobre uma issue, coleções omitidas, task IDs duplicados, divergência de contagem do snapshot e GH-ID inconsistente com URL.
+
+Verificação em arquivos reais do repositório (fila PMO rev20 em `fix/governed-activities-cli-20261026`, inventário transversal e este plano): `check-register-schema` **PASS** (10 WOs, 13 Simulados, 18 issues, 4 gaps); `check-pending-coverage` **exit 1 esperado** (10 WOs, 35 tasks, 31 pendências, **0 PENDENCIA_ORFA**, **0 WO_SEM_TASK**, **4 GAP_ABERTO**). A validação não encerra os quatro gaps; prova que o bloqueio é real e explícito.
+
+Outros limites: CI geral do PR ainda não homologado; o workflow de release `pending-coverage-gate.yml` segue propositalmente fora de `.github/workflows`; `main`, segurança em produção e admissão Kernel permanecem sem alterações por este PR.

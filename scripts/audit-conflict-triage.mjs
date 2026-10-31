@@ -21,7 +21,7 @@ const report={
  limitations:[
    'Suggested WOs are candidate mappings; approved Kernel admission is not established.',
    'Proposed source branches are not decisions or merges. No source is authorized for production.',
-   '57 semantically identical DRAFT German translations still require editorial ownership and QA.',
+   `${triage.counts.semanticEquivalent} semantically equivalent German registry candidates still require editorial ownership and QA.`,
    'Unknown WO mappings remain explicit and require PMO reconciliation.'
  ]
 };

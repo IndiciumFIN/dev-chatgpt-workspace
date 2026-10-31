@@ -5,6 +5,11 @@ on:
       - simulados-enfermagem-db-canonico
     paths:
       - '.github/workflows/remediate-better-auth-candidate.yml'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - '.github/workflows/remediate-better-auth-candidate.yml'
 
 permissions:
   contents: write
@@ -15,7 +20,11 @@ concurrency:
 
 jobs:
   remediate:
-    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace'
+    if: >-
+      github.repository == 'IndiciumFIN/dev-chatgpt-workspace' &&
+      (github.event_name == 'push' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       github.head_ref == 'simulados-enfermagem-db-canonico'))
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:

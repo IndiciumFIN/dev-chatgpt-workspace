@@ -5,8 +5,10 @@ name: Gate de cobertura de pendências (PMO × Kernel)
 # precisa estar vinculada e nenhum gap de cobertura pode ficar aberto.
 #
 # Regra de ausencia (D-02 do plano): insumo ausente NAO e aprovacao — o gate
-# imprime SKIP com a task que falta e sai 0. A ativacao efectiva depende de
+# imprime SKIP apenas em modo de desenvolvimento; o release exige --require-inputs.
+# A ativacao efectiva depende de
 # o inventario aterrissar no main (T0.005) — por isso o filtro de paths.
+# Na execução de release, entrada ausente => FAIL, nunca SKIP verde.
 
 on:
   pull_request:
@@ -49,7 +51,7 @@ jobs:
         run: node --test scripts/check-pending-coverage.test.mjs
 
       - name: Cobertura de pendências
-        run: node scripts/check-pending-coverage.mjs
+        run: node scripts/check-pending-coverage.mjs --require-inputs
 
       - name: Testes do motor de auditoria
         run: python3 -m unittest discover -s tests -p 'test_*.py' -q

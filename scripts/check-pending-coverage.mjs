@@ -19,8 +19,8 @@
  *   node scripts/check-pending-coverage.mjs --root tests/fixtures/coverage
  *
  * Códigos de saída:
- *   0 = sem violações (ou SKIP declarado quando falta insumo ainda não aterrissado)
- *   1 = violações bloqueantes (o gate falha fechado)
+ *   0 = sem violações (ou SKIP declarado por padrão quando falta insumo no branch candidato)
+ *   1 = violações bloqueantes (inclusive insumo ausente em --require-inputs)
  *   2 = uso incorreto
  *
  * Regra de ausência: entrada ausente NÃO é aprovação. Quando o insumo ainda
@@ -39,12 +39,15 @@ const REL = {
 
 const args = process.argv.slice(2);
 let root = ".";
+let requireInputs = false;
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--root") {
     root = args[++i] ?? null;
     if (!root) fail(2, "--root exige um caminho");
+  } else if (args[i] === "--require-inputs") {
+    requireInputs = true;
   } else if (args[i] === "--help" || args[i] === "-h") {
-    console.log("uso: node scripts/check-pending-coverage.mjs [--root <dir>]");
+    console.log("uso: node scripts/check-pending-coverage.mjs [--root <dir>] [--require-inputs]");
     process.exit(0);
   } else {
     fail(2, `argumento desconhecido: ${args[i]}`);
@@ -77,6 +80,10 @@ if (!intake) missing.push({ rel: REL.intake, task: "T0.2" });
 if (!plan) missing.push({ rel: REL.plan, task: "T0.5" });
 
 if (missing.length) {
+  if (requireInputs) {
+    for (const m of missing) console.error(`[check-pending-coverage] ENTRADA_AUSENTE: ${m.rel} (depende de ${m.task})`);
+    process.exit(1);
+  }
   console.log("[check-pending-coverage] SKIP — insumo ainda não aterrissado neste branch:");
   for (const m of missing) console.log(`  - ${m.rel} (depende de ${m.task})`);
   console.log("  Ausência de insumo não é aprovação. Ative o gate após T0.2/T0.5 (task T1.3).");

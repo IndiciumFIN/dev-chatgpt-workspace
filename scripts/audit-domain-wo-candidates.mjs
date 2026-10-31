@@ -41,7 +41,7 @@ export function verify({intake,queue,plan,register,sourceSha,queueSha,planSha}){
  // Later specialist tasks may exist only through their separately guarded
  // provenance register; never redefine the original 31 candidate coverage.
  const historic=register.coverage.currentPlanTasks,addon=plan.r86SupplementalTaskIntake,scoped=plan.r87ScopedTaskExpansion;
- const additional=scoped ? scoped.extensionCount : addon?.additionalAuditTaskCount??0;
+ const additional=scoped ? scoped.extensionCount+(plan.r89ScopedTaskReconciliation?.additionalTaskCount??0) : addon?.additionalAuditTaskCount??0;
  guard(historic===register.coverage.oldPlanTasks+unresolved.length && Number.isSafeInteger(additional) && additional>=0 && plan.tasks.length===historic+additional,'PLAN_COUNT_DRIFT');
  if(scoped){
   guard(checkR87Extension(plan,woIds)===24,'R87_EXTENSION_INCOMPLETE');

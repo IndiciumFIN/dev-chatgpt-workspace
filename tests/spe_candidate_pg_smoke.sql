@@ -59,3 +59,31 @@ BEGIN
   END IF;
 END
 $checks$;
+
+-- Defense-in-depth: even if a future migration accidentally grants SELECT,
+-- an unprivileged role must see zero candidate rows under enabled RLS.
+-- All grants and fixture data below are reverted by ROLLBACK.
+BEGIN;
+INSERT INTO spe_candidate.sources (source_id, title, source_kind)
+VALUES ('SPE.SRC.rls_fixture', 'RLS fixture only', 'OTHER_DOCUMENT');
+GRANT USAGE ON SCHEMA spe_candidate TO anon, authenticated;
+GRANT SELECT ON spe_candidate.sources TO anon, authenticated;
+SET ROLE anon;
+DO $checks$
+BEGIN
+  IF (SELECT count(*) FROM spe_candidate.sources) <> 0 THEN
+    RAISE EXCEPTION 'anon bypassed candidate source RLS';
+  END IF;
+END
+$checks$;
+RESET ROLE;
+SET ROLE authenticated;
+DO $checks$
+BEGIN
+  IF (SELECT count(*) FROM spe_candidate.sources) <> 0 THEN
+    RAISE EXCEPTION 'authenticated bypassed candidate source RLS';
+  END IF;
+END
+$checks$;
+RESET ROLE;
+ROLLBACK;

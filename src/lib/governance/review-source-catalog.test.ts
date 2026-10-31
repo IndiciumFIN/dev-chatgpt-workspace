@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { evidenceSuggestions, searchEvidenceSuggestions, searchReviewWorkOrders, selectReviewEvidence, type ReviewWorkOrder } from './review-source-catalog.ts';
 
 const WO: ReviewWorkOrder[] = [
@@ -57,4 +58,17 @@ test('suspicious or duplicate URLs are never suggested',()=>{
 });
 test('a WO with no evidence has no fabricated PMO evidence',()=>{
   assert.equal(evidenceSuggestions({...WO[0], evidence:[]}).length,0);
+});
+
+test('real canonical PMO queue supplies actual searchable WOs and their evidence', () => {
+  const queue = JSON.parse(readFileSync('registers/pmo/queue.v1.json', 'utf8')) as { items: ReviewWorkOrder[] };
+  assert.ok(queue.items.length >= 10, 'expected the versioned PMO register');
+  const matches = searchReviewWorkOrders(queue.items, 'seguranca lgpd');
+  assert.ok(matches.some(item => item.id === 'WO-SEC-001'));
+  const selected = queue.items.find(item => item.id === 'WO-SEC-001');
+  assert.ok(selected);
+  const options = evidenceSuggestions(selected);
+  assert.ok(options.length > 0, 'registered PMO security evidence should be discoverable');
+  assert.ok(options.every(option => selected.evidence.includes(option.url)));
+  assert.equal(selectReviewEvidence(options,'not-a-option'),null);
 });

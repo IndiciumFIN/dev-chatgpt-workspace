@@ -86,3 +86,13 @@ test('missing or non-Git blob source cannot become an approved conflict',()=>{
  const c=[{path:'package.json',sources:[{branch:'A',blob:'not-a-blob'},{branch:'B',blob:'b'.repeat(40)}]}];
  assert.throws(()=>buildCanonicalTriage(c,{equivalent:[]}),/INVALID_BLOB_LINEAGE/);
 });
+
+test('R77: header Entrar regression is an admin WO candidate, not admission',()=>{
+ const r=triageCanonicalConflict('scripts/header-entry.test.mjs');
+ assert.equal(r.proposedWo,'WO-ADM-001');
+ assert.equal(r.priority,'P1');
+ assert.equal(r.mappingStatus,'CANDIDATE_WO_MAPPING');
+ assert.equal(r.decision,'NOT_APPROVED');
+ assert.equal(r.kernelAdmission,'NOT_VERIFIED');
+ assert.equal(r.releaseGate,'HOLD_HUMAN');
+});

@@ -10,7 +10,7 @@ FILES = (
     "0031_cms_working_copies_option_lifecycle.sql",
     "0038_api_assessment_runtime.sql",
 )
-PUBLIC_ROLES = {"anon", "authenticated"}
+PUBLIC_ROLES = {"anon", "authenticated", "public"}
 
 def public_grants(source, function):
     """Detect any public role, including independent or reversed-order GRANTs."""
@@ -47,8 +47,8 @@ def audit(archive):
             exposed.append(name)
         checks[name] = {
             "has_rpc": has_rpc,
-            "anon_grant": "anon" in roles,
-            "authenticated_grant": "authenticated" in roles,
+            "anon_grant": "anon" in roles or "public" in roles,
+            "authenticated_grant": "authenticated" in roles or "public" in roles,
             "public_roles": roles,
             "answer_ids": answer_ids,
             "calls_grading": calls_grading,

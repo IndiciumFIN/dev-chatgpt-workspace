@@ -248,3 +248,37 @@ test("tarefa CANCELLED não cobre pendência ativa (regressão falso-verde)", ()
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("coleção do inventário omitida gera ENTRADA_INCOMPLETA", () => {
+  const root = tmp();
+  try {
+    const { openIssues, ...incomplete } = INTAKE;
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": QUEUE,
+      "registers/pmo/cross-source-pending-intake.v1.json": incomplete,
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": PLAN,
+    });
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /ENTRADA_INCOMPLETA/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("IDs de task duplicados são reprovados em vez de sobrescritos", () => {
+  const root = tmp();
+  try {
+    const plan = { ...PLAN, tasks: [...PLAN.tasks, { ...PLAN.tasks[0] }] };
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": QUEUE,
+      "registers/pmo/cross-source-pending-intake.v1.json": INTAKE,
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": plan,
+    });
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /TASK_ID_DUPLICADO/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

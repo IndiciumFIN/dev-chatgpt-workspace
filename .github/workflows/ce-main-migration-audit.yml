@@ -64,6 +64,24 @@ jobs:
         run: node --test scripts/reconcile-pmo-forks.test.mjs
       - name: Index PMO events across five real branches
         run: node scripts/audit-pmo-forks.mjs --output audit-evidence/pmo-forks/fork-reconciliation.v1.json
+      - name: Confirm all PMO event branches and conflicts are retained
+        run: |
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const p=JSON.parse(readFileSync('audit-evidence/pmo-forks/fork-reconciliation.v1.json','utf8'));
+          const c=p.counts;
+          if(c.sourceCount!==5||c.baselineWos!==10||c.candidateDistinctWos!==12)throw Error('PMO_WO_COUNT_CHANGED');
+          if(c.baselineEvents!==20||c.candidateDistinctEvents!==28||c.replayOnlyEvents!==8)throw Error('PMO_EVENT_LOSS');
+          if(c.originalSeqCollisionCount!==2||c.statusContestedWos!==2||c.itemVariantConflicts<7)throw Error('PMO_FORK_CONFLICT_NOT_IDENTIFIED');
+          if(p.releaseGate!=='HOLD_HUMAN'||p.ownerDecision!=='NOT_ELECTED'||p.reconciliationComplete!==false)throw Error('FALSE_PMO_ADMISSION');
+          console.log('PASS: all 28 candidate PMO events retained; 2 seq conflicts and contested WO statuses still HOLD');
+          NODE
+      - name: Archive read-only candidate PMO fork audit
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-pmo-fork-reconciliation
+          path: audit-evidence/pmo-forks/fork-reconciliation.v1.json
+          retention-days: 30
       - name: Generate exhaustive Git blob/path collision candidate report
         run: node scripts/audit-main-migration.mjs --output audit-evidence/main-migration/runtime-report.json
       - name: Assert 23 branches inspected and release still blocked

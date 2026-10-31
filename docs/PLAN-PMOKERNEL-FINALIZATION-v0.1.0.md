@@ -368,3 +368,34 @@ O registro existente `registers/governance/find-register.v1.json` passou de 8 pa
 `GAP-01..04` **OPEN**; `main` sem alterações; `WO-HOM-001=HOLD_HUMAN`. O trabalho restante de `P0-04` exige acesso autorizado a PostgreSQL isolado com 47 migrations e 17 testes, validação de grants/RLS por `anon` e `authenticated`, correção dos consumidores e aprovação de segurança independente. Não executar um `REVOKE` isolado em produção: pode quebrar os consumidores que chamam as funções legadas.
 
 Para `GAP-02`, nenhuma versão de fila foi eleita, não houve replay dos 28 eventos nem WO admitida. Falta proteger a `main`, revogar/rotacionar o segredo histórico do broker OAuth (#28) e executar os gates gerais sem falhas antes de qualquer promoção.
+
+---
+
+## 13. R82 — gate PMO, Better Auth e evidência ACL dos Simulados (31/10/2026)
+
+### WO-ADM-001 — gate de autorização local corrigido
+
+- Corrigido `scripts/check-pmo-queue.mjs` na branch `plan/pmokernel-finalization-20261031` com a implementação validada da branch `fix/governed-activities-cli-20261026` (blob `96f76963fd6aa9aa3a064b18256962178d746f4c`).
+- A fila canônica local rev18 preserva evento #20 autorizando `WO-ADM-001=IN_PROGRESS` **somente para preparação do Commander local**. O validador anterior exigia `PAUSED` sem analisar o evento; essa rejeição indevida foi removida.
+- Permanece verificável a justificativa do proprietário, o commit de evidência, a ausência de execução externa no Commander, ciclos, estados/evidências e `WO-HOM-001=HOLD_HUMAN`. `scripts/check-pmo-queue.test.mjs` tem sete casos positivos/negativos. A fila não foi editada nem reeleita.
+- Um falso positivo adicional de CI foi corrigido: `scripts/audit-domain-wo-candidates.mjs` deixou de exigir hash imutável do **plano completo** após R79; os hashes de fonte e fila, IDs/WO/dependências/status dos 31 vínculos continuam validados. Novos testes impedem apagar essa integridade.
+
+### WO-SEC-001 — Better Auth 1.7.14 corrigido de forma seletiva
+
+- O `verify` real avançou além do PMO e encontrou [GHSA-44jh-23m7-hpcf](https://github.com/advisories/GHSA-44jh-23m7-hpcf) no `better-auth@~1.6.30`; `npm audit --audit-level=high` bloqueava. O PR #13 já continha alternativa `better-auth@1.7.14` e lockfile avaliado.
+- Aplicadas **somente** as mudanças de dependência e autenticação já preparadas, sem importar funcionalidades do Commander: `package.json` fixa `1.7.14`; `package-lock.json` reaproveita o blob `f576a666ce59590113e06d8c0cb68bf7b17d0b86`, com **15 entradas relacionadas à cadeia Better Auth** alteradas e nenhum pacote não relacionado trocado.
+- O TypeScript detectou a remoção da API `genericOAuthClient`. Código ajustado no cliente OAuth para `signIn.social`, no servidor e nos providers segundo a fonte candidata. O auth agora exige opt-in literal `VITE_AUTH_ENABLED=true`; valor omitido não ativa login. A prévia candidata deixou de incluir `PREVIEW_CLIENT_SECRET` literal e o lê somente de variável do servidor. **Segredo já exposto no histórico/main ainda exige revogação externa por dono do broker.**
+- Adicionadas regressões de autenticação explícita, ausência do segredo literal e lockfile/adapters: `scripts/check-auth-invariant.test.mjs`, `scripts/test-auth-secret-env.mjs`, `scripts/check-better-auth-lock.mjs`, `scripts/check-better-auth-lock.test.mjs`.
+- [GitHub Actions #41235891544](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544) **SUCCESS**: `npm audit --audit-level=high`, TypeScript, `npm test`, contratos e `build:spa`. [Execução posterior #41235967540](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540) **SUCCESS**. Isso é aprovação técnica de CI, não homologação operacional nem ausência de avisos moderados/baixos.
+
+### P0-04 — sequência de ACL no ZIP original
+
+- A varredura dos **47 SQL originais** do ZIP (SHA-256 `5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47`) localizou **seis declarações específicas**: `REVOKE ALL FROM PUBLIC` seguido de `GRANT EXECUTE TO anon,authenticated` em `0024`, `0031` e `0038` para `evaluate_question` / `evaluate_question_set`. Nenhum outro `REVOKE` explícito desses alvos ou GRANT global de schema foi encontrado nas 47 migrations examinadas.
+- O registro `registers/governance/r81-simulados-original-rpc-static-20261031.v1.json` recebeu `aclTimeline`, e `scripts/check-r81-original-rpc-find.mjs`/testes preservam os seis eventos, o estado `HOLD_HUMAN` e o reconhecimento de que não houve PostgreSQL real.
+- No ambiente disponível nesta rodada **não estão instalados** `postgres`, `psql`, `initdb` ou `docker`. Não foi simulada execução: **47 migrations não aplicadas; 17 pgTAP não executados; anon/authenticated E2E NOT_RUN**. Nenhuma mudança em banco remoto, nenhuma publicação do ZIP original.
+
+### Estado de governança e entregas
+
+- Dossiê: `registers/governance/r82-pmo-security-execution-20261031.v1.json`.
+- Todas as WOs oficiais preservadas; `TASK-PLAN-003`, `TASK-PLAN-015`, `TASK-PLAN-057`, `TASK-PLAN-080` tiveram evidências atualizadas no plano de **68 tasks**, sem alteração de `status`. `GAP-01..04` permanecem **OPEN**; aprovação/Kernel **NOT_VERIFIED**; `WO-HOM-001=HOLD_HUMAN`.
+- `main` não alterada, sem branch protection e sem merge/deploy. Antes de promover: rotação OAuth externa, decisão sobre revisão PMO, autorização assinada do Kernel, confirmação independente da segurança RPC, migrations/testes em DB descartável e homologação.

@@ -25,11 +25,13 @@ export function checkR87Extension(plan,canonicalWoIds){
   if(!['PROPOSTO','BLOCKED'].includes(t.status)||t.status!==p.status)bad('R87_FALSE_TASK_COMPLETION:'+t.id);
   if(t.title!==p.title||t.wo!==p.wo||t.acceptance!==p.acceptance||JSON.stringify(t.deps??[])!==JSON.stringify(p.deps)||JSON.stringify(t.artifacts??[])!==JSON.stringify(p.artifacts))bad('R87_TASK_EVIDENCE_DRIFT:'+t.id);
   const isDs=t.wo==='WO-DS-001';
-  if(isDs&&!['TASK-PLAN-102','TASK-PLAN-105'].includes(t.id))bad('R87_UNAPPROVED_NEW_WO_SCOPE');
-  if(!isDs&&!canonicalWoIds.has(t.wo))bad('R87_UNKNOWN_TASK_WO:'+t.id);
+  if(isDs&&!['TASK-PLAN-102','TASK-PLAN-105'].includes(t.id))bad('R87_DS_WO_SCOPE_DRIFT');
+  if(!canonicalWoIds.has(t.wo))bad('R87_UNKNOWN_TASK_WO:'+t.id);
   if(t.authorization?.approval==='APPROVED'||t.authorization?.kernelAdmission==='ADMITTED'||t.authorization?.releaseGate==='PASS')bad('R87_FALSE_WO_ADMISSION:'+t.id);
  }
- const actualNew=plan.tasks.filter(t=>!canonicalWoIds.has(t.wo));
- if(actualNew.length!==2||actualNew.some(t=>!['TASK-PLAN-102','TASK-PLAN-105'].includes(t.id)||t.wo!=='WO-DS-001'))bad('R87_UNADMITTED_WO_POPULATION');
+ const dsRefs=plan.tasks.slice(HISTORIC_TASKS).filter(t=>t.wo==='WO-DS-001');
+ if(dsRefs.length!==2||dsRefs.some(t=>!['TASK-PLAN-102','TASK-PLAN-105'].includes(t.id)))bad('R87_DS_WO_REFERENCE_DRIFT');
+ // WO-DS-001 is an existing queue ID; its Kernel admission remains unverified.
+ if(!canonicalWoIds.has('WO-DS-001'))bad('R87_DS_QUEUE_SOURCE_MISSING');
  return 24;
 }

@@ -23,6 +23,7 @@ import { Route as SistemaRouteImport } from './routes/sistema'
 import { Route as BibliotecasIndexRouteImport } from './routes/bibliotecas.index'
 import { Route as BibliotecasSlugRouteImport } from './routes/bibliotecas.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as FerramentasSlugRouteImport } from './routes/ferramentas.$slug'
 import { Route as InstitucionalIndexRouteImport } from './routes/institucional.index'
 import { Route as InstitucionalHubRouteImport } from './routes/institucional.$hub'
@@ -106,6 +107,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FerramentasSlugRoute = FerramentasSlugRouteImport.update({
   id: '/ferramentas/$slug',
   path: '/ferramentas/$slug',
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/sistema': typeof SistemaRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
   '/modelos/$id': typeof ModelosIdRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/sistema': typeof SistemaRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
   '/modelos/$id': typeof ModelosIdRoute
@@ -265,6 +274,7 @@ export interface FileRouteTypes {
     | '/sistema'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
+    | '/blog/'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
     | '/modelos/$id'
@@ -290,6 +300,7 @@ export interface FileRouteTypes {
     | '/sessao'
     | '/sistema'
     | '/blog/$slug'
+    | '/blog'
     | '/ferramentas/$slug'
     | '/modelos/$id'
     | '/secao/$slug'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/sistema'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
+    | '/blog/'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
     | '/modelos/$id'
@@ -346,6 +358,7 @@ export interface RootRouteChildren {
   SistemaRoute: typeof SistemaRoute
   BibliotecasSlugRoute: typeof BibliotecasSlugRouteWithChildren
   BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   FerramentasSlugRoute: typeof FerramentasSlugRoute
   SecaoSlugRoute: typeof SecaoSlugRoute
   BibliotecasIndexRoute: typeof BibliotecasIndexRoute
@@ -450,6 +463,13 @@ declare module '@tanstack/react-router' {
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ferramentas/$slug': {
@@ -619,6 +639,7 @@ const rootRouteChildren: RootRouteChildren = {
   SistemaRoute: SistemaRoute,
   BibliotecasSlugRoute: BibliotecasSlugRouteWithChildren,
   BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   FerramentasSlugRoute: FerramentasSlugRoute,
   SecaoSlugRoute: SecaoSlugRoute,
   BibliotecasIndexRoute: BibliotecasIndexRoute,

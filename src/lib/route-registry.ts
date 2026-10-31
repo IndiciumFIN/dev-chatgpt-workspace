@@ -51,16 +51,18 @@ function secoes(): RouteEntry[] {
 }
 
 function artigos(): RouteEntry[] {
-  return articleSlugs.map((slug) => {
+  const preparedArticles = articleSlugs.map((slug) => {
     const article = findArticle(slug);
     return {
-      path: `/blog/${slug}`,
+      path: "/blog/" + slug,
       kind: "artigo" as const,
       title: article?.title ?? slug,
       description: article?.lead ?? "",
       indexavel: true,
     };
   });
+  // Curiosidades candidatas não entram no registro público até admissão governada.
+  return preparedArticles;
 }
 
 function ferramentas(): RouteEntry[] {
@@ -84,6 +86,7 @@ export const routeRegistry: RouteEntry[] = [
     description: "Escalas, protocolos e calculadoras clínicas de enfermagem.",
     indexavel: true,
   },
+  { path: "/blog", kind: "secao", title: "Curiosidades de Enfermagem", description: "Prévia editorial.", indexavel: false },
   ...artigos(),
   ...secoes(),
   ...ferramentas(),

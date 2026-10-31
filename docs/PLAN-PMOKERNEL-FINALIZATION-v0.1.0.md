@@ -289,3 +289,18 @@ check-pending-coverage → 10 WOs · 36 tasks · 32 pendências
                          → 0 PENDENCIA_ORFA · 0 WO_SEM_TASK · 4 GAP_ABERTO
 check-register-schema  → OK (10 WOs · 13 pendências · 19 issues · 4 gaps)
 ```
+
+---
+
+## 9. Checkpoint R77 — 31/10 18:59Z (remedição do baseline)
+
+Esta seção atualiza o retrato das 18:56Z acima; **não sobrescreve os valores históricos**.
+
+- **TASK-PLAN-058 — correção técnica comprovada, encerramento formal pendente.** O workflow `ce-main-migration-audit.yml` deixou de comparar `sourceCollisions` com constante 115 e passou a rederivar a cobertura do inventário de origem, exigindo unicidade, linhagem e `HOLD_HUMAN`. CI [41232027627](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41232027627) **SUCCESS** no SHA `bfa6cf5f522648e3e633353a85acca9050aa3f7b`.
+- **23/23 branches-fonte verificadas**; 118 caminhos com colisões, 57 semanticamente equivalentes, 61 que exigem revisão. O vínculo candidato do teste `scripts/header-entry.test.mjs` foi adicionado a `WO-ADM-001`: **118/118 caminhos associados a WOs candidatas, zero sem WO, zero formalmente aprovados**. A classificação não equivale à resolução das colisões.
+- Registro de tasks **37** (inclui `TASK-PLAN-057` e `TASK-PLAN-058`). A task 058 permanece **PROPOSTO** porque depende de `TASK-PLAN-014`, também não concluída. A evidência de execução técnica foi acrescentada a seus `artifacts[]`, sem marcar `DONE` indevidamente.
+- A falha de baseline fixo `CHANGED_COLLISION_BASELINE` de 115 versus 118 está resolvida **na branch candidata**, não na `main`. Para a `main`, `TASK-PLAN-003`, as autorizações de Kernel, proteção de branch, cobertura e demais gates continuam pendentes.
+- **Autenticação P0:** issue [#28](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28) continua exigindo revogação/rotação no broker, apesar de testes de correção de código na branch do PR #13. Sem deploy ou rotação nesta rodada.
+- **Autoridade:** revisão canônica PMO ainda `NOT_ELECTED`; WOs adicionais e as duas divergências de estado continuam candidatas; `main` não modificada; sem merge ou aprovação clínica, admissão Kernel não comprovada; release `HOLD_HUMAN`.
+
+**Regra:** nenhum workflow verde, contagem de cobertura ou prova de identidade por equivalência habilita promoção sem o processo FIND → política → validador → task → WO → Kernel → testes → auditoria → homologação.

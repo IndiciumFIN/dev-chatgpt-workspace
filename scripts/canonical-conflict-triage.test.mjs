@@ -49,3 +49,29 @@ test('unknown, duplicate or missing semantic evidence cannot silently pass',()=>
  assert.throws(()=>buildCanonicalTriage([c[0],c[0]],{equivalent:[]}),/DUPLICATE_PATH/);
  assert.throws(()=>buildCanonicalTriage(c,null),/MISSING_EVIDENCE/);
 });
+
+test('all 28 initially unmapped paths have explicit candidate WO owners, never formal admission',()=>{
+ const paths=[
+ '.gitignore','it-book/docs/normalizacao.md',
+ 'registers/canonical/route-contracts.v1.json','registers/canonical/surface-contracts.v2.json',
+ 'scripts/admin-ux-e2e.mjs','scripts/alias-hook.mjs','scripts/brand-check.test.mjs',
+ 'scripts/check-auth-invariant.test.mjs','scripts/grok-pwa-plugin.test.mjs',
+ 'scripts/grok-pwa-shared.mjs','scripts/migration-plan.test.mjs',
+ 'scripts/test-admin-console.mjs','scripts/with-app-env.test.mjs',
+ 'scripts/write-atomic.test.mjs','src/core/compliance/validators.ts',
+ 'src/core/registry/source-registry.ts','src/lib/app-data/client.server.ts',
+ 'src/lib/chrome.tsx','src/lib/dictionary.test.ts','src/lib/intake.test.ts',
+ 'src/lib/intake.ts','src/lib/it-controls.test.ts',
+ 'src/lib/kernel-admit.test.ts','src/lib/kernel-admit.ts',
+ 'src/lib/policy-decision.ts','src/lib/source.functions.ts',
+ 'src/lib/stored.functions.ts','src/routeTree.gen.ts'
+ ];
+ assert.equal(paths.length,28);
+ for(const path of paths){
+  const candidate=triageCanonicalConflict(path);
+  assert.match(candidate.proposedWo??'',/^WO-/,'owner missing: '+path);
+  assert.equal(candidate.mappingStatus,'CANDIDATE_WO_MAPPING');
+  assert.equal(candidate.decision,'NOT_APPROVED');
+  assert.equal(candidate.releaseGate,'HOLD_HUMAN');
+ }
+});

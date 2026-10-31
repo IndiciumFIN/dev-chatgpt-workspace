@@ -7,6 +7,7 @@ on:
       - 'scripts/verify-pmo-fork-lineage*'
       - 'scripts/verify-r84-pmo-decision-intake*'
       - 'scripts/verify-r85-owner-assent*'
+      - 'scripts/verify-r86-pr-review-evidence*'
       - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
       - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
       - 'src/components/admin/pmo-review-intake.tsx'
@@ -45,6 +46,7 @@ on:
       - 'scripts/verify-pmo-fork-lineage*'
       - 'scripts/verify-r84-pmo-decision-intake*'
       - 'scripts/verify-r85-owner-assent*'
+      - 'scripts/verify-r86-pr-review-evidence*'
       - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
       - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
       - 'src/components/admin/pmo-review-intake.tsx'
@@ -75,6 +77,7 @@ on:
       - '.github/workflows/pmo-candidate-unit-regressions.yml'
 permissions:
   contents: read
+  pull-requests: read
 jobs:
   verify-candidate-regressions:
     if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace'
@@ -108,6 +111,16 @@ jobs:
           node --check scripts/verify-r85-owner-assent.mjs
           node scripts/verify-r85-owner-assent.mjs
           node --test scripts/verify-r85-owner-assent.test.mjs
+      - name: Verify R86 independent GitHub review gate negative cases
+        run: |
+          node --check scripts/verify-r86-pr-review-evidence.mjs
+          node --test scripts/verify-r86-pr-review-evidence.test.mjs
+      - name: Read live PR 26 reviews and verify no authority inferred from GitHub status
+        if: github.event_name == 'push' || github.event.pull_request.number == 26
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/verify-r86-pr-review-evidence.mjs
       - name: Verify Better Auth 1.7 client/server opt-in and no literal preview secret
         run: node --test scripts/check-auth-invariant.test.mjs scripts/test-auth-secret-env.mjs
       - name: Verify Better Auth 1.7.14 lockfile and adapter integrity

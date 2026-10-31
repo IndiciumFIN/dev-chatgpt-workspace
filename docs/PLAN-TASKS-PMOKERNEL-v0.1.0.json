@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001).",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113.",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -2055,6 +2055,89 @@
       "covers": [],
       "artifacts": [],
       "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo."
+    },
+    {
+      "id": "TASK-PLAN-108",
+      "phase": "F0",
+      "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+    },
+    {
+      "id": "TASK-PLAN-109",
+      "phase": "F3",
+      "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+    },
+    {
+      "id": "TASK-PLAN-110",
+      "phase": "F3",
+      "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+    },
+    {
+      "id": "TASK-PLAN-111",
+      "phase": "F3",
+      "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao nao tem severidade autoritativa. Nao inventar SLAs."
+    },
+    {
+      "id": "TASK-PLAN-112",
+      "phase": "F0",
+      "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas."
+    },
+    {
+      "id": "TASK-PLAN-113",
+      "phase": "F1",
+      "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner / fonte canonica",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
     }
   ],
   "candidateVerification": {

@@ -27,9 +27,45 @@ for(const [i,item] of q.items.entries()){
   assert(item.dependencies.every(dep=>ids.has(dep)&&dep!==item.id),'Dependência inválida: '+item.id);
   assert(Array.isArray(item.evidence));
   assert(item.evidence.every(url=>/^https:\/\/github\.com\/IndiciumFIN\/dev-chatgpt-workspace\//.test(url)),'Evidência de origem não autorizada');
-  if(item.status==='DONE')assert(item.evidence.length>0,'DONE sem evidência: '+item.id);
+  if(item.status==='DONE') {
+    assert(item.evidence.length>0,'DONE sem evidência: '+item.id);
+    assert(item.dependencies.every(dep=>q.items.find(x=>x.id===dep)?.status==='DONE'),
+      'DONE com dependência pendente: '+item.id);
+  }
 }
-assert(q.items[0].id==='WO-ADM-001'&&q.items[0].status==='PAUSED','Protótipo deve permanecer congelado');
+const visiting = new Set();
+const visited = new Set();
+const byId = new Map(q.items.map(item => [item.id, item]));
+function visit(id) {
+  assert(!visiting.has(id), 'Ciclo de dependências: '+id);
+  if (visited.has(id)) return;
+  visiting.add(id);
+  for (const dep of byId.get(id).dependencies) visit(dep);
+  visiting.delete(id);
+  visited.add(id);
+}
+for (const item of q.items) {
+  assert.equal(new Set(item.evidence).size, item.evidence.length, 'Evidência duplicada: '+item.id);
+  visit(item.id);
+}
+// Allow exactly the owner's documented LOCAL Commander preparation; no remote execution.
+const adm=q.items.find(item=>item.id==='WO-ADM-001');
+assert(adm&&['PAUSED','IN_PROGRESS'].includes(adm.status),'Unauthorized prototype state');
+if(adm.status==='IN_PROGRESS'){
+  const transition=[...q.events].reverse().find(ev=>ev.workId==='WO-ADM-001');
+  assert(transition?.to==='IN_PROGRESS' &&
+    /Proprietário autorizou/.test(transition.reason) &&
+    /Commander local/.test(transition.reason) &&
+    /sem execução externa/.test(transition.reason) &&
+    /autenticação ou banco/.test(transition.reason),
+    'Owner-approved local scope is missing');
+  assert(adm.evidence.some(url=>/\/commit\//.test(url)),'Active ADM WO without commit evidence');
+  const commander=readFileSync('src/components/admin/commander-panel.tsx','utf8');
+  assert(commander.includes('Nenhum agente ou serviço foi acionado.') &&
+    !/\b(fetch|axios|supabase)\s*\(/.test(commander),
+    'Commander exceeded local-only scope');
+}
+assert(q.items.find(item=>item.id==='WO-HOM-001')?.status==='HOLD_HUMAN','Release HOLD bypassed');
 assert(Array.isArray(q.events)&&q.events.length>0);
 for(const [i,event] of q.events.entries()){
   assert.equal(event.seq,i+1,'Lacuna na sequência de eventos');

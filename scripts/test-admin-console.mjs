@@ -8,6 +8,12 @@ const shared = read('src/components/local/local-workbench-page.tsx');
 const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
+const review = read('src/components/admin/governed-review-panel.tsx');
+const pmo = read('src/components/admin/pmo-panel.tsx');
+const decisionContract = read('src/lib/governance/decision-draft.ts');
+const reviewCatalog = read('src/lib/governance/review-source-catalog.ts');
+const handoffs = JSON.parse(read('registers/commander/lanes.v1.json'));
+
 const assertions = [
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
@@ -22,6 +28,22 @@ const assertions = [
   ['real end-user routes provided only for published local projection', /previewVersion === 'published' && <Link/.test(ui)],
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
+  ['Commander displays candidate agent issue links from the canonical PMO', commander.includes("../../../registers/pmo/queue.v1.json") && commander.includes("../../../registers/commander/lanes.v1.json") && commander.includes('commander-handoff-inbox') && handoffs.governance.dispatchImplemented === false && handoffs.lanes.every(lane => lane.dispatched === false)],
+  ['Commander validates real PMO and lanes before rendering', /validateCommanderReadModel\(queue, handoffs\)/.test(commander) && /if \(modelIssues\.length\)/.test(commander) && /Commander indisponível/.test(commander)],
+  ['Commander displays dependency and evidence provenance from canonical PMO', /item\?\.dependencies\?\.length/.test(commander) && /item\?\.evidence\?\.length/.test(commander) && /lane\.sourceCommit\.slice/.test(commander) && /item\?\.next/.test(commander)],
+  ['Commander derives unresolved dependencies solely from the canonical queue', /item\?\.dependencies\.filter\(id => queue\.items\.find/.test(commander) && /status !== 'DONE'/.test(commander) && /Prontidão por dependências:/.test(commander)],
+  ['Commander derives admission and dispatch labels from canonical governance', /handoffs\.governance\.kernelAdmission/.test(commander) && /lane\.dispatched/.test(commander) && /handoffs\.governance\.dispatchImplemented/.test(commander)],
+  ['Commander displays pre-Task governance from canonical contracts', /commander-upstream-chain/.test(commander) && /taskContract\.required\.filter/.test(commander) && /queue\.canonicalSource/.test(commander) && /Um registro de fila não equivale a WO admitida/.test(commander)],
+  ['Commander can inspect real PMO activities without mutation', /selectedWorkOrderId/.test(commander) && /queue\.items\.map\(item => <option/.test(commander) && /commander-wo-readiness/.test(commander) && /BLOQUEADA ATÉ ADMISSÃO FORMAL/.test(commander)],
+  ['Commander has no simulated remote agent calls', !/\b(fetch|axios)\s*\(/.test(commander) && /não despachado/.test(commander)],
+  ['PMO displays governed review inside canonical administration', pmo.includes("import { GovernedReviewPanel }") && /<GovernedReviewPanel\s*\/>/.test(pmo) && /pmo-governed-review/.test(review)],
+  ['review draft has explicit local edit and copy actions', review.includes('Editar minuta') && review.includes('Copiar minuta para revisão') && review.includes('setResult(null)')],
+  ['review search uses canonical PMO work orders and evidence, no remote catalog', /searchReviewWorkOrders\(queue\.items, woQuery\)/.test(review) && /evidenceSuggestions\(selected\)/.test(review) && /searchEvidenceSuggestions\(availableEvidence, evidenceQuery\)/.test(review) && /review-wo-search/.test(review) && /review-source-search/.test(review) && !reviewCatalog.includes('fetch(')],
+  ['all searchable selectors have labels, help text and live matching counts', /htmlFor="review-wo-search"/.test(review) && /htmlFor="review-source-search"/.test(review) && /htmlFor="review-evidence-option"/.test(review) && /review-source-help/.test(review) && /matchingWorkOrders.length/.test(review) && /matchingEvidence.length/.test(review)],
+  ['work order switch clears stale decisions and evidence', /function changeWorkOrder/.test(review) && /setEvidenceUrl\(''\)/.test(review) && /setSelectedEvidenceId\(''\)/.test(review) && /setReason\(''\)/.test(review)],
+  ['context insertion explicitly requires review', /function insertWoContext/.test(review) && /Conferir evidências, condições e admissões/.test(review) && /não é justificativa aprovada automaticamente/.test(review)],
+  ['recorded owner approval is visible without another approval request', /Plano de continuidade: aprovação já registrada/.test(review) && /APPROVAL_RECORD_URL/.test(review) && /Admissão Kernel pendente/.test(review)],
+  ['decision options prepare drafts but never persist, sign or promote', ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE'].every(k => decisionContract.includes(k)) && /NOT_SUBMITTED/.test(decisionContract) && /promotionAllowed: false/.test(decisionContract) && !review.includes('fetch(') && !review.includes('axios(') && !review.includes('localStorage') && !review.includes('setItem(')],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];
 let failed = 0;

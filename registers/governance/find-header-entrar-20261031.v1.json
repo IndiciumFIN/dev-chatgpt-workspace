@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "FIND-HEADER-ENTRAR-20261031",
+  "date": "2026-10-31",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "severity": "P1",
+  "state": "CANDIDATE_CODE_VERIFIED_PREVIEW_BLOCKED",
+  "source": "Owner requested Entrar visible in topbar and canonical migration to main; approval to continue already documented in PR #26.",
+  "problem": "Main and previous PMO candidate hid Entrar whenever VITE_AUTH_ENABLED=false; a header-only fix in old shell branch had unrelated CSS delta and incompatible Vercel config.",
+  "implementedIn": {
+    "branch": "fix/governed-activities-cli-20261026",
+    "commit": "337b0338fd639762dc1ec3740cdfb4f0877a34bc",
+    "pullRequest": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/13",
+    "alternateDraft": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/27",
+    "files": [
+      "src/components/site/shell.tsx",
+      "src/routes/login.tsx",
+      "scripts/header-entry.test.mjs",
+      ".github/workflows/ce-admin-review-candidate.yml"
+    ],
+    "behavior": "Entrar visible and linked to canonical /login independently of auth flag; login is truthful about disabled authentication. No permissions granted."
+  },
+  "verifiedEvidence": {
+    "integratedGithubWorkflow": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41227928335",
+    "integratedWorkflowResult": "SUCCESS",
+    "checks": [
+      "PMO gates PASS",
+      "Dependency audit at high severity PASS with 15 moderate vulnerabilities still recorded",
+      "Admin static checks PASS",
+      "Typecheck PASS",
+      "npm tests PASS",
+      "SPA build PASS"
+    ],
+    "caveat": "The GitHub CI result proves candidate build and tests, not browser E2E, authentication in production or Kernel admission."
+  },
+  "deployment": {
+    "project": "dev-chatgpt-workspace",
+    "team": "team_DYBNuYQyhhw6GKeDZhNwW7fP",
+    "attemptedPreviewSourceCommit": "337b0338fd639762dc1ec3740cdfb4f0877a34bc",
+    "result": "BLOCKED_QUOTA",
+    "providerError": "HTTP 402 payment_required — api-deployments-free-per-day (more than 100)",
+    "note": "A new READY preview URL for this commit was not produced. The previous READY preview does not contain this header commit."
+  },
+  "release": {
+    "mainModified": false,
+    "realAuthenticationEnabledByThisChange": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "required": [
+      "Vercel preview or equivalent artifact test when quota permits",
+      "Browser E2E for visible topbar and /login",
+      "Resolve PMO canonical revision and independent Kernel admission",
+      "Resolve security/privacy and all guarded production gates"
+    ],
+    "status": "HOLD_HUMAN"
+  }
+}

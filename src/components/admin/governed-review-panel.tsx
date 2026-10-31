@@ -142,7 +142,7 @@ export function GovernedReviewPanel() {
           <select id="review-wo" value={workOrderId} onChange={event => changeWorkOrder(event.target.value)} aria-describedby="review-wo-help">
             {visibleWorkOrders.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title} ({item.status})</option>)}
           </select>
-          <small id="review-wo-help">Fonte: registros/pmo/queue.v1.json. A busca não cria nem altera WOs.</small>
+          <small id="review-wo-help">Fonte: registers/pmo/queue.v1.json. A busca não cria nem altera WOs.</small>
         </label>
       </div>
       {matchingWorkOrders.length === 0 && <p role="status" className="ce-admin-detail-note">Nenhuma WO encontrada. Limpe a busca para consultar as opções existentes.</p>}

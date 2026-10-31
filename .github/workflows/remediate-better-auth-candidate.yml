@@ -77,11 +77,11 @@ jobs:
         run: npm test
       - name: Verify production-like SPA build and gates
         run: npm run build:spa
-      - name: Confirm only dependency manifests changed
+      - name: Confirm only the three reviewed files changed
         run: |
           git diff --exit-code -- . ':!package.json' ':!package-lock.json' ':!src/lib/auth/client.ts'
           test -n "$(git diff --name-only -- package.json package-lock.json src/lib/auth/client.ts)"
-          test "$(git diff --name-only | sort)" = "$(printf 'package-lock.json\npackage.json' | sort)"
+          test "$(git diff --name-only | sort)" = "$(printf 'package-lock.json\npackage.json\nsrc/lib/auth/client.ts' | sort)"
       - name: Commit validated dependency update to existing branch only
         run: |
           git config user.name "github-actions[bot]"

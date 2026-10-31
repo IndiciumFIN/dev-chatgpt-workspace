@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada).",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001).",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -41,12 +41,7 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx",
-        "registers/governance/r86-independent-review-readiness-20261031.v1.json",
-        "scripts/verify-r86-pr-review-evidence.mjs",
-        "scripts/verify-r86-pr-review-evidence.test.mjs",
-        "scripts/check-r86-review-readiness.mjs",
-        "scripts/check-r86-review-readiness.test.mjs"
+        "src/components/admin/pmo-review-intake.tsx"
       ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
@@ -71,12 +66,7 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx",
-        "registers/governance/r86-independent-review-readiness-20261031.v1.json",
-        "scripts/verify-r86-pr-review-evidence.mjs",
-        "scripts/verify-r86-pr-review-evidence.test.mjs",
-        "scripts/check-r86-review-readiness.mjs",
-        "scripts/check-r86-review-readiness.test.mjs"
+        "src/components/admin/pmo-review-intake.tsx"
       ],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
@@ -1858,6 +1848,213 @@
         "src/lib/impact/impact-engine.ts"
       ],
       "acceptance": "A cadeia SHA-256 em localStorage e mantida apenas como tamper-evidence local, com rotulo explicito de que nao e prova de autoria nem auditoria imutavel de servidor; o registo exportavel carrega ator manual, timestamp, decisao humana e estado PENDING/HOLD. Nenhuma rota produz DONE/APPROVED sem acao humana explicita. Prova: audit-execution-gates.mjs verde e o rotulo presente no registo."
+    },
+    {
+      "id": "TASK-PLAN-094",
+      "phase": "F0",
+      "title": "Obter o workspace completo do repo (clone) para correr a prova N1",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O acesso via App GitHub permite ler ficheiros, mas nao correr npm ci/gates. E preciso um clone local (ou um job de CI) para executar a cadeia real: npm ci -> check-contract-coverage -> npm test -> typecheck -> check-generated-fresh -> check-cko-packages -> test-admin-console -> audit-execution-gates -> SPA_BUILD=1 vite build -> materialize-static-routes. Sem isto, N1 e N2 ficam NOT_RUN."
+    },
+    {
+      "id": "TASK-PLAN-095",
+      "phase": "F3",
+      "title": "Tela de decisao de impacto ligada ao motor (Impacta / Nao impacta / Escalar)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A tela mostra o candidato, o caminho de dependencia e as tres acoes com justificativa exigida por severidade; decisao humana validada pelo motor (validateDecision). Sem persistencia remota enquanto nao houver RBAC: rascunho local rotulado. Nao substitui a fila de OS duravel."
+    },
+    {
+      "id": "TASK-PLAN-096",
+      "phase": "F3",
+      "title": "Contrato JSON versionado do grafo de impacto + validador + gate",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-030"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Registos dependencia_conteudo, versao_normativo e mudanca_versao em registers/ com schema, versao, proveniencia (SHA) e validador fail-closed; gate que reprova relacao sem versao validada, versao divergente ou evento sem idempotencia. Assim o modelo fecha antes de existir banco."
+    },
+    {
+      "id": "TASK-PLAN-097",
+      "phase": "F3",
+      "title": "Aprovar (ou substituir) a matriz de severidade do motor de impacto",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz DEFAULT_SEVERITY_MATRIX esta com approved:false. Decisao do dono e dos donos de conteudo/risco: aprovar, substituir ou remover. Sem isso a tela de decisao (T0.095) nao tem severidade autoritativa. Nao inventar SLAs."
+    },
+    {
+      "id": "TASK-PLAN-098",
+      "phase": "F0",
+      "title": "Decidir o modelo de identidade e backend (destrava perfil, logout, alertas e CRUD remoto)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decisao registada: modelo de acesso, onde vive a sessao, RBAC e trilha duravel. ate la, a UI mantem 'sem identidade neste ambiente', Sair desabilitado, sem avatar de utilizador e sem mutacoes remotas. Bloqueia T0.093, T0.106 e o item 'perfil e saida' do roadmap."
+    },
+    {
+      "id": "TASK-PLAN-099",
+      "phase": "F1",
+      "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner / fonte canonica",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
+    },
+    {
+      "id": "TASK-PLAN-100",
+      "phase": "F3",
+      "title": "Estender o list-query as restantes listas (fontes, templates, achados/FINDs, auditoria)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-059",
+        "TASK-PLAN-090"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "As 4 listas reusam list-query e os estilos ce-admin-listbar*/chip*/pager ja entregues, sem duplicar biblioteca. Prova: os testes do list-query correm no gate oficial (T0.090) e cada lista nova tem teste estatico de invariantes."
+    },
+    {
+      "id": "TASK-PLAN-101",
+      "phase": "F4",
+      "title": "Auditoria de acessibilidade real (teclado + viewports 320/390/768/1280)",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-094"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O repo tem playwright 1.62 e testes de a11y proprios (test-country-icon-a11y.mjs, test-focus-colors-i18n.mjs), mas NAO tem axe-core: ou se instala axe-core como devDependency com lockfile, ou a alegacao fica 'teclado + testes proprios, axe nao verificado'. Medir antes de afirmar."
+    },
+    {
+      "id": "TASK-PLAN-102",
+      "phase": "F4",
+      "title": "Biblioteca unica de componentes administrativos (17 familias)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-029",
+        "TASK-PLAN-091"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "DataTable, FilterBar, Tabs de detalhe, Drawer/Modal com foco preso, FormField com label visivel e resumo de erros, DiffViewer, Timeline, GraphView, Toast, Skeleton, ErrorState, PermissionDenied, SourceStamp, DisabledAction, StatusBadge, Stepper e KeyValueList. Regra: uma unica biblioteca, sem duplicar o que ja existe, tokens derivados dos canonicos e cada componente com contrato (check-contract-coverage)."
+    },
+    {
+      "id": "TASK-PLAN-103",
+      "phase": "F3",
+      "title": "Backlog dos 5 modulos propostos (APIs e fornecedores; midia/redirecionamentos/SEO; registo clinico e testes de referencia; selo de proveniencia e maquina do tempo; simulador 'e se' de revogacao; modo auditor e playbooks)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-102"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada modulo entra com escopo, dados necessarios, gate que o prova e o que fica por decision. Nenhum comeca sem o contrato de dados e o registo de proveniencia correspondentes."
+    },
+    {
+      "id": "TASK-PLAN-104",
+      "phase": "F2",
+      "title": "Ligar o Commander ao Kernel (apos admissao)",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-002",
+        "TASK-PLAN-098"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Hoje o Commander e preparacao local: nenhum provedor conectado, o avaliador deterministico existe no codigo mas o Commander nao o invoca, e as instrucoes em agents/ sao documentos, nao executores registrados (src/components/admin/commander-panel.tsx). Ligar so apos admissao do Kernel, com escopo, plano, validacao de OS/politicas/manifesto e encaminhamento apenas a agente/equipe registrada; o LLM nao decide impacto clinico/legal nem aprova publicacao."
+    },
+    {
+      "id": "TASK-PLAN-105",
+      "phase": "F4",
+      "title": "Composicao e configuracao do site (idioma, rotas, SEO, JSON-LD, templates, manifesto, aprovacao, preview, publicacao, retirada, rollback)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-091",
+        "TASK-PLAN-100"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Cada versao canonica e a sua publicacao sao registadas; retirada e rollback por versao, nao por reescrita. Prova: gates de superficie (check-contract-coverage) + build:spa + materializacao de rotas estaticas."
+    },
+    {
+      "id": "TASK-PLAN-106",
+      "phase": "F3",
+      "title": "Identidade, persistencia e trilha de auditoria duravel no servidor",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-098"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Decidir e implementar backend, sessao, RBAC e trilha append-only atestada antes de qualquer mutacao remota. A hash-chain local (SHA-256 em localStorage) e apenas tamper-evidence client-side e tem de ficar rotulada como nao atestada."
+    },
+    {
+      "id": "TASK-PLAN-107",
+      "phase": "F1",
+      "title": "Registar FIND-MOD-001 (matriz M01-M22 sem fonte) e a divergencia dos 36 hashes no find-register",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-099"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo."
     }
   ],
   "candidateVerification": {
@@ -2029,83 +2226,5 @@
     "mainChanged": false,
     "sourceQueueChanged": false,
     "releaseGate": "HOLD_HUMAN"
-  },
-  "r86IndependentReviewerReadiness": {
-    "date": "2026-10-31",
-    "state": "TECHNICAL_CHECKS_IMPLEMENTED_HUMAN_REVIEW_NOT_STARTED",
-    "snapshotDossier": "registers/governance/r86-independent-review-readiness-20261031.v1.json",
-    "liveVerifier": "scripts/verify-r86-pr-review-evidence.mjs",
-    "liveTests": "scripts/verify-r86-pr-review-evidence.test.mjs",
-    "dossierVerifier": "scripts/check-r86-review-readiness.mjs",
-    "dossierTests": "scripts/check-r86-review-readiness.test.mjs",
-    "githubReviewSnapshot": "NO_REVIEWS_OBSERVED",
-    "ownerInstructionsRecorded": 4,
-    "independentCorporateCheckerReviewsVerified": 0,
-    "kernelAdmissionsVerified": 0,
-    "reviewerAssignment": "NOT_VERIFIED",
-    "canonicalElection": false,
-    "eventsReplayed": 0,
-    "mainChanged": false,
-    "releaseGate": "HOLD_HUMAN",
-    "taskCountObservedAtUpdate": 72
-  },
-  "r86SupplementalTaskIntake": {
-    "date": "2026-10-31",
-    "state": "CANDIDATE_ONLY_NOT_KERNEL_ADMITTED",
-    "originalBaselineTasks": 37,
-    "r79SourceCandidateTasks": 31,
-    "additionalAuditTaskCount": 4,
-    "resultingTaskCount": 72,
-    "source": "specialized admin-area review registered in same candidate PR branch (not a corporate decision)",
-    "sourceCommit": "d5ca82bf99499878a4b4c034078f9edd7089d9bf",
-    "sourcePlanIntakeCommits": [
-      "260a4bb4105033703e70a7d34b28be5aa1f89d79",
-      "516a33b74b486494e80cbe429b1821b92ed315a6"
-    ],
-    "authorizedWoStatusChanges": false,
-    "additionalWosAdmitted": 0,
-    "kernelAdmission": "NOT_VERIFIED",
-    "approval": "NOT_APPROVED",
-    "releaseGate": "HOLD_HUMAN",
-    "tasks": [
-      {
-        "id": "TASK-PLAN-090",
-        "wo": "WO-SEC-001",
-        "status": "PROPOSTO",
-        "title": "Integrar os testes do pacote no glob oficial do repo",
-        "artifacts": [
-          "scripts/impact-engine.test.mjs",
-          "scripts/list-query.test.mjs"
-        ]
-      },
-      {
-        "id": "TASK-PLAN-091",
-        "wo": "WO-PMO-001",
-        "status": "PROPOSTO",
-        "title": "Declarar as entidades novas nos contratos canonicos",
-        "artifacts": [
-          "registers/canonical/surface-contracts.v2.json",
-          "contracts/entities/design-tokens.v1.json"
-        ]
-      },
-      {
-        "id": "TASK-PLAN-092",
-        "wo": "WO-PMO-001",
-        "status": "PROPOSTO",
-        "title": "Preservar o PmoReviewIntake e adicionar list-query como camada de consulta",
-        "artifacts": [
-          "src/components/admin/pmo-panel.tsx"
-        ]
-      },
-      {
-        "id": "TASK-PLAN-093",
-        "wo": "WO-SEC-001",
-        "status": "PROPOSTO",
-        "title": "Rotular a auditoria local como nao atestada (hash-chain -> log append-only rotulado)",
-        "artifacts": [
-          "src/lib/impact/impact-engine.ts"
-        ]
-      }
-    ]
   }
 }

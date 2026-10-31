@@ -50,6 +50,30 @@ export function validate({findingRegister,report,r80,w11}){
    if(m.file.startsWith('0038'))assert.equal(m.callsEvaluateQuestion,true,'CONSUMER_CHAIN_MISSING');
    else assert.equal(m.containsCorrectOptionIds,true,'ANSWER_EXPOSURE_MISSING');
  }
+ const timeline=report.aclTimeline;
+ assert.equal(timeline?.method?.startsWith('Ordered plain SQL statement scan'),true,'ACL_METHOD_NOT_EXPLICIT');
+ assert.equal(timeline.filesScanned,47,'INCOMPLETE_ACL_MIGRATIONS');
+ assert.equal(timeline.matchingTargetStatements,6,'INCOMPLETE_ACL_EVENTS');
+ assert.equal(timeline.schemaWideGrantRevokeOrDefaultPrivilegesStatements,0,'SCHEMA_WIDE_ACL_CHANGE_NEEDS_REVIEW');
+ assert.equal(timeline.status,'STATIC_SOURCE_ONLY_NO_RUNTIME_CONCLUSION','FALSE_RUNTIME_PROOF');
+ assert.deepEqual(timeline.functions?.map(x=>x.signature),[
+   'api.evaluate_question(uuid,uuid[],text)',
+   'api.evaluate_question_set(jsonb,text)'
+ ],'UNEXPECTED_ACL_FUNCTION_SET');
+ const expectedChanges=[
+   [['0024_api_functions.sql','REVOKE_ALL','PUBLIC'],
+    ['0024_api_functions.sql','GRANT_EXECUTE','anon,authenticated'],
+    ['0031_cms_working_copies_option_lifecycle.sql','REVOKE_ALL','PUBLIC'],
+    ['0031_cms_working_copies_option_lifecycle.sql','GRANT_EXECUTE','anon,authenticated']],
+   [['0038_api_assessment_runtime.sql','REVOKE_ALL','PUBLIC'],
+    ['0038_api_assessment_runtime.sql','GRANT_EXECUTE','anon,authenticated']]
+ ];
+ for(let i=0;i<2;i++){
+  const t=timeline.functions[i];
+  assert.deepEqual(t.changes.map(y=>[y.migration,y.action,y.role]),expectedChanges[i],'ACL_EVENT_SEQUENCE_DRIFT');
+  assert.equal(t.laterTargetRevokeFound,false,'ACL_REVOKE_EVIDENCE_DRIFT');
+  assert.equal(t.lastExplicitStatement,'GRANT_EXECUTE_TO_ANON_AND_AUTHENTICATED','ACL_FINAL_GRANT_DRIFT');
+ }
  assert.equal(report.traceability?.existingTask,'TASK-PLAN-080','TASK_NOT_MATCHED');
  assert.equal(report.traceability?.workOrderCandidate,'WO-SEC-001','WO_NOT_MATCHED');
  assert.equal(report.release?.status,'HOLD_HUMAN','FALSE_RELEASE_GATE');

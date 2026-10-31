@@ -147,6 +147,9 @@ for (const w of wos) {
 /* ---------- regra 3: pendência órfã ---------- */
 for (const p of pending) {
   const covered = tasks.some((t) => {
+    // Superseded/cancelled tasks cannot discharge live pendencies.
+    // A task without a valid WO is never authoritative coverage.
+    if (CLOSED_TASK_STATUS.has(t.status) || !woIds.has(t.wo)) return false;
     const covers = Array.isArray(t.covers) ? t.covers : [];
     return p.aliases.some((a) => covers.includes(a)) || covers.includes(`${p.group}:${p.id}`);
   });

@@ -1,7 +1,7 @@
 /** Deterministic semantic comparison; never authorizes a branch/file winner. */
 import {createHash} from 'node:crypto';
 
-const REGISTRY_PREFIX = 'registers/i18n/incoming/de/';
+const REGISTRY_PREFIX = 'registers/i18n/incoming/de/contracts/';
 const JSON_SUFFIX = '.json';
 
 /**

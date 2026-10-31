@@ -1,15 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions} from './lib/main-migration-core.mjs';
+import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions,reconcileBranchPopulation} from './lib/main-migration-core.mjs';
 
 const manifest=JSON.parse(readFileSync('registers/governance/main-migration-scope.v1.json','utf8'));
-test('scope includes exactly 23 distinct versioned branches with explicit HOLD',()=>{
+test('scope contains a controlled, versioned branch universe with explicit HOLD',()=>{
   assert.deepEqual(validateMigrationManifest(manifest),[]);
-  assert.equal(manifest.branches.filter(x=>x.status==='ahead').length,11);
-  assert.equal(manifest.branches.filter(x=>x.status==='diverged').length,8);
-  assert.equal(manifest.branches.filter(x=>x.status==='no_common_ancestor').length,2);
-  assert.equal(manifest.branches.filter(x=>x.status==='behind').length,2);
+  assert.equal(manifest.branches.length,manifest.sourceBranchesCount);
+  for(const [status,count] of Object.entries(manifest.classificationCounts)) {
+    assert.equal(manifest.branches.filter(x=>x.status===status).length,count);
+  }
 });
 test('scope cannot declare unauthorized release or a duplicate branch',()=>{
   const broken=structuredClone(manifest);broken.releaseGate='APPROVED';
@@ -62,4 +62,22 @@ test('missing blob and deletion cannot be mistaken for a clean duplicate',()=>{
     {branch:'B',paths:[{path:'a',blob:'b'.repeat(40),status:'M',risk:'CANDIDATE_REVIEW'}]}
   ]);
   assert.equal(found.collisions.length,1);
+});
+
+test('live branch population must include every manifest source and forbid untracked refs',()=>{
+  const declared=manifest.branches.map(b=>b.name);
+  assert.equal(reconcileBranchPopulation(declared,[...declared].reverse()).complete,true);
+  assert.deepEqual(reconcileBranchPopulation(declared,declared.slice(1)).missing,[declared[0]]);
+  assert.deepEqual(reconcileBranchPopulation(declared,[...declared,'unexpected/new']).untracked,['unexpected/new']);
+  assert.equal(reconcileBranchPopulation(declared,[...declared,declared[0]]).complete,false);
+  assert.throws(()=>reconcileBranchPopulation(declared,['main',...declared]),/INVALID_BRANCH_POPULATION/);
+});
+
+test('a new branch requires scope reconciliation instead of a hardcoded total of 23',()=>{
+  const next=structuredClone(manifest);
+  next.branches.push({...next.branches[0],name:'new-work-item'});
+  next.sourceBranchesCount=next.branches.length;
+  assert.deepEqual(validateMigrationManifest(next),[]);
+  next.sourceBranchesCount--;
+  assert.ok(validateMigrationManifest(next).includes('SOURCE_COUNT_MISMATCH'));
 });

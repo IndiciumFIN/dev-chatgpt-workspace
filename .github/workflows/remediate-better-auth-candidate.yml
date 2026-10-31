@@ -77,11 +77,15 @@ jobs:
         run: npm test
       - name: Verify production-like SPA build and gates
         run: npm run build:spa
-      - name: Confirm only the three reviewed files changed
+      - name: Stage and validate only the reviewed dependency and OAuth changes
         run: |
-          git diff --exit-code -- . ':!package.json' ':!package-lock.json' ':!src/lib/auth/client.ts'
-          test -n "$(git diff --name-only -- package.json package-lock.json src/lib/auth/client.ts)"
-          test "$(git diff --name-only | sort)" = "$(printf 'package-lock.json\npackage.json\nsrc/lib/auth/client.ts' | sort)"
+          set -euo pipefail
+          git add -- package.json package-lock.json src/lib/auth/client.ts
+          expected="$(printf 'package-lock.json\npackage.json\nsrc/lib/auth/client.ts' | sort)"
+          actual="$(git diff --cached --name-only | sort)"
+          test "$actual" = "$expected"
+          git diff --cached --check
+          echo "PASS: only the three reviewed files staged; generated audit snapshots remain uncommitted"
       - name: Commit validated dependency update to existing branch only
         run: |
           git config user.name "github-actions[bot]"

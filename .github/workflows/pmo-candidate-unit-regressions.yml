@@ -73,7 +73,11 @@ jobs:
           set -e
           cat "$root/coverage.log"
           test "$code" -eq 1
-          grep -Fq '10 WOs · 36 tasks · 32 pendências · 4 gaps' "$root/coverage.log"
+          expected_tasks="$(node -p "JSON.parse(require('node:fs').readFileSync('$root/docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json','utf8')).tasks.length")"
+          # Snapshot has 37 task IDs (including GH28 and the R77 collision-gate task).
+          # Derive exact output from the actual, separately validated plan instead of a stale 36-task literal.
+          test "$expected_tasks" -ge 37
+          grep -Fq "10 WOs · ${expected_tasks} tasks · 32 pendências · 4 gaps" "$root/coverage.log"
           grep -Fq 'GAP_ABERTO: 4' "$root/coverage.log"
           ! grep -Eq 'PENDENCIA_ORFA:|WO_SEM_TASK:|TASK_SEM_WO:|TASK_WO_INEXISTENTE:|ENTRADA_INCOMPLETA:' "$root/coverage.log"
           echo 'PASS: gate rejeitou corretamente os quatro gaps; nenhuma pendência órfã ou WO sem task'

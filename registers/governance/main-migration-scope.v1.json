@@ -217,7 +217,13 @@
       "pr": "26",
       "gate": "HOLD_HUMAN",
       "source": "GitHub compare main...branch, 2026-10-31",
-      "limitations": null
+      "limitations": null,
+      "observationSemantics": "HISTORICAL_CAPTURE_SUPERSEDED_BY_LIVE_PR_AND_RUNTIME_AUDIT",
+      "latestObservedBeforeHardening": {
+        "headSha": "0b0daf95cc7a12084dc83e639bd2befb3204c724",
+        "commits": 283,
+        "changedFiles": 128
+      }
     },
     {
       "name": "planning",
@@ -419,5 +425,35 @@
     "why": "Git history comparisons are not exhaustive source-content, canonical lineage or clinical correctness proofs"
   },
   "progressPolicy": "Report only actual committed, tested and promoted items; never infer 100% from green CI in a candidate.",
-  "releaseGate": "HOLD_HUMAN"
+  "releaseGate": "HOLD_HUMAN",
+  "snapshotSemantics": {
+    "classification": "HISTORICAL_POINT_IN_TIME_NOT_LIVE_GATE",
+    "initialSnapshotDate": "2026-10-31",
+    "baselineMainSha": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+    "immutableSourceMeaning": "branches[].ahead, behind, changedFiles and classificationCounts were captured when the scope was first assembled; they are historical descriptors, not authoritative live metrics. In particular PR26 originally had ahead=37 and changedFiles=17.",
+    "liveObservedBeforeHardening": {
+      "observedHeadSha": "0b0daf95cc7a12084dc83e639bd2befb3204c724",
+      "pullRequest": 26,
+      "commits": 283,
+      "changedFiles": 128,
+      "branchesIncludingMain": 24,
+      "sourceBranches": 23,
+      "source": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26"
+    },
+    "lastCompleteRuntimeAudit": {
+      "runUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41250529047",
+      "auditedHeadSha": "0b0daf95cc7a12084dc83e639bd2befb3204c724",
+      "branchSourceCount": 23,
+      "collisionPaths": 118,
+      "duplicatePaths": 260,
+      "sourcePaths": 11424,
+      "pendingPaths": 11422,
+      "distinctPendingPaths": 10796,
+      "status": "PASSED_AS_READ_ONLY_INVENTORY_NOT_RELEASE_AUTHORIZATION"
+    },
+    "currentAuthority": "At every new task, fetch all live branch refs and SHAs, then execute scripts/audit-main-migration.mjs and gate on complete fresh runtime output. Never compare approvals against this static historical snapshot.",
+    "independentReview": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26#issuecomment-6550484028",
+    "requiresFreshRunAfterHeadChanges": true,
+    "releaseGate": "HOLD_HUMAN"
+  }
 }

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {examineSourcePage,summarizeSourceIndex} from './lib/corpus-index.mjs';
+import {examineSourcePage,summarizeSourceIndex,classifySourceKind} from './lib/corpus-index.mjs';
 
 const hash='a'.repeat(64);
 const base={arquivo:'pt-br/escalas/glasgow/index.html',idioma:'pt-BR',papel:'origem',sha256:hash,
@@ -55,4 +55,19 @@ test('locale missing and missing text are reported for quarantine',()=>{
   assert.ok(p.structuralProblems.includes('INVALID_LOCALE'));
   assert.ok(p.structuralProblems.includes('SECTIONS_MISSING'));
   assert.ok(p.structuralProblems.includes('FULL_TEXT_MISSING'));
+});
+
+test('templates with unresolved canonical placeholders stay in quarantine',()=>{
+ const p=page({...base,arquivo:'blog-templates/post.template.html',metadados:{canonical:'{{canonical}}'}});
+ assert.equal(p.kind,'TEMPLATE_QUARANTINE');
+ assert.ok(p.structuralProblems.includes('UNRESOLVED_CANONICAL_TEMPLATE'));
+ assert.ok(!p.structuralProblems.includes('CANONICAL_OUTSIDE_PROJECT'));
+});
+test('backups, UI fragments and content candidates are classified without deletion',()=>{
+ assert.equal(classifySourceKind('backups-temporarios/menu.html'),'BACKUP_QUARANTINE');
+ assert.equal(classifySourceKind('header.html'),'SHARED_FRAGMENT_HOLD');
+ assert.equal(classifySourceKind('automacoes/sinan_raw.html'),'AUTOMATION_HOLD');
+ assert.equal(classifySourceKind('blog/mary-eliza-mahoney/index.html'),'CONTENT_CANDIDATE_HOLD');
+ const s=summarizeSourceIndex([page()],1);
+ assert.equal(s.kinds.CONTENT_CANDIDATE_HOLD,1);
 });

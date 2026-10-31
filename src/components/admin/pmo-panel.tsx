@@ -3,6 +3,7 @@ import { ArrowUpRight, ClipboardCheck, FileClock, ListTodo } from 'lucide-react'
 import queue from '../../../registers/pmo/queue.v1.json';
 import candidates from '../../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json';
 import findRegistry from '../../../registers/governance/find-register.v1.json';
+import { PmoReviewIntake } from './pmo-review-intake';
 
 /** Projeção somente leitura: a fonte é o registro versionado no GitHub, não localStorage. */
 export function PmoPanel() {
@@ -39,6 +40,7 @@ export function PmoPanel() {
       </ol>
       <p className="ce-admin-detail-note"><strong>Fonte da verdade do PMO:</strong> <code>{queue.canonicalSource}</code>. Atualizações chegam após o commit e o novo build. Não existe gravação administrativa remota aqui.</p>
     </section>
+    <PmoReviewIntake />
     <section className="ce-admin-panel" data-testid="pmo-candidate-finds" aria-labelledby="pmo-find-heading">
       <div className="ce-admin-panel-heading"><div><h2 id="pmo-find-heading">Achados candidatos — CKO / COREN / COFEN</h2>
         <p>{candidates.items.length} registros ({candidates.items.filter(x => x.priority === 'P0').length} P0 e {candidates.items.filter(x => x.priority === 'P1').length} P1) · {findRegistry.candidate_batches.find(x => x.batch_id === 'CKO-COREN-COFEN-AUDIT-20261023')?.related_wo}</p></div></div>

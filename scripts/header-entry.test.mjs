@@ -20,7 +20,7 @@ test('header reuses canonical translations and existing styling', () => {
 
 test('login remains gated by the real existing authentication switch', () => {
   assert.match(login, /if \(!authEnabled\) return/);
-  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED !== "false"/);
+  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED === "true"/);
   assert.match(login, /A autenticação não está habilitada neste ambiente/);
   assert.match(login, /não inicia sessão nem concede acesso/);
 });

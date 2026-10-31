@@ -39,7 +39,30 @@
       "I18N_VALIDATE": 1270,
       "CANDIDATE_REVIEW": 1205
     },
-    "note": "Git-file structural classification only; many clinically relevant HTML pages inside source corpus were counted under SOURCE_CORPUS_HOLD, not the 8 paths matching CLINICAL_HOLD."
+    "note": "Git-file structural classification only; many clinically relevant HTML pages inside source corpus were counted under SOURCE_CORPUS_HOLD, not the 8 paths matching CLINICAL_HOLD.",
+    "conflictCategories": {
+      "i18n": 59,
+      "src": 28,
+      "other": 13,
+      "docs": 6,
+      "governance": 5,
+      "ciAndDependencies": 4,
+      "total": 115,
+      "grouping": "Heuristic by collision path; exact names and blob SHAs are available in full GitHub Actions artifact."
+    },
+    "highPriorityCollisionPaths": [
+      "package.json",
+      "package-lock.json",
+      "src/components/site/shell.tsx",
+      "src/routes/login.tsx",
+      "src/styles.css",
+      "src/components/admin/pmo-panel.tsx",
+      "registers/pmo/queue.v1.json",
+      "contracts/cko-governance/opa/kernel_admission.rego",
+      "registers/canonical/surface-contracts.v2.json",
+      "contracts/entities/routes.v1.json",
+      "src/core/governance/kernel.ts"
+    ]
   },
   "sourceCorpus": {
     "origin": {
@@ -78,7 +101,8 @@
       "Structural validity is not clinical, linguistic, editorial or regulatory homologation",
       "Some invalid locale values belong to backups/templates rather than publishable pages"
     ],
-    "releaseGate": "HOLD_HUMAN"
+    "releaseGate": "HOLD_HUMAN",
+    "note": "Templates/backups are source-preserving classifications derived from document path, not deletions or proof of semantic duplicates."
   },
   "header": {
     "pr": 27,
@@ -110,7 +134,18 @@
     ],
     "state": "CANDIDATE_RECONCILIATION_ONLY",
     "gate": "HOLD_HUMAN",
-    "completionClaim": "NOT_100_PERCENT_MIGRATED"
+    "completionClaim": "NOT_100_PERCENT_MIGRATED",
+    "conflictResolutionStrategy": {
+      "method": "For each conflicting path, identify canonical owner/source and compare full blobs/lineage; classify as KEEP_MAIN, ADOPT_CANDIDATE, MERGE_SEMANTIC, QUARANTINE or SUPERSEDE with evidence; require human/Kernel authorization for restricted categories.",
+      "prohibited": "No automatic winner chosen from branch date, filename, or recency alone.",
+      "priority": [
+        "Kernel/PMO, access control and package dependencies",
+        "Canonical routes and Design System/topbar",
+        "i18n competing dictionaries",
+        "Editorial corpus/backup dedup and source rights",
+        "Product modules, DB staging and clinical governance"
+      ]
+    }
   },
   "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required."
 }

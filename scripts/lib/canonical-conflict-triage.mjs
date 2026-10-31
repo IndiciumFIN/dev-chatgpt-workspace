@@ -35,6 +35,27 @@ export function triageCanonicalConflict(path,{equivalent=false}={}){
   }else if(/^docs\/handoffs\//.test(path)){
     wo='WO-PMO-001';priority='P2';domain='DOCUMENTARY_HANDOFF';
   }
+  // Explicitly triage the 28 paths without an owner in the first inventory.
+  // These are *candidate* WO mappings, subject to PMO reconciliation/Kernel.
+  if(!wo){
+    if(path==='.gitignore'||/^scripts\/(?:alias-hook|grok-pwa-plugin|grok-pwa-shared|migration-plan|with-app-env|write-atomic)(?:\.test)?\.mjs$/.test(path)){
+      wo='WO-AUTO-001';priority='P1';domain='BUILD_AUTOMATION';
+    }else if(/^scripts\/(?:admin-ux-e2e|test-admin-console)\.mjs$/.test(path)){
+      wo='WO-E2E-001';priority='P1';domain='ADMIN_TESTING';
+    }else if(/^scripts\/brand-check\.test\.mjs$/.test(path)||/^src\/lib\/(?:chrome\.tsx|dictionary\.test\.ts)$/.test(path)){
+      wo='WO-DS-001';priority='P1';domain='DESIGN_SYSTEM';
+    }else if(/^scripts\/check-auth-invariant\.test\.mjs$/.test(path)||/^src\/lib\/(?:app-data\/client\.server\.ts|it-controls\.test\.ts)$/.test(path)){
+      wo='WO-SEC-001';priority='P0';domain='SECURITY_CONTROLS';
+    }else if(/^src\/core\/compliance\/validators\.ts$/.test(path)||/^src\/lib\/(?:kernel-admit(?:\.test)?\.ts|policy-decision\.ts)$/.test(path)){
+      wo='WO-GOV-TRANS-001';priority='P0';domain='KERNEL_CONTROLS';
+    }else if(path==='registers/canonical/surface-contracts.v2.json'){
+      wo='WO-DS-001';priority='P1';domain='SURFACE_CONTRACT';
+    }else if(path==='registers/canonical/route-contracts.v1.json'||path==='src/routeTree.gen.ts'){
+      wo='WO-ADM-001';priority='P1';domain='CANONICAL_ROUTING';
+    }else if(path==='it-book/docs/normalizacao.md'||/^src\/core\/registry\/source-registry\.ts$/.test(path)||/^src\/lib\/(?:intake(?:\.test)?\.ts|source\.functions\.ts|stored\.functions\.ts)$/.test(path)){
+      wo='WO-CKO-001';priority='P1';domain='KNOWLEDGE_SOURCE';
+    }
+  }
   const candidate=CANONICAL_SOURCE_CANDIDATES[path]??null;
   return {
     path,domain,priority,

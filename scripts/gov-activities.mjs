@@ -37,8 +37,12 @@ export function validatePmo(q){
   for(const item of q.items){
     if(Array.isArray(item.dependencies))for(const dep of item.dependencies)if(!ids.has(dep)||dep===item.id)issues.push('Invalid dependency '+item.id+':'+dep);
     if(last.has(item.id)&&last.get(item.id)!==item.status)issues.push('Current state differs from event history '+item.id);
-    if(item.status==='DONE'&&item.evidence.length===0)issues.push('DONE without evidence '+item.id);
+    if(item.status==='DONE'&&(!Array.isArray(item.evidence)||item.evidence.length===0))issues.push('DONE without evidence '+item.id);
+    if(item.status==='DONE'&&Array.isArray(item.dependencies)&&item.dependencies.some(dep=>q.items.find(other=>other.id===dep)?.status!=='DONE'))issues.push('DONE with unfinished dependency '+item.id);
   }
+  // The read-only planner must never silently turn an unapproved release into a candidate.
+  const homologation=q.items.find(item=>item.id==='WO-HOM-001');
+  if(homologation&&homologation.status!=='HOLD_HUMAN')issues.push('Release HOLD bypassed');
   // Graph integrity: reject cycles, even when all references are valid.
   const visiting=new Set(),visited=new Set();
   const byId=new Map(q.items.map(i=>[i.id,i]));

@@ -82,7 +82,7 @@
       },
       {
         "name": "fix/governed-activities-cli-20261026",
-        "sha": "a8ce7e1b1e60839c17d45205c29a190517af1765",
+        "sha": "24b510c6fef1e6d25174bd6c312095eeba315470",
         "kind": "product-candidate",
         "aheadBy": null,
         "behindBy": null,
@@ -181,7 +181,7 @@
       },
       {
         "name": "simulados-enfermagem-db-canonico",
-        "sha": "9deb9466ca2a13801aebf6e950a379159008ec56",
+        "sha": "77db95dd2b55e8aefc9b4c07e07d3897bc4a9736",
         "kind": "product-candidate",
         "aheadBy": 36,
         "behindBy": 0,
@@ -235,7 +235,7 @@
         "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/13",
         "decision": "HOLD",
         "reason": "Draft and outstanding security/Kernel/review/release gates; no verified protected main",
-        "headSha": "a8ce7e1b1e60839c17d45205c29a190517af1765"
+        "headSha": "24b510c6fef1e6d25174bd6c312095eeba315470"
       },
       {
         "number": 19,
@@ -275,7 +275,7 @@
         "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24",
         "decision": "HOLD",
         "reason": "Draft and outstanding security/Kernel/review/release gates; no verified protected main",
-        "headSha": "9deb9466ca2a13801aebf6e950a379159008ec56"
+        "headSha": "77db95dd2b55e8aefc9b4c07e07d3897bc4a9736"
       }
     ]
   },
@@ -423,7 +423,42 @@
         },
         "reason": "No release-ready chain of eight independently validated gates; do not infer product completion"
       }
-    ]
+    ],
+    "additionalFronts": {
+      "curiosidadesMEM": {
+        "pagesInventoried": 87,
+        "pagesReleased": 0,
+        "sourceOccurrencesReconciled": 48,
+        "alternativeSourcesProposed": 46,
+        "sourceClaimsIndependentlyValidated": 0,
+        "sourceRightsAssessed": 0,
+        "release": "HOLD_HUMAN"
+      },
+      "careerYouth": {
+        "atomicFactsMaterialized": 19,
+        "claimsMaterialized": 19,
+        "claimsIndependentlyReviewed": 0,
+        "editorialDocumentsMaterialized": 17,
+        "editorialDocumentsHumanApproved": 0,
+        "release": "HOLD_HUMAN"
+      },
+      "researchParticipation": {
+        "listedPendingItems": 12,
+        "formalKernelAdmission": false,
+        "release": "HOLD_HUMAN",
+        "note": "Prior 12% estimate is not independently validated completion"
+      },
+      "vila": {
+        "historicalFindings": 20,
+        "currentFindingsIndependentlyClosed": 0,
+        "currentBranchGaps": 4,
+        "release": "HOLD"
+      },
+      "centralCommand": {
+        "formalReleaseGatePass": 0,
+        "release": "HOLD"
+      }
+    }
   },
   "changesThisRound": [
     {
@@ -457,6 +492,30 @@
         ".github/workflows/remediate-better-auth-candidate.yml"
       ],
       "scope": "Restrict dependency+OAuth candidate to three reviewed files"
+    },
+    {
+      "sha": "749a009b66049a4a1d67115d69605890bb2a7827",
+      "branch": "fix/governed-activities-cli-20261026",
+      "files": [
+        "scripts/gov-activities.mjs"
+      ],
+      "scope": "Fail closed when mandatory homologation WO is absent"
+    },
+    {
+      "sha": "24b510c6fef1e6d25174bd6c312095eeba315470",
+      "branch": "fix/governed-activities-cli-20261026",
+      "files": [
+        "scripts/test-gov-activities.mjs"
+      ],
+      "scope": "Negative regression for deleted homologation WO"
+    },
+    {
+      "sha": "77db95dd2b55e8aefc9b4c07e07d3897bc4a9736",
+      "branch": "simulados-enfermagem-db-canonico",
+      "files": [
+        ".github/workflows/remediate-better-auth-candidate.yml"
+      ],
+      "scope": "CI stages only dependency and OAuth client files after full gates; independently validate snapshot side effects"
     }
   ],
   "ciEvidence": [
@@ -485,6 +544,28 @@
       "run": 41214870524,
       "status": "CANCELLED",
       "reason": "Concurrent candidate branch updates; do not claim success"
+    },
+    {
+      "sha": "24b510c6fef1e6d25174bd6c312095eeba315470",
+      "run": 41214959099,
+      "pmoValidator": "PASS",
+      "pmoNegative": "PASS",
+      "governedActivities": "PASS",
+      "dependencyAudit": "FAIL",
+      "fullSuite": "NOT_RUN",
+      "release": "HOLD"
+    },
+    {
+      "sha": "9deb9466ca2a13801aebf6e950a379159008ec56",
+      "run": 41214895947,
+      "betterAuthLockUpdate": "PASS_IN_RUNNER",
+      "oauthMigration": "PASS_IN_RUNNER",
+      "npmAuditHigh": "PASS_IN_RUNNER",
+      "typecheck": "PASS_IN_RUNNER",
+      "regressionSuite": "PASS_IN_RUNNER",
+      "buildSpa": "PASS_IN_RUNNER",
+      "diffScope": "FAIL_DUE_TO_GENERATED_AUDIT_SNAPSHOTS",
+      "commitApplied": false
     }
   ],
   "blockers": [
@@ -519,5 +600,6 @@
   "productionDbWrites": 0,
   "deletedBranches": 0,
   "notes": "Do not overlap IndiciumFIN/calculadorasdeenfermagem/Supabase automation. Product PRs remain drafts. Other product requirement denominators must be independently enumerated before a technical-completion percentage is assigned.",
-  "nextMicrotask": "Finish Better Auth 1.7 migration CI without concurrent branch pushes; then run isolated RPC/RLS negative tests and capture review gates"
+  "nextMicrotask": "Let the updated Better Auth CI run finish on the stable PR24 SHA, verify staged files and GitHub bot commit readback; retain generated snapshot audit evidence and continue RPC/RLS negative testing",
+  "sourceNote": "Round-02 checkpoint readback includes branch heads before this checkpoint update; its own branch head advances upon commit. Concurrent PR24 automation may advance the candidate SHA; never infer success without a fresh readback."
 }

@@ -29,7 +29,7 @@ test('R83: changed original queue bytes are rejected even when JSON shape is val
 });
 test('R83: duplicate or dropped event ledger entry fails closed',()=>{
  const d=clone();d.dossier.eventLedger[20]=structuredClone(d.dossier.eventLedger[19]);
- assert.throws(()=>verify(d),/DUPLICATE_LEDGER_EVENT|EVENT_OCCURRENCE_DRIFT/);
+ assert.throws(()=>verify(d),/PROPOSED_INDEX_SEQUENCE_DRIFT|DUPLICATE_LEDGER_EVENT|EVENT_OCCURRENCE_DRIFT/);
  const e=clone();e.dossier.eventLedger.pop();
  assert.throws(()=>verify(e),/LEDGER_INCOMPLETE/);
 });

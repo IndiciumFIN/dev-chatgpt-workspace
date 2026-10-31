@@ -1,8 +1,8 @@
 {
-  "as_of": "2026-10-24",
+  "as_of": "2026-10-31",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -241,6 +241,69 @@
       "blocking_policy_refs": [
         "CKO-POL-UT-001"
       ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-PMO-COVERAGE-20261031",
+      "version": "0.1.0",
+      "status": "DRAFT_FOR_GOVERNED_REVIEW",
+      "updated_at": "2026-10-31",
+      "provenance_refs": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25"
+      ],
+      "finding_type": "INTEGRATION_GAP",
+      "severity": "HIGH",
+      "fact": "32 pendências têm cobertura por task, mas 31 têm WO UNRECONCILED na origem; 31 WOs de domínio são propostas não admitidas. Revisões PMO main 18 e candidata 20 não eleitas; não há comprovação individual de política, validação ou Kernel.",
+      "evidence_refs": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25",
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "registers/governance/r79-domain-wo-mapping-20261031.v1.json",
+        "registers/governance/r80-pending-evidence-chain-20261031.v1.json"
+      ],
+      "root_cause_status": "CANDIDATE_ASSESSMENT",
+      "remediation_task_refs": [
+        "TASK-PLAN-005",
+        "TASK-PLAN-013",
+        "TASK-PLAN-059"
+      ],
+      "blocking_policy_refs": [
+        "docs/governance/04-work-order-model.md",
+        "AGENTS.project.md"
+      ],
+      "policy_ref": "PENDING_APPLICABILITY_REVIEW",
+      "validator_ref": "PENDING_ADMISSION",
+      "work_order": "NOT_ADMITTED",
+      "mutation_allowed": false
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-CKO-IMPORT-ROUTE",
+      "version": "0.1.0",
+      "status": "DRAFT_FOR_GOVERNED_REVIEW",
+      "updated_at": "2026-10-31",
+      "provenance_refs": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/2"
+      ],
+      "finding_type": "SECURITY_CONTROL_GAP",
+      "severity": "HIGH",
+      "fact": "A issue de arquitetura documenta falta de rota autenticada de importação governada e prova de PEP/identidade de servidor/OPA/grants PostgreSQL. O contrato de API isolado não prova autorização de execução real. Requer decisão específica de autoridade de runtime.",
+      "evidence_refs": [
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/2",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/1"
+      ],
+      "root_cause_status": "CANDIDATE_ASSESSMENT",
+      "remediation_task_refs": [
+        "TASK-PLAN-026",
+        "TASK-PLAN-076"
+      ],
+      "blocking_policy_refs": [
+        "docs/governance/04-work-order-model.md",
+        "AGENTS.project.md"
+      ],
+      "policy_ref": "PENDING_APPLICABILITY_REVIEW",
+      "validator_ref": "PENDING_ADMISSION",
+      "work_order": "NOT_ADMITTED",
+      "mutation_allowed": false
     }
   ],
   "candidate_batches": [

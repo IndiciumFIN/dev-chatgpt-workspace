@@ -224,3 +224,27 @@ test("nao Creates falso verde: task que cobre outra issue não cobre a pendencia
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("tarefa CANCELLED não cobre pendência ativa (regressão falso-verde)", () => {
+  const root = tmp();
+  try {
+    const queue = { ...QUEUE, items: QUEUE.items.map((w) =>
+      w.id === "WO-PMO-001" ? { ...w, evidence: ["https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/1ab0561"] } : w) };
+    const plan = { schemaVersion: 1, tasks: [
+      { id: "TASK-A", wo: "WO-ADM-001", status: "PROPOSTO", covers: [], artifacts: [] },
+      { id: "TASK-B", wo: "WO-SEC-001", status: "PROPOSTO", covers: ["simulados:P0-04"], artifacts: [] },
+      { id: "TASK-C", wo: "WO-PMO-001", status: "CANCELLED", covers: ["GH-25"], artifacts: [] },
+    ] };
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": queue,
+      "registers/pmo/cross-source-pending-intake.v1.json": INTAKE,
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": plan,
+    });
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /PENDENCIA_ORFA/);
+    assert.match(result.out, /GH-25/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

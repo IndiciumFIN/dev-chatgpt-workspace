@@ -24,6 +24,8 @@ const assertions = [
   ['real end-user routes provided only for published local projection', /previewVersion === 'published' && <Link/.test(ui)],
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
+  ['R87 PMO uses canonical deterministic list-query and preserves review intake', /import \{ queryPmo, type ListSort \} from '@\/lib\/admin\/list-query'/.test(pmo) && /queryPmo\(queue\.items/.test(pmo) && /<PmoReviewIntake\s*\/>/.test(pmo)],
+  ['R87 list controls are labeled, paginated and read-only', /htmlFor="pmo-search"/.test(pmo) && /htmlFor="pmo-filter"/.test(pmo) && /htmlFor="pmo-sort"/.test(pmo) && /htmlFor="pmo-page-size"/.test(pmo) && /aria-label="Navegação das páginas do PMO"/.test(pmo) && !/\b(fetch|axios|supabase)\s*\(/.test(pmo)],
   ['R84 four-decision intake is reachable in canonical PMO panel', /<PmoReviewIntake\s*\/>/.test(pmo) && /r84-pmo-owner-decision-intake-20261031\.v1\.json/.test(pmoReview)],
   ['R84 review options and rationale are labeled accessibly', /htmlFor=\{item\.id \+ '-choice'\}/.test(pmoReview) && /htmlFor=\{item\.id \+ '-justification'\}/.test(pmoReview) && /role="status" aria-live="polite"/.test(pmoReview)],
   ['R84 proposals stay local and unsigned, never direct approval', /NON_BINDING_LOCAL_REVIEW_DRAFT/.test(pmoReview) && /kernelAdmission: 'NOT_VERIFIED'/.test(pmoReview) && /canonicalRevisionElected: false/.test(pmoReview) && !/\b(fetch|axios|supabase)\s*\(/.test(pmoReview)],

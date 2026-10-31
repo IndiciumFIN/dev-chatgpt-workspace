@@ -41,6 +41,33 @@ jobs:
         run: node --test scripts/check-pending-coverage.test.mjs
       - name: Run register schema regressions
         run: node --test scripts/check-register-schema.test.mjs
+      - name: Checkout real PMO rev20 source (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: fix/governed-activities-cli-20261026
+          path: pmo-source
+          persist-credentials: false
+      - name: Assert real-data coverage is blocked only by the four known gaps
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$(mktemp -d)"
+          trap 'rm -rf "$root"' EXIT
+          mkdir -p "$root/registers/pmo" "$root/docs"
+          cp pmo-source/registers/pmo/queue.v1.json "$root/registers/pmo/"
+          cp pmo-source/registers/pmo/cross-source-pending-intake.v1.json "$root/registers/pmo/"
+          cp docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json "$root/docs/"
+          node scripts/check-register-schema.mjs --root "$root"
+          set +e
+          node scripts/check-pending-coverage.mjs --root "$root" > "$root/coverage.log" 2>&1
+          code=$?
+          set -e
+          cat "$root/coverage.log"
+          test "$code" -eq 1
+          grep -Fq '10 WOs · 35 tasks · 31 pendências · 4 gaps' "$root/coverage.log"
+          grep -Fq 'GAP_ABERTO: 4' "$root/coverage.log"
+          ! grep -Eq 'PENDENCIA_ORFA:|WO_SEM_TASK:|TASK_SEM_WO:|TASK_WO_INEXISTENTE:|ENTRADA_INCOMPLETA:' "$root/coverage.log"
+          echo 'PASS: gate rejeitou corretamente os quatro gaps; nenhuma pendência órfã ou WO sem task'
       - name: Run read-only data kernel regressions
         run: python3 -m unittest discover -s tests -p 'test_*.py' -q
 # Advisory candidate tests only: does not activate the release/coverage gate

@@ -197,3 +197,22 @@
 .ce-commander-draft-heading small { color:var(--color-muted); font-size:.72rem; }
 .ce-commander-notice--compact { margin-top:.4rem; }
 @media(max-width:700px) { .ce-commander-grid { grid-template-columns:1fr; } .ce-commander-actions > button { flex:1 1 100%; } }
+
+
+/* Governed human-review candidates: CE canonical tokens, no competing design system. */
+.ce-admin-review-panel { display:grid; gap:1rem; }
+.ce-admin-review-evidence { display:flex; align-items:flex-start; gap:.75rem; padding:.9rem; border:1px solid var(--color-line); border-radius:var(--radius-control); background:var(--color-ice); }
+.ce-admin-review-evidence > svg { flex:none; color:var(--color-navy); }
+.ce-admin-review-evidence strong { font-size:.86rem; color:var(--color-ink); }
+.ce-admin-review-evidence p { margin:.3rem 0; font-size:.82rem; line-height:1.5; color:var(--color-body); }
+.ce-admin-review-evidence a { color:var(--color-navy); font-size:.8rem; font-weight:700; display:inline-flex; gap:.3rem; align-items:center; text-decoration:underline; }
+.ce-admin-review-fieldset { margin:0; padding:.75rem; border:1px solid var(--color-line); border-radius:var(--radius-control); min-width:0; }
+.ce-admin-review-fieldset legend { padding:0 .3rem; color:var(--color-ink); font-weight:750; font-size:.83rem; }
+.ce-admin-review-actions { display:flex; gap:.55rem; flex-wrap:wrap; }
+.ce-admin-review-actions .ce-admin-btn[aria-pressed="true"] { background:var(--color-navy); color:#fff; border-color:var(--color-navy); }
+.ce-admin-review-actions a.ce-admin-btn { text-decoration:none; }
+.ce-admin-review-panel .ce-admin-field select { min-height:44px; padding:.6rem .75rem; border:1px solid var(--color-line); background:var(--color-paper); border-radius:var(--radius-control); color:var(--color-body); font:inherit; }
+.ce-admin-review-draft { padding:.8rem; border:1px solid var(--color-line); border-radius:var(--radius-panel); background:var(--color-ice); }
+.ce-admin-review-draft pre { max-height:280px; overflow:auto; white-space:pre-wrap; word-break:break-word; font:inherit; font-size:.75rem; line-height:1.5; }
+.ce-admin-review-panel > .ce-admin-detail-note:last-child { display:flex; align-items:flex-start; gap:.4rem; }
+@media (max-width:530px) { .ce-admin-review-actions > * { width:100%; } .ce-admin-review-evidence { padding:.7rem; } }

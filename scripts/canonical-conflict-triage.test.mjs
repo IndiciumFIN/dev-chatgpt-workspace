@@ -37,6 +37,7 @@ test('unmapped paths fail open only in search, never in authorization',()=>{
 });
 test('full triage accounts for every collision, including semantic equivalence',()=>{
  const c=[collision('package.json'),collision('src/components/site/shell.tsx'),collision('registers/i18n/incoming/de/contracts/interface__enter.json')];
+ c[1].sources[0].branch='fix/governed-activities-cli-20261026'; // real verified candidate must appear in lineage
  const r=buildCanonicalTriage(c,{equivalent:[{path:c[2].path}]});
  assert.deepEqual({total:r.counts.total,semantic:r.counts.semanticEquivalent,review:r.counts.needingReview},
   {total:3,semantic:1,review:2});

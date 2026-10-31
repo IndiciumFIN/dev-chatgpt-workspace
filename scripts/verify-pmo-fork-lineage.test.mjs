@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import {load,verify,verifyDecisionPacket} from './verify-pmo-fork-lineage.mjs';
 
 const sourceDir=process.env.PMO_FORK_SOURCE_DIR;
-assert(sourceDir,'PMO_FORK_SOURCE_DIR required for R83 source-based regressions');
+if (!sourceDir) {
+ test('R83: source checkouts NOT_RUN in generic npm test; dedicated CI must execute',t=>t.skip('Requires five GitHub branch checkouts in PMO candidate workflow'));
+} else {
 const data=()=>load(sourceDir);
 function clone(){
  const d=data();
@@ -88,3 +90,5 @@ test('R83 packet: signed Kernel claim and release bypass rejected',()=>{
  const e=clone();e.packet.releaseGate='PASS';
  assert.throws(()=>verifyDecisionPacket(e),/UNAUTHORIZED_RELEASE/);
 });
+
+}

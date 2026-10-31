@@ -1828,7 +1828,12 @@
       "status": "PROPOSTO",
       "covers": [],
       "artifacts": [
-        "src/components/admin/pmo-panel.tsx"
+        "src/components/admin/pmo-panel.tsx",
+        "src/lib/admin/list-query.ts",
+        "src/lib/admin/list-query.test.ts",
+        "src/components/admin/pmo-review-intake.tsx",
+        "src/styles/admin-console.css",
+        "scripts/test-admin-console.mjs"
       ],
       "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI."
     },
@@ -2402,7 +2407,12 @@
           "TASK-PLAN-059"
         ],
         "artifacts": [
-          "src/components/admin/pmo-panel.tsx"
+          "src/components/admin/pmo-panel.tsx",
+          "src/lib/admin/list-query.ts",
+          "src/lib/admin/list-query.test.ts",
+          "src/components/admin/pmo-review-intake.tsx",
+          "src/styles/admin-console.css",
+          "scripts/test-admin-console.mjs"
         ],
         "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI."
       },
@@ -2630,5 +2640,22 @@
         "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
       }
     ]
+  },
+  "r87ExecutionEvidence": {
+    "date": "2026-10-31",
+    "taskId": "TASK-PLAN-092",
+    "state": "IMPLEMENTED_CANDIDATE_NOT_PRODUCTION",
+    "engine": "src/lib/admin/list-query.ts",
+    "unitTests": "src/lib/admin/list-query.test.ts",
+    "expectedUnitTests": 14,
+    "ui": "src/components/admin/pmo-panel.tsx",
+    "reviewPreserved": "src/components/admin/pmo-review-intake.tsx",
+    "contractChecks": "scripts/test-admin-console.mjs",
+    "sourceWosModified": false,
+    "mainModified": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "technicalVerification": "CI_PENDING_NEW_HEAD",
+    "visualE2E": "NOT_RUN",
+    "releaseGate": "HOLD_HUMAN"
   }
 }

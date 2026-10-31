@@ -330,25 +330,28 @@ O esqueleto traz **tokens próprios** e é uma aplicação separada (rotas, stor
 
 Evidência persistida em `docs/evidence/admin-area-2026-10-31/` (relatório + roadmap recebidos, sem alteração de conteúdo). Tarefas: `TASK-PLAN-059` (aplicar por reconciliação), `TASK-PLAN-060` (esqueleto x DS canônico), `TASK-PLAN-061` (provar os gates NOT_RUN).
 
----
 
-## 16. R85 — Manifestação “aprovado” registrada para quatro encaminhamentos R84 (31/10/2026)
+### 9.1 Veredictos de auditoria especializada (3 agentes, 31/10 20:30Z)
 
-O usuário respondeu **“aprovado”** imediatamente após a apresentação de quatro encaminhamentos recomendados na R84 e da necessidade de manifestação específica. Essa resposta é tratada como **concordância contextual com os quatro encaminhamentos** — não como mensagem enumerada individualmente, identidade autenticada, assinatura criptográfica ou admissão Kernel.
+Foram despachados 3 auditores especializados (divergência/regressão · DS-contratos-governança · verificabilidade). Dois concluíram com evidência; o terceiro ficou sem acesso a ferramentas no seu turno e **recusou-se a emitir veredito sem prova** — comportamento correto, e a medição foi feita pelo caminho equivalente.
 
-A manifestação foi preservada no documento `registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json`, que aponta por Git blob SHA para as fontes R84, R83, aprovação operacional anterior e fila rev18. Quatro códigos foram registrados:
+**A. Verificabilidade — bloqueadores duros medidos**
 
-1. `R77-PMO-001 = KEEP_REV18_PENDING_KERNEL`: manter a fila rev18 **somente como referência provisória**, sem eleição canônica, exclusão das variantes ou replay de eventos.
-2. `R77-PMO-002 = KEEP_LOCAL_COMMANDER_SCOPED`: manter `WO-ADM-001=IN_PROGRESS` somente para Commander **local**, sem nova autorização de IA externa, OAuth, banco ou execução de agentes remotos.
-3. `R77-PMO-003 = KEEP_CKO_QUEUED`: manter `WO-CKO-001=QUEUED` na fonte de referência e conservar o piloto técnico Apgar/Fugulin como evidência paralela, sem homologação clínica.
-4. `R77-PMO-004 = HOLD_EXTRA_WOS`: preservar `WO-CKO-ID-009` e `WO-CKO-LINK-010` e sete variantes como candidatas, sem admissão automática.
+| achado | evidência | consequência |
+|---|---|---|
+| **Os 23 testes do ZIP ficam invisíveis ao gate oficial** | `scripts/run-tests.mjs:36` → `args: ["--test", "scripts/**/*.test.mjs"]`; os ficheiros do ZIP chamam-se `test-impact-engine.mjs` e `test-list-query.mjs` (**não** terminam em `.test.mjs`) | `npm test` e `build:spa` **não executam** os testes novos: o pacote pode passar verde com o motor totalmente quebrado |
+| **check-contract-coverage corre em `npm test` E em `npm run build`** | `package.json`: `"build": "node scripts/check-contract-coverage.mjs && …"`, `"test": "node scripts/check-contract-coverage.mjs && …"` | entidade nova sem contrato ⇒ **parte o build**, não só os testes |
+| **Toolchain divergente** | repo: vite 8.2.0 / plugin-react 5.2.0 / react 19.2.0 / lucide-react 0.510.0 / playwright 1.62.0 · esqueleto: vite 6 / plugin-react 4 / react 19.0 / lucide 0.468 / sem lockfile | o esqueleto fica **fora** do gate `npm audit --audit-level=high` e não é reprodutível |
+| **Não há axe no repo** | dependências: playwright sim; axe-core não (existem `test-country-icon-a11y.mjs` e `test-focus-colors-i18n.mjs`) | "a11y conforme axe/WCAG automático" **não é alegável** |
+| **O `ENOENT .../pglite.data` NÃO é bug do repo** | `src/lib/db.ts:71` cria `new PGlite({…})` **sem `dataDir`** (in-memory) | é artefacto do runtime da outra sessão → a `TASK-PLAN-031` fica defensiva, não correctiva |
 
-**Estado:** `ownerRecommendationsRecorded=4`, mas `ownerAuthenticatedDecisions=0`, `independentCheckerApprovals=0`, `kernelAdmissionsVerified=0`. A declaração não contém timestamp preciso, ID fictício de mensagem, identidade confirmada nem assinatura. As quatro seleções no pacote R84 permanecem `null` intencionalmente, pois o R84 é a entrada **não assinada** e continua falhando fechado contra elevação de status. A R85 é o comprovante separado de manifestação na conversa.
+**B. DS, contratos e governança**
 
-O verificador `scripts/verify-r85-owner-assent.mjs` reconcilia a declaração com a R84/R83 e com os Git blobs de origem, veta seleções diferentes, identidade/assinatura inventadas, checker/Kernel aprovados artificialmente e qualquer tentativa de eleger a fila, mover WOs, liberar CKO, publicar ou efetuar replay. `scripts/verify-r85-owner-assent.test.mjs` cobre nove cenários com casos positivos e negativos; ambos estão registrados no workflow PMO candidato.
+- `registers/canonical/surface-contracts.v2.json` (v2.0.0, `authority: EXPLICIT_REVIEWED_SOURCE_IMPORT_CONTRACT`, scope `CE_PUBLIC_BACKUP_ONLY`) indexa contratos **por caminho de ficheiro**; o gate re-deriva as entidades do código. `impact-engine`, a aba `impact` e o `admin-topbar` entram como **entidade sem contrato** (violação 1) enquanto não forem declarados; se `PmoReviewIntake` deixar de ser lido por alguém, o contrato correspondente fica **órfão** (violação 3).
+- **Esqueleto Vite = DS concorrente.** A autoridade é `contracts/entities/design-tokens.v1.json` (frozen) + `src/lib/site-data.ts`; os tokens próprios do esqueleto são uma segunda fonte de verdade. **Não deve aterrar dentro da árvore do repo.**
+- **Hash-chain local ≠ auditoria.** SHA-256 em `localStorage` é integridade client-side reescrevível: sem ator autenticado, sem atestação de servidor. O registo correto numa UI local é log append-only **rotulado como não atestado**, com decisão humana explícita e `PENDING`/`HOLD` — nunca `DONE`/`APPROVED` automático (coerente com `WO-HOM-001=HOLD_HUMAN`).
+- **Classificação do `pmo-panel`**: **regressão de governança** (o ZIP substitui o `PmoReviewIntake` por `list-query` — troca-se uma superfície de decisão por uma de listagem) **com ganho de listagem**. Reconciliação mínima: intake **fica**, `list-query` **entra** como camada de consulta.
 
-O painel `src/components/admin/pmo-review-intake.tsx` apresenta as quatro orientações aceitas na conversa e distingue **declaração de intenção** de **aprovação corporativa assinada**. O usuário ainda pode exportar uma minuta local não vinculante para revisão, sem chamada remota. `TASK-PLAN-001` permanece `PROPOSTO` e `TASK-PLAN-002` permanece `BLOCKED`; não foram alteradas as **68 tasks** nem a fila oficial.
+**C. Veredito final do pacote**: pode ser aceite como **código entregue**, **não** como **PASS verificado**. O bloqueio principal não é o código — é (i) integrar os testes no glob oficial, (ii) declarar as entidades novas nos contratos, (iii) preservar o intake, (iv) manter o esqueleto fora do repo, (v) executar N1+N2 no toolchain canónico.
 
-### Próximos gates obrigatórios, não dispensados pelo “aprovado”
-
-Autenticar identidade e escopo do proprietário → obter revisão independente maker/checker → validar política, manifesto, risco e evidências → conferir assinatura/admissão Kernel por decisão e WO → somente então executar transição versionada autorizada e verificar efeito. Enquanto isso: `GAP-01..04=OPEN`, `canonicalRevision=NOT_ELECTED`, `WO-HOM-001=HOLD_HUMAN`, sem merge, deploy, mudança em Supabase, rotação de segredo ou promoção clínica.
+**Tarefas novas (persistidas):** `TASK-PLAN-062` (testes no glob oficial), `TASK-PLAN-063` (contratos canónicos das entidades novas), `TASK-PLAN-064` (preservar `PmoReviewIntake` + `list-query`), `TASK-PLAN-065` (hash-chain → log local rotulado, não atestado).

@@ -1,4 +1,4 @@
-name: Simulados RPC static regressions
+name: Simulados RPC and source-integrity static regressions
 
 on:
   push:
@@ -7,14 +7,20 @@ on:
     paths:
       - 'scripts/spe_audit_rpc_answers.py'
       - 'scripts/test_spe_audit_rpc_answers.py'
+      - 'scripts/spe_check_original_db_archive.py'
+      - 'scripts/test_spe_check_original_db_archive.py'
       - '.github/workflows/spe-rpc-static-regression.yml'
       - 'docs/simulados-enfermagem/W12_FIND_RPC_SCHEMA_GRANTS_20261031.md'
+      - 'docs/simulados-enfermagem/W15_FIND_ORIGINAL_ARCHIVE_INTEGRITY_20261031.md'
   pull_request:
     paths:
       - 'scripts/spe_audit_rpc_answers.py'
       - 'scripts/test_spe_audit_rpc_answers.py'
+      - 'scripts/spe_check_original_db_archive.py'
+      - 'scripts/test_spe_check_original_db_archive.py'
       - '.github/workflows/spe-rpc-static-regression.yml'
       - 'docs/simulados-enfermagem/W12_FIND_RPC_SCHEMA_GRANTS_20261031.md'
+      - 'docs/simulados-enfermagem/W15_FIND_ORIGINAL_ARCHIVE_INTEGRITY_20261031.md'
 
 permissions:
   contents: read
@@ -24,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout source
+      - name: Checkout source without persistent credentials
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
@@ -34,3 +40,10 @@ jobs:
           python-version: '3.12'
       - name: Run deterministic RPC grant regressions
         run: python -m unittest discover -s scripts -p 'test_spe_audit_rpc_answers.py' -v
+      - name: Run original-archive checker regressions on synthetic fixtures only
+        run: python -m unittest discover -s scripts -p 'test_spe_check_original_db_archive.py' -v
+      - name: Preserve private archive and runtime HOLD
+        run: |
+          echo 'Original private ZIP is NOT committed to the repository or downloaded by CI.'
+          echo '47 migrations and 17 pgTAP tests: SOURCE_INTEGRITY_VERIFIED_LOCALLY; DB_EXECUTION_NOT_RUN.'
+          echo 'Kernel admission, independent review and release: HOLD_HUMAN.'

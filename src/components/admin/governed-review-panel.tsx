@@ -81,7 +81,7 @@ export function GovernedReviewPanel() {
   function insertWoContext() {
     if (!selected) return;
     const context = `Contexto documentado em ${selected.id}: critério de aceite: ${selected.criteria}. Próximo passo registrado: ${selected.next}. Conferir evidências, condições e admissões antes de emitir o parecer.`;
-    setReason(previous => [previous.trim(), context].filter(Boolean).join('\\n').slice(0, 1200));
+    setReason(previous => [previous.trim(), context].filter(Boolean).join('\n').slice(0, 1200));
     setResult(null);
     setFeedback('Contexto da WO inserido para revisão; não é justificativa aprovada automaticamente.');
   }

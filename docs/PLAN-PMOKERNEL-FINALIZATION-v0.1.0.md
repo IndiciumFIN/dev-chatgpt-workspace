@@ -51,6 +51,8 @@ O anexo é uma **especificação genérica de auditoria de dados para PostgreSQL
 **Veredito:** a spec é boa, mas é **genérica e não-executável no estado atual** — cite `core.produtos`, `core.produtos_i18n`, `clientes`, `cpf`, `policy.yaml`, `psycopg2`, `pandas`, `pydantic`, `Great Expectations`, `pg_cron`, `dbt`: **nenhum desses existe neste repositório**, e o CI (`verify-bibliotecas.yml`) roda `npm ci` **sem etapa de instalação Python**. Uma spec que depende de `pip install psycopg pandas pydantic` nunca roda no gate — vira documento.
 → **Decisão de projeto (D-03):** motor **só com biblioteca padrão**, política em **JSON** (não YAML), modo estático sobre os arquivos do repo + modo PostgreSQL opcional com `psycopg` protegido por import condicional. Implementado neste PR como `scripts/audit_data_kernel.py` + `tests/test_audit_data_kernel.py` (**17 testes, verdes**).
 
+*Correção de precisão:* o CI **instala** dependências Python de forma pontual (`python3 -m pip install "jsonschema==4.25.1"` no passo de auditoria ISO), mas sem lockfile e sem etapa de instalação para o restante do job. A justificativa correta para D-03 não é "o CI não instala pip", e sim **evitar divergência entre ambiente local e gate** e não introduzir dependência nova sem lockfile.
+
 ### 1.4 A falha `ENOENT: ... '/var/task/_libs/pglite.data'`
 
 Causa: o diretório de dados do PGlite foi tratado como pré-existente por um caminho herdado do ambiente de execução (`/var/task/_libs/`). O PGlite abre o diretório e falha se ele não existir.
@@ -64,7 +66,7 @@ Causa: o diretório de dados do PGlite foi tratado como pré-existente por um ca
 |---|---|---|
 | D-01 | O gate de cobertura é **não-circular**: re-deriva WOs, pendências e tasks de três fontes independentes | snapshot que ninguém re-deriva envelhece em silêncio (falha já observada) |
 | D-02 | Entrada **ausente** ⇒ `SKIP` com o ID da task que falta; entrada **presente e incompleta** ⇒ **falha fechada** | ausência de insumo não é aprovação; a ativação do gate é a T1.3 |
-| D-03 | Motor de auditoria **sem dependências externas**; política em JSON | o CI não instala pip; spec genérica com `pandas/pydantic/psycopg2` não roda no gate |
+| D-03 | Motor de auditoria **sem dependências externas**; política em JSON | o CI instala pip de forma pontual (`jsonschema==4.25.1`) e sem lockfile — manter o motor em stdlib evita divergência entre ambiente local e gate e não exige etapa de instalação nova |
 | D-04 | Toda task do plano tem **WO**, `covers[]`, `artefatos[]` e `aceite` verificável | a cadeia da issue #25 precisa ser **verificável por máquina**, não por leitura |
 | D-05 | Este plano **não** mexe em `main`, Supabase, segredos ou permissões, e **não** fecha issues | o gate quebrado no `main` é sintoma; a causa é decisão de admissão (já pedida na #25) |
 | D-06 | Branch nova a partir de `main`, PR **draft**, sem tocar nas branches existentes | evita diff duplicado com o PR #13 e mantém a sequência sem ambiguidade |
@@ -89,11 +91,14 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 
 ### Fase 1 — Gate de cobertura: de snapshot para invariante
 
+> **Nota de ativação (medida em 31/10):** um workflow **novo** só é despachado pelo GitHub depois de existir na branch padrão. Por isso o `pending-coverage-gate.yml` deste PR **não roda** no próprio PR #26 — e é por isso que ele **não** foi ligado ao `verify-bibliotecas.yml` (workflow já existente): alterá-lo agora colocaria o gate em todas as PRs do repositório **antes** de o inventário aterrissar, quebrando o CI de quem tem PR aberto. A sequência correta é `T0.005 → T0.013 → T0.001 → T0.012`. A verificação desta rodada foi **local** (`node --test` → 7/7; `python3 -m unittest` → 17/17) e o gate em si rodou no `verify` do PR #26: ele falha pelo motivo **pré-existente** `Protótipo deve permanecer congelado` (P1), sem falha nova causada pelos artefatos deste plano.
+
+
 | task | título | WO | deps | ling. | aceite | status |
 |---|---|---|---|---|---|---|
 | TASK-PLAN-010 | `scripts/check-pending-coverage.mjs` — re-deriva WOs × pendências × tasks | WO-PMO-001 | 005 | JS | violações `TASK_SEM_WO`, `TASK_WO_INEXISTENTE`, `WO_SEM_TASK`, `PENDENCIA_ORFA`, `DONE_SEM_EVIDENCIA`, `TASK_SEM_ARTEFATO`, `GAP_ABERTO` | **DONE** (neste PR) |
 | TASK-PLAN-011 | Testes negativos do gate | WO-PMO-001 | 010 | JS | 7 testes verdes (`node --test scripts/check-pending-coverage.test.mjs`), incluindo SKIP-when-absent | **DONE** (neste PR) |
-| TASK-PLAN-012 | Ativar o gate no CI (workflow `pending-coverage-gate.yml`) | WO-PMO-001 | 005, 010, 011 | CI | roda em PR; **falha fechada** quando houver gaps; `paths:` evita ruído antes de o inventário aterrissar | PROPOSTO (arquivo pronto neste PR) |
+| TASK-PLAN-012 | Ativar o gate no CI (workflow `pending-coverage-gate.yml`) | WO-PMO-001 | 005, 010, 011 | CI | roda em PR; **falha fechada** quando houver gaps; `paths:` evita ruído antes do inventário aterrissar. **Ordem obrigatória:** T0.005 (inventário) → T0.013 (vínculos) → T0.001 (gaps fechados) → só então `GAP_ABERTO` como erro | PROPOSTO (arquivo pronto; **não** ligado ao `verify-bibliotecas.yml` para não quebrar o CI das outras PRs) |
 | TASK-PLAN-013 | Vínculo das **18 issues** + **13 pendências Simulados** a WO/task | WO-PMO-001, WO-SEC-001 | 010, 005 | JS | `PENDENCIA_ORFA = 0` no gate; cada issue aberta tem task e cada task tem WO | PROPOSTO |
 | TASK-PLAN-014 | Consolidar os ~35 FINDs (R14–R47, CURI-R36–R40, SPE-R14–R35) em **uma baseline commitada por PR** | WO-PMO-001 | 012 | JS+PY | para cada PR auditado: um validador no repo, testes negativos, e o texto do FIND referenciando o blob **commitado** (hoje aponta para blobs que só existem em comentário) | PROPOSTO |
 

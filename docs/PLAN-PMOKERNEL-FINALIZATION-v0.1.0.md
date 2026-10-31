@@ -355,3 +355,39 @@ Foram despachados 3 auditores especializados (divergência/regressão · DS-cont
 **C. Veredito final do pacote**: pode ser aceite como **código entregue**, **não** como **PASS verificado**. O bloqueio principal não é o código — é (i) integrar os testes no glob oficial, (ii) declarar as entidades novas nos contratos, (iii) preservar o intake, (iv) manter o esqueleto fora do repo, (v) executar N1+N2 no toolchain canónico.
 
 **Tarefas novas (persistidas):** `TASK-PLAN-062` (testes no glob oficial), `TASK-PLAN-063` (contratos canónicos das entidades novas), `TASK-PLAN-064` (preservar `PmoReviewIntake` + `list-query`), `TASK-PLAN-065` (hash-chain → log local rotulado, não atestado).
+
+---
+
+## 17. R86 — Prontidão à revisão independente, veto de autoridade e expansão governada do plano (31/10/2026)
+
+### Resultado da consulta real ao GitHub
+
+O PR #26 está `open`, `draft=false`, sem merge. A consulta direta às revisões do PR retornou **0 revisões formais**, **0 revisores solicitados** e nenhum thread de revisão; `main` permanece **sem proteção**. Na observação inicial o PR tinha 83 arquivos alterados e mais de 195 commits; números variam conforme novas integrações na branch. Estes dados são **snapshot**, não declaração permanente de inexistência de revisões.
+
+O gate `scripts/verify-r86-pr-review-evidence.mjs` consulta `pulls/26`, `pulls/26/reviews` com paginação completa e `branches/main` via token do GitHub Actions com permissões de leitura. Confere HEAD exato, base, repositório, identidade GitHub, eventos de revisão e recusa população parcial, dados inválidos e HEAD divergente. Uma aprovação GitHub por uma identidade diferente da autora do PR é **apenas evidência candidata**, nunca assinatura maker/checker empresarial, decisão do proprietário ou admissão Kernel. Mesmo com CI e revisão GitHub verdes o relatório conserva `corporateCheckerIdentityVerified=false`, `kernelAdmissionVerified=false`, `mergingAuthorized=false` e `releaseGate=HOLD_HUMAN`.
+
+O verificador foi testado com **10 casos** positivos/negativos (`scripts/verify-r86-pr-review-evidence.test.mjs`). Na primeira execução `pull_request`, um problema real de contexto usava a variável reservada `GITHUB_SHA` (que pode representar o merge temporário); foi corrigido com `R86_EXPECTED_HEAD_SHA=${{ github.event.pull_request.head.sha || github.sha }}`, passando o SHA da branch de origem explicitamente, preservando a falha fechada quando a branch avança.
+
+### Dossiê de revisão
+
+`registers/governance/r86-independent-review-readiness-20261031.v1.json` relaciona **quatro checklists** separados de owner, checker independente, política/manifesto, fonte e Kernel:
+
+- `R77-PMO-001`: testar as cinco filas, os 112 vínculos de ocorrência e as colisões de sequência; proibir eleição sem decisão assinada.
+- `R77-PMO-002`: provar escopo Commander local-only e o evento #20; sem autorização de agente externo ou escrita privilegiada.
+- `R77-PMO-003`: preservar `WO-CKO-001=QUEUED`, analisar proveniência/direitos do piloto e exigir revisor clínico para qualquer elevação.
+- `R77-PMO-004`: preservar as duas WOs extras como não admitidas e requerer FIND/política/validador/Kernel por WO.
+
+`scripts/check-r86-review-readiness.mjs` e seus **7 testes** asseguram integridade da fonte R85, os quatro checklists e o `HOLD_HUMAN`. PASS significa **integridade técnica das evidências, não aprovação humana independente**.
+
+### Compatibilidade da expansão simultânea do PMO
+
+Outra frente acrescentou **quatro tasks de auditoria especializada**, `TASK-PLAN-090..093`, ampliando o plano para **72**. Este incremento não altera a população das **31 candidatas R79**. O novo registro `r86SupplementalTaskIntake` em `docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json` preserva identidade, status `PROPOSTO`, escopo e artefatos de cada uma, com commits de origem. Foram corrigidos **dois bugs reais** de validação:
+
+1. `scripts/check-r78-gap-register.mjs` tratava `37 + 31 = 68` como total permanente; agora confere `37 + 31 + 4 = 72` e falha se qualquer quinta task não autorizada, novo estado DONE, admissão, título/artefato ou fonte diversa for introduzido.
+2. `scripts/audit-domain-wo-candidates.mjs` também exigia 68 no total; agora retém os 31 vínculos R79 com seus blobs imutáveis e só aceita as quatro extensões de auditoria com origem documentada, sem marcar WOs como admitidas.
+
+Testes negativos extras foram adicionados a ambos os validadores. Nenhum conteúdo da fila rev18 ou registro R79 foi alterado para forçar um PASS.
+
+### Bloqueios reais e próximo gate
+
+A aprovação textual R85 continua como quatro orientações declaradas em conversa, **não autenticadas e sem assinatura**. Ainda faltam pessoa independente nomeada, conferência formal com identidade/escopo, política e manifesto aprovados, assinatura Kernel verificável, escolha da revisão canônica e proteção da `main` por autorização própria. `GAP-01..04` continuam abertos; `WO-HOM-001=HOLD_HUMAN`; 31 source WOs não reconciliadas e 0 WOs adicionais admitidas. Nenhum merge, deploy, rotação de segredo, replay de eventos ou escrita em banco foi executado nesta rodada.

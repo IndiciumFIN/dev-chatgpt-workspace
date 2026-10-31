@@ -11,6 +11,7 @@ const commander = read('src/components/admin/commander-panel.tsx');
 const review = read('src/components/admin/governed-review-panel.tsx');
 const pmo = read('src/components/admin/pmo-panel.tsx');
 const decisionContract = read('src/lib/governance/decision-draft.ts');
+const reviewCatalog = read('src/lib/governance/review-source-catalog.ts');
 const handoffs = JSON.parse(read('registers/commander/lanes.v1.json'));
 
 const assertions = [
@@ -37,6 +38,10 @@ const assertions = [
   ['Commander has no simulated remote agent calls', !/\b(fetch|axios)\s*\(/.test(commander) && /não despachado/.test(commander)],
   ['PMO displays governed review inside canonical administration', pmo.includes("import { GovernedReviewPanel }") && /<GovernedReviewPanel\s*\/>/.test(pmo) && /pmo-governed-review/.test(review)],
   ['review draft has explicit local edit and copy actions', review.includes('Editar minuta') && review.includes('Copiar minuta para revisão') && review.includes('setResult(null)')],
+  ['review search uses canonical PMO work orders and evidence, no remote catalog', /searchReviewWorkOrders\(queue\.items, woQuery\)/.test(review) && /evidenceSuggestions\(selected\)/.test(review) && /searchEvidenceSuggestions\(availableEvidence, evidenceQuery\)/.test(review) && /review-wo-search/.test(review) && /review-source-search/.test(review) && !reviewCatalog.includes('fetch(')],
+  ['all searchable selectors have labels, help text and live matching counts', /htmlFor="review-wo-search"/.test(review) && /htmlFor="review-source-search"/.test(review) && /htmlFor="review-evidence-option"/.test(review) && /review-source-help/.test(review) && /matchingWorkOrders.length/.test(review) && /matchingEvidence.length/.test(review)],
+  ['work order switch clears stale decisions and evidence', /function changeWorkOrder/.test(review) && /setEvidenceUrl\(''\)/.test(review) && /setSelectedEvidenceId\(''\)/.test(review) && /setReason\(''\)/.test(review)],
+  ['context insertion explicitly requires review', /function insertWoContext/.test(review) && /Conferir evidências, condições e admissões/.test(review) && /não é justificativa aprovada automaticamente/.test(review)],
   ['recorded owner approval is visible without another approval request', /Plano de continuidade: aprovação já registrada/.test(review) && /APPROVAL_RECORD_URL/.test(review) && /Admissão Kernel pendente/.test(review)],
   ['decision options prepare drafts but never persist, sign or promote', ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE'].every(k => decisionContract.includes(k)) && /NOT_SUBMITTED/.test(decisionContract) && /promotionAllowed: false/.test(decisionContract) && !review.includes('fetch(') && !review.includes('axios(') && !review.includes('localStorage') && !review.includes('setItem(')],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],

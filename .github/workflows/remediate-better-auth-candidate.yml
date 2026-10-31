@@ -45,6 +45,28 @@ jobs:
           test "$(node -p "require('./package.json').dependencies['better-auth']")" = "~1.6.30"
       - name: Update better-auth with lockfile as an atomic pair
         run: npm install --package-lock-only --save-exact --ignore-scripts better-auth@1.7.14
+      - name: Migrate Generic OAuth client to documented Better Auth 1.7 API
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const path = 'src/lib/auth/client.ts';
+          let source = readFileSync(path, 'utf8');
+          const changes = [
+            ['import { genericOAuthClient } from "better-auth/client/plugins";\\n', ''],
+            ['  plugins: [genericOAuthClient()],\\n', ''],
+            ['authClient.signIn.oauth2({\\n    providerId,', 'authClient.signIn.social({\\n    provider: providerId,'],
+          ];
+          for (const [before, after] of changes) {
+            const original = before.replaceAll('\\n', '\n');
+            const updated = after.replaceAll('\\n', '\n');
+            if (!source.includes(original)) throw new Error('Unexpected OAuth client source; refusing blind migration: ' + original);
+            source = source.replace(original, updated);
+          }
+          if (source.includes('genericOAuthClient') || source.includes('signIn.oauth2')) {
+            throw new Error('Legacy OAuth client API remains');
+          }
+          writeFileSync(path, source);
+          NODE
       - name: Reinstall from exact lockfile
         run: npm ci
       - name: Confirm critical and high vulnerabilities are resolved
@@ -57,13 +79,13 @@ jobs:
         run: npm run build:spa
       - name: Confirm only dependency manifests changed
         run: |
-          git diff --exit-code -- . ':!package.json' ':!package-lock.json'
-          git diff --name-only --exit-code -- package.json package-lock.json >/dev/null && { echo 'Expected changed dependency manifests'; exit 1; } || true
+          git diff --exit-code -- . ':!package.json' ':!package-lock.json' ':!src/lib/auth/client.ts'
+          test -n "$(git diff --name-only -- package.json package-lock.json src/lib/auth/client.ts)"
           test "$(git diff --name-only | sort)" = "$(printf 'package-lock.json\npackage.json' | sort)"
       - name: Commit validated dependency update to existing branch only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
-          git commit -m "fix(security): upgrade better-auth and lockfile after passing gates"
+          git add package.json package-lock.json src/lib/auth/client.ts
+          git commit -m "fix(security): upgrade better-auth and migrate Generic OAuth after passing gates"
           git push origin HEAD:refs/heads/simulados-enfermagem-db-canonico

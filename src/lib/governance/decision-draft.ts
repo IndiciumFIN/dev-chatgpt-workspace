@@ -40,13 +40,15 @@ export function buildDecisionDraft(input: DecisionInput): DecisionResult {
     errors.push('Parecer favorável exige URL de evidência.');
   }
   if (errors.length) return { ok: false, status: 'NOT_SUBMITTED', promotionAllowed: false, errors };
+  // Hide/clear reservations from all choices except explicit conditional approval.
+  const effectiveCaveats = input.choice === 'APPROVE_WITH_RESERVATIONS' ? caveats : '';
   const label = DECISION_LABELS[input.choice];
   const text = [
     '## MINUTA DE PARECER — NÃO ENVIADA / NÃO ASSINADA',
     `**WO:** ${workOrderId}`,
     `**Proposta:** ${label}`,
     `**Justificativa:** ${reason}`,
-    `**Ressalvas:** ${caveats || 'Não registradas'}`,
+    `**Ressalvas:** ${effectiveCaveats || 'Não registradas'}`,
     `**Evidência:** ${evidenceUrl || 'Não informada'}`,
     '**Status:** NOT_SUBMITTED (somente memória da interface)',
     '**Admissão Kernel:** NOT_VERIFIED',

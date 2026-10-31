@@ -22,7 +22,7 @@
     {
       "id": "TASK-PLAN-001",
       "phase": "F0",
-      "title": "Reconciliar as 4 revisões de PMO (18 main / 19 work-editorial / 20 fix-governed / 23 preview)",
+      "title": "Reconciliar as 5 revisões da fila PMO (18 main / 19 editorial / 20 Commander / 21 idioma / 23 preview)",
       "wo": "WO-PMO-001",
       "deps": [],
       "owner": "PMO",
@@ -33,7 +33,11 @@
       ],
       "artifacts": [
         "registers/governance/pmo-r77-arbitration-20261031.v1.json",
-        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+        "scripts/verify-pmo-fork-lineage.mjs",
+        "scripts/verify-pmo-fork-lineage.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599"
       ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
@@ -50,7 +54,12 @@
         "ISSUE-25",
         "ISSUE-23"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+        "scripts/verify-pmo-fork-lineage.mjs",
+        "scripts/verify-pmo-fork-lineage.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599"
+      ],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
     {
@@ -1887,5 +1896,29 @@
       "formalAdmission": false
     },
     "currentPlanTasks": 68
+  },
+  "r83ForkVerification": {
+    "date": "2026-10-31",
+    "scope": "CANDIDATE_EVIDENCE_RECONSTRUCTION",
+    "sourceQueues": 5,
+    "sourceOccurrences": 112,
+    "uniqueEventPayloads": 28,
+    "baseEvents": 20,
+    "exclusiveEvents": 8,
+    "originalSeqConflicts": [
+      20,
+      21
+    ],
+    "workOrders": 12,
+    "additionalWosStillCandidate": 2,
+    "variantWos": 7,
+    "decisionsAwaitingAuthority": 4,
+    "reconciliationGate": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599",
+    "packet": "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+    "canonicalRevision": "NOT_ELECTED",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceQueuesModified": false,
+    "eventsReplayed": false,
+    "releaseGate": "HOLD_HUMAN"
   }
 }

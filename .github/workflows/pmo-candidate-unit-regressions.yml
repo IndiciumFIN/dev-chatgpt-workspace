@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'scripts/check-pending-coverage*'
+      - 'scripts/check-pmo-queue*'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
@@ -25,6 +26,7 @@ on:
       - plan/pmokernel-finalization-20261031
     paths:
       - 'scripts/check-pending-coverage*'
+      - 'scripts/check-pmo-queue*'
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
@@ -62,6 +64,10 @@ jobs:
           node --check scripts/check-pending-coverage.mjs
           node --check scripts/check-register-schema.mjs
           node --check scripts/check-approval-pmokernel-record.mjs
+      - name: Verify authorized Commander local-only PMO transition and negative tests
+        run: |
+          node scripts/check-pmo-queue.mjs
+          node --test scripts/check-pmo-queue.test.mjs
       - name: Run fail-closed coverage regressions
         run: node --test scripts/check-pending-coverage.test.mjs
       - name: Run per-pendency source-lineage regressions (candidate only)

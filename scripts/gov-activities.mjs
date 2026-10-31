@@ -42,7 +42,7 @@ export function validatePmo(q){
   }
   // The read-only planner must never silently turn an unapproved release into a candidate.
   const homologation=q.items.find(item=>item.id==='WO-HOM-001');
-  if(homologation&&homologation.status!=='HOLD_HUMAN')issues.push('Release HOLD bypassed');
+  if(!homologation||homologation.status!=='HOLD_HUMAN')issues.push('Release HOLD bypassed');
   // Graph integrity: reject cycles, even when all references are valid.
   const visiting=new Set(),visited=new Set();
   const byId=new Map(q.items.map(i=>[i.id,i]));

@@ -25,7 +25,12 @@ BEGIN
       RAISE EXCEPTION '% unexpectedly has question SELECT', role_name;
     END IF;
   END LOOP;
-  IF has_schema_privilege('public', 'spe_candidate', 'USAGE') THEN
+  IF EXISTS (
+    SELECT 1 FROM pg_namespace n
+    CROSS JOIN LATERAL aclexplode(COALESCE(n.nspacl, acldefault('n', n.nspowner))) acl
+    WHERE n.nspname = 'spe_candidate'
+      AND acl.grantee = 0 AND acl.privilege_type = 'USAGE'
+  ) THEN
     RAISE EXCEPTION 'PUBLIC unexpectedly has candidate schema USAGE';
   END IF;
 END

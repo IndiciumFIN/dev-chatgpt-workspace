@@ -60,6 +60,10 @@ jobs:
         run: node --test scripts/main-migration-core.test.mjs
       - name: Fetch source branches for read-only comparison
         run: git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+      - name: Check PMO fork reconciliation rules
+        run: node --test scripts/reconcile-pmo-forks.test.mjs
+      - name: Index PMO events across five real branches
+        run: node scripts/audit-pmo-forks.mjs --output audit-evidence/pmo-forks/fork-reconciliation.v1.json
       - name: Generate exhaustive Git blob/path collision candidate report
         run: node scripts/audit-main-migration.mjs --output audit-evidence/main-migration/runtime-report.json
       - name: Assert 23 branches inspected and release still blocked

@@ -50,11 +50,9 @@ import { ${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}Contract } fr
  * ${service.title} — esqueleto declarado, NÃO implementado.
  * Qualquer chamada tem de falhar de forma explícita até existir admissão + evidência.
  */
-export function ${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}(): typeof ${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}Contract {
-  if (${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}Contract.status !== 'ADMITTED') {
-    throw new Error('NOT_IMPLEMENTED_CANDIDATE_HOLD: ${family.id}.${service.id} — requer admissão (WO/OPA/Kernel) e evidência.');
-  }
-  return ${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}Contract;
+export function run_${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}(): typeof ${service.id.replace(/-(\w)/g, (_, c) => c.toUpperCase())}Contract {
+  // Sem código funcional: nem mesmo uma admissão futura converte o stub em implementação.
+  throw new Error('NOT_IMPLEMENTED_CANDIDATE_HOLD: ${family.id}.${service.id} — implementação e autorização verificáveis obrigatórias.');
 }
 `);
   }

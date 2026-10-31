@@ -324,3 +324,42 @@ test("R78: modo release nao altera a regra de gaps abertos", () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("R78: WO válida no inventário não substitui task de cobertura da pendência", () => {
+  const root = tmp();
+  try {
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": {
+        ...QUEUE,
+        items: QUEUE.items.map(w => w.id === "WO-PMO-001"
+          ? { ...w,evidence:["https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/1ab0561"] } : w),
+      },
+      "registers/pmo/cross-source-pending-intake.v1.json": {
+        ...INTAKE,
+        simulados:[],
+        openIssues:[{id:"GH-25",title:"Issue ligada à WO mas sem task",state:"OPEN",wo:"WO-PMO-001"}],
+      },
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": PLAN,
+    });
+    const result=run(root, ["--require-inputs"]);
+    assert.equal(result.code,1);
+    assert.match(result.out,/PENDENCIA_ORFA/);
+    assert.match(result.out,/GH-25/);
+  } finally { rmSync(root,{recursive:true,force:true}); }
+});
+
+test("R78: ligação de issue a WO inexistente é falha independente da cobertura", () => {
+  const root=tmp();
+  try {
+    writeTree(root,{
+      "registers/pmo/queue.v1.json":QUEUE,
+      "registers/pmo/cross-source-pending-intake.v1.json":{
+        ...INTAKE,simulados:[],openIssues:[{id:"GH-25",title:"Vínculo inválido",state:"OPEN",wo:"WO-DOES-NOT-EXIST"}]
+      },
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json":PLAN
+    });
+    const result=run(root,["--require-inputs"]);
+    assert.equal(result.code,1);
+    assert.match(result.out,/PENDENCIA_WO_INEXISTENTE/);
+  } finally {rmSync(root,{recursive:true,force:true});}
+});

@@ -57,3 +57,12 @@ test('tipo desconhecido não autoriza nada mesmo forjado em runtime', () => {
   assert.equal(result.ok, false);
   assert.equal(result.promotionAllowed, false);
 });
+
+test('stale hidden reservations cannot appear in plain approval', () => {
+  const result = buildDecisionDraft({ ...base, choice: 'APPROVE', caveats: 'Ressalvas de uma escolha anterior' });
+  assert.equal(result.ok, true);
+  if (result.ok) {
+    assert.match(result.text, /Ressalvas:\*\* Não registradas/);
+    assert.doesNotMatch(result.text, /Ressalvas de uma escolha anterior/);
+  }
+});

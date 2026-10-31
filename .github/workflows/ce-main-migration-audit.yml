@@ -10,6 +10,9 @@ on:
       - 'scripts/lib/semantic-collision-audit.mjs'
       - 'scripts/semantic-collision-audit.test.mjs'
       - 'scripts/audit-i18n-collisions.mjs'
+      - 'scripts/lib/canonical-conflict-triage.mjs'
+      - 'scripts/canonical-conflict-triage.test.mjs'
+      - 'scripts/audit-conflict-triage.mjs'
       - 'scripts/lib/corpus-index.mjs'
       - 'scripts/corpus-index.test.mjs'
       - 'scripts/index-source-corpus.mjs'
@@ -23,6 +26,9 @@ on:
       - 'scripts/lib/semantic-collision-audit.mjs'
       - 'scripts/semantic-collision-audit.test.mjs'
       - 'scripts/audit-i18n-collisions.mjs'
+      - 'scripts/lib/canonical-conflict-triage.mjs'
+      - 'scripts/canonical-conflict-triage.test.mjs'
+      - 'scripts/audit-conflict-triage.mjs'
       - 'scripts/lib/corpus-index.mjs'
       - 'scripts/corpus-index.test.mjs'
       - 'scripts/index-source-corpus.mjs'
@@ -79,6 +85,24 @@ jobs:
           if(r.canonicalWinnerSelected!==false||r.releaseGate!=='HOLD_HUMAN')throw Error('UNAUTHORIZED_CANONICAL_DECISION');
           console.log('PASS: every collision classified, with unverifiable items explicitly held',JSON.stringify(r.counts));
           NODE
+      - name: Test canonical conflict to WO candidate mapping fail-closed
+        run: node --test scripts/canonical-conflict-triage.test.mjs
+      - name: Generate candidate-only per-path reconciliation register
+        run: |
+          node scripts/audit-conflict-triage.mjs \
+            --source audit-evidence/main-migration/runtime-report.json \
+            --semantic audit-evidence/main-migration/semantic-i18n-collisions.v1.json \
+            --output audit-evidence/main-migration/canonical-conflict-triage.v1.json
+      - name: Assert every path has a status and no fake approval
+        run: |
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const r=JSON.parse(readFileSync('audit-evidence/main-migration/canonical-conflict-triage.v1.json','utf8'));
+          if(r.counts.total!==115||r.counts.semanticEquivalent!==57)throw Error('INCOMPLETE_TRIAGE');
+          if(r.counts.formallyApproved!==0||r.releaseGate!=='HOLD_HUMAN'||r.mainUpdated!==false)throw Error('FALSE_PROMOTION');
+          if(r.items.some(x=>x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'))throw Error('FALSE_ITEM_DECISION');
+          console.log('PASS: all 115 mapped to explicit decision state (57 semantic), 0 authorized merges',JSON.stringify(r.counts));
+          NODE
       - name: Test source-corpus provenance and licensing fail-closed rules
         run: node --test scripts/corpus-index.test.mjs
       - name: Extract 8250 source pages from unrelated branch into temporary workspace (read only)
@@ -123,5 +147,6 @@ jobs:
           path: |
             audit-evidence/main-migration/runtime-report.json
             audit-evidence/main-migration/semantic-i18n-collisions.v1.json
+            audit-evidence/main-migration/canonical-conflict-triage.v1.json
           retention-days: 30
 # No merge, no file contents exported, no DB writes or production release.

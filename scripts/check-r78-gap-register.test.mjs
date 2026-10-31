@@ -49,7 +49,7 @@ test('R86: no silent specialist completion or unverified Kernel admission',()=>{
 });
 test('R86: unpinned specialist source or task title cannot pass',()=>{
  const a=current();a.plan.r87ScopedTaskExpansion.sourceCommits[0]='0'.repeat(40);
- assert.throws(()=>validate(a.report,a.plan),/R86_SPECIALIST_INTAKE_UNVERIFIED/);
+ assert.throws(()=>validate(a.report,a.plan),/R87_PROVENANCE_DRIFT/);
  const b=current();b.plan.r87ScopedTaskExpansion.tasks[2].title='unreviewed changed scope';
  assert.throws(()=>validate(b.report,b.plan),/R87_TASK_EVIDENCE_DRIFT/);
 });

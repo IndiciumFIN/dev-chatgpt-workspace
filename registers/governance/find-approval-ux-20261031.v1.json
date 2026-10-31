@@ -6,7 +6,7 @@
   "source": "Owner observed absence of Review, Edit, Approve and Approve-with-reservations actions; continuation of existing owner approval recorded in PR #26.",
   "severity": "P1",
   "type": "USABILITY_AND_GOVERNANCE_GAP",
-  "state": "CANDIDATE_PARTIAL_IMPLEMENTATION",
+  "state": "CANDIDATE_TESTED_NOT_KERNEL_ADMITTED",
   "relatedWos": [
     "WO-ADM-001",
     "WO-PMO-001",
@@ -26,7 +26,7 @@
       "scripts/test-admin-console.mjs"
     ],
     "behavior": "Governed review UI preparing local non-binding drafts, displaying previously recorded approval; no remote persistence and no fresh owner approval required.",
-    "status": "CANDIDATE_ONLY"
+    "status": "CI_TESTED"
   },
   "requiredForRealDecisions": [
     "Formal Kernel admission interface and authoritative adapter (no parallel approval system)",
@@ -49,5 +49,19 @@
     "All decisions and test results persisted via GitHub commit evidence"
   ],
   "kernelAdmission": "NOT_VERIFIED",
-  "releaseGate": "HOLD_HUMAN"
+  "releaseGate": "HOLD_HUMAN",
+  "verifiedEvidence": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41220932460",
+    "commit": "974f61045df2e09269260cf8ef4c6c847a1bbf37",
+    "result": "SUCCESS",
+    "checks": [
+      "Admin contract checks PASS including visibility and no false persistence",
+      "TypeScript typecheck PASS",
+      "npm test PASS (includes 9 negative decision-draft unit tests)",
+      "npm run build:spa PASS"
+    ],
+    "productionImpact": "NONE_FROM_THIS_CHANGE",
+    "vercelPreview": "BUILDING_AT_LAST_OBSERVATION",
+    "kernelAdmission": "NOT_VERIFIED"
+  }
 }

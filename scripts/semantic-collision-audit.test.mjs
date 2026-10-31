@@ -40,6 +40,14 @@ test('provenance references must be unique nonempty order-insensitive strings',(
  assert.throws(()=>normalizeCanonicalJson({provenance_refs:['x','x']}),/AMBIGUOUS_PROVENANCE_REFS/);
  assert.throws(()=>normalizeCanonicalJson({provenance_refs:[1,'x']}),/AMBIGUOUS_PROVENANCE_REFS/);
 });
+test('German registry index and register-entry are NOT translation contracts',()=>{
+ for(const p of ['registers/i18n/incoming/de/index.json','registers/i18n/incoming/de/register-entry.json']) {
+  const r=analyzeSemanticI18nCollisions([{path:p,sources:collision[0].sources}],read);
+  assert.equal(r.counts.semanticEquivalents,0);
+  assert.equal(r.counts.unverifiable,0);
+  assert.equal(r.substantive[0].reason,'NOT_ALLOWLISTED');
+ }
+});
 test('missing blob or malformed source fails closed',()=>{
  const missing=analyzeSemanticI18nCollisions([{path:PATH,sources:[{blob:null},{blob:hashA}]}],read);
  assert.equal(missing.counts.unverifiable,1);

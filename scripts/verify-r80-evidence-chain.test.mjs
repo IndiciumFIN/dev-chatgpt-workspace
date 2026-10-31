@@ -13,7 +13,7 @@ test('R80: 31 evidence anchors are complete but none is admitted',()=>{
  assert.equal(r.candidateRows,31);
  assert.equal(r.issueSnapshots,18);
  assert.equal(r.documentsPinned,13);
- assert.equal(r.registeredFindMatches,0);
+ assert.equal(r.registeredFindMatches,2);
  assert.equal(r.fullyAdmitted,0);
  assert.equal(r.releaseGate,'HOLD_HUMAN');
 });
@@ -40,7 +40,7 @@ test('R80: R79 task or WO collision vetoed',()=>{
  assert.throws(()=>validate(q),/R80_INCOMPLETE_ROWS/);
 });
 test('R80: claimed FIND must actually exist in the canonical FIND register',()=>{
- const p=load();p.record.rows[0].source.findIdsInOfficialRegister=['FIND-PMO-COVERAGE-20261031'];
+ const p=load();p.record.rows[0].source.findIdsInOfficialRegister=['FIND-NOT-IN-REGISTER'];
  assert.throws(()=>validate(p),/FALSE_REGISTERED_FIND/);
 });
 test('R80: source document tampering fails when bytes are supplied',()=>{

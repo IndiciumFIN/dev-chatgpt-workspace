@@ -304,3 +304,20 @@ Esta seção atualiza o retrato das 18:56Z acima; **não sobrescreve os valores 
 - **Autoridade:** revisão canônica PMO ainda `NOT_ELECTED`; WOs adicionais e as duas divergências de estado continuam candidatas; `main` não modificada; sem merge ou aprovação clínica, admissão Kernel não comprovada; release `HOLD_HUMAN`.
 
 **Regra:** nenhum workflow verde, contagem de cobertura ou prova de identidade por equivalência habilita promoção sem o processo FIND → política → validador → task → WO → Kernel → testes → auditoria → homologação.
+
+---
+
+## 10. R79 — fila de tasks de domínio por pendência (31/10/2026)
+
+Este checkpoint amplia o resultado R78, **sem modificar a fila PMO oficial**.
+
+- As 32 pendências do snapshot versionado (19 issues, 13 Simulados) têm cobertura por task. A GH-28 já estava vinculada a `TASK-PLAN-057`, `WO-SEC-001`, e não foi duplicada.
+- Os **31 registros cujo campo `wo` é `UNRECONCILED` na fonte** receberam 31 tasks novas, com IDs `TASK-PLAN-059` a `TASK-PLAN-089`, WO de domínio candidata, task de dependência, título da origem, identificador, arquivo de fonte e blob SHA. Plano total: **68 tasks**; 31 propostas permanecem `PROPOSTO`, não `DONE`.
+- As candidatas distribuem-se por 7 WOs existentes: 10 `WO-SEC-001`, 9 `WO-GOV-TRANS-001`, 5 `WO-CKO-001`, 3 `WO-ADM-001`, 2 `WO-E2E-001`, 1 `WO-PMO-001` e 1 `WO-HOM-001`. São vínculos técnicos para **revisão**, não atribuições confirmadas pelo Kernel.
+- Registro da matriz `registers/governance/r79-domain-wo-mapping-20261031.v1.json` e verificador `scripts/audit-domain-wo-candidates.mjs` cruzam o inventário real, a fila rev20, o plano e os blob SHAs. Cinco regressões negativas impedem source drift, WO sem origem, falsas aprovações, dependência ausente e duplicidade.
+- [GitHub Actions 41233716155](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41233716155) **SUCCESS**: 16 testes de cobertura, 6 de lineage, 5 de R79, 5 de R78, 10 de schema e 7 de aprovação. Resultado real: **32/32 pendências com candidata de domínio, zero sem candidata, 31 status `UNRECONCILED` na fonte, 0 admissões**.
+- **GAP-01 continua OPEN.** A atribuição proposta não substitui FIND, política, validador, verificação documental da fonte, assinatura Kernel, publicação ou mudança da fila oficial. `GAP-02`, `GAP-03`, `GAP-04` e `WO-HOM-001` continuam bloqueados. `main` não alterada e nenhum deploy/DB-write/merge realizado.
+
+### Próxima cadeia controlada
+
+Revisão independente do vínculo de cada pendência → formalização de FIND e política/validador aplicável → vinculação de task e WO autorizadas na fila canônica eleita → admissão Kernel com identidade e SHA → execução técnica/segurança → homologação. Resolver a credencial histórica do broker OAuth (#28) continua sendo P0 externo.

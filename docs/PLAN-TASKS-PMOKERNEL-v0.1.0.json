@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113.",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada). | 31/10 21:00Z: +T0.094 a T0.107 (workspace completo, tela de decisao de impacto, contrato do grafo, matriz de severidade, identidade/backend, matriz M01-M22, mais listas, a11y real, biblioteca de componentes, backlog de modulos, Commander ligado ao Kernel, composicao do site, trilha duravel, registo de FIND-MOD-001). | 31/10 21:05Z: T0.094-099 colidiram com ids do time -> reinscritos como TASK-PLAN-108, TASK-PLAN-109, TASK-PLAN-110, TASK-PLAN-111, TASK-PLAN-112, TASK-PLAN-113. | 31/10 21:25Z: auditoria do pacote Commander (39/40 hashes OK; src/App.tsx divergente; matriz M01-M22 localizada em fix/governed-activities-cli-20261026) -> T0.114 a T0.119 + actualizacao medida de T0.090/091/092/107/113.",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -1793,7 +1793,7 @@
         "scripts/impact-engine.test.mjs",
         "scripts/list-query.test.mjs"
       ],
-      "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado."
+      "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado. | MEDIDO 31/10 21:20Z: o repo usa a convencao scripts/**/*.test.mjs (6 ficheiros no main; ex.: test-route-registry.test.mjs). O problema do ZIP e que os seus ficheiros se chamam test-*.mjs SEM o sufixo .test.mjs. Estado: nao existe nenhum ficheiro de teste para impact-engine, list-query ou admin-topbar (verificado por listagem de scripts/ e search_code)."
     },
     {
       "id": "TASK-PLAN-091",
@@ -1813,7 +1813,7 @@
         "registers/canonical/surface-contracts.v2.json",
         "contracts/entities/design-tokens.v1.json"
       ],
-      "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build)."
+      "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build). | MEDIDO 31/10 21:20Z: registers/canonical/surface-contracts.v2.json EXISTE (275 linhas) mas nao declara impact-engine, list-query, admin-topbar nem PmoReviewIntake (0 ocorrencias de cada chave). check-contract-coverage nao os apanha: os tokens ainda nao tem contrato."
     },
     {
       "id": "TASK-PLAN-092",
@@ -1825,7 +1825,7 @@
       ],
       "owner": "Mavis",
       "language": "TSX",
-      "status": "PROPOSTO",
+      "status": "DELIVERED_PENDING_GATE",
       "covers": [],
       "artifacts": [
         "src/components/admin/pmo-panel.tsx",
@@ -1835,7 +1835,7 @@
         "src/styles/admin-console.css",
         "scripts/test-admin-console.mjs"
       ],
-      "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI."
+      "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI. | MEDIDO 31/10 21:20Z: src/components/admin/pmo-review-intake.tsx PRESENTE (132 linhas) e importado por src/components/admin/pmo-panel.tsx (import { PmoReviewIntake } from './pmo-review-intake') + queryPmo de @/lib/admin/list-query (54 linhas). A superficie de decisao foi preservada e a listagem e camada de consulta, nao substituto. DELIVERED, pendente de correr o gate oficial."
     },
     {
       "id": "TASK-PLAN-093",
@@ -2049,7 +2049,7 @@
     {
       "id": "TASK-PLAN-107",
       "phase": "F1",
-      "title": "Registar FIND-MOD-001 (matriz M01-M22 sem fonte) e a divergencia dos 36 hashes no find-register",
+      "title": "Registar FIND-MOD-001 (matriz M01-M22) e a divergencia de hash no find-register",
       "wo": "WO-PMO-001",
       "deps": [
         "TASK-PLAN-099"
@@ -2059,7 +2059,7 @@
       "status": "PROPOSTO",
       "covers": [],
       "artifacts": [],
-      "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo."
+      "acceptance": "FIND-MOD-001 aparece citado no relatorio do pacote commander mas NAO existe em registers/governance/find-register.v1.json (11 FINDs registados, nenhum MOD; search_code devolve 0). Regista-se como DRAFT_FOR_GOVERNED_REVIEW com proveniencia, severidade e work_order=NOT_ADMITTED, para deixar de ser um achado que vive so fora do registo. | FONTE ENCONTRADA 31/10 21:10Z: a matriz existe no repo em docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ branch fix/governed-activities-cli-20261026 (NAO esta no main); search_code so indexa a branch por defeito, razao do HOLD do mockup. Evidencia: issue #16 comentario 6427776320. Divergencia de hash medida por mim: 40 entradas declaradas, 39 OK, 1 divergente = src/App.tsx (declarado c75313ee..., medido a16223547...)."
     },
     {
       "id": "TASK-PLAN-108",
@@ -2134,15 +2134,101 @@
     {
       "id": "TASK-PLAN-113",
       "phase": "F1",
-      "title": "Fornecer a matriz canonica M01-M22 (7 macrogrupos / 22 modulos) e reconciliar a divergencia dos 36 hashes",
+      "title": "Reconciliar M01-M22 com a matriz canonica localizada (7 macrogrupos / 22 modulos)",
       "wo": "WO-ADM-001",
       "deps": [],
       "owner": "Owner / fonte canonica",
       "language": "-",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Fonte localizada em 31/10: docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md @ fix/governed-activities-cli-20261026 (copia com proveniencia em docs/evidence/commander-2026-10-31/). Contem os 7 macrogrupos e os 22 modulos COM NOMES (M01 Visao Geral ... M22 Gestao Corporativa e Terceiros) e o layout obrigatorio 65/35. Entregaveis: (a) crosswalk entre as sete abas do AdminConsole e os sete macrogrupos propostos, classificado PRESENT/CANDIDATE/HOLD; (b) os nomes dos 22 modulos aplicados onde fizer sentido, sem declarar 22 rotas implementadas e sem usar as abas como substituto dos macrogrupos; (c) Central de Comando registada como transversal a M01/M03/M07/M16/M19/M20/M14 e nao como Kernel/PMO/storage concorrente; (d) comprovacao de autoridade do DOCX original (ver TASK-PLAN-119). A matriz e transcricao-resumo PROPOSTO: nao e homologacao."
+    },
+    {
+      "id": "TASK-PLAN-114",
+      "phase": "F1",
+      "title": "Verificador de integridade que recalcula os hashes do delivery-manifest",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-107"
+      ],
+      "owner": "Mavis",
+      "language": "PY+JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "O validador que o pacote entrega (scripts/validate-manifest.mjs) so valida JSON contra schema AJV e NAO recalcula um unico hash; por isso a divergencia de src/App.tsx passou despercebida. Entregar script que recalcula SHA-256 dos 40 declarados e falha fechada em qualquer divergencia, e regenerar o manifesto com o ficheiro entregue. Prova: executar contra o pacote recebido e obter 39 OK + 1 divergente antes do conserto, 40 OK depois."
+    },
+    {
+      "id": "TASK-PLAN-115",
+      "phase": "F1",
+      "title": "Clarificar a linhagem do pacote Commander (manifesto vs adaptador de host)",
+      "wo": "WO-ADM-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
       "status": "BLOCKED",
       "covers": [],
       "artifacts": [],
-      "acceptance": "O pacote commander(1).zip (mockup candidato) declara review.approved=false, releaseAuthorized=false, NOT_HOMOLOGATED e uma matriz M01-M22 sem fonte; a revisao de integridade encontrou 1 divergencia entre 36 hashes declarados. Provas: a fonte canonica da matriz e a reconciliacao da divergencia, registadas. Regra do proprio pacote: nao copiar src/App.tsx nem trata-lo como autoridade de execucao."
+      "acceptance": "O ZIP reenviado e a linhagem com delivery-manifest/validation/handoff e NAO inclui a linhagem 'continuidade local' do comentario 6428694625 (CommanderReadModel, src/ce-ds-bridge.candidate.css, scripts/test-host-adapter.mjs, INTEGRATION_README.md, candidate-manifest.json). O src/App.tsx recebido nao tem CommanderReadModel. Decisao do dono: qual linhagem e a entrega final, e onde fica o adaptador de host (repo ou fora). A divergencia de hash de App.tsx e a pista."
+    },
+    {
+      "id": "TASK-PLAN-116",
+      "phase": "F4",
+      "title": "Port do redesign do workspace da outra sessao para o repo (admin-console, commander-panel, catalogo)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-091",
+        "TASK-PLAN-117"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido: workspace admin-console.tsx 485 linhas vs repo 291; commander-panel.tsx 280 vs 175; o workspace importa @/core/governance/catalog e a fila directamente e acrescenta icones e superficies de monitor WO/run. Portar por fiacao, nao por copia, mantendo o repo como autoridade, com design-tokens.v1.json e queue.v1.json INTACTOS (identicos ao workspace) e o wireframe rotulado NOT_HOMOLOGATED ate WO-DS-001. Prova: typecheck + npm test + build:spa verdes e delta registado."
+    },
+    {
+      "id": "TASK-PLAN-117",
+      "phase": "F4",
+      "title": "Reconciliar o estado de WO-DS-001 (fila QUEUED vs HOLD_HUMAN do proprietario)",
+      "wo": "WO-DS-001",
+      "deps": [],
+      "owner": "Owner / PMO",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "registers/pmo/queue.v1.json no main regista WO-DS-001=QUEUED (rev. 18, updatedOn 2026-10-26) e o comentario do proprietario na issue #16 (#6427869597) pergunta se o comentario deve ser lido como HOLD separado. A pergunta continua sem resposta. Decisao registada e versionada; ate la, DS continua HOLD_HUMAN e nenhum token canonico e alterado."
+    },
+    {
+      "id": "TASK-PLAN-118",
+      "phase": "F3",
+      "title": "Entregar o motor de impacto e a topbar, e reconciliar o CSS de lista vazia",
+      "wo": "WO-ADM-001",
+      "deps": [
+        "TASK-PLAN-090",
+        "TASK-PLAN-091"
+      ],
+      "owner": "Mavis",
+      "language": "TS+CSS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "Medido 31/10: src/lib/impact/impact-engine.ts e src/components/admin/admin-topbar.tsx AUSENTES no repo. O repo ja tem src/lib/admin/list-query.ts (54 linhas) e src/components/admin/pmo-review-intake.tsx (132 linhas). Reconciliar no CSS a duplicacao semantica entre .ce-admin-empty e .ce-admin-list-empty (ambas existem em src/styles/admin-console.css); os estilos do ZIP (ce-admin-listbar, ce-admin-chip, ce-admin-topbar) tem 0 ocorrencias e nao foram portados. Prova: testes no glob oficial e contratos declarados."
+    },
+    {
+      "id": "TASK-PLAN-119",
+      "phase": "F1",
+      "title": "Confirmar autoridade e integridade do DOCX original da matriz",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "-",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [],
+      "acceptance": "A matriz M01-M22 declara origem em Especificacao_Final_Central_de_Comando_e_Tabelas_Iniciais.docx v1.0 (26/10, 19 pag.), proposta NAO homologada, que NAO esta no checkout do repo. Antes de qualquer promocao da matriz: obter o original, conferir a contagem 4+2+4+4+2+4+2=22 e a autoria, e registar a procedencia. A proposta de 215 tabelas nao e autorizacao para criar tabelas."
     }
   ],
   "candidateVerification": {

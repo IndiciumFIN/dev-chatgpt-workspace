@@ -19,7 +19,8 @@ export function validate({record,r79,findRegister,policy,sourceBytes={}}){
  ensure(findRegister?.status==='DRAFT_FOR_GOVERNED_REVIEW' && Array.isArray(findRegister.finds),'FIND_REGISTER_STATUS_DRIFT');
  ensure(policy?.populationStatus==='TODO','POLICY_ACTIVATION_REQUIRES_REVIEW');
  ensure(record.source.findRegisterStatus===findRegister.status && record.source.policyPopulationStatus===policy.populationStatus,'SOURCE_POLICY_STATUS_DRIFT');
- const registeredIds=new Set(findRegister.finds.map(f=>f.canonical_id));
+ const findById=new Map(findRegister.finds.map(f=>[f.canonical_id,f]));
+ ensure(findById.size===findRegister.finds.length,'DUPLICATE_FIND_IDS');
  const candidates=new Map(r79.candidates.map(c=>[c.sourceId,c]));
  ensure(candidates.size===31,'DUPLICATE_R79_IDS');
  let issues=0,docs=0,registered=0,docPins=new Set();
@@ -32,8 +33,12 @@ export function validate({record,r79,findRegister,policy,sourceBytes={}}){
   ensure(row.policy.modelPath===record.source.woModelPath && row.policy.modelBlobSha===record.source.woModelBlobSha && row.policy.auditPolicyPath===record.source.policyPath && row.policy.auditPolicyBlobSha===record.source.policyBlobSha && row.policy.applicability==='NOT_VALIDATED' && row.policy.auditPolicyPopulationStatus==='TODO','UNVERIFIED_POLICY_PROMOTION:'+row.sourceId);
   ensure(row.governance.findAdmission==='NOT_VERIFIED' && row.governance.policyApproved==='NOT_VERIFIED' && row.governance.validatorPassed==='NOT_RUN_BY_R80' && row.governance.kernelAdmission==='NOT_VERIFIED' && row.governance.sourceWo==='UNRECONCILED' && row.governance.release==='HOLD_HUMAN','FALSE_AUTHORITY:'+row.sourceId);
   ensure(row.source && Array.isArray(row.source.declaredFindIds)&&Array.isArray(row.source.findIdsInOfficialRegister),'BAD_FIND_ANNOTATION:'+row.sourceId);
-  const claimed=row.source.declaredFindIds.filter(id=>registeredIds.has(id)).sort();
+  const claimed=row.source.declaredFindIds.filter(id=>findById.has(id)).sort();
   ensure(claimed.join('|')===row.source.findIdsInOfficialRegister.slice().sort().join('|'),'FALSE_REGISTERED_FIND:'+row.sourceId);
+  for(const id of claimed){
+   const f=findById.get(id);
+   ensure(f.status==='DRAFT_FOR_GOVERNED_REVIEW'&&f.mutation_allowed===false&&f.work_order==='NOT_ADMITTED'&&f.policy_ref==='PENDING_APPLICABILITY_REVIEW'&&f.validator_ref==='PENDING_ADMISSION','FALSE_FIND_ADMISSION:'+id);
+  }
   registered+=claimed.length;
   if(candidate.sourceType==='issue'){
    issues++;
@@ -53,9 +58,10 @@ export function validate({record,r79,findRegister,policy,sourceBytes={}}){
    }else ensure(row.validator.status==='ITEM_VALIDATOR_NOT_BOUND'&&row.validator.path===null,'FALSE_VALIDATOR_BINDING:'+row.sourceId);
   }else ensure(false,'UNKNOWN_SOURCE_TYPE');
  }
- ensure(issues===18 && docs===13 && registered===0,'COVERAGE_OR_FIND_REGISTRATION_DRIFT');
+ ensure(issues===18 && docs===13 && registered===2,'COVERAGE_OR_FIND_REGISTRATION_DRIFT');
+ ensure(record.r81FindCandidates?.count===registered && record.r81FindCandidates?.status==='DRAFT_FOR_GOVERNED_REVIEW' && record.r81FindCandidates?.kernelAdmission==='NOT_VERIFIED' && record.r81FindCandidates?.releaseGate==='HOLD_HUMAN','R81_DRAFT_STATUS_DRIFT');
  const counts=record.counts;
- ensure(counts.candidateRows===31 && counts.openIssueBodiesAndTitlesVerified===issues && counts.sourceDocsBlobPinned===docs && counts.officialRegisteredAdmittedFindMatches===0 && counts.validatedApplicablePolicies===0 && counts.independentValidatorsExecuted===0 && counts.kernelAdmitted===0 && counts.sourceWoUnreconciled===31,'FALSE_R80_COUNTS');
+ ensure(counts.candidateRows===31 && counts.registeredDraftFindMatches===2 && counts.openIssueBodiesAndTitlesVerified===issues && counts.sourceDocsBlobPinned===docs && counts.officialRegisteredAdmittedFindMatches===0 && counts.validatedApplicablePolicies===0 && counts.independentValidatorsExecuted===0 && counts.kernelAdmitted===0 && counts.sourceWoUnreconciled===31,'FALSE_R80_COUNTS');
  ensure(record.releaseGate==='HOLD_HUMAN'&&record.mainModified===false&&record.sourceModified===false,'FALSE_RELEASE_STATE');
  return {candidateRows:31,issueSnapshots:issues,documentsPinned:docs,uniqueDocuments:docPins.size,registeredFindMatches:registered,fullyAdmitted:0,releaseGate:'HOLD_HUMAN'};
 }

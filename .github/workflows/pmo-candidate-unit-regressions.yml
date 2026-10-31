@@ -1,0 +1,235 @@
+name: PMO candidate unit regressions (non-release)
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-pending-coverage*'
+      - 'scripts/check-pmo-queue*'
+      - 'scripts/verify-pmo-fork-lineage*'
+      - 'scripts/verify-r84-pmo-decision-intake*'
+      - 'scripts/verify-r85-owner-assent*'
+      - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
+      - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
+      - 'src/components/admin/pmo-review-intake.tsx'
+      - 'src/components/admin/pmo-panel.tsx'
+      - 'registers/governance/pmo-fork-reconciliation-20261031.v1.json'
+      - 'registers/governance/pmo-r77-arbitration-20261031.v1.json'
+      - 'scripts/check-auth-invariant*'
+      - 'scripts/check-better-auth-lock*'
+      - 'scripts/test-auth-secret-env.mjs'
+      - 'src/lib/auth/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/audit-pending-lineage*'
+      - 'scripts/audit-domain-wo-candidates*'
+      - 'scripts/verify-r80-evidence-chain*'
+      - 'scripts/check-r81-original-rpc-find*'
+      - 'registers/governance/find-register.v1.json'
+      - 'registers/governance/r81-simulados-original-rpc-static-20261031.v1.json'
+      - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
+      - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
+      - 'scripts/check-r78-gap-register*'
+      - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
+      - 'scripts/check-register-schema*'
+      - 'scripts/check-approval-pmokernel-record*'
+      - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
+      - 'tests/test_audit_data_kernel.py'
+      - 'scripts/audit_data_kernel.py'
+      - 'docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json'
+      - '.github/workflows/pmo-candidate-unit-regressions.yml'
+  push:
+    branches:
+      - plan/pmokernel-finalization-20261031
+    paths:
+      - 'scripts/check-pending-coverage*'
+      - 'scripts/check-pmo-queue*'
+      - 'scripts/verify-pmo-fork-lineage*'
+      - 'scripts/verify-r84-pmo-decision-intake*'
+      - 'scripts/verify-r85-owner-assent*'
+      - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
+      - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
+      - 'src/components/admin/pmo-review-intake.tsx'
+      - 'src/components/admin/pmo-panel.tsx'
+      - 'registers/governance/pmo-fork-reconciliation-20261031.v1.json'
+      - 'registers/governance/pmo-r77-arbitration-20261031.v1.json'
+      - 'scripts/check-auth-invariant*'
+      - 'scripts/check-better-auth-lock*'
+      - 'scripts/test-auth-secret-env.mjs'
+      - 'src/lib/auth/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/audit-pending-lineage*'
+      - 'scripts/audit-domain-wo-candidates*'
+      - 'scripts/verify-r80-evidence-chain*'
+      - 'scripts/check-r81-original-rpc-find*'
+      - 'registers/governance/find-register.v1.json'
+      - 'registers/governance/r81-simulados-original-rpc-static-20261031.v1.json'
+      - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
+      - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
+      - 'scripts/check-r78-gap-register*'
+      - 'registers/governance/r78-gap-wo-execution-20261031.v1.json'
+      - 'scripts/check-register-schema*'
+      - 'scripts/check-approval-pmokernel-record*'
+      - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
+      - 'tests/test_audit_data_kernel.py'
+      - 'scripts/audit_data_kernel.py'
+      - '.github/workflows/pmo-candidate-unit-regressions.yml'
+permissions:
+  contents: read
+jobs:
+  verify-candidate-regressions:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Check validator syntax
+        run: |
+          node --check scripts/check-pending-coverage.mjs
+          node --check scripts/check-register-schema.mjs
+          node --check scripts/check-approval-pmokernel-record.mjs
+      - name: Verify authorized Commander local-only PMO transition and negative tests
+        run: |
+          node scripts/check-pmo-queue.mjs
+          node --test scripts/check-pmo-queue.test.mjs
+      - name: Verify four R84 owner decisions are proposals, not signed corporate approvals
+        run: |
+          node --check scripts/verify-r84-pmo-decision-intake.mjs
+          node scripts/verify-r84-pmo-decision-intake.mjs
+          node --test scripts/verify-r84-pmo-decision-intake.test.mjs
+      - name: Verify user approval recorded only as conversation assent without Kernel authority
+        run: |
+          node --check scripts/verify-r85-owner-assent.mjs
+          node scripts/verify-r85-owner-assent.mjs
+          node --test scripts/verify-r85-owner-assent.test.mjs
+      - name: Verify Better Auth 1.7 client/server opt-in and no literal preview secret
+        run: node --test scripts/check-auth-invariant.test.mjs scripts/test-auth-secret-env.mjs
+      - name: Verify Better Auth 1.7.14 lockfile and adapter integrity
+        run: |
+          node scripts/check-better-auth-lock.mjs
+          node --test scripts/check-better-auth-lock.test.mjs
+      - name: Run fail-closed coverage regressions
+        run: node --test scripts/check-pending-coverage.test.mjs
+      - name: Run per-pendency source-lineage regressions (candidate only)
+        run: node --test scripts/audit-pending-lineage.test.mjs
+      - name: Validate 31 scoped WO mapping candidates with negative regressions
+        run: node --test scripts/audit-domain-wo-candidates.test.mjs
+      - name: Validate R80 FIND-policy-validator candidate evidence snapshots
+        run: |
+          node --check scripts/verify-r80-evidence-chain.mjs
+          node --test scripts/verify-r80-evidence-chain.test.mjs
+      - name: Verify original ZIP security FIND remains static and non-admitted
+        run: |
+          node --check scripts/check-r81-original-rpc-find.mjs
+          node --test scripts/check-r81-original-rpc-find.test.mjs
+      - name: Validate R78 4-gap WO register (candidate only)
+        run: |
+          node scripts/check-r78-gap-register.mjs
+          node --test scripts/check-r78-gap-register.test.mjs
+      - name: Run register schema regressions
+        run: node --test scripts/check-register-schema.test.mjs
+      - name: Verify persisted owner approval and negative authorization regressions
+        run: |
+          node scripts/check-approval-pmokernel-record.mjs
+          node --test scripts/check-approval-pmokernel-record.test.mjs
+      - name: Checkout real PMO rev20 source (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: fix/governed-activities-cli-20261026
+          path: pmo-source
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-main (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          path: pmo-fork-main
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-editorial (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: work/editorial-canonical-learning-20261026
+          path: pmo-fork-editorial
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-idioma (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: idioma/consolidado-19
+          path: pmo-fork-idioma
+          persist-credentials: false
+      - name: Checkout PMO fork source pmo-fork-preview (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: preview/central-comando-20261026
+          path: pmo-fork-preview
+          persist-credentials: false
+      - name: Checkout Simulados evidence source (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: simulados-enfermagem-db-canonico
+          path: spe-source
+          persist-credentials: false
+      - name: Reconstruct R83 five-source fork lineage without replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$(mktemp -d)"
+          trap 'rm -rf "$root"' EXIT
+          cp pmo-fork-main/registers/pmo/queue.v1.json "$root/main.json"
+          cp pmo-source/registers/pmo/queue.v1.json "$root/governed.json"
+          cp pmo-fork-editorial/registers/pmo/queue.v1.json "$root/editorial.json"
+          cp pmo-fork-idioma/registers/pmo/queue.v1.json "$root/idioma.json"
+          cp pmo-fork-preview/registers/pmo/queue.v1.json "$root/preview.json"
+          node scripts/verify-pmo-fork-lineage.mjs "$root"
+          PMO_FORK_SOURCE_DIR="$root" node --test scripts/verify-pmo-fork-lineage.test.mjs
+      - name: Reconcile R80 source documents against original Git blobs
+        run: node scripts/verify-r80-evidence-chain.mjs . spe-source
+      - name: Cross-check R81 ZIP risk against historical original inventory W11
+        run: node scripts/check-r81-original-rpc-find.mjs . spe-source
+      - name: Run isolated Simulados RPC static validator tests (not E2E or admission)
+        run: python3 -m unittest discover -s spe-source/scripts -p 'test_spe_audit_rpc_answers.py' -v
+      - name: Assert real-data coverage is blocked only by the four known gaps
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$(mktemp -d)"
+          trap 'rm -rf "$root"' EXIT
+          mkdir -p "$root/registers/pmo" "$root/registers/governance" "$root/docs"
+          cp pmo-source/registers/pmo/queue.v1.json "$root/registers/pmo/"
+          cp pmo-source/registers/pmo/cross-source-pending-intake.v1.json "$root/registers/pmo/"
+          cp docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json "$root/docs/"
+          cp registers/governance/r79-domain-wo-mapping-20261031.v1.json "$root/registers/governance/"
+          node scripts/check-register-schema.mjs --root "$root"
+          node scripts/audit-domain-wo-candidates.mjs "$root"
+          node scripts/audit-pending-lineage.mjs --root "$root" --output "$root/lineage.json"
+          node --input-type=module - "$root/lineage.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const d=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(d.counts.total!==32 || d.counts.taskCovered!==32 || d.counts.sourceWoUnreconciled!==31 || d.counts.domainCandidateUnmapped!==0) throw Error('PENDING_LINEAGE_SOURCE_DRIFT');
+          if(d.counts.kernelAdmitted!==0 || d.releaseGate!=='HOLD_HUMAN' || d.approvedMappings!==0) throw Error('FALSE_PENDING_AUTHORITY');
+          if(d.records.length!==32 || d.records.some(x=>!x.missingEvidence.includes('KERNEL_ADMISSION_NOT_VERIFIED'))) throw Error('INCOMPLETE_AUTHORITY_ASSESSMENT');
+          console.log('PASS: 32/32 task-covered; 31 source WOs still unreconciled; 0 authorized admissions');
+          NODE
+          set +e
+          node scripts/check-pending-coverage.mjs --root "$root" > "$root/coverage.log" 2>&1
+          code=$?
+          set -e
+          cat "$root/coverage.log"
+          test "$code" -eq 1
+          expected_tasks="$(node -p "JSON.parse(require('node:fs').readFileSync('$root/docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json','utf8')).tasks.length")"
+          # Snapshot has 37 task IDs (including GH28 and the R77 collision-gate task).
+          # Derive exact output from the actual, separately validated plan instead of a stale 36-task literal.
+          test "$expected_tasks" -ge 37
+          grep -Fq "10 WOs · ${expected_tasks} tasks · 32 pendências · 4 gaps" "$root/coverage.log"
+          grep -Fq 'GAP_ABERTO: 4' "$root/coverage.log"
+          ! grep -Eq 'PENDENCIA_ORFA:|WO_SEM_TASK:|TASK_SEM_WO:|TASK_WO_INEXISTENTE:|ENTRADA_INCOMPLETA:' "$root/coverage.log"
+          echo 'PASS: gate rejeitou corretamente os quatro gaps; nenhuma pendência órfã ou WO sem task'
+      - name: Run read-only data kernel regressions
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -q
+# Advisory candidate tests only: does not activate the release/coverage gate
+# in main. Four real GAP_ABERTO remain blockers for integration.

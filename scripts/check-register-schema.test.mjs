@@ -27,7 +27,7 @@ const VALID = {
   sourceSnapshots: {
     pmo: { branch: "fix/governed-activities-cli-20261026", revision: 20, file: "registers/pmo/queue.v1.json" },
     simulados: { branch: "simulados-enfermagem-db-canonico", file: "docs/x.json" },
-    issues: { query: "repo:IndiciumFIN/dev-chatgpt-workspace is:issue is:open", observedCount: 18 },
+    issues: { query: "repo:IndiciumFIN/dev-chatgpt-workspace is:issue is:open", observedCount: 1 },
   },
   pmo: [
     { id: "WO-ADM-001", title: "Commander", status: "IN_PROGRESS", priority: "P1", dependencies: [], evidenceCount: 1 },
@@ -146,6 +146,48 @@ test("url de issue fora do repositório reprova", () => {
     const r = run(root);
     assert.equal(r.code, 1);
     assert.match(r.out, /URL/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("coleção de issues omitida não pode resultar em falso verde", () => {
+  const root = tmp();
+  try {
+    const doc = structuredClone(VALID);
+    delete doc.openIssues;
+    writeRegister(root, doc);
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /COLECAO_AUSENTE/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("contagem de issues divergente do snapshot reprova", () => {
+  const root = tmp();
+  try {
+    const doc = structuredClone(VALID);
+    doc.sourceSnapshots.issues.observedCount = 18;
+    writeRegister(root, doc);
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /SNAPSHOT_CONTAGEM/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("GH-id divergente do número na URL reprova", () => {
+  const root = tmp();
+  try {
+    const doc = structuredClone(VALID);
+    doc.openIssues[0].id = "GH-24";
+    writeRegister(root, doc);
+    const result = run(root);
+    assert.equal(result.code, 1, result.out);
+    assert.match(result.out, /ISSUE_IDENTIDADE/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

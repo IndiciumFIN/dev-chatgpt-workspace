@@ -171,9 +171,14 @@ for (const p of pending) {
     const covers = Array.isArray(t.covers) ? t.covers : [];
     return p.aliases.some((a) => covers.includes(a)) || covers.includes(`${p.group}:${p.id}`);
   });
-  const linked = p.wo && p.wo !== "UNRECONCILED" && woIds.has(p.wo);
-  if (!covered && !linked) {
-    add("PENDENCIA_ORFA", `${p.group}:${p.id} "${p.title.slice(0, 70)}" não está coberta por task nem vinculada a WO`);
+  // A WO declarada no inventário não é prova de existência de TASK válida.
+  // Um vínculo arbitrário de WO nunca dispensa a cobertura da pendência por task ativa.
+  if (!covered) {
+    add("PENDENCIA_ORFA", `${p.group}:${p.id} "${p.title.slice(0, 70)}" não possui TASK ativa de cobertura`);
+  }
+  const declaredWo = p.wo && p.wo !== "UNRECONCILED" ? p.wo : null;
+  if (declaredWo && !woIds.has(declaredWo)) {
+    add("PENDENCIA_WO_INEXISTENTE", `${p.group}:${p.id} declara WO ${declaredWo} ausente da fila`);
   }
 }
 

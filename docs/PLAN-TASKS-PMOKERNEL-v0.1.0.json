@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 31 pendências (13 Simulados + 18 issues) estão cobertas. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham).",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham).",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -630,6 +630,25 @@
       "covers": [],
       "artifacts": [],
       "acceptance": "WO-HOM-001 permanece HOLD_HUMAN em todas as revisões da fila; nenhum merge, deploy ou migração aplicada antes de decisão verificável de admissão (TASK-PLAN-002)."
+    },
+    {
+      "id": "TASK-PLAN-057",
+      "phase": "F0",
+      "title": "Revogar e rotacionar credencial de prévia do broker e revalidar OAuth 1.7",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Responsável autorizado pelo broker + revisor de segurança",
+      "language": "SECURITY",
+      "status": "BLOCKED",
+      "covers": [
+        "GH-28",
+        "GAP-04"
+      ],
+      "artifacts": [
+        "registers/governance/find-oauth-preview-secret-20261031.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28"
+      ],
+      "acceptance": "Revogação da credencial histórica comprovada sem revelar valores; preview acessa segredo somente por variáveis seguras; callback e PKCE Better Auth 1.7 confirmados no broker; E2E de sign-in/out e segregação aprovado; Kernel e gates de produção formalmente liberados."
     }
   ],
   "candidateVerification": {
@@ -660,5 +679,14 @@
       "releaseGate": "HOLD_HUMAN"
     },
     "note": "Candidate tests PASS; real-data gate intentionally exits 1 on 4 unresolved gaps; no Kernel admission or release."
+  },
+  "snapshotRevalidation": {
+    "date": "2026-10-31",
+    "previousCount": 31,
+    "expectedCount": 32,
+    "newIssue": "GH-28",
+    "newTask": "TASK-PLAN-057",
+    "state": "PENDING_FULL_GATE_READBACK",
+    "releaseGate": "HOLD_HUMAN"
   }
 }

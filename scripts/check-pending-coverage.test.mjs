@@ -29,9 +29,9 @@ function writeTree(root, files) {
   }
 }
 
-function run(root) {
+function run(root, extraArgs = []) {
   try {
-    const out = execFileSync(process.execPath, [SCRIPT, "--root", root], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const out = execFileSync(process.execPath, [SCRIPT, "--root", root, ...extraArgs], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { code: 0, out };
   } catch (e) {
     return { code: e.status ?? 1, out: `${e.stdout ?? ""}${e.stderr ?? ""}` };
@@ -278,6 +278,48 @@ test("IDs de task duplicados são reprovados em vez de sobrescritos", () => {
     const result = run(root);
     assert.equal(result.code, 1, result.out);
     assert.match(result.out, /TASK_ID_DUPLICADO/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("R78: modo release exige fontes; ausencia nunca aprova", () => {
+  const root = tmp();
+  try {
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": QUEUE,
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": PLAN,
+    });
+    const result = run(root, ["--require-inputs"]);
+    assert.equal(result.code, 1);
+    assert.match(result.out, /ENTRADA_AUSENTE/);
+    assert.match(result.out, /cross-source-pending-intake/);
+    assert.doesNotMatch(result.out, /\bOK — cobertura integral\b/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("R78: modo release nao altera a regra de gaps abertos", () => {
+  const root = tmp();
+  try {
+    writeTree(root, {
+      "registers/pmo/queue.v1.json": {
+        ...QUEUE,
+        items: QUEUE.items.map(w => w.id === "WO-PMO-001" ? {...w,evidence:["https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/1ab0561"]} : w),
+      },
+      "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json": PLAN,
+      "registers/pmo/cross-source-pending-intake.v1.json": {
+        ...INTAKE,
+        openIssues: [],
+        simulados: [],
+        coverageGaps: [{ id: "GAP-04", description: "Seguranca pendente", status: "OPEN" }],
+      },
+    });
+    const result = run(root, ["--require-inputs"]);
+    assert.equal(result.code, 1);
+    assert.match(result.out, /GAP_ABERTO/);
+    assert.doesNotMatch(result.out, /ENTRADA_AUSENTE/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

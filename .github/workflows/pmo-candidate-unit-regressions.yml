@@ -38,6 +38,9 @@ on:
       - 'tests/test_audit_data_kernel.py'
       - 'scripts/audit_data_kernel.py'
       - 'docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json'
+      - 'scripts/check-r90-service-boundaries*'
+      - 'registers/governance/r90-service-boundary-candidates.v1.json'
+      - 'docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json'
       - '.github/workflows/pmo-candidate-unit-regressions.yml'
   push:
     branches:
@@ -78,6 +81,9 @@ on:
       - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
       - 'tests/test_audit_data_kernel.py'
       - 'scripts/audit_data_kernel.py'
+      - 'scripts/check-r90-service-boundaries*'
+      - 'registers/governance/r90-service-boundary-candidates.v1.json'
+      - 'docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json'
       - '.github/workflows/pmo-candidate-unit-regressions.yml'
 permissions:
   contents: read
@@ -101,6 +107,10 @@ jobs:
           node --check scripts/check-pending-coverage.mjs
           node --check scripts/check-register-schema.mjs
           node --check scripts/check-approval-pmokernel-record.mjs
+      - name: Validate R90 candidate service boundaries without admitting any service
+        run: |
+          node scripts/check-r90-service-boundaries.mjs
+          node --test scripts/check-r90-service-boundaries.test.mjs
       - name: Verify authorized Commander local-only PMO transition and negative tests
         run: |
           node scripts/check-pmo-queue.mjs

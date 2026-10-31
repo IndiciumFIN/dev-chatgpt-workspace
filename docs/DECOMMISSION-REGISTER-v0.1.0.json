@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "0.1.0",
+  "registerId": "CE-DECOMMISSION-REGISTER",
+  "snapshotDate": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "state": "PROPOSTO",
+  "releaseGate": "HOLD_HUMAN",
+  "policy": {
+    "purpose": "Registrar o que deixou de servir para evitar ambiguidade na sequencia de tarefas. Descomissionar nunca significa apagar historia de auditoria: o item sai da fila ativa e passa a pointer para o que o substitui.",
+    "deletionRequires": "autorizacao do owner/Kernel; o plugin nao expoe delete de branch nem close automatico de issue com seguranca",
+    "statusSemantics": {
+      "FINALIZADO": "substituido por artefato commitado neste repo; pode sair da fila ativa",
+      "PROPOSTO": "candidato a descomissionamento; aguarda decisao do owner/Kernel",
+      "SUPERSEDED": "existente mas superado por revisao mais nova do mesmo registro"
+    }
+  },
+  "items": [
+    {
+      "id": "DEC-001",
+      "item": "Relatório de revisão de branches de 27/10 (versão anterior desta análise)",
+      "kind": "relatorio",
+      "motivo": "Mediu 22 branches / 6 PRs / 17 issues; o estado atual é 23 branches / 7 PRs / 18 issues e o próprio relatório continha uma recomendação (merge unilateral do gate) que contraria a política do repo.",
+      "substituidoPor": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
+      "acao": "arquivar como histórico datado; não usar para decisão corrente",
+      "decisor": "Mavis",
+      "status": "FINALIZADO"
+    },
+    {
+      "id": "DEC-002",
+      "item": "Cadeias de FIND só em comentário de PR (R14–R47 no #13, CURI-R36–R40 no #22, SPE-R14–R35 no #24)",
+      "kind": "achado_nao_persistido",
+      "motivo": "Viola a diretriz da issue #25 (nenhum achado pode permanecer exclusivamente na conversa). Os blobs remotos dos auditores seguem os originais, com todos os defeitos apontados.",
+      "substituidoPor": "TASK-PLAN-014 (uma baseline commitada por PR)",
+      "acao": "consolidar em um validador commitado por PR; os comentários passam a apontar para o blob commitado",
+      "decisor": "Mavis",
+      "status": "PROPOSTO"
+    },
+    {
+      "id": "DEC-003",
+      "item": "Branches duplicadas `archivamento` e `planning` (ambas em 87c537fe, contida em `main`)",
+      "kind": "branch",
+      "motivo": "Duplicata exata de SHA, sem trabalho próprio; mantidas por engano desde 24/10.",
+      "substituidoPor": "nenhum (conteudo ja esta em main)",
+      "acao": "git push origin --delete archivamento planning (a API do plugin nao expoe delete de branch; exige owner)",
+      "decisor": "Owner",
+      "status": "PROPOSTO"
+    },
+    {
+      "id": "DEC-004",
+      "item": "Branches sem PR e sem CI (13 no total)",
+      "kind": "branch",
+      "motivo": "Sem PR e sem execucao de workflow nao ha evidencia de gate; permanecem na fila ativa como pendencia, nao como trabalho validado.",
+      "substituidoPor": "TASK-PLAN-013 (vinculo por WO/task)",
+      "acao": "abrir PR ou arquivar; `feat/research-hub-governed-20261026` merece atencao porque contem commit 'saneiar CI quebrada na main' que nunca rodou CI",
+      "decisor": "Owner",
+      "status": "PROPOSTO"
+    },
+    {
+      "id": "DEC-005",
+      "item": "Issue #23 (solicitar admissao Kernel para o Research Hub)",
+      "kind": "issue",
+      "motivo": "Absorvida pela issue #25, que especifica o contrato de admissao verificavel (ID, WO, SHA, identidade, autoridade, assinatura, timestamp, expiracao, condicoes, veto, trilha).",
+      "substituidoPor": "ISSUE-25",
+      "acao": "fechar #23 com ponteiro para #25 (execucao pelo owner; este plano nao fecha issues unilateralmente)",
+      "decisor": "Owner",
+      "status": "PROPOSTO"
+    },
+    {
+      "id": "DEC-006",
+      "item": "Issues #10 e #11 (14 arestas sem reciprocidade; arquivos efetivos dos agentes)",
+      "kind": "issue",
+      "motivo": "Cobertas pelo inventario transversal e pela cadeia FIND→WO; manter abertas duplica a mesma pendencia em dois lugares de tracking.",
+      "substituidoPor": "registers/pmo/cross-source-pending-intake.v1.json + TASK-PLAN-013",
+      "acao": "fechar com ponteiro para o item do inventario e a task correspondente, apos T0.005",
+      "decisor": "Owner",
+      "status": "PROPOSTO"
+    },
+    {
+      "id": "DEC-007",
+      "item": "Spec generica de auditoria de dados (anexo de 13 cenarios com pandas/pydantic/psycopg2/yaml)",
+      "kind": "spec",
+      "motivo": "Generica e nao-executavel neste repo: cita tabelas inexistentes (core.produtos, clientes), dependencias que o CI nao instala e um gate de dados que nao existe.",
+      "substituidoPor": "docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md + scripts/audit_data_kernel.py + registers/governance/audit-policy.v1.json",
+      "acao": "manter a spec original como entrada de historico; o catalogo transposto e o motor sao a referencia vigente",
+      "decisor": "Mavis",
+      "status": "FINALIZADO"
+    },
+    {
+      "id": "DEC-008",
+      "item": "Politica como codigo em YAML (policy.yaml) e tabelas de log em Postgres (audit.logs_execucao)",
+      "kind": "design",
+      "motivo": "Exigem PyYAML e escrita no banco; o motor precisa rodar no gate sem pip e sem tocar banco de producao.",
+      "substituidoPor": "registers/governance/audit-policy.v1.json + relatorio JSON/Markdown em arquivo",
+      "acao": "nenhuma; decisao registrada em D-03 do plano",
+      "decisor": "Mavis",
+      "status": "FINALIZADO"
+    },
+    {
+      "id": "DEC-009",
+      "item": "Caminho de dados do PGlite herdado do ambiente (/var/task/_libs/pglite.data)",
+      "kind": "infra",
+      "motivo": "Causa do ENOENT: diretorio tratado como pre-existente. Corrigido em scripts/audit_data_kernel.py::resolve_pg_target (DATABASE_URL -> PGLITE_DATA_DIR criado -> .tmp/pglite).",
+      "substituidoPor": "scripts/audit_data_kernel.py",
+      "acao": "nenhuma; teste cobrindo em tests/test_audit_data_kernel.py::TestPgTargetResolution",
+      "decisor": "Mavis",
+      "status": "FINALIZADO"
+    },
+    {
+      "id": "DEC-010",
+      "item": "Fila PMO com 4 revisoes simultaneas (18 main / 19 work-editorial / 20 fix-governed / 23 preview)",
+      "kind": "registro",
+      "motivo": "Cada branch valida a propria copia local da fila; por isso uma linhagem fica verde sem que nada esteja resolvido. E a causa do gate vermelho do main.",
+      "substituidoPor": "TASK-PLAN-001 (reconciliacao com revisao canonica)",
+      "acao": "escolher a revisao canonica, marcar as demais SUPERSEDED com evento novo e seq preservado",
+      "decisor": "PMO",
+      "status": "PROPOSTO"
+    }
+  ]
+}

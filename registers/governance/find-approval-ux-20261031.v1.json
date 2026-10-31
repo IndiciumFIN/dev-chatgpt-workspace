@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "FIND-ADMIN-DECISION-UX-20261031",
+  "date": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "source": "Owner observed absence of Review, Edit, Approve and Approve-with-reservations actions; continuation of existing owner approval recorded in PR #26.",
+  "severity": "P1",
+  "type": "USABILITY_AND_GOVERNANCE_GAP",
+  "state": "CANDIDATE_PARTIAL_IMPLEMENTATION",
+  "relatedWos": [
+    "WO-ADM-001",
+    "WO-PMO-001",
+    "WO-HOM-001"
+  ],
+  "issue": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25",
+  "approvedContinuityEvidence": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/approval-pmokernel-audit-20261031.v1.json",
+  "policy": "FIND -> policy -> validator -> TASK -> WO -> Kernel admission -> tests -> audit -> authorized promotion",
+  "existingImplementation": {
+    "branch": "fix/governed-activities-cli-20261026",
+    "files": [
+      "src/lib/governance/decision-draft.ts",
+      "src/lib/governance/decision-draft.test.ts",
+      "src/components/admin/governed-review-panel.tsx",
+      "src/components/admin/pmo-panel.tsx",
+      "src/styles/admin-console.css",
+      "scripts/test-admin-console.mjs"
+    ],
+    "behavior": "Governed review UI preparing local non-binding drafts, displaying previously recorded approval; no remote persistence and no fresh owner approval required.",
+    "status": "CANDIDATE_ONLY"
+  },
+  "requiredForRealDecisions": [
+    "Formal Kernel admission interface and authoritative adapter (no parallel approval system)",
+    "Authenticated actor/role and segregation of duties",
+    "Versioned immutable decision event, SHA and expiry checks, server-side anti-replay",
+    "Audit log and reliable durable write, rejected by default when unavailable",
+    "Independent verification and authorized rollout"
+  ],
+  "prohibited": [
+    "Do not treat local draft or click as an approval",
+    "Do not update production database or GitHub automatically from browser",
+    "Do not change WO-HOM-001 HOLD_HUMAN without formal admission",
+    "Do not merge protected main without authorized release"
+  ],
+  "acceptance": [
+    "Visible review and pre-recorded owner approval with source",
+    "Four proposal choices with validation and reservations",
+    "No claim that decisions were submitted, signed or promoted",
+    "Typecheck, negative unit tests, static admin gate and build green",
+    "All decisions and test results persisted via GitHub commit evidence"
+  ],
+  "kernelAdmission": "NOT_VERIFIED",
+  "releaseGate": "HOLD_HUMAN"
+}

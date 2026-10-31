@@ -86,6 +86,16 @@ if (missing.length) {
 const violations = [];
 const add = (code, detail) => violations.push({ code, detail });
 
+/* A chamada isolada do gate não pode ignorar coleções omitidas, mesmo
+ * quando o validador de schema não foi executado antes dela. */
+for (const key of ["items"]) {
+  if (!Array.isArray(queue[key])) add("ENTRADA_INCOMPLETA", `fila.${key} deve existir como array`);
+}
+if (!Array.isArray(plan.tasks)) add("ENTRADA_INCOMPLETA", "plano.tasks deve existir como array");
+for (const key of ["simulados", "openIssues", "coverageGaps"]) {
+  if (!Array.isArray(intake[key])) add("ENTRADA_INCOMPLETA", `inventário.${key} deve existir como array`);
+}
+
 /* ---------- re-derivação 1: WOs canônicas ---------- */
 const wos = Array.isArray(queue.items) ? queue.items : [];
 const woIds = new Set(wos.map((w) => w.id));
@@ -95,6 +105,7 @@ if (!wos.length) add("FILA_VAZIA", "registers/pmo/queue.v1.json não possui iten
 const tasks = Array.isArray(plan.tasks) ? plan.tasks : [];
 const taskById = new Map(tasks.map((t) => [t.id, t]));
 if (!tasks.length) add("PLANO_VAZIO", "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json não possui tasks");
+if (taskById.size !== tasks.length) add("TASK_ID_DUPLICADO", "plano.tasks contém IDs duplicados");
 
 const OPEN_WO_STATUS = new Set(["PAUSED", "IN_PROGRESS", "QUEUED", "HOLD_HUMAN", "BLOCKED"]);
 // Task "PROPOSTO" ou "BLOCKED" ainda é uma task viva: o que define cobertura

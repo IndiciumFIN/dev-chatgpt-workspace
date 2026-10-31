@@ -68,7 +68,8 @@
       "artifacts": [
         "scripts/check-pmo-queue.mjs",
         "scripts/check-pmo-queue.test.mjs",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/43682e6447854b3f683c41a59e18fa5660d4400b"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/43682e6447854b3f683c41a59e18fa5660d4400b",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
       ],
       "acceptance": "node scripts/check-pmo-queue.mjs verde no main; PR aberto contra main; fila PMO não alterada."
     },
@@ -121,7 +122,12 @@
         "GAP-04"
       ],
       "artifacts": [
-        "registers/governance/r78-gap-wo-execution-20261031.v1.json"
+        "registers/governance/r78-gap-wo-execution-20261031.v1.json",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-better-auth-lock.test.mjs",
+        "scripts/test-auth-secret-env.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
       ],
       "acceptance": "As três ferramentas falham com erro de conector: estado é 'não medido', nunca 'zero alertas'. Alertas lidos e registrados por severidade + SHA dos artefatos afetados."
     },
@@ -662,7 +668,12 @@
       ],
       "artifacts": [
         "registers/governance/find-oauth-preview-secret-20261031.v1.json",
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-better-auth-lock.test.mjs",
+        "scripts/test-auth-secret-env.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
       ],
       "acceptance": "Revogação da credencial histórica comprovada sem revelar valores; preview acessa segredo somente por variáveis seguras; callback e PKCE Better Auth 1.7 confirmados no broker; E2E de sign-in/out e segregação aprovado; Kernel e gates de produção formalmente liberados."
     },
@@ -1421,7 +1432,8 @@
         "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24",
         "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
         "scripts/check-r81-original-rpc-find.mjs",
-        "scripts/check-r81-original-rpc-find.test.mjs"
+        "scripts/check-r81-original-rpc-find.test.mjs",
+        "registers/governance/r82-pmo-security-execution-20261031.v1.json"
       ],
       "origin": {
         "sourceId": "P0-04",
@@ -1855,6 +1867,25 @@
     "mainChanged": false,
     "sourceWosReconciled": false,
     "formalStatusesChanged": false,
-    "releaseGate": "HOLD_HUMAN"
+    "releaseGate": "HOLD_HUMAN",
+    "dependencySecurity": {
+      "sourceBranch": "fix/governed-activities-cli-20261026",
+      "targetVersion": "better-auth@1.7.14",
+      "changes": "package.json and corresponding 15-package lock chain; client/server/preview/provider code adapted",
+      "packageLockSha": "f576a666ce59590113e06d8c0cb68bf7b17d0b86",
+      "verifiedNoHardcodedPreviewSecretInCandidate": true,
+      "externalBrokerCredentialRotation": "NOT_DONE",
+      "npmAuditGate": "PASS_AUDIT_LEVEL_HIGH_CANDIDATE",
+      "githubSecurityScanning": "NOT_MEASURED",
+      "releaseGate": "HOLD_HUMAN"
+    },
+    "ci": {
+      "firstGlobalSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
+      "latestObservedGlobalSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540",
+      "latestObservedPmoSuccess": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235980220",
+      "mainChange": false,
+      "formalAdmission": false
+    },
+    "currentPlanTasks": 68
   }
 }

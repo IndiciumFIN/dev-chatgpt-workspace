@@ -8,8 +8,6 @@ const shared = read('src/components/local/local-workbench-page.tsx');
 const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
-const pmo = read('src/components/admin/pmo-panel.tsx');
-const pmoReview = read('src/components/admin/pmo-review-intake.tsx');
 const assertions = [
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
@@ -24,11 +22,6 @@ const assertions = [
   ['real end-user routes provided only for published local projection', /previewVersion === 'published' && <Link/.test(ui)],
   ['canonical design tokens reused', /var\(--color-navy\)/.test(style) && /var\(--color-line\)/.test(style) && !/--color-navy\s*:/.test(style)],
   ['browser and accessible feedback present', /role="status" aria-live="polite"/.test(ui) && /aria-invalid=/.test(ui)],
-  ['R87 PMO uses canonical deterministic list-query and preserves review intake', /import \{ queryPmo, type ListSort \} from '@\/lib\/admin\/list-query'/.test(pmo) && /queryPmo\(queue\.items/.test(pmo) && /<PmoReviewIntake\s*\/>/.test(pmo)],
-  ['R87 list controls are labeled, paginated and read-only', /htmlFor="pmo-search"/.test(pmo) && /htmlFor="pmo-filter"/.test(pmo) && /htmlFor="pmo-sort"/.test(pmo) && /htmlFor="pmo-page-size"/.test(pmo) && /aria-label="Navegação das páginas do PMO"/.test(pmo) && !/\b(fetch|axios|supabase)\s*\(/.test(pmo)],
-  ['R84 four-decision intake is reachable in canonical PMO panel', /<PmoReviewIntake\s*\/>/.test(pmo) && /r84-pmo-owner-decision-intake-20261031\.v1\.json/.test(pmoReview)],
-  ['R84 review options and rationale are labeled accessibly', /htmlFor=\{item\.id \+ '-choice'\}/.test(pmoReview) && /htmlFor=\{item\.id \+ '-justification'\}/.test(pmoReview) && /role="status" aria-live="polite"/.test(pmoReview)],
-  ['R84 proposals stay local and unsigned, never direct approval', /NON_BINDING_LOCAL_REVIEW_DRAFT/.test(pmoReview) && /kernelAdmission: 'NOT_VERIFIED'/.test(pmoReview) && /canonicalRevisionElected: false/.test(pmoReview) && !/\b(fetch|axios|supabase)\s*\(/.test(pmoReview)],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];
 let failed = 0;

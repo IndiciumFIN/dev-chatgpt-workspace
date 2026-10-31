@@ -66,3 +66,21 @@ test('stale hidden reservations cannot appear in plain approval', () => {
     assert.doesNotMatch(result.text, /Ressalvas de uma escolha anterior/);
   }
 });
+
+test('a repository prefix cannot be laundered into external evidence', () => {
+  const prefix = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/';
+  for (const evidenceUrl of [
+    prefix + '../../other/repo/issues/1',
+    prefix + '%2e%2e/%2e%2e/other/repo',
+    prefix + '%2fother',
+    'https://github.com.evil.invalid/IndiciumFIN/dev-chatgpt-workspace/issues/1',
+  ]) {
+    const result = buildDecisionDraft({...base, choice: 'APPROVE', evidenceUrl});
+    assert.equal(result.ok, false, evidenceUrl);
+    assert.equal(result.promotionAllowed, false);
+  }
+  const valid = buildDecisionDraft({...base, choice: 'APPROVE',
+    evidenceUrl: prefix + 'issues/25#issuecomment-123'});
+  assert.equal(valid.ok, true);
+  assert.equal(valid.promotionAllowed, false);
+});

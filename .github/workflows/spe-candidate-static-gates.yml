@@ -1,0 +1,51 @@
+name: SPE Candidate Static Gates
+on:
+  workflow_dispatch:
+  push:
+    branches: [simulados-enfermagem-db-canonico]
+    paths:
+      - 'scripts/spe_validate_extraction.py'
+      - 'tests/test_spe_validate_extraction.py'
+      - 'contracts/simulados-enfermagem/**'
+      - 'src/lib/simulados/**'
+      - '.github/workflows/spe-candidate-static-gates.yml'
+  pull_request:
+    paths:
+      - 'scripts/spe_validate_extraction.py'
+      - 'tests/test_spe_validate_extraction.py'
+      - 'contracts/simulados-enfermagem/**'
+      - 'src/lib/simulados/**'
+jobs:
+  candidate-unit-gates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate JSON Schema syntax and example rejection
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('contracts/simulados-enfermagem/attempt-lifecycle.v0.1.0.schema.json').read_text())
+          assert x['$schema']=='https://json-schema.org/draft/2020-12/schema'
+          assert x['allOf'][0]['then']['properties']['answer_visibility']['not']['const'] == 'STUDY_EXPLICIT'
+          print('SCHEMA_STATIC_CHECK_PASS; this is not full JSON Schema validation')
+          PY
+      - name: Candidate extraction tests
+        run: python -m unittest discover -s tests -p 'test_spe_validate_extraction.py' -v
+      - name: Attempt contract tests
+        run: python contracts/simulados-enfermagem/tests/attempt-lifecycle.contract.test.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: W10 runtime policy unit checks
+        run: node --experimental-strip-types src/lib/simulados/attempt-policy.test.ts
+      - name: Explicit DB/runtime hold
+        run: |
+          echo 'DB migrations: NOT_RUN (original source ZIP not in this repository)'
+          echo 'RLS and RPC runtime regressions: NOT_RUN'
+          echo 'Kernel admission and promotion: HOLD'

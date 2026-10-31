@@ -1,0 +1,88 @@
+name: SPE candidate PostgreSQL isolation (disposable only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [simulados-enfermagem-db-canonico]
+    paths:
+      - 'migrations/candidate/simulados-enfermagem/0001_spe_core_candidate.sql'
+      - 'migrations/candidate/simulados-enfermagem/0002_spe_source_lineage_candidate.sql'
+      - 'tests/spe_candidate_pg_smoke.sql'
+      - 'docs/simulados-enfermagem/W13_FIND_CANDIDATE_SQL_CORRUPTION_20261031.md'
+      - 'docs/simulados-enfermagem/W14_FIND_RLS_FALSE_ASSURANCE_20261031.md'
+      - '.github/workflows/spe-candidate-postgres-smoke.yml'
+  pull_request:
+    paths:
+      - 'migrations/candidate/simulados-enfermagem/0001_spe_core_candidate.sql'
+      - 'migrations/candidate/simulados-enfermagem/0002_spe_source_lineage_candidate.sql'
+      - 'tests/spe_candidate_pg_smoke.sql'
+      - 'docs/simulados-enfermagem/W13_FIND_CANDIDATE_SQL_CORRUPTION_20261031.md'
+      - 'docs/simulados-enfermagem/W14_FIND_RLS_FALSE_ASSURANCE_20261031.md'
+      - '.github/workflows/spe-candidate-postgres-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-postgres-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: candidate-only-ci
+          POSTGRES_DB: spe_candidate_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d spe_candidate_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGDATABASE: spe_candidate_ci
+      PGPASSWORD: candidate-only-ci
+    steps:
+      - name: Checkout candidate branch without write credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install PostgreSQL client if runner does not include it
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version
+      - name: Prepare disposable Supabase-like non-login roles
+        run: |
+          psql -v ON_ERROR_STOP=1 -c 'CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN;'
+      - name: Compile and apply only isolated candidate migrations
+        run: |
+          psql -v ON_ERROR_STOP=1 -f migrations/candidate/simulados-enfermagem/0001_spe_core_candidate.sql
+          psql -v ON_ERROR_STOP=1 -f migrations/candidate/simulados-enfermagem/0002_spe_source_lineage_candidate.sql
+      - name: Verify 13 tables, RLS, privileges, constraints and rollback
+        run: psql -v ON_ERROR_STOP=1 -f tests/spe_candidate_pg_smoke.sql
+      - name: Negative direct SELECT as anon and authenticated
+        shell: bash
+        run: |
+          set -euo pipefail
+          for role in anon authenticated; do
+            psql -v ON_ERROR_STOP=1 -c "SET ROLE ${role}; SELECT current_user;" >/dev/null
+            if psql -v ON_ERROR_STOP=1 -c "SET ROLE ${role}; SELECT * FROM spe_candidate.answer_key_items LIMIT 1;" >/dev/null 2>&1; then
+              echo "FAIL: ${role} can SELECT private answer keys" >&2
+              exit 1
+            fi
+            echo "PASS: ${role} denied direct answer-key SELECT"
+          done
+      - name: Preserve historical DB and promotion HOLD
+        run: |
+          echo 'PASS: isolated candidate migrations 0001/0002 only'
+          echo 'NOT_RUN: 47 historical migrations, 17 pgTAP files, live RPC and consumer E2E'
+          echo 'HOLD_HUMAN: Kernel admission, independent security approval, release'

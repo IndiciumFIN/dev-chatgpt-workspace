@@ -74,12 +74,13 @@ Causa: o diretório de dados do PGlite foi tratado como pré-existente por um ca
 
 ---
 
-## 3. Plano de execução — 5 fases, 24 tasks
+## 3. Plano de execução — 5 fases, 35 tasks
 
 Estado de cada task: `PROPOSTO` (vivo), `BLOCKED` (depende de decisão externa), `DONE` (artefato entregue neste PR).
 Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdlib (`unittest`), **DOC** = registro, **CI** = workflow.
 
 ### Fase 0 — Selagem do inventário e da decisão (destrava tudo)
+
 
 | task | título | WO | deps | ling. | aceite | status |
 |---|---|---|---|---|---|---|
@@ -88,6 +89,9 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-003 | Land do gate relaxado (`PAUSED`\|`IN_PROGRESS`) em branch própria | WO-ADM-001 | 002 | JS | `node scripts/check-pmo-queue.mjs` verde no `main`; PR aberto contra `main`; sem tocar a fila PMO | PROPOSTO |
 | TASK-PLAN-004 | Proteger `main` + **provar** o enforcement (issue #12) | WO-SEC-001 | 003 | CI | ruleset com PR + `verify` verde + review; teste que demonstra push direto sendo **recusado** (log do GitHub como evidência) | PROPOSTO |
 | TASK-PLAN-005 | Land do inventário `CE-CROSS-SOURCE-PENDING-INTAKE` + validação de schema | WO-PMO-001 | 001 | JS | register no `main`; `registerId`/`schemaVersion`/`completeness` validados por script (fail-closed) | PROPOSTO |
+| TASK-PLAN-015 | Medir a superfície de segurança (Dependabot, code scanning, secret scanning) | WO-SEC-001 | — | CI | as 3 ferramentas falham com erro de conector ⇒ hoje é **"não medido"**, nunca "zero alertas"; registrar alertas por severidade + SHA afetado | PROPOSTO |
+| TASK-PLAN-016 | Destravar os 3 workflows do PR #24 em `action_required` | WO-SEC-001 | — | CI | `SPE Candidate Static Gates`, `Simulados RPC static regressions` e `Remediate better-auth candidate safely` executam (hoje aguardam aprovação ⇒ o PR #24 não tem veredito de CI) | PROPOSTO |
+| TASK-PLAN-017 | Validador de schema do inventário transversal | WO-PMO-001 | 005 | JS | falha fechada em campo ausente/inválido, id duplicado, WO desconhecida, URL fora do repo, incoerência `completeness`×`releaseGate`; **7 testes verdes**; validado contra o inventário real → OK | **DONE** (neste PR) |
 
 ### Fase 1 — Gate de cobertura: de snapshot para invariante
 
@@ -102,6 +106,10 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-013 | Vínculo das **18 issues** + **13 pendências Simulados** a WO/task | WO-PMO-001, WO-SEC-001 | 010, 005 | JS | `PENDENCIA_ORFA = 0` no gate; cada issue aberta tem task e cada task tem WO | PROPOSTO |
 | TASK-PLAN-014 | Consolidar os ~35 FINDs (R14–R47, CURI-R36–R40, SPE-R14–R35) em **uma baseline commitada por PR** | WO-PMO-001 | 012 | JS+PY | para cada PR auditado: um validador no repo, testes negativos, e o texto do FIND referenciando o blob **commitado** (hoje aponta para blobs que só existem em comentário) | PROPOSTO |
 
+> **Validação end-to-end medida (31/10, dados reais):** o gate foi rodado contra a **fila rev 20** (`fix/governed-activities-cli-20261026`) + o **inventário real** (`1ab0561`) + este registro de tasks:
+> `10 WOs · 35 tasks · 31 pendências` → **0 PENDENCIA_ORFA**, **0 WO_SEM_TASK**, **4 GAP_ABERTO** (GAP-01…04 — exatamente os gaps que T0.001/T0.013/T2.022 fecham).
+> Isso é o fail-closed funcionando: o gate está vermelho **por um motivo verdadeiro**, não por bug do gate.
+
 ### Fase 2 — Política como código + catálogo de cenários
 
 | task | título | WO | deps | ling. | aceite | status |
@@ -109,6 +117,7 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-020 | `docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md` — 13 cenários mapeados ao repo | WO-SEC-001 | — | DOC | cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real + limitação + modo (estático/DB) | **DONE** (neste PR) |
 | TASK-PLAN-021 | `registers/governance/audit-policy.v1.json` | WO-SEC-001 | 020 | DOC | política populada: locales obrigatórios, limites SEO, colunas PII, tabelas RLS, mutabilidade, FKs lógicas, tipagem — com `populationStatus` explícito | **DONE (esqueleto)** / popular: PROPOSTO |
 | TASK-PLAN-022 | Ligar cada cenário a uma WO do inventário | WO-SEC-001 | 021 | DOC | cobertura de cenários: cada regra do motor tem WO e critério de aceite | PROPOSTO |
+| TASK-PLAN-026 | Cobrir a matriz transversal de governança e Master Data pelo motor | WO-GOV-TRANS-001 | 030, 021 | PY | cenários KER/MST/SEC rodam sobre a matriz transversal com `populationStatus=COMPLETE`; o motor passa a produzir achado real, não aviso de política vazia | PROPOSTO |
 
 ### Fase 3 — Motor de auditoria executável
 
@@ -119,6 +128,8 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-032 | Suíte de testes do motor | WO-SEC-001 | 030, 031 | PY | 17 testes verdes (`python3 -m unittest discover -s tests -p 'test_*.py' -q`) | **DONE** (neste PR) |
 | TASK-PLAN-033 | Corrigir a fixture contraditória do PR #24 (`attempt-policy.test.ts:12`) | WO-SEC-001 | 030 | PY/JS | `SPE Candidate Static Gates` verde; o teste deixa de afirmar duas coisas contraditórias para o mesmo input | PROPOSTO |
 | TASK-PLAN-034 | Auditar as **47 migrations + 17 testes** do banco original dos Simulados | WO-SEC-001 | 031, 033 | PY | replay em PostgreSQL descartável com relatório do motor; divergências catalogadas | PROPOSTO |
+| TASK-PLAN-027 | Reconciliar CKO, fontes normativas e o corpus de bibliotecas | WO-CKO-001 | 034 | PY | 17 achados CKO/COREN/COFEN + 240 CSV (`staging/bibliotecas-corpus`) + 1577 recortes (`audit-hardening`) rastreados a fonte (SHA + ponteiro JSON), sem duplicidade nem órfão | PROPOSTO |
+| TASK-PLAN-028 | Reconciliar os 17 achados CKO/COREN/COFEN com a fila PMO | WO-CKO-COFEN-001 | 034 | DOC | os 17 itens do lote (`registers/governance/find-register.v1.json`) têm task e evidência; `check-candidate-find-register.mjs` verde | PROPOSTO |
 
 ### Fase 4 — Publicação: i18n, SEO, JSON-LD
 
@@ -127,6 +138,7 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-040 | Gate de paridade de locales + SEO/slug/alt sobre o conteúdo | WO-SEC-001 | 021, 030 | PY | 87 páginas do PR #22 auditadas; `I18N-01` e `SEO-02` sem erro; `registers/i18n/locale-register.v1.json` é a fonte de verdade | PROPOSTO |
 | TASK-PLAN-041 | Gerador JSON-LD estrito + validação Schema.org por `@type` | WO-SEC-001 | 030 | PY | `JSD-01`/`JSD-02` no motor; gerador sem dependência externa (validação própria, não pydantic) | PROPOSTO |
 | TASK-PLAN-042 | Fechar a divergência de fontes do PR #22 (colisão de identidade em 12 citações, FIND-CURI-R40) | WO-SEC-001 | 040 | JS | `sources.json` com chaves únicas; validador impede o verde falso de "87/87" | PROPOSTO |
+| TASK-PLAN-029 | Consolidar o Design System e os templates canônicos | WO-DS-001 | 001 | JS | `fix/shell-consolidation` + `grook_10_26` (chrome, home, desks por módulo, sem DS concorrente) com decisão única de identidade visual; gate de `registers/canonical/surface-contracts.v2.json` verde | PROPOSTO |
 
 ### Fase 5 — Encerramento: o que não serve mais
 
@@ -137,6 +149,27 @@ Legenda de ling.: **JS** = Node (`.mjs`, padrão do repo), **PY** = Python stdli
 | TASK-PLAN-052 | Consolidar as 18 issues em 3 trilhas e fechar as absorvidas | WO-PMO-001 | 013 | — | #23 absorvida pela #25 (contrato de admissão); #10/#11 absorvidas pelo inventário; as demais ganham `assignee` | PROPOSTO (owner/Kernel) |
 | TASK-PLAN-053 | Nomear dono por task/issue (hoje: **zero assignees** em 18 issues) | WO-PMO-001 | 013 | — | cada task do registro tem `owner`; cada issue aberta tem responsável | PROPOSTO |
 | TASK-PLAN-054 | Normalizar o limite de deploy do Vercel (100/dia) | WO-E2E-001 | 012 | CI | preview disponível em toda PR ativa (hoje 8 falhas por limite de plano) | PROPOSTO |
+| TASK-PLAN-055 | Definir a automação recorrente com orçamento e rastreabilidade | WO-AUTO-001 | 001 | PY | cada rotina (aquisição, indexação, auditoria) com custo máximo, intervalo, fonte de estado e critério de parada; orçamento medido em execuções | PROPOSTO |
+| TASK-PLAN-056 | Preservar o bloqueio de homologação até a admissão | WO-HOM-001 | 002 | DOC | `WO-HOM-001` permanece `HOLD_HUMAN` em todas as revisões; nenhum merge/deploy/migração aplicada antes da decisão verificável | **BLOCKED** (externo) |
+
+---
+
+### Cobertura de WOs (verificada pelo gate contra a fila rev 20)
+
+| WO | status na fila | task(s) |
+|---|---|---|
+| WO-PMO-001 | DONE | T0.001, T0.005, T1.010–T1.014, T5.050–T5.053 |
+| WO-ADM-001 | IN_PROGRESS | T0.002 (BLOCKED), T0.003 |
+| WO-SEC-001 | IN_PROGRESS | T0.004, T0.015, T0.016, T2.020–T2.022, T3.030–T3.034, T4.040–T4.042 |
+| WO-E2E-001 | IN_PROGRESS | T5.054 |
+| WO-DS-001 | QUEUED | T4.029 |
+| WO-CKO-001 | QUEUED | T3.027 |
+| WO-AUTO-001 | QUEUED | T5.055 |
+| WO-CKO-COFEN-001 | QUEUED | T3.028 |
+| WO-GOV-TRANS-001 | IN_PROGRESS | T2.026 |
+| WO-HOM-001 | HOLD_HUMAN | T5.056 (BLOCKED) |
+
+**Pendências:** 31 (13 dos Simulados + 18 issues) — todas cobertas por `TASK-PLAN-013`.
 
 ---
 
@@ -183,6 +216,7 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 | `docs/DECOMMISSION-REGISTER-v0.1.0.json` | o que não serve mais + ação + quem decide | DOC |
 | `registers/governance/audit-policy.v1.json` | política como código (JSON, sem deps) | DOC |
 | `scripts/check-pending-coverage.mjs` | gate de cobertura (fail-closed) | JS |
+| `scripts/check-register-schema.mjs` (+ `.test.mjs`) | validador de schema do inventário (fail-closed) | JS |
 | `scripts/check-pending-coverage.test.mjs` | 7 testes negativos | JS |
 | `scripts/audit_data_kernel.py` | motor de auditoria (estático + postgres read-only) | PY |
 | `tests/test_audit_data_kernel.py` | 17 testes | PY |
@@ -190,7 +224,11 @@ F1.010 + F1.011 (entregues) ──► F5.050 ──► F5.051/052/053/054
 
 **Limite medido (31/10):** a API do plugin **bloqueia escrita em `.github/workflows/`** (`connector_tool_error` em todas as tentativas; um push anterior chegou a reportar OK com saída vazia e **não** criou o ficheiro — 9 dos 10 arquivos do PR estão presentes, o workflow é o único fora). O ficheiro do gate vive em `ci/pending-coverage-gate.yml` e a activação é uma cópia de uma linha pelo owner (instruções em `ci/README.md`).
 
-**Verificação local (executada):** `node --test scripts/check-pending-coverage.test.mjs` → **7/7 verdes** · `python3 -m unittest discover -s tests -p 'test_*.py' -q` → **17/17 verdes**.
+**Verificação local (executada):**
+- `node --test scripts/check-pending-coverage.test.mjs` → **9/9 verdes**
+- `node --test scripts/check-register-schema.test.mjs` → **7/7 verdes** (e o validador passa contra o inventário real: 10 WOs, 13 pendências, 18 issues, 4 gaps)
+- `python3 -m unittest discover -s tests -p 'test_*.py' -q` → **17/17 verdes**
+- **Gate contra dados reais** (fila rev 20 + inventário `1ab0561` + este registro): 10 WOs · 35 tasks · 31 pendências → **0 órfã, 0 WO sem task, 4 GAP_ABERTO** (os gaps reais, ainda abertos).
 
 ---
 

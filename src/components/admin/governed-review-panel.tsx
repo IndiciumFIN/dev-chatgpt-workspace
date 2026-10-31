@@ -18,6 +18,10 @@ import {
 const APPROVAL_RECORD_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/approval-pmokernel-audit-20261031.v1.json';
 const ISSUE_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25';
 const decisions: DecisionChoice[] = ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE'];
+const statusLabels: Record<string, string> = {
+  IN_PROGRESS: 'Em execução', QUEUED: 'Na fila', PAUSED: 'Pausada', HOLD_HUMAN: 'Aprovação humana pendente',
+  DONE: 'Concluída com evidências', BLOCKED: 'Bloqueada',
+};
 
 /**
  * Human-readable candidate review UI. No backend exists for signing or posting
@@ -87,6 +91,7 @@ export function GovernedReviewPanel() {
   }
 
   function selectDecision(value: DecisionChoice) {
+    if (value !== 'APPROVE_WITH_RESERVATIONS') setCaveats('');
     setChoice(value);
     setResult(null);
     setFeedback(`Opção ${DECISION_LABELS[value]} selecionada. A ação prepara apenas uma minuta local.`);
@@ -135,12 +140,12 @@ export function GovernedReviewPanel() {
           <input id="review-wo-search" type="search" value={woQuery}
             onChange={event => setWoQuery(event.target.value)}
             placeholder="Ex.: homologação, segurança, WO-SEC" aria-describedby="review-wo-search-help" />
-          <small id="review-wo-search-help">{matchingWorkOrders.length} de {queue.items.length} WOs correspondem à busca. Pesquisa local nos registros versionados.</small>
+          <small id="review-wo-search-help" role="status">{matchingWorkOrders.length} de {queue.items.length} WOs correspondem à busca. Pesquisa local nos registros versionados.</small>
         </label>
         <label className="ce-admin-field" htmlFor="review-wo">
           <span>Selecionar ordem de trabalho <em>Obrigatório</em></span>
           <select id="review-wo" value={workOrderId} onChange={event => changeWorkOrder(event.target.value)} aria-describedby="review-wo-help">
-            {visibleWorkOrders.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title} ({item.status})</option>)}
+            {visibleWorkOrders.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title} ({statusLabels[item.status] ?? item.status})</option>)}
           </select>
           <small id="review-wo-help">Fonte: registers/pmo/queue.v1.json. A busca não cria nem altera WOs.</small>
         </label>
@@ -148,7 +153,7 @@ export function GovernedReviewPanel() {
       {matchingWorkOrders.length === 0 && <p role="status" className="ce-admin-detail-note">Nenhuma WO encontrada. Limpe a busca para consultar as opções existentes.</p>}
       {selected && (
         <div className="ce-admin-review-context" data-testid="review-dependencies">
-          <p><strong>Estado:</strong> {selected.status} · <strong>Prioridade:</strong> {selected.priority} · <strong>Responsável:</strong> {selected.owner}</p>
+          <p><strong>Estado:</strong> {statusLabels[selected.status] ?? selected.status} · <strong>Prioridade:</strong> {selected.priority} · <strong>Responsável:</strong> {selected.owner}</p>
           <p><strong>Critério de aceite:</strong> {selected.criteria}</p>
           <p><strong>Próxima ação registrada:</strong> {selected.next}</p>
           <p><strong>Dependências pendentes:</strong> {pendingDependencies.join(', ') || 'Nenhuma no PMO'} · <strong>Evidências na fila:</strong> {selected.evidence.length}.</p>
@@ -186,7 +191,7 @@ export function GovernedReviewPanel() {
           <input id="review-source-search" type="search" value={evidenceQuery}
             onChange={event => setEvidenceQuery(event.target.value)}
             placeholder="Ex.: CI, issue, aprovação documental" aria-describedby="review-source-help" />
-          <small id="review-source-help">{matchingEvidence.length} de {availableEvidence.length} referências disponíveis para a WO. Sugestões locais; não há busca remota nem validação de links.</small>
+          <small id="review-source-help" role="status">{matchingEvidence.length} de {availableEvidence.length} referências disponíveis para a WO. Sugestões locais; não há busca remota nem validação de links.</small>
         </label>
         <label className="ce-admin-field" htmlFor="review-evidence-option">
           <span>Selecionar evidência já registrada <em>Opcional</em></span>

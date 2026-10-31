@@ -290,181 +290,42 @@ check-pending-coverage → 10 WOs · 36 tasks · 32 pendências
 check-register-schema  → OK (10 WOs · 13 pendências · 19 issues · 4 gaps)
 ```
 
----
-
-## 9. Checkpoint R77 — 31/10 18:59Z (remedição do baseline)
-
-Esta seção atualiza o retrato das 18:56Z acima; **não sobrescreve os valores históricos**.
-
-- **TASK-PLAN-058 — correção técnica comprovada, encerramento formal pendente.** O workflow `ce-main-migration-audit.yml` deixou de comparar `sourceCollisions` com constante 115 e passou a rederivar a cobertura do inventário de origem, exigindo unicidade, linhagem e `HOLD_HUMAN`. CI [41232027627](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41232027627) **SUCCESS** no SHA `bfa6cf5f522648e3e633353a85acca9050aa3f7b`.
-- **23/23 branches-fonte verificadas**; 118 caminhos com colisões, 57 semanticamente equivalentes, 61 que exigem revisão. O vínculo candidato do teste `scripts/header-entry.test.mjs` foi adicionado a `WO-ADM-001`: **118/118 caminhos associados a WOs candidatas, zero sem WO, zero formalmente aprovados**. A classificação não equivale à resolução das colisões.
-- Registro de tasks **37** (inclui `TASK-PLAN-057` e `TASK-PLAN-058`). A task 058 permanece **PROPOSTO** porque depende de `TASK-PLAN-014`, também não concluída. A evidência de execução técnica foi acrescentada a seus `artifacts[]`, sem marcar `DONE` indevidamente.
-- A falha de baseline fixo `CHANGED_COLLISION_BASELINE` de 115 versus 118 está resolvida **na branch candidata**, não na `main`. Para a `main`, `TASK-PLAN-003`, as autorizações de Kernel, proteção de branch, cobertura e demais gates continuam pendentes.
-- **Autenticação P0:** issue [#28](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28) continua exigindo revogação/rotação no broker, apesar de testes de correção de código na branch do PR #13. Sem deploy ou rotação nesta rodada.
-- **Autoridade:** revisão canônica PMO ainda `NOT_ELECTED`; WOs adicionais e as duas divergências de estado continuam candidatas; `main` não modificada; sem merge ou aprovação clínica, admissão Kernel não comprovada; release `HOLD_HUMAN`.
-
-**Regra:** nenhum workflow verde, contagem de cobertura ou prova de identidade por equivalência habilita promoção sem o processo FIND → política → validador → task → WO → Kernel → testes → auditoria → homologação.
 
 ---
 
-## 10. R79 — fila de tasks de domínio por pendência (31/10/2026)
+## 9. Pacote "área administrativa governada" + esqueleto Vite — analysing 31/10 20:20Z
 
-Este checkpoint amplia o resultado R78, **sem modificar a fila PMO oficial**.
+Material recebido: (a) transcrição de outra sessão a construir um esqueleto **Vite + React + TS** (20 módulos, store local, hash-chain SHA-256, dados sintéticos rotulados); (b) ZIP `finalizacao-area-administrativa (1).zip` com 11 ficheiros — relatório, roadmap, 3 scripts de teste e 6 ficheiros de código.
 
-- As 32 pendências do snapshot versionado (19 issues, 13 Simulados) têm cobertura por task. A GH-28 já estava vinculada a `TASK-PLAN-057`, `WO-SEC-001`, e não foi duplicada.
-- Os **31 registros cujo campo `wo` é `UNRECONCILED` na fonte** receberam 31 tasks novas, com IDs `TASK-PLAN-059` a `TASK-PLAN-089`, WO de domínio candidata, task de dependência, título da origem, identificador, arquivo de fonte e blob SHA. Plano total: **68 tasks**; 31 propostas permanecem `PROPOSTO`, não `DONE`.
-- As candidatas distribuem-se por 7 WOs existentes: 10 `WO-SEC-001`, 9 `WO-GOV-TRANS-001`, 5 `WO-CKO-001`, 3 `WO-ADM-001`, 2 `WO-E2E-001`, 1 `WO-PMO-001` e 1 `WO-HOM-001`. São vínculos técnicos para **revisão**, não atribuições confirmadas pelo Kernel.
-- Registro da matriz `registers/governance/r79-domain-wo-mapping-20261031.v1.json` e verificador `scripts/audit-domain-wo-candidates.mjs` cruzam o inventário real, a fila rev20, o plano e os blob SHAs. Cinco regressões negativas impedem source drift, WO sem origem, falsas aprovações, dependência ausente e duplicidade.
-- [GitHub Actions 41233716155](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41233716155) **SUCCESS**: 16 testes de cobertura, 6 de lineage, 5 de R79, 5 de R78, 10 de schema e 7 de aprovação. Resultado real: **32/32 pendências com candidata de domínio, zero sem candidata, 31 status `UNRECONCILED` na fonte, 0 admissões**.
-- **GAP-01 continua OPEN.** A atribuição proposta não substitui FIND, política, validador, verificação documental da fonte, assinatura Kernel, publicação ou mudança da fila oficial. `GAP-02`, `GAP-03`, `GAP-04` e `WO-HOM-001` continuam bloqueados. `main` não alterada e nenhum deploy/DB-write/merge realizado.
+### O que o ZIP é
 
-### Próxima cadeia controlada
+Um **pacote de patches de outra sessão**, e o próprio relatório é honesto: operou sobre "arquivos soltos" (sem `package.json`, sem `registers/`, sem os testes do repo) e marca **`npm test`, `build:spa`, `check-generated-fresh`, `check-cko-packages`, `check-contract-coverage`, navegador real e axe como NOT_RUN**. Ou seja: **candidato, não entrega** — e o gap é exatamente o que `TASK-PLAN-061` fecha.
 
-Revisão independente do vínculo de cada pendência → formalização de FIND e política/validador aplicável → vinculação de task e WO autorizadas na fila canônica eleita → admissão Kernel com identidade e SHA → execução técnica/segurança → homologação. Resolver a credencial histórica do broker OAuth (#28) continua sendo P0 externo.
+### Medição de divergência contra o repo atual (tip da branch do plano)
 
----
+| ficheiro | ZIP | repo | leitura |
+|---|---|---|---|
+| `src/lib/impact/impact-engine.ts` | 314 | **ausente** | novo (motor determinístico de impacto) |
+| `src/lib/admin/list-query.ts` | 49 | **ausente** | novo (busca/filtro/ordem/paginação) |
+| `src/components/admin/admin-topbar.tsx` | 78 | **ausente** | novo |
+| `scripts/test-impact-engine.mjs` | 155 | **ausente** | novo (17 testes) |
+| `scripts/test-list-query.mjs` | 42 | **ausente** | novo (6 testes) |
+| `src/components/admin/admin-console.tsx` | 489 | 291 | ZIP mais rico (13 abas vs 7) **mas** |
+| `src/components/admin/pmo-panel.tsx` | 102 | 66 | ZIP **não** importa `PmoReviewIntake` |
+| `src/styles/admin-console.css` | 441 | 216 | ZIP mais rico |
+| `scripts/test-admin-console.mjs` | 49 | 35 | ZIP mais rico |
 
-## 11. R80 — evidências FIND → política → validador por pendência (31/10/2026)
+### O risco concreto: cópia ciega **reverte** um fluxo
 
-Este checkpoint amplia R79 **sem considerar qualquer vínculo candidato como admissão Kernel**.
+O `pmo-panel.tsx` do repo **importa `PmoReviewIntake`** (o componente de revisão do PMO, presente em `src/components/admin/` com 4 ficheiros). A versão do ZIP **não importa** — foi escrita sobre uma base sem ele. **Aplicar o ZIP por cima derrubaria o fluxo de revisão**, e o `admin-console.tsx` do ZIP (13 abas) foi construído sobre essa base mais pobre.
+→ Por isso `TASK-PLAN-059` é **reconciliação de três vias**, não cópia: manter `PmoReviewIntake` **e** adicionar `list-query` (busca/filtro/ordenação/paginação).
+Nota positiva: o ZIP importa `@/core/governance/catalog` e `registers/pmo/queue.v1.json` — **ambos existem** no repo (`src/core/governance/` com 13 ficheiros), portanto o código novo é compatível com o núcleo de governança.
 
-- Registro `registers/governance/r80-pending-evidence-chain-20261031.v1.json` reúne os **31 registros R79** com fonte comprovada: **18 issues abertas**, cujo título e presença de descrição foram conferidos na API do GitHub; e **13 referências documentais de Simulados** ancoradas em **10 blobs Git distintos** de `simulados-enfermagem-db-canonico`. Metadados de issue são instantâneos e exigem nova verificação após alterações.
-- A verificação identificou duas declarações explícitas de FIND em issues: `FIND-PMO-COVERAGE-20261031` (#25) e `FIND-CKO-IMPORT-ROUTE` (#2), **ambas ausentes do array `finds` do registro canônico examinado**. Referência declarada em issue ≠ FIND registrado/admitido.
-- O modelo `docs/governance/04-work-order-model.md` foi localizado; a política `registers/governance/audit-policy.v1.json` continua com `populationStatus: TODO`. Portanto, **0/31 políticas aprovadas por item**, **0/31 validações independentes completas** e **0/31 admissões Kernel**; documentos localizados não são equivalentes à execução/validação.
-- Em `P0-04`, foi localizado o FIND estático de exposição de gabaritos em `docs/simulados-enfermagem/W07_FIND_RPC_ANSWER_EXPOSURE_v0.1.0.md`, com scanner `scripts/spe_audit_rpc_answers.py` e testes na branch dos Simulados. A auditoria explica que funções `SECURITY DEFINER` e grants `anon/authenticated` podem revelar `correct_option_ids`; não é constatação de exploração do deploy atual.
-- [CI R80 #41234365213](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213) **SUCCESS**: verificador `scripts/verify-r80-evidence-chain.mjs` fez readback dos blobs dos Simulados; **8/8** testes R80 e **11/11** regressões estáticas RPC PASS. Isso valida o scanner e a integridade das fontes, **não** as ACLs, a segurança do banco original, a aplicação das 47 migrations ou testes end-to-end anon/authenticated.
-- Permanecem **31/31 source WOs `UNRECONCILED`**, apesar de 31 tarefas com WO candidata; `GAP-01..04` abertos, `WO-HOM-001=HOLD_HUMAN`, política por item não vinculada/aprovada. Sem merge/deploy/SQL/rotação OAuth.
-- Próximos passos: registrar FINDs não promovidos no fluxo canônico, analisar aplicabilidade das políticas e validadores por escopo e executar os testes de banco isolado, com autorização; para `GAP-02`, eleger revisão canônica da fila e obter admissão Kernel assinada antes de mudar qualquer WO oficial.
+### O esqueleto Vite: prohibited "DS concorrente"
 
----
+O esqueleto traz **tokens próprios** e é uma aplicação separada (rotas, store, hash-chain). O repositório proíbe DS concorrente — a identidade visual e os tokens são canónicos (`contracts/cko-tokens/dist/*` + `registers/canonical/surface-contracts.v2.json`) e `check-contract-coverage` re-deriva a lista de entidades a partir do código.
+→ `TASK-PLAN-060`: antes de qualquer aterragem, os tokens têm de ser **derivados** dos canónicos e o `check-contract-coverage` tem de ficar verde; e é preciso registrar a decisão: **protótipo fora do repo** ou **módulo amarrado aos contratos**. O hash-chain local é bom (deteta adulteração do histórico local) mas, como o próprio código declara, **não é prova de autoria nem auditoria imutável de servidor** — não pode ser apresentado como o mecanismo de auditoria do Kernel.
 
-## 12. R81 — FINDs candidatos + exame direto do ZIP original dos Simulados (31/10/2026)
+### Registo
 
-### Registro de FIND sem promoção
-
-O registro existente `registers/governance/find-register.v1.json` passou de 8 para **11 FINDs**, com três novas entradas `DRAFT_FOR_GOVERNED_REVIEW`, `work_order=NOT_ADMITTED`, `mutation_allowed=false`, `policy_ref=PENDING_APPLICABILITY_REVIEW` e `validator_ref=PENDING_ADMISSION`:
-
-- `FIND-PMO-COVERAGE-20261031` — issue #25, fila/coverage/admissão; tasks `TASK-PLAN-005/013/059`.
-- `FIND-CKO-IMPORT-ROUTE` — issue #2, rota privada e identidade/runtime ainda não comprovados; tasks `TASK-PLAN-026/076`.
-- `FIND-SPE-RPC-ANSWER-EXPOSURE-20261031` — segurança do Simulados `P0-04`, mapeada a `TASK-PLAN-080` / WO de domínio candidata `WO-SEC-001`. Atenção: `WO-SPE-DB-FIRST-20261026-001` segue como outra WO documental candidata, ainda sem admissão corporativa.
-
-### Aquisição e avaliação real da fonte ZIP
-
-- O arquivo original `simulados-platform-next-cms-v1.4.0.zip` foi obtido **somente leitura** pela conta Google Drive que possui acesso ao ID `1O2drLtDpNoSl5Lk-GeOPRdaKzpsOJ2i9` (não disponível pela segunda conta).
-- SHA-256 calculado da fonte: `5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47`. Coincide com `docs/simulados-enfermagem/W11_EXECUTION_EVIDENCE_v0.1.0.json`.
-- Integridade ZIP (CRC): **PASS**; presença física: **47 SQL de migration**, sequência `0001..0047` sem lacunas, e **17 arquivos de teste SQL**. Esses dados não representam execução.
-- Varredura independente de leitura de conteúdo confirma em `0024_api_functions.sql` e `0031_cms_working_copies_option_lifecycle.sql` a declaração `api.evaluate_question`, retorno `correct_option_ids` e GRANT EXECUTE a `anon/authenticated`; em `0038_api_assessment_runtime.sql`, a `api.evaluate_question_set` é pública a esses papéis e chama `evaluate_question`.
-- Hash SHA-256 de cada uma dessas três SQL está preservado em `registers/governance/r81-simulados-original-rpc-static-20261031.v1.json`. O arquivo ZIP e os SQL integrais **não** foram introduzidos na branch pública.
-- A inspeção prova o **padrão vulnerável na fonte original**, **não** que a instância atual o deployou ou que as ACLs efetivas mantenham o comportamento. O scanner estático está sujeito a mudanças de privilégios, ordem de GRANT/REVOKE, `SECURITY DEFINER`, papéis e comportamento de runtime.
-
-### Validação CI — candidata, não de release
-
-- [GitHub Actions #41235128696](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235128696) **SUCCESS**. Gate `scripts/check-r81-original-rpc-find.mjs` confronta o registro R81 e a versão histórica de `W11`, veta afirmações de execução DB, homologação ou promoção, e passa **7 regressões**.
-- Cadeia de FIND R80 novamente conferida: **11 testes R80 PASS**, 2 FINDs declarados em issues agora registrados como DRAFT, 0 FINDs admitidos; **11 testes Python** do scanner estático dos Simulados PASS.
-- O CI **não obtém o ZIP privado do Drive**: compara evidências registradas, versão histórica e valida o scanner em fixtures. O exame dos bytes originais foi realizado somente nesta rodada, em ambiente de trabalho separado.
-
-### Estado de decisão
-
-`GAP-01..04` **OPEN**; `main` sem alterações; `WO-HOM-001=HOLD_HUMAN`. O trabalho restante de `P0-04` exige acesso autorizado a PostgreSQL isolado com 47 migrations e 17 testes, validação de grants/RLS por `anon` e `authenticated`, correção dos consumidores e aprovação de segurança independente. Não executar um `REVOKE` isolado em produção: pode quebrar os consumidores que chamam as funções legadas.
-
-Para `GAP-02`, nenhuma versão de fila foi eleita, não houve replay dos 28 eventos nem WO admitida. Falta proteger a `main`, revogar/rotacionar o segredo histórico do broker OAuth (#28) e executar os gates gerais sem falhas antes de qualquer promoção.
-
----
-
-## 13. R82 — gate PMO, Better Auth e evidência ACL dos Simulados (31/10/2026)
-
-### WO-ADM-001 — gate de autorização local corrigido
-
-- Corrigido `scripts/check-pmo-queue.mjs` na branch `plan/pmokernel-finalization-20261031` com a implementação validada da branch `fix/governed-activities-cli-20261026` (blob `96f76963fd6aa9aa3a064b18256962178d746f4c`).
-- A fila canônica local rev18 preserva evento #20 autorizando `WO-ADM-001=IN_PROGRESS` **somente para preparação do Commander local**. O validador anterior exigia `PAUSED` sem analisar o evento; essa rejeição indevida foi removida.
-- Permanece verificável a justificativa do proprietário, o commit de evidência, a ausência de execução externa no Commander, ciclos, estados/evidências e `WO-HOM-001=HOLD_HUMAN`. `scripts/check-pmo-queue.test.mjs` tem sete casos positivos/negativos. A fila não foi editada nem reeleita.
-- Um falso positivo adicional de CI foi corrigido: `scripts/audit-domain-wo-candidates.mjs` deixou de exigir hash imutável do **plano completo** após R79; os hashes de fonte e fila, IDs/WO/dependências/status dos 31 vínculos continuam validados. Novos testes impedem apagar essa integridade.
-
-### WO-SEC-001 — Better Auth 1.7.14 corrigido de forma seletiva
-
-- O `verify` real avançou além do PMO e encontrou [GHSA-44jh-23m7-hpcf](https://github.com/advisories/GHSA-44jh-23m7-hpcf) no `better-auth@~1.6.30`; `npm audit --audit-level=high` bloqueava. O PR #13 já continha alternativa `better-auth@1.7.14` e lockfile avaliado.
-- Aplicadas **somente** as mudanças de dependência e autenticação já preparadas, sem importar funcionalidades do Commander: `package.json` fixa `1.7.14`; `package-lock.json` reaproveita o blob `f576a666ce59590113e06d8c0cb68bf7b17d0b86`, com **15 entradas relacionadas à cadeia Better Auth** alteradas e nenhum pacote não relacionado trocado.
-- O TypeScript detectou a remoção da API `genericOAuthClient`. Código ajustado no cliente OAuth para `signIn.social`, no servidor e nos providers segundo a fonte candidata. O auth agora exige opt-in literal `VITE_AUTH_ENABLED=true`; valor omitido não ativa login. A prévia candidata deixou de incluir `PREVIEW_CLIENT_SECRET` literal e o lê somente de variável do servidor. **Segredo já exposto no histórico/main ainda exige revogação externa por dono do broker.**
-- Adicionadas regressões de autenticação explícita, ausência do segredo literal e lockfile/adapters: `scripts/check-auth-invariant.test.mjs`, `scripts/test-auth-secret-env.mjs`, `scripts/check-better-auth-lock.mjs`, `scripts/check-better-auth-lock.test.mjs`.
-- [GitHub Actions #41235891544](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544) **SUCCESS**: `npm audit --audit-level=high`, TypeScript, `npm test`, contratos e `build:spa`. [Execução posterior #41235967540](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540) **SUCCESS**. Isso é aprovação técnica de CI, não homologação operacional nem ausência de avisos moderados/baixos.
-
-### P0-04 — sequência de ACL no ZIP original
-
-- A varredura dos **47 SQL originais** do ZIP (SHA-256 `5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47`) localizou **seis declarações específicas**: `REVOKE ALL FROM PUBLIC` seguido de `GRANT EXECUTE TO anon,authenticated` em `0024`, `0031` e `0038` para `evaluate_question` / `evaluate_question_set`. Nenhum outro `REVOKE` explícito desses alvos ou GRANT global de schema foi encontrado nas 47 migrations examinadas.
-- O registro `registers/governance/r81-simulados-original-rpc-static-20261031.v1.json` recebeu `aclTimeline`, e `scripts/check-r81-original-rpc-find.mjs`/testes preservam os seis eventos, o estado `HOLD_HUMAN` e o reconhecimento de que não houve PostgreSQL real.
-- No ambiente disponível nesta rodada **não estão instalados** `postgres`, `psql`, `initdb` ou `docker`. Não foi simulada execução: **47 migrations não aplicadas; 17 pgTAP não executados; anon/authenticated E2E NOT_RUN**. Nenhuma mudança em banco remoto, nenhuma publicação do ZIP original.
-
-### Estado de governança e entregas
-
-- Dossiê: `registers/governance/r82-pmo-security-execution-20261031.v1.json`.
-- Todas as WOs oficiais preservadas; `TASK-PLAN-003`, `TASK-PLAN-015`, `TASK-PLAN-057`, `TASK-PLAN-080` tiveram evidências atualizadas no plano de **68 tasks**, sem alteração de `status`. `GAP-01..04` permanecem **OPEN**; aprovação/Kernel **NOT_VERIFIED**; `WO-HOM-001=HOLD_HUMAN`.
-- `main` não alterada, sem branch protection e sem merge/deploy. Antes de promover: rotação OAuth externa, decisão sobre revisão PMO, autorização assinada do Kernel, confirmação independente da segurança RPC, migrations/testes em DB descartável e homologação.
-
----
-
-## 14. R83 — Reconciliação determinística dos cinco forks da fila PMO (31/10/2026)
-
-### Fonte e identidade
-
-Foram reabertas cinco cópias reais de `registers/pmo/queue.v1.json` pelo conector GitHub, sem modificar nenhum arquivo original. Foram conferidos os blob SHAs:
-
-| Branch | Revisão | WOs | Eventos | Blob SHA |
-|---|---:|---:|---:|---|
-| `main` | 18 | 10 | 20 | `c713557a808857eab9952e511d1f2a10bfa6f828` |
-| `fix/governed-activities-cli-20261026` | 20 | 10 | 20 | `80c5d327411287132f23caa0ace817d7d356edb8` |
-| `work/editorial-canonical-learning-20261026` | 19 | 10 | 21 | `84f9e1ad8ffa8baf785eb8370facbf258ada3160` |
-| `idioma/consolidado-19` | 21 | 12 | 25 | `e7d77e9467ee6f6c6a7483de0d8b2b64f673cef5` |
-| `preview/central-comando-20261026` | 23 | 12 | 26 | `e60a017b0ffd55d8d0976abea76fa3f0b15fb8cb` |
-
-O verificador `scripts/verify-pmo-fork-lineage.mjs` reconstitui **112 ocorrências**, compara **28 eventos distintos** linha a linha com os originais, prova a preservação dos **20 eventos base**, identifica **8 eventos adicionais** e verifica as colisões nos números de sequência **20 e 21**. Compara as **12 WOs distintas** e sete variantes de cadastro. A posição `proposedSeq` é índice de evidência, *não* sequência de replay autorizada.
-
-### Tratamento dos conflitos
-
-- `WO-ADM-001`: `PAUSED` na variante antiga × `IN_PROGRESS` com autorização limitada ao Commander local; não generalizar a autorização.
-- `WO-CKO-001`: `QUEUED` no baseline × `IN_PROGRESS` para piloto técnico Apgar/Fugulin; piloto não equivale à homologação clínica.
-- `WO-CKO-ID-009` e `WO-CKO-LINK-010`: presentes apenas nas variantes posteriores; não são WOs admitidas do Kernel.
-- A auditoria de sequência conserva todas as ocorrências, incluindo ramos com números originais iguais e payloads distintos, e nunca escolhe implicitamente o evento mais recente.
-
-O novo pacote `registers/governance/r83-pmo-fork-review-packet-20261031.v1.json` documenta os oito eventos adicionais, fontes/SHAs, o tratamento `SOURCE_EVIDENCE_ONLY_NOT_REPLAYED` e as quatro decisões pendentes (`R77-PMO-001..004`). **A proposta técnica é preservar a rev18 como referência provisória**, carregar as evidências das demais branches em sidecar e obter decisão específica do proprietário e do Kernel antes de qualquer escolha/replay/WO adicional. `chosenCanonicalRevision=null`; `eventReplay=NOT_AUTHORIZED`.
-
-### Testes
-
-[GitHub Actions R83 #41237098599](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41237098599) **SUCCESS**: reconstrução real dos cinco arquivos e **13 testes R83**, incluindo falsificação de SHA, origem, evento, WO, estado, replay, cronologia, admissão e eleição. O validador também veta documento de decisão alterado. O primeiro CI encontrou uma asserção de erro desatualizada em um teste negativo; a correção não mudou o comportamento do gate e a suíte foi reexecutada com sucesso.
-
-`TASK-PLAN-001` foi atualizada para explicitar cinco revisões (antes citava quatro); `TASK-PLAN-001/002` receberam links para os artefatos. Plano permanece com **68 tasks**, sem promoção de estados formais.
-
-### Autoridade
-
-`GAP-02` **continua OPEN / NOT_ELECTED**, e `GAP-01/03/04` continuam abertos. Não houve alteração na fila oficial, exclusão ou replay dos eventos, admissão Kernel, merge, deploy ou operação de banco. As decisões eletivas e a assinatura Kernel **não podem ser substituídas por um CI verde**. `WO-HOM-001=HOLD_HUMAN`.
-
----
-
-## 15. R84 — Quatro decisões formais: minuta, autoridade e interface administrativa (31/10/2026)
-
-### Entrada governada (não é uma aprovação)
-
-Foi criado `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json`, referenciado por SHA à arbitragem R77, ao pacote R83, à aprovação operacional anterior e à fila PMO rev18. Quatro decisões são mantidas separadamente:
-
-1. `R77-PMO-001` — manter rev18 como referência provisória, propor nova revisão ou solicitar evidências; *referência provisória não é eleição*.
-2. `R77-PMO-002` — preservar `WO-ADM-001=IN_PROGRESS` somente para Commander local, solicitar revisão do escopo ou mais evidências; sem execução remota.
-3. `R77-PMO-003` — manter `WO-CKO-001=QUEUED` e evidências piloto em sidecar, solicitar revisão clínica independente ou mais evidências; sem admissão clínica automática.
-4. `R77-PMO-004` — manter duas WOs adicionais e sete variantes como candidatas, solicitar avaliação de admissão WO a WO ou mais evidências; sem inventar aprovações.
-
-Em todos os casos `selection=null`, `reviewState=PENDING_OWNER_SPECIFIC_DECISION`, sem identidade verificada, checker, timestamp assinado, assinatura ou Kernel. A autorização prévia de 31/10 para registrar e verificar o trabalho **não aprova estas quatro escolhas específicas**.
-
-O processo de decisão segue obrigatoriamente: decisão específica e autenticada do proprietário → revisão independente maker/checker → política/manifesto aplicável → assinatura Kernel verificável com escopo, expiração e identidade → transições oficiais auditáveis, **somente após** esses gates. O arquivo R84 não é mecanismo de assinatura nem admite WOs, mesmo se seus campos fossem alterados.
-
-### Painel do administrador
-
-Em `src/components/admin/pmo-review-intake.tsx`, integrado ao `PmoPanel` existente, há **quatro fieldsets com labels, menus de encaminhamento, justificativas/ressalvas, status e link ao PR**. A ação `Baixar minuta JSON` exporta somente seleção preparatória `NON_BINDING_LOCAL_REVIEW_DRAFT`; o navegador não envia dados à API, Supabase ou GitHub, e não cria sessão de aprovação. Sem seleção, o botão fica inativo. A interface reutiliza tokens do Design System e comportamentos responsivos/foco visível.
-
-Este controle serve à revisão humana; não é aprovação remota nem um backend de autoridade. A autenticidade de qualquer decisão efetiva precisa ser obtida/verificada fora deste formulário antes de se alterar o estado canônico. Os documentos não contêm assinatura criptográfica verificável nem configuração de trust store.
-
-### Validação e trilha
-
-- `scripts/verify-r84-pmo-decision-intake.mjs`: confere os hashes de fontes/filas e os quatro IDs, opções, ordem de autorização, separação das funções e ausência de eleição, admissão ou mutação.
-- `scripts/verify-r84-pmo-decision-intake.test.mjs`: **9 casos** positivos/negativos de veto à aprovação fictícia, fontes alteradas, autoridade presumida e publicação não autorizada.
-- `scripts/test-admin-console.mjs`: contrato adicional exige formulário acessível e exportação exclusivamente local/sem aprovação.
-- Workflow `.github/workflows/pmo-candidate-unit-regressions.yml` chama o verificador e os testes como **gate candidato, não release**.
-
-`TASK-PLAN-001` e `TASK-PLAN-002` agora possuem os artefatos R84, mas mantêm `PROPOSTO` e `BLOCKED`. O plano tem **68 tasks**; `GAP-02=OPEN/NOT_ELECTED`; `GAP-01/03/04` também abertos. A fila, o histórico de eventos e `main` não foram modificados. `WO-HOM-001=HOLD_HUMAN`. Nenhum merge, deploy, SQL, rotação de segredo ou autorização clínica ocorreu.
+Evidência persistida em `docs/evidence/admin-area-2026-10-31/` (relatório + roadmap recebidos, sem alteração de conteúdo). Tarefas: `TASK-PLAN-059` (aplicar por reconciliação), `TASK-PLAN-060` (esqueleto x DS canônico), `TASK-PLAN-061` (provar os gates NOT_RUN).

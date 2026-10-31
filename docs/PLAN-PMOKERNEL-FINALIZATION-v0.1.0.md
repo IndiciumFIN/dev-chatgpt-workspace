@@ -436,3 +436,35 @@ O novo pacote `registers/governance/r83-pmo-fork-review-packet-20261031.v1.json`
 ### Autoridade
 
 `GAP-02` **continua OPEN / NOT_ELECTED**, e `GAP-01/03/04` continuam abertos. Não houve alteração na fila oficial, exclusão ou replay dos eventos, admissão Kernel, merge, deploy ou operação de banco. As decisões eletivas e a assinatura Kernel **não podem ser substituídas por um CI verde**. `WO-HOM-001=HOLD_HUMAN`.
+
+---
+
+## 15. R84 — Quatro decisões formais: minuta, autoridade e interface administrativa (31/10/2026)
+
+### Entrada governada (não é uma aprovação)
+
+Foi criado `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json`, referenciado por SHA à arbitragem R77, ao pacote R83, à aprovação operacional anterior e à fila PMO rev18. Quatro decisões são mantidas separadamente:
+
+1. `R77-PMO-001` — manter rev18 como referência provisória, propor nova revisão ou solicitar evidências; *referência provisória não é eleição*.
+2. `R77-PMO-002` — preservar `WO-ADM-001=IN_PROGRESS` somente para Commander local, solicitar revisão do escopo ou mais evidências; sem execução remota.
+3. `R77-PMO-003` — manter `WO-CKO-001=QUEUED` e evidências piloto em sidecar, solicitar revisão clínica independente ou mais evidências; sem admissão clínica automática.
+4. `R77-PMO-004` — manter duas WOs adicionais e sete variantes como candidatas, solicitar avaliação de admissão WO a WO ou mais evidências; sem inventar aprovações.
+
+Em todos os casos `selection=null`, `reviewState=PENDING_OWNER_SPECIFIC_DECISION`, sem identidade verificada, checker, timestamp assinado, assinatura ou Kernel. A autorização prévia de 31/10 para registrar e verificar o trabalho **não aprova estas quatro escolhas específicas**.
+
+O processo de decisão segue obrigatoriamente: decisão específica e autenticada do proprietário → revisão independente maker/checker → política/manifesto aplicável → assinatura Kernel verificável com escopo, expiração e identidade → transições oficiais auditáveis, **somente após** esses gates. O arquivo R84 não é mecanismo de assinatura nem admite WOs, mesmo se seus campos fossem alterados.
+
+### Painel do administrador
+
+Em `src/components/admin/pmo-review-intake.tsx`, integrado ao `PmoPanel` existente, há **quatro fieldsets com labels, menus de encaminhamento, justificativas/ressalvas, status e link ao PR**. A ação `Baixar minuta JSON` exporta somente seleção preparatória `NON_BINDING_LOCAL_REVIEW_DRAFT`; o navegador não envia dados à API, Supabase ou GitHub, e não cria sessão de aprovação. Sem seleção, o botão fica inativo. A interface reutiliza tokens do Design System e comportamentos responsivos/foco visível.
+
+Este controle serve à revisão humana; não é aprovação remota nem um backend de autoridade. A autenticidade de qualquer decisão efetiva precisa ser obtida/verificada fora deste formulário antes de se alterar o estado canônico. Os documentos não contêm assinatura criptográfica verificável nem configuração de trust store.
+
+### Validação e trilha
+
+- `scripts/verify-r84-pmo-decision-intake.mjs`: confere os hashes de fontes/filas e os quatro IDs, opções, ordem de autorização, separação das funções e ausência de eleição, admissão ou mutação.
+- `scripts/verify-r84-pmo-decision-intake.test.mjs`: **9 casos** positivos/negativos de veto à aprovação fictícia, fontes alteradas, autoridade presumida e publicação não autorizada.
+- `scripts/test-admin-console.mjs`: contrato adicional exige formulário acessível e exportação exclusivamente local/sem aprovação.
+- Workflow `.github/workflows/pmo-candidate-unit-regressions.yml` chama o verificador e os testes como **gate candidato, não release**.
+
+`TASK-PLAN-001` e `TASK-PLAN-002` agora possuem os artefatos R84, mas mantêm `PROPOSTO` e `BLOCKED`. O plano tem **68 tasks**; `GAP-02=OPEN/NOT_ELECTED`; `GAP-01/03/04` também abertos. A fila, o histórico de eventos e `main` não foram modificados. `WO-HOM-001=HOLD_HUMAN`. Nenhum merge, deploy, SQL, rotação de segredo ou autorização clínica ocorreu.

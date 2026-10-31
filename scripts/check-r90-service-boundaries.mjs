@@ -46,20 +46,21 @@ export function validateR90(catalog,record,{sourceBytes}={}){
  if(sourceBytes && (blobHash(sourceBytes)!==SOURCE_GIT_BLOB_SHA||createHash('sha256').update(sourceBytes).digest('hex')!==SOURCE_SHA256))reject('R90_SOURCE_BYTES_DRIFT');
  if(record.source?.gitBlobSha!==SOURCE_GIT_BLOB_SHA||record.source.sha256!==SOURCE_SHA256||record.source.catalogPath!==SOURCE_PATH||record.source.capabilitySourcePr!==21||record.source.capabilityCountFromCandidate!==201||record.source.objectBindingCountFromCandidate!==16)reject('R90_SOURCE_PIN_DRIFT');
  if(catalog?.schemaVersion!=='1.0.0'||catalog?.status!=='CANDIDATE_HOLD'||catalog?.authority?.value!=='PROPOSED'||!Array.isArray(catalog.families)||catalog.families.length!==45)reject('R90_CATALOG_UNTRUSTED');
- const all=[],families=new Set(),layerCounts={DOMAIN:0,PLATFORM:0,CROSS_CUTTING:0};
+ const all=[],families=new Set(),layerCounts={DOMAIN:0,PLATFORM:0,CROSS_CUTTING:0},kindCounts={LOGICAL_SERVICE:0,EXPERIENCE_CAPABILITY_GROUP:0};
  for(const f of catalog.families){
   if(typeof f.id!=='string'||families.has(f.id)||!['DOMAIN','PLATFORM','CROSS_CUTTING'].includes(f.layer)||f.status!=='CANDIDATE_HOLD'||!Array.isArray(f.services)||f.services.length<1)reject('R90_FAMILY_DRIFT');
   families.add(f.id);
   for(const s of f.services){
-   if(typeof s.id!=='string'||typeof s.title!=='string'||s.status!=='CANDIDATE_HOLD'||s.kind!=='LOGICAL_SERVICE')reject('R90_SERVICE_PROMOTION');
-   all.push({key:f.id+'/'+s.id,family:f.id,serviceId:s.id,title:s.title,layer:f.layer});
+   if(typeof s.id!=='string'||typeof s.title!=='string'||s.status!=='CANDIDATE_HOLD'||!['LOGICAL_SERVICE','EXPERIENCE_CAPABILITY_GROUP'].includes(s.kind))reject('R90_SERVICE_PROMOTION');
+   all.push({key:f.id+'/'+s.id,family:f.id,serviceId:s.id,title:s.title,layer:f.layer,kind:s.kind});
    layerCounts[f.layer]++;
+   kindCounts[s.kind]++;
   }
  }
  const keys=new Set(all.map(x=>x.key)),groups=new Map();
  for(const item of all){const z=groups.get(item.serviceId)||[];z.push(item.key);groups.set(item.serviceId,z);}
- if(all.length!==410||keys.size!==410||groups.size!==406||!eq(layerCounts,{DOMAIN:274,PLATFORM:97,CROSS_CUTTING:39}))reject('R90_POPULATION_DRIFT');
- if(!eq(record.coverage,{familyCount:45,serviceCount:410,layerCounts,uniqueQualifiedKeys:410,uniqueUnqualifiedIds:406,exactDuplicateIdGroups:4,adjacentBoundaryGroups:6}))reject('R90_COVERAGE_DRIFT');
+ if(all.length!==410||keys.size!==410||groups.size!==406||!eq(layerCounts,{DOMAIN:274,PLATFORM:97,CROSS_CUTTING:39})||!eq(kindCounts,{LOGICAL_SERVICE:305,EXPERIENCE_CAPABILITY_GROUP:105}))reject('R90_POPULATION_DRIFT');
+ if(!eq(record.coverage,{familyCount:45,serviceCount:410,layerCounts,uniqueQualifiedKeys:410,uniqueUnqualifiedIds:406,exactDuplicateIdGroups:4,adjacentBoundaryGroups:6,logicalServiceCount:305,experienceCapabilityGroupCount:105,kindCounts}))reject('R90_COVERAGE_DRIFT');
  const fs=catalog.families.map(f=>({id:f.id,layer:f.layer,serviceCount:f.services.length}));
  if(!eq(record.familyInventory,fs)||!eq(record.serviceEntries,all))reject('R90_SERVICE_CROSSWALK_DRIFT');
  const duplicate=[...groups.entries()].filter(([,v])=>v.length>1);
@@ -76,7 +77,7 @@ export function validateR90(catalog,record,{sourceBytes}={}){
  for(const x of record.ownershipPrinciples){if(OWNERSHIP[x.family]!==x.role||typeof x.limit!=='string'||x.limit.length<30)reject('R90_AUTHORITY_LAYER_DRIFT');}
  const a=record.authority;
  if(record.relatedOpenFind!=='FIND-EXP-CAP-REF-001'||a?.ownerIdentityVerified!==false||a?.reviewerIndependent!==false||a?.policyVerified!==false||a?.woAdmitted!==false||a?.kernelAdmission!=='NOT_VERIFIED'||a?.mergeAllowed!==false||a?.mainTouched!==false||a?.releaseGate!=='HOLD_HUMAN')reject('R90_FALSE_RELEASE_AUTHORITY');
- return {families:45,services:410,qualifiedKeys:410,ambiguousRawIds:4,semanticBoundaryGroups:6,releaseGate:'HOLD_HUMAN'};
+ return {families:45,catalogEntries:410,logicalServices:305,experienceCapabilityGroups:105,qualifiedKeys:410,ambiguousRawIds:4,semanticBoundaryGroups:6,releaseGate:'HOLD_HUMAN'};
 }
 if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const raw=readFileSync(resolve(ROOT,SOURCE_PATH));

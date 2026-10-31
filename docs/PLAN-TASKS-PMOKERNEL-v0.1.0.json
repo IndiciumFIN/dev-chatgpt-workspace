@@ -155,9 +155,10 @@
         "GAP-01"
       ],
       "artifacts": [
-        ".github/workflows/pending-coverage-gate.yml"
+        "ci/pending-coverage-gate.yml",
+        "ci/README.md"
       ],
-      "acceptance": "Workflow roda em PR e falha fechada quando houver gaps; filtro de paths evita ruido antes do inventario aterrissar. Ordem obrigatoria: T0.005 (inventario) -> T0.013 (vinculos) -> T0.001 (gaps fechados) -> so entao GAP_ABERTO como erro. Workflow novo so e despachado apos existir na branch padrao, por isso a ligacao no verify-bibliotecas.yml fica para depois do merge desta PR."
+      "acceptance": "ci/pending-coverage-gate.yml copiado para .github/workflows/ (escrita nessa pasta e bloqueada para a API do plugin, exige owner) e gate falhando fechado quando houver gaps. Ordem obrigatoria: T0.005 (inventario) -> T0.013 (vinculos) -> T0.001 (gaps fechados) -> so entao GAP_ABERTO como erro. NAO ligar ao verify-bibliotecas.yml antes disso: quebraria o CI das 7 PRs drafts enquanto os gaps estiverem abertos."
     },
     {
       "id": "TASK-PLAN-013",

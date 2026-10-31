@@ -3,6 +3,9 @@ on:
   push:
     branches: [fix/governed-activities-cli-20261026]
     paths:
+      - 'src/components/site/shell.tsx'
+      - 'src/routes/login.tsx'
+      - 'scripts/header-entry.test.mjs'
       - 'src/components/admin/governed-review-panel.tsx'
       - 'src/components/admin/pmo-panel.tsx'
       - 'src/lib/governance/decision-draft.ts'
@@ -35,9 +38,13 @@ jobs:
         run: npm ci
       - name: Validate administrative controls
         run: node scripts/test-admin-console.mjs
+      - name: Validate Entrar topbar and auth-off behavior
+        run: node --test scripts/header-entry.test.mjs
       - name: Validate TypeScript
         run: npx tsc --noEmit
       - name: Verify decision-draft negative tests
         run: node --experimental-strip-types --import ./scripts/alias-hook.mjs --test src/lib/governance/decision-draft.test.ts src/lib/governance/review-source-catalog.test.ts
+      - name: Build candidate SPA without release
+        run: npm run build:spa
 # This is an independent code-quality candidate workflow.
 # No browser action, job or check signs an admission or changes WO-HOM-001.

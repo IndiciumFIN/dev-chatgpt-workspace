@@ -2048,5 +2048,64 @@
     "mainChanged": false,
     "releaseGate": "HOLD_HUMAN",
     "taskCountObservedAtUpdate": 72
+  },
+  "r86SupplementalTaskIntake": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_ONLY_NOT_KERNEL_ADMITTED",
+    "originalBaselineTasks": 37,
+    "r79SourceCandidateTasks": 31,
+    "additionalAuditTaskCount": 4,
+    "resultingTaskCount": 72,
+    "source": "specialized admin-area review registered in same candidate PR branch (not a corporate decision)",
+    "sourceCommit": "d5ca82bf99499878a4b4c034078f9edd7089d9bf",
+    "sourcePlanIntakeCommits": [
+      "260a4bb4105033703e70a7d34b28be5aa1f89d79",
+      "516a33b74b486494e80cbe429b1821b92ed315a6"
+    ],
+    "authorizedWoStatusChanges": false,
+    "additionalWosAdmitted": 0,
+    "kernelAdmission": "NOT_VERIFIED",
+    "approval": "NOT_APPROVED",
+    "releaseGate": "HOLD_HUMAN",
+    "tasks": [
+      {
+        "id": "TASK-PLAN-090",
+        "wo": "WO-SEC-001",
+        "status": "PROPOSTO",
+        "title": "Integrar os testes do pacote no glob oficial do repo",
+        "artifacts": [
+          "scripts/impact-engine.test.mjs",
+          "scripts/list-query.test.mjs"
+        ]
+      },
+      {
+        "id": "TASK-PLAN-091",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "title": "Declarar as entidades novas nos contratos canonicos",
+        "artifacts": [
+          "registers/canonical/surface-contracts.v2.json",
+          "contracts/entities/design-tokens.v1.json"
+        ]
+      },
+      {
+        "id": "TASK-PLAN-092",
+        "wo": "WO-PMO-001",
+        "status": "PROPOSTO",
+        "title": "Preservar o PmoReviewIntake e adicionar list-query como camada de consulta",
+        "artifacts": [
+          "src/components/admin/pmo-panel.tsx"
+        ]
+      },
+      {
+        "id": "TASK-PLAN-093",
+        "wo": "WO-SEC-001",
+        "status": "PROPOSTO",
+        "title": "Rotular a auditoria local como nao atestada (hash-chain -> log append-only rotulado)",
+        "artifacts": [
+          "src/lib/impact/impact-engine.ts"
+        ]
+      }
+    ]
   }
 }

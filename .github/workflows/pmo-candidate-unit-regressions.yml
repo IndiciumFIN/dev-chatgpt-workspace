@@ -8,6 +8,8 @@ on:
       - 'scripts/verify-r84-pmo-decision-intake*'
       - 'scripts/verify-r85-owner-assent*'
       - 'scripts/verify-r86-pr-review-evidence*'
+      - 'scripts/check-r86-review-readiness*'
+      - 'registers/governance/r86-independent-review-readiness-20261031.v1.json'
       - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
       - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
       - 'src/components/admin/pmo-review-intake.tsx'
@@ -47,6 +49,8 @@ on:
       - 'scripts/verify-r84-pmo-decision-intake*'
       - 'scripts/verify-r85-owner-assent*'
       - 'scripts/verify-r86-pr-review-evidence*'
+      - 'scripts/check-r86-review-readiness*'
+      - 'registers/governance/r86-independent-review-readiness-20261031.v1.json'
       - 'registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json'
       - 'registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json'
       - 'src/components/admin/pmo-review-intake.tsx'
@@ -111,6 +115,10 @@ jobs:
           node --check scripts/verify-r85-owner-assent.mjs
           node scripts/verify-r85-owner-assent.mjs
           node --test scripts/verify-r85-owner-assent.test.mjs
+      - name: Validate R86 independent checker readiness evidence without granting approval
+        run: |
+          node scripts/check-r86-review-readiness.mjs
+          node --test scripts/check-r86-review-readiness.test.mjs
       - name: Verify R86 independent GitHub review gate negative cases
         run: |
           node --check scripts/verify-r86-pr-review-evidence.mjs

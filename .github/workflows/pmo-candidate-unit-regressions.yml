@@ -6,6 +6,9 @@ on:
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
+      - 'scripts/check-r81-original-rpc-find*'
+      - 'registers/governance/find-register.v1.json'
+      - 'registers/governance/r81-simulados-original-rpc-static-20261031.v1.json'
       - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
       - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
       - 'scripts/check-r78-gap-register*'
@@ -25,6 +28,9 @@ on:
       - 'scripts/audit-pending-lineage*'
       - 'scripts/audit-domain-wo-candidates*'
       - 'scripts/verify-r80-evidence-chain*'
+      - 'scripts/check-r81-original-rpc-find*'
+      - 'registers/governance/find-register.v1.json'
+      - 'registers/governance/r81-simulados-original-rpc-static-20261031.v1.json'
       - 'registers/governance/r80-pending-evidence-chain-20261031.v1.json'
       - 'registers/governance/r79-domain-wo-mapping-20261031.v1.json'
       - 'scripts/check-r78-gap-register*'
@@ -66,6 +72,10 @@ jobs:
         run: |
           node --check scripts/verify-r80-evidence-chain.mjs
           node --test scripts/verify-r80-evidence-chain.test.mjs
+      - name: Verify original ZIP security FIND remains static and non-admitted
+        run: |
+          node --check scripts/check-r81-original-rpc-find.mjs
+          node --test scripts/check-r81-original-rpc-find.test.mjs
       - name: Validate R78 4-gap WO register (candidate only)
         run: |
           node scripts/check-r78-gap-register.mjs
@@ -90,6 +100,8 @@ jobs:
           persist-credentials: false
       - name: Reconcile R80 source documents against original Git blobs
         run: node scripts/verify-r80-evidence-chain.mjs . spe-source
+      - name: Cross-check R81 ZIP risk against historical original inventory W11
+        run: node scripts/check-r81-original-rpc-find.mjs . spe-source
       - name: Run isolated Simulados RPC static validator tests (not E2E or admission)
         run: python3 -m unittest discover -s spe-source/scripts -p 'test_spe_audit_rpc_answers.py' -v
       - name: Assert real-data coverage is blocked only by the four known gaps

@@ -1,0 +1,133 @@
+import { useState } from 'react';
+import { ArrowUpRight, ClipboardCopy, ClipboardList, LockKeyhole, ShieldAlert } from 'lucide-react';
+import queue from '../../../registers/pmo/queue.v1.json';
+import {
+  buildDecisionDraft,
+  DECISION_LABELS,
+  type DecisionChoice,
+  type DecisionResult,
+} from '../../lib/governance/decision-draft';
+
+const APPROVAL_RECORD_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/approval-pmokernel-audit-20261031.v1.json';
+const ISSUE_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25';
+const decisions: DecisionChoice[] = ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE'];
+
+/**
+ * Human-readable candidate review UI. No backend exists for signing or posting
+ * to GitHub. None of these buttons changes PMO or authorizes Kernel execution.
+ */
+export function GovernedReviewPanel() {
+  const [workOrderId, setWorkOrderId] = useState(queue.items.find(item => item.status === 'HOLD_HUMAN')?.id ?? queue.items[0]?.id ?? '');
+  const [choice, setChoice] = useState<DecisionChoice>('REVIEW');
+  const [reason, setReason] = useState('');
+  const [caveats, setCaveats] = useState('');
+  const [evidenceUrl, setEvidenceUrl] = useState('');
+  const [result, setResult] = useState<DecisionResult | null>(null);
+  const [feedback, setFeedback] = useState('Escolha uma atividade para consultar ou preparar um parecer. Não há nova aprovação obrigatória.');
+  const selected = queue.items.find(item => item.id === workOrderId);
+  const pendingDependencies = selected?.dependencies.filter(id => queue.items.find(item => item.id === id)?.status !== 'DONE') ?? [];
+
+  function selectDecision(value: DecisionChoice) {
+    setChoice(value);
+    setResult(null);
+    setFeedback(`Opção ${DECISION_LABELS[value]} selecionada. A ação prepara apenas uma minuta local.`);
+  }
+  function prepareDraft() {
+    const candidate = buildDecisionDraft({ workOrderId, choice, reason, caveats, evidenceUrl });
+    setResult(candidate);
+    setFeedback(candidate.ok
+      ? 'Minuta preparada nesta página. Não enviada, não assinada, sem alteração de status ou permissão.'
+      : candidate.errors.join(' '));
+  }
+  async function copyDraft() {
+    if (!result?.ok) return;
+    try {
+      await navigator.clipboard.writeText(result.text);
+      setFeedback('Minuta copiada. Revise-a antes de registrar manualmente em canal autorizado; copiar não aprova nem envia.');
+    } catch {
+      setFeedback('Não foi possível copiar. Selecione o texto da minuta para copiar manualmente.');
+    }
+  }
+
+  return (
+    <section className="ce-admin-panel ce-admin-review-panel" data-testid="pmo-governed-review" aria-labelledby="pmo-governed-review-heading">
+      <div className="ce-admin-panel-heading">
+        <div>
+          <h2 id="pmo-governed-review-heading">Centro de revisão · PMO e homologação</h2>
+          <p>Consulte o aceite já registrado e prepare novos pareceres, sem repetir sua aprovação nem contornar o Kernel.</p>
+        </div>
+        <span className="ce-admin-indicator ce-admin-indicator--warn">Admissão Kernel pendente</span>
+      </div>
+      <div className="ce-admin-review-evidence" role="note">
+        <ClipboardList size={19} aria-hidden="true" />
+        <div>
+          <strong>Plano de continuidade: aprovação já registrada em 31/10/2026.</strong>
+          <p>A aprovação documentada autoriza o registro e as verificações; <strong>não</strong> libera produção nem substitui assinatura do Kernel.</p>
+          <a href={APPROVAL_RECORD_URL} target="_blank" rel="noopener noreferrer">Consultar aprovação e evidências <ArrowUpRight size={14} aria-hidden="true" /></a>
+        </div>
+      </div>
+      <div className="ce-commander-notice ce-commander-notice--compact" role="status">
+        <ShieldAlert size={18} aria-hidden="true" />
+        <p><strong>Liberação bloqueada:</strong> WO-HOM-001 permanece HOLD_HUMAN. Os botões abaixo preparam pareceres em memória, não alteram a fila, não gravam no GitHub e não executam homologação.</p>
+      </div>
+      <label className="ce-admin-field" htmlFor="review-wo">
+        <span>Atividade do PMO</span>
+        <select id="review-wo" value={workOrderId} onChange={event => { setWorkOrderId(event.target.value); setResult(null); }}>
+          {queue.items.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title}</option>)}
+        </select>
+      </label>
+      {selected && (
+        <p className="ce-admin-detail-note" data-testid="review-dependencies">
+          <strong>Estado:</strong> {selected.status} · <strong>Dependências pendentes:</strong> {pendingDependencies.join(', ') || 'Nenhuma no PMO'} ·
+          <strong> Evidências na fila:</strong> {selected.evidence.length}. Nenhum desses dados prova admissão formal.
+        </p>
+      )}
+      <fieldset className="ce-admin-review-fieldset">
+        <legend>Tipo de parecer a preparar</legend>
+        <div className="ce-admin-review-actions">
+          {decisions.map(value => (
+            <button type="button" className="ce-admin-btn" aria-pressed={choice === value}
+              key={value} onClick={() => selectDecision(value)}>{DECISION_LABELS[value]}</button>
+          ))}
+        </div>
+      </fieldset>
+      <label className="ce-admin-field" htmlFor="review-justification">
+        <span>Justificativa para o parecer <em>Obrigatória</em></span>
+        <textarea id="review-justification" value={reason} maxLength={1200} rows={3}
+          onChange={event => { setReason(event.target.value); setResult(null); }}
+          aria-invalid={reason.length > 0 && reason.trim().length < 16} />
+        <small>16 a 1200 caracteres. Não inclua dados clínicos pessoais nem segredos.</small>
+      </label>
+      {choice === 'APPROVE_WITH_RESERVATIONS' && (
+        <label className="ce-admin-field" htmlFor="review-caveats">
+          <span>Ressalvas <em>Obrigatórias nesta opção</em></span>
+          <textarea id="review-caveats" value={caveats} maxLength={1200} rows={2}
+            onChange={event => { setCaveats(event.target.value); setResult(null); }}
+            aria-invalid={caveats.length > 0 && caveats.trim().length < 12} />
+        </label>
+      )}
+      <label className="ce-admin-field" htmlFor="review-evidence">
+        <span>Link de evidência no GitHub <em>Obrigatório para parecer favorável</em></span>
+        <input id="review-evidence" value={evidenceUrl} type="url" placeholder="https://github.com/IndiciumFIN/dev-chatgpt-workspace/..."
+          onChange={event => { setEvidenceUrl(event.target.value); setResult(null); }} />
+      </label>
+      <div className="ce-admin-review-actions">
+        <button type="button" className="ce-admin-btn ce-admin-btn--primary" onClick={prepareDraft}>
+          <ClipboardList size={16} aria-hidden="true" /> Preparar minuta local
+        </button>
+        <a className="ce-admin-btn" href={ISSUE_URL} target="_blank" rel="noopener noreferrer">
+          <ArrowUpRight size={16} aria-hidden="true" /> Consultar decisões no GitHub
+        </a>
+      </div>
+      <p className="ce-commander-feedback" role="status" aria-live="polite">{feedback}</p>
+      {result?.ok && (
+        <div className="ce-admin-review-draft" data-testid="review-candidate-draft" role="region" aria-label="Minuta local não enviada">
+          <strong>Minuta gerada — não enviada nem assinada</strong>
+          <pre>{result.text}</pre>
+          <button type="button" className="ce-admin-btn" onClick={copyDraft}><ClipboardCopy size={15} aria-hidden="true" /> Copiar minuta para revisão</button>
+        </div>
+      )}
+      <p className="ce-admin-detail-note"><LockKeyhole size={14} aria-hidden="true" /> Nenhuma decisão é persistida nesta interface. O fluxo definitivo exige autenticação, segregação de funções, registro imutável e validação da admissão pelo Kernel.</p>
+    </section>
+  );
+}

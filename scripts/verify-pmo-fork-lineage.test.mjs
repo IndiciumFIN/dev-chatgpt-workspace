@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {load,verify} from './verify-pmo-fork-lineage.mjs';
+import {load,verify,verifyDecisionPacket} from './verify-pmo-fork-lineage.mjs';
 
 const sourceDir=process.env.PMO_FORK_SOURCE_DIR;
 assert(sourceDir,'PMO_FORK_SOURCE_DIR required for R83 source-based regressions');
@@ -10,6 +10,7 @@ function clone(){
  return {
   dossier:structuredClone(d.dossier),
   arbitration:structuredClone(d.arbitration),
+  packet:structuredClone(d.packet),
   sources:Object.fromEntries(Object.entries(d.sources).map(([k,v])=>[k,Buffer.from(v)]))
  };
 }
@@ -60,4 +61,30 @@ test('R83: last event ordering is not approved chronology',()=>{
 test('R83: cannot silently promote contested WO-CKO state',()=>{
  const d=clone();d.dossier.woVariants.find(x=>x.id==='WO-CKO-001').variants[0].record.status='DONE';
  assert.throws(()=>verify(d),/UNRECOGNIZED_WO_RECORD/);
+});
+
+test('R83 packet: all eight events retain source without replay or admission',()=>{
+ const d=clone();
+ const result=verifyDecisionPacket(d);
+ assert.equal(result.forkOnlyEvents,8);
+ assert.equal(result.decisionsAwaitingAuthority,4);
+ assert.equal(result.replay,'NOT_AUTHORIZED');
+});
+test('R83 packet: missing original occurrence or forged event status is blocked',()=>{
+ const d=clone();d.packet.candidateNonReplayEvents[0].originalOccurrences.pop();
+ assert.throws(()=>verifyDecisionPacket(d),/FORK_ORIGINAL_OCCURRENCE_MISMATCH/);
+ const e=clone();e.packet.candidateNonReplayEvents[4].to='DONE';
+ assert.throws(()=>verifyDecisionPacket(e),/FORK_EVENT_STATUS_MISMATCH/);
+});
+test('R83 packet: owner election cannot be asserted by changing a JSON field',()=>{
+ const d=clone();d.packet.election.chosenCanonicalRevision=23;
+ assert.throws(()=>verifyDecisionPacket(d),/UNAUTHORIZED_CANONICAL_REVISION/);
+ const e=clone();e.packet.decisionMatrix[0].status='APPROVED';
+ assert.throws(()=>verifyDecisionPacket(e),/DECISION_FALSE_APPROVAL/);
+});
+test('R83 packet: signed Kernel claim and release bypass rejected',()=>{
+ const d=clone();d.packet.election.kernelAdmission='ADMITTED';
+ assert.throws(()=>verifyDecisionPacket(d),/UNAUTHORIZED_KERNEL_ADMISSION/);
+ const e=clone();e.packet.releaseGate='PASS';
+ assert.throws(()=>verifyDecisionPacket(e),/UNAUTHORIZED_RELEASE/);
 });

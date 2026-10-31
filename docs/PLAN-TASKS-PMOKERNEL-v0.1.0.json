@@ -66,7 +66,9 @@
       "status": "PROPOSTO",
       "covers": [],
       "artifacts": [
-        "scripts/check-pmo-queue.mjs"
+        "scripts/check-pmo-queue.mjs",
+        "scripts/check-pmo-queue.test.mjs",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/43682e6447854b3f683c41a59e18fa5660d4400b"
       ],
       "acceptance": "node scripts/check-pmo-queue.mjs verde no main; PR aberto contra main; fila PMO não alterada."
     },
@@ -1416,7 +1418,10 @@
         "P0-04"
       ],
       "artifacts": [
-        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24"
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/24",
+        "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+        "scripts/check-r81-original-rpc-find.mjs",
+        "scripts/check-r81-original-rpc-find.test.mjs"
       ],
       "origin": {
         "sourceId": "P0-04",
@@ -1826,5 +1831,30 @@
       "WO-PMO-001": 1,
       "WO-SEC-001": 10
     }
+  },
+  "r82Evidence": {
+    "date": "2026-10-31",
+    "state": "CANDIDATE_TECHNICAL_IMPROVEMENTS",
+    "pmoGate": {
+      "task": "TASK-PLAN-003",
+      "code": "scripts/check-pmo-queue.mjs",
+      "tests": "scripts/check-pmo-queue.test.mjs",
+      "sourceImplementationBranch": "fix/governed-activities-cli-20261026",
+      "sourceBlobSha": "96f76963fd6aa9aa3a064b18256962178d746f4c",
+      "authorityCheck": "OWNER_LOCAL_COMMANDER_ONLY",
+      "release": "HOLD_HUMAN"
+    },
+    "simulados": {
+      "task": "TASK-PLAN-080",
+      "sourceOriginalZipSha256": "5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47",
+      "evidence": "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+      "aclTimeline": "SIX_STMTS_IN_47_ORIGINAL_MIGRATIONS",
+      "dbReplay": "NOT_RUN",
+      "liveGrants": "NOT_VERIFIED"
+    },
+    "mainChanged": false,
+    "sourceWosReconciled": false,
+    "formalStatusesChanged": false,
+    "releaseGate": "HOLD_HUMAN"
   }
 }

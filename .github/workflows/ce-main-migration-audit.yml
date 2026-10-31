@@ -106,10 +106,15 @@ jobs:
         run: |
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
+          const source=JSON.parse(readFileSync('audit-evidence/main-migration/runtime-report.json','utf8'));
           const r=JSON.parse(readFileSync('audit-evidence/main-migration/semantic-i18n-collisions.v1.json','utf8'));
-          if(r.counts.sourceCollisions!==115)throw Error('CHANGED_COLLISION_BASELINE');
+          const expected=source.collisions?.length;
+          if(!Number.isSafeInteger(expected)||expected<=0||expected!==source.summary.collisionPaths)throw Error('INVALID_SOURCE_COLLISION_COUNT');
+          if(r.counts.sourceCollisions!==expected)throw Error('SEMANTIC_SOURCE_COUNT_MISMATCH');
           if(r.counts.unverifiable<0)throw Error('INVALID_UNVERIFIED_COUNT');
-          if(r.counts.semanticEquivalents+r.counts.substantiveOrNonAllowlisted+r.counts.unverifiable!==115)throw Error('INCOMPLETE_COLLISION_SEMANTICS');
+          if(r.counts.semanticEquivalents+r.counts.substantiveOrNonAllowlisted+r.counts.unverifiable!==expected)throw Error('INCOMPLETE_COLLISION_SEMANTICS');
+          const classified=[...r.equivalent,...r.substantive,...r.unableToVerify].map(x=>x.path);
+          if(classified.length!==expected||new Set(classified).size!==expected)throw Error('DUPLICATE_OR_MISSING_COLLISION_CLASSIFICATION');
           if(r.canonicalWinnerSelected!==false||r.releaseGate!=='HOLD_HUMAN')throw Error('UNAUTHORIZED_CANONICAL_DECISION');
           console.log('PASS: every collision classified, with unverifiable items explicitly held',JSON.stringify(r.counts));
           NODE
@@ -125,10 +130,15 @@ jobs:
         run: |
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
+          const source=JSON.parse(readFileSync('audit-evidence/main-migration/runtime-report.json','utf8'));
+          const semantic=JSON.parse(readFileSync('audit-evidence/main-migration/semantic-i18n-collisions.v1.json','utf8'));
           const r=JSON.parse(readFileSync('audit-evidence/main-migration/canonical-conflict-triage.v1.json','utf8'));
-          if(r.counts.total!==115||r.counts.semanticEquivalent!==57)throw Error('INCOMPLETE_TRIAGE');
+          const expected=source.collisions?.length;
+          if(!Number.isSafeInteger(expected)||expected<=0||expected!==source.summary.collisionPaths)throw Error('INVALID_SOURCE_COLLISION_COUNT');
+          if(r.counts.total!==expected||r.items.length!==expected||r.counts.semanticEquivalent!==semantic.counts.semanticEquivalents||r.counts.needingReview!==expected-semantic.counts.semanticEquivalents)throw Error('INCOMPLETE_TRIAGE');
+          if(new Set(r.items.map(x=>x.path)).size!==expected)throw Error('DUPLICATE_TRIAGE_PATH');
           if(r.counts.formallyApproved!==0||r.releaseGate!=='HOLD_HUMAN'||r.mainUpdated!==false)throw Error('FALSE_PROMOTION');
-          if(r.items.some(x=>x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'))throw Error('FALSE_ITEM_DECISION');
+          if(r.items.some(x=>x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'||x.kernelAdmission!=='NOT_VERIFIED'))throw Error('FALSE_ITEM_DECISION');
           console.log('PASS: all 115 mapped to explicit decision state (57 semantic), 0 authorized merges',JSON.stringify(r.counts));
           NODE
       - name: Test source-corpus provenance and licensing fail-closed rules

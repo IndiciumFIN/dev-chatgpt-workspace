@@ -321,3 +321,17 @@ Este checkpoint amplia o resultado R78, **sem modificar a fila PMO oficial**.
 ### Próxima cadeia controlada
 
 Revisão independente do vínculo de cada pendência → formalização de FIND e política/validador aplicável → vinculação de task e WO autorizadas na fila canônica eleita → admissão Kernel com identidade e SHA → execução técnica/segurança → homologação. Resolver a credencial histórica do broker OAuth (#28) continua sendo P0 externo.
+
+---
+
+## 11. R80 — evidências FIND → política → validador por pendência (31/10/2026)
+
+Este checkpoint amplia R79 **sem considerar qualquer vínculo candidato como admissão Kernel**.
+
+- Registro `registers/governance/r80-pending-evidence-chain-20261031.v1.json` reúne os **31 registros R79** com fonte comprovada: **18 issues abertas**, cujo título e presença de descrição foram conferidos na API do GitHub; e **13 referências documentais de Simulados** ancoradas em **10 blobs Git distintos** de `simulados-enfermagem-db-canonico`. Metadados de issue são instantâneos e exigem nova verificação após alterações.
+- A verificação identificou duas declarações explícitas de FIND em issues: `FIND-PMO-COVERAGE-20261031` (#25) e `FIND-CKO-IMPORT-ROUTE` (#2), **ambas ausentes do array `finds` do registro canônico examinado**. Referência declarada em issue ≠ FIND registrado/admitido.
+- O modelo `docs/governance/04-work-order-model.md` foi localizado; a política `registers/governance/audit-policy.v1.json` continua com `populationStatus: TODO`. Portanto, **0/31 políticas aprovadas por item**, **0/31 validações independentes completas** e **0/31 admissões Kernel**; documentos localizados não são equivalentes à execução/validação.
+- Em `P0-04`, foi localizado o FIND estático de exposição de gabaritos em `docs/simulados-enfermagem/W07_FIND_RPC_ANSWER_EXPOSURE_v0.1.0.md`, com scanner `scripts/spe_audit_rpc_answers.py` e testes na branch dos Simulados. A auditoria explica que funções `SECURITY DEFINER` e grants `anon/authenticated` podem revelar `correct_option_ids`; não é constatação de exploração do deploy atual.
+- [CI R80 #41234365213](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213) **SUCCESS**: verificador `scripts/verify-r80-evidence-chain.mjs` fez readback dos blobs dos Simulados; **8/8** testes R80 e **11/11** regressões estáticas RPC PASS. Isso valida o scanner e a integridade das fontes, **não** as ACLs, a segurança do banco original, a aplicação das 47 migrations ou testes end-to-end anon/authenticated.
+- Permanecem **31/31 source WOs `UNRECONCILED`**, apesar de 31 tarefas com WO candidata; `GAP-01..04` abertos, `WO-HOM-001=HOLD_HUMAN`, política por item não vinculada/aprovada. Sem merge/deploy/SQL/rotação OAuth.
+- Próximos passos: registrar FINDs não promovidos no fluxo canônico, analisar aplicabilidade das políticas e validadores por escopo e executar os testes de banco isolado, com autorização; para `GAP-02`, eleger revisão canônica da fila e obter admissão Kernel assinada antes de mudar qualquer WO oficial.

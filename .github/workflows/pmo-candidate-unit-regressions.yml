@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'scripts/check-pending-coverage*'
+      - 'scripts/audit-pending-lineage*'
       - 'scripts/check-register-schema*'
       - 'scripts/check-approval-pmokernel-record*'
       - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
@@ -15,6 +16,7 @@ on:
       - plan/pmokernel-finalization-20261031
     paths:
       - 'scripts/check-pending-coverage*'
+      - 'scripts/audit-pending-lineage*'
       - 'scripts/check-register-schema*'
       - 'scripts/check-approval-pmokernel-record*'
       - 'registers/governance/approval-pmokernel-audit-20261031.v1.json'
@@ -44,6 +46,8 @@ jobs:
           node --check scripts/check-approval-pmokernel-record.mjs
       - name: Run fail-closed coverage regressions
         run: node --test scripts/check-pending-coverage.test.mjs
+      - name: Run per-pendency source-lineage regressions (candidate only)
+        run: node --test scripts/audit-pending-lineage.test.mjs
       - name: Run register schema regressions
         run: node --test scripts/check-register-schema.test.mjs
       - name: Verify persisted owner approval and negative authorization regressions
@@ -67,6 +71,15 @@ jobs:
           cp pmo-source/registers/pmo/cross-source-pending-intake.v1.json "$root/registers/pmo/"
           cp docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json "$root/docs/"
           node scripts/check-register-schema.mjs --root "$root"
+          node scripts/audit-pending-lineage.mjs --root "$root" --output "$root/lineage.json"
+          node --input-type=module - "$root/lineage.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const d=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(d.counts.total!==32 || d.counts.taskCovered!==32 || d.counts.sourceWoUnreconciled!==31) throw Error('PENDING_LINEAGE_SOURCE_DRIFT');
+          if(d.counts.kernelAdmitted!==0 || d.releaseGate!=='HOLD_HUMAN' || d.approvedMappings!==0) throw Error('FALSE_PENDING_AUTHORITY');
+          if(d.records.length!==32 || d.records.some(x=>!x.missingEvidence.includes('KERNEL_ADMISSION_NOT_VERIFIED'))) throw Error('INCOMPLETE_AUTHORITY_ASSESSMENT');
+          console.log('PASS: 32/32 task-covered; 31 source WOs still unreconciled; 0 authorized admissions');
+          NODE
           set +e
           node scripts/check-pending-coverage.mjs --root "$root" > "$root/coverage.log" 2>&1
           code=$?

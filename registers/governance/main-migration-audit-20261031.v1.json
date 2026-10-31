@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-MAIN-MIGRATION-AUDIT-20261031",
+  "date": "2026-10-31",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "baseline": {
+    "branch": "main",
+    "sha": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+    "verifiedDuringAudit": true
+  },
+  "audit": {
+    "sources": {
+      "branches": 23,
+      "ahead": 11,
+      "diverged": 8,
+      "noCommonAncestor": 2,
+      "behind": 2,
+      "missingRefs": 0
+    },
+    "diffPaths": {
+      "totalAcrossBranches": 11288,
+      "sourcePathsAlreadyInMain": 1,
+      "pendingAcrossBranches": 11287,
+      "distinctPendingPaths": 10679,
+      "collisionPaths": 115,
+      "duplicatePaths": 258
+    },
+    "firstRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223479751",
+    "refinedRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41224102293",
+    "riskGroupsAtRefinedRun": {
+      "SOURCE_CORPUS_HOLD": 8250,
+      "SOURCE_IMPORT_HOLD": 236,
+      "SOURCE_LIBRARY_HOLD": 105,
+      "TEMP_ARTIFACT_QUARANTINE": 16,
+      "AUDIT_ARTIFACT_REVIEW": 15,
+      "SECURITY_HOLD": 46,
+      "DATABASE_HOLD": 136,
+      "CLINICAL_HOLD": 8,
+      "I18N_VALIDATE": 1270,
+      "CANDIDATE_REVIEW": 1205
+    },
+    "note": "Git-file structural classification only; many clinically relevant HTML pages inside source corpus were counted under SOURCE_CORPUS_HOLD, not the 8 paths matching CLINICAL_HOLD."
+  },
+  "sourceCorpus": {
+    "origin": {
+      "branch": "feat/projection-unica-f0-suite-real",
+      "sourceCommit": "6d712dd47029286869f909a2014f42083f5db2a9",
+      "path": "artifacts/fonte/corpus/paginas"
+    },
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41224102293",
+    "indexArtifactName": "ce-source-corpus-candidate-index",
+    "indexSha256": "827624bb70b78b7e333904a5e411a855f08094a3ad6fda528cf86540d3db9f14",
+    "pagesExpected": 8250,
+    "pagesIndexed": 8250,
+    "batches": 33,
+    "batchSize": 250,
+    "kinds": {
+      "CONTENT_CANDIDATE_HOLD": 4374,
+      "BACKUP_QUARANTINE": 3817,
+      "TEMPLATE_QUARANTINE": 31,
+      "SHARED_FRAGMENT_HOLD": 21,
+      "AUTOMATION_HOLD": 7
+    },
+    "structurallyValid": 8206,
+    "structuralProblems": 44,
+    "problemOccurrences": {
+      "INVALID_LOCALE": 43,
+      "UNRESOLVED_CANONICAL_TEMPLATE": 2
+    },
+    "emptyTexts": 590,
+    "duplicateIdentityGroups": 0,
+    "licenseEvidenceInIndex": 0,
+    "licenseUnverified": 8250,
+    "limitations": [
+      "Duplicated identities are checked only for exact language+sourcePath; content similarity and semantic duplicates are not yet assessed",
+      "A source SHA-256 is declared by the extracted page but cannot be cryptographically checked against missing original HTML",
+      "No license field in extracted page JSON does not imply user lacks rights; ownership, attribution and source rights require evidence",
+      "Structural validity is not clinical, linguistic, editorial or regulatory homologation",
+      "Some invalid locale values belong to backups/templates rather than publishable pages"
+    ],
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "header": {
+    "pr": 27,
+    "branch": "fix/shell-consolidation",
+    "commit": "8090077a256c4986a29d07e488158f349b1df1ab",
+    "candidateCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223233001",
+    "candidateCIResult": "SUCCESS",
+    "generalCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223232987",
+    "generalCIResult": "FAILURE_PMO_VALIDATION",
+    "knownMergeRisk": "The PR includes older large src/styles.css changes unrelated to the login change; selective integration and diff review required.",
+    "loginBehavior": "Entrar always visible and links to /login; when VITE_AUTH_ENABLED=false the page says sign-in is unavailable, no fake session.",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "releasePolicy": {
+    "mainUpdatedByThisAudit": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "pmoCanonicalRevision": "NOT_ELECTED",
+    "securityAndDbTests": "NOT_COMPLETE",
+    "clinicalRightsAndProvenance": "NOT_VERIFIED",
+    "branchConflictsResolved": 0,
+    "branchConflictsTotal": 115,
+    "requiredNextActions": [
+      "Reconcile 115 colliding paths, prioritizing package/auth, route contracts and i18n dictionaries without destructive overwrite",
+      "Separate 4374 content candidates from 3817 backups and verify rights/clinical provenance per page",
+      "Resolve 44 structural defects and inspect 590 entries without full text",
+      "Validate 236 Drive import items and 105 library corpus files against canonical IDs and duplicate hashes",
+      "Elect PMO revision, obtain verifiable Kernel admission, finish security and independent E2E before any promotion",
+      "Integrate topbar files selectively, excluding unintended stylesheet churn"
+    ],
+    "state": "CANDIDATE_RECONCILIATION_ONLY",
+    "gate": "HOLD_HUMAN",
+    "completionClaim": "NOT_100_PERCENT_MIGRATED"
+  },
+  "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required."
+}

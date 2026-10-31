@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "registerId": "CE-CROSS-SOURCE-PENDING-INTAKE",
+  "snapshotDate": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "completeness": "NOT_VERIFIED",
+  "policy": "Do not infer closure or Kernel admission from source snapshot; reconcile records, validate evidence and preserve HOLD.",
+  "sourceSnapshots": {
+    "pmo": {
+      "branch": "fix/governed-activities-cli-20261026",
+      "revision": 20,
+      "file": "registers/pmo/queue.v1.json"
+    },
+    "simulados": {
+      "branch": "simulados-enfermagem-db-canonico",
+      "file": "docs/simulados-enfermagem/PENDENCIAS_CONSOLIDADAS_v0.2.0.json"
+    },
+    "issues": {
+      "query": "repo:IndiciumFIN/dev-chatgpt-workspace is:issue is:open",
+      "observedCount": 19
+    }
+  },
+  "pmo": [
+    {
+      "id": "WO-ADM-001",
+      "title": "Administração local — Commander",
+      "status": "IN_PROGRESS",
+      "priority": "P1",
+      "dependencies": [],
+      "evidenceCount": 1
+    },
+    {
+      "id": "WO-PMO-001",
+      "title": "PMO visível no administrador",
+      "status": "DONE",
+      "priority": "P0",
+      "dependencies": [],
+      "evidenceCount": 2
+    },
+    {
+      "id": "WO-SEC-001",
+      "title": "Segurança, dependências e LGPD",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "dependencies": [
+        "WO-PMO-001"
+      ],
+      "evidenceCount": 6
+    },
+    {
+      "id": "WO-E2E-001",
+      "title": "E2E, acessibilidade e visual",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "dependencies": [
+        "WO-PMO-001"
+      ],
+      "evidenceCount": 0
+    },
+    {
+      "id": "WO-DS-001",
+      "title": "Design System e templates canônicos",
+      "status": "QUEUED",
+      "priority": "P1",
+      "dependencies": [
+        "WO-E2E-001"
+      ],
+      "evidenceCount": 0
+    },
+    {
+      "id": "WO-CKO-001",
+      "title": "CKO e fontes normativas",
+      "status": "QUEUED",
+      "priority": "P1",
+      "dependencies": [
+        "WO-PMO-001",
+        "WO-GOV-TRANS-001"
+      ],
+      "evidenceCount": 0
+    },
+    {
+      "id": "WO-AUTO-001",
+      "title": "Automação recorrente com orçamento e rastreabilidade",
+      "status": "QUEUED",
+      "priority": "P1",
+      "dependencies": [
+        "WO-SEC-001"
+      ],
+      "evidenceCount": 0
+    },
+    {
+      "id": "WO-CKO-COFEN-001",
+      "title": "Reconciliar 17 achados candidatos CKO/COREN/COFEN",
+      "status": "QUEUED",
+      "priority": "P0",
+      "dependencies": [
+        "WO-CKO-001",
+        "WO-GOV-TRANS-001"
+      ],
+      "evidenceCount": 2
+    },
+    {
+      "id": "WO-GOV-TRANS-001",
+      "title": "Matriz transversal de governança e Master Data (CKO)",
+      "status": "IN_PROGRESS",
+      "priority": "P0",
+      "dependencies": [],
+      "evidenceCount": 16
+    },
+    {
+      "id": "WO-HOM-001",
+      "title": "Homologação independente",
+      "status": "HOLD_HUMAN",
+      "priority": "P0",
+      "dependencies": [
+        "WO-SEC-001",
+        "WO-E2E-001",
+        "WO-DS-001",
+        "WO-CKO-001",
+        "WO-AUTO-001",
+        "WO-GOV-TRANS-001"
+      ],
+      "evidenceCount": 0
+    }
+  ],
+  "simulados": [
+    {
+      "id": "P0-01",
+      "title": "Original database v1.4.0 as sole canonical baseline",
+      "status": "HOLD",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-02",
+      "title": "Disposable PostgreSQL migration replay",
+      "status": "BLOCKED",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-03",
+      "title": "Original database tests + new RLS regressions",
+      "status": "NOT_RUN",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-04",
+      "title": "Public grading RPCs reveal answers",
+      "status": "SECURITY_FIND",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-05",
+      "title": "W10 runtime integration",
+      "status": "PARTIAL",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-06",
+      "title": "Full Drive PDF inventory",
+      "status": "PARTIAL",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-07",
+      "title": "SHA dedup and source recovery",
+      "status": "NOT_RUN",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-08",
+      "title": "Evidence/rights review and question admission",
+      "status": "HOLD",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-09",
+      "title": "Kernel Work Order approval",
+      "status": "HOLD",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P0-10",
+      "title": "Production merge/deploy",
+      "status": "HOLD",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P1-11",
+      "title": "Published website live audit",
+      "status": "NOT_VERIFIED",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P1-12",
+      "title": "GitHub CI gate execution",
+      "status": "PARTIAL",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    },
+    {
+      "id": "P1-13",
+      "title": "Original crosswalk artifact portability",
+      "status": "PARTIAL",
+      "wo": "UNRECONCILED",
+      "sourceBranch": "simulados-enfermagem-db-canonico"
+    }
+  ],
+  "openIssues": [
+    {
+      "id": "GH-28",
+      "title": "Revisão de credenciais de autenticação",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/28",
+      "state": "OPEN",
+      "wo": "WO-SEC-001",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-25",
+      "title": "[P0][PMO×KERNEL][HOLD] Reconciliar cobertura integral das frentes e contrato de admissão verificável",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-23",
+      "title": "[P0][HOLD] Solicitar admissão Kernel/PMO para integração isolada do Research Hub (PR #19 + gate PR #13)",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/23",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-18",
+      "title": "[COMMANDER][CHECKER/AUDITOR] Testes negativos, provenance e segregação da equipe de IAs",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/18",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-17",
+      "title": "[COMMANDER][DEEPSEEK][REASONING] Contrato seguro de sugestões estruturadas sem autonomia de escrita",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/17",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-16",
+      "title": "[COMMANDER][MANUS][UX] Entregar desenho administrativo completo e contrato de componentes",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/16",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-15",
+      "title": "[COMMANDER][MINIMAX][MAKER] Integração de atividades no painel sem backend e sem DS concorrente",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/15",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-14",
+      "title": "[COMMANDER][CANDIDATE] Centro de atividades, contratos de delegação e integração controlada das IAs",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/14",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-12",
+      "title": "[P0][G02][HOLD_HUMAN] Proteger main e comprovar enforcement de PR/CI antes de merges",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/12",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-11",
+      "title": "[EXTRAÇÕES][HOLD] Entregar arquivos efetivos dos agentes e completar proveniência, hashes e handoffs",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/11",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-10",
+      "title": "[SO #9][FIND] 14 arestas de módulos sem reciprocidade no catálogo Preview",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/10",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-9",
+      "title": "[SO CANDIDATE][HOLD_HUMAN] Auditoria cruzada Preview × CKO × Supabase e reconciliação de chaves",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/9",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-8",
+      "title": "[HOLD_HUMAN] Source/Snapshot/Claim — auditoria de chaves e dados reais (157/78/41)",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/8",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-7",
+      "title": "[HOLD_HUMAN] Evidência READ_ONLY — 161 tabelas, 175 FKs; reconciliação integral de chaveamento",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/7",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-6",
+      "title": "[HOLD_HUMAN] Invariante global de chaveamento e integridade referencial entre todas as camadas",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/6",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-5",
+      "title": "[HOLD_HUMAN] Integração Source → atomização → metamodelos → bindings por módulo → projeções MDX",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/5",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-4",
+      "title": "[HOLD_HUMAN] Auditoria de segregação e revogação de grants de agentes",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/4",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-3",
+      "title": "[HOLD_HUMAN] Pré-homologação das 5 migrações candidatas e papel PG restrito",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/3",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    },
+    {
+      "id": "GH-2",
+      "title": "[HOLD_HUMAN] FIND-CKO-IMPORT-ROUTE — decisão sobre API privada e runtime autorizado",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/2",
+      "state": "OPEN",
+      "wo": "UNRECONCILED",
+      "admission": "NOT_VERIFIED"
+    }
+  ],
+  "coverageGaps": [
+    {
+      "id": "GAP-01",
+      "description": "Mapping each issue and each Simulados item to an authoritative WO/FIND/validator/Kernel admission is not verified",
+      "status": "OPEN"
+    },
+    {
+      "id": "GAP-02",
+      "description": "PMO main revision 18 and candidate revision 20 diverge",
+      "status": "OPEN"
+    },
+    {
+      "id": "GAP-03",
+      "description": "No evidence of exhaustive coverage across every branch, PR, Supabase table and Drive source",
+      "status": "OPEN"
+    },
+    {
+      "id": "GAP-04",
+      "description": "CI dependency vulnerability and RPC answer disclosure require security remediation and evidence",
+      "status": "OPEN"
+    }
+  ],
+  "releaseGate": "HOLD_HUMAN"
+}

@@ -24,6 +24,10 @@ jobs:
           cache: npm
       - name: Validar PMO canônico e histórico
         run: node scripts/check-pmo-queue.mjs
+      - name: Testar PMO com fixtures isoladas e cenários negativos
+        run: node --test scripts/test-pmo-queue-negative.mjs
+      - name: Testar atividades e bloqueios DeepSeek (sem chamadas externas)
+        run: node --test scripts/test-gov-activities.mjs
       - name: Verificar integridade do inventário transversal candidato (não conformidade)
         run: node scripts/check-transversal-catalog.mjs
       - name: Auditar 18 instâncias ISO com schemas canônicos, hashes e testes negativos (sem admissão)
@@ -62,7 +66,29 @@ jobs:
       - run: npm ci
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
+      - name: Auditar fronteira DS do Commander (não homologa paleta)
+        run: node scripts/check-commander-ds-boundary.mjs
+      - name: Testar controles negativos do DS canônico
+        run: node --test scripts/test-commander-ds-boundary.mjs
+      - name: Testar evidências formais de WO sem inferir admissão
+        run: node --experimental-strip-types --test scripts/test-commander-formal-readiness.mjs
+      - name: Auditar pré-requisitos anteriores à Task (sem admissão)
+        run: node --test scripts/test-audit-commander-upstream.mjs
+      - name: Testar quarentena dos quatro artefatos de IA
+        run: node --test scripts/test-agent-delivery.mjs
+      - name: Testar validação de recebimento sem execução
+        run: node --test scripts/test-check-commander-delivery.mjs
+      - name: Exercitar jornada real de handoff em diretório isolado
+        run: node --test scripts/test-rehearse-commander-handoff.mjs
+      - name: Testar exportação determinística das WOs
+        run: node --test scripts/test-export-commander-task.mjs
       - run: node scripts/test-admin-console.mjs
+      - run: node --test scripts/test-auth-secret-env.mjs
+      - name: Testar delegação fail-closed do Commander
+        run: |
+          node scripts/check-commander-handoffs.mjs
+          node --test scripts/test-commander-handoffs.mjs
+          node --experimental-strip-types --test scripts/test-commander-read-model.mjs
       - run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs

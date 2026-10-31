@@ -1,0 +1,56 @@
+name: CE admin review candidate (no admission or deployment)
+on:
+  push:
+    branches: [fix/governed-activities-cli-20261026]
+    paths:
+      - 'src/components/site/shell.tsx'
+      - 'src/routes/login.tsx'
+      - 'scripts/header-entry.test.mjs'
+      - 'scripts/test-auth-secret-env.mjs'
+      - 'src/lib/auth/preview.ts'
+      - 'src/lib/auth/server.ts'
+      - 'src/lib/auth/client.ts'
+      - 'src/components/admin/governed-review-panel.tsx'
+      - 'src/components/admin/pmo-panel.tsx'
+      - 'src/lib/governance/decision-draft.ts'
+      - 'src/lib/governance/decision-draft.test.ts'
+      - 'src/lib/governance/review-source-catalog.ts'
+      - 'src/lib/governance/review-source-catalog.test.ts'
+      - 'scripts/test-admin-console.mjs'
+      - 'src/styles/admin-console.css'
+      - 'registers/governance/find-approval-ux-20261031.v1.json'
+      - 'registers/governance/find-evidence-url-boundary-20261031.v1.json'
+      - 'audit-evidence/branch-consolidation/**'
+      - '.github/workflows/ce-admin-review-candidate.yml'
+permissions:
+  contents: read
+jobs:
+  verify-review-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout candidate (read only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install frozen dependencies
+        run: npm ci
+      - name: Validate administrative controls
+        run: node scripts/test-admin-console.mjs
+      - name: Validate Entrar topbar and auth-off behavior
+        run: node --test scripts/header-entry.test.mjs
+      - name: Verify authentication invariant
+        run: node --test scripts/test-auth-secret-env.mjs
+      - name: Validate TypeScript
+        run: npx tsc --noEmit
+      - name: Verify decision-draft negative tests
+        run: node --experimental-strip-types --import ./scripts/alias-hook.mjs --test src/lib/governance/decision-draft.test.ts src/lib/governance/review-source-catalog.test.ts
+      - name: Build candidate SPA without release
+        run: npm run build:spa
+# This is an independent code-quality candidate workflow.
+# No browser action, job or check signs an admission or changes WO-HOM-001.

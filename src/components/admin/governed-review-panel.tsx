@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, ClipboardCopy, ClipboardList, LockKeyhole, ShieldAlert } from 'lucide-react';
+import { ArrowUpRight, ClipboardCopy, ClipboardList, LockKeyhole, Search, ShieldAlert } from 'lucide-react';
 import queue from '../../../registers/pmo/queue.v1.json';
 import {
   buildDecisionDraft,
@@ -7,6 +7,13 @@ import {
   type DecisionChoice,
   type DecisionResult,
 } from '../../lib/governance/decision-draft';
+
+import {
+  evidenceSuggestions,
+  searchEvidenceSuggestions,
+  searchReviewWorkOrders,
+  selectReviewEvidence,
+} from '../../lib/governance/review-source-catalog';
 
 const APPROVAL_RECORD_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/approval-pmokernel-audit-20261031.v1.json';
 const ISSUE_URL = 'https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25';
@@ -18,6 +25,9 @@ const decisions: DecisionChoice[] = ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_
  */
 export function GovernedReviewPanel() {
   const [workOrderId, setWorkOrderId] = useState(queue.items.find(item => item.status === 'HOLD_HUMAN')?.id ?? queue.items[0]?.id ?? '');
+  const [woQuery, setWoQuery] = useState('');
+  const [evidenceQuery, setEvidenceQuery] = useState('');
+  const [selectedEvidenceId, setSelectedEvidenceId] = useState('');
   const [choice, setChoice] = useState<DecisionChoice>('REVIEW');
   const [reason, setReason] = useState('');
   const [caveats, setCaveats] = useState('');
@@ -26,6 +36,55 @@ export function GovernedReviewPanel() {
   const [feedback, setFeedback] = useState('Escolha uma atividade para consultar ou preparar um parecer. Não há nova aprovação obrigatória.');
   const selected = queue.items.find(item => item.id === workOrderId);
   const pendingDependencies = selected?.dependencies.filter(id => queue.items.find(item => item.id === id)?.status !== 'DONE') ?? [];
+  const matchingWorkOrders = searchReviewWorkOrders(queue.items, woQuery);
+  // Keep the selected option visible even if the current search filters it out.
+  const visibleWorkOrders = selected && !matchingWorkOrders.some(item => item.id === selected.id)
+    ? [selected, ...matchingWorkOrders] : matchingWorkOrders;
+  const availableEvidence = selected ? evidenceSuggestions(selected) : [];
+  const matchingEvidence = searchEvidenceSuggestions(availableEvidence, evidenceQuery);
+  const selectedEvidence = availableEvidence.find(item => item.id === selectedEvidenceId);
+  const visibleEvidence = selectedEvidence && !matchingEvidence.some(item => item.id === selectedEvidenceId)
+    ? [selectedEvidence, ...matchingEvidence] : matchingEvidence;
+
+  function changeWorkOrder(nextId: string) {
+    if (!queue.items.some(item => item.id === nextId)) return;
+    setWorkOrderId(nextId);
+    setWoQuery('');
+    setEvidenceQuery('');
+    setSelectedEvidenceId('');
+    setEvidenceUrl('');
+    setReason('');
+    setCaveats('');
+    setResult(null);
+    setFeedback('Nova WO selecionada. Campos do parecer anterior foram limpos para evitar associação de evidência incorreta.');
+  }
+
+  function chooseEvidence(id: string) {
+    if (!id) {
+      setSelectedEvidenceId('');
+      setEvidenceUrl('');
+      setResult(null);
+      setFeedback('Fonte sugerida desmarcada. Informe uma URL do repositório ou escolha outra evidência.');
+      return;
+    }
+    const url = selectReviewEvidence(availableEvidence, id);
+    if (!url) {
+      setFeedback('Fonte não encontrada entre as evidências da WO selecionada.');
+      return;
+    }
+    setSelectedEvidenceId(id);
+    setEvidenceUrl(url);
+    setResult(null);
+    setFeedback('Referência preenchida com URL do registro. Verifique o conteúdo: sugestão não é validação de evidência.');
+  }
+
+  function insertWoContext() {
+    if (!selected) return;
+    const context = `Contexto documentado em ${selected.id}: critério de aceite: ${selected.criteria}. Próximo passo registrado: ${selected.next}. Conferir evidências, condições e admissões antes de emitir o parecer.`;
+    setReason(previous => [previous.trim(), context].filter(Boolean).join('\\n').slice(0, 1200));
+    setResult(null);
+    setFeedback('Contexto da WO inserido para revisão; não é justificativa aprovada automaticamente.');
+  }
 
   function selectDecision(value: DecisionChoice) {
     setChoice(value);
@@ -70,17 +129,32 @@ export function GovernedReviewPanel() {
         <ShieldAlert size={18} aria-hidden="true" />
         <p><strong>Liberação bloqueada:</strong> WO-HOM-001 permanece HOLD_HUMAN. Os botões abaixo preparam pareceres em memória, não alteram a fila, não gravam no GitHub e não executam homologação.</p>
       </div>
-      <label className="ce-admin-field" htmlFor="review-wo">
-        <span>Atividade do PMO</span>
-        <select id="review-wo" value={workOrderId} onChange={event => { setWorkOrderId(event.target.value); setResult(null); }}>
-          {queue.items.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title}</option>)}
-        </select>
-      </label>
+      <div className="ce-admin-review-search">
+        <label className="ce-admin-field" htmlFor="review-wo-search">
+          <span><Search size={15} aria-hidden="true" /> Pesquisar atividade do PMO <em>Por ID, título, responsável ou critério</em></span>
+          <input id="review-wo-search" type="search" value={woQuery}
+            onChange={event => setWoQuery(event.target.value)}
+            placeholder="Ex.: homologação, segurança, WO-SEC" aria-describedby="review-wo-search-help" />
+          <small id="review-wo-search-help">{matchingWorkOrders.length} de {queue.items.length} WOs correspondem à busca. Pesquisa local nos registros versionados.</small>
+        </label>
+        <label className="ce-admin-field" htmlFor="review-wo">
+          <span>Selecionar ordem de trabalho <em>Obrigatório</em></span>
+          <select id="review-wo" value={workOrderId} onChange={event => changeWorkOrder(event.target.value)} aria-describedby="review-wo-help">
+            {visibleWorkOrders.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title} ({item.status})</option>)}
+          </select>
+          <small id="review-wo-help">Fonte: registros/pmo/queue.v1.json. A busca não cria nem altera WOs.</small>
+        </label>
+      </div>
+      {matchingWorkOrders.length === 0 && <p role="status" className="ce-admin-detail-note">Nenhuma WO encontrada. Limpe a busca para consultar as opções existentes.</p>}
       {selected && (
-        <p className="ce-admin-detail-note" data-testid="review-dependencies">
-          <strong>Estado:</strong> {selected.status} · <strong>Dependências pendentes:</strong> {pendingDependencies.join(', ') || 'Nenhuma no PMO'} ·
-          <strong> Evidências na fila:</strong> {selected.evidence.length}. Nenhum desses dados prova admissão formal.
-        </p>
+        <div className="ce-admin-review-context" data-testid="review-dependencies">
+          <p><strong>Estado:</strong> {selected.status} · <strong>Prioridade:</strong> {selected.priority} · <strong>Responsável:</strong> {selected.owner}</p>
+          <p><strong>Critério de aceite:</strong> {selected.criteria}</p>
+          <p><strong>Próxima ação registrada:</strong> {selected.next}</p>
+          <p><strong>Dependências pendentes:</strong> {pendingDependencies.join(', ') || 'Nenhuma no PMO'} · <strong>Evidências na fila:</strong> {selected.evidence.length}.</p>
+          <button type="button" className="ce-admin-btn" onClick={insertWoContext}>Inserir contexto da WO na justificativa</button>
+          <small>Apenas auxílio de redação. Nenhum dado exibido prova admissão, cumprimento do critério ou homologação.</small>
+        </div>
       )}
       <fieldset className="ce-admin-review-fieldset">
         <legend>Tipo de parecer a preparar</legend>
@@ -106,11 +180,36 @@ export function GovernedReviewPanel() {
             aria-invalid={caveats.length > 0 && caveats.trim().length < 12} />
         </label>
       )}
-      <label className="ce-admin-field" htmlFor="review-evidence">
-        <span>Link de evidência no GitHub <em>Obrigatório para parecer favorável</em></span>
-        <input id="review-evidence" value={evidenceUrl} type="url" placeholder="https://github.com/IndiciumFIN/dev-chatgpt-workspace/..."
-          onChange={event => { setEvidenceUrl(event.target.value); setResult(null); }} />
-      </label>
+      <div className="ce-admin-review-search" data-testid="review-evidence-search">
+        <label className="ce-admin-field" htmlFor="review-source-search">
+          <span><Search size={15} aria-hidden="true" /> Pesquisar evidências registradas <em>Por título, URL ou origem</em></span>
+          <input id="review-source-search" type="search" value={evidenceQuery}
+            onChange={event => setEvidenceQuery(event.target.value)}
+            placeholder="Ex.: CI, issue, aprovação documental" aria-describedby="review-source-help" />
+          <small id="review-source-help">{matchingEvidence.length} de {availableEvidence.length} referências disponíveis para a WO. Sugestões locais; não há busca remota nem validação de links.</small>
+        </label>
+        <label className="ce-admin-field" htmlFor="review-evidence-option">
+          <span>Selecionar evidência já registrada <em>Opcional</em></span>
+          <select id="review-evidence-option" value={selectedEvidenceId} onChange={event => chooseEvidence(event.target.value)} aria-describedby="review-source-hint">
+            <option value="">Escolha uma fonte sugerida ou informe manualmente</option>
+            {visibleEvidence.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
+          </select>
+          <small id="review-source-hint">Referências PMO da WO e, quando aplicável, registros de governança. Sempre confira o conteúdo antes de usar.</small>
+        </label>
+        {availableEvidence.length === 0 && <p className="ce-admin-detail-note">A WO não possui evidências sugeridas no catálogo atual. Isso não significa ausência de pendência ou aprovação.</p>}
+        <label className="ce-admin-field" htmlFor="review-evidence">
+          <span>URL da evidência no GitHub <em>Obrigatória para parecer favorável</em></span>
+          <input id="review-evidence" value={evidenceUrl} type="url"
+            placeholder="https://github.com/IndiciumFIN/dev-chatgpt-workspace/..."
+            aria-describedby="review-evidence-help"
+            onChange={event => {
+              setEvidenceUrl(event.target.value);
+              setSelectedEvidenceId('');
+              setResult(null);
+            }} />
+          <small id="review-evidence-help">Preenchimento manual ou a partir da fonte selecionada. Outros repositórios e fontes externas não são admitidos nesta versão.</small>
+        </label>
+      </div>
       <div className="ce-admin-review-actions">
         <button type="button" className="ce-admin-btn ce-admin-btn--primary" onClick={prepareDraft}>
           <ClipboardList size={16} aria-hidden="true" /> Preparar minuta local

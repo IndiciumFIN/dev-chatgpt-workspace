@@ -53,3 +53,22 @@ test('R80: P0-04 static validator source cannot disappear or be called E2E appro
  const p=load(),item=p.record.rows.find(x=>x.sourceId==='P0-04');
  item.validator.status='PASS_E2E';assert.throws(()=>validate(p),/P004_STATIC_AUDITOR_EVIDENCE_MISSING/);
 });
+
+test('R81: draft FIND cannot be silently promoted by changing its status',()=>{
+ const x=load();
+ const item=x.findRegister.finds.find(f=>f.canonical_id==='FIND-PMO-COVERAGE-20261031');
+ assert.ok(item);
+ item.status='ADMITTED';
+ assert.throws(()=>validate(x),/FALSE_FIND_ADMISSION/);
+});
+test('R81: draft FIND cannot mutate production',()=>{
+ const x=load();
+ const item=x.findRegister.finds.find(f=>f.canonical_id==='FIND-CKO-IMPORT-ROUTE');
+ item.mutation_allowed=true;
+ assert.throws(()=>validate(x),/FALSE_FIND_ADMISSION/);
+});
+test('R81: source declaration without registered FIND fails closed',()=>{
+ const x=load();
+ x.findRegister.finds=x.findRegister.finds.filter(f=>f.canonical_id!=='FIND-CKO-IMPORT-ROUTE');
+ assert.throws(()=>validate(x),/FALSE_REGISTERED_FIND/);
+});

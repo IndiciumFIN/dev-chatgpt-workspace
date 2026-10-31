@@ -24,6 +24,8 @@ jobs:
           cache: npm
       - name: Validar PMO canônico e histórico
         run: node scripts/check-pmo-queue.mjs
+      - name: Testar PMO com fixtures isoladas e cenários negativos
+        run: node --test scripts/test-pmo-queue-negative.mjs
       - name: Testar atividades e bloqueios DeepSeek (sem chamadas externas)
         run: node --test scripts/test-gov-activities.mjs
       - name: Verificar integridade do inventário transversal candidato (não conformidade)

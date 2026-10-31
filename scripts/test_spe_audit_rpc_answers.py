@@ -1,48 +1,67 @@
 #!/usr/bin/env python3
-"""Regression tests for the read-only legacy RPC answer exposure audit."""
+"""Negative and positive regressions for legacy answer-key RPC scan."""
 import importlib.util
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
 
-SCRIPT = Path(__file__).with_name("spe_audit_rpc_answers.py")
-spec = importlib.util.spec_from_file_location("spe_audit_rpc_answers", SCRIPT)
-audit_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(audit_module)
+spec = importlib.util.spec_from_file_location("spe_audit_rpc_answers", Path(__file__).with_name("spe_audit_rpc_answers.py"))
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+NAMES = ("0024_api_functions.sql", "0031_cms_working_copies_option_lifecycle.sql", "0038_api_assessment_runtime.sql")
 
-def sql(name, vulnerable=True):
-    fn = "api.evaluate_question_set" if name.startswith("0038") else "api.evaluate_question"
-    grant = f"grant execute on function {fn}(jsonb,text) to anon, authenticated;" if vulnerable else ""
-    payload = "select api.evaluate_question('id');" if name.startswith("0038") else "select correct_option_ids;"
+def sql(name, roles="anon, authenticated", answer=True):
+    indirect = name.startswith("0038")
+    fn = "api.evaluate_question_set" if indirect else "api.evaluate_question"
+    payload = "select api.evaluate_question('id');" if indirect else ("select correct_option_ids;" if answer else "select redacted;")
+    grant = f"grant execute on function {fn}(jsonb,text) to {roles};" if roles else ""
     return f"create function {fn}(jsonb,text) returns jsonb as $$ {payload} $$ language sql;\n{grant}"
 
 class RpcExposureAuditTests(unittest.TestCase):
-    def run_audit(self, overrides=None):
-        names = ("0024_api_functions.sql", "0031_cms_working_copies_option_lifecycle.sql", "0038_api_assessment_runtime.sql")
-        with tempfile.TemporaryDirectory() as d:
-            archive = Path(d) / "legacy.zip"
+    def scan(self, overrides=None):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "legacy.zip"
             with zipfile.ZipFile(archive, "w") as z:
-                for name in names:
+                for name in NAMES:
                     z.writestr("archive/supabase/migration_sources/" + name, (overrides or {}).get(name, sql(name)))
-            return audit_module.audit(archive)
+            return module.audit(archive)
 
-    def test_detects_legacy_public_answer_exposure(self):
-        result = self.run_audit()
-        self.assertEqual(result["finding"], "SPE-RPC-ANSWER-EXPOSURE")
+    def test_full_original_pattern_is_exposed(self):
+        result = self.scan()
+        self.assertTrue(result["confirmed_static"])
+        self.assertEqual(result["exposed_migrations"], list(NAMES))
+
+    def test_one_public_grant_is_enough_for_exposure(self):
+        result = self.scan({NAMES[0]: sql(NAMES[0], "authenticated"), NAMES[1]: "", NAMES[2]: ""})
+        self.assertTrue(result["confirmed_static"])
+        self.assertEqual(result["exposed_migrations"], [NAMES[0]])
+
+    def test_reversed_grants_and_split_grants(self):
+        name = NAMES[0]
+        source = sql(name, "authenticated, anon")
+        result = self.scan({name: source, NAMES[1]: "", NAMES[2]: ""})
+        self.assertEqual(result["checks"][name]["public_roles"], ["anon", "authenticated"])
+        split = sql(name, "anon") + "\ngrant execute on function api.evaluate_question(jsonb,text) to authenticated;"
+        result = self.scan({name: split, NAMES[1]: "", NAMES[2]: ""})
+        self.assertEqual(result["checks"][name]["public_roles"], ["anon", "authenticated"])
+
+    def test_missing_grant_excludes_only_that_migration(self):
+        result = self.scan({NAMES[2]: sql(NAMES[2], "")})
+        self.assertTrue(result["confirmed_static"])
+        self.assertNotIn(NAMES[2], result["exposed_migrations"])
+
+    def test_missing_answer_field_excludes_only_direct_migration(self):
+        result = self.scan({NAMES[0]: sql(NAMES[0], answer=False)})
+        self.assertNotIn(NAMES[0], result["exposed_migrations"])
         self.assertTrue(result["confirmed_static"])
 
-    def test_missing_public_grant_does_not_confirm_full_chain(self):
-        result = self.run_audit({"0038_api_assessment_runtime.sql": sql("0038_api_assessment_runtime.sql", False)})
+    def test_no_exposure_is_not_confirmed(self):
+        result = self.scan({name: sql(name, "") for name in NAMES})
         self.assertFalse(result["confirmed_static"])
 
-    def test_missing_answer_payload_does_not_confirm_full_chain(self):
-        name = "0024_api_functions.sql"
-        result = self.run_audit({name: sql(name).replace("correct_option_ids", "redacted")})
-        self.assertFalse(result["confirmed_static"])
-
-    def test_missing_original_migration_does_not_confirm(self):
-        result = self.run_audit({"0031_cms_working_copies_option_lifecycle.sql": ""})
+    def test_missing_migrations_does_not_confirm(self):
+        result = self.scan({name: "" for name in NAMES})
         self.assertFalse(result["confirmed_static"])
 
 if __name__ == "__main__":

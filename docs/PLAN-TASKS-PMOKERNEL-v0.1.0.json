@@ -17,7 +17,7 @@
     ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
-  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada).",
+  "coverageNote": "As 10 WOs da fila rev20 têm task (PMO-001, ADM-001, SEC-001, E2E-001, DS-001, CKO-001, AUTO-001, CKO-COFEN-001, GOV-TRANS-001, HOM-001). As 32 pendências observadas (13 Simulados + 19 issues, incluindo GH-28) têm tasks candidatas, sujeitas à validação automática. Validado com o gate contra a fila rev20 e o inventário real: 0 PENDENCIA_ORFA, 0 WO_SEM_TASK, 4 GAP_ABERTO (esperado enquanto T0.001/T0.013/T2.022 não fecham). | 31/10 18:56Z: 36 tasks, 32 pendencias vivas (GH-28 incluido), 0 orfas, 0 WO sem task, 4 GAP_ABERTO. | R77 31/10 18:59Z: plano 37 tasks, TASK-PLAN-058 com evidência técnica de CI PASS 41232027627 (118/118 colisões classificadas; 118 vínculos candidatos, 0 sem WO); status formal PROPOSTO mantido porque TASK-PLAN-014 ainda não concluída; autorização Kernel/HOLD_HUMAN preservada. | 31/10 20:20Z: +T0.059 (pacote admin area por reconciliacao), +T0.060 (esqueleto Vite x DS canonico), +T0.061 (gates NOT_RUN a provar). | 31/10 20:30Z: +T0.062 (testes no glob oficial), T0.063 (contratos das entidades novas), T0.064 (preservar PmoReviewIntake), T0.065 (hash-chain nao atestada). | 31/10 20:30Z: T0.090 (testes no glob oficial), T0.091 (contratos das entidades novas), T0.092 (preservar PmoReviewIntake), T0.093 (hash-chain nao atestada).",
   "tasks": [
     {
       "id": "TASK-PLAN-001",
@@ -1774,6 +1774,80 @@
         "releaseGate": "HOLD_HUMAN"
       },
       "acceptance": "Conferir P1-13 com a origem versionada; validar a pertinência de WO-CKO-001, registrar FIND, política, validador, evidência e decisão Kernel verificável. Não transformar este vínculo candidato em WO admitida, alteração na fonte ou promoção sem aprovação."
+    },
+    {
+      "id": "TASK-PLAN-090",
+      "phase": "F3",
+      "title": "Integrar os testes do pacote no glob oficial do repo",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-04"
+      ],
+      "artifacts": [
+        "scripts/impact-engine.test.mjs",
+        "scripts/list-query.test.mjs"
+      ],
+      "acceptance": "Os 23 testes novos sao executados pelo gate oficial: o runner usa o glob scripts/**/*.test.mjs, por isso os ficheiros tem de terminar em .test.mjs (ou ser steps explicitos do workflow) e a flag --experimental-strip-types tem de ser explicita e deterministica (imports .ts dependem de Node >= 22.18 para strip-types default-on). Prova: a saida de npm test lista os nomes dos 23 testes novos; sem isso o pacote nao conta como testado."
+    },
+    {
+      "id": "TASK-PLAN-091",
+      "phase": "F2",
+      "title": "Declarar as entidades novas nos contratos canonicos",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        "registers/canonical/surface-contracts.v2.json",
+        "contracts/entities/design-tokens.v1.json"
+      ],
+      "acceptance": "impact-engine, a aba impact, o admin-topbar e os tokens de UI novos (ce-admin-topbar*, ce-admin-listbar*, ce-admin-chip*, ce-admin-pager, ce-admin-list-empty) ficam declarados nos contratos, preservando .ce-admin-empty. Prova: node scripts/check-contract-coverage.mjs sai 0 (corre em npm test E em npm run build)."
+    },
+    {
+      "id": "TASK-PLAN-092",
+      "phase": "F3",
+      "title": "Preservar o PmoReviewIntake e adicionar list-query como camada de consulta",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "TSX",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "src/components/admin/pmo-panel.tsx"
+      ],
+      "acceptance": "O pmo-panel final importa e renderiza PmoReviewIntake (a superficie de revisao/HOLD) E usa list-query para busca/filtro/ordenacao/paginacao. Nao se troca decisao por listagem. Prova: test-admin-console.mjs verde E o intake continua alcancaavel na UI."
+    },
+    {
+      "id": "TASK-PLAN-093",
+      "phase": "F3",
+      "title": "Rotular a auditoria local como nao atestada (hash-chain -> log append-only rotulado)",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-059"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "src/lib/impact/impact-engine.ts"
+      ],
+      "acceptance": "A cadeia SHA-256 em localStorage e mantida apenas como tamper-evidence local, com rotulo explicito de que nao e prova de autoria nem auditoria imutavel de servidor; o registo exportavel carrega ator manual, timestamp, decisao humana e estado PENDING/HOLD. Nenhuma rota produz DONE/APPROVED sem acao humana explicita. Prova: audit-execution-gates.mjs verde e o rotulo presente no registo."
     }
   ],
   "candidateVerification": {

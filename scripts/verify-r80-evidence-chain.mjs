@@ -31,8 +31,8 @@ export function validate({record,r79,findRegister,policy,sourceBytes={}}){
   ensure(candidate && candidate.proposedTask===row.proposedTask && candidate.proposedWo===row.proposedWo,'R79_LINK_MISMATCH:'+row.sourceId);
   ensure(row.policy.modelPath===record.source.woModelPath && row.policy.modelBlobSha===record.source.woModelBlobSha && row.policy.auditPolicyPath===record.source.policyPath && row.policy.auditPolicyBlobSha===record.source.policyBlobSha && row.policy.applicability==='NOT_VALIDATED' && row.policy.auditPolicyPopulationStatus==='TODO','UNVERIFIED_POLICY_PROMOTION:'+row.sourceId);
   ensure(row.governance.findAdmission==='NOT_VERIFIED' && row.governance.policyApproved==='NOT_VERIFIED' && row.governance.validatorPassed==='NOT_RUN_BY_R80' && row.governance.kernelAdmission==='NOT_VERIFIED' && row.governance.sourceWo==='UNRECONCILED' && row.governance.release==='HOLD_HUMAN','FALSE_AUTHORITY:'+row.sourceId);
-  ensure(row.source && Array.isArray(row.source.findIdsDeclaredInIssue)&&Array.isArray(row.source.findIdsInOfficialRegister),'BAD_FIND_ANNOTATION:'+row.sourceId);
-  const claimed=row.source.findIdsDeclaredInIssue.filter(id=>registeredIds.has(id)).sort();
+  ensure(row.source && Array.isArray(row.source.declaredFindIds)&&Array.isArray(row.source.findIdsInOfficialRegister),'BAD_FIND_ANNOTATION:'+row.sourceId);
+  const claimed=row.source.declaredFindIds.filter(id=>registeredIds.has(id)).sort();
   ensure(claimed.join('|')===row.source.findIdsInOfficialRegister.slice().sort().join('|'),'FALSE_REGISTERED_FIND:'+row.sourceId);
   registered+=claimed.length;
   if(candidate.sourceType==='issue'){

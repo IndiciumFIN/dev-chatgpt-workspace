@@ -102,8 +102,24 @@
       "npmAuditHighPassedTypecheckPassedNpmTestPassed": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
       "sourceMigrationInventory": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235411368"
     },
-    "globalVerifyFinalState": "PENDING_WHEN_EVIDENCE_REGISTER_FIRST_COMMITTED",
-    "releaseStatus": "HOLD_HUMAN"
+    "globalVerifyFinalState": "SUCCESS_CANDIDATE_NOT_RELEASE",
+    "releaseStatus": "HOLD_HUMAN",
+    "latestPassingGlobalVerify": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540",
+    "latestPassingPmoCandidate": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235980220",
+    "executionInterpretation": {
+      "npmAuditHigh": "PASS",
+      "typecheck": "PASS",
+      "npmTest": "PASS",
+      "spaBuild": "PASS",
+      "firstFullyPassingGlobalCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
+      "securityCaveats": [
+        "Moderate and low npm audit advisories not individually resolved",
+        "Broker OAuth secret revocation not verified",
+        "No E2E auth flow",
+        "Original Simulados PostgreSQL 47 migrations and 17 pgTAP not run"
+      ],
+      "releaseGate": "HOLD_HUMAN"
+    }
   },
   "remainingGaps": [
     "GAP-01",
@@ -114,5 +130,5 @@
   "noMerge": true,
   "noDeploy": true,
   "noDatabaseWrite": true,
-  "note": "All code fixes on existing candidate branch. Actual default branch remains unchanged and unprotected; credential revocation requires external broker owner."
+  "note": "All code fixes on existing candidate branch. Actual default branch remains unchanged and unprotected; credential revocation requires external broker owner. CI verde da candidata não altera autoridade, fila, decisão, proteção de branch ou homologação."
 }

@@ -10,7 +10,7 @@ export function validateMigrationManifest(manifest) {
   if (manifest?.releaseGate !== 'HOLD_HUMAN') errors.push('RELEASE_GATE');
   if (!Array.isArray(manifest?.branches)) errors.push('BRANCH_LIST_MISSING');
   else {
-    if (manifest.branches.length !== 23) errors.push('SOURCE_COUNT_MISMATCH');
+    if (manifest.branches.length < 1 || manifest.sourceBranchesCount !== manifest.branches.length) errors.push('SOURCE_COUNT_MISMATCH');
     if (new Set(manifest.branches.map(b => b.name)).size !== manifest.branches.length) errors.push('DUPLICATE_BRANCH');
     for (const b of manifest.branches) {
       if (typeof b.name !== 'string' || !/^[a-zA-Z0-9._/-]+$/.test(b.name) || b.name === 'main') errors.push('BAD_BRANCH_NAME');
@@ -20,6 +20,25 @@ export function validateMigrationManifest(manifest) {
   }
   return [...new Set(errors)];
 }
+/** Fail closed if the live remote branch universe is not exactly the declared one. */
+export function reconcileBranchPopulation(expectedNames, observedNames) {
+  if (!Array.isArray(expectedNames) || !Array.isArray(observedNames)) throw Error('INVALID_BRANCH_POPULATION');
+  const valid = names => names.every(name => typeof name === 'string' && name.length > 0 && name !== 'main');
+  if (!valid(expectedNames) || !valid(observedNames)) throw Error('INVALID_BRANCH_POPULATION');
+  const expected = new Set(expectedNames), observed = new Set(observedNames);
+  const duplicateExpected = expected.size !== expectedNames.length;
+  const duplicateObserved = observed.size !== observedNames.length;
+  return {
+    expected: expectedNames.length,
+    observed: observedNames.length,
+    missing: [...expected].filter(name => !observed.has(name)).sort(),
+    untracked: [...observed].filter(name => !expected.has(name)).sort(),
+    duplicates: duplicateExpected || duplicateObserved,
+    complete: !duplicateExpected && !duplicateObserved &&
+      expected.size === observed.size && [...expected].every(name => observed.has(name))
+  };
+}
+
 export function parseTree(text) {
   const files = new Map();
   for (const line of text.split('\0')) {

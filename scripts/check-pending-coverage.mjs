@@ -105,10 +105,14 @@ const CLOSED_TASK_STATUS = new Set(["SUPERSEDED", "CANCELLED"]);
 /* ---------- re-derivação 3: pendências do inventário ---------- */
 const pending = [];
 for (const item of intake.simulados ?? []) {
-  pending.push({ group: "simulados", id: item.id, title: item.title ?? "", status: item.status ?? "", wo: item.wo ?? "" });
+  pending.push({ group: "simulados", id: item.id, aliases: [item.id, `simulados:${item.id}`], title: item.title ?? "", status: item.status ?? "", wo: item.wo ?? "" });
 }
 for (const item of intake.openIssues ?? []) {
-  pending.push({ group: "issue", id: `ISSUE-${item.number}`, title: item.title ?? "", status: item.state ?? "OPEN", wo: item.wo ?? "" });
+  // O inventário real usa ids "GH-<n>"; snapshots antigos usam {number}.
+  // Aceitamos todas as formas para que o gate não dependa do formato.
+  const num = item.number ?? String(item.id ?? "").replace(/^(GH|ISSUE)-/, "");
+  const aliases = [...new Set([item.id, num ? `ISSUE-${num}` : null, num ? `GH-${num}` : null].filter(Boolean))];
+  pending.push({ group: "issue", id: aliases[0], aliases, title: item.title ?? "", status: item.state ?? "OPEN", wo: item.wo ?? "" });
 }
 
 /* ---------- regra 1: task sem WO ---------- */
@@ -144,7 +148,7 @@ for (const w of wos) {
 for (const p of pending) {
   const covered = tasks.some((t) => {
     const covers = Array.isArray(t.covers) ? t.covers : [];
-    return covers.includes(p.id) || covers.includes(`${p.group}:${p.id}`);
+    return p.aliases.some((a) => covers.includes(a)) || covers.includes(`${p.group}:${p.id}`);
   });
   const linked = p.wo && p.wo !== "UNRECONCILED" && woIds.has(p.wo);
   if (!covered && !linked) {

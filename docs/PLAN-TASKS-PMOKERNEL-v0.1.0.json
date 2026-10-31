@@ -8,7 +8,13 @@
   "policy": {
     "chain": "FIND -> Política -> Validador -> TASK -> WO -> Kernel -> Execução -> Testes -> Auditoria -> Homologação",
     "noConversationOnlyFindings": true,
-    "doNotTouch": ["main", "supabase-producao", "secrets", "permissions", "WO-HOM-001"]
+    "doNotTouch": [
+      "main",
+      "supabase-producao",
+      "secrets",
+      "permissions",
+      "WO-HOM-001"
+    ]
   },
   "planDocument": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
   "tasks": [
@@ -21,7 +27,9 @@
       "owner": "PMO",
       "language": "DOC",
       "status": "PROPOSTO",
-      "covers": ["GAP-02"],
+      "covers": [
+        "GAP-02"
+      ],
       "artifacts": [],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; README do plano coerente."
     },
@@ -34,7 +42,10 @@
       "owner": "Kernel",
       "language": "-",
       "status": "BLOCKED",
-      "covers": ["ISSUE-25", "ISSUE-23"],
+      "covers": [
+        "ISSUE-25",
+        "ISSUE-23"
+      ],
       "artifacts": [],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
@@ -43,12 +54,16 @@
       "phase": "F0",
       "title": "Land do gate relaxado (PAUSED|IN_PROGRESS) em branch própria",
       "wo": "WO-ADM-001",
-      "deps": ["TASK-PLAN-002"],
+      "deps": [
+        "TASK-PLAN-002"
+      ],
       "owner": "Mavis",
       "language": "JS",
       "status": "PROPOSTO",
       "covers": [],
-      "artifacts": ["scripts/check-pmo-queue.mjs"],
+      "artifacts": [
+        "scripts/check-pmo-queue.mjs"
+      ],
       "acceptance": "node scripts/check-pmo-queue.mjs verde no main; PR aberto contra main; fila PMO não alterada."
     },
     {
@@ -56,11 +71,15 @@
       "phase": "F0",
       "title": "Proteger main e provar o enforcement (issue #12)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-003"],
+      "deps": [
+        "TASK-PLAN-003"
+      ],
       "owner": "Owner",
       "language": "CI",
       "status": "PROPOSTO",
-      "covers": ["ISSUE-12"],
+      "covers": [
+        "ISSUE-12"
+      ],
       "artifacts": [],
       "acceptance": "Ruleset com PR + verify verde + review; evidência (log do GitHub) de push direto recusado."
     },
@@ -69,12 +88,18 @@
       "phase": "F0",
       "title": "Land do inventário CE-CROSS-SOURCE-PENDING-INTAKE e validar o schema do register",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-001"],
+      "deps": [
+        "TASK-PLAN-001"
+      ],
       "owner": "Mavis",
       "language": "JS",
       "status": "PROPOSTO",
-      "covers": ["GAP-01"],
-      "artifacts": ["registers/pmo/cross-source-pending-intake.v1.json"],
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "registers/pmo/cross-source-pending-intake.v1.json"
+      ],
       "acceptance": "Register no main com registerId/schemaVersion/completeness validados por script fail-closed."
     },
     {
@@ -82,12 +107,18 @@
       "phase": "F1",
       "title": "Gate de cobertura que re-deriva WOs x pendências x tasks",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-005"],
+      "deps": [
+        "TASK-PLAN-005"
+      ],
       "owner": "Mavis",
       "language": "JS",
       "status": "DONE",
-      "covers": ["GAP-01"],
-      "artifacts": ["scripts/check-pending-coverage.mjs"],
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        "scripts/check-pending-coverage.mjs"
+      ],
       "acceptance": "Violações TASK_SEM_WO, TASK_WO_INEXISTENTE, WO_SEM_TASK, PENDENCIA_ORFA, DONE_SEM_EVIDENCIA, TASK_SEM_ARTEFATO e GAP_ABERTO detectadas."
     },
     {
@@ -95,12 +126,16 @@
       "phase": "F1",
       "title": "Testes negativos do gate de cobertura",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-010"],
+      "deps": [
+        "TASK-PLAN-010"
+      ],
       "owner": "Mavis",
       "language": "JS",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["scripts/check-pending-coverage.test.mjs"],
+      "artifacts": [
+        "scripts/check-pending-coverage.test.mjs"
+      ],
       "acceptance": "node --test scripts/check-pending-coverage.test.mjs => 7 testes verdes, incluindo SKIP por insumo ausente."
     },
     {
@@ -108,30 +143,65 @@
       "phase": "F1",
       "title": "Ativar o gate de cobertura no CI",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-005", "TASK-PLAN-010", "TASK-PLAN-011"],
+      "deps": [
+        "TASK-PLAN-005",
+        "TASK-PLAN-010",
+        "TASK-PLAN-011"
+      ],
       "owner": "Mavis",
       "language": "CI",
       "status": "PROPOSTO",
-      "covers": ["GAP-01"],
-      "artifacts": [".github/workflows/pending-coverage-gate.yml"],
-      "acceptance": "Workflow roda em PR e falha fechada quando houver gaps; filtro de paths evita ruído antes do inventário aterrissar."
+      "covers": [
+        "GAP-01"
+      ],
+      "artifacts": [
+        ".github/workflows/pending-coverage-gate.yml"
+      ],
+      "acceptance": "Workflow roda em PR e falha fechada quando houver gaps; filtro de paths evita ruido antes do inventario aterrissar. Ordem obrigatoria: T0.005 (inventario) -> T0.013 (vinculos) -> T0.001 (gaps fechados) -> so entao GAP_ABERTO como erro. Workflow novo so e despachado apos existir na branch padrao, por isso a ligacao no verify-bibliotecas.yml fica para depois do merge desta PR."
     },
     {
       "id": "TASK-PLAN-013",
       "phase": "F1",
       "title": "Vincular as 18 issues abertas e as 13 pendências dos Simulados a WO/task",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-010", "TASK-PLAN-005"],
+      "deps": [
+        "TASK-PLAN-010",
+        "TASK-PLAN-005"
+      ],
       "owner": "PMO",
       "language": "JS",
       "status": "PROPOSTO",
       "covers": [
-        "ISSUE-2", "ISSUE-3", "ISSUE-4", "ISSUE-5", "ISSUE-6", "ISSUE-7", "ISSUE-8",
-        "ISSUE-9", "ISSUE-10", "ISSUE-11", "ISSUE-12", "ISSUE-14", "ISSUE-15",
-        "ISSUE-16", "ISSUE-17", "ISSUE-18", "ISSUE-23", "ISSUE-25",
-        "simulados:P0-01", "simulados:P0-02", "simulados:P0-03", "simulados:P0-04",
-        "simulados:P0-05", "simulados:P0-06", "simulados:P0-07", "simulados:P0-08",
-        "simulados:P0-09", "simulados:P0-10", "simulados:P1-11", "simulados:P1-12",
+        "ISSUE-2",
+        "ISSUE-3",
+        "ISSUE-4",
+        "ISSUE-5",
+        "ISSUE-6",
+        "ISSUE-7",
+        "ISSUE-8",
+        "ISSUE-9",
+        "ISSUE-10",
+        "ISSUE-11",
+        "ISSUE-12",
+        "ISSUE-14",
+        "ISSUE-15",
+        "ISSUE-16",
+        "ISSUE-17",
+        "ISSUE-18",
+        "ISSUE-23",
+        "ISSUE-25",
+        "simulados:P0-01",
+        "simulados:P0-02",
+        "simulados:P0-03",
+        "simulados:P0-04",
+        "simulados:P0-05",
+        "simulados:P0-06",
+        "simulados:P0-07",
+        "simulados:P0-08",
+        "simulados:P0-09",
+        "simulados:P0-10",
+        "simulados:P1-11",
+        "simulados:P1-12",
         "simulados:P1-13"
       ],
       "artifacts": [],
@@ -142,11 +212,15 @@
       "phase": "F1",
       "title": "Consolidar os FINDs em uma baseline commitada por PR (#13, #22, #24)",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-012"],
+      "deps": [
+        "TASK-PLAN-012"
+      ],
       "owner": "Mavis",
       "language": "JS+PY",
       "status": "PROPOSTO",
-      "covers": ["GAP-03"],
+      "covers": [
+        "GAP-03"
+      ],
       "artifacts": [],
       "acceptance": "Para cada PR auditado: um validador no repo com testes negativos; FINDs referenciando blob commitado, não apenas comentário."
     },
@@ -159,21 +233,29 @@
       "owner": "Mavis",
       "language": "DOC",
       "status": "DONE",
-      "covers": ["GAP-03"],
-      "artifacts": ["docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md"],
-      "acceptance": "Cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real, limitação e modo (estático ou DB)."
+      "covers": [
+        "GAP-03"
+      ],
+      "artifacts": [
+        "docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md"
+      ],
+      "acceptance": "Cada cenário KER/MST/SEC/I18N/SEO/JSD mapeado a caminho real, limitação e modo (estático ou DB). Precisao: o CI instala pip de forma pontual (jsonschema), sem lockfile - a justificativa para motor stdlib-only e evitar divergencia entre ambiente local e gate, nao 'o CI nao instala pip'."
     },
     {
       "id": "TASK-PLAN-021",
       "phase": "F2",
       "title": "Política como código (audit-policy.v1.json)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-020"],
+      "deps": [
+        "TASK-PLAN-020"
+      ],
       "owner": "Mavis",
       "language": "DOC",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["registers/governance/audit-policy.v1.json"],
+      "artifacts": [
+        "registers/governance/audit-policy.v1.json"
+      ],
       "acceptance": "JSON sem dependências; campos de locales, SEO, PII, RLS, mutabilidade, FKs lógicas e tipagem; populationStatus explícito."
     },
     {
@@ -181,11 +263,17 @@
       "phase": "F2",
       "title": "Popular a política com o inventário real (Supabase, Drive, fontes)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-021", "TASK-PLAN-005"],
+      "deps": [
+        "TASK-PLAN-021",
+        "TASK-PLAN-005"
+      ],
       "owner": "DataEng",
       "language": "DOC",
       "status": "PROPOSTO",
-      "covers": ["GAP-03", "GAP-04"],
+      "covers": [
+        "GAP-03",
+        "GAP-04"
+      ],
       "artifacts": [],
       "acceptance": "populationStatus = COMPLETE com evidência por item; o motor passa a produzir achado real em vez de aviso de política vazia."
     },
@@ -194,7 +282,9 @@
       "phase": "F2",
       "title": "Ligar cada regra do motor a uma WO e a um critério de aceite",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-022"],
+      "deps": [
+        "TASK-PLAN-022"
+      ],
       "owner": "PMO",
       "language": "DOC",
       "status": "PROPOSTO",
@@ -207,12 +297,16 @@
       "phase": "F3",
       "title": "Motor de auditoria - modo estático (SQL, conteúdo, registers)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-021"],
+      "deps": [
+        "TASK-PLAN-021"
+      ],
       "owner": "Mavis",
       "language": "PY",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["scripts/audit_data_kernel.py"],
+      "artifacts": [
+        "scripts/audit_data_kernel.py"
+      ],
       "acceptance": "Executa sem banco e sem dependências externas; exit 1 com erro, 2 com insumo ausente, 0 com warning."
     },
     {
@@ -220,12 +314,16 @@
       "phase": "F3",
       "title": "Modo PostgreSQL read-only e bootstrap PGlite sem ENOENT",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-030"],
+      "deps": [
+        "TASK-PLAN-030"
+      ],
       "owner": "Mavis",
       "language": "PY",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["scripts/audit_data_kernel.py"],
+      "artifacts": [
+        "scripts/audit_data_kernel.py"
+      ],
       "acceptance": "resolve_pg_target() cria o diretório de dados; transação READ ONLY com rollback; psycopg ausente gera aviso, nunca crash."
     },
     {
@@ -233,12 +331,17 @@
       "phase": "F3",
       "title": "Suíte de testes do motor de auditoria",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-030", "TASK-PLAN-031"],
+      "deps": [
+        "TASK-PLAN-030",
+        "TASK-PLAN-031"
+      ],
       "owner": "Mavis",
       "language": "PY",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["tests/test_audit_data_kernel.py"],
+      "artifacts": [
+        "tests/test_audit_data_kernel.py"
+      ],
       "acceptance": "python3 -m unittest discover -s tests -p 'test_*.py' -q => 17 testes verdes."
     },
     {
@@ -246,7 +349,9 @@
       "phase": "F3",
       "title": "Corrigir a fixture contraditória do PR #24 (attempt-policy.test.ts:12)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-030"],
+      "deps": [
+        "TASK-PLAN-030"
+      ],
       "owner": "Mavis",
       "language": "JS+PY",
       "status": "PROPOSTO",
@@ -259,11 +364,17 @@
       "phase": "F3",
       "title": "Auditar as 47 migrations e os 17 testes do banco original dos Simulados",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-031", "TASK-PLAN-033"],
+      "deps": [
+        "TASK-PLAN-031",
+        "TASK-PLAN-033"
+      ],
       "owner": "DataEng",
       "language": "PY",
       "status": "PROPOSTO",
-      "covers": ["simulados:P0-02", "simulados:P0-03"],
+      "covers": [
+        "simulados:P0-02",
+        "simulados:P0-03"
+      ],
       "artifacts": [],
       "acceptance": "Replay em PostgreSQL descartável com relatório do motor; divergências catalogadas e vinculadas a WO."
     },
@@ -272,7 +383,10 @@
       "phase": "F4",
       "title": "Gate de paridade de locales, SEO, slug e alt sobre o conteúdo publicado",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-022", "TASK-PLAN-030"],
+      "deps": [
+        "TASK-PLAN-022",
+        "TASK-PLAN-030"
+      ],
       "owner": "Mavis",
       "language": "PY",
       "status": "PROPOSTO",
@@ -285,7 +399,9 @@
       "phase": "F4",
       "title": "Gerador JSON-LD estrito e validação Schema.org por @type",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-030"],
+      "deps": [
+        "TASK-PLAN-030"
+      ],
       "owner": "Mavis",
       "language": "PY",
       "status": "PROPOSTO",
@@ -298,7 +414,9 @@
       "phase": "F4",
       "title": "Fechar a divergência de fontes do PR #22 (colisão de identidade em 12 citações)",
       "wo": "WO-SEC-001",
-      "deps": ["TASK-PLAN-040"],
+      "deps": [
+        "TASK-PLAN-040"
+      ],
       "owner": "Mavis",
       "language": "JS",
       "status": "PROPOSTO",
@@ -311,12 +429,16 @@
       "phase": "F5",
       "title": "Registro de descomissionamento do que não serve mais",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-001"],
+      "deps": [
+        "TASK-PLAN-001"
+      ],
       "owner": "Mavis",
       "language": "DOC",
       "status": "DONE",
       "covers": [],
-      "artifacts": ["docs/DECOMMISSION-REGISTER-v0.1.0.json"],
+      "artifacts": [
+        "docs/DECOMMISSION-REGISTER-v0.1.0.json"
+      ],
       "acceptance": "Cada item com motivo, substituidoPor, acao, decisor e status (FINALIZADO ou PROPOSTO)."
     },
     {
@@ -324,11 +446,15 @@
       "phase": "F5",
       "title": "Eliminar as branches duplicadas archivamento e planning",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-001"],
+      "deps": [
+        "TASK-PLAN-001"
+      ],
       "owner": "Owner",
       "language": "-",
       "status": "PROPOSTO",
-      "covers": ["GAP-03"],
+      "covers": [
+        "GAP-03"
+      ],
       "artifacts": [],
       "acceptance": "Ambas apontam para 87c537fe, contida em main; apagadas via git push origin --delete (a API do plugin não expõe delete de branch)."
     },
@@ -337,11 +463,17 @@
       "phase": "F5",
       "title": "Consolidar as issues em 3 trilhas e fechar as absorvidas",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-013"],
+      "deps": [
+        "TASK-PLAN-013"
+      ],
       "owner": "Owner",
       "language": "-",
       "status": "PROPOSTO",
-      "covers": ["ISSUE-23", "ISSUE-10", "ISSUE-11"],
+      "covers": [
+        "ISSUE-23",
+        "ISSUE-10",
+        "ISSUE-11"
+      ],
       "artifacts": [],
       "acceptance": "#23 absorvida pela #25; #10 e #11 absorvidas pelo inventário; as demais mantidas com referência à task correspondente."
     },
@@ -350,7 +482,9 @@
       "phase": "F5",
       "title": "Nomear dono por task e por issue",
       "wo": "WO-PMO-001",
-      "deps": ["TASK-PLAN-013"],
+      "deps": [
+        "TASK-PLAN-013"
+      ],
       "owner": "Owner",
       "language": "-",
       "status": "PROPOSTO",
@@ -363,7 +497,9 @@
       "phase": "F5",
       "title": "Normalizar o limite de deploy do Vercel (100 por dia)",
       "wo": "WO-E2E-001",
-      "deps": ["TASK-PLAN-012"],
+      "deps": [
+        "TASK-PLAN-012"
+      ],
       "owner": "Owner",
       "language": "CI",
       "status": "PROPOSTO",

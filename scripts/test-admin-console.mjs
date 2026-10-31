@@ -8,6 +8,9 @@ const shared = read('src/components/local/local-workbench-page.tsx');
 const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
+const review = read('src/components/admin/governed-review-panel.tsx');
+const pmo = read('src/components/admin/pmo-panel.tsx');
+const decisionContract = read('src/lib/governance/decision-draft.ts');
 const handoffs = JSON.parse(read('registers/commander/lanes.v1.json'));
 
 const assertions = [
@@ -32,6 +35,9 @@ const assertions = [
   ['Commander displays pre-Task governance from canonical contracts', /commander-upstream-chain/.test(commander) && /taskContract\.required\.filter/.test(commander) && /queue\.canonicalSource/.test(commander) && /Um registro de fila não equivale a WO admitida/.test(commander)],
   ['Commander can inspect real PMO activities without mutation', /selectedWorkOrderId/.test(commander) && /queue\.items\.map\(item => <option/.test(commander) && /commander-wo-readiness/.test(commander) && /BLOQUEADA ATÉ ADMISSÃO FORMAL/.test(commander)],
   ['Commander has no simulated remote agent calls', !/\b(fetch|axios)\s*\(/.test(commander) && /não despachado/.test(commander)],
+  ['PMO displays governed review inside canonical administration', pmo.includes("import { GovernedReviewPanel }") && /<GovernedReviewPanel\s*\/>/.test(pmo) && /pmo-governed-review/.test(review)],
+  ['recorded owner approval is visible without another approval request', /Plano de continuidade: aprovação já registrada/.test(review) && /APPROVAL_RECORD_URL/.test(review) && /Admissão Kernel pendente/.test(review)],
+  ['decision options prepare drafts but never persist, sign or promote', ['REVIEW', 'REQUEST_CHANGES', 'APPROVE_WITH_RESERVATIONS', 'APPROVE'].every(k => decisionContract.includes(k)) && /NOT_SUBMITTED/.test(decisionContract) && /promotionAllowed: false/.test(decisionContract) && !/\\b(fetch|axios|supabase)\\s*\\(/.test(review) && !/setItem\\(/.test(review)],
   ['Commander drafts remain in page memory and are not sent externally', /setDraft\(/.test(commander) && /não é enviado|não são acionados/i.test(commander) && !/\b(fetch|axios)\s*\(/.test(commander)],
 ];
 let failed = 0;

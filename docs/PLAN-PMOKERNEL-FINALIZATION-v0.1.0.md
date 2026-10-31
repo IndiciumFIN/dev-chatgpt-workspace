@@ -391,26 +391,26 @@ Foram despachados 3 auditores especializados (divergência/regressão · DS-cont
 
 **Nada disto foi aplicado ao código.** Tudo registado como task com acceptance verificável; o registo remoto vai de 72 → **86 tasks**.
 
+
 ---
 
-## 18. R87 — Lista PMO operável e reconciliação de 24 tarefas simultâneas (31/10/2026)
+## 10.3 Auditoria independente do pacote Commander (31/10 21:25Z) — o HOLD da matriz era evitável
 
-### Implementação efetiva
+**Veredito: candidato com HOLD, não PASS verificado.** O pacote é material de design e rastreabilidade; não é integração canónica nem autoridade.
 
-- Criado `src/lib/admin/list-query.ts`, motor puro/read-only para busca sem acentos (ID, título, responsável, critérios, ação), filtros `all/active/holds`, ordenação estável (posição, P0..Pn, título pt-BR) e paginação determinística. Sem alteração na fila e com veto a IDs duplicados ou parâmetros inválidos.
-- Criado `src/lib/admin/list-query.test.ts` com **14 testes** (normalização Unicode, buscas múltiplas, filtros, ordenação, overflow de página, lista vazia, falhas fechadas). O runner oficial descobre `src/**/*.test.ts` e executa com `--experimental-strip-types`, sem depender de scripts de testes fora do glob.
-- A interface `src/components/admin/pmo-panel.tsx` agora fornece input de busca com label, filtros, ordenação, quantidade de itens por página, paginação Anterior/Próxima, `aria-live` para contagem e estado vazio acessível. `PmoReviewIntake` **continua presente**; nenhuma ação concede aprovação ou acesso remoto.
-- `src/styles/admin-console.css` reutiliza as variáveis do Design System e estabelece alvos mínimos de 44 px e foco visível; `scripts/test-admin-console.mjs` acrescentou controles estáticos de acessibilidade e de preservação do intake.
-- `TASK-PLAN-092` recebeu os artefatos rastreáveis, mantendo `status=PROPOSTO` até teste visual/homologação independente. Não é alegado que as outras listas, motor de impacto ou backend estejam implementados.
+**1) Integridade, medida por mim (não herdada do enunciado).** O `artifacts/delivery-manifest.json` declara **40** entradas (36 ficheiros + 4 inputs); recalculei o SHA-256 de cada uma: **39 conferem, 1 diverge — `src/App.tsx`** (declarado `c75313ee…`, medido `a16223547…`); 0 ausentes. CSV completo em `docs/evidence/commander-2026-10-31/hashes-verificacao.csv`.
 
-### Divergência real encontrada e saneada sem perda de origem
+**2) O defeito maior é de processo:** o verificador que o pacote entrega (`scripts/validate-manifest.mjs`) **só valida o JSON contra o schema AJV — não recalcula um único hash**. `pnpm check:manifest` não deteta a divergência; o passo 1 do `handoff.md` ("conferir hashes") não é automatizável com o que o pacote entrega. → `TASK-PLAN-114`.
 
-A integração paralela adicionou **24 tarefas** `TASK-PLAN-090..113` além da população histórica R78/R79 `37+31=68`, elevando o plano a **92**. A versão paralela havia descartado o registro `r86SupplementalTaskIntake` de quatro tarefas e introduzido seis pares com escopos sobrepostos (`094/108`, `095/109`, `096/110`, `097/111`, `098/112`, `099/113`). Nenhuma dessas tarefas foi removida, aprovada ou agrupada silenciosamente.
+**3) A matriz M01–M22 EXISTE no repo:** `docs/governance/commander/MANUS_MODULE_CROSSWALK_CANDIDATE_20261026.md` @ branch **`fix/governed-activities-cli-20261026`** (**não está no `main`**). O caminho estava no comentário do dono na issue #16 (`#issuecomment-6427776320`); a busca de código do GitHub **só indexa a branch por defeito** — foi isso que produziu o `FIND-MOD-001` HOLD. A matriz traz os 7 macrogrupos e os **22 módulos com nomes** (M01 Visão Geral … M22 Gestão Corporativa e Terceiros; 4+2+4+4+2+4+2 = 22), a Central de Comando transversal a M01/M03/M07/M16/M19/M20/M14 (não é Kernel/PMO/storage) e o layout obrigatório 65/35. **Copia com proveniência** em `docs/evidence/commander-2026-10-31/`.
+   ⇒ fecha-se o *gap de acesso à fonte* (`TASK-PLAN-113` → PROPOSTO); **mantém-se o HOLD de autoridade** (é transcrição-resumo PROPOSTO; o DOCX original não está no repo → `TASK-PLAN-119`).
 
-O plano agora registra `r87ScopedTaskExpansion` com 24 identidades, títulos, estados, WO, critérios de aceite, artefatos e commits de origem, além dos seis alertas de possível duplicidade. `WO-DS-001` já existe entre as dez WOs da fila (a presença no cadastro **não** equivale à admissão formal do Kernel); apenas `TASK-PLAN-102` e `105` são referências novas ao DS. O guard `scripts/validate-r87-task-extension.mjs` confere essa população exata, vetando tarefas adicionais, falsos `DONE`, alterações de escopo e fonte, liberação e quaisquer WO IDs desconhecidos.
+**4) Linhagem:** o ZIP reenviado é a linhagem com `delivery-manifest`/`validation`/`handoff`; **não** inclui a linhagem "continuidade local" (comentário `6428694625`: `CommanderReadModel`, `ce-ds-bridge.candidate.css`, `test-host-adapter.mjs`, `INTEGRATION_README.md`, `candidate-manifest.json`) — confirmei que o `src/App.tsx` recebido não tem `CommanderReadModel`. É a pista mais provável para a divergência de hash. → `TASK-PLAN-115`.
 
-`scripts/check-r78-gap-register.mjs` e `scripts/audit-domain-wo-candidates.mjs` agora aceitam o registro R87 validado ou a extensão histórica R86 de quatro tarefas, **sem alterar** a semântica das 31 vinculações R79, seus SHAs, dependências e o veto de admissão. Há novas regressões `scripts/validate-r87-task-extension.test.mjs` e ajustes nos testes R78. Não houve mudança na fila canônica ou na branch principal.
+**5) Delta workspace "Planejar" vs repo** (`delta-planejar-vs-repo.json`): `admin-console.tsx` 485→291 linhas e `commander-panel.tsx` 280→175 (redesign **não integrado**); `pmo-panel.tsx` 64→98 (**o repo está à frente**: tem `PmoReviewIntake` + `queryPmo`); `design-tokens.v1.json` e `queue.v1.json` **IDÊNTICOS** → tokens canónicos e fila PMO **não foram tocados** ✔. → port em `TASK-PLAN-116`.
 
-### Autoridade e limitações
+**6) Estado real do repo medido:** `src/lib/admin/list-query.ts` PRESENTE (54 linhas) e `src/components/admin/pmo-review-intake.tsx` PRESENTE (132 linhas, importado pelo `pmo-panel.tsx`) → **`PmoReviewIntake` preservado** (`TASK-PLAN-092` → DELIVERED_PENDING_GATE). `src/lib/impact/impact-engine.ts` e `src/components/admin/admin-topbar.tsx` **AUSENTES** → `TASK-PLAN-118`. `registers/canonical/surface-contracts.v2.json` (275 linhas) **não declara** `impact-engine`, `list-query`, `admin-topbar` nem `PmoReviewIntake` → `TASK-PLAN-091` segue aberto. No CSS coexistem **`.ce-admin-empty` e `.ce-admin-list-empty`** (duplicação semântica real) e `ce-admin-listbar`/`chip`/`topbar` têm **0 ocorrências** (não portados).
 
-CI técnico valida regressão e compilação, não a origem de aprovação; o PR #26 está em modo `DRAFT/HOLD`, e a leitura R86 passou a distinguir esse estado seguro de uma falha operacional. `GAP-01..04` continuam abertos, `WO-HOM-001=HOLD_HUMAN`; não foi concedida nenhuma assinatura, admissão Kernel, release, merge ou deploy. Os seis pares sobrepostos dependem de reconciliação formal em processo separado, sem inventar eleição da fila.
+**7) Limites confirmados:** `review.approved=false`, `reviewer=null`, `independent=false`, `releaseAuthorized=false`, `executionEvidence=null`, status `CANDIDATE_WITH_HOLDS`; `axe`/teclado = **NOT_RUN**; execução real (LLM/Kernel/agentes/API/auth/banco) desligada; uma rota declarada (`/`), M01–M22 como âncoras, não rotas.
+
+**8) Continua a ser do dono:** o estado de `WO-DS-001` (fila rev. 18 = `QUEUED` vs `HOLD_HUMAN` do comentário `6427869597`, **sem resposta**) → `TASK-PLAN-117`; a revisão independente (`approved=false`); a linhagem final do pacote.

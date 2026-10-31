@@ -62,3 +62,38 @@ test('read-only queue contract is mandatory',()=>{
  const x=sources();x[0].queue.readOnly=false;
  assert.throws(()=>reconcilePmoForks(x),/PMO_CONTRACT_INVALID/);
 });
+
+test('R77: arbitration record is bound to an unchanged Git blob and preserves all PMO conflicts', async () => {
+ const {readFileSync} = await import('node:fs');
+ const {createHash} = await import('node:crypto');
+ const src = readFileSync(new URL('../registers/governance/pmo-fork-reconciliation-20261031.v1.json', import.meta.url));
+ const record = JSON.parse(readFileSync(new URL('../registers/governance/pmo-r77-arbitration-20261031.v1.json', import.meta.url),'utf8'));
+ const pmo = JSON.parse(src.toString('utf8'));
+ const blobSha = createHash('sha1').update('blob '+src.length+'\\0').update(src).digest('hex');
+ assert.equal(record.source.blobSha, blobSha, 'versioned decision must bind to actual immutable source blob');
+ assert.deepEqual(record.scope.originalSeqCollisions, [20,21]);
+ assert.equal(record.scope.distinctEvents,pmo.counts.distinctEventPayloads);
+ assert.equal(record.scope.distinctEvents,pmo.eventLedger.length);
+ assert.deepEqual(record.scope.statusConflictWOs, pmo.counts.contestedStatuses);
+ assert.deepEqual(record.scope.additionalCandidateWOs,pmo.extraWorkOrders);
+ assert.equal(record.scope.variantWOs,pmo.woVariants.length);
+ assert.deepEqual(record.scope.originalSeqCollisions,pmo.originalSeqCollisions.map(e=>e.originalSeq));
+});
+
+test('R77: scoped arbitration is not a canonical election or Kernel release', async () => {
+ const {readFileSync} = await import('node:fs');
+ const d=JSON.parse(readFileSync(new URL('../registers/governance/pmo-r77-arbitration-20261031.v1.json', import.meta.url),'utf8'));
+ assert.equal(d.scope.canonicalRevisionElected,false);
+ assert.equal(d.requiresSpecificCanonicalDecision,true);
+ assert.equal(d.ownerOperationalAuthorizationPreviouslyRecorded,true);
+ assert.equal(d.controls.mainChanged,false);
+ assert.equal(d.controls.officialQueueChanged,false);
+ assert.equal(d.controls.eventsDeleted,false);
+ assert.equal(d.controls.newWOsAdmitted,false);
+ assert.equal(d.controls.promotionAllowed,false);
+ assert.equal(d.controls.releaseGate,'HOLD_HUMAN');
+ assert.equal(d.controls.kernelAdmission,'NOT_VERIFIED');
+ assert.deepEqual(d.decisionCandidates.map(x=>x.workOrder),['WO-ADM-001','WO-CKO-001']);
+ assert.ok(d.decisionCandidates.every(x=>!x.releaseAuthority&&x.proposedTreatment.startsWith('KEEP_MAIN_STATUS_PENDING_')));
+ assert.ok(d.decisionsRequired.every(x=>x.state==='NOT_ELECTED'));
+});

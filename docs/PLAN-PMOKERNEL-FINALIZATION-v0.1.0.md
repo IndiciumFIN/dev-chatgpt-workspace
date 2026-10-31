@@ -414,3 +414,17 @@ Foram despachados 3 auditores especializados (divergência/regressão · DS-cont
 **7) Limites confirmados:** `review.approved=false`, `reviewer=null`, `independent=false`, `releaseAuthorized=false`, `executionEvidence=null`, status `CANDIDATE_WITH_HOLDS`; `axe`/teclado = **NOT_RUN**; execução real (LLM/Kernel/agentes/API/auth/banco) desligada; uma rota declarada (`/`), M01–M22 como âncoras, não rotas.
 
 **8) Continua a ser do dono:** o estado de `WO-DS-001` (fila rev. 18 = `QUEUED` vs `HOLD_HUMAN` do comentário `6427869597`, **sem resposta**) → `TASK-PLAN-117`; a revisão independente (`approved=false`); a linhagem final do pacote.
+
+
+---
+
+## 11. Esqueleto CE (Experience Platform) — construído localmente e verificado (31/10 21:45Z)
+
+O dono pediu o "esqueleto completo localmente, com todos os recursos". Feito e medido, **fora do repo canónico** (sem WO de admissão, sem alterar `main`):
+
+- **45 famílias** (36 domínio + 9 transversais) · **410 serviços lógicos** (274 DOMAIN · 97 PLATFORM · 39 CROSS_CUTTING) · **201 capabilities** em 20 famílias · **16 bindings** por tipo de objeto · **3 schemas** de piloto (Article, LibraryEntity, ClinicalTool).
+- **905 ficheiros gerados** por script determinístico (o catálogo é a verdade; `--check` falha em qualquer drift), **70/70 testes verdes** (45 de família + 20 de capability + 5 de piloto), **gate de estrutura 8/8 verde** e fail-closed (sem serviço órfão, sem `PASS`/`APPROVED`/`ADMITTED` sem evidência, sem capability por declarar, sem drift de toolchain).
+- **Tudo em `CANDIDATE_HOLD`**: 410 serviços que **lançam** `NOT_IMPLEMENTED_CANDIDATE_HOLD`; nenhum mock finge sucesso. Só o piloto tem lógica (resolver puro, estado guest-first, schemas) — coerente com o parecer da outra IA de não codificar 201 capabilities.
+- **Toolchain fixada na canónica** (vite 8.2.0 · react 19.2.0 · lucide-react 0.510.0 · typescript 5.7.0) para portabilidade sem partir `npm audit --audit-level=high`.
+- **Persistido**: `docs/evidence/experience-platform-skeleton-2026-10-31/` (avaliação + catálogo) e `tools/experience-skeleton/` (gerador + gate + piloto) — tasks `TASK-PLAN-120` a `TASK-PLAN-124`.
+- **Aberto, por decisão do dono:** fundir o vocabulário antes de admitir qualquer WO (`T0.121`), schemas centrais no registo canónico (`T0.122`), acessibilidade real por medir (`T0.123`) e o port ao repo canónico (`T0.124`, BLOCKED).

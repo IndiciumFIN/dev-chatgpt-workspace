@@ -36,7 +36,21 @@ export function verify({intake,queue,plan,register,sourceSha,queueSha,planSha}){
  guard(/^[a-f0-9]{40}$/.test(register.baseline.taskPlanBlobSha) && /^[a-f0-9]{40}$/.test(planSha),'INVALID_PLAN_BLOB_SHA');
  guard(plan.r79CandidateMapping?.sourceRegistryBlobSha===sourceSha && plan.r79CandidateMapping?.queueBlobSha===queueSha,'PLAN_SOURCE_DRIFT');
  guard(plan.r79CandidateMapping?.baselineTasks===register.coverage.oldPlanTasks,'BASELINE_TASK_DRIFT');
- guard(plan.tasks.length===register.coverage.currentPlanTasks && plan.tasks.length===register.coverage.oldPlanTasks+unresolved.length,'PLAN_COUNT_DRIFT');
+ // Historical R79 mapping covers exactly the initial 37+31 tasks.
+ // Later specialist tasks may exist only through their separately guarded
+ // provenance register; never redefine the original 31 candidate coverage.
+ const historic=register.coverage.currentPlanTasks,addon=plan.r86SupplementalTaskIntake;
+ const additional=addon?.additionalAuditTaskCount??0;
+ guard(historic===register.coverage.oldPlanTasks+unresolved.length && Number.isSafeInteger(additional) && additional>=0 && plan.tasks.length===historic+additional,'PLAN_COUNT_DRIFT');
+ if(additional){
+  const ids=['TASK-PLAN-090','TASK-PLAN-091','TASK-PLAN-092','TASK-PLAN-093'];
+  guard(additional===4 && addon.state==='CANDIDATE_ONLY_NOT_KERNEL_ADMITTED' && addon.originalBaselineTasks===register.coverage.oldPlanTasks && addon.r79SourceCandidateTasks===unresolved.length && addon.resultingTaskCount===historic+additional && addon.sourceCommit==='d5ca82bf99499878a4b4c034078f9edd7089d9bf' && addon.approval==='NOT_APPROVED' && addon.kernelAdmission==='NOT_VERIFIED' && addon.releaseGate==='HOLD_HUMAN' && addon.authorizedWoStatusChanges===false && addon.additionalWosAdmitted===0,'UNVERIFIED_ADDITIONAL_AUDIT_TASKS');
+  guard(Array.isArray(addon.tasks) && addon.tasks.length===4 && addon.tasks.map(t=>t.id).join(',')===ids.join(',') && plan.tasks.slice(historic).map(t=>t.id).join(',')===ids.join(','),'ADDITIONAL_TASK_IDS_DRIFT');
+  for(const row of addon.tasks){
+   const t=plan.tasks.find(v=>v.id===row.id);
+   guard(t && t.status==='PROPOSTO' && row.status==='PROPOSTO' && t.wo===row.wo && woIds.has(row.wo) && t.title===row.title && JSON.stringify(t.artifacts)===JSON.stringify(row.artifacts) && t.artifacts?.length>0 && t.authorization?.approval!=='APPROVED' && t.authorization?.kernelAdmission!=='ADMITTED','ADDITIONAL_TASK_SCOPE_DRIFT:'+row.id);
+  }
+ }
  guard(register.coverage.sourcePendingTotal===sources.length && register.coverage.sourceUnreconciled===unresolved.length && register.coverage.alreadySourceWoMapped===mapped.length && register.coverage.newProposedTasks===unresolved.length,'COVERAGE_COUNT_DRIFT');
  guard(mapped.every(x=>woIds.has(x.wo)),'PREEXISTING_SOURCE_WO_INVALID');
  const sourceMap=new Map(unresolved.map(x=>[x.id,x]));

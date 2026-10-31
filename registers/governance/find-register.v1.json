@@ -2,7 +2,7 @@
   "as_of": "2026-10-31",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos. | R81: FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 registrado como draft de segurança com hashes do ZIP original, sem prova de execução SQL ou homologação.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -295,6 +295,37 @@
       "remediation_task_refs": [
         "TASK-PLAN-026",
         "TASK-PLAN-076"
+      ],
+      "blocking_policy_refs": [
+        "docs/governance/04-work-order-model.md",
+        "AGENTS.project.md"
+      ],
+      "policy_ref": "PENDING_APPLICABILITY_REVIEW",
+      "validator_ref": "PENDING_ADMISSION",
+      "work_order": "NOT_ADMITTED",
+      "mutation_allowed": false
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-SPE-RPC-ANSWER-EXPOSURE-20261031",
+      "version": "0.1.0",
+      "status": "DRAFT_FOR_GOVERNED_REVIEW",
+      "updated_at": "2026-10-31",
+      "provenance_refs": [
+        "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+        "https://drive.google.com/file/d/1O2drLtDpNoSl5Lk-GeOPRdaKzpsOJ2i9/view"
+      ],
+      "finding_type": "SECURITY_CONTROL_GAP",
+      "severity": "CRITICAL",
+      "fact": "No arquivo original dos Simulados v1.4.0 (SHA-256 5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47), migrations 0024/0031 concedem EXECUTE a anon/authenticated em api.evaluate_question com correct_option_ids; 0038 concede EXECUTE na evaluate_question_set que chama a rotina. Evidência estática de risco de revelação de gabaritos; versão implantada e efetividade das ACLs não verificadas.",
+      "evidence_refs": [
+        "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/simulados-enfermagem-db-canonico/docs/simulados-enfermagem/W07_FIND_RPC_ANSWER_EXPOSURE_v0.1.0.md"
+      ],
+      "root_cause_status": "IDENTIFIED_STATIC_ORIGINAL_ARCHIVE_NOT_RUNTIME",
+      "remediation_task_refs": [
+        "TASK-PLAN-080",
+        "TASK-PLAN-034"
       ],
       "blocking_policy_refs": [
         "docs/governance/04-work-order-model.md",

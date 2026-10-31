@@ -97,7 +97,7 @@ export async function loadLive({token,expectedHead}){
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
-  const result=await loadLive({token:process.env.GITHUB_TOKEN,expectedHead:process.env.GITHUB_SHA});
+  const result=await loadLive({token:process.env.GITHUB_TOKEN,expectedHead:process.env.R86_EXPECTED_HEAD_SHA});
   console.log('[R86-live-review] EVIDENCE_VALIDATED '+JSON.stringify(result));
   if(process.env.GITHUB_STEP_SUMMARY){
     const {appendFileSync}=await import('node:fs');

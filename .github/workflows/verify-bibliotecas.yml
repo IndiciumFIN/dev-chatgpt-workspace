@@ -83,6 +83,7 @@ jobs:
       - name: Testar exportação determinística das WOs
         run: node --test scripts/test-export-commander-task.mjs
       - run: node scripts/test-admin-console.mjs
+      - run: node --test scripts/test-auth-secret-env.mjs
       - name: Testar delegação fail-closed do Commander
         run: |
           node scripts/check-commander-handoffs.mjs

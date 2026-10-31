@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-R81-SPE-ORIGINAL-RPC-STATIC-20261031",
+  "date": "2026-10-31",
+  "repo": "IndiciumFIN/dev-chatgpt-workspace",
+  "artifactType": "SOURCE_ARCHIVE_STATIC_REPRODUCTION",
+  "reviewMode": "READ_ONLY_NO_DB_EXECUTION",
+  "source": {
+    "origin": "Google Drive original owner archive",
+    "fileName": "simulados-platform-next-cms-v1.4.0.zip",
+    "driveFileId": "1O2drLtDpNoSl5Lk-GeOPRdaKzpsOJ2i9",
+    "archiveSha256": "5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47",
+    "archiveBytes": 582756,
+    "zipCrc": "PASS",
+    "redistributedToPublicRepository": false
+  },
+  "inventory": {
+    "originalMigrationFiles": 47,
+    "originalMigrationSequence": "0001..0047",
+    "sequenceComplete": true,
+    "originalDatabaseTestFiles": 17,
+    "migrationExecuted": 0,
+    "databaseTestsExecuted": 0
+  },
+  "check": {
+    "method": "Independent read-only Python archive inspection (ZIP and SQL patterns); no SQL execution",
+    "auditedFunctions": [
+      "api.evaluate_question",
+      "api.evaluate_question_set"
+    ],
+    "scope": "Original ZIP bytes",
+    "riskObserved": "PUBLIC_GRADING_ANSWER_EXPOSURE_STATIC",
+    "securityDefinerNotEquivalentToLivePrivilegeProof": true
+  },
+  "migrations": [
+    {
+      "file": "0024_api_functions.sql",
+      "sha256": "471c7cdab35b904a84dfc66f431daa831ec72c702b1134a7dce07e96815f46d8",
+      "rpc": "api.evaluate_question",
+      "hasRpc": true,
+      "executeGrantedTo": [
+        "anon",
+        "authenticated"
+      ],
+      "containsCorrectOptionIds": true,
+      "staticExposure": true
+    },
+    {
+      "file": "0031_cms_working_copies_option_lifecycle.sql",
+      "sha256": "a61a54a9d5fd98ddc918f73ca429cc6557e96384a4d5d57245d293dc8d0bed0a",
+      "rpc": "api.evaluate_question",
+      "hasRpc": true,
+      "executeGrantedTo": [
+        "anon",
+        "authenticated"
+      ],
+      "containsCorrectOptionIds": true,
+      "staticExposure": true
+    },
+    {
+      "file": "0038_api_assessment_runtime.sql",
+      "sha256": "7dddd92f3deaed898aed1cde47a2d5c940824a7cd7e5e671230ddfd2190bc638",
+      "rpc": "api.evaluate_question_set",
+      "hasRpc": true,
+      "executeGrantedTo": [
+        "anon",
+        "authenticated"
+      ],
+      "callsEvaluateQuestion": true,
+      "staticExposure": true
+    }
+  ],
+  "traceability": {
+    "sourceDocument": "docs/simulados-enfermagem/W07_FIND_RPC_ANSWER_EXPOSURE_v0.1.0.md",
+    "sourceBranch": "simulados-enfermagem-db-canonico",
+    "existingTask": "TASK-PLAN-080",
+    "workOrderCandidate": "WO-SEC-001",
+    "simuladosWorkOrderNotSubmitted": "WO-SPE-DB-FIRST-20261026-001",
+    "existingValidation": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41234365213"
+  },
+  "release": {
+    "status": "HOLD_HUMAN",
+    "policyApplicability": "NOT_APPROVED",
+    "kernelAdmission": "NOT_VERIFIED",
+    "postgresqlDisposableReplay": "NOT_RUN",
+    "anonAuthenticatedDirectRpcTests": "NOT_RUN",
+    "downstreamConsumerMigration": "NOT_DONE",
+    "brokerCredentialRotation": "NOT_DONE",
+    "mergeOrDeployAllowed": false
+  },
+  "limitations": [
+    "Static declaration may not equal effective privilege after later REVOKE/GRANT, role inheritance, schema visibility and runtime changes.",
+    "SECURITY DEFINER may bypass RLS and must be tested with actual grants, roles and attempts.",
+    "No proof of deployed version or live exploit; source is archived and has not been applied by this task.",
+    "Running the 47 original migrations and all 17 pgTAP tests requires a disposable PostgreSQL environment and authorized source access; do not inject the original ZIP into public GitHub CI."
+  ]
+}

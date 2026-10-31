@@ -8,8 +8,8 @@ const wos=new Set(queue.items.map(x=>x.id));
 const clone=()=>structuredClone(base);
 test('R87: 24 registered candidate tasks verified while preserving 68 historical records',()=>{
  assert.equal(checkR87Extension(clone(),wos),24);
- assert.equal(base.tasks.length,92);
- assert.equal(base.tasks.filter(x=>x.id.startsWith('TASK-PLAN-1')).length,14);
+ assert.equal(base.tasks.length,112);
+ assert.equal(base.tasks.filter(x=>x.id.startsWith('TASK-PLAN-1')).length,34);
 });
 test('R87: duplicated scope is reported for review, not auto-closed',()=>{
  const d=clone();

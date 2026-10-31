@@ -124,7 +124,10 @@ export function GovernedReviewPanel() {
         <div className="ce-admin-review-draft" data-testid="review-candidate-draft" role="region" aria-label="Minuta local não enviada">
           <strong>Minuta gerada — não enviada nem assinada</strong>
           <pre>{result.text}</pre>
-          <button type="button" className="ce-admin-btn" onClick={copyDraft}><ClipboardCopy size={15} aria-hidden="true" /> Copiar minuta para revisão</button>
+          <div className="ce-admin-review-actions">
+            <button type="button" className="ce-admin-btn" onClick={() => { setResult(null); setFeedback('Minuta reaberta para edição local, sem nenhuma decisão registrada.'); }}>Editar minuta</button>
+            <button type="button" className="ce-admin-btn" onClick={copyDraft}><ClipboardCopy size={15} aria-hidden="true" /> Copiar minuta para revisão</button>
+          </div>
         </div>
       )}
       <p className="ce-admin-detail-note"><LockKeyhole size={14} aria-hidden="true" /> Nenhuma decisão é persistida nesta interface. O fluxo definitivo exige autenticação, segregação de funções, registro imutável e validação da admissão pelo Kernel.</p>

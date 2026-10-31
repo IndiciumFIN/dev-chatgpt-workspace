@@ -31,3 +31,10 @@ test('release HOLD cannot be removed by an untrusted PMO event',async()=>{
  assert.match(validatePmo(q).join(' '),/Release HOLD bypassed/);
  await assert.rejects(run(['report'],io(q)),/Release HOLD bypassed/);
 });
+
+test('removing homologation WO does not remove the release HOLD',async()=>{
+ const q=fixture();q.items=q.items.filter(x=>x.id!=='WO-HOM-001');
+ q.events=q.events.filter(x=>x.workId!=='WO-HOM-001');
+ assert.match(validatePmo(q).join(' '),/Release HOLD bypassed/);
+ await assert.rejects(run(['scan'],io(q)),/Release HOLD bypassed/);
+});

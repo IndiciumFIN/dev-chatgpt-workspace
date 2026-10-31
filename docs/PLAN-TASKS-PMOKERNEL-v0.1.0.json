@@ -41,7 +41,10 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx"
+        "src/components/admin/pmo-review-intake.tsx",
+        "registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json",
+        "scripts/verify-r85-owner-assent.mjs",
+        "scripts/verify-r85-owner-assent.test.mjs"
       ],
       "acceptance": "Uma revisão canônica escolhida e registrada na fila com evento novo e seq preservado; as demais marcadas SUPERSEDED; gate do plano coerente com a revisão eleita."
     },
@@ -66,7 +69,10 @@
         "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
         "scripts/verify-r84-pmo-decision-intake.mjs",
         "scripts/verify-r84-pmo-decision-intake.test.mjs",
-        "src/components/admin/pmo-review-intake.tsx"
+        "src/components/admin/pmo-review-intake.tsx",
+        "registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json",
+        "scripts/verify-r85-owner-assent.mjs",
+        "scripts/verify-r85-owner-assent.test.mjs"
       ],
       "acceptance": "Decisão verificável com ID, WO, SHA, identidade e autoridade do decisor, assinatura, timestamp, expiração, condições, veto e trilha imutável."
     },
@@ -1931,7 +1937,7 @@
   },
   "r84DecisionIntake": {
     "date": "2026-10-31",
-    "state": "CANDIDATE_REVIEW_UNSUBMITTED",
+    "state": "CONVERSATION_ASSENT_RECORDED_FORMAL_ATTESTATION_PENDING",
     "ownerDecisionsAwaited": 4,
     "ownerIdentityVerified": false,
     "checkerReviewsVerified": 0,
@@ -1944,6 +1950,29 @@
     "electedCanonicalRevision": null,
     "mainChanged": false,
     "sourceQueueChanged": false,
-    "releaseGate": "HOLD_HUMAN"
+    "releaseGate": "HOLD_HUMAN",
+    "ownerConversationAssentRecorded": 4
+  },
+  "r85ConversationAssent": {
+    "date": "2026-10-31",
+    "recordType": "OWNER_RECOMMENDATIONS_RECORDED_AS_CONVERSATION_NOT_SIGNED",
+    "sourceWord": "aprovado",
+    "assentedCodes": [
+      "KEEP_REV18_PENDING_KERNEL",
+      "KEEP_LOCAL_COMMANDER_SCOPED",
+      "KEEP_CKO_QUEUED",
+      "HOLD_EXTRA_WOS"
+    ],
+    "ownerRecommendationsRecorded": 4,
+    "ownerIdentityVerified": false,
+    "formalOwnerDecisionsAuthenticated": 0,
+    "independentCheckerApprovals": 0,
+    "kernelAdmissionsVerified": 0,
+    "canonicalRevisionElected": false,
+    "sourceQueueUpdated": false,
+    "mainChanged": false,
+    "formalTaskStatusesChanged": false,
+    "releaseGate": "HOLD_HUMAN",
+    "record": "registers/governance/r85-pmo-conversation-owner-assent-20261031.v1.json"
   }
 }

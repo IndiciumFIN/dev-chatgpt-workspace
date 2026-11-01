@@ -37,6 +37,9 @@ jobs:
       - name: Governança — rejeitar placeholders de aprovação
         run: node scripts/check-governance-placeholders.mjs migrations/*.sql
 
+      - name: CE — integridade dos 870 arquivos recuperados (sem autorização de release)
+        run: node scripts/audit-historical-recovery.mjs
+
       - name: DERBY — nada fica retido
         run: node scripts/preencher-derby.mjs --check
 

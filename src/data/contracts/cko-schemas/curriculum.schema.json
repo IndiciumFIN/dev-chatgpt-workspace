@@ -1,0 +1,529 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/curriculum.schema.json",
+  "title": "CKO | curriculum",
+  "description": "Currículo profissional (Lattes/ABNT) derivado de learning_resource. Trata o CV como um learning_resource do tipo CURRICULUM, com sub-objetos canônicos para educação, experiência, publicações, certificações e competências. Vincula-se a Source/Reference para evidenciar diplomas, atestados e publicações.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "canonical_topic_ids",
+    "resource_type",
+    "projection_profile_ref",
+    "source_claim_ids",
+    "privacy_profile",
+    "owner",
+    "summary",
+    "education_refs",
+    "experience_refs",
+    "publication_refs",
+    "certification_refs",
+    "skill_refs",
+    "language_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$",
+      "description": "ID canônico estável (ex.: CV-MARIA-SILVA-2024)."
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Lista de source_ids que sustentam os registros do CV (diplomas, atestados, publicações)."
+    },
+    "canonical_topic_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Tópicos canônicos cobertos (ex.: enfermagem, UTI, gestão)."
+    },
+    "resource_type": {
+      "type": "string",
+      "const": "CURRICULUM",
+      "description": "Sempre CURRICULUM — derivado de learning_resource."
+    },
+    "projection_profile_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Perfil de projeção (ex.: lattes, abnt, einf)."
+    },
+    "source_claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Claims que sustentam as afirmações do CV."
+    },
+    "privacy_profile": {
+      "type": "string",
+      "enum": ["PUBLIC", "PROFESSIONAL_NETWORK", "INSTITUTIONAL", "PRIVATE"],
+      "description": "Perfil de privacidade do CV."
+    },
+    "evaluation_contract_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Referência ao contrato de avaliação (herdado de learning_resource)."
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full_name", "professional_id"],
+      "properties": {
+        "full_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Nome completo do profissional."
+        },
+        "preferred_name": {
+          "type": "string",
+          "description": "Nome de preferência/citação."
+        },
+        "professional_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Registro profissional (ex.: COREN-SP 123456)."
+        },
+        "professional_id_type": {
+          "type": "string",
+          "enum": ["COREN", "CRM", "CRF", "CRFA", "CRO", "CFE", "OTHER"]
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "orcid": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]$",
+          "description": "Identificador ORCID (open researcher and contributor ID)."
+        },
+        "lattes_id": {
+          "type": "string",
+          "description": "ID Plataforma Lattes (CNPq)."
+        },
+        "linkedin_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "address": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "city": {"type": "string"},
+            "state": {"type": "string"},
+            "country": {"type": "string", "default": "Brasil"}
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "Resumo profissional (200-500 palavras, padrão Lattes)."
+    },
+    "education_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/education"
+      },
+      "description": "Formação acadêmica (graduação, especialização, mestrado, doutorado)."
+    },
+    "experience_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/experience"
+      },
+      "description": "Experiência profissional."
+    },
+    "publication_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "IDs de Reference (citações) cadastradas no bloco Pesquisa. Vínculo direto com research_method.publication_refs."
+    },
+    "certification_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/certification"
+      },
+      "description": "Certificações e títulos (residência, board, specialty)."
+    },
+    "skill_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/skill"
+      },
+      "description": "Competências e habilidades."
+    },
+    "language_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/language"
+      },
+      "description": "Idiomas falados/escritos."
+    },
+    "award_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/award"
+      },
+      "description": "Prêmios e distinções."
+    },
+    "membership_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/membership"
+      },
+      "description": "Filiações a sociedades profissionais."
+    },
+    "event_participation_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event_participation"
+      },
+      "description": "Participação em eventos (congressos, palestras)."
+    },
+    "projection_target": {
+      "type": "string",
+      "enum": ["LATTES", "ABNT_14724", "EINF", "LINKEDIN", "PRINT_PDF"],
+      "description": "Formato de projeção padrão ao exportar."
+    }
+  },
+  "$defs": {
+    "education": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "degree", "field", "institution", "start_date", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "degree": {
+          "type": "string",
+          "enum": ["TECHNICAL", "GRADUATION", "SPECIALIZATION", "MBA", "MASTER", "DOCTORATE", "POSTDOC", "RESIDENCY", "FELLOWSHIP", "OTHER"]
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Área/curso (ex.: Enfermagem, Cardiologia)."
+        },
+        "institution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ONGOING", "COMPLETED", "ABANDONED"]
+        },
+        "advisor": {
+          "type": "string"
+        },
+        "thesis_title": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string",
+          "description": "Source canônico do diploma/curso (vincula a source.schema.json)."
+        }
+      }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "institution", "start_date", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Cargo (ex.: Enfermeiro, Técnico, Coordenador)."
+        },
+        "institution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "department": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["CURRENT", "PAST"]
+        },
+        "workload_hours_week": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição de atividades (até 500 caracteres)."
+        },
+        "source_id": {
+          "type": "string",
+          "description": "Source canônico do atestado/carta de recomendação."
+        }
+      }
+    },
+    "certification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "issuer", "issue_date"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Título da certificação (ex.: ACLS, BLS, Especialista em Cardiologia)."
+        },
+        "issuer": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Emissor (ex.: American Heart Association, COREN-SP, SBC)."
+        },
+        "issue_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "expiry_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date"
+        },
+        "registry_number": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "category", "level"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Nome da competência (ex.: Sutura, SVD, RCP, Liderança)."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["CLINICAL", "TECHNICAL", "MANAGEMENT", "COMMUNICATION", "RESEARCH", "EDUCATION", "DIGITAL", "OTHER"]
+        },
+        "level": {
+          "type": "string",
+          "enum": ["BASIC", "INTERMEDIATE", "ADVANCED", "EXPERT"]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "description": "Source/Reference que valida a competência."
+        }
+      }
+    },
+    "language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "language", "speaking", "writing", "reading"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Idioma (ex.: Português, Inglês, Espanhol)."
+        },
+        "speaking": {
+          "type": "string",
+          "enum": ["NONE", "BASIC", "INTERMEDIATE", "ADVANCED", "FLUENT", "NATIVE"]
+        },
+        "writing": {
+          "type": "string",
+          "enum": ["NONE", "BASIC", "INTERMEDIATE", "ADVANCED", "FLUENT", "NATIVE"]
+        },
+        "reading": {
+          "type": "string",
+          "enum": ["NONE", "BASIC", "INTERMEDIATE", "ADVANCED", "FLUENT", "NATIVE"]
+        },
+        "certification_ref": {
+          "type": "string",
+          "description": "ID de certificação (TOEFL, IELTS, Celpe-Bras) vinculada."
+        }
+      }
+    },
+    "award": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "issuer", "date"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "membership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "organization", "role", "start_date", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Sociedade/associação (ex.: ABEn, SBE, ANS)."
+        },
+        "role": {
+          "type": "string",
+          "description": "Cargo (ex.: Membro, Diretor, Presidente)."
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "INACTIVE"]
+        }
+      }
+    },
+    "event_participation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "event_name", "role", "date"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "event_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "enum": ["CONGRESS", "SEMINAR", "WORKSHOP", "COURSE", "LECTURE", "PANEL", "OTHER"]
+        },
+        "role": {
+          "type": "string",
+          "enum": ["ATTENDEE", "SPEAKER", "ORGANIZER", "PANELIST", "INSTRUCTOR"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "workload_hours": {
+          "type": "number",
+          "minimum": 0
+        },
+        "source_id": {
+          "type": "string",
+          "description": "Source canônico do certificado de participação."
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ import { StudyDesk } from "@/components/site/study";
 import { SubscriptionPanel } from "@/components/site/subscription";
 import { Translated } from "@/components/site/translated";
 import { imageAlt, useStored } from "@/lib/stored";
+import { LibraryShelves } from "@/components/templates/library-shelves";
+import { HeartSheet } from "@/components/templates/heart-sheet";
 import { useChrome } from "@/lib/chrome";
 import { navLabel } from "@/lib/translate";
 import type { CatalogItem, Section } from "@/lib/sections";
@@ -132,6 +134,7 @@ export function SectionPage({
       {section.kind === "subscribe" ? <SubscriptionPanel /> : null}
       {q ? <p className="tool-help">Busca: “{q}”.</p> : null}
       {section.slug === "simulados" && !q ? <StudyDesk /> : null}
+      {section.slug === "biblioteca" && !q ? <LibraryShelves /> : null}
     </>
   );
   const catalog = longs.map((block, index) => {
@@ -182,6 +185,8 @@ export function SectionPage({
       <Translated text={block.text ?? ""} />
     </Callout>
   ));
+
+  if (section.slug === "coracao-humano") return <HeartSheet />;
 
   if (!framed) {
     return (

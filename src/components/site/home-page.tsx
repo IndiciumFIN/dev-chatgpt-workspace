@@ -47,12 +47,12 @@ function Destino({
   );
 }
 
-function TileLink({ item, section, title, text }: { item: { title: string; slug: string | null; icon: "calc" | "book" | "cap" | null }; section: string; title: string; text: string }) {
+function TileLink({ item, section, title, text }: { item: { title: string; slug: string | null; icon: "calc" | "book" | "cap" | null; section?: string | null; hash?: string | null }; section: string; title: string; text: string }) {
   return (
     <Destino
       slug={item.slug ?? undefined}
-      section={section}
-      hash={item.slug ? undefined : slugify(item.title)}
+      section={item.section || section}
+      hash={item.hash || (item.slug ? undefined : slugify(item.title))}
       className="calc-tile"
       ariaLabel={title}
     >
@@ -286,6 +286,11 @@ export function HomePage({ copyLocale }: { copyLocale?: string }) {
           );
         })}
       </ul>
+      <p className="section-sub">
+        <Link to="/estudo">Estúdio de simulados</Link>
+        {" · "}
+        <Link to="/viladocuidado">Vila do Cuidado</Link>
+      </p>
 
       <SectionBand
         kicker={copy.bands?.[1]?.kicker || "Protocolos"}

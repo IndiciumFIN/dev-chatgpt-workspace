@@ -71,6 +71,10 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | section_page | slug | — | linha fina, título, lead, tipo |
 | content_place | id | — | objeto, seção de tela, página institucional |
 | screen_dest | id | — | tipo, lugar, ferramenta, âncora, página, modelo |
+| study_item | id | — | tipo, ordem, enunciado, verso, índice da resposta |
+| template_contract | id | — | ordem, nome, endereço, tipo, moldura, nota, situação, origem |
+| ops_record | id | — | módulo, tipo, título, estado, nota, data |
+| repo_source | repo | — | nota |
 
 `page` guarda o id da peça, não o título dela. `community_post` e `audit_event` guardam o id da pessoa, não o nome. Por isso não há dependência transitiva.
 
@@ -124,6 +128,10 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | specimen_line | specimen_id + module_position + position | O trecho é deste bloco nesta posição |
 | section_block | slug + position | O bloco é desta seção nesta posição |
 | section_link | slug + block_position + position | O item é deste bloco nesta posição |
+| study_choice | item_id + position | O texto é desta alternativa nesta questão. A posição 1 não é a mesma alternativa em outra questão |
+| media_alt | path + locale | O texto é desta imagem neste idioma. O mesmo caminho tem outro texto noutro idioma |
+| repo_branch | repo + branch | O commit é desta branch neste repositório. A mesma branch noutro repositório não é o mesmo commit |
+| repo_file | repo + branch + path | O blob e o confronto são deste caminho nesta branch. O commit ficou em repo_branch |
 
 Em `tool_faq`, a resposta não depende da pergunta sozinha. Depende da ferramenta e da posição. Isso é o que mantém a 3FN.
 

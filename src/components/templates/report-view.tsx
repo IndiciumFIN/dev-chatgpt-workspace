@@ -2,6 +2,7 @@ import { ArticlePage } from "@/components/article/article-page";
 import { ClinicalSheet } from "@/components/tools/clinical-sheet";
 import { Callout } from "@/components/site/callout";
 import { RelatedContent } from "@/components/site/related-content";
+import { lorem } from "@/lib/lorem";
 import { evaluateScale } from "@/lib/tools/engine";
 import { getTool } from "@/lib/tools/catalog";
 
@@ -15,9 +16,9 @@ export function ReportView() {
     <ArticlePage
       kind="editorial"
       crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: "Laudo" }]}
-      eyebrow="Folha de resultado"
-      title="Laudo da escala"
-      lead="A folha sai na impressão da calculadora e da escala. Aqui ela aparece na tela para revisão do modelo, com dados de demonstração, não de paciente."
+      eyebrow="Amostra visual"
+      title="Laudo"
+      lead={lorem("Folha de resultado na tela. A escala publicada abre em Calculadoras e Escalas.")}
       toc={[{ id: "folha", label: "Folha" }]}
       related={
         <RelatedContent
@@ -28,12 +29,12 @@ export function ReportView() {
         />
       }
     >
-      <Callout>Nome, idade e leito abaixo são o texto “Modelo”. Não há paciente e nada é gravado.</Callout>
+      <Callout>{lorem("Nome e setor abaixo são amostra. A escala publicada não é esta página.")}</Callout>
       <section className="inst-sec specimen-sheet" id="folha" aria-labelledby="folha-h">
         <h2 id="folha-h">Folha</h2>
         <ClinicalSheet
           tool={tool}
-          patient={{ nome: "Modelo", idade: "", setor: "Modelo", data: "", meta: {} }}
+          patient={{ nome: "Lorem ipsum", idade: "", setor: "Lorem", data: "", meta: {} }}
           raw={{}}
           answers={answers}
           notes=""

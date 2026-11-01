@@ -69,7 +69,8 @@ export async function auditEcosystem(db: Queryable): Promise<AuditFinding[]> {
   }
 
   const alternates = languageLinks("/ferramentas/braden", "pt-BR").filter(
-    (link) => link.rel === "alternate" && link.hrefLang !== "pt-BR" && link.hrefLang !== "x-default",
+    (link): link is { rel: "alternate"; hrefLang: string; href: string } =>
+      link.rel === "alternate" && "hrefLang" in link && link.hrefLang !== "pt-BR" && link.hrefLang !== "x-default",
   );
   if (alternates.length > 0) {
     note("I18N-HREFLANG", "WCAG 3.1.1: não anunciar idioma cujo texto não está publicado", "languageLinks emite en, es e fr para uma ferramenta que só abre em pt-BR");

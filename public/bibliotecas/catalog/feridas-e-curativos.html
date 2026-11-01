@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Biblioteca de Feridas e Curativos · Biblioteca de Imagens</title>
+<style>
+:root{--font-sans:Inter,ui-sans-serif,system-ui,sans-serif;--font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;--color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;--color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;--color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;--color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;--color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;--color-success:#16a34a;--color-warning:#d49a13;--color-danger:#dc2626;--color-info:#4a90e2;--radius:8px;--radius-lg:14px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--color-canvas);font-family:var(--font-sans);color:var(--color-body);line-height:1.55;font-size:16px;overflow-x:hidden}
+a{color:var(--color-navy-mid);text-decoration:none}a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;display:block}
+button{font:inherit;cursor:pointer}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;z-index:9999;padding:12px 16px;border-radius:6px;font-size:14px}
+.skip-link:focus{top:8px;left:8px}
+
+/* ===== A11y bar (mobile-first: compacta) ===== */
+.a11y-bar{display:flex;align-items:center;gap:6px;min-height:32px;background:var(--color-navy);color:#fff;padding:4px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;position:sticky;top:0;z-index:50}
+.a11y-bar button{border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:5px 9px;font-size:12px;flex-shrink:0;min-height:32px;min-width:32px;display:flex;align-items:center;justify-content:center}
+.a11y-bar .site-lang{margin-right:auto;font-weight:800;font-size:12px;flex-shrink:0}
+
+/* ===== Header mobile-first ===== */
+.site-header{background:#fff;box-shadow:0 2px 6px #13284b12;border-bottom:1px solid var(--color-line);position:sticky;top:32px;z-index:40}
+.site-header-inner{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;min-height:56px}
+.brand{display:flex;align-items:center;gap:8px;color:var(--color-navy);font-weight:850;text-decoration:none;flex-shrink:0}
+.brand-mark{width:36px;height:36px;background:var(--color-navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--font-display);font-size:16px;flex-shrink:0}
+.brand-text{font-size:14px;line-height:1.1}
+.brand-text small{display:block;font-size:10px;font-weight:600;color:var(--color-slate)}
+.site-links{display:none;gap:14px;align-items:center}
+
+/* ===== Wrap mobile-first ===== */
+.cko-wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 14px 80px}
+
+/* ===== Crumb (mobile-first) ===== */
+.crumb{font-size:12px;color:var(--color-muted);padding:12px 0 8px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.crumb a{color:var(--color-navy-mid);font-weight:700}
+.crumb span.sep{color:#8294ad;margin:0 2px}
+.crumb span.current{color:var(--color-body);font-weight:600;overflow:hidden;text-overflow:ellipsis;max-width:60vw;white-space:nowrap}
+
+/* ===== Hero gradient (mobile-first) ===== */
+.hero-grad{background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));border-radius:var(--radius);color:#fff;padding:24px 18px;margin:12px 0}
+.hero-grad.eyebrow{font-weight:800;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#bbd8ff;margin-bottom:6px}
+.hero-grad h1{font-family:var(--font-display);font-size:24px;margin:6px 0 8px;letter-spacing:-.025em;line-height:1.2;color:#fff}
+.hero-grad p{font-size:14px;color:#cfdff5;margin:0 0 12px;line-height:1.5}
+.hero-grad .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.hero-grad .badge{background:#ffffff17;border:1px solid #ffffff48;border-radius:18px;font-size:11px;font-weight:750;padding:5px 10px;white-space:nowrap}
+
+/* ===== Stats cards (mobile-first: 2 colunas no mobile, 4+ no desktop) ===== */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0}
+.stat{padding:12px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:8px;text-align:center}
+.stat strong{display:block;color:var(--color-navy);font-size:22px;font-weight:850;font-family:var(--font-display);line-height:1.2}
+.stat span{color:var(--color-muted);font-size:11px;display:block;margin-top:2px}
+
+/* ===== Library cards grid (mobile-first) ===== */
+.lib-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0}
+.lib-card{display:block;text-decoration:none;color:inherit;background:var(--color-paper);border:1px solid var(--color-line);border-radius:var(--radius);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.lib-card:active{transform:scale(.98)}
+.lib-card-img{position:relative;background:var(--color-stage);aspect-ratio:16/9;overflow:hidden}
+.lib-card-img img{width:100%;height:100%;object-fit:cover}
+.lib-card-status{position:absolute;top:8px;left:8px;background:rgba(28,72,127,0.9);color:#fff;font-size:10px;padding:3px 8px;border-radius:12px;font-weight:700}
+.lib-card-status.hold{background:rgba(212,154,19,0.95)}
+.lib-card-body{padding:14px}
+.lib-card-eyebrow{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-muted);font-weight:800;margin-bottom:4px}
+.lib-card-title{font-family:var(--font-display);font-size:16px;color:var(--color-navy-deep);line-height:1.3;margin:0 0 6px;letter-spacing:-.01em}
+.lib-card-sub{font-size:13px;color:var(--color-slate);line-height:1.5;margin:0 0 10px}
+.lib-card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.lib-card-tag{background:var(--color-ice);border:1px solid var(--color-line);color:var(--color-navy);font-size:10px;font-weight:700;padding:3px 7px;border-radius:10px}
+.lib-card-cta{font-size:12px;color:var(--color-navy);font-weight:800;padding-top:8px;border-top:1px solid var(--color-line)}
+
+/* ===== Tiles grid (mobile-first: 2 colunas no mobile) ===== */
+.section-title{font-family:var(--font-display);font-size:18px;color:var(--color-navy-deep);margin:24px 0 12px;padding:0 2px;letter-spacing:-.01em}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.tile{display:block;text-decoration:none;color:inherit;background:var(--color-paper);border:1px solid var(--color-line);border-radius:8px;overflow:hidden;transition:transform .15s,border-color .15s}
+.tile:active{transform:scale(.98)}
+.tile-img{background:var(--color-stage);aspect-ratio:1;overflow:hidden;position:relative}
+.tile-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.tile:hover .tile-img img{transform:scale(1.05)}
+.tile-num{position:absolute;top:5px;right:5px;background:rgba(28,72,127,0.9);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700}
+.tile-body{padding:8px 10px}
+.tile-title{display:block;color:var(--color-navy);font-size:12px;line-height:1.3;font-weight:700;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:4px;min-height:32px}
+.tile-meta{display:flex;gap:5px;font-size:10px;color:var(--color-muted);align-items:center;flex-wrap:wrap}
+.tile-meta span{white-space:nowrap}
+
+/* ===== Callout (mobile-first) ===== */
+.callout{border-radius:8px;padding:12px 14px;margin:14px 0;font-size:13px;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.callout .icon{font-size:18px;line-height:1.2;flex-shrink:0}
+.callout .body{flex:1}
+.callout .body strong{display:block;margin-bottom:4px}
+.callout.warning{background:#fff8e9;border-left:4px solid var(--color-warning);color:#79530d}
+.callout.info{background:var(--color-ice);border-left:4px solid var(--color-info);color:var(--color-navy-deep)}
+.callout.success{background:#f0fdf4;border-left:4px solid var(--color-success);color:#14532d}
+
+/* ===== Asset page (ficha individual) ===== */
+.asset-hero{background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));color:#fff;padding:18px 20px;border-radius:0}
+.asset-hero .eyebrow{font-weight:800;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#bbd8ff;margin-bottom:6px}
+.asset-hero h1{font-family:var(--font-display);font-size:20px;margin:0;letter-spacing:-.02em;line-height:1.25;color:#fff}
+
+.asset-layout{padding:16px;display:grid;grid-template-columns:1fr;gap:16px}
+.asset-main{display:flex;flex-direction:column;gap:14px}
+.asset-img-wrap{position:relative;background:var(--color-stage);border-radius:10px;overflow:hidden;border:1px solid var(--color-line)}
+.asset-img-wrap img{width:100%;display:block;cursor:zoom-in}
+.asset-img-zoom-hint{position:absolute;bottom:8px;right:8px;background:rgba(28,72,127,0.9);color:#fff;font-size:11px;padding:5px 9px;border-radius:14px;font-weight:700;display:flex;align-items:center;gap:4px;pointer-events:none}
+
+/* Asset navigation (prev/next) */
+.asset-nav{display:flex;justify-content:space-between;gap:8px;margin-top:8px}
+.asset-nav-btn{flex:1;display:flex;align-items:center;gap:6px;background:var(--color-paper);border:1px solid var(--color-line);color:var(--color-navy);padding:10px 12px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;justify-content:center;min-height:44px;transition:background .15s,border-color .15s}
+.asset-nav-btn:hover{background:var(--color-ice);border-color:var(--color-sky);text-decoration:none}
+.asset-nav-btn:active{transform:scale(.98)}
+.asset-nav-btn:disabled{opacity:.4;pointer-events:none}
+.asset-nav-btn .arrow{font-size:16px;line-height:1}
+.asset-nav-btn .label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
+.asset-nav-btn.next{flex-direction:row-reverse}
+
+/* Asset meta sidebar */
+.asset-sidebar{display:grid;gap:10px}
+.meta-card{background:var(--color-pane);border:1px solid var(--color-line);border-radius:8px;padding:12px}
+.meta-card h3{font-size:11px;font-weight:850;color:var(--color-navy);margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em}
+.meta-card dl{margin:0;font-size:12px;line-height:1.6}
+.meta-card dt{color:var(--color-muted);font-weight:600;margin-top:6px}
+.meta-card dt:first-child{margin-top:0}
+.meta-card dd{margin:0 0 6px;color:var(--color-body);word-break:break-word}
+.meta-card dd code,.meta-card dd .mono{font-family:ui-monospace,monospace;font-size:10px;background:var(--color-ice);padding:1px 5px;border-radius:3px;display:inline-block;word-break:break-all;max-width:100%}
+.meta-card .hash{font-family:ui-monospace,monospace;font-size:10px;color:var(--color-slate);word-break:break-all;background:var(--color-paper);padding:6px 8px;border-radius:4px;border:1px solid var(--color-line);display:block;margin-top:2px}
+
+/* Action bar (sidebar) */
+.asset-actions{background:var(--color-navy);color:#fff;border-radius:8px;padding:12px}
+.asset-actions h3{font-size:11px;font-weight:850;color:#fff;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em}
+.asset-actions a,.asset-actions button{display:flex;align-items:center;gap:8px;color:#cfdff5;font-size:13px;padding:9px 0;border:0;background:transparent;border-bottom:1px solid #2c4a7a;width:100%;text-align:left;text-decoration:none;font-weight:600}
+.asset-actions a:last-child,.asset-actions button:last-child{border-bottom:0}
+.asset-actions a:hover,.asset-actions button:hover{color:#fff;text-decoration:none;background:rgba(255,255,255,0.05)}
+.asset-actions .icon{font-size:14px}
+
+/* Related */
+.related-section{padding:0 16px 24px}
+.related-title{font-family:var(--font-display);font-size:16px;color:var(--color-navy-deep);margin:0 0 12px;letter-spacing:-.01em}
+
+/* ===== Lightbox (fullscreen zoom) ===== */
+.lightbox{position:fixed;inset:0;background:rgba(8,18,40,0.96);z-index:1000;display:none;align-items:center;justify-content:center;padding:60px 20px 80px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.lightbox-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-close:hover{background:rgba(255,255,255,0.2)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;width:48px;height:48px;border-radius:50%;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-nav:hover{background:rgba(255,255,255,0.2)}
+.lightbox-prev{left:16px}
+.lightbox-next{right:16px}
+.lightbox-caption{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;max-width:90vw;text-align:center}
+.lightbox-counter{position:absolute;top:20px;left:50%;transform:translateX(-50%);color:#fff;font-size:13px;background:rgba(0,0,0,0.5);padding:6px 12px;border-radius:14px;font-weight:600}
+
+/* ===== Bottom action bar (mobile sticky) ===== */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--color-navy);color:#fff;z-index:30;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:6px;gap:4px;border-top:1px solid #2c4a7a;box-shadow:0 -4px 12px rgba(0,0,0,0.1)}
+.bottom-bar button,.bottom-bar a{background:transparent;border:0;color:#cfdff5;font-size:11px;font-weight:700;padding:8px 4px;border-radius:6px;display:flex;flex-direction:column;align-items:center;gap:3px;justify-content:center;text-decoration:none;min-height:48px}
+.bottom-bar button:active,.bottom-bar a:active{background:rgba(255,255,255,0.1)}
+.bottom-bar .icon{font-size:18px}
+
+/* ===== Footer (mobile-first) ===== */
+.site-footer{background:var(--color-navy-deep);color:#cfdff5;padding:24px 16px;margin-top:48px;padding-bottom:80px}
+.site-footer-inner{max-width:1280px;margin:auto;display:grid;grid-template-columns:1fr;gap:20px}
+.site-footer h4{color:#fff;font-size:13px;font-weight:800;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em}
+.site-footer ul{list-style:none;padding:0;margin:0}.site-footer li{margin:5px 0;font-size:12px}.site-footer a{color:#cfdff5}
+.site-footer .copyright{grid-column:1/-1;text-align:center;padding-top:14px;margin-top:8px;border-top:1px solid #2c4a7a;font-size:11px;color:#9bb8d8}
+
+/* ===== Desktop breakpoints (min-width) ===== */
+@media(min-width:768px){
+  .a11y-bar{padding:4px 22px}
+  .site-header-inner{padding:10px 22px;min-height:60px}
+  .brand-text{font-size:15px}.brand-text small{font-size:11px}
+  .brand-mark{width:39px;height:39px;font-size:18px}
+  .site-links{display:flex}
+  .cko-wrap{padding:0 22px 48px}
+  .crumb{padding:14px 0 10px;font-size:13px}
+  .hero-grad{padding:32px}
+  .hero-grad h1{font-size:32px}
+  .hero-grad p{font-size:15px;max-width:780px}
+  .stats{grid-template-columns:repeat(4,1fr);gap:9px}
+  .stat strong{font-size:26px}
+  .lib-grid{grid-template-columns:repeat(2,1fr);gap:18px}
+  .lib-card-body{padding:18px}
+  .lib-card-title{font-size:18px}
+  .tiles{grid-template-columns:repeat(3,1fr);gap:12px}
+  .asset-hero{padding:24px 28px;border-radius:var(--radius) var(--radius) 0 0}
+  .asset-hero h1{font-size:26px}
+  .asset-layout{padding:24px;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+  .asset-img-wrap img{cursor:zoom-in}
+  .asset-sidebar{position:sticky;top:90px}
+  .related-section{padding:0 24px 32px}
+  .related-title{font-size:18px}
+  .bottom-bar{display:none}
+  .site-footer{padding:32px 22px;padding-bottom:32px}
+  .site-footer-inner{grid-template-columns:1fr 1fr 1fr;gap:24px}
+}
+@media(min-width:1024px){
+  .tiles{grid-template-columns:repeat(4,1fr);gap:14px}
+  .hero-grad{padding:40px}
+  .hero-grad h1{font-size:38px}
+}
+@media(min-width:1280px){
+  .lib-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== Print ===== */
+@media print{
+  .a11y-bar,.site-header,.site-footer,.bottom-bar,.asset-actions,.asset-nav,.lightbox{display:none!important}
+  .asset-layout{grid-template-columns:1fr}
+  .asset-hero{border-radius:0}
+}
+
+/* ===== Reduced motion ===== */
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== High contrast ===== */
+@media(high-contrast:active){
+  body{background:#000;color:#fff}
+  .lib-card,.tile,.meta-card,.stat{background:#000;border-color:#fff}
+  .hero-grad,.asset-hero,.asset-actions,.bottom-bar{background:#000;color:#fff;border:1px solid #fff}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+<div class="a11y-bar" role="toolbar" aria-label="Acessibilidade">
+  <span class="site-lang">🇧🇷 PT</span>
+  <button type="button" onclick="document.documentElement.style.fontSize=parseFloat(getComputedStyle(document.documentElement).fontSize)+1+'px'" aria-label="Aumentar fonte">A+</button>
+  <button type="button" onclick="document.documentElement.style.fontSize=parseFloat(getComputedStyle(document.documentElement).fontSize)-1+'px'" aria-label="Diminuir fonte">A−</button>
+  <button type="button" onclick="document.documentElement.dataset.contrast=document.documentElement.dataset.contrast==='high'?'':'high'" aria-label="Alto contraste">Contraste</button>
+  <button type="button" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'':'dark'" aria-label="Modo escuro">Escuro</button>
+</div>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html" aria-label="Calculadoras de Enfermagem">
+      <span class="brand-mark">Ce</span>
+      <span class="brand-text">Calculadoras<small>de Enfermagem</small></span>
+    </a>
+    <nav class="site-links" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="index.html" class="active">Bibliotecas</a>
+      <a href="#">CKO</a>
+      <a class="subscribe" href="#" style="background:var(--color-navy);color:#fff;padding:8px 14px;border-radius:7px;font-weight:800">Assinar</a>
+    </nav>
+  </div>
+</header>
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<nav class="crumb" aria-label="Trilha de navegação">
+  <a href="index.html">Início</a><span class="sep">›</span>
+  <a href="index.html">Bibliotecas</a><span class="sep">›</span>
+  <span class="current">Feridas e curativos</span>
+</nav>
+
+<section class="hero-grad">
+  <div class="eyebrow">Biblioteca · Feridas e curativos</div>
+  <h1>Biblioteca de Feridas e Curativos</h1>
+  <p>Acervo visual de materiais para avaliação de feridas e coberturas, com organização por objeto.</p>
+  <div class="badges">
+    <span class="badge">49 imagens</span>
+    <span class="badge">1961 KB total</span>
+    <span class="badge">Coberturas</span><span class="badge">Feridas</span><span class="badge">Cuidados</span>
+  </div>
+</section>
+
+
+
+<h2 class="section-title">Acervo completo · 49 imagens</h2>
+<div class="tiles">
+  
+<a href="assets/bilingual-medical-gauze-collection.html" class="tile" aria-label="Ver imagem 1: Compressas e gazes">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/bilingual-medical-gauze-collection.avif" alt="Compressas e gazes" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">1</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Compressas e gazes</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>53KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/charcoal-felt-flower-patch.html" class="tile" aria-label="Ver imagem 2: Cobertura de carvão — ilustração">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/charcoal-felt-flower-patch.avif" alt="Cobertura de carvão — ilustração" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">2</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Cobertura de carvão — ilustração</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>104KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/curativos-biblioteca-de-materiais-medicos.html" class="tile" aria-label="Ver imagem 3: Biblioteca de curativos">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/curativos-biblioteca-de-materiais-medicos.avif" alt="Biblioteca de curativos" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">3</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Biblioteca de curativos</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>50KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/curativos-kit-de-cuidados-medicos.html" class="tile" aria-label="Ver imagem 4: Kit de curativos">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/curativos-kit-de-cuidados-medicos.avif" alt="Kit de curativos" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">4</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Kit de curativos</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>45KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/fluffy-cream-medical-dressing-pad.html" class="tile" aria-label="Ver imagem 5: Cobertura de fibras — ilustração">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/fluffy-cream-medical-dressing-pad.avif" alt="Cobertura de fibras — ilustração" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">5</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Cobertura de fibras — ilustração</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>77KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/glossy-clear-hydrogel-patch.html" class="tile" aria-label="Ver imagem 6: Cobertura de hidrogel">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/glossy-clear-hydrogel-patch.avif" alt="Cobertura de hidrogel" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">6</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Cobertura de hidrogel</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>47KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/hydrocolloid-dressing-patch.html" class="tile" aria-label="Ver imagem 7: Cobertura de hidrocoloide">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/hydrocolloid-dressing-patch.avif" alt="Cobertura de hidrocoloide" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">7</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Cobertura de hidrocoloide</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>44KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/isolated-beige-foam-wound-dressing.html" class="tile" aria-label="Ver imagem 8: Cobertura de espuma">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/isolated-beige-foam-wound-dressing.avif" alt="Cobertura de espuma" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">8</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Cobertura de espuma</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>45KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/layered-foam-adhesive-dressing.html" class="tile" aria-label="Ver imagem 9: Espuma com borda adesiva">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/layered-foam-adhesive-dressing.avif" alt="Espuma com borda adesiva" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">9</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Espuma com borda adesiva</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>67KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/medical-dressing-collection.html" class="tile" aria-label="Ver imagem 10: Coleção de coberturas para curativos">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/medical-dressing-collection.avif" alt="Coleção de coberturas para curativos" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">10</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Coleção de coberturas para curativos</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>60KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/medical-skin-injury-training-kit.html" class="tile" aria-label="Ver imagem 11: Medical Skin Injury Training Kit">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/medical-skin-injury-training-kit.avif" alt="Medical Skin Injury Training Kit" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">11</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Medical Skin Injury Training Kit</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>52KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/medical-tape-and-adhesive-dressing-collection.html" class="tile" aria-label="Ver imagem 12: Medical Tape And Adhesive Dressing Collection">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/medical-tape-and-adhesive-dressing-collection.avif" alt="Medical Tape And Adhesive Dressing Collection" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">12</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Medical Tape And Adhesive Dressing Collection</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>48KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/stacked-surgical-drapes-and-gauze.html" class="tile" aria-label="Ver imagem 13: Stacked Surgical Drapes And Gauze">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/stacked-surgical-drapes-and-gauze.avif" alt="Stacked Surgical Drapes And Gauze" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">13</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Stacked Surgical Drapes And Gauze</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>83KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/sterile-gauze-compresses-display.html" class="tile" aria-label="Ver imagem 14: Sterile Gauze Compresses Display">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/sterile-gauze-compresses-display.avif" alt="Sterile Gauze Compresses Display" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">14</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Sterile Gauze Compresses Display</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>46KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/textured-bandage-collection-display.html" class="tile" aria-label="Ver imagem 15: Textured Bandage Collection Display">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/textured-bandage-collection-display.avif" alt="Textured Bandage Collection Display" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">15</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Textured Bandage Collection Display</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>82KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/textured-medical-mesh-pad.html" class="tile" aria-label="Ver imagem 16: Textured Medical Mesh Pad">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/textured-medical-mesh-pad.avif" alt="Textured Medical Mesh Pad" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">16</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Textured Medical Mesh Pad</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>122KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/transparent-medical-adhesive-film-patch.html" class="tile" aria-label="Ver imagem 17: Transparent Medical Adhesive Film Patch">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/transparent-medical-adhesive-film-patch.avif" alt="Transparent Medical Adhesive Film Patch" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">17</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Transparent Medical Adhesive Film Patch</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>63KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/white-fibrous-felt-pad.html" class="tile" aria-label="Ver imagem 18: (Fundo Branco) Fibrous Felt Pad">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/white-fibrous-felt-pad.avif" alt="(Fundo Branco) Fibrous Felt Pad" loading="lazy" width="1254" height="1254">
+    <span class="tile-num">18</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">(Fundo Branco) Fibrous Felt Pad</span>
+    <div class="tile-meta">
+      <span>1254×1254</span><span>·</span><span>68KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/wound-care-kit-essentials.html" class="tile" aria-label="Ver imagem 19: Wound Care Kit Essentials">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/wound-care-kit-essentials.avif" alt="Wound Care Kit Essentials" loading="lazy" width="1448" height="1086">
+    <span class="tile-num">19</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Wound Care Kit Essentials</span>
+    <div class="tile-meta">
+      <span>1448×1086</span><span>·</span><span>61KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/00-hero-ferimento.html" class="tile" aria-label="Ver imagem 20: Feridas — Hero ferimento">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/00-hero-ferimento.avif" alt="Feridas — Hero ferimento" loading="lazy" width="1800" height="1602">
+    <span class="tile-num">20</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Hero ferimento</span>
+    <div class="tile-meta">
+      <span>1800×1602</span><span>·</span><span>77KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/00-hero-ferimento-white.html" class="tile" aria-label="Ver imagem 21: Feridas — Hero ferimento white">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/00-hero-ferimento-white.avif" alt="Feridas — Hero ferimento white" loading="lazy" width="1800" height="1602">
+    <span class="tile-num">21</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Hero ferimento white</span>
+    <div class="tile-meta">
+      <span>1800×1602</span><span>·</span><span>39KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/01-estagio-limpa-superficial.html" class="tile" aria-label="Ver imagem 22: Feridas — Estagio limpa superficial">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/01-estagio-limpa-superficial.avif" alt="Feridas — Estagio limpa superficial" loading="lazy" width="1400" height="904">
+    <span class="tile-num">22</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Estagio limpa superficial</span>
+    <div class="tile-meta">
+      <span>1400×904</span><span>·</span><span>15KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/02-estagio-profunda-parcial.html" class="tile" aria-label="Ver imagem 23: Feridas — Estagio profunda parcial">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/02-estagio-profunda-parcial.avif" alt="Feridas — Estagio profunda parcial" loading="lazy" width="1400" height="886">
+    <span class="tile-num">23</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Estagio profunda parcial</span>
+    <div class="tile-meta">
+      <span>1400×886</span><span>·</span><span>18KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/03-estagio-profunda-total.html" class="tile" aria-label="Ver imagem 24: Feridas — Estagio profunda total">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/03-estagio-profunda-total.avif" alt="Feridas — Estagio profunda total" loading="lazy" width="1400" height="872">
+    <span class="tile-num">24</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Estagio profunda total</span>
+    <div class="tile-meta">
+      <span>1400×872</span><span>·</span><span>21KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/04-estagio-extensa-complexa.html" class="tile" aria-label="Ver imagem 25: Feridas — Estagio extensa complexa">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/04-estagio-extensa-complexa.avif" alt="Feridas — Estagio extensa complexa" loading="lazy" width="1400" height="886">
+    <span class="tile-num">25</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Estagio extensa complexa</span>
+    <div class="tile-meta">
+      <span>1400×886</span><span>·</span><span>19KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/05-estagio-ferida-cronica.html" class="tile" aria-label="Ver imagem 26: Feridas — Estagio ferida cronica">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/05-estagio-ferida-cronica.avif" alt="Feridas — Estagio ferida cronica" loading="lazy" width="1400" height="886">
+    <span class="tile-num">26</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Estagio ferida cronica</span>
+    <div class="tile-meta">
+      <span>1400×886</span><span>·</span><span>17KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/06-video-avaliacao-feridas.html" class="tile" aria-label="Ver imagem 27: Feridas — Video avaliacao feridas">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/06-video-avaliacao-feridas.avif" alt="Feridas — Video avaliacao feridas" loading="lazy" width="1200" height="686">
+    <span class="tile-num">27</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Video avaliacao feridas</span>
+    <div class="tile-meta">
+      <span>1200×686</span><span>·</span><span>11KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/07-video-limpeza-ferida.html" class="tile" aria-label="Ver imagem 28: Feridas — Video limpeza ferida">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/07-video-limpeza-ferida.avif" alt="Feridas — Video limpeza ferida" loading="lazy" width="1200" height="686">
+    <span class="tile-num">28</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Video limpeza ferida</span>
+    <div class="tile-meta">
+      <span>1200×686</span><span>·</span><span>9KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/08-video-desbridamento.html" class="tile" aria-label="Ver imagem 29: Feridas — Video desbridamento">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/08-video-desbridamento.avif" alt="Feridas — Video desbridamento" loading="lazy" width="1200" height="686">
+    <span class="tile-num">29</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Video desbridamento</span>
+    <div class="tile-meta">
+      <span>1200×686</span><span>·</span><span>10KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/09-video-aplicacao-curativos.html" class="tile" aria-label="Ver imagem 30: Feridas — Video aplicacao curativos">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/09-video-aplicacao-curativos.avif" alt="Feridas — Video aplicacao curativos" loading="lazy" width="1200" height="662">
+    <span class="tile-num">30</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Video aplicacao curativos</span>
+    <div class="tile-meta">
+      <span>1200×662</span><span>·</span><span>9KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/20-icone-classificacao-pessoa.html" class="tile" aria-label="Ver imagem 31: Feridas — Icone classificacao pessoa">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/20-icone-classificacao-pessoa.avif" alt="Feridas — Icone classificacao pessoa" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">31</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone classificacao pessoa</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>27KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/21-icone-exsudato-gota.html" class="tile" aria-label="Ver imagem 32: Feridas — Icone exsudato gota">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/21-icone-exsudato-gota.avif" alt="Feridas — Icone exsudato gota" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">32</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone exsudato gota</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>29KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/22-icone-alerta.html" class="tile" aria-label="Ver imagem 33: Feridas — Icone alerta">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/22-icone-alerta.avif" alt="Feridas — Icone alerta" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">33</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone alerta</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>29KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/23-icone-check.html" class="tile" aria-label="Ver imagem 34: Feridas — Icone check">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/23-icone-check.avif" alt="Feridas — Icone check" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">34</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone check</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>32KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/24-icone-documento.html" class="tile" aria-label="Ver imagem 35: Feridas — Icone documento">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/24-icone-documento.avif" alt="Feridas — Icone documento" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">35</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone documento</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>24KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/25-icone-imprimir.html" class="tile" aria-label="Ver imagem 36: Feridas — Icone imprimir">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/25-icone-imprimir.avif" alt="Feridas — Icone imprimir" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">36</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone imprimir</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>24KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/26-icone-compartilhar.html" class="tile" aria-label="Ver imagem 37: Feridas — Icone compartilhar">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/26-icone-compartilhar.avif" alt="Feridas — Icone compartilhar" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">37</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone compartilhar</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>29KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/27-icone-play.html" class="tile" aria-label="Ver imagem 38: Feridas — Icone play">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/27-icone-play.avif" alt="Feridas — Icone play" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">38</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Icone play</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/28-badge-time-t.html" class="tile" aria-label="Ver imagem 39: Feridas — Badge time t">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/28-badge-time-t.avif" alt="Feridas — Badge time t" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">39</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge time t</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>24KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/29-badge-time-i.html" class="tile" aria-label="Ver imagem 40: Feridas — Badge time i">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/29-badge-time-i.avif" alt="Feridas — Badge time i" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">40</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge time i</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>24KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/30-badge-time-m.html" class="tile" aria-label="Ver imagem 41: Feridas — Badge time m">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/30-badge-time-m.avif" alt="Feridas — Badge time m" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">41</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge time m</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/31-badge-time-e.html" class="tile" aria-label="Ver imagem 42: Feridas — Badge time e">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/31-badge-time-e.avif" alt="Feridas — Badge time e" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">42</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge time e</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>25KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/32-badge-passo-1.html" class="tile" aria-label="Ver imagem 43: Feridas — Badge passo 1">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/32-badge-passo-1.avif" alt="Feridas — Badge passo 1" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">43</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 1</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>25KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/33-badge-passo-2.html" class="tile" aria-label="Ver imagem 44: Feridas — Badge passo 2">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/33-badge-passo-2.avif" alt="Feridas — Badge passo 2" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">44</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 2</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/34-badge-passo-3.html" class="tile" aria-label="Ver imagem 45: Feridas — Badge passo 3">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/34-badge-passo-3.avif" alt="Feridas — Badge passo 3" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">45</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 3</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/35-badge-passo-4.html" class="tile" aria-label="Ver imagem 46: Feridas — Badge passo 4">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/35-badge-passo-4.avif" alt="Feridas — Badge passo 4" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">46</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 4</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>25KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/36-badge-passo-5.html" class="tile" aria-label="Ver imagem 47: Feridas — Badge passo 5">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/36-badge-passo-5.avif" alt="Feridas — Badge passo 5" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">47</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 5</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/37-badge-passo-6.html" class="tile" aria-label="Ver imagem 48: Feridas — Badge passo 6">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/37-badge-passo-6.avif" alt="Feridas — Badge passo 6" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">48</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 6</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>26KB</span>
+    </div>
+  </div>
+</a>
+<a href="assets/38-badge-passo-7.html" class="tile" aria-label="Ver imagem 49: Feridas — Badge passo 7">
+  <div class="tile-img">
+    <img src="assets/feridas-e-curativos/38-badge-passo-7.avif" alt="Feridas — Badge passo 7" loading="lazy" width="1024" height="1024">
+    <span class="tile-num">49</span>
+  </div>
+  <div class="tile-body">
+    <span class="tile-title">Feridas — Badge passo 7</span>
+    <div class="tile-meta">
+      <span>1024×1024</span><span>·</span><span>25KB</span>
+    </div>
+  </div>
+</a>
+</div>
+
+<div class="callout info">
+  <span class="icon">ℹ</span>
+  <div class="body">
+    <strong>Sobre o acervo</strong>
+    As imagens vieram do acervo documental fornecido por Google Drive. Nomenclatura, licenças e aplicações clínicas exigem validação humana. Integridade por arquivo registrada no manifesto SHA-256.
+  </div>
+</div>
+
+</main>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div><h4>Calculadoras de Enfermagem</h4><p style="font-size:12px;line-height:1.6;color:#9bb8d8;margin:0">Biblioteca de imagens do usuário — acervo visual com 240 imagens AVIF catalogadas.</p></div>
+    <div><h4>Bibliotecas</h4><ul><li><a href="anatomia.html">Anatomia</a></li><li><a href="seringas-e-agulhas.html">Seringas e agulhas</a></li><li><a href="feridas-e-curativos.html">Feridas e curativos</a></li><li><a href="luvas-e-epi.html">Luvas e EPI</a></li><li><a href="nutricao.html">Nutrição</a></li><li><a href="processo-de-enfermagem.html">Processo de Enfermagem</a></li><li><a href="antissepsia.html">Antissepsia</a></li><li><a href="dispositivos-medicos.html">Dispositivos médicos</a></li><li><a href="educacao-e-pesquisa.html">Educação e pesquisa</a></li></ul></div>
+    <div><h4>Institucional</h4><ul><li><a href="#">Sobre</a></li><li><a href="#">Governança CKO</a></li><li><a href="#">LGPD</a></li></ul></div>
+    <div class="copyright">© Calculadoras de Enfermagem · Biblioteca de imagens · 2026-10-26 · Hub · Feridas e curativos</div>
+  </div>
+</footer>
+
+</body>
+</html>

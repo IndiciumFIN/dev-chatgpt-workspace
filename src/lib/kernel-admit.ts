@@ -1,3 +1,4 @@
+import { verifyAllowDecision } from "./policy-signature.ts";
 import type { Sql } from "@/lib/db";
 
 export type PolicyFact = {
@@ -12,6 +13,15 @@ export type AdmitInput = {
   rules: PolicyFact[];
   validators: boolean[];
   approverId: string | null;
+  /** HMAC-SHA256 hex of the canonical allow decision. Never a caller boolean. */
+  policySignature?: string | null;
+  /** Explicit HMAC key. Not read from the environment. */
+  signatureKey?: string | null;
+  /**
+   * Ignored. A caller-supplied claim that a bundle signature was verified
+   * is not a verification result and cannot admit.
+   */
+  bundle_signature_verified?: boolean;
 };
 
 export type AdmitDecision = {
@@ -22,6 +32,13 @@ export type AdmitDecision = {
 export function admit(input: AdmitInput): AdmitDecision {
   if (!input.workOrderId) return { outcome: "reject", reason: "work-order-missing-id" };
   if (input.policyCodes.length === 0) return { outcome: "reject", reason: "policy-set-required" };
+
+  const signatureOk = verifyAllowDecision(
+    { workOrderId: input.workOrderId, policyCodes: input.policyCodes },
+    input.policySignature,
+    input.signatureKey,
+  );
+  if (!signatureOk) return { outcome: "reject", reason: "policy-signature-failed" };
 
   for (const code of input.policyCodes) {
     const rule = input.rules.find((item) => item.code === code && item.active);
@@ -52,7 +69,15 @@ const orderStatus = {
   admit: "admitida",
 } as const;
 
-export async function admitOrder(sql: Sql, orderId: string) {
+export async function admitOrder(
+  sql: Sql,
+  orderId: string,
+  proof?: {
+    signatureKey?: string | null;
+    policySignature?: string | null;
+    bundle_signature_verified?: boolean;
+  } | null,
+) {
   const orders = await sql.query<{ approver_id: string | null }>(
     "select approver_id from kernel_order where id = $1",
     [orderId],
@@ -79,6 +104,8 @@ export async function admitOrder(sql: Sql, orderId: string) {
     rules: rules.map((rule) => ({ code: rule.code, active: on(rule.active), effect: rule.effect })),
     validators: validators.map((row) => on(row.passed)),
     approverId: order.approver_id,
+    policySignature: proof?.policySignature ?? null,
+    signatureKey: proof?.signatureKey ?? null,
   });
   const manifest = manifestStatus(decision, order.approver_id);
   await sql.query(

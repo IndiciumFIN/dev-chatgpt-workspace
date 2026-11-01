@@ -18,7 +18,7 @@ async function migrated() {
 
 test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferramentas", async () => {
   const db = await migrated();
-  const empty = await db.query("select count(*)::int as n from content_text where status = 'publicado' and btrim(body) = ''");
+  const empty = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and btrim(body) = ''");
   assert.equal(empty.rows[0].n, 0);
 
   const foreign = await db.query<{ n: unknown }>(
@@ -26,7 +26,7 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   );
   assert.equal(Number(foreign.rows[0].n) > 3, true);
 
-  const broken = await db.query("select count(*)::int as n from content_text where status = 'publicado' and slug like '%/'");
+  const broken = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and slug like '%/'");
   assert.equal(broken.rows[0].n, 0);
 
   const open = await db.query<{ slug: string }>(
@@ -39,7 +39,7 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   assert.match(menu, /\[braden, morse, apgar, gotejamento, imc\]/);
   assert.equal(menu.includes("aldrete"), false);
 
-  const foreignOnAir = await db.query(
+  const foreignOnAir = await db.query<{ n: number }>(
     `select count(*)::int as n
      from content_alias as alias
      join content_text as copy on copy.slug = alias.slug and copy.locale = alias.locale and copy.view = alias.view

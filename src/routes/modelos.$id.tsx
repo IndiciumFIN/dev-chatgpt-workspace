@@ -12,6 +12,10 @@ import { Shell } from "@/components/site/shell";
 import { RelatedContent } from "@/components/site/related-content";
 import { readEditorial } from "@/lib/stored.functions";
 import { unflatten, useStored } from "@/lib/stored";
+import { lorem, loremData } from "@/lib/lorem";
+import { ContractView } from "@/components/templates/contract-view";
+import { recoveredTemplate } from "@/components/templates/recovered-templates";
+import { catalogById } from "@/lib/template-catalog";
 import { parseLocale } from "@/lib/translate";
 
 export const Route = createFileRoute("/modelos/$id")({
@@ -31,6 +35,8 @@ export const Route = createFileRoute("/modelos/$id")({
     if (params.id === "laudo") return { kind: "laudo" as const };
     if (params.id === "institucional") return { kind: "institucional" as const };
     if (params.id === "slides") return { kind: "slides" as const };
+    const contract = catalogById(params.id);
+    if (contract && contract.href === `/modelos/${params.id}`) return { kind: "contrato" as const, row: contract };
     const template = await readEditorial({ data: params.id });
     if (!template) throw notFound();
     return { kind: "editorial" as const, template };
@@ -54,14 +60,18 @@ function Modelo() {
   if (data.kind === "laudo") return <Shell><ReportView /></Shell>;
   if (data.kind === "institucional") return <Shell><InstitutionalTemplate /></Shell>;
   if (data.kind === "slides") return <Shell><SlideDeck /></Shell>;
+  if (data.kind === "contrato") {
+    const Recovered = recoveredTemplate(data.row.id);
+    return <Shell>{Recovered ? <Recovered /> : <ContractView row={data.row} />}</Shell>;
+  }
   return (
     <Shell>
       <ArticlePage
         kind="editorial"
         crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: data.template.name }]}
-        eyebrow="Template"
-        title={data.template.name}
-        lead={data.template.description}
+        eyebrow="Amostra visual"
+        title={data.template.id}
+        lead={lorem(data.template.description)}
         related={
           <RelatedContent
             title="Outras peças"
@@ -74,7 +84,7 @@ function Modelo() {
           />
         }
       >
-        <EditorialView template={{ ...data.template, data: unflatten(data.template.lines.map((line) => ({ key: line.path, text: line.text }))) }} />
+        <EditorialView template={{ ...data.template, name: data.template.id, category: lorem(data.template.category), description: lorem(data.template.description), data: loremData(unflatten(data.template.lines.map((line) => ({ key: line.path, text: line.text })))) as Record<string, unknown> }} />
       </ArticlePage>
     </Shell>
   );

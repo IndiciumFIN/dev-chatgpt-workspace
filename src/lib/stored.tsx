@@ -40,6 +40,9 @@ export type StoredPage = { slug: string; title: string; lead: string; items: str
 
 export type StoredImage = { path: string; locale: string; alt: string; status: string };
 
+export type StoredStudyQuestion = { id: string; prompt: string; options: string[]; answer: number };
+export type StoredStudyCard = { id: string; front: string; back: string };
+
 export type StoredSite = {
   nav: NavNode[];
   accountNav: NavNode[];
@@ -59,6 +62,7 @@ export type StoredSite = {
   specimens: StoredSpecimen[];
   pages: StoredPage[];
   images: StoredImage[];
+  study: { questions: StoredStudyQuestion[]; cards: StoredStudyCard[] };
 };
 
 const StoredContext = createContext<StoredSite | null>(null);

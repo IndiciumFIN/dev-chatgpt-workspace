@@ -29,7 +29,7 @@ function destOf(row: NavRow): Dest | undefined {
     return row.dest_hash ? { kind: "section", slug: row.dest_slug, hash: row.dest_hash } : { kind: "section", slug: row.dest_slug };
   }
   if (row.dest_kind === "tool" && row.dest_slug) return { kind: "tool", slug: row.dest_slug };
-  if (row.dest_kind === "page" && row.dest_to) return { kind: "page", to: row.dest_to as "/login" };
+  if (row.dest_kind === "page" && row.dest_to) return { kind: "page", to: row.dest_to as Dest extends { kind: "page" } ? Dest["to"] : never };
   if (row.dest_kind === "model" && row.dest_model) {
     const id = row.dest_model as "biblioteca";
     return row.dest_hash ? { kind: "model", id, hash: row.dest_hash } : { kind: "model", id };
@@ -106,6 +106,12 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
   const images = await sql<{ path: string; locale: string; alt: string; status: string }>`
     select path, locale, text as alt, status from media_alt order by path, locale
   `;
+  const studyRows = await sql<{ id: string; kind: string; prompt: string; detail: string; answer_index: number; choice_position: number | null; label: string | null }>`
+    select item.id, item.kind, item.prompt, item.detail, item.answer_index, choice.position as choice_position, choice.label
+    from study_item as item
+    left join study_choice as choice on choice.item_id = item.id
+    order by item.position, choice.position
+  `;
   const instPages = await sql<{ path: string; title: string; lead: string }>`select path, title, lead from inst_page where kind = 'page' order by path`;
   const pages: StoredPage[] = pageRows.map((row) => ({
     slug: row.slug,
@@ -177,6 +183,19 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
     specimens,
     pages,
     images,
+    study: {
+      questions: [...new Map(studyRows.filter((row) => row.kind === "question").map((row) => [row.id, row])).values()].map((row) => ({
+        id: row.id,
+        prompt: row.prompt,
+        options: studyRows.filter((choice) => choice.id === row.id && choice.label).map((choice) => choice.label as string),
+        answer: Number(row.answer_index),
+      })),
+      cards: studyRows.filter((row) => row.kind === "card" && row.choice_position == null).map((row) => ({
+        id: row.id,
+        front: row.prompt,
+        back: row.detail,
+      })),
+    },
   };
 });
 

@@ -305,28 +305,128 @@ function Body({ template }: { template: EditorialTemplate }) {
     case "social-post":
     case "carousel-cover":
       return (
+        <div className={template.type === "carousel-cover" ? "soc soc-post soc-carousel" : "soc soc-post"}>
+          <div className="soc-bar"><span className="soc-mark">CE</span><span>calculadorasdeenfermagem</span></div>
+          <div className="soc-stage">
+            <p>{asText(data.tag)}</p>
+            <h2>{asText(data.title)}</h2>
+            {asText(data.subtitle) ? <p className="soc-sub">{asText(data.subtitle)}</p> : null}
+            <ul>{asList(data.bullets).map((item) => <li key={asText(item)}>{asText(item)}</li>)}</ul>
+            {asText(data.series) ? <p className="soc-series">{asText(data.series)}</p> : null}
+            <p className="soc-cta">{asText(data.cta) || "calculadorasdeenfermagem.com.br"}</p>
+          </div>
+        </div>
+      );
+    case "share-image":
+      return (
+        <div className="soc soc-share">
+          <p>{asText(data.eyebrow || data.tag)}</p>
+          <h2>{asText(data.title)}</h2>
+          <p className="soc-sub">{asText(data.subtitle)}</p>
+          <p className="soc-cta">{asList(data.chips).map((chip) => asText(chip)).filter(Boolean).join(" · ") || asText(data.badge) || "calculadorasdeenfermagem.com.br"}</p>
+        </div>
+      );
+    case "thumbnail-card":
+      return (
+        <div className="soc soc-thumb">
+          <span className="soc-mark">CE</span>
+          <div>
+            <p>{asText(data.eyebrow || data.tag)}</p>
+            <h2>{asText(data.title)}</h2>
+            <p className="soc-sub">{asText(data.subtitle)}</p>
+          </div>
+        </div>
+      );
+    case "flashcard":
+      return (
         <>
           <p className="tpl-kicker">{asText(data.tag)}</p>
           <h2>{asText(data.title)}</h2>
           {asText(data.subtitle) ? <p className="tpl-sub">{asText(data.subtitle)}</p> : null}
-          <ol className="tpl-nums">{asList(data.bullets).map((item) => <li key={asText(item)}>{asText(item)}</li>)}</ol>
-          {asText(data.series) ? <p className="tpl-sub">{asText(data.series)}</p> : null}
-          <p className="tpl-cta">{asText(data.cta)}</p>
+          <div className="tpl-stack">
+            {asList(data.cards).map((item, index) => {
+              const card = item as { front?: string; back?: string; source?: string };
+              return (
+                <details key={asText(card.front)}>
+                  <summary>{index + 1}. {asText(card.front)}</summary>
+                  <p>{asText(card.back)}</p>
+                  {asText(card.source) ? <p className="tpl-note">{asText(card.source)}</p> : null}
+                </details>
+              );
+            })}
+          </div>
+          <Note>{asText(data.summary)}</Note>
         </>
       );
-    case "share-image":
-    case "thumbnail-card":
+    case "quiz":
+    case "simulado":
       return (
-        <div className="tpl-split">
-          <div>
-            <p className="tpl-kicker">{asText(data.eyebrow || data.tag)}</p>
-            <h2>{asText(data.title)}</h2>
-            <p>{asText(data.subtitle)}</p>
-            <p className="tpl-chips">{asList(data.chips).map((chip) => asText(chip)).join(" · ")}</p>
-            {asText(data.badge) ? <p className="tpl-cta">{asText(data.badge)}</p> : null}
+        <>
+          <p className="tpl-kicker">{asText(data.tag)}</p>
+          <h2>{asText(data.title)}</h2>
+          {asText(data.subtitle) ? <p className="tpl-sub">{asText(data.subtitle)}</p> : null}
+          <p className="tpl-sub">{asText(data.instructions)}{asText(data.duration) ? ` · ${asText(data.duration)}` : ""}</p>
+          <ol className="tpl-nums">
+            {asList(data.questions).map((item) => {
+              const question = item as { prompt?: string; options?: unknown[]; answer?: string; rationale?: string; source?: string };
+              return (
+                <li key={asText(question.prompt)}>
+                  <div>
+                    <p>{asText(question.prompt)}</p>
+                    <ul className="plain-list">{asList(question.options).map((option) => <li key={asText(option)}>{asText(option)}</li>)}</ul>
+                    <details>
+                      <summary>Ver a faixa do catálogo</summary>
+                      <p>{asText(question.answer)}. {asText(question.rationale)}</p>
+                      {asText(question.source) ? <p className="tpl-note">{asText(question.source)}</p> : null}
+                    </details>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+          <Note>{asText(data.summary)}</Note>
+        </>
+      );
+    case "prova":
+      return (
+        <>
+          <p className="tpl-kicker">{asText(data.tag)}</p>
+          <h2>{asText(data.title)}</h2>
+          <p className="tpl-sub">{asText(data.subtitle)}</p>
+          <p className="tpl-sub">{asText(data.instructions)}{asText(data.duration) ? ` · ${asText(data.duration)}` : ""}</p>
+          {asList(data.sections).map((section) => {
+            const row = section as { title?: string; items?: unknown[] };
+            return (
+              <section key={asText(row.title)}>
+                <h3>{asText(row.title)}</h3>
+                <ul className="plain-list">{asList(row.items).map((item) => <li key={asText(item)}>{asText(item)}</li>)}</ul>
+              </section>
+            );
+          })}
+          <Note>{asText(data.summary)}</Note>
+        </>
+      );
+    case "ebook":
+      return (
+        <>
+          <p className="tpl-kicker">{asText(data.tag)}</p>
+          <h2>{asText(data.title)}</h2>
+          <p className="tpl-sub">{asText(data.subtitle)}</p>
+          <p className="tpl-sub">{asText(data.author)} · {asText(data.edition)}</p>
+          <div className="tpl-stack">
+            {asList(data.chapters).map((chapter, index) => {
+              const row = chapter as { title?: string; summary?: string; points?: unknown[] };
+              return (
+                <details key={asText(row.title)} open={index === 0}>
+                  <summary>{index + 1}. {asText(row.title)}</summary>
+                  {asText(row.summary) ? <p>{asText(row.summary)}</p> : null}
+                  <ul className="plain-list">{asList(row.points).map((point) => <li key={asText(point)}>{asText(point)}</li>)}</ul>
+                </details>
+              );
+            })}
           </div>
-          <div className="tpl-cover" aria-hidden="true">CE</div>
-        </div>
+          <Note>{asText(data.summary)}</Note>
+        </>
       );
     default:
       return <p>Este tipo ainda não tem renderizador.</p>;
@@ -334,9 +434,10 @@ function Body({ template }: { template: EditorialTemplate }) {
 }
 
 export function EditorialView({ template }: { template: EditorialTemplate }) {
-  const square = template.type === "social-post" || template.type === "carousel-cover";
+  const social = template.type === "social-post" || template.type === "carousel-cover" || template.type === "share-image" || template.type === "thumbnail-card";
+  if (social) return <Body template={template} />;
   return (
-    <article className={square ? "tpl-frame is-square" : "tpl-frame"} lang="pt-BR">
+    <article className="tpl-frame" lang="pt-BR">
       <p className="tpl-meta">{template.id} · {template.category}</p>
       <Body template={template} />
       <Brand />

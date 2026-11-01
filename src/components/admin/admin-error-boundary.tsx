@@ -1,13 +1,16 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 /** Isolate a failing admin surface; do not infer remote state from a UI error. */
-type Props={children:ReactNode; moduleName:string};
+type Props={children:ReactNode; moduleName:string; resetKey?:string};
 type State={failed:boolean};
 export class AdminErrorBoundary extends Component<Props,State>{
  state:State={failed:false};
  static getDerivedStateFromError():State{return {failed:true};}
  componentDidCatch(error:Error,info:ErrorInfo){
   console.error('[admin-module-render-failed]',this.props.moduleName,error.message,info.componentStack);
+ }
+ componentDidUpdate(previous:Props){
+  if(this.state.failed && previous.resetKey!==this.props.resetKey) this.setState({failed:false});
  }
  render(){
   if(!this.state.failed)return this.props.children;

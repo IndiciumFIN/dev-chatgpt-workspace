@@ -26,7 +26,6 @@ import { AdminModuleWorkspace } from '@/components/admin/admin-module-workspace'
 import { CommanderPanel } from '@/components/admin/commander-panel';
 import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
 import { getAdminModule, type AdminModuleId, type AdminSurface } from '@/lib/admin-module-registry';
-import { ModuleBoundary } from '@/components/admin/module-boundary';
 import '@/styles/admin-console.css';
 
 type Tab = 'overview' | 'pmo' | 'commander' | 'content' | 'templates' | 'sources' | 'publication' | 'module-detail';
@@ -217,11 +216,10 @@ export function AdminConsole() {
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
-        <ModuleBoundary resetKey={`${tab}:${selectedModule}`}>
         {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <AdminErrorBoundary moduleName="PMO"><PmoPanel /></AdminErrorBoundary>}
         {tab === 'commander' && <AdminErrorBoundary moduleName="Commander"><CommanderPanel /></AdminErrorBoundary>}
-        {tab === 'module-detail' && <AdminErrorBoundary moduleName={activeModule.title}>
+        {tab === 'module-detail' && <AdminErrorBoundary moduleName={activeModule.title} resetKey={selectedModule}>
           <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule}
             onOpenExisting={(view) => { if (view === 'governance') { setSelectedModule('M04'); setTab('module-detail'); } else { setTab(view); } }}
             onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}}/>
@@ -270,7 +268,7 @@ export function AdminConsole() {
         </AdminErrorBoundary>}
         {tab === 'templates' && <AdminErrorBoundary moduleName="Templates"><TemplatesPanel /></AdminErrorBoundary>}
         {tab === 'sources' && <AdminErrorBoundary moduleName="Fontes"><SourcesPanel /></AdminErrorBoundary>}
-        {tab === 'publication' && <>
+        {tab === 'publication' && <AdminErrorBoundary moduleName="Publicação"><>
           <Panel title="Controle de alterações e publicação" subtitle="O ato de publicar aqui altera apenas a projeção deste navegador. Não aciona GitHub, Vercel ou Supabase.">
             <div className="ce-admin-publication-state"><div><span>Rascunho marcado para exibição</span><strong>{draftCount} / {model.tools.length}</strong></div><div><span>Publicado no navegador</span><strong>{publishedCount} / {published.tools.length}</strong></div><div><span>Última revisão</span><strong>#{revision}</strong></div></div>
             <div className="ce-admin-publish-actions"><button type="button" className="ce-admin-btn ce-admin-btn--primary" onClick={save} disabled={!dirty || !dataIsValid || externalChange || loadingFailed}><Check size={16}/> Salvar rascunho local</button>
@@ -287,8 +285,7 @@ export function AdminConsole() {
           <Panel title="Histórico de revisões" subtitle="Até 500 eventos validados por sequência e ID no navegador. Não é auditoria imutável de servidor.">
             {events.length ? <ol className="ce-admin-history">{[...events].reverse().slice(0,20).map(event => <li key={event.id}><ClipboardCheck size={18}/><div><strong>{event.action === 'PUBLISHED' ? 'Publicação local' : 'Rascunho salvo'}</strong><small>{event.at} · Revisão {event.revision} · anterior {event.previousRevision}</small></div></li>)}</ol> : <p>Nenhuma alteração registrada nesta instalação.</p>}
           </Panel>
-        </>}
-        </ModuleBoundary>
+        </>}</AdminErrorBoundary>}
       </div>
     </div>
   </main>;

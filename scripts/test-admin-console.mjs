@@ -10,6 +10,9 @@ const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
 const pmo = read('src/components/admin/pmo-panel.tsx');
 const overview = read('src/components/admin/modules/admin-overview-module.tsx');
+const templatesPanel = read('src/components/admin/templates-panel.tsx');
+const sourcesPanel = read('src/components/admin/sources-panel.tsx');
+const readonlyDialog = read('src/components/admin/admin-readonly-dialog.tsx');
 const boundary = read('src/components/admin/admin-error-boundary.tsx');
 const contentSchema = read('src/lib/admin-content-schema.ts');
 const workbench = read('src/lib/local-workbench-store.ts');
@@ -20,7 +23,9 @@ const assertions = [
   ['Zod checks draft and imported content', /adminContentSchema=z.object/.test(contentSchema) && /parseAdminContent\(value\)/.test(workbench)],
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
-  ['templates derive from canonical registry', /templateCatalogo/.test(ui) && /templateContracts/.test(ui)],
+  ['templates derive from canonical registry', /<TemplatesPanel \/>/.test(ui) && /templateCatalogo/.test(templatesPanel) && /templateContracts/.test(templatesPanel)],
+  ['sources expose real IDs and references', /<SourcesPanel \/>/.test(ui) && /sourceIds/.test(sourcesPanel) && /references/.test(sourcesPanel)],
+  ['template/source details use accessible Radix dialog', /@radix-ui\/react-dialog/.test(readonlyDialog) && /Dialog.Title/.test(readonlyDialog) && /Dialog.Description/.test(readonlyDialog)],
   ['all administrative tabs reachable', ['overview','pmo','commander','content','templates','sources','publication'].every(tab => ui.includes(`id: '${tab}'`))],
   ['draft and published shown distinctly', /setPreviewVersion\('published'\)/.test(ui) && /previewVersion === 'draft' \? model : published/.test(ui)],
   ['save and publish remain explicit independent actions', /saveLocalDraft\(model, revision\)/.test(ui) && /publishLocalDraft\(revision\)/.test(ui)],

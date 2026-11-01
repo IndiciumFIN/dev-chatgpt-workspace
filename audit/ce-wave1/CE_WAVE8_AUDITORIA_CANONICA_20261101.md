@@ -40,6 +40,12 @@
 
 O auditor fallhou inicialmente em `INVALID_BLOB_LINEAGE` com cinco fontes de exclusão legítimas (`status=D`, `blob=null`) da branch revert da PR #29. O validador agora aceita o estado somente quando `D + null`, rejeita hash inválido e preserva a operação em `sources[].status`; testes negativos foram adicionados. O workflow seguinte expôs 22 conflitos sem WO. Todos foram mapeados **exclusivamente como candidatos** a WOs existentes. Uma falha de sintaxe foi detectada e corrigida antes do CI verde.
 
+## Matriz permanente no Git
+
+Os **146 caminhos em colisão**, com cada branch de origem, blob SHA/remoção `D + null`, mapeamento WO candidato e estado `NOT_APPROVED`, também foram versionados em [`CE_WAVE8_146_COLISOES_20261101.jsonl`](./CE_WAVE8_146_COLISOES_20261101.jsonl). São 147 registros JSONL (cabeçalho + 146 colisões), conteúdo remoto conferido bit a bit com a evidência local de mesmo texto; SHA-256 do arquivo local: `867b3425a27f0d0d1fd1bb1090e07490e6dfc9a0b6252a6799cd69b9cf8489fc`.
+
+O arquivo completo de runtime e o índice do corpus permanecem nos artefatos do Actions com retenção limitada; a matriz de colisões em Git é uma **cópia histórica auditável**, não substitui a triagem canônica nem admite alterações na `main`.
+
 ## Limitações e próximos gates
 
 1. `registers/governance/main-migration-scope.v1.json` contém população atualizada, mas HEADs de suas fontes são **fotografia de consulta, não pinagem transacional**. Uma branch de planejamento e a própria branch candidata avançaram; não é possível exigir que o manifesto contenha o hash do seu próprio commit. A fonte de verdade de HEADs do runtime é `remoteBranchHeads` do relatório de cada execução, lido antes/depois pelo auditor.

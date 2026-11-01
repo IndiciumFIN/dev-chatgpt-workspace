@@ -30,7 +30,21 @@
 | **Média** | Inferência forte a partir de nome de branch ou de registo canónico; ou texto de página real sem hash verificável no repositório comum. |
 | **Baixa** | Heurística por classificador (contagem por palavra-chave), ausência não verificada, ou extrapolação. |
 
-### 0.3 Regras duras aplicadas neste relatório
+### 0.3 Glossário (o que significam as siglas usadas no relatório)
+
+| Sigla | Significado |
+|---|---|
+| **UUa** | **Unidade de significado.** Divergência em que *o mesmo nome* designa *objectos diferentes* nos dois lados — por exemplo, "favorito" é uma visita na produção e uma coleção persistida no esqueleto. **Não é uma lacuna de volume**: o vocabulário existe nos dois lados, mas não aponta para a mesma coisa. A consequência é sempre a mesma — o utilizador vê uma promessa que o modelo não cumpre, ou o motor resolve o objecto errado |
+| **Gap** | Falta de implementação: o esqueleto **declara** a capacidade e não a executa. Não é divergência de sentido |
+| **Gap de runtime** | O esqueleto declara a forma (objecto, binding, serviço) mas não há código que a faça correr |
+| **FIND** | Divergência registada para o processo de governança — FIND → política → validador → TASK → WO → OPA → Kernel → testes → auditoria → decisão humana `[E3]`. **Nunca substituição silenciosa** |
+| **HOLD / HOLD_HUMAN** | Estado que exige decisão humana antes de avançar. `HOLD_HUMAN` é o estado que o `WO-HOM-001` mantém |
+| **`CANDIDATE` / `CANDIDATE_HOLD`** | Estado do registo candidato: declarado, não promovido. Nenhuma promoção é prometida por este relatório |
+| **a-/b-/c-/d-** | Classes dos deltas accionáveis do §8: **(a)** corrigir o esqueleto agora · **(b)** implementar no roadmap · **(c)** decisão do dono · **(d)** fora de âmbito |
+| **L-xx / C-xx / A-xx** | Linhas de evidência (§5), contradições (§7) e anexos (§10) deste relatório |
+| **F1…F6** | As seis frentes upstream (mapa em §2) |
+
+### 0.4 Regras duras aplicadas neste relatório
 
 1. **Guest-first e Clinical Safety são requisitos**, não sugestões. Onde um eixo os contradiz, o veredito diz isso, não o suaviza.
 2. **Nenhum `promotion`, `ADMITTED` ou `WO` é prometido** por este relatório. Promoção exige FIND → política → validador → WO → OPA → Kernel → testes → auditoria → decisão humana `[E5]`.

@@ -62,7 +62,24 @@ export async function handleAuthPopupRequest(request: Request): Promise<Response
   // Stay first-party for the callback so the session cookie lands in THIS popup.
   const back = `${url.origin}/auth/popup?done=1`;
   try {
-    const apiRes = await auth.api.signInWithOAuth2({
+    // genericOAuth is installed conditionally; Better Auth's inferred API type
+    // does not expose its method when the plugin is absent. Verify it at runtime.
+    type OAuthRequest = {
+      body: { providerId: string; callbackURL: string; errorCallbackURL: string };
+      headers: Headers;
+      asResponse: true;
+    };
+    const oauth = auth.api as unknown as {
+      signInWithOAuth2?: (options: OAuthRequest) => Promise<Response>;
+    };
+    if (typeof oauth.signInWithOAuth2 !== "function") {
+      return completionResponse({
+        source: "grok-auth-popup",
+        token: null,
+        error: "oauth_provider_unavailable",
+      });
+    }
+    const apiRes = await oauth.signInWithOAuth2({
       body: {
         providerId,
         callbackURL: back,

@@ -67,5 +67,5 @@ test_fails_when_human_approval_timestamp_differs_from_manifest if {
 }
 
 test_fails_when_approval_timestamp_is_absent if {
-	not allow with input as object.union(fixture, {"approval": object.remove(fixture.approval, {"approved_at"})})
+	not allow with input as object.union(object.remove(fixture, {"approval"}), {"approval": object.remove(fixture.approval, {"approved_at"})})
 }

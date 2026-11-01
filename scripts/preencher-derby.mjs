@@ -20,6 +20,17 @@ import { PGlite } from "@electric-sql/pglite";
 
 export const MARCADOR = "DERBY";
 export const RESPONSAVEL = "derby-normalizacao";
+// A pendência legítima não pode ser preenchida com identidade/aprovação fabricada.
+export const GOVERNED_PENDING_FIELDS = new Set([
+ "kernel_atom.admitted_by","kernel_claim.admitted_by",
+ "business_rule.approved_by","ai_control.approved_by",
+ "governance_item.approved_by","data_specification.approved_by",
+ "policy_ack.owner_user_id",
+]);
+export const GOVERNED_PENDING_STATES = new Set([
+ "content_text","kernel_atom","kernel_claim","business_rule",
+ "ai_control","governance_item","data_specification",
+]);
 const diretorioMigrations = new URL("../migrations/", import.meta.url);
 const arquivoRelatorio = new URL("../artifacts/db-derby.json", import.meta.url);
 
@@ -269,6 +280,7 @@ export async function auditar(db, opcoes = {}) {
 
   const violacoes = [];
   for (const achado of pendencias) {
+    if (GOVERNED_PENDING_FIELDS.has(achado.tabela + "." + achado.coluna)) continue;
     if (achado.alvo) {
       violacoes.push({
         tipo: "pendencia-nao-preenchida",
@@ -312,6 +324,8 @@ export async function auditar(db, opcoes = {}) {
     }
   }
   for (const achado of estados) {
+    // A permanência em rascunho/candidato é correta até aprovação humana comprovada.
+    if (GOVERNED_PENDING_STATES.has(achado.tabela)) continue;
     violacoes.push({
       tipo: "estado-retido",
       tabela: achado.tabela,
@@ -328,8 +342,32 @@ export async function auditar(db, opcoes = {}) {
     });
   }
 
+  // Não aceitar autor técnico de normalização como decisão de uma pessoa.
+  const checks = [
+    ["kernel_atom","admitted_by"],["kernel_claim","admitted_by"],
+    ["business_rule","approved_by"],["ai_control","approved_by"],
+    ["governance_item","approved_by"],["data_specification","approved_by"],
+    ["policy_ack","owner_user_id"],
+  ];
+  for (const [tabela,coluna] of checks) {
+    const result = await db.query('select count(*)::int as n from "' + tabela + '" where "' + coluna + '" = $1',[RESPONSAVEL]);
+    if (result.rows[0].n > 0) violacoes.push({
+      tipo:"autoridade-sintetica",tabela,coluna,
+      detalhe:result.rows[0].n + " registros atribuem autoridade a uma normalização técnica.",
+    });
+  }
+  const unreviewed = await db.query("select count(*)::int as n from content_text where status = 'publicado' and review_state = 'DERBY'");
+  if (unreviewed.rows[0].n > 0) violacoes.push({
+    tipo:"publicacao-sem-revisao",tabela:"content_text",coluna:"review_state",
+    detalhe:unreviewed.rows[0].n + " textos publicados sem revisão humana.",
+  });
+  const unapprovedClaims = await db.query("select count(*)::int as n from kernel_claim where status = 'admitido' and (admitted_by is null or btrim(admitted_by) = '')");
+  if (unapprovedClaims.rows[0].n > 0) violacoes.push({
+    tipo:"admissao-sem-ator",tabela:"kernel_claim",coluna:"admitted_by",
+    detalhe:unapprovedClaims.rows[0].n + " claims admitidos sem aprovador identificável.",
+  });
   const estruturais = pendencias.filter((p) => p.classificacao === "estrutura-declarada");
-  const semDeclaracao = pendencias.filter((p) => p.classificacao === "PENDENCIA-SEM-DECLARACAO");
+  const semDeclaracao = pendencias.filter((p) => p.classificacao === "PENDENCIA-SEM-DECLARACAO" && !GOVERNED_PENDING_FIELDS.has(p.tabela + "." + p.coluna));
   return { violacoes, pendencias, estados, caminhos, marcador, estruturais, semDeclaracao };
 }
 
@@ -367,7 +405,7 @@ export function formatar(relatorio) {
   linhas.push(`[derby] DERBY em inst_section:      ${m.inst_section}`);
   linhas.push(`[derby] DERBY em section_block:     ${m.section_block}`);
   linhas.push(`[derby] DERBY em specimen:          ${m.specimen}`);
-  linhas.push(`[derby] admito por normalizacao:   atom=${m.kernel_atom} regra=${m.business_rule} controle=${m.ai_control} governanca=${m.governance_item} dicionario=${m.data_specification}`);
+  linhas.push(`[derby] aprovador tecnico nao valido (esperado 0):   atom=${m.kernel_atom} regra=${m.business_rule} controle=${m.ai_control} governanca=${m.governance_item} dicionario=${m.data_specification}`);
   if (relatorio.estruturais.length) {
     linhas.push(`[derby] vazio declarado como desenho (${relatorio.estruturais.length} colunas, com a razão de cada uma):`);
     for (const p of relatorio.estruturais) {
@@ -402,11 +440,11 @@ async function principal() {
   let relatorio = await auditar(db);
 
   if (selfTest) {
-    console.log("[self-test] quebro QUATRO coisas de proposito:");
+    console.log("[self-test] quebro campos de conteúdo, autoridade e dicionário de propósito:");
     await db.query("update source_tool set version = '' where slug = (select slug from source_tool limit 1)");
     await db.query("update content_text set body = '' where slug = (select slug from content_text limit 1)");
     await db.query("update content_text set title = '/caminho/errado' where slug = (select slug from content_text where locale = 'pt-BR' limit 1)");
-    await db.query("update content_text set status = 'rascunho' where slug = (select slug from content_text where locale = 'pt-BR' limit 1)");
+    await db.query("update kernel_atom set admitted_by = 'derby-normalizacao' where id = (select id from kernel_atom limit 1)");
     // Uma coluna nova, com pendência, e SEM declaração: é a prova de que o
     // portão não aceita "vazio estrutural" por deduzão — tem que vir escrito.
     await db.query("alter table content_text add column coluna_do_self_test text");
@@ -415,14 +453,14 @@ async function principal() {
     console.log(formatar(relatorio));
     const acusou = relatorio.violacoes.some((v) => v.tipo === "pendencia-nao-preenchida");
     const acusouCaminho = relatorio.violacoes.some((v) => v.tipo === "valor-caminho");
-    const acusouEstado = relatorio.violacoes.some((v) => v.tipo === "estado-retido");
+    const acusouAutoridade = relatorio.violacoes.some((v) => v.tipo === "autoridade-sintetica");
     const acusouSemDeclaracao = relatorio.violacoes.some(
       (v) => v.tipo === "pendencia-sem-declaracao" && v.coluna === "coluna_do_self_test",
     );
-    const ok = acusou && acusouCaminho && acusouEstado && acusouSemDeclaracao;
+    const ok = acusou && acusouCaminho && acusouAutoridade && acusouSemDeclaracao;
     console.log(
       ok
-        ? "[self-test] ok: o portão falhou e nomeou a pendência, o caminho, o estado retido e a coluna sem declaração."
+        ? "[self-test] ok: o portão falhou e nomeou a pendência, o caminho, a autoridade sintética e a coluna sem declaração."
         : "[self-test] FALHA: o portão não acusou uma das quatro quebras.",
     );
     process.exit(ok ? 0 : 1);

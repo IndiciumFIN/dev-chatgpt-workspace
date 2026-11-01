@@ -61,6 +61,9 @@ export type WorkOrder = {
   owner: string;
   approver: string;
   sourceRef: string;
+  /** Legacy drafts may omit these, but admission requires both. */
+  findRef?: string;
+  taskRef?: string;
   policySet: string[];
   riskLevel: RiskLevel;
   dataClassification: DataClassification;

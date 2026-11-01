@@ -10,7 +10,7 @@
  *   - tabela do dicionário sem linha no índice, ou linha do índice sem tabela
  *   - duas tabelas com a mesma label
  *
- * Achado (não derruba, mas sai no relatório e na saída do --self-test):
+ * Achado bloqueante de cobertura (HOLD_HUMAN, sai no relatório):
  *   - tabela do banco que o dicionário não cobre
  *
  * uso: node scripts/audit-indice-banco.mjs [--self-test] [--json]
@@ -227,7 +227,13 @@ async function principal() {
   if (json) {
     console.log(JSON.stringify(relatorio, null, 2));
   }
-  process.exit(relatorio.violacoes.length === 0 ? 0 : 1);
+  // Metadata coverage is a release invariant. We keep the detailed items as
+  // findings (rather than inventing labels), but --check must fail closed.
+  const lacksDictionaryCoverage = relatorio.contagens.tabelasForaDoDicionario > 0;
+  if (lacksDictionaryCoverage) {
+    console.error(`HOLD_HUMAN: ${relatorio.contagens.tabelasForaDoDicionario} tables lack schema_entity and index coverage; no automatic labels generated.`);
+  }
+  process.exit(relatorio.violacoes.length === 0 && !lacksDictionaryCoverage ? 0 : 1);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

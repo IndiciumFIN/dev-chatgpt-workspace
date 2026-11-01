@@ -2,14 +2,14 @@
   "schemaVersion": "1.0.0",
   "reportType": "READ_ONLY_BRANCH_CANONICALIZATION_INVENTORY",
   "repository": "IndiciumFIN/dev-chatgpt-workspace",
-  "generatedAt": "2026-11-01T02:39:40.578Z",
+  "generatedAt": "2026-11-01T02:51:25.139Z",
   "baseline": {
     "ref": "refs/remotes/origin/main",
     "commit": "e9f7fe66075ebe5d7346072dc3a1b4934678c6de"
   },
   "candidate": {
     "branch": "integration/structural-overlay-20261101",
-    "commit": "49a714cc18ef58f32b3bbd764553be0763699651"
+    "commit": "3143107ba252b6213d1c98b2cae742221656e02a"
   },
   "sourceBranches": [
     {
@@ -166,7 +166,7 @@
     "divergentPaths": 143,
     "candidateMatchesCommonSourcePaths": 278,
     "candidateMatchesAnySourcePaths": 293,
-    "candidateAbsentWhileSourceHasFilePaths": 10282,
+    "candidateAbsentWhileSourceHasFilePaths": 10225,
     "baselineMatchesAnySourcePaths": 12,
     "sourceDeletions": 1659,
     "sourceDeletionEntries": 3409,
@@ -187,7 +187,7 @@
         "divergentPaths": 60,
         "candidateMatchesCommonSourcePaths": 0,
         "candidateMatchesAnySourcePaths": 0,
-        "candidateAbsentWhileSourceHasFilePaths": 1209
+        "candidateAbsentWhileSourceHasFilePaths": 1152
       },
       "contracts/cko-skeletons": {
         "paths": 351,
@@ -6042,6 +6042,89 @@
     "substantive": [],
     "unableToVerify": [],
     "canonicalWinnerSelected": false
+  },
+  "sourceSecuritySignals": {
+    "scope": [
+      "src/lib/auth/client.ts",
+      "src/lib/auth/preview.ts",
+      "src/lib/auth/server.ts"
+    ],
+    "candidateVariantsChecked": 3,
+    "sourceVariantsChecked": 13,
+    "candidateSignals": [],
+    "sourceSignals": [
+      {
+        "path": "src/lib/auth/client.ts",
+        "branch": "feat/projection-unica-f0-suite-real",
+        "blob": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+        "line": 38,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/client.ts",
+        "branch": "grook_10_26",
+        "blob": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+        "line": 38,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/client.ts",
+        "branch": "revert-26-plan/pmokernel-finalization-20261031",
+        "blob": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+        "line": 38,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/client.ts",
+        "branch": "simulados-enfermagem-db-canonico",
+        "blob": "2649a4c41e58a0735990a6bcc22fbc9ee011fb7f",
+        "line": 36,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/preview.ts",
+        "branch": "feat/projection-unica-f0-suite-real",
+        "blob": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+        "line": 20,
+        "signal": "LITERAL_PREVIEW_OAUTH_SECRET"
+      },
+      {
+        "path": "src/lib/auth/preview.ts",
+        "branch": "grook_10_26",
+        "blob": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+        "line": 20,
+        "signal": "LITERAL_PREVIEW_OAUTH_SECRET"
+      },
+      {
+        "path": "src/lib/auth/preview.ts",
+        "branch": "revert-26-plan/pmokernel-finalization-20261031",
+        "blob": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+        "line": 20,
+        "signal": "LITERAL_PREVIEW_OAUTH_SECRET"
+      },
+      {
+        "path": "src/lib/auth/server.ts",
+        "branch": "feat/projection-unica-f0-suite-real",
+        "blob": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+        "line": 75,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/server.ts",
+        "branch": "grook_10_26",
+        "blob": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+        "line": 75,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      },
+      {
+        "path": "src/lib/auth/server.ts",
+        "branch": "revert-26-plan/pmokernel-finalization-20261031",
+        "blob": "b32a0af440b1012db7acf3d5ff937af0648a95bc",
+        "line": 75,
+        "signal": "AUTH_ENABLED_BY_DEFAULT"
+      }
+    ],
+    "limitation": "Pattern-based review of auth configuration conflicts only; it does not prove a secret is active, revoked, or absent elsewhere."
   },
   "records": [
     {
@@ -256749,7 +256832,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "56f1759fa696d2c1026c10b0b51472222a6e2694"
+        "oid": "59ce107e36bac2c0fe8f3ecc87b54dcf60923768"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -256793,7 +256876,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "f4d6f7acae7d0a43b047d0676bcbcff6d850b1a3"
+        "oid": "3fa12c892bcfd76843127c30fbe6ebacddef1102"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -256837,7 +256920,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "e5fafe6cafb1847a33bc2338c184402d211936eb"
+        "oid": "b0bd12cdfc279aa73d60079c103a60d7c4872cbb"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -256881,7 +256964,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "0c5de91126d394a92ce9eaa945b53b1792c998fd"
+        "oid": "260a71e1c83e816922f9a275c3109cc677acb8f3"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -256925,7 +257008,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "3d3fa43da0547c15799365fdadafcfed40b05025"
+        "oid": "c9c8e217a8ed87e38a023e8cd5912fab6f235583"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -256969,7 +257052,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "4c30f642a90afb11eb2a94b8e27a46f827a04210"
+        "oid": "f325f43c0dad4d425ec529be6c8eb9c72e5c79bf"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -257013,7 +257096,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "20e9f6c043b72fe192f89b34bfbf1ccfb01a3449"
+        "oid": "9ac613b75be6a2d3b0d34b5ae68d5f6af747ca32"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -257057,7 +257140,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "4fa53319252baed573d265f369cef537ad2c430c"
+        "oid": "79b8a399255f53cf3c69e3f5535c780554822a9e"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -257101,7 +257184,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "d62d37a040029258302f5df5ede58ddaa45677be"
+        "oid": "e6cbeb8885480d560d6ae3ed6515b50644df23af"
       },
       "sourceBranchCount": 2,
       "sourceVersionCount": 1,
@@ -311300,7 +311383,7 @@
       "candidateEntry": {
         "mode": "100644",
         "type": "blob",
-        "oid": "43ad88bf65b0ff7e7c5d1fedce0e63c58f0974a6"
+        "oid": "fbd40c851986b80e7067e1338086011ee0e9127e"
       },
       "sourceBranchCount": 9,
       "sourceVersionCount": 8,
@@ -335469,7 +335552,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__accessibility.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "95932223ba700f501e56b4a4a76db5a68ee2390d"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335505,7 +335592,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__contrast.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "09ce815260ac7557afdf641f124c6867153f77cd"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335541,7 +335632,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__dark.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "db6d82ba087da403f7784a790e6ee50dab72009d"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335577,7 +335672,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__dyslexia.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "513c335446331fa58670e55a48964544ee681486"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335613,7 +335712,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__fontDown.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2664ddbcd7adaff8213fae4f6e25bd50f9c04906"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335649,7 +335752,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__fontUp.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fe1cd4dc5b357016118b584231c4bdee4314213f"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335685,7 +335792,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__language.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bd56fb387873f4deef0ce86decf7040d4236ef9d"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335721,7 +335832,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__reset.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "54df8a9acd434fce14ef74488d9d0bf44dd99996"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335757,7 +335872,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__search.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4fdca0a9152ce18601019a75f35a5e6e57d4fdf6"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335793,7 +335912,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/headerAccessibility__shortcuts.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9fd5449036758822ebf6bcc5ea2d43839d815966"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335829,7 +335952,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__about.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8f1537462d622481f35443a1b6e89ef9f151ddc9"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335865,7 +335992,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__accept.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "958c9f397b60165a28e480494fe99632d7d07ca9"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335901,7 +336032,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__autoNote.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cfb66cf1dc8006d237a51a73af1c28d7887d5a1a"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335937,7 +336072,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__calcs.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e5309945db68cd5da6822be9f28604e784806bf4"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -335973,7 +336112,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__clinicalLock.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "267dc0399f2ceb919ac79ade9abd289b7a1a1ce9"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336009,7 +336152,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__close.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "18d4fea64dd096fbfc2b549aab6865b6157e5420"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336045,7 +336192,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__closePanels.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c15b38a6cd625e022b0128d47ac8a530b490458c"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336081,7 +336232,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__commitment.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c3739e304c5118e26bf2d6c08721364c2cc4f9d7"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336117,7 +336272,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__commitmentText.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cbedbda3f8cc456d3da9b5d165f65509e8f3a97b"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336153,7 +336312,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__contact.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2151e8060937ed59e46af5e7bd621ceca7925b36"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336189,7 +336352,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__contents.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "99e86a3b8d8f1d3a9507d422451214aad58ef579"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336225,7 +336392,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__contrast.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a5883bddd7a7f9f0c0e48e058b91d6c53ee79f0e"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336261,7 +336432,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__cookie.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c21ca19fb95c31942abe61479b5da102be070a8e"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336297,7 +336472,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__cookieAudience.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "802dea2f4c05720dd56f2ad06b3abd6e0fb6704f"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336333,7 +336512,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__cookieNecessary.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6192bab5694f9840aa8c8ddb2a9a9969182f69f6"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336369,7 +336552,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__cookiesManage.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "700329297510765bb5b39d79cb92dfb6c6075176"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336405,7 +336592,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__cookieTranslation.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6ece514722134393c69f00407d46e52f6c86ccaa"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336441,7 +336632,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__customize.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "64ed9e34702380792fe89adc0aa9b3e6bd87af0c"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336477,7 +336672,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__dark.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "93225d834a6413e3ba32c3ff6b3fc4d21f5e4f2e"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336513,7 +336712,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__dyslexia.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "12d9f4117e7b8e5fdc7eb6875cad9cd43792f535"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336549,7 +336752,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__enter.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "15a68db99d4db048bc174b61d465f85fabfffca8"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336585,7 +336792,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__exams.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3c783c60b4eb6eb09761d4700152810ccc31b571"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336621,7 +336832,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__follow.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ba3f2e792be3cb457635eb55667c89a9e74e148a"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336657,7 +336872,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__fontDown.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eded10a4faf0f5b8ca6f2615d6c6d90dae27e513"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336693,7 +336912,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__fontUp.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4fdc7d38c06db7c564faa66c5536b34f1c5941a0"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336729,7 +336952,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__goContent.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67da0a08909b215dab1c07705ec05690b41ffd00"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336765,7 +336992,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__goFooter.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a08dc96a57f2c3e5a1f5366e1de26046ce24f172"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336801,7 +337032,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__goMenu.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5617c6277838eb465af7d81e37103ec7ae4f0819"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336837,7 +337072,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__goSearch.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9ffe95dc53ee12e06ace2821751005977a98a216"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336873,7 +337112,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__home.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "18057e4e1c957b6ff5848122617e83baab05addf"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336909,7 +337152,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__institutional.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5e9a3fb258957663f2def1fc713064cef0958aaa"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336945,7 +337192,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__jobs.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "41c0e04f8d91b9b2019368e76ea48b53a95e772d"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -336981,7 +337232,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__library.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "201543638532a712869f887c6c8d56d9f4727fe6"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337017,7 +337272,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__menu.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5a4b960de0ba7bec2ad54bd013f1207e665b7611"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337053,7 +337312,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__openList.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d23cf3c175c159e04b36b30b73a6f8b2e8e979c1"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337089,7 +337352,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__pack.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d9519f36349ed73f90a150efe82fd5868083092e"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337125,7 +337392,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__reject.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0038f56e233b4cd4bdab02ce9cb46c0e6235b577"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337161,7 +337432,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__reset.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "84a528e0f9de3ae2fe2d5f089736b5ae329d1b85"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337197,7 +337472,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__saveCookies.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "30a82bf9fee4d8498637a8702ee4c7e7142ece87"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337233,7 +337512,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__search.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ac78c13fa2e1ac44c8bf7396d22c769198c44224"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337269,7 +337552,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__searchPlaceholder.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8eedf6c6d2da942ef865c86a10a5c22a73be2c73"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337305,7 +337592,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__shortcuts.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0e72c55e291392661f7443f491fa35ac550163c3"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337341,7 +337632,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__shortcutsTitle.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "be8241d2459e6f7f1760843197714e3ab9978e74"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337377,7 +337672,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__skip.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "87d2c90d5aa5e181d088497b375653221fe8264f"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337413,7 +337712,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__subscribe.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "37c21d57de4568c1853c7422f6d2f517c36712ef"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337449,7 +337752,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__sustainability.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "760b787936631064e375e47584d14acc6c54e537"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,
@@ -337485,7 +337792,11 @@
     {
       "path": "registers/i18n/incoming/de/contracts/interface__system.json",
       "baselineEntry": null,
-      "candidateEntry": null,
+      "candidateEntry": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6735fef935c83cf3417623d41a5741b48a944d78"
+      },
       "sourceBranchCount": 2,
       "sourceVersionCount": 2,
       "sourceBranchesAgree": false,

@@ -125,6 +125,22 @@ test("continuação de uma reserva não vira outra reserva", async () => {
   }
 });
 
+test("uma reserva válida não vira conflito só porque há outra migration no mesmo número", async () => {
+  const report = await auditar();
+  const invalid = report.violacoes.filter(v => v.tipo === "colisao-de-migration");
+  for (const numero of ["0036","0037","0042"]) {
+    assert.ok(!invalid.some(v=>v.detalhe.includes("número "+numero+" ")),
+      "A reserva legítima de "+numero+" não pode ser confundida com a segunda migration");
+  }
+  for (const numero of ["0039","0040"]) {
+    assert.ok(invalid.some(v=>v.detalhe.includes("número "+numero+" ")),
+      "A reserva que realmente não bate com o disco deve continuar bloqueada: "+numero);
+  }
+  assert.ok(report.violacoes.some(v=>v.tipo === "migration-numero-duplicado"),
+    "As colisões de numeração continuam bloqueantes");
+  assert.ok(report.migrationsNoDisco >= report.migrationsNumerosUnicos);
+});
+
 test("a auditoria acusa número de migration reservado em colisão", async () => {
   // O 0036 já existe no disco como "indice_do_banco"; reservar o mesmo número
   // para outro nome é escrever por cima de uma migration que entrou.

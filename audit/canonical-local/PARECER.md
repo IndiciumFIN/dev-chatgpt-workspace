@@ -32,5 +32,5 @@ A base desta branch é `integration/structural-overlay-20261101` em `621f73b`: 2
 
 `0001` a `0003` são iguais aos de `grook_10_26`. `0004` a `0035` foram copiados dessa branch e aplicados num banco local. `0036` e `0037` acrescentam `review_item`. `0038` grava as divergências em `canonical_divergence`.
 
-`scripts/migrar-com-revisao.py` confere cada caminho pelo hash. 13.303 ficaram `CONFERIDO`. 122 ficaram `DIVERGENTE`, 3.006 `AUSENTE` e 2 `SEGREDO`. `revisao_humana` não aceita `true` e conteúdo clínico não foi aprovado.
+`scripts/baixar-tar.py` procura o TAR no disco, numa release do GitHub ou num `--url`. Nesta sessão não havia cópia. Sem o arquivo, a saída é 2. Se o conteúdo não tiver os 16.433 caminhos do inventário, nada é extraído e o `.env` nunca entra.
 

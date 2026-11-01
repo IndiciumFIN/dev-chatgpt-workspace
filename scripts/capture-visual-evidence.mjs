@@ -37,7 +37,11 @@ try {
       try {
         await page.setViewportSize({ width: vp.width, height: vp.height });
         const runtimeErrors = [];
+        const consoleErrors = [];
         page.on('pageerror', e => runtimeErrors.push(String(e)));
+        page.on('console', message => {
+          if (message.type() === 'error') consoleErrors.push(message.text());
+        });
         const response = await page.goto(new URL(route.pathname, url.origin).href, { waitUntil: 'networkidle', timeout: 20000 });
         if (!response || response.status() >= 400) throw new Error(`HTTP ${response?.status() ?? 'no response'}`);
         const rendered = await page.evaluate(() => ({
@@ -48,9 +52,11 @@ try {
         }));
         if (rendered.textLength < 20 || rendered.visibleElements < 1) throw new Error(`EMPTY_OR_UNVERIFIED_RENDER ${JSON.stringify(rendered)}`);
         if (runtimeErrors.length) throw new Error(`RUNTIME_ERRORS ${JSON.stringify(runtimeErrors)}`);
+        if (consoleErrors.length) throw new Error(`CONSOLE_ERRORS ${JSON.stringify(consoleErrors)}`);
+        if (rendered.horizontalOverflow) throw new Error(`HORIZONTAL_OVERFLOW ${JSON.stringify(rendered)}`);
         await page.screenshot({ path: path.join(out, pathname), fullPage: true, animations: 'disabled' });
         const bytes = await readFile(path.join(out, pathname));
-        result.captures.push({ route: route.pathname, viewport: vp, file: pathname, status: response.status(), rendered, runtimeErrors, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+        result.captures.push({ route: route.pathname, viewport: vp, file: pathname, status: response.status(), rendered, runtimeErrors, consoleErrors, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
       } catch (e) {
         result.errors.push({ route: route.pathname, viewport: vp.id, error: String(e) });
       } finally { await page.close(); }

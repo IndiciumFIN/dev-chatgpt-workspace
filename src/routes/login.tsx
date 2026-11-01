@@ -89,7 +89,13 @@ function SignInPanel() {
     void navigate({ to: "/sessao" });
   }
 
-  if (!authEnabled) return <p>A entrada está desligada.</p>;
+  if (!authEnabled) {
+    return (
+      <p role="status" aria-live="polite">
+        A autenticação não está habilitada neste ambiente; esta tela não inicia sessão nem concede acesso.
+      </p>
+    );
+  }
 
   return (
     <div className="login-panel">

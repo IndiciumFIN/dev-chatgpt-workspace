@@ -155,14 +155,12 @@ export async function auditar(opcoes = {}) {
   }
 
   // 3) Os números de migration reservados são únicos e batem com o disco.
-  const existentes = new Map();
   const nomesPorNumero = new Map();
   for (const nome of (await readdir(migrations)).sort()) {
     if (!/^\d{4}_.+\.sql$/.test(nome)) continue;
     const numero = nome.slice(0, 4);
     if (!nomesPorNumero.has(numero)) nomesPorNumero.set(numero, []);
     nomesPorNumero.get(numero).push(nome);
-    existentes.set(numero, nome.slice(5, -4).replace(/-/g, "_"));
   }
   for(const [numero, nomes] of nomesPorNumero){
     if(nomes.length > 1) violacoes.push({
@@ -179,11 +177,13 @@ export async function auditar(opcoes = {}) {
       });
     }
     vistos.add(reserva.numero);
-    const noDisco = existentes.get(reserva.numero);
-    if (noDisco && noDisco !== reserva.nome.replace(/-/g, "_")) {
+    const noDisco = nomesPorNumero.get(reserva.numero) ?? [];
+    const esperado = reserva.nome.replace(/-/g, "_");
+    const presente = noDisco.some(nome => nome.slice(5, -4).replace(/-/g, "_") === esperado);
+    if (noDisco.length && !presente) {
       violacoes.push({
         tipo: "colisao-de-migration",
-        detalhe: `o número ${reserva.numero} está reservado para "${reserva.nome}", mas no disco existe "${noDisco}"`,
+        detalhe: `o número ${reserva.numero} está reservado para "${reserva.nome}", mas no disco existem "${noDisco.join(", ")}"`,
       });
     }
   }
@@ -216,7 +216,8 @@ export async function auditar(opcoes = {}) {
     tarefas: tarefas.length,
     referencias: tarefas.reduce((acc, t) => acc + t.caminhos.length, 0),
     reservas: reservas.length,
-    migrationsNoDisco: existentes.size,
+    migrationsNoDisco: [...nomesPorNumero.values()].reduce((n,files) => n+files.length,0),
+    migrationsNumerosUnicos: nomesPorNumero.size,
     entregas: entregues.length,
   };
 }

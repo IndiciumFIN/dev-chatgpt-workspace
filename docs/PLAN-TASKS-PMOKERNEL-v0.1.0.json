@@ -2852,7 +2852,7 @@
     "contracts/entities/tool-bindings.v1.json",
     "contracts/cko-skeleton/catalog/cko-data.json"
    ],
-   "acceptance": "Medido (owner, 01/11) por leitura directa do repo canonico: tool-bindings.v1.json tem 78 itens e 78/78 com authority_class e decision fora do enum canonico OU AUSENTES. Detalhe: authority_class usa CLINICAL (36), TECHNICAL (6), INTERNAL_CONFIG (4) e esta ausente em 32; decision usa BOUND (46) e esta ausente em 32. Os enums canonicos sao authority_class = REGULATORY, TECHNICAL_STANDARD, AUTHORITATIVE_TERMINOLOGY, CLINICAL_EVIDENCE, INTERNAL_NONCLINICAL (5) e decision = HOLD, REJECTED, APPROVED (3) - BOUND nao pertence a nenhum dos dois. Consequencia de governanca: 32 bindings nao tem decisao registada, 46 tem uma decisao que nao e uma decisao do CKO (ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED). Obrigatorio: reclassificar os 78 com o enum canonico, tornar a decisao obrigatoria (campo ausente = HOLD), e registar o reclassificador como FIND. NOT_RUN: se o mapeamento CLINICAL -> CLINICAL_EVIDENCE e BOUND -> HOLD sao semanticamente correctos - decisao do Kernel."
+   "acceptance": "Medido (owner, 01/11) por leitura directa do repo canonico: tool-bindings.v1.json tem 78 itens e 78/78 com authority_class e decision fora do enum canonico OU AUSENTES. Detalhe: authority_class usa CLINICAL (36), TECHNICAL (6), INTERNAL_CONFIG (4) e esta ausente em 32; decision usa BOUND (46) e esta ausente em 32. Os enums canonicos sao authority_class = REGULATORY, TECHNICAL_STANDARD, AUTHORITATIVE_TERMINOLOGY, CLINICAL_EVIDENCE, INTERNAL_NONCLINICAL (5) e decision = HOLD, REJECTED, APPROVED (3) - BOUND nao pertence a nenhum dos dois. Consequencia de governanca: 32 bindings nao tem decisao registada, 46 tem uma decisao que nao e uma decisao do CKO (ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED). Obrigatorio: reclassificar os 78 com o enum canonico, tornar a decisao obrigatoria (campo ausente = HOLD), e registar o reclassificador como FIND. NOT_RUN: se o mapeamento CLINICAL -> CLINICAL_EVIDENCE e BOUND -> HOLD sao semanticamente correctos - decisao do Kernel. | CORRECIDO (owner, 01/11/2026 04:05Z): o enum de `decision` que rege os bindings NAO e o do `release_gate` (HOLD/REJECTED/APPROVED) mas o do contrato `authority_binding` = **ALLOW / HOLD_HUMAN / REJECT / NOT_APPLICABLE_JUSTIFIED**. Medido em contracts/cko-skeleton/catalog/cko-data.json: `decision` aparece em TRES contratos com valores diferentes (applicability, authority_binding, release_gate) - resolver o enum pelo nome da chave, sem escopo, mistura vocabularios. Consequencia para o sandbox: a conversao 'BOUND -> HOLD' introduziu um valor que tambem nao pertence ao enum do contrato que governa o binding; e o `HOLD` do release_gate nao e a mesma coisa que o `HOLD_HUMAN` do authority_binding. VALOR CORRECTO para um binding sem validator_ids e sem evidence_bundle_ids: HOLD_HUMAN (nao ALLOW, porque nao ha evidencia)."
   },
   {
    "id": "TASK-PLAN-158",
@@ -2974,6 +2974,114 @@
     "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
    ],
    "acceptance": "MEDIDO POR EXECUCAO (owner, 01/11/2026 03:25Z): no repo canonico (main, e9f7fe66) o port existe em tools/experience-skeleton/ com 12 ficheiros, mas node tools/experience-skeleton/check-skeleton.mjs e node tools/experience-skeleton/generate-skeleton.mjs falham ambos com Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'. CAUSA: os dois scripts fazem ROOT = resolve(dirname(import.meta.url), '..') - ou seja, esperando a raiz do esqueleto no diretorio PAI - e leem catalog/service-catalog.v1.json, catalog/capability-registry.candidate.v0.1.json, catalog/object-capability-binding.candidate.v0.1.json, src/core/experience/{resolver,state,metamodel,module-status}.ts e schemas/*.json. Nada disso existe nesse caminho no repo: o catalogo real esta em docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json (84.569 B) e src/core/experience/ nao existe no repo. O pilot/ foi copiado para tools/experience-skeleton/pilot/ mas os scripts continuam a esperar src/core/experience/ - ou seja, nem o catalogo nem o nucleo estao onde o codigo os procura. CONSEQUENCIA DE GOVERNANCA: um artefacto do esqueleto esta no repo canonico e aparenta estar portado, mas nao corre - e o PR #29 apagaria essa copia (semelhante ao resto do pacote). OBRIGATORIO: (a) decidir a localizacao canonica (raiz do repo vs tools/experience-skeleton/) e tornar o ROOT explicito e configuravel; (b) portar o catalogo e o nucleo para o caminho que o codigo le, ou corrigir os caminhos; (c) PROVA: correr o gate no repo canonico e mostrar 11/11 verde a partir do commit, e o --check do gerador sem drift; (d) o port passa a ser 'entregue e verificado', nao 'portado'. NOT_RUN: a suite completa de testes do esqueleto no repo canonico (o port nao tem os 65 ficheiros de teste nem o package.json do esqueleto)."
+  },
+  {
+   "id": "TASK-PLAN-164",
+   "phase": "F2",
+   "title": "S1 Contratos: reclassificar as 6 fontes e os 78 bindings pela natureza e pelo enum escopado ao contrato",
+   "wo": "WO-CKO-001",
+   "deps": [
+    "TASK-PLAN-156",
+    "TASK-PLAN-157"
+   ],
+   "owner": "Mavis",
+   "language": "JSON",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "contracts/entities/tool-sources.v1.json",
+    "contracts/entities/tool-bindings.v1.json",
+    "contracts/cko-skeleton/catalog/cko-data.json",
+    "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 04:05Z) com o portao novo scripts/check-contract-integrity.mjs: **172 violacoes** no estado actual (6x R1 source_type fora do enum do contrato `source`; 6x R3 sha256 = 64 zeros; 78x R4 authority_class fora do enum; 78x R5 decision fora do enum do `authority_binding`; 4x R8 autoridade nao-INTERNAL sem source_ids). VALORES A APLICAR (determinados pela natureza do documento, nao por traducao de rotulo): SRC-CFM-PARECER-28-2020 (parecer do CFM) -> REGULATOR (nao OFFICIAL_LAW: um parecer de conselho profissional nao e lei); SRC-REV-ENF-USP-BRADEN-1999 (artigo cientifico de validacao) -> PRIMARY_STUDY; SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA (manual de consulta) -> GUIDELINE; SRC-OMS-OBESIDADE-2000 (relatorio da OMS) -> GUIDELINE (nao OFFICIAL_LAW: a OMS nao legisla no Brasil); SRC-APGAR-1953 (artigo original) -> PRIMARY_STUDY; SRC-GOTEJAMENTO-FORMULA-CLASSICA (formula tecnica de enfermagem) -> STANDARD. PENDENTE DE CONFIRMACAO pela frente de doutrina (TASK-PLAN-156/157 dependem desta frente) antes de escrever. INTEGRIDADE: **5 das 6 fontes nao tem artefacto preservado** (medido no pacote de capturas, 36 artefactos, 36/36 com hash): so SRC-CFM-PARECER-28-2020 tem documento (cfm_parecer28_2020.pdf = 089dba1488ac8ee0a3ca943c1131b193e4ee593bbd5c9a3289718320afd68c2d). As 5 restantes passam a integrity.sha256 = NOT_AVAILABLE COM integrity.reason e integrity.artifact_ref declarados - ausencia declarada e honesta, ausencia NAO e integridade. BINDINGS: authority_class CLINICAL -> CLINICAL_EVIDENCE, TECHNICAL -> TECHNICAL_STANDARD, INTERNAL_CONFIG -> INTERNAL_NONCLINICAL; os 32 sem authority_class ficam com o valor ausente declarado (nao imputavel) e decisao HOLD_HUMAN; os 46 com decision BOUND -> HOLD_HUMAN (nao ha validator_ids nem evidence_bundle_ids, logo nao ha ALLOW). PROVA: node scripts/check-contract-integrity.mjs passa a 0 violacoes e node --test scripts/check-contract-integrity.test.mjs da 12/12."
+  },
+  {
+   "id": "TASK-PLAN-165",
+   "phase": "F2",
+   "title": "S2 Portao de integridade e referencia dos contratos (entregue - falha em 172 violacoes ate a S1)",
+   "wo": "WO-CKO-001",
+   "deps": [],
+   "owner": "Mavis",
+   "language": "JS",
+   "status": "DELIVERED_PENDING_GATE",
+   "covers": [],
+   "artifacts": [
+    "scripts/check-contract-integrity.mjs",
+    "scripts/check-contract-integrity.test.mjs"
+   ],
+   "acceptance": "ENTREGUE E MEDIDO (owner, 01/11/2026 04:05Z): scripts/check-contract-integrity.mjs (10.989 B) + teste (12/12 verde). Distingue-se do portao do sandbox (`check-enum-conformity.mjs`) em 4 pontos: (1) resolve os enums **escopados ao contrato** (source_type do contrato `source`; authority_class e decision do `authority_binding`), porque `decision` tem TRES enums no catalogo CKO; (2) exige integridade (hash real com artefacto no disco, OU NOT_AVAILABLE com reason E artifact_ref declarados) - o portao do sandbox aceita NOT_AVAILABLE sem motivo; (3) exige integridade REFERENCIAL (todo source_id existe no contrato de fontes) e coerencia decisao/estado; (4) reprova authority_class ausente - ausencia nao e imputavel. MEDIDO contra o estado real do repo: **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8), com o item e a linha nomeados. O portao fica VERMELHO de proposito ate a S1 - e o que o torna uma prova, nao decoracao. FALTA: integrar no agregador de portoes (scripts/audit-execution-gates.mjs) e correr em CI - a integracao em .github/workflows/ exige copia pelo owner (TASK-PLAN-012)."
+  },
+  {
+   "id": "TASK-PLAN-167",
+   "phase": "F1",
+   "title": "S4 FIND-CTR-010: registar com canonical_id (nao id) no registo activo de findings",
+   "wo": "WO-CKO-COFEN-001",
+   "deps": [
+    "TASK-PLAN-164"
+   ],
+   "owner": "Mavis",
+   "language": "JSON",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "registers/governance/find-register.v1.json",
+    "docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/prod_aldrete.html"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:40Z): o Parecer V6 item 5 regista que o FIND-CTR-010 foi adicionado com a chave `id` enquanto os 8 findings existentes usam `canonical_id`, e que tres caminhos de evidencia nao resolvem na arvore actual. SERA: registar o finding no registo ACTIVO do repo de governanca (registers/governance/find-register.v1.json) com `canonical_id`, severity HIGH, status DRAFT_FOR_GOVERNED_REVIEW, decision HOLD_HUMAN, e os tres caminhos de evidencia a resolver para ficheiros verificaveis (o HTML de producao `prod_aldrete.html` preservado em docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/ com SHA-256 conferido; o texto do parecer do CFM `cfm28.txt`; a formula da calculadora no repo). CONTEUDO DA DIVERGENCIA (medido): a fonte CFM (parecer 28/2020) define o corte em 8 pontos e o site publica 9 (prod_aldrete.html contem literalmente `if (calcScore >= 9)`). A divergencia NAO esta homologada - por isso HOLD_HUMAN, nao DONE. NOT_RUN: onde esta o registo activo no sandbox (ha dois caminhos possiveis: registers/governance/ no git vs src/data/registers/governance/ no sandbox) - o registo canonico e o do git; o do sandbox e copia e nao pode criar cadastro paralelo."
+  },
+  {
+   "id": "TASK-PLAN-168",
+   "phase": "F4",
+   "title": "S5 Espelho estatico: os 5.520 destinos nao resolvidos nas 251 paginas de catalogo",
+   "wo": "WO-E2E-001",
+   "deps": [],
+   "owner": "Mavis",
+   "language": "HTML",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/",
+    "ce-bibliotecas-dev (repo das bibliotecas)"
+   ],
+   "acceptance": "MEDIDO pelo parecer V5 (seccao 5) e a re-derivar: 5.520 ocorrencias de destinos locais nao resolvidos em 251 paginas de public/bibliotecas/catalog/ (1.920 imagens, 3.600 links, 250 caminhos distintos): 2.640 resolvem retirando o prefixo extra `catalog/`; 2.880 concentram-se em 10 caminhos de navegacao relativos a pasta errada. REGRA DURA: e um achado ESTATICO DE CAMINHOS DO PACOTE - nao e teste HTTP nem afirma��ao sobre o site live (o Parecer V5 repete isto duas vezes); as paginas mantem `noindex`, logo o espelho nao e para publicacao, e para reconciliacao. PROVA DE EXECUCAO: correr o auditor estatico sobre a copia e mostrar 5.520 -> 0, comparando antes/depois; e antes de tocar em nada, decidir se o espelho e CANONICO (sobe e substitui) ou DERIVADO (corrige-se ou descarta-se). NOT_RUN: a comparacao byte a byte com ce-bibliotecas-dev (repo git da bibliotecas) para promover a fonte - a fazer."
+  },
+  {
+   "id": "TASK-PLAN-169",
+   "phase": "F1",
+   "title": "S6 Evidencia: os 318 recuperados, os 24 tool-results removidos, os 5 symlinks de raiz e o .env do backup",
+   "wo": "WO-GOV-TRANS-001",
+   "deps": [],
+   "owner": "Mavis",
+   "language": "MD+JSON",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "docs/evidence/ce-comparacao-2026-10-31/",
+    "docs/evidence/experience-platform-skeleton-2026-10-31/"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:40Z, pelo Parecer V5 e V6): (1) os 318 ficheiros anteriormente classificados como ausentes estao recuperados com o MESMO SHA-256, e mais 615 caminhos deslocados voltaram as posicoes - a recuperacao fisica esta resolvida e nao deve voltar a ser contada como pendencia; (2) **24 ficheiros removidos** sob tool-results/ sem copia identica - nao concluir que nao houve perda de evidencia: tem de ficar recuperavel na cadeia de auditoria original; (3) os **5 aliases de raiz** (schemas, contracts, registers, audit-run, audit-evidence) eram symlinks no TAR anterior e NAO foram serializados - a exportacao nao e uma reproducao fiel; (4) o `.env` do backup tem valores nao vazios - **nao incluir em ZIPs de auditoria, relatorios ou GitHub**; (5) os 11 ficheiros com bytes diferentes do backup v3 (10 registos de auditoria + 1 registo de bindings de superficies) tem os hashes anteriores fora do pacote novo - o v3 deve ser preservado como versao. OBRIGATORIO: registar cada um dos 4 riscos com destino declarado (recuperar de onde / registar como perdido) e publicar o indice sem o .env."
+  },
+  {
+   "id": "TASK-PLAN-170",
+   "phase": "F0",
+   "title": "S7 Reconciliar o sandbox com o git: 5.746 ficheiros que nunca foram publicados",
+   "wo": "WO-E2E-001",
+   "deps": [
+    "TASK-PLAN-164",
+    "TASK-PLAN-165",
+    "TASK-PLAN-167",
+    "TASK-PLAN-168",
+    "TASK-PLAN-169"
+   ],
+   "owner": "Owner",
+   "language": "MD",
+   "status": "BLOCKED",
+   "covers": [],
+   "artifacts": [
+    "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md (seccao 13)"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:35Z): o sandbox tem 5.746 ficheiros (src/ 2.366, _archive/ 1.445, upload/ 927, public/ 614, scripts/ 150, e2e/ 8, tests/ 9, migrations/ 11) e **nao esta em git em nenhum repositorio**: medido nas 17 branches de IndiciumFIN/calculadorasdeenfermagem e nas 27 de IndiciumFIN/dev-chatgpt-workspace - nenhum dos artefactos do sandbox la esta. O trabalho (17 contratos, 62 schemas, 83 ferramentas com conteudo editorial completo, 19 idiomas + 1.149 tradicoes, 251 paginas de catalogo, 385 testes, 17 portoes) esta apenas na maquina. DECISAO DO DONO (bloqueia a promocao, nao a analise): (a) o sandbox sobe? (b) para que repo e que branch? (c) com que correccoes - a classificacao das 22 fontes (TASK-PLAN-164), o portao de integridade (TASK-PLAN-165), a coerencia dos 1.031 bindings, e sem o `.env`; (d) os 5 modulos src/core/experience/ que so existem no ZIP - sobem para src/core/experience/ e o port partido de tools/experience-skeleton/ e corrigido (TASK-PLAN-163)? O PR #30 (candidato estrutural, 485 ficheiros, CI 12/12 verde) e o veiculo natural para (d) - e o PR #29 (revert) apaga-lo-ia."
   }
  ],
  "candidateVerification": {
@@ -3823,6 +3931,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 03:30Z - TASK-PLAN-132 fechada como DONE (comparacao entregue e verificada); TASK-PLAN-124/131 actualizadas com a medicao do port; nova TASK-PLAN-163 (port pela metade, nao executa). Total 142."
+  "ultima_revisao_owner": "01/11/2026 04:10Z - etapas S1..S7 registadas (164,165,167,168,169,170) + TASK-PLAN-157 corrigido (enum de decision escopado ao authority_binding). Total 148 tasks."
  }
 }

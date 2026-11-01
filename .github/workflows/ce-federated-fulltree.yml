@@ -37,7 +37,9 @@ jobs:
           const r=JSON.parse(readFileSync("audit-evidence/federated-20261101/summary.json","utf8"));
           if(r.physicalBranchReferences < 110 || r.independentBranchReferences < 93 ||
              r.gitPairwise !== r.independentBranchReferences*(r.independentBranchReferences-1)/2 ||
-             r.duplicateMirroredReferences !== 17 || r.errors.length ||
+             r.duplicateMirroredReferences !== 17 || !r.structuralCrosswalk ||
+             r.structuralCrosswalk.total !== r.structuralCrosswalk.p0+r.structuralCrosswalk.p1 ||
+             r.structuralCrosswalk.gate !== "HOLD_HUMAN" || r.errors.length ||
              r.authorizedForMerge !== false || r.gate !== "HOLD_HUMAN") {
             console.error("FEDERATED_FULLTREE_HOLD",r.errors);
             process.exit(1);

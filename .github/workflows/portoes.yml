@@ -56,13 +56,15 @@ jobs:
         # memória — foi assim que um arquivo de teste morreu com SIGKILL.
         run: npm test
 
-      - name: Tipos
-        if: ${{ always() }}
-        run: npx tsc --noEmit
-
+      # TanStack Start generates routeTree.gen.ts during the build plugin.
+      # Typecheck runs after code generation, while always() keeps independent failure visibility.
       - name: Build
         if: ${{ always() }}
         run: npm run build
+
+      - name: Tipos
+        if: ${{ always() }}
+        run: npx tsc --noEmit
 
       - name: Segurança — dependências de produção
         if: ${{ always() }}

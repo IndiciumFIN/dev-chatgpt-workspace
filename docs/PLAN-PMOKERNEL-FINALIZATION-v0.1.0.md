@@ -531,3 +531,40 @@ O dono pediu o "esqueleto completo localmente, com todos os recursos". Feito e m
 **Achado novo, registado (não ficou só no relatório):** os contratos do repo canónico violam os enums canónicos de `contracts/cko-skeleton/catalog/cko-data.json` — `source_type` (11 valores canónicos) e `authority_class` (5) e `decision` (`HOLD`/`REJECTED`/`APPROVED`). Registado em **`TASK-PLAN-156`** (fontes: reclassificar + hash real), **`TASK-PLAN-157`** (bindings: reclassificar + tornar a decisão obrigatória) e **`TASK-PLAN-158`** (gate fail-closed que reprove qualquer contrato fora do enum — hoje o gate dá 11/11 verde a um contrato inválido). O registo passa a **137 tasks** (111 PROPOSTO · 16 BLOCKED · 9 DONE · 1 DELIVERED_PENDING_GATE).
 
 **O que NÃO mudou com a verificação:** a TABELA-MESTRE, a cadeia de evidência, os 56 deltas e o veredito por eixo. As correções foram de **rastreabilidade e de um número**, não de estrutura.
+
+### 12.8 PR #29 — impacto medido (01/11/2026 03:20Z, via API REST do GitHub)
+
+O corpo do PR #29 esteve **NOT_RUN** por falha do conector durante a comparação. Com o token do ambiente, a leitura foi feita por `api.github.com` — o que tambémallows medir **o CI do próprio PR** e **os alertas de segurança**, que estavam bloqueados.
+
+**O PR #29 é a inversa exacta do #26:** 128 ficheiros, **+127 / −29.195**, 116 removidos e 12 modificados, base `main`, head `revert-26-plan/pmokernel-finalization-20261031`, criado 31/10 23:36:54Z.
+
+| Área | Ficheiros | −linhas | O que seria apagado |
+|---|---|---|---|
+| `scripts/**` | 58 | 5.026 | Todos os validadores e os seus testes (inclui `verify-r80..r86`, `check-pmo-queue.test.mjs`) |
+| `registers/**` | 18 | 9.337 | 17 registos de governança + rollback do `find-register.v1.json` |
+| `tools/experience-skeleton/**` | 12 | 5.280 | **O esqueleto CE já portado para o repo canónico** (o port do `TASK-PLAN-124`) |
+| `docs/evidence/**` | 20 | 4.378 | Todos os packs: admin-area, commander, ce-comparação, experience-platform |
+| `docs/**` | 4 | 4.013 | O plano e o registo de tasks |
+| `.github/workflows/**` | 2 | 463 | Os dois gates fail-closed (`ce-main-migration-audit`, `pmo-candidate-unit-regressions`) |
+| `ci/**` | 2 | 87 | `ci/pending-coverage-gate.yml` — **o ficheiro do `TASK-PLAN-012`** |
+| `src/**` | 9 | 337 | `PmoReviewIntake`, `list-query`, `admin-console.css`, 4 ficheiros de auth |
+| `tests/**` | 1 | 197 | `tests/test_audit_data_kernel.py` |
+| `package.json` + `package-lock.json` | 2 | — | `better-auth` **1.7.14 → ~1.6.30** |
+
+**O PR está vermelho — e a causa está medida.** O CI do PR #29 falha no passo 4 *"Validar PMO canónico e histórico"* com `AssertionError: Protótipo deve permanecer congelado` em `scripts/check-pmo-queue.mjs:32`; os passos 5–20 ficam `skipped`. O revert **restaura a versão antiga de 46 linhas** desse script, que exige `WO-ADM-001 = PAUSED`, mas a fila em `main` tem `WO-ADM-001 = IN_PROGRESS` (a versão de 82 linhas que o #26 trouxe já não tem essa assert — foi o conserto do P1 medido em 27/10).
+
+**Consequência:** o revert **reintroduz o defeito P1** que o #26 tinha corrigido, e o próprio CI do repo o apanha. Não é um revert "limpo".
+
+**O revert também mexe na cadeia de FINDs:** `find-register.v1.json` volta de `as_of: 2026-10-31` a `2026-10-24` e perde 96 linhas, incluindo o `FIND-SPE-RPC-ANSWER-EXPOSURE-20261031` (draft de segurança) e os 2 FINDs R81.
+
+**Alertas de segurança — medição definitiva (`TASK-PLAN-015` fechado como DONE):**
+
+| Ferramenta | Resposta | Significado |
+|---|---|---|
+| Dependabot | HTTP **403** *"Dependabot alerts are disabled for this repository"* | Feature **desligada** |
+| Secret scanning | HTTP **404** *"Secret scanning is disabled on this repository"* | Feature **desligada** |
+| Code scanning | HTTP **404** *"no analysis found"* | Sem execução de análise |
+
+Isto **não é "zero alertas"** — é "não existe superfície de alertas activa". O repo compensa com guardios locais (`check-better-auth-lock.mjs`, `check-auth-invariant.mjs`, `test-auth-secret-env.mjs`), dois dos quais o PR #29 modifica. Registado em `TASK-PLAN-162`.
+
+**Nenhuma acção foi tomada sobre o PR #29.** Abrir, fechar ou fundir um revert continua a ser decisão do dono/Kernel. Registado: `TASK-PLAN-159` (inventário e decisão), `TASK-PLAN-160` (regressão de fail-closed: os 4 invariantes removidos), `TASK-PLAN-161` (downgrade do `better-auth`).

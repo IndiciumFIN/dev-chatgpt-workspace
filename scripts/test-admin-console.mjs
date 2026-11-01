@@ -13,11 +13,13 @@ const overview = read('src/components/admin/modules/admin-overview-module.tsx');
 const templatesPanel = read('src/components/admin/templates-panel.tsx');
 const sourcesPanel = read('src/components/admin/sources-panel.tsx');
 const readonlyDialog = read('src/components/admin/admin-readonly-dialog.tsx');
+const moduleWorkspace = read('src/components/admin/admin-module-workspace.tsx');
 const boundary = read('src/components/admin/admin-error-boundary.tsx');
 const contentSchema = read('src/lib/admin-content-schema.ts');
 const workbench = read('src/lib/local-workbench-store.ts');
 const pmoReview = read('src/components/admin/pmo-review-intake.tsx');
 const assertions = [
+  ['all module details reuse existing governed workspaces', /<AdminModuleWorkspace/.test(ui) && /export function AdminModuleWorkspace/.test(moduleWorkspace) && /moduleId=\{selectedModule\}/.test(ui)],
   ['overview moved into isolated module', /<AdminOverviewModule/.test(ui) && /export function AdminOverviewModule/.test(overview)],
   ['PMO and Commander rendering isolated', /<AdminErrorBoundary moduleName="PMO">/.test(ui) && /<AdminErrorBoundary moduleName="Commander">/.test(ui) && /getDerivedStateFromError/.test(boundary)],
   ['Zod checks draft and imported content', /adminContentSchema=z.object/.test(contentSchema) && /parseAdminContent\(value\)/.test(workbench)],

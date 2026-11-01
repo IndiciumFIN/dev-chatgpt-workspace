@@ -1,215 +1,292 @@
 {
-  "schemaVersion": "1.0.0",
-  "recordId": "CE-R84-PMO-OWNER-DECISION-INTAKE-20261031",
-  "date": "2026-10-31",
-  "recordType": "UNSIGNED_REVIEW_INTAKE_NO_AUTHORITY",
-  "repository": "IndiciumFIN/dev-chatgpt-workspace",
-  "source": {
-    "r83Path": "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
-    "r83BlobSha": "1c62224990d3d33aa4c474286696fe74407ede16",
-    "r77Path": "registers/governance/pmo-r77-arbitration-20261031.v1.json",
-    "r77BlobSha": "c0aa654ca7d89549c94461c8780ff659c48e2492",
-    "priorApprovalPath": "registers/governance/approval-pmokernel-audit-20261031.v1.json",
-    "priorApprovalBlobSha": "823fe13773df6d0f4c31c1215bdc4e8db41109e6",
-    "forkSnapshotPath": "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
-    "mainBaselineQueueBlobSha": "c713557a808857eab9952e511d1f2a10bfa6f828"
-  },
-  "decisionFlow": {
-    "sequence": [
-      "OWNER_EXPLICIT_PER_ITEM_DECISION",
-      "INDEPENDENT_CHECKER_REVIEW",
-      "VALIDATE_APPLICABLE_POLICY_AND_MANIFEST",
-      "VERIFY_SIGNED_KERNEL_ADMISSION",
-      "PRESERVE_AND_APPLY_AUTHORIZED_EVENT_TRANSITIONS"
-    ],
-    "ownerApprovalFromOct31": "APPROVED_FOR_PERSISTENCE_AND_CONTINUED_VERIFICATION_ONLY",
-    "identityCheck": "NOT_PERFORMED",
-    "cryptographicSignatures": "NOT_VERIFIED",
-    "signatureRequirements": {
-      "subject": "Exact decision ID and specific source blob SHAs",
-      "actorIdentity": "Verified owner/checker/Kernel subject IDs",
-      "time": "Offset-aware signed timestamp and expiry",
-      "scope": "Exact WO/revision/event action and restrictions",
-      "signature": "Verified signature against trusted independently configured key and revocation policy",
-      "separationOfDuties": "Maker and independent checker may not be the same principal"
-    },
-    "mayCommitCandidateDraft": true,
-    "mayAutoElectRevision": false,
-    "mayAutoAdmitWo": false,
-    "mayAutoMergeOrDeploy": false,
-    "sourceQueueReadOnly": true,
-    "requiresNewAuthorizedDecision": true
-  },
-  "decisions": [
-    {
-      "id": "R77-PMO-001",
-      "subject": "Fonte canônica da fila",
-      "sourceObservation": "Five snapshots rev18/19/20/21/23",
-      "recommendedCode": "KEEP_REV18_PENDING_KERNEL",
-      "options": [
-        {
-          "code": "KEEP_REV18_PENDING_KERNEL",
-          "label": "Manter a revisão 18 como referência provisória",
-          "effect": "Reference only. Does not elect a canonical revision, replay events, or supersede other branches."
-        },
-        {
-          "code": "PROPOSE_ANOTHER_BASELINE",
-          "label": "Solicitar avaliação de outra revisão",
-          "effect": "Requires source/impact comparison and independent authorization; no automatic election."
-        },
-        {
-          "code": "DEFER_AND_REVIEW",
-          "label": "Solicitar novas evidências",
-          "effect": "Retains current baseline and unchanged HOLD."
-        }
-      ],
-      "selection": null,
-      "justification": null,
-      "evidencePaths": [
-        "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
-        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
-      ],
-      "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
-      "makerAttestation": null,
-      "independentCheckerAttestation": null,
-      "kernelAdmissibility": null,
-      "approvalSignature": null,
-      "approvalTimestamp": null,
-      "statusEffectsAllowed": false,
-      "reason": "Decision to review is not a declaration of corporate authority."
-    },
-    {
-      "id": "R77-PMO-002",
-      "subject": "WO-ADM-001",
-      "sourceObservation": "PAUSED (older) versus IN_PROGRESS (owner-scoped local Commander event #20)",
-      "recommendedCode": "KEEP_LOCAL_COMMANDER_SCOPED",
-      "options": [
-        {
-          "code": "KEEP_LOCAL_COMMANDER_SCOPED",
-          "label": "Preservar IN_PROGRESS apenas para Commander local",
-          "effect": "Keeps main source event 20 as evidence, no external agents/auth/database."
-        },
-        {
-          "code": "REQUEST_ADM_REVIEW",
-          "label": "Reavaliar escopo da WO-ADM-001",
-          "effect": "Requires exact authenticated owner authorization and Kernel gate."
-        },
-        {
-          "code": "DEFER_AND_REVIEW",
-          "label": "Solicitar novas evidências",
-          "effect": "No change to source queue."
-        }
-      ],
-      "selection": null,
-      "justification": null,
-      "evidencePaths": [
-        "registers/pmo/queue.v1.json",
-        "registers/governance/pmo-r77-arbitration-20261031.v1.json"
-      ],
-      "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
-      "makerAttestation": null,
-      "independentCheckerAttestation": null,
-      "kernelAdmissibility": null,
-      "approvalSignature": null,
-      "approvalTimestamp": null,
-      "statusEffectsAllowed": false,
-      "reason": "Decision to review is not a declaration of corporate authority."
-    },
-    {
-      "id": "R77-PMO-003",
-      "subject": "WO-CKO-001",
-      "sourceObservation": "QUEUED (main) versus IN_PROGRESS (read-only Apgar/Fugulin pilot)",
-      "recommendedCode": "KEEP_CKO_QUEUED",
-      "options": [
-        {
-          "code": "KEEP_CKO_QUEUED",
-          "label": "Manter QUEUED e arquivar provas do piloto à parte",
-          "effect": "Read-only Apgar/Fugulin evidence is not clinical admission."
-        },
-        {
-          "code": "REQUEST_CKO_PILOT_REVIEW",
-          "label": "Solicitar revisão clínica independente do piloto",
-          "effect": "Requires clinical reviewer, rights/provenance, and signed Kernel admission before state change."
-        },
-        {
-          "code": "DEFER_AND_REVIEW",
-          "label": "Solicitar novas evidências",
-          "effect": "No WO state change."
-        }
-      ],
-      "selection": null,
-      "justification": null,
-      "evidencePaths": [
-        "registers/governance/pmo-r77-arbitration-20261031.v1.json",
-        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
-      ],
-      "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
-      "makerAttestation": null,
-      "independentCheckerAttestation": null,
-      "kernelAdmissibility": null,
-      "approvalSignature": null,
-      "approvalTimestamp": null,
-      "statusEffectsAllowed": false,
-      "reason": "Decision to review is not a declaration of corporate authority."
-    },
-    {
-      "id": "R77-PMO-004",
-      "subject": "New WOs / 7 variants",
-      "sourceObservation": "WO-CKO-ID-009 and WO-CKO-LINK-010 plus 7 record variants",
-      "recommendedCode": "HOLD_EXTRA_WOS",
-      "options": [
-        {
-          "code": "HOLD_EXTRA_WOS",
-          "label": "Manter novas WOs e sete variantes como candidatas",
-          "effect": "No new WO admission, no release; retain each candidate event occurrence."
-        },
-        {
-          "code": "REQUEST_EACH_WO_ADMISSION",
-          "label": "Solicitar análise individual de cada WO adicional",
-          "effect": "Requires per-WO FIND, policy, validator, source scope and Kernel admission."
-        },
-        {
-          "code": "DEFER_AND_REVIEW",
-          "label": "Solicitar novas evidências",
-          "effect": "Retains unreconciled candidates."
-        }
-      ],
-      "selection": null,
-      "justification": null,
-      "evidencePaths": [
-        "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
-        "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
-      ],
-      "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
-      "makerAttestation": null,
-      "independentCheckerAttestation": null,
-      "kernelAdmissibility": null,
-      "approvalSignature": null,
-      "approvalTimestamp": null,
-      "statusEffectsAllowed": false,
-      "reason": "Decision to review is not a declaration of corporate authority."
-    }
+ "schemaVersion": "1.0.0",
+ "recordId": "CE-R84-PMO-OWNER-DECISION-INTAKE-20261031",
+ "date": "2026-10-31",
+ "recordType": "UNSIGNED_REVIEW_INTAKE_NO_AUTHORITY",
+ "repository": "IndiciumFIN/dev-chatgpt-workspace",
+ "source": {
+  "r83Path": "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json",
+  "r83BlobSha": "1c62224990d3d33aa4c474286696fe74407ede16",
+  "r77Path": "registers/governance/pmo-r77-arbitration-20261031.v1.json",
+  "r77BlobSha": "c0aa654ca7d89549c94461c8780ff659c48e2492",
+  "priorApprovalPath": "registers/governance/approval-pmokernel-audit-20261031.v1.json",
+  "priorApprovalBlobSha": "823fe13773df6d0f4c31c1215bdc4e8db41109e6",
+  "forkSnapshotPath": "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
+  "mainBaselineQueueBlobSha": "c713557a808857eab9952e511d1f2a10bfa6f828"
+ },
+ "decisionFlow": {
+  "sequence": [
+   "OWNER_EXPLICIT_PER_ITEM_DECISION",
+   "INDEPENDENT_CHECKER_REVIEW",
+   "VALIDATE_APPLICABLE_POLICY_AND_MANIFEST",
+   "VERIFY_SIGNED_KERNEL_ADMISSION",
+   "PRESERVE_AND_APPLY_AUTHORIZED_EVENT_TRANSITIONS"
   ],
-  "blocked": {
-    "canonicalRevision": null,
-    "canonicalBranch": null,
-    "ownerDecisionsRecorded": 0,
-    "checkerDecisionsVerified": 0,
-    "kernelAdmissionsVerified": 0,
-    "authorizedEventReplays": 0,
-    "additionalWosAdmitted": 0,
-    "sourceWosReconciled": 0
+  "ownerApprovalFromOct31": "APPROVED_FOR_PERSISTENCE_AND_CONTINUED_VERIFICATION_ONLY",
+  "identityCheck": "NOT_PERFORMED",
+  "cryptographicSignatures": "NOT_VERIFIED",
+  "signatureRequirements": {
+   "subject": "Exact decision ID and specific source blob SHAs",
+   "actorIdentity": "Verified owner/checker/Kernel subject IDs",
+   "time": "Offset-aware signed timestamp and expiry",
+   "scope": "Exact WO/revision/event action and restrictions",
+   "signature": "Verified signature against trusted independently configured key and revocation policy",
+   "separationOfDuties": "Maker and independent checker may not be the same principal"
   },
-  "governance": {
-    "policyApplicability": "NOT_VALIDATED",
-    "kernelAuthority": "NOT_VERIFIED",
-    "releaseGate": "HOLD_HUMAN",
-    "homologation": "HOLD_HUMAN",
-    "mainModified": false,
-    "sourceQueueModified": false
+  "mayCommitCandidateDraft": true,
+  "mayAutoElectRevision": false,
+  "mayAutoAdmitWo": false,
+  "mayAutoMergeOrDeploy": false,
+  "sourceQueueReadOnly": true,
+  "requiresNewAuthorizedDecision": true
+ },
+ "decisions": [
+  {
+   "id": "R77-PMO-001",
+   "subject": "Fonte canônica da fila",
+   "sourceObservation": "Five snapshots rev18/19/20/21/23",
+   "recommendedCode": "KEEP_REV18_PENDING_KERNEL",
+   "options": [
+    {
+     "code": "KEEP_REV18_PENDING_KERNEL",
+     "label": "Manter a revisão 18 como referência provisória",
+     "effect": "Reference only. Does not elect a canonical revision, replay events, or supersede other branches."
+    },
+    {
+     "code": "PROPOSE_ANOTHER_BASELINE",
+     "label": "Solicitar avaliação de outra revisão",
+     "effect": "Requires source/impact comparison and independent authorization; no automatic election."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Solicitar novas evidências",
+     "effect": "Retains current baseline and unchanged HOLD."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
+    "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decision to review is not a declaration of corporate authority."
   },
-  "links": {
-    "pullRequest": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26",
-    "centralIssue": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25"
+  {
+   "id": "R77-PMO-002",
+   "subject": "WO-ADM-001",
+   "sourceObservation": "PAUSED (older) versus IN_PROGRESS (owner-scoped local Commander event #20)",
+   "recommendedCode": "KEEP_LOCAL_COMMANDER_SCOPED",
+   "options": [
+    {
+     "code": "KEEP_LOCAL_COMMANDER_SCOPED",
+     "label": "Preservar IN_PROGRESS apenas para Commander local",
+     "effect": "Keeps main source event 20 as evidence, no external agents/auth/database."
+    },
+    {
+     "code": "REQUEST_ADM_REVIEW",
+     "label": "Reavaliar escopo da WO-ADM-001",
+     "effect": "Requires exact authenticated owner authorization and Kernel gate."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Solicitar novas evidências",
+     "effect": "No change to source queue."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/pmo/queue.v1.json",
+    "registers/governance/pmo-r77-arbitration-20261031.v1.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decision to review is not a declaration of corporate authority."
+  },
+  {
+   "id": "R77-PMO-003",
+   "subject": "WO-CKO-001",
+   "sourceObservation": "QUEUED (main) versus IN_PROGRESS (read-only Apgar/Fugulin pilot)",
+   "recommendedCode": "KEEP_CKO_QUEUED",
+   "options": [
+    {
+     "code": "KEEP_CKO_QUEUED",
+     "label": "Manter QUEUED e arquivar provas do piloto à parte",
+     "effect": "Read-only Apgar/Fugulin evidence is not clinical admission."
+    },
+    {
+     "code": "REQUEST_CKO_PILOT_REVIEW",
+     "label": "Solicitar revisão clínica independente do piloto",
+     "effect": "Requires clinical reviewer, rights/provenance, and signed Kernel admission before state change."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Solicitar novas evidências",
+     "effect": "No WO state change."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/governance/pmo-r77-arbitration-20261031.v1.json",
+    "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decision to review is not a declaration of corporate authority."
+  },
+  {
+   "id": "R77-PMO-004",
+   "subject": "New WOs / 7 variants",
+   "sourceObservation": "WO-CKO-ID-009 and WO-CKO-LINK-010 plus 7 record variants",
+   "recommendedCode": "HOLD_EXTRA_WOS",
+   "options": [
+    {
+     "code": "HOLD_EXTRA_WOS",
+     "label": "Manter novas WOs e sete variantes como candidatas",
+     "effect": "No new WO admission, no release; retain each candidate event occurrence."
+    },
+    {
+     "code": "REQUEST_EACH_WO_ADMISSION",
+     "label": "Solicitar análise individual de cada WO adicional",
+     "effect": "Requires per-WO FIND, policy, validator, source scope and Kernel admission."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Solicitar novas evidências",
+     "effect": "Retains unreconciled candidates."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
+    "registers/governance/r83-pmo-fork-review-packet-20261031.v1.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decision to review is not a declaration of corporate authority."
+  },
+  {
+   "id": "R84-CKO-SRC-EVIDENCE-STATE",
+   "subject": "O contrato `source` nao tem representacao para 'documento nao preservado'",
+   "sourceObservation": "O contrato canonico `source` exige integrity.sha256 com pattern ^[a-f0-9]{64}$ e integrity.additionalProperties false; as 43 instancias canonicas tem todas artefacto preservado. 5 das 6 fontes de ferramenta nao tem documento preservado (r85).",
+   "recommendedCode": "AMEND_CONTRACT_WITH_EXPLICIT_ABSENT_STATE",
+   "options": [
+    {
+     "code": "AMEND_CONTRACT_WITH_EXPLICIT_ABSENT_STATE",
+     "label": "Emendar o contrato `source` para declarar um estado explicito de evidencia ausente (com motivo)",
+     "effect": "Exige WORK ORDER do Kernel sobre um contrato canonico. Nao altera o release gate nem admite a fonte; torna o estado representavel."
+    },
+    {
+     "code": "PRESERVE_THE_FIVE_DOCUMENTS",
+     "label": "Preservar os cinco documentos e registar a fonte como as 43 instancias canonicas",
+     "effect": "Satisfaz o contrato sem emendar. Impossivel para SRC-GOTEJAMENTO-FORMULA-CLASSICA (nao existe documento) e sujeito a direitos de redistribuicao."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Adiar e rever com o Kernel",
+     "effect": "Mantem o estado actual, com HOLD_HUMAN e as 5 fontes em evidencia pendente registada."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/governance/r85-source-evidence-pending-20261101.v1.json",
+    "scripts/check-contract-integrity.mjs",
+    "registers/governance/transversal-source-instances/",
+    "contracts/cko-skeleton/catalog/cko-data.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decisao a rever nao e declaracao de autoridade corporativa; nenhuma fonte sai de HOLD por esta linha."
+  },
+  {
+   "id": "R84-CKO-SRC-CITATION-SLOT",
+   "subject": "O contrato `source` nao tem campo para a citacao que a pratica carrega",
+   "sourceObservation": "As 6 fontes de ferramenta carregam `citacao`, propriedade que o contrato nao declara (additionalProperties: false). O contrato declara language, effective_from e license_ref, mas nao citacao; locator.pinpoint carrega um pinpoint mais curto.",
+   "recommendedCode": "AMEND_CONTRACT_TO_DECLARE_CITACAO",
+   "options": [
+    {
+     "code": "AMEND_CONTRACT_TO_DECLARE_CITACAO",
+     "label": "Declarar `citacao` no contrato `source`",
+     "effect": "Exige WORK ORDER do Kernel sobre um contrato canonico; torna a pratica conforme sem perder informacao."
+    },
+    {
+     "code": "CONFORM_RECORDS_AND_MOVE_CITATION",
+     "label": "Mover a citacao para locator.pinpoint e remover o campo",
+     "effect": "Torna a pratica conforme sem emendar o contrato, ao custo de encurtar a citacao e de mexer em registos que nao sao desta frente."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Adiar e rever com o Kernel",
+     "effect": "Mantem o campo e a lacura registada; o portao continua a reprovar."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "contracts/entities/tool-sources.v1.json",
+    "scripts/check-contract-integrity.mjs",
+    "contracts/cko-skeleton/catalog/cko-data.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decisao a rever nao e declaracao de autoridade corporativa."
   }
+ ],
+ "blocked": {
+  "canonicalRevision": null,
+  "canonicalBranch": null,
+  "ownerDecisionsRecorded": 0,
+  "checkerDecisionsVerified": 0,
+  "kernelAdmissionsVerified": 0,
+  "authorizedEventReplays": 0,
+  "additionalWosAdmitted": 0,
+  "sourceWosReconciled": 0
+ },
+ "governance": {
+  "policyApplicability": "NOT_VALIDATED",
+  "kernelAuthority": "NOT_VERIFIED",
+  "releaseGate": "HOLD_HUMAN",
+  "homologation": "HOLD_HUMAN",
+  "mainModified": false,
+  "sourceQueueModified": false
+ },
+ "links": {
+  "pullRequest": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26",
+  "centralIssue": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25"
+ }
 }

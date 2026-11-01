@@ -22,6 +22,10 @@ Este registro REFERENCIA os backups auditados e seus pareceres anteriores. A exp
 
 Todas essas fontes foram materializadas da Biblioteca privada e os SHA-256 recalculados. Os arquivos sensíveis (incluindo `.env`) foram excluídos dos inventários exportáveis; não publicar TARs brutos no Git.
 
+### Verificação adicional de duplicidade binária
+
+O arquivo histórico `sandbox-completo (4).tar(2).gz` foi recuperado da Biblioteca e teve SHA-256 recalculado: `3f8dc1170401dde7ccff07f72faa628ac29cd7db57692c03a173dd0cecdc7e42`, **idêntico byte a byte** ao TAR `sandbox-canonico-completo.tar.gz` (mesmo hash e tamanho de 112.999.926 bytes). Mantê-los como aliases de uma mesma carga, preservando ambos os nomes/proveniências.
+
 ## Achados cumulativos e NÃO DESFAZER
 
 - **865/865** arquivos de `src/families/` do primeiro TAR reaparecem byte a byte em `upload/ce-skeleton/ce-skeleton/src/families/` do TAR de 01/11. Isso é recuperação física, **não** 865 serviços implementados. Os 410 serviços do catálogo de esqueleto são candidatos.

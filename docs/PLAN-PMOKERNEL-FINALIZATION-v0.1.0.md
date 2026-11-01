@@ -769,4 +769,94 @@ O CI do PR #31 ficou vermelho em dois sítios, e **um é meu e um não**:
 
 **(a) Meu — o portão de cobertura.** A regra anterior (`!f.integrity?.sha256`) aceitava **64 zeros** como integridade: era isso que segurava o verde do `main`. A rev.2 passou a exigir hash real + artefacto preservado ⇒ as 5 fontes sem documento reprovaram. **rev.3:** o portão passa a aceitar **evidência pendente registada** (`r86`, `HOLD_HUMAN`) e a **imprimi-la** — porque um verde que não nomeia a pendência é um *accept silencioso*. **Fail-closed verificado:** sem o registo `r86`, o portão reprova. O portão de integridade (rev.2) **continua estrito e vermelho** — é ele que mede as 16 lacunas de contrato.
 
-**(b) Pré-existente — `TASK_PLAN_DRIFT` no gate do R78.** `scripts/check-r78-gap-register.mjs:12-13` exige `tasks.length === 37 + 31 = 68` e a linha 17 exige que as candidatas sejam **exactamente** as de id `059-089` ⇒ **qualquer task acima de 089 torna o gate insatisfazível**. Medido: `main` tem **112** tasks (esperado 68) e falha igual; a comparação CE adicionou **84** tasks desde 31/10. O gate só corre em branches candidatas (`pmo-candidate-unit-regressions.yml`), por isso o CI do `main` nunca o apanhou. **Não mexi no registo `r78` para o fazer passar** — registado em `TASK-PLAN-175` para decisão do dono/Kernel.
+**(b) MEU — `TASK_PLAN_DRIFT` no gate do R78.** *(Correcção de 01/11 08:10Z: a redacção original desta alínea dizia "pré-existente" e estava **errada** — ver §13.9.)* `scripts/check-r78-gap-register.mjs:12-17` computa `expected = 37 + 31 = 68` e compara com `expected + additional`, onde `additional` vem da expansão **R89** (24 R87 + 20 R89 = 44) ⇒ o registo tem de ter **exactamente 112** tasks. `main` tem 112 ⇒ **passa** (312/313 testes). A carrier tem **153** (155 com a §13.8) ⇒ **`TASK_PLAN_DRIFT`** ⇒ **22 testes falham** (R78: 5, R86: 3, R87: 6, R89: 8) e o CI fica vermelho. **A causa é a minha**: a comparação CE somou **84** tasks (TASK-PLAN-092 e 133..177) ao mesmo registo. O `main` nunca apanhou a falha porque o workflow só corre em branches candidatas — mas a carrier **é** uma branch candidata, por isso apanha. **Não mexi no gate nem no bloco R89** (isso seria a admissão silenciosa que o gate existe para impedir) — `TASK-PLAN-175` para decisão do dono/Kernel.
+
+### 13.8 Os 5.520 links do espelho: plano validado por execução (01/11/2026 08:00Z)
+
+#### 13.8.1 O que era a pendência
+
+O espelho estático `public/bibliotecas/catalog/` (251 páginas HTML) tem **5.520 destinos locais
+não resolvidos**, medidos no inventário E4 (9.063 ocorrências em 268 páginas: 1.920 `img` +
+7.143 `a`, das quais 5.520 não resolvem; 250 caminhos de destino distintos). A causa é estrutural:
+a cópia foi assente um nível mais fundo do que o acervo canónico, por isso os caminhos relativos
+caem em `catalog/` e `catalog/assets/` onde os ficheiros não estão.
+
+#### 13.8.2 As três regras (medidas, não inferidas)
+
+| Regra | Ocorrências | De | Para |
+|---|---|---|---|
+| `R-NAV` | 2.880 | `index.html`, `<cat>.html` (de `catalog/assets/`) | `../index.html`, `../<cat>.html` |
+| `R-AVIF-ITEM` | 2.390 | `<cat>/<f>.avif` (de `catalog/assets/`) | `../../assets/<cat>/<f>.avif` |
+| `R-ASSET-HUB` | 250 | `assets/<cat>/<f>.avif` (de `catalog/`) | `../assets/<cat>/<f>.avif` |
+
+#### 13.8.3 A prova: o verificador do plano correu
+
+`scripts/verify-espelho-link-plan.mjs` aplica as mesmas regras do corrector ao inventário E4 e
+**re-resolve cada destino** contra o acervo canónico (`public/bibliotecas/assets/`, 262 ficheiros) e
+contra as páginas do próprio espelho:
+
+```
+PASS: 5520 ligações quebradas no inventário; 5520 resolvem com as regras
+      (R-ASSET-HUB=250, R-NAV=2880, R-AVIF-ITEM=2390); 0 por resolver.
+```
+
+Isto é a **medição**, não a promessa: cada um dos 5.520 destinos foi testado contra um ficheiro que
+existe. O que a medição **não** cobre: se o espelho corrigido é o ficheiro certo a promover
+(é a decisão do dono, `TASK-PLAN-177`).
+
+#### 13.8.4 Os entregáveis
+
+- `scripts/fix-espelho-links.mjs` — 3 regras, sem inferência; `dry-run` por omissão, `--apply` escreve;
+  **depois de reescrever re-resolve tudo e reprova (exit 1) se sobrar um destino**; `--json`.
+- `scripts/fix-espelho-links.test.mjs` — **5/5 testes**, fixtures sintéticos independentes do estado do
+  repo, incluindo o teste **fail-closed** (sem o activo de destino, reprova) e a idempotência.
+- `scripts/verify-espelho-link-plan.mjs` — valida o plano contra o inventário + o acervo, sem o HTML.
+
+#### 13.8.5 O que ficou por fazer, e porquê
+
+**Não foi aplicado**: os 251 HTML do espelho **não existem neste ambiente** (medido: `find` por
+`acervo-a-classificar.html` e por `*cko-image-library*` → 0 ocorrências; o ZIP não traz
+`bibliotecas/catalog/*.html`). O corrector está pronto e testado; corre onde o HTML estiver.
+O destino do espelho (descartar / corrigir e promover / promover sem correcção) é
+`TASK-PLAN-177` — decisão do dono, não minha.
+
+#### 13.8.6 Uma correcção de conta que o próprio dono fez
+
+A frente reportou **2.640 imagens + 2.880 navegação**. A medição re-derivada separa as 5.520 por
+**regra aplicável**, não por tipo de elemento: 2.390 `R-AVIF-ITEM` (das quais 1.670 são `img` e
+**720 são `<a href>` para `.avif`**), 250 `R-ASSET-HUB` e 2.880 `R-NAV`. As 2.640 "imagens" da frente
+= 1.920 `img` + 720 `<a>` para `.avif` — bate certo. O que **não** bate era a minha própria
+aritmética de caminhos na primeira passagem (a validação resolvia os `uri` contra a raiz em vez do
+directório da página); corrigi a medição, não o número.
+
+### 13.9 Correcção de um registo meu: o drift do gate R78 era meu, não pré-existente (01/11/2026 08:10Z)
+
+Em §13.7.5(b) escrevi que o `TASK_PLAN_DRIFT` no gate R78 era **pré-existente** e que `main` "tem 112
+tasks (esperado 68) e falha igual". **Medi de novo e está errado nas duas partes.** A correcção:
+
+| | o que eu escrevi | o que a medição dá |
+|---|---|---|
+| `main` | "112 tasks, esperado 68, falha igual" | **PASS**: 313 testes, 312 PASS, 0 FAIL |
+| a contagem que o gate exige | 68 | **112** = 37 (baseline) + 31 (R79) + 44 (expansão R89: 24 R87 + 20 R89) |
+| a causa do vermelho na carrier | "pré-existente" | **minha**: a comparação CE somou 84 tasks ao mesmo registo (TASK-PLAN-092 e 133..177) |
+
+O mecanismo real: `scripts/check-r78-gap-register.mjs:12-17` faz
+`expected = r.baseline.taskPlanCount + r.r79CandidateMapping.candidateTasksAdded` (= 68) e exige
+`plan.tasks.length === expected + additional`, com `additional` lido do bloco R89 (= 44) ⇒ **112**.
+`main` tem 112 ⇒ bate. A carrier tem 153 (155 com a §13.8) ⇒ `TASK_PLAN_DRIFT` ⇒ **22 testes
+falham** (R78: 5 · R86: 3 · R87: 6 · R89: 8) e o workflow `pmo-candidate-unit-regressions` fica
+vermelho. A falha do `main` nunca apareceu porque esse workflow só corre em branches candidatas —
+mas a carrier **é** uma branch candidata, por isso apanha.
+
+**O que eu não fiz, deliberadamente:** não mexi no gate nem no bloco `r89ScopedTaskReconciliation`
+para a contagem passar. Esse bloco é o registo do que o Kernel admitiu, com `sourcePlanBlobSha` e
+`sourceBranchHeadSha`; alterá-lo para admitir as minhas tasks seria exactamente a *admissão
+silenciosa* que o gate existe para impedir. A decisão fica com o dono/Kernel, em `TASK-PLAN-175`
+(corrigida): **(i)** admitir as tasks CE na expansão R89 com os seus source commits; **(ii)** mover
+as tasks da comparação CE para um registo próprio e deixar o plano canónico nos 112; ou **(iii)**
+emendar o gate para aceitar tasks adicionais **declaradas** no próprio plano.
+
+Lição registada (Lição 10 do plano): *«pré-existente» é uma afirmação que se mede, não se supõe.*
+Eu reusei a medição de uma frente anterior sem a re-derivar no estado novo, e a frente anterior
+tinha medido a **baseline R79 (68)**, não a **expansão R89 (112)** — o número estava certo em
+contexto e errado na conclusão.

@@ -18,11 +18,11 @@ Arquivos **fora** de qualquer lista são de livre acesso — mas confira o `git 
 |---|---|
 | Índice do banco | `migrations/0036_indice_do_banco.sql` · `src/lib/banco/indice.ts` · `scripts/audit-indice-banco.mjs` · `scripts/audit-indice-banco.test.mjs` |
 | Preenchimento DERBY | `migrations/0037_preencher_derby.sql` · `migrations/0041_passa_de_aprovacao.sql` · `scripts/preencher-derby.mjs` · `scripts/preencher-derby.test.mjs` |
-| Processo de source | `src/core/**` · `contracts/cko-governance/**` · `src/lib/kernel-admit.ts` · `src/lib/intake.ts` · `src/lib/source.functions.ts` · `migrations/0038_processo_source.sql` · `scripts/audit-source.mjs` · `scripts/audit-source.test.mjs` |
-| Doutrina e políticas (portada) | `docs/governance/**` · `docs/governance/README.md` · `docs/governance/README-ORIGEM.md` |
+| Processo de source | `src/core/**` · `contracts/cko-governance/**` · `src/lib/intake.ts` · `src/lib/source.functions.ts` · `migrations/0038_processo_source.sql` · `scripts/audit-source.mjs` · `scripts/audit-source.test.mjs` |
+| Doutrina e políticas (portada) | `docs/governance/**` · `docs/governance/README.md` · `docs/governance/README-ORIGEM.md` · `docs/CKO-POL-UT-001.md` · `agents/normativos-licenciados.md` · `contracts/cko-schemas/**` |
 | Normas: confronto e captura | `audit-evidence/transversal-acquisition/**` · `docs/normativos/requisitos.md` · `docs/normativos/plano-de-captura.md` |
 | Especificação das mesas novas | `docs/admin/especificacao-mesas-novas.md` |
-| Área administrativa (admin-ux) | `src/components/admin/**` · `src/lib/admin-catalog.ts` · `src/lib/normative-desk.ts` |
+| Área administrativa (admin-ux) | `src/components/admin/**` · `src/lib/admin/**` · `src/lib/admin-catalog.ts` · `src/lib/normative-desk.ts` |
 | Catálogo da fonte | `scripts/extrair-catalogo-fonte.mjs` · `scripts/extrair-catalogo-fonte.test.mjs` · `artifacts/fonte/**` · `docs/fonte/PROVENIENCIA.md` |
 | Recuperação da fonte | `scripts/auditar-fonte.mjs` · `scripts/auditar-fonte.test.mjs` · `migrations/0042_recuperar_fonte.sql` · `docs/fonte/CONFRONTO.md` |
 | Registro e portões da CI | `scripts/auditar-registro.mjs` · `scripts/auditar-registro.test.mjs` · `.github/workflows/portoes.yml` |
@@ -37,17 +37,16 @@ Arquivos declarados que **ainda não existem**. Ninguém os produziu: a tarefa q
 
 | Tarefa | Arquivo reservado | Por quê |
 |---|---|---|
-| Doutrina e políticas | `docs/CKO-POL-UT-001.md` | a política como texto estruturado não foi traduzida para o esquema do app |
-| Doutrina e políticas | `agents/normativos-licenciados.md` | o catálogo de agentes normativos depende dos contratos `cko-schemas` (linhagem B) |
-| Doutrina e políticas | `contracts/cko-schemas/**` | os esquemas JSON da outra linhagem não foram portados; dependem de `cko_orch`/`cko_evidence` |
 | Normas: atomização | `migrations/0040_atomos.sql` | a atomização normativa está reservada, não feita |
 | Normas: atomização | `scripts/capturar-normas.mjs` | o capturador de normas não foi escrito (o número 0040 continua livre) |
 | Normas: atomização | `scripts/capturar-normas.test.mjs` | o teste do capturador não foi escrito: o capturador nem existe |
 | Normas: atomização | `docs/normativos/atomizacao.md` | o método de atomização não foi escrito; a 0038 já cria as tabelas do átomo |
-| Área administrativa (admin-ux) | `src/lib/admin/**` | a área admin do app é `src/components/admin/**`; não existe `src/lib/admin/**` |
 | Verificação final | `docs/entregas/REGISTRO-POR-CHAVE.md` | o registro por chave é a entrega do #9 |
 | Verificação final | `docs/entregas/REGISTRO-POR-CHAVE.json` | a versão legível por máquina do registro por chave, no #9 |
 | Verificação final | `deliverables/verificacao-final/**` | a pasta da entrega do #9: suíte, build, portões e rotas em um relatório |
+
+### Reservas reconciliadas com arquivos existentes (01/11/2026)
+Estas quatro reservas foram encerradas somente enquanto **reservas de arquivos ausentes**: `docs/CKO-POL-UT-001.md`, `agents/normativos-licenciados.md`, `contracts/cko-schemas/**`, `src/lib/admin/**`. Sua propriedade foi registrada na tabela acima. Existência não demonstra aprovação de conteúdo. A referência anterior `src/lib/kernel-admit.ts` foi retirada por inexistência; o escopo de processo continua coberto por `src/core/**` e pelos contratos de source existentes. Colisões de número de migration permanecem bloqueantes.
 
 ## Reserva de número de migration
 

@@ -763,3 +763,10 @@ A primeira versão desta correcção **acrescentou as duas decisões ao `r84`** 
 - **Já existia um `r85`** (`r85-pmo-conversation-owner-assent-20261031.v1.json`) com o seu próprio validador (`verify-r85-owner-assent.mjs`).
 
 ⇒ **Revertido**: o `r84` ficou intacto e as decisões foram para um registo **novo, `r86`**, que não colide com nada. Registado em `TASK-PLAN-172`/`173`: o intake de decisões do dono que se pode acrescentar é o `r86`, e o `r84` só muda por WORK ORDER.
+
+#### 13.7.5 O CI do repo: uma falha minha e uma pré-existente (01/11/2026 07:30Z)
+O CI do PR #31 ficou vermelho em dois sítios, e **um é meu e um não**:
+
+**(a) Meu — o portão de cobertura.** A regra anterior (`!f.integrity?.sha256`) aceitava **64 zeros** como integridade: era isso que segurava o verde do `main`. A rev.2 passou a exigir hash real + artefacto preservado ⇒ as 5 fontes sem documento reprovaram. **rev.3:** o portão passa a aceitar **evidência pendente registada** (`r86`, `HOLD_HUMAN`) e a **imprimi-la** — porque um verde que não nomeia a pendência é um *accept silencioso*. **Fail-closed verificado:** sem o registo `r86`, o portão reprova. O portão de integridade (rev.2) **continua estrito e vermelho** — é ele que mede as 16 lacunas de contrato.
+
+**(b) Pré-existente — `TASK_PLAN_DRIFT` no gate do R78.** `scripts/check-r78-gap-register.mjs:12-13` exige `tasks.length === 37 + 31 = 68` e a linha 17 exige que as candidatas sejam **exactamente** as de id `059-089` ⇒ **qualquer task acima de 089 torna o gate insatisfazível**. Medido: `main` tem **112** tasks (esperado 68) e falha igual; a comparação CE adicionou **84** tasks desde 31/10. O gate só corre em branches candidatas (`pmo-candidate-unit-regressions.yml`), por isso o CI do `main` nunca o apanhou. **Não mexi no registo `r78` para o fazer passar** — registado em `TASK-PLAN-175` para decisão do dono/Kernel.

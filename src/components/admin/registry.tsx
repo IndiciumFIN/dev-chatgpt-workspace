@@ -78,7 +78,7 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
   const { tokens } = useStored();
   const [tab, setTab] = useState(forced);
   const [search, setSearch] = useState("");
-  const [files, setFiles] = useState<string[]>([]);
+  const [files, setFiles] = useState<{ path: string; alt: string }[]>([]);
   const [mediaError, setMediaError] = useState("");
   const needle = search.trim().toLowerCase();
 
@@ -111,8 +111,8 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
           ) : null}
           {tab === "arquivos" ? (
             <table className="admin-table">
-              <thead><tr><th>Arquivo</th><th>Caminho</th></tr></thead>
-              <tbody>{files.filter((src) => src.toLowerCase().includes(needle)).map((src) => <tr key={src}><td data-label="Arquivo"><a href={src}>{src.split("/").pop()}</a></td><td data-label="Caminho">{src}</td></tr>)}</tbody>
+              <thead><tr><th>Arquivo</th><th>Texto alternativo</th></tr></thead>
+              <tbody>{files.filter((file) => `${file.path} ${file.alt}`.toLowerCase().includes(needle)).map((file) => <tr key={file.path}><td data-label="Arquivo"><a href={file.path}>{file.path.split("/").pop()}</a></td><td data-label="Texto alternativo">{file.alt || "Sem texto"}</td></tr>)}</tbody>
             </table>
           ) : null}
           {tab === "agentes" ? <AgentRoster /> : null}

@@ -406,6 +406,6 @@ export const listMedia = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const sql = await sqlClient();
     await requireAdmin(sql, context.userId);
-    const rows = await sql<{ path: string }>`select path from media_asset order by path`;
-    return rows.map((row) => row.path);
+    const rows = await sql<{ path: string; alt: string | null }>`select path, alt from media_asset order by path`;
+    return rows.map((row) => ({ path: row.path, alt: row.alt ?? "" }));
   });

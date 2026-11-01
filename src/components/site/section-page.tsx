@@ -6,6 +6,7 @@ import { RelatedContent } from "@/components/site/related-content";
 import { StudyDesk } from "@/components/site/study";
 import { SubscriptionPanel } from "@/components/site/subscription";
 import { Translated } from "@/components/site/translated";
+import { imageAlt, useStored } from "@/lib/stored";
 import { useChrome } from "@/lib/chrome";
 import { navLabel } from "@/lib/translate";
 import type { CatalogItem, Section } from "@/lib/sections";
@@ -108,6 +109,7 @@ export function SectionPage({
   related: { slug: string; label: string; text: string }[];
 }) {
   const { t } = useChrome();
+  const { images } = useStored();
   const [sent, setSent] = useState(false);
   const q = query ?? "";
 
@@ -144,7 +146,7 @@ export function SectionPage({
         {framed && index === 0 && visual ? (
           <div className="inst-split is-fig-esquerda">
             <figure className="inst-fig has-frame">
-              <img src={visual.src} alt={visual.alt} />
+              <img src={visual.src} alt={imageAlt(images, visual.src, visual.alt)} />
               <figcaption>{visual.caption}</figcaption>
             </figure>
             {text}

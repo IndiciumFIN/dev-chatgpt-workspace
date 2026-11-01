@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArticlePage } from "@/components/article/article-page";
 import { RelatedContent } from "@/components/site/related-content";
+import { imageAlt, useStored } from "@/lib/stored";
 import { ArticleFaq, ArticlePortrait, Chronology, Cite, ContextGrid, Keyline, ReferenceList, type ChronologyEvent } from "@/components/article/pieces";
 
 const toc = [
@@ -43,6 +44,7 @@ const references = [
 ];
 
 export function BiographyView() {
+  const { images } = useStored();
   return (
     <ArticlePage
       kind="artigo"
@@ -68,7 +70,7 @@ export function BiographyView() {
       <section className="inst-sec" id="introducao" aria-labelledby="introducao-h">
         <h2 id="introducao-h">Introdução</h2>
         <div className="inst-split is-fig-esquerda is-portrait-left">
-          <ArticlePortrait src="/artigos/mary-eliza-mahoney.jpg" alt="Retrato histórico de Mary Eliza Mahoney em uniforme de enfermagem, fotografia em preto e branco." title="Figura 1 – Mary Eliza Mahoney" caption="Fotógrafo desconhecido. Créditos: Wikimedia Commons." fallbackHref="https://commons.wikimedia.org/wiki/File:Mary_Eliza_Mahoney.jpg" />
+          <ArticlePortrait src="/artigos/mary-eliza-mahoney.jpg" alt={imageAlt(images, "/artigos/mary-eliza-mahoney.jpg", "Retrato histórico de Mary Eliza Mahoney de touca e uniforme de enfermagem.")} title="Figura 1 – Mary Eliza Mahoney" caption="Fotógrafo desconhecido. Créditos: Wikimedia Commons." fallbackHref="https://commons.wikimedia.org/wiki/File:Mary_Eliza_Mahoney.jpg" />
           <div>
             <p>Mary Eliza Mahoney (1845–1926) é reconhecida como a primeira mulher negra a concluir uma formação profissional em enfermagem nos Estados Unidos. Diplomada em 1879 pela escola do <em>New England Hospital for Women and Children</em>, sua trajetória conectou cuidado, formação e defesa de oportunidades para enfermeiras afro-americanas.<Cite n={[1, 2]} /></p>
             <p>Seu percurso articula qualificação profissional, cuidado domiciliar e mobilização coletiva por oportunidades para mulheres negras na enfermagem. A fotografia ao lado é apresentada como documento histórico, com procedência explicitada.</p>

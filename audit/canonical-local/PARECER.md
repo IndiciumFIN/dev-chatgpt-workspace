@@ -32,5 +32,5 @@ A base desta branch é `integration/structural-overlay-20261101` em `621f73b`: 2
 
 `0001` a `0003` são iguais aos de `grook_10_26`. `0004` a `0035` foram copiados dessa branch e aplicados num banco local. `0036` e `0037` acrescentam `review_item`. `0038` grava as divergências em `canonical_divergence`.
 
-O SQL candidato do Kernel não entra: o esquema `cko_orch` não existe neste repositório. As dez relações já lidas no Supabase não foram recriadas. Nada disso foi executado em produção.
+`0039` cria só as colunas que o SQL candidato do Kernel já cita. `0040` aplica as oito tabelas neste banco. Uma admissão `ADMITTED` sem ordem é recusada. `0041` guarda seis sugestões. Nenhuma libera produção. O Supabase não foi alterado.
 

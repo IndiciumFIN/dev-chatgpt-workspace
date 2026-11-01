@@ -34,6 +34,9 @@ jobs:
       - name: Índice do banco — rótulo humano para tudo
         run: node scripts/audit-indice-banco.mjs --check
 
+      - name: Governança — rejeitar placeholders de aprovação
+        run: node scripts/check-governance-placeholders.mjs migrations/*.sql
+
       - name: DERBY — nada fica retido
         run: node scripts/preencher-derby.mjs --check
 

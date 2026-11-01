@@ -3128,6 +3128,17 @@
    "blocked_by": [],
    "created_at": "2026-11-01T07:00:00Z",
    "updated_at": "2026-11-01T07:00:00Z"
+  },
+  {
+   "id": "TASK-PLAN-175",
+   "title": "O gate R78 fixa a contagem de tasks a um modelo que so admite ids 059-089",
+   "status": "PROPOSTO",
+   "phase": "F1",
+   "owner": "dono/Kernel",
+   "blocked_by": [],
+   "acceptance": "MEDIDO (01/11 07:30Z): `scripts/check-r78-gap-register.mjs:12-13` exige `plan.tasks.length === r78.baseline.taskPlanCount (37) + plan.r79CandidateMapping.candidateTasksAdded (31)` = 68, e a linha 17 exige que **exatamente** as tasks com id `TASK-PLAN-0(59|[6-8][0-9])` sejam as candidatas (31). ⇒ **Qualquer task com id acima de 089 torna o gate impossivel de satisfazer** (a expansao nao pode contar mais do que 31). O drift e **PRE-EXISTENTE**: `main` tem 112 tasks (esperado 68) e falha igual; o workflow que corre este gate e `pmo-candidate-unit-regressions.yml`, que so corre em branches candidatas, por isso o CI do `main` nunca o apanhou. A comparacao CE adicionou 84 tasks desde 31/10 (134..155, 156..170, 171..174). Decisao do dono: alargar o gate (aceitar tasks fora da expansao com contagem declarada no proprio plano) ou rever o baseline — **nao** mexer no registo r78 para fazer o gate passar.",
+   "created_at": "2026-11-01T07:30:00Z",
+   "updated_at": "2026-11-01T07:30:00Z"
   }
  ],
  "candidateVerification": {
@@ -3977,6 +3988,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 07:15Z - REV.2 do portao (fiel ao contrato) + revisao do registo: o `r84` e um intake FECHADO (validador exige 4 decisoes indexadas) e ja existia um `r85` no repo; as duas decisoes novas foram para um registo NOVO `r86`, sem colisao. 152 tasks."
+  "ultima_revisao_owner": "01/11/2026 07:30Z - portao de cobertura rev.3: passa a aceitar EVIDENCIA PENDENTE **registada** (r86, HOLD_HUMAN) e a imprimi-la; pendencia nao registada continua a reprovar (fail-closed verificado: sem o r86, reprova). Registado TASK-PLAN-175: o gate R78 fixa a contagem de tasks a um modelo que so admite ids 059-089 ⇒ falha em main (112 vs 68) desde as tasks da comparacao; e pre-existente, nao foi esta frente. 153 tasks."
  }
 }

@@ -47,3 +47,7 @@ O arquivo histórico `sandbox-completo (4).tar(2).gz` foi recuperado da Bibliote
 5. Reconciliar a população vigente de 29 branches de forma multilateral; trabalhos de 28 branches são baseline, não validação do HEAD atual.
 
 **Evidências detalhadas:** pacote privado `CE_RECUPERACAO_HISTORICA_CUMULATIVA_20261101.zip` contém índices SHA256+Git blob, deltas, 28 branches, relatórios originais e 870 arquivos candidatos em staging. Não incluiu TARs brutos nem segredos. As fontes originais permanecem na Biblioteca do ChatGPT.
+
+## Handoff mais antigo recuperado — 18/10/2026
+
+Fonte: `CE_MASTER_CONTINUITY_20261018.zip` na Biblioteca privada, SHA-256 `d306c356ff8e670ee64ef29c28b85f6d226994b982e9cca9e06314897d193b53`, 350 entradas (347 artefatos anteriores + três arquivos de continuidade). Seu `STATE.json` indica 14 branches em **outro repositório**, `IndiciumFIN/calculadorasdeenfermagem` (18/10), que **não** devem ser somadas às 29 de `IndiciumFIN/dev-chatgpt-workspace` (01/11). Preservar o handoff anterior e reconciliar entidades, blobs, WOs e decisões entre esses repositórios sem equiparar históricos por nome. Históricos ainda sem revalidação: 22 conflitos, 65 hashes CE04, 1.020 rastreabilidades estruturais, 303 outbox e 61 proveniências. O pacote original está preservado na Biblioteca; suas cópias não autorizam release.

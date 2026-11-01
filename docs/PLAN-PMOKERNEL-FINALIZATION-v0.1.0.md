@@ -861,55 +861,65 @@ Eu reusei a medição de uma frente anterior sem a re-derivar no estado novo, e 
 tinha medido a **baseline R79 (68)**, não a **expansão R89 (112)** — o número estava certo em
 contexto e errado na conclusão.
 
-### 13.10 Comparação byte-a-byte com os repositórios — e duas correções a registos anteriores (01/11/2026 13:45Z)
+### 13.10 O mapa real dos repositórios e o delta real (01/11/2026 14:10Z) — **com uma correcção a uma correcção minha**
 
-O dono pediu "comparar os repositórios e branches com os arquivos que temos aqui, e criar **só** o
-conteúdo em ZIP para avançar mais rápido". Feito por hash de conteúdo (`git blob-sha`), não por nome
-nem por data.
+O dono pediu "comparar os repositórios e branches do repositório com os arquivos que temos aqui e criar
+**só** o conteúdo em ZIP para avançar mais rápido". Feito por hash de conteúdo (`git blob-sha`), contra
+**todos** os repositórios e **todas** as branches.
 
-#### 13.10.1 O delta real
+#### 13.10.1 O mapa (4 repos, 229 branches)
+
+| | Repo | Owner | Branches | `main` | Papel |
+|---|---|---|---|---|---|
+| **A** | `dev-chatgpt-workspace` | IndiciumFIN | **29** | 1.877 ficheiros | governança PMO × Kernel + **CE Experience Platform** |
+| **P** | `calculadoras-de-enfermagem` | **kauesp0007** | **182** | **14.458 ficheiros** | **o produto** (HTML estático na raiz, `CATALOGO_*`, `scripts/icones-fa.json`) |
+| **B** | `calculadorasdeenfermagem` | IndiciumFIN | **17** | 176 ficheiros | app/migrações da organização (**público** — o inventário dizia privado) |
+| **D** | `ce-bibliotecas-dev` | IndiciumFIN | 1 | — | desenvolvimento da biblioteca |
+
+**A e P partilham 6 caminhos**: `.gitignore`, `.prettierrc`, `AGENTS.md`, `README.md`,
+`package-lock.json`, `package.json`. ⇒ **A plataforma de governança e o produto são bases de código
+quase disjuntas: a Experience Platform nunca tocou as 14.458 ficheiras do produto.** O motor de
+impacto, o `list-query` e o `pmo-panel` existem **só em A**.
+
+#### 13.10.2 CORRECÇÃO — eu é que estava errado (a minha "correção" anterior)
+
+TASK-PLAN-178 tinha escrito que o repo das 182 branches "dá 404, foi apagado ou renomeado". **Fui eu que
+inventei o path**: a chave do inventario (`branches-todas.json`) é só o **nome** do repo, sem o owner —
+e eu assumi que o owner era `IndiciumFIN`. O repo real é **`kauesp0007/calculadoras-de-enfermagem`**:
+está **vivo**, público, com 182 branches, `main` = 14.458 ficheiros, último push 27/10 06:29Z.
+Conferido nome a nome: **182/182 nomes e 182/182 SHAs** coincidem com o inventário. ⇒ **As medições
+"181 branches, churn 137/181, 114/181 no núcleo" estavam correctas** — descrevem P.
+
+⇒ **Lição 12: um nome de repo sem owner é uma chave ambígua.** Confirmar o path completo (owner + nome)
+antes de concluir que algo desapareceu. Um 404 num path que eu próprio construí não é prova de nada.
+
+#### 13.10.3 CORRECÇÃO — `locale-registry.ts` e `site-data.ts` existem no `main` de A
+
+O registo dizia "não existem no `main` de nenhum dos dois repositórios". O E2 medira o `main` de **P**
+(onde não existem). Em **`main` de A existem ambos** (`src/lib/locale-registry.ts` e
+`src/lib/site-data.ts`). ⇒ A afirmação anterior era errada por generalização indevida.
+
+#### 13.10.4 O delta (contra A + B + P, byte a byte)
 
 | | Ficheiros |
 |---|---|
 | Árvore local (sem `.git`, `node_modules`, `.vercel`, `.env`) | 1.834 |
-| **Já idênticos** a alguma branch de A ou de B | **1.805** |
-| Divergentes | 26 → **15** são trabalho local por commitar; **11** são ficheiros onde o repo já está mais à frente |
-| Novos (não existem em A nem em B) | 3 |
+| **Já idênticos** a alguma branch de A, B ou P | **1.805** |
+| Divergentes | 26 → **15** trabalho local por commitar · **11** o repo já está mais à frente |
+| Novos | 3 |
 
-**O delta são 15 ficheiros**: `src/lib/impact/impact-engine.ts` (novo) · `src/lib/admin/list-query.ts` ·
-`src/components/admin/pmo-panel.tsx` · `src/styles/admin-console.css` · `scripts/test-impact-engine.test.mjs`
-(novo) · `scripts/test-list-query.test.mjs` (novo) · 9 registos de auditoria regenerados.
+Os 15: `src/lib/impact/impact-engine.ts` (novo) · `src/lib/admin/list-query.ts` ·
+`src/components/admin/pmo-panel.tsx` · `src/styles/admin-console.css` ·
+`scripts/test-impact-engine.test.mjs` (novo) · `scripts/test-list-query.test.mjs` (novo) ·
+9 registos de auditoria regenerados (local rev 92, repo rev 91).
 
-**Verificado antes de empacotar**: 23/23 testes verdes; `tsc` só com os **2 erros pré-existentes** de
-`@types/pg`; `git apply --check` **limpo** sobre a carrier; o `pmo-panel` **mantém o `PmoReviewIntake`**;
-e nada mais no repositório importa `list-query` (nem usa `queryPmo`/`ListSort`) ⇒ a troca da API é
-segura — **mas o `pmo-panel` e o `list-query` têm de subir juntos** (o painel usa
-`activeChips`/`queryList`/`SortDir`; a versão do repo exporta `queryPmo`/`ListSort`).
+**Verificado antes de empacotar**: 23/23 testes; `tsc` só com os **2 erros pré-existentes** de
+`@types/pg`; `git apply --check` **limpo** sobre a carrier; sha256 do manifesto a bater.
+⚠️ O `pmo-panel` e o `list-query` **têm de subir juntos** (API nova `activeChips`/`queryList`/`SortDir`
+vs a do repo `queryPmo`/`ListSort`) — mas nada mais importa `list-query` e ninguém usa a API antiga.
 
-#### 13.10.2 CORRECÇÃO 1 — o repositório das 182 branches já não responde
-O inventário antigo (`evidence_pack/branches-todas.json`) tem **dois** repositórios: `calculadoras-de-enfermagem`
-(**com hífens**, 182 branches) e `dev-chatgpt-workspace` (24). Medido agora:
-
-| Repositório | Branches registadas | Estado **agora** |
-|---|---|---|
-| `calculadoras-de-enfermagem` (com hífens) | 182 | **HTTP 404** — apagado, renomeado, ou privado sem o nosso acesso (**qual dos três não foi medido**) |
-| `dev-chatgpt-workspace` | 24 | existe, **29** branches (API e `ls-remote` concordam) |
-
-Sobreposição de nomes entre as 182 antigas e as 17 de `calculadorasdeenfermagem`: **1** (só `main`).
-⇒ **As medições publicadas como "181 branches do repositório público" (churn 137/181, 114/181 no
-núcleo conta→cobrança→ads, órfãos) descrevem esse repositório de 182 branches — que já não responde.**
-E o `dev-chatgpt-workspace` tem **29**, não 181.
-
-#### 13.10.3 CORRECÇÃO 2 — `calculadorasdeenfermagem` é público
-A API diz `private: false`; o inventário antigo tratava-o como privado.
-
-#### 13.10.4 CORRECÇÃO 3 — o "universo C" (5.746 ficheiros) não está neste ambiente
-O §13.0 descreve um sandbox com `src/data/contracts/`, `src/data/registers/`, `public/bibliotecas/catalog/`
-(251 HTML), `upload/` (927) e `_archive/` (1.445). **Nada disso está aqui.** O que existe é a árvore do
-universo A + os 15 ficheiros de delta. Em particular, **os 251 HTML do espelho não existem** ⇒ o corrector
-dos 5.520 links fica pronto e testado, mas **sem material sobre o qual correr**.
-
-#### 13.10.5 Entregue
-`avancar-ce-2026-11-01.zip` (332 KB, 20 entradas): `CONTEUDO/` (os 15 ficheiros nos caminhos exactos do repo) +
-`DELTA/` (`LEIA-ME.md` · `DELTA.csv` · `avancar.patch` · `COMPARACAO.md` · `verificacao.txt`).
-Registado em `TASK-PLAN-178`, que também pergunta ao dono **onde foi parar o conteúdo do repo de 182 branches**.
+#### 13.10.5 O que fica para o dono
+(i) Os 6 ficheiros funcionais sobem para a **carrier de governança** (onde já vive tudo o resto) ou
+para o **repo do produto** (que hoje não tem nenhum deles)? (ii) Os 9 registos de auditoria sobem só
+quando a auditoria voltar a correr no CI? (iii) A plataforma e o produto vão fundir-se, ou a
+disjuncção (6 caminhos em comum) é deliberada?

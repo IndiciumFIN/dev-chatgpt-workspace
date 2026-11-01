@@ -2,7 +2,7 @@ import type { ClinicalTool } from "@/lib/tools/types";
 
 export const siteOrigin = "https://calculadorasdeenfermagem.com.br";
 
-const locales = ["pt-BR", "en", "es", "fr"] as const;
+const offered = ["pt-BR", "en", "es", "fr"] as const;
 
 export function pageLang(value: unknown) {
   if (value === "en" || value === "es" || value === "fr" || value === "pt-BR") return value;
@@ -15,11 +15,14 @@ export function absoluteUrl(path: string, lang: string = "pt-BR") {
   return url.toString();
 }
 
-export function languageLinks(path: string, lang: unknown) {
-  const current = pageLang(lang);
+export function languageLinks(path: string, lang: unknown, published: readonly string[] = ["pt-BR"]) {
+  const locales = offered.filter((code) => published.includes(code));
+  const list = locales.includes("pt-BR") ? [...locales] : ["pt-BR", ...locales];
+  const requested = pageLang(lang);
+  const current = list.includes(requested) ? requested : "pt-BR";
   return [
     { rel: "canonical", href: absoluteUrl(path, current) },
-    ...locales.map((code) => ({
+    ...list.map((code) => ({
       rel: "alternate" as const,
       hrefLang: code,
       href: absoluteUrl(path, code),
@@ -34,7 +37,7 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: "Calculadoras de Enfermagem",
     url: siteOrigin,
-    inLanguage: ["pt-BR", "en", "es", "fr"],
+    inLanguage: ["pt-BR"],
     description: "Escalas, protocolos e calculadoras clínicas de enfermagem.",
   });
 }

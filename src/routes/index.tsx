@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
         content: loaderData?.lead || "Plataforma clínica com escalas, protocolos e calculadoras de enfermagem. Design system institucional em reconstrução.",
       },
     ],
-    links: languageLinks("/", (match.search as { lang?: unknown }).lang),
+    links: languageLinks("/", (match.search as { lang?: unknown }).lang, loaderData?.editions.map((item) => item.code) ?? ["pt-BR"]),
     scripts: [{ type: "application/ld+json", children: websiteJsonLd() }],
   }),
 });

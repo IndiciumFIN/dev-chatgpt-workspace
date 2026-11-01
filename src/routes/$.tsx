@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$")({
       ],
       links: [
         { rel: "canonical", href: absoluteUrl(origin) },
-        ...languageLinks(`/${params._splat ?? ""}`, (match.search as { lang?: unknown }).lang).filter((link) => link.rel !== "canonical"),
+        ...languageLinks(`/${params._splat ?? ""}`, (match.search as { lang?: unknown }).lang, loaderData?.editions.map((item) => item.code) ?? ["pt-BR"]).filter((link) => link.rel !== "canonical"),
       ],
     };
   },

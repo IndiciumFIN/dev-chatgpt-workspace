@@ -116,11 +116,13 @@ export async function auditEcosystem(db: Queryable): Promise<AuditFinding[]> {
     note("DIC-SINTAXE", "Dicionário interno: a sintaxe gravada não descreve o slug que existe", syntax.rows[0]?.syntax ?? "");
   }
 
-  const alt = await db.query<{ column_name: string }>(
-    "select column_name from information_schema.columns where table_schema = 'public' and table_name = 'media_asset'",
+  const alt = await db.query<{ n: unknown }>(
+    `select count(*)::int as n
+     from media_asset
+     where kind = 'imagem' and (alt is null or btrim(alt) = '' or alt = note or alt = path)`,
   );
-  if (alt.rows.length > 0 && !alt.rows.some((row) => row.column_name === "alt")) {
-    note("MID-SEM-ALT", "WCAG 1.1.1: mídia pública ainda não tem texto alternativo na tabela", "media_asset guarda path, kind e note");
+  if (numberOf(alt.rows[0]?.n) > 0) {
+    note("MID-SEM-ALT", "WCAG 1.1.1: imagem pública sem texto alternativo próprio", `${alt.rows[0]?.n} imagens`);
   }
 
   const draftRules = await db.query<{ n: unknown }>("select count(*)::int as n from business_rule where status = 'rascunho'");

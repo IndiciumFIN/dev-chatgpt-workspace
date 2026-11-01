@@ -17,14 +17,12 @@ Falha o teste. Não pode ir ao ar.
 
 ## Achado
 
-O teste exige que os quatro achados atuais continuem visíveis até a causa fechar. Os dois de dicionário físico só aparecem se a paridade das 94 tabelas quebrar.
+O teste exige que os dois achados atuais continuem visíveis até a causa fechar. Os dois de dicionário físico só aparecem se a paridade das tabelas quebrar.
 
 | Id | Norma citada | O que ainda não fecha |
 |---|---|---|
-| DIC-SINTAXE | Dicionário interno | Sintaxe do slug pede hífen e o banco usa sublinhado |
-| I18N-HREFLANG | WCAG 3.1.1 | `languageLinks` anuncia en, es e fr sem texto publicado |
-| MID-SEM-ALT | WCAG 1.1.1 | `media_asset` não tem texto alternativo |
-| REG-RASCUNHO | Regra de negócio | `business_rule` ainda em rascunho |
+| MID-SEM-ALT | WCAG 1.1.1 | Imagem pública sem texto alternativo próprio |
+| REG-RASCUNHO | Regra de negócio | `business_rule` ainda em rascunho. Não se aprova sozinha. |
 | DIC-ENTIDADE-SEM-TABELA | Dicionário interno, não ISO 8000 | Entidade sem tabela. Hoje não dispara. |
 | DIC-TABELA-SEM-ENTIDADE | Dicionário interno | Tabela sem entidade. Hoje não dispara. |
 

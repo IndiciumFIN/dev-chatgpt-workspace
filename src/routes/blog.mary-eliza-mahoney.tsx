@@ -24,7 +24,7 @@ export const Route = createFileRoute("/blog/mary-eliza-mahoney")({
       { name: "description", content: loaderData?.lead ?? "" },
       { property: "og:type", content: "article" },
     ],
-    links: languageLinks("/blog/mary-eliza-mahoney", (match.search as { lang?: unknown }).lang),
+    links: languageLinks("/blog/mary-eliza-mahoney", (match.search as { lang?: unknown }).lang, loaderData?.editions.map((item) => item.code) ?? ["pt-BR"]),
     scripts: [
       {
         type: "application/ld+json",

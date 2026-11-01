@@ -12,20 +12,26 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AssinanteRouteImport } from './routes/assinante'
+import { Route as CentralComandoRouteImport } from './routes/central-comando'
 import { Route as ContaRouteImport } from './routes/conta'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
+import { Route as KidsRouteImport } from './routes/kids'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ModelosRouteImport } from './routes/modelos'
 import { Route as OficinaLocalRouteImport } from './routes/oficina-local'
 import { Route as PacoteRouteImport } from './routes/pacote'
 import { Route as SessaoRouteImport } from './routes/sessao'
 import { Route as SistemaRouteImport } from './routes/sistema'
+import { Route as ViladocuidadoRouteImport } from './routes/viladocuidado'
 import { Route as BibliotecasIndexRouteImport } from './routes/bibliotecas.index'
 import { Route as BibliotecasSlugRouteImport } from './routes/bibliotecas.$slug'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as FerramentasSlugRouteImport } from './routes/ferramentas.$slug'
 import { Route as InstitucionalIndexRouteImport } from './routes/institucional.index'
 import { Route as InstitucionalHubRouteImport } from './routes/institucional.$hub'
+import { Route as KidsIndexRouteImport } from './routes/kids.index'
+import { Route as KidsSectionRouteImport } from './routes/kids.$section'
 import { Route as ModelosIndexRouteImport } from './routes/modelos.index'
 import { Route as ModelosIdRouteImport } from './routes/modelos.$id'
 import { Route as SecaoSlugRouteImport } from './routes/secao.$slug'
@@ -51,6 +57,11 @@ const AssinanteRoute = AssinanteRouteImport.update({
   path: '/assinante',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CentralComandoRoute = CentralComandoRouteImport.update({
+  id: '/central-comando',
+  path: '/central-comando',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContaRoute = ContaRouteImport.update({
   id: '/conta',
   path: '/conta',
@@ -59,6 +70,11 @@ const ContaRoute = ContaRouteImport.update({
 const InstitucionalRoute = InstitucionalRouteImport.update({
   id: '/institucional',
   path: '/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KidsRoute = KidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -91,6 +107,11 @@ const SistemaRoute = SistemaRouteImport.update({
   path: '/sistema',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ViladocuidadoRoute = ViladocuidadoRouteImport.update({
+  id: '/viladocuidado',
+  path: '/viladocuidado',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BibliotecasIndexRoute = BibliotecasIndexRouteImport.update({
   id: '/bibliotecas/',
   path: '/bibliotecas/',
@@ -99,6 +120,11 @@ const BibliotecasIndexRoute = BibliotecasIndexRouteImport.update({
 const BibliotecasSlugRoute = BibliotecasSlugRouteImport.update({
   id: '/bibliotecas/$slug',
   path: '/bibliotecas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -120,6 +146,16 @@ const InstitucionalHubRoute = InstitucionalHubRouteImport.update({
   id: '/$hub',
   path: '/$hub',
   getParentRoute: () => InstitucionalRoute,
+} as any)
+const KidsIndexRoute = KidsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KidsRoute,
+} as any)
+const KidsSectionRoute = KidsSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => KidsRoute,
 } as any)
 const ModelosIndexRoute = ModelosIndexRouteImport.update({
   id: '/',
@@ -172,22 +208,28 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/assinante': typeof AssinanteRouteWithChildren
+  '/central-comando': typeof CentralComandoRoute
   '/conta': typeof ContaRoute
   '/institucional': typeof InstitucionalRouteWithChildren
+  '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
   '/oficina-local': typeof OficinaLocalRoute
   '/pacote': typeof PacoteRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
+  '/viladocuidado': typeof ViladocuidadoRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
+  '/kids/$section': typeof KidsSectionRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/institucional/': typeof InstitucionalIndexRoute
+  '/kids/': typeof KidsIndexRoute
   '/modelos/': typeof ModelosIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/assinante/ferramentas/$slug': typeof AssinanteFerramentasSlugRoute
@@ -200,18 +242,23 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/assinante': typeof AssinanteRouteWithChildren
+  '/central-comando': typeof CentralComandoRoute
   '/conta': typeof ContaRoute
   '/login': typeof LoginRoute
   '/oficina-local': typeof OficinaLocalRoute
   '/pacote': typeof PacoteRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
+  '/viladocuidado': typeof ViladocuidadoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
+  '/kids/$section': typeof KidsSectionRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas': typeof BibliotecasIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/institucional': typeof InstitucionalIndexRoute
+  '/kids': typeof KidsIndexRoute
   '/modelos': typeof ModelosIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/assinante/ferramentas/$slug': typeof AssinanteFerramentasSlugRoute
@@ -225,22 +272,28 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/assinante': typeof AssinanteRouteWithChildren
+  '/central-comando': typeof CentralComandoRoute
   '/conta': typeof ContaRoute
   '/institucional': typeof InstitucionalRouteWithChildren
+  '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
   '/oficina-local': typeof OficinaLocalRoute
   '/pacote': typeof PacoteRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
+  '/viladocuidado': typeof ViladocuidadoRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
+  '/kids/$section': typeof KidsSectionRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/institucional/': typeof InstitucionalIndexRoute
+  '/kids/': typeof KidsIndexRoute
   '/modelos/': typeof ModelosIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/assinante/ferramentas/$slug': typeof AssinanteFerramentasSlugRoute
@@ -255,22 +308,28 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assinante'
+    | '/central-comando'
     | '/conta'
     | '/institucional'
+    | '/kids'
     | '/login'
     | '/modelos'
     | '/oficina-local'
     | '/pacote'
     | '/sessao'
     | '/sistema'
+    | '/viladocuidado'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
+    | '/kids/$section'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
+    | '/blog/'
     | '/institucional/'
+    | '/kids/'
     | '/modelos/'
     | '/api/auth/$'
     | '/assinante/ferramentas/$slug'
@@ -283,18 +342,23 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assinante'
+    | '/central-comando'
     | '/conta'
     | '/login'
     | '/oficina-local'
     | '/pacote'
     | '/sessao'
     | '/sistema'
+    | '/viladocuidado'
     | '/blog/$slug'
     | '/ferramentas/$slug'
+    | '/kids/$section'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas'
+    | '/blog'
     | '/institucional'
+    | '/kids'
     | '/modelos'
     | '/api/auth/$'
     | '/assinante/ferramentas/$slug'
@@ -307,22 +371,28 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assinante'
+    | '/central-comando'
     | '/conta'
     | '/institucional'
+    | '/kids'
     | '/login'
     | '/modelos'
     | '/oficina-local'
     | '/pacote'
     | '/sessao'
     | '/sistema'
+    | '/viladocuidado'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
+    | '/kids/$section'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
+    | '/blog/'
     | '/institucional/'
+    | '/kids/'
     | '/modelos/'
     | '/api/auth/$'
     | '/assinante/ferramentas/$slug'
@@ -336,19 +406,23 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   AssinanteRoute: typeof AssinanteRouteWithChildren
+  CentralComandoRoute: typeof CentralComandoRoute
   ContaRoute: typeof ContaRoute
   InstitucionalRoute: typeof InstitucionalRouteWithChildren
+  KidsRoute: typeof KidsRouteWithChildren
   LoginRoute: typeof LoginRoute
   ModelosRoute: typeof ModelosRouteWithChildren
   OficinaLocalRoute: typeof OficinaLocalRoute
   PacoteRoute: typeof PacoteRoute
   SessaoRoute: typeof SessaoRoute
   SistemaRoute: typeof SistemaRoute
+  ViladocuidadoRoute: typeof ViladocuidadoRoute
   BibliotecasSlugRoute: typeof BibliotecasSlugRouteWithChildren
   BlogSlugRoute: typeof BlogSlugRoute
   FerramentasSlugRoute: typeof FerramentasSlugRoute
   SecaoSlugRoute: typeof SecaoSlugRoute
   BibliotecasIndexRoute: typeof BibliotecasIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -375,6 +449,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssinanteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/central-comando': {
+      id: '/central-comando'
+      path: '/central-comando'
+      fullPath: '/central-comando'
+      preLoaderRoute: typeof CentralComandoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/conta': {
       id: '/conta'
       path: '/conta'
@@ -387,6 +468,13 @@ declare module '@tanstack/react-router' {
       path: '/institucional'
       fullPath: '/institucional'
       preLoaderRoute: typeof InstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kids': {
+      id: '/kids'
+      path: '/kids'
+      fullPath: '/kids'
+      preLoaderRoute: typeof KidsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -431,6 +519,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SistemaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/viladocuidado': {
+      id: '/viladocuidado'
+      path: '/viladocuidado'
+      fullPath: '/viladocuidado'
+      preLoaderRoute: typeof ViladocuidadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bibliotecas/': {
       id: '/bibliotecas/'
       path: '/bibliotecas'
@@ -443,6 +538,13 @@ declare module '@tanstack/react-router' {
       path: '/bibliotecas/$slug'
       fullPath: '/bibliotecas/$slug'
       preLoaderRoute: typeof BibliotecasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -472,6 +574,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/institucional/$hub'
       preLoaderRoute: typeof InstitucionalHubRouteImport
       parentRoute: typeof InstitucionalRoute
+    }
+    '/kids/': {
+      id: '/kids/'
+      path: '/'
+      fullPath: '/kids/'
+      preLoaderRoute: typeof KidsIndexRouteImport
+      parentRoute: typeof KidsRoute
+    }
+    '/kids/$section': {
+      id: '/kids/$section'
+      path: '/$section'
+      fullPath: '/kids/$section'
+      preLoaderRoute: typeof KidsSectionRouteImport
+      parentRoute: typeof KidsRoute
     }
     '/modelos/': {
       id: '/modelos/'
@@ -578,6 +694,18 @@ const InstitucionalRouteWithChildren = InstitucionalRoute._addFileChildren(
   InstitucionalRouteChildren,
 )
 
+interface KidsRouteChildren {
+  KidsSectionRoute: typeof KidsSectionRoute
+  KidsIndexRoute: typeof KidsIndexRoute
+}
+
+const KidsRouteChildren: KidsRouteChildren = {
+  KidsSectionRoute: KidsSectionRoute,
+  KidsIndexRoute: KidsIndexRoute,
+}
+
+const KidsRouteWithChildren = KidsRoute._addFileChildren(KidsRouteChildren)
+
 interface ModelosRouteChildren {
   ModelosIdRoute: typeof ModelosIdRoute
   ModelosIndexRoute: typeof ModelosIndexRoute
@@ -609,19 +737,23 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AssinanteRoute: AssinanteRouteWithChildren,
+  CentralComandoRoute: CentralComandoRoute,
   ContaRoute: ContaRoute,
   InstitucionalRoute: InstitucionalRouteWithChildren,
+  KidsRoute: KidsRouteWithChildren,
   LoginRoute: LoginRoute,
   ModelosRoute: ModelosRouteWithChildren,
   OficinaLocalRoute: OficinaLocalRoute,
   PacoteRoute: PacoteRoute,
   SessaoRoute: SessaoRoute,
   SistemaRoute: SistemaRoute,
+  ViladocuidadoRoute: ViladocuidadoRoute,
   BibliotecasSlugRoute: BibliotecasSlugRouteWithChildren,
   BlogSlugRoute: BlogSlugRoute,
   FerramentasSlugRoute: FerramentasSlugRoute,
   SecaoSlugRoute: SecaoSlugRoute,
   BibliotecasIndexRoute: BibliotecasIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,0 +1,128 @@
+name: Remediate better-auth candidate safely
+on:
+  push:
+    branches:
+      - simulados-enfermagem-db-canonico
+    paths:
+      - '.github/workflows/remediate-better-auth-candidate.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/lib/auth/client.ts'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - '.github/workflows/remediate-better-auth-candidate.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/lib/auth/client.ts'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: better-auth-candidate-remediation
+  cancel-in-progress: false
+
+jobs:
+  remediate:
+    if: >-
+      github.repository == 'IndiciumFIN/dev-chatgpt-workspace' &&
+      (github.event_name == 'push' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       github.head_ref == 'simulados-enfermagem-db-canonico'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout exact candidate branch head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: simulados-enfermagem-db-canonico
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Set up reviewed Node version
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Verify this branch and scope
+        id: scope
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "simulados-enfermagem-db-canonico"
+          version="$(node -p "require('./package.json').dependencies['better-auth']")"
+          case "$version" in
+            '~1.6.30')
+              echo 'needs_upgrade=true' >> "$GITHUB_OUTPUT"
+              ;;
+            '1.7.14')
+              echo 'needs_upgrade=false' >> "$GITHUB_OUTPUT"
+              node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const source = readFileSync('src/lib/auth/client.ts', 'utf8');
+          if (!source.includes('authClient.signIn.social(') ||
+              source.includes('genericOAuthClient') ||
+              source.includes('authClient.signIn.oauth2(')) {
+            throw new Error('Already-upgraded Better Auth must use the reviewed OAuth 1.7 client API');
+          }
+          NODE
+              ;;
+            *)
+              echo "Unexpected Better Auth version: $version" >&2
+              exit 1
+              ;;
+          esac
+      - name: Update better-auth with lockfile as an atomic pair
+        if: steps.scope.outputs.needs_upgrade == 'true'
+        run: npm install --package-lock-only --save-exact --ignore-scripts better-auth@1.7.14
+      - name: Migrate Generic OAuth client to documented Better Auth 1.7 API
+        if: steps.scope.outputs.needs_upgrade == 'true'
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const path = 'src/lib/auth/client.ts';
+          let source = readFileSync(path, 'utf8');
+          const changes = [
+            ['import { genericOAuthClient } from "better-auth/client/plugins";\\n', ''],
+            ['  plugins: [genericOAuthClient()],\\n', ''],
+            ['authClient.signIn.oauth2({\\n    providerId,', 'authClient.signIn.social({\\n    provider: providerId,'],
+          ];
+          for (const [before, after] of changes) {
+            const original = before.replaceAll('\\n', '\n');
+            const updated = after.replaceAll('\\n', '\n');
+            if (!source.includes(original)) throw new Error('Unexpected OAuth client source; refusing blind migration: ' + original);
+            source = source.replace(original, updated);
+          }
+          if (source.includes('genericOAuthClient') || source.includes('signIn.oauth2')) {
+            throw new Error('Legacy OAuth client API remains');
+          }
+          writeFileSync(path, source);
+          NODE
+      - name: Reinstall from exact lockfile
+        run: npm ci
+      - name: Confirm critical and high vulnerabilities are resolved
+        run: npm audit --audit-level=high
+      - name: Check TypeScript contracts
+        run: npm run typecheck
+      - name: Run regression suite
+        run: npm test
+      - name: Verify production-like SPA build and gates
+        run: npm run build:spa
+      - name: Stage and validate only the reviewed dependency and OAuth changes
+        if: steps.scope.outputs.needs_upgrade == 'true'
+        run: |
+          set -euo pipefail
+          git add -- package.json package-lock.json src/lib/auth/client.ts
+          expected="$(printf 'package-lock.json\npackage.json\nsrc/lib/auth/client.ts' | sort)"
+          actual="$(git diff --cached --name-only | sort)"
+          test "$actual" = "$expected"
+          git diff --cached --check
+          echo "PASS: only the three reviewed files staged; generated audit snapshots remain uncommitted"
+      - name: Commit validated dependency update to existing branch only
+        if: steps.scope.outputs.needs_upgrade == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json src/lib/auth/client.ts
+          git commit -m "fix(security): upgrade better-auth and migrate Generic OAuth after passing gates"
+          git push origin HEAD:refs/heads/simulados-enfermagem-db-canonico

@@ -56,10 +56,10 @@ const tally = (out) => {
     const m = out.match(new RegExp(`^(?:#|ℹ)\\s+${key}\\s+(\\d+)\\s*$`, "m"));
     return m ? Number(m[1]) : 0;
   };
-  return { tests: pick("tests"), pass: pick("pass"), fail: pick("fail") };
+  return { tests: pick("tests"), pass: pick("pass"), fail: pick("fail"), skipped: pick("skipped") };
 };
 
-let total = { tests: 0, pass: 0, fail: 0 };
+let total = { tests: 0, pass: 0, fail: 0, skipped: 0 };
 let failed = false;
 
 for (const suite of SUITES) {
@@ -74,13 +74,14 @@ for (const suite of SUITES) {
   total.tests += t.tests;
   total.pass += t.pass;
   total.fail += t.fail;
-  process.stdout.write(`--- ${suite.name}: ${t.pass}/${t.tests} pass, ${t.fail} fail\n`);
-  if (run.status !== 0 || t.tests === 0 || t.pass + t.fail > t.tests) failed = true;
+  total.skipped += t.skipped;
+  process.stdout.write(`--- ${suite.name}: ${t.pass} pass, ${t.skipped} skipped, ${t.fail} fail (${t.tests} total)\n`);
+  if (run.status !== 0 || t.tests === 0 || t.pass + t.fail + t.skipped !== t.tests) failed = true;
 }
 
 process.stdout.write(
-  `\n=== TOTAL: ${total.pass}/${total.tests} pass, ${total.fail} fail ===\n` +
-    `As duas metades SEMPRE rodam. Um falha nao esconde a outra.\n`,
+  `\n=== TOTAL: ${total.pass} pass, ${total.skipped} skipped, ${total.fail} fail (${total.tests} tests) ===\n` +
+    `As duas metades SEMPRE rodam. Falhas e bloqueios nao sao escondidos.\n`,
 );
 
 process.exitCode = failed ? 1 : 0;

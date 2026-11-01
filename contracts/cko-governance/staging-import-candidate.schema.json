@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/contracts/cko/staging-import-candidate.v0.1.json",
+  "title": "CKO — pacote de importação em staging (candidato, sem escrita)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "type",
+    "source",
+    "profile",
+    "mapping",
+    "summary",
+    "chunk_size",
+    "chunks",
+    "rows",
+    "findings",
+    "status",
+    "has_remote_write"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "type": {
+      "const": "CKO_STAGING_IMPORT_CANDIDATE"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "format",
+        "size_bytes",
+        "sha256"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "format": {
+          "enum": [
+            "csv",
+            "tsv",
+            "json"
+          ]
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "destination",
+        "version"
+      ],
+      "properties": {
+        "key": {
+          "enum": [
+            "sources",
+            "policies",
+            "validators"
+          ]
+        },
+        "destination": {
+          "enum": [
+            "cko_evidence.sources",
+            "cko_orch.policy_registry",
+            "cko_validation.validators"
+          ]
+        },
+        "version": {
+          "const": "CANDIDATE"
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total",
+        "candidates",
+        "held",
+        "duplicates"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "candidates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "held": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicates": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "chunk_size": {
+      "const": 250
+    },
+    "chunks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "index",
+          "first_row",
+          "last_row",
+          "sha256"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "first_row": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "last_row": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "line",
+          "identifier",
+          "state",
+          "data",
+          "issues"
+        ],
+        "properties": {
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "CANDIDATE",
+              "HOLD"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/issue"
+            }
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "status": {
+      "const": "NOT_SUBMITTED"
+    },
+    "has_remote_write": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "line",
+        "column",
+        "code",
+        "message"
+      ],
+      "properties": {
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

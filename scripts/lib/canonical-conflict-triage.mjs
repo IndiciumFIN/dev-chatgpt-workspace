@@ -58,6 +58,37 @@ export function triageCanonicalConflict(path,{equivalent=false}={}){
       wo='WO-CKO-001';priority='P1';domain='KNOWLEDGE_SOURCE';
     }
   }
+  // Wave 8: exhaustive observed-path candidate mappings. These are NOT
+  // approvals or autonomous work-order admissions; unmatched paths remain HOLD.
+  // Entries are limited to the 22 observed source conflicts of run 41281819758.
+  if(!wo) {
+    const observedCandidates={
+  'docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml':{wo:'WO-PMO-001',priority:'P0',domain:'PMO_EVIDENCE',},
+  'docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md':{wo:'WO-PMO-001',priority:'P0',domain:'PMO_PLAN',},
+  'docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json':{wo:'WO-PMO-001',priority:'P0',domain:'PMO_TASKS',},
+  'scripts/admin-mobile-first.test.mjs':{wo:'WO-DS-001',priority:'P1',domain:'ADMIN_MOBILE_UX',},
+  'scripts/canonical-conflict-triage.test.mjs':{wo:'WO-PMO-001',priority:'P0',domain:'PMO_TRIAGE',},
+  'scripts/cko-canonical-pilot.test.mjs':{wo:'WO-CKO-001',priority:'P0',domain:'CKO_PILOT',},
+  'scripts/cko-db-first-evidence.test.mjs':{wo:'WO-CKO-001',priority:'P0',domain:'CKO_DB_EVIDENCE',},
+  'scripts/cko-db-first-replay.test.mjs':{wo:'WO-CKO-001',priority:'P0',domain:'CKO_DB_REPLAY',},
+  'scripts/cko-governance-pilot.test.mjs':{wo:'WO-GOV-TRANS-001',priority:'P0',domain:'CKO_GOVERNANCE',},
+  'scripts/governance-continuity.test.mjs':{wo:'WO-GOV-TRANS-001',priority:'P0',domain:'GOVERNANCE_CONTINUITY',},
+  'scripts/lib/canonical-conflict-triage.mjs':{wo:'WO-PMO-001',priority:'P0',domain:'PMO_TRIAGE',},
+  'scripts/test-commander-read-model.mjs':{wo:'WO-ADM-001',priority:'P1',domain:'ADMIN_COMMANDER',},
+  'scripts/test-curiosidades-source-alternatives.mjs':{wo:'WO-CKO-001',priority:'P1',domain:'EDITORIAL_SOURCE',},
+  'scripts/test-locale-registry.mjs':{wo:'WO-DS-001',priority:'P1',domain:'I18N',},
+  'src/components/article/curiosity-page.tsx':{wo:'WO-CKO-001',priority:'P1',domain:'EDITORIAL_SURFACE',},
+  'src/components/career/career-hub.tsx':{wo:'WO-ADM-001',priority:'P1',domain:'PRODUCT_SURFACE',},
+  'src/components/templates/curiosity-view.tsx':{wo:'WO-CKO-001',priority:'P1',domain:'EDITORIAL_TEMPLATE',},
+  'src/components/vila/vila-source-home.tsx':{wo:'WO-ADM-001',priority:'P1',domain:'PRODUCT_SURFACE',},
+  'src/lib/commander/read-model.ts':{wo:'WO-ADM-001',priority:'P0',domain:'ADMIN_COMMANDER_MODEL',},
+  'src/lib/contract-index.generated.ts':{wo:'WO-CKO-001',priority:'P1',domain:'CANONICAL_CONTRACT_INDEX',},
+  'src/lib/header-i18n.ts':{wo:'WO-DS-001',priority:'P1',domain:'I18N',},
+  'src/lib/locale-registry.ts':{wo:'WO-DS-001',priority:'P1',domain:'I18N',}
+    };
+    const proposal=observedCandidates[path];
+    if(proposal){wo=proposal.wo;priority=proposal.priority;domain=proposal.domain;}
+  }
   const candidate=CANONICAL_SOURCE_CANDIDATES[path]??null;
   return {
     path,domain,priority,
@@ -78,7 +109,12 @@ export function buildCanonicalTriage(collisions,semantic){
   if([...equivalentPaths].some(p=>!knownPaths.has(p)))throw Error('UNKNOWN_SEMANTIC_PATH');
   const items=collisions.map(x=>{
     if(!Array.isArray(x.sources)||x.sources.length<2)throw Error('MISSING_CONFLICT_LINEAGE');
-    if(x.sources.some(source=>typeof source.branch!=='string'||!/^([a-f0-9]{40}|[a-f0-9]{64})$/.test(source.blob??''))){
+    // A deletion is Git status D with no remaining blob. Preserve it as a
+    // candidate deletion; never manufacture a SHA or treat it as approval.
+    const validLineage=source=>source&&typeof source.branch==='string'&&source.branch.length>0&&
+      (source.status==='D' ? source.blob===null :
+        typeof source.blob==='string'&&/^([a-f0-9]{40}|[a-f0-9]{64})$/.test(source.blob));
+    if(x.sources.some(source=>!validLineage(source))){
       throw Error('INVALID_BLOB_LINEAGE');
     }
     const row=triageCanonicalConflict(x.path,{equivalent:equivalentPaths.has(x.path)});
@@ -86,7 +122,7 @@ export function buildCanonicalTriage(collisions,semantic){
        !x.sources.some(source=>source.branch===row.candidateSource.sourceBranch)){
       throw Error('CANDIDATE_SOURCE_NOT_IN_CONFLICT');
     }
-    return {...row,sources:x.sources.map(source=>({branch:source.branch,blob:source.blob}))};
+    return {...row,sources:x.sources.map(source=>({branch:source.branch,blob:source.blob,status:source.status??null}))};
   }).sort((a,b)=>a.path.localeCompare(b.path));
   const counts={
     total:items.length,

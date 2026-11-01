@@ -1,0 +1,49 @@
+name: CKO canonical pilot (read-only)
+on:
+  push:
+    branches:
+      - 'work/editorial-canonical-learning-20261026'
+    paths:
+      - 'scripts/cko-*'
+      - 'audit-evidence/cko/db-first/**'
+      - 'registers/governance/candidates/**'
+      - 'registers/pmo/queue.v1.json'
+      - '.github/workflows/cko-canonical-pilot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CKO_CLINICAL_PROMOTION: 'false'
+      CKO_DB_WRITE: 'false'
+    steps:
+      - name: Checkout scoped candidate branch
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify evidence snapshot and run negative tests
+        run: |
+          node --test scripts/cko-canonical-pilot.test.mjs \
+            scripts/cko-db-first-replay.test.mjs \
+            scripts/cko-db-first-evidence.test.mjs \
+            scripts/cko-governance-pilot.test.mjs
+      - name: Generate fail-closed candidate diagnostic
+        run: node scripts/cko-canonical-pilot.mjs > /tmp/cko-candidate-pilot.json
+      - name: Check no clinical release can be asserted
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const x = JSON.parse(fs.readFileSync("/tmp/cko-candidate-pilot.json", "utf8"));
+            if (x.status !== "HOLD" ||
+                !x.diagnostics.every(t => t.verdict === "HOLD" && t.can_publish === false && t.can_calculate === false)) {
+              process.exit(1);
+            }
+            console.log("PASS: all candidate tools remain HOLD");
+          '

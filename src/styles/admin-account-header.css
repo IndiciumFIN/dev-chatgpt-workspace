@@ -1,0 +1,39 @@
+/* Cabeçalho administrativo sem ruído técnico, priorizando conta e navegação. */
+.ce-admin .ce-account-bar,.ce-admin .ce-account-bar *{box-sizing:border-box;min-width:0}
+.ce-admin .ce-account-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:68px;padding:10px 13px;background:var(--color-paper);border:1px solid var(--color-line);border-radius:var(--radius-panel);position:relative;z-index:16}
+.ce-account-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.ce-account-brand-mark{display:grid;place-items:center;flex:none;width:36px;height:36px;background:var(--color-navy);border-radius:10px;color:#fff;font-weight:850;font-size:.74rem;letter-spacing:-.035em}
+.ce-account-brand>span:last-child{display:grid;gap:1px}
+.ce-account-brand strong{font-size:.91rem;color:var(--color-ink);line-height:1.3}
+.ce-account-brand small{color:var(--color-muted);font-size:.69rem}
+.ce-account-controls{display:flex;align-items:center;justify-content:flex-end;gap:5px;min-width:0}
+.ce-account-control{position:relative;min-width:0}
+.ce-account-icon,.ce-account-avatar-button{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;flex:none;min-height:44px;min-width:44px;padding:7px;border:1px solid transparent;border-radius:var(--radius-control);background:transparent;color:var(--color-navy);font:inherit;text-decoration:none}
+.ce-account-icon:hover:not(:disabled),.ce-account-avatar-button:hover,.ce-account-icon[aria-expanded=true],.ce-account-avatar-button[aria-expanded=true]{background:var(--color-ice);border-color:var(--color-line)}
+.ce-account-icon:disabled{opacity:.4;cursor:not-allowed}
+.ce-account-alert-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--color-navy);border:2px solid var(--color-paper);box-sizing:content-box}
+.ce-account-avatar-fallback{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:50%;background:var(--color-ice);color:var(--color-navy);border:1px solid var(--color-line);font-weight:850;font-size:.85rem}
+.ce-account-avatar-button img{width:32px;height:32px;object-fit:cover;border-radius:50%}
+.ce-account-user-label{display:none;max-width:160px;font-size:.77rem;font-weight:750;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--color-ink)}
+.ce-account-popover{position:absolute;z-index:100;top:calc(100% + 10px);right:-52px;width:min(320px,calc(100vw - 32px));max-width:calc(100vw - 32px);display:grid;gap:12px;padding:15px;border:1px solid var(--color-line);border-radius:var(--radius-panel);background:var(--color-paper);box-shadow:0 12px 36px rgba(12,24,42,.16);overflow-wrap:anywhere}
+.ce-account-popover-head{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.ce-account-popover-head>strong{font-size:.86rem;color:var(--color-ink)}
+.ce-account-popover-head>button{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper);color:var(--color-navy)}
+.ce-account-popover p{margin:0;color:var(--color-body);font-size:.79rem;line-height:1.55}
+.ce-account-popover small{font-size:.72rem;color:var(--color-slate);line-height:1.55}
+.ce-account-toggle{display:flex;align-items:flex-start;gap:12px;font-size:.78rem}
+.ce-account-toggle input{width:20px;height:20px;margin:0;accent-color:var(--color-navy);flex:none}
+.ce-account-toggle span{display:grid;gap:4px}
+.ce-account-toggle strong{color:var(--color-ink)}
+.ce-account-action{min-height:44px;border:1px solid var(--color-navy);border-radius:var(--radius-control);background:var(--color-navy);color:#fff;font:inherit;font-size:.79rem;font-weight:800}
+.ce-account-auth-ok{display:flex;align-items:center;gap:6px;color:var(--color-navy);font-size:.74rem;font-weight:700}
+.ce-account-error{position:absolute;top:100%;right:0;background:var(--color-paper);border:1px solid #ad4a4a;border-radius:var(--radius-control);padding:8px 12px;font-size:.75rem;color:#a02525;max-width:320px}
+.ce-admin .ce-account-icon:focus-visible,.ce-admin .ce-account-avatar-button:focus-visible,.ce-admin .ce-account-popover button:focus-visible{outline:3px solid var(--color-navy);outline-offset:2px}
+.ce-admin.ce-admin--compact .ce-admin-panel,.ce-admin.ce-admin--compact .ce-workspace-main,.ce-admin.ce-admin--compact .ce-workspace-head{padding:9px}
+.ce-admin.ce-admin--compact .ce-workspace-record,.ce-admin.ce-admin--compact .ce-admin-stat{padding:8px}
+@media(min-width:700px){.ce-admin .ce-account-bar{padding:12px 18px}.ce-account-controls{gap:9px}.ce-account-user-label{display:block}.ce-account-popover{right:0}}
+@media(max-width:370px){.ce-admin .ce-account-bar{padding:8px}.ce-account-controls{gap:1px}.ce-account-brand strong{font-size:.82rem}.ce-account-brand small{font-size:.64rem}.ce-account-brand-mark{width:29px;height:29px}.ce-account-brand{gap:6px}.ce-account-icon,.ce-account-avatar-button{padding:5px;min-width:38px;min-height:44px}.ce-account-popover{position:fixed;top:80px;right:10px}}
+@media print{.ce-account-controls{display:none}}
+
+/* Os menus de conta ficam acima da navegação móvel fixa e do dock. */
+.ce-admin .ce-account-bar{z-index:120}

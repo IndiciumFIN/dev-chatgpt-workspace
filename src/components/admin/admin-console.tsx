@@ -1,11 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import {
-  AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Bot, Check, ChevronRight,
+  AlertCircle, ArrowUpRight, BookOpenCheck, BookOpenText, Bot, Check, ChevronDown, ChevronRight,
   ClipboardCheck, Download, Eye, FileClock, FileInput, FileText, Layers3,
-  LayoutDashboard, ListTodo, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Smartphone,
+  LayoutDashboard, ListTodo, LockKeyhole, Menu, Search, ShieldCheck, SlidersHorizontal, Smartphone, X,
   type LucideIcon,
 } from 'lucide-react';
-import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode } from 'react';
 import { PageHero } from '@/components/site/page-hero';
 import { Breadcrumb } from '@/components/site/breadcrumb';
 import { tools } from '@/lib/tools/catalog';
@@ -21,11 +21,21 @@ import {
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
 import { CommanderPanel } from '@/components/admin/commander-panel';
+import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
+import { getAdminModule, type AdminModuleId, type AdminSurface } from '@/lib/admin-module-registry';
 import '@/styles/admin-console.css';
 
-type Tab = 'overview' | 'pmo' | 'commander' | 'content' | 'templates' | 'sources' | 'publication';
+type Tab = 'overview' | 'pmo' | 'commander' | 'content' | 'templates' | 'sources' | 'publication' | 'module-detail';
 type PreviewAudience = 'publico' | 'assinante';
 type PreviewVersion = 'draft' | 'published';
+const surfaceTabs: Partial<Record<AdminSurface, Tab>> = {
+  overview: 'overview',
+  pmo: 'pmo',
+  content: 'content',
+  templates: 'templates',
+  sources: 'sources',
+  publication: 'publication',
+};
 const tabs: { id: Tab; label: string; icon: LucideIcon; hint: string }[] = [
   { id: 'pmo', label: 'PMO · fila', icon: ListTodo, hint: 'Ordens, status e evidências' },
   { id: 'overview', label: 'Visão geral', icon: LayoutDashboard, hint: 'Protótipo congelado' },
@@ -56,6 +66,9 @@ export function AdminConsole() {
   const [revision, setRevision] = useState(0);
   const [events, setEvents] = useState<PublicationEvent[]>([]);
   const [tab, setTab] = useState<Tab>('pmo');
+  const [selectedModule, setSelectedModule] = useState<AdminModuleId>('M03');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileDialogRef = useRef<HTMLDialogElement>(null);
   const [selected, setSelected] = useState<string>(() => initialWorkbench().tools[0]?.slug ?? '');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'publicado' | 'oculto'>('todos');
@@ -67,6 +80,24 @@ export function AdminConsole() {
   const [status, setStatus] = useState('Carregando o registro do navegador…');
   const [statusError, setStatusError] = useState(false);
   const [loadingFailed, setLoadingFailed] = useState(false);
+
+  useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    if (!dialog) return;
+    if (mobileMenuOpen && !dialog.open) dialog.showModal();
+    if (!mobileMenuOpen && dialog.open) dialog.close();
+  }, [mobileMenuOpen]);
+
+  function navigateModule(id: AdminModuleId) {
+    setSelectedModule(id);
+    const surface = getAdminModule(id).surface;
+    setTab(surface ? surfaceTabs[surface] ?? 'module-detail' : 'module-detail');
+    setMobileMenuOpen(false);
+  }
+  function showOverview() {
+    setTab('overview');
+    setMobileMenuOpen(false);
+  }
 
   useEffect(() => {
     try {
@@ -143,6 +174,8 @@ export function AdminConsole() {
   const draftCount = model.tools.filter(x => x.published).length;
   const noPage = templateCatalogo.filter(t => t.url === null);
   const showRisk = dirty || loadingFailed || externalChange || !dataIsValid;
+  const activeModule = getAdminModule(selectedModule);
+  const pageHeading = tab === 'module-detail' ? activeModule.title : tabs.find(x => x.id === tab)?.label;
 
   return <main id="conteudo" className="page-wide ce-admin" aria-labelledby="admin-heading">
     <Breadcrumb items={[{ label: 'Início', to: '/' }, { label: 'Administração' }]} />
@@ -159,17 +192,27 @@ export function AdminConsole() {
         <span>Este navegador mantém rascunho, projeção publicada e revisões. Sem sincronização entre usuários, sem banco remoto e sem aprovação clínica automática.</span>
       </>}
     </div></div>
+    <div className="ce-admin-mobile-nav">
+      <button type="button" className="ce-admin-mobile-launch" aria-haspopup="dialog" aria-controls="ce-admin-mobile-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen(true)}>
+        <Menu size={18} aria-hidden="true" />
+        <span><strong>{tab === 'overview' ? 'Visão geral' : activeModule.title}</strong><small>7 grupos · 22 módulos</small></span>
+        <ChevronDown size={17} aria-hidden="true" />
+      </button>
+    </div>
+    <dialog id="ce-admin-mobile-menu" ref={mobileDialogRef} className="ce-admin-mobile-dialog" aria-label="Acesso rápido da administração" onClose={() => setMobileMenuOpen(false)}>
+      <div className="ce-admin-mobile-dialog-head">
+        <strong>Acesso à administração</strong>
+        <button type="button" aria-label="Fechar navegação" onClick={() => setMobileMenuOpen(false)}><X size={19} aria-hidden="true" /></button>
+      </div>
+      <AdminSidebarTree selectedId={selectedModule} onSelect={navigateModule} onOverview={showOverview} overviewActive={tab === 'overview'} idPrefix="mobile" />
+    </dialog>
     <div className="ce-admin-layout">
-      <nav className="ce-admin-sidebar" aria-label="Módulos da administração">
-        <p className="ce-admin-nav-label">ESPAÇO DE TRABALHO</p>
-        {tabs.map(({ id, label, icon: Icon, hint }) => <button key={id} type="button" className={tab === id ? 'ce-admin-navitem is-selected' : 'ce-admin-navitem'} aria-current={tab === id ? 'page' : undefined} onClick={() => setTab(id)}>
-          <Icon size={18} aria-hidden="true" /><span><strong>{label}</strong><small>{hint}</small></span><ChevronRight size={15} aria-hidden="true" />
-        </button>)}
-        <div className="ce-admin-sidebar-foot"><ShieldCheck size={18} aria-hidden="true" /><span>Fonte normativa, contratos e integridade permanecem sujeitos aos gates de aprovação.</span></div>
-      </nav>
+      <aside className="ce-admin-sidebar">
+        <AdminSidebarTree selectedId={selectedModule} onSelect={navigateModule} onOverview={showOverview} overviewActive={tab === 'overview'} idPrefix="desktop" />
+      </aside>
       <div className="ce-admin-body">
         <div className="ce-admin-toolbar">
-          <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{tabs.find(x => x.id === tab)?.label}</h2></div>
+          <div><span className="ce-admin-toolbar-caption">Ambiente / Calculadoras de Enfermagem</span><h2>{pageHeading}</h2></div>
           <div className="ce-admin-toolbar-actions">
             <Indicator tone={tab === 'pmo' ? 'neutral' : tab === 'commander' ? 'warn' : showRisk ? 'warn' : 'ok'}>{tab === 'pmo' ? 'PMO versionado' : tab === 'commander' ? 'Execução não conectada' : loadingFailed ? 'Registro bloqueado' : externalChange ? 'Conflito entre abas' : dirty ? 'Alterações pendentes' : 'Revisão ' + revision}</Indicator>
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
@@ -178,6 +221,11 @@ export function AdminConsole() {
         {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <PmoPanel />}
         {tab === 'commander' && <CommanderPanel />}
+        {tab === 'module-detail' && <Panel title={activeModule.title} subtitle={activeModule.purpose}>
+          <p>Este módulo consta no catálogo administrativo, mas ainda não possui uma superfície operacional conectada.</p>
+          {activeModule.previewScope && <p className="ce-admin-detail-note">{activeModule.previewScope}</p>}
+          <ul>{activeModule.submodules.map(item => <li key={item}>{item}</li>)}</ul>
+        </Panel>}
         {tab === 'overview' && <>
           <div className="ce-admin-stats">
             <Stat label="Instrumentos" value={model.tools.length} note="Catálogo existente" icon={BookOpenCheck} />
@@ -243,7 +291,7 @@ export function AdminConsole() {
         </>}
         {tab === 'templates' && <Panel title="Inventário canônico de templates" subtitle="Derivado diretamente de template-catalog.ts e template-contract.ts; os contratos não são alterados por este painel.">
           <div className="ce-admin-table-scroll"><table className="ce-admin-table"><thead><tr><th>Template / família</th><th>Contrato</th><th>Origem / matéria-prima</th><th>Disponibilidade</th></tr></thead><tbody>
-            {templateCatalogo.map(item => <tr key={item.id}><td><strong>{item.nome}</strong><small>{item.id}</small></td><td>{item.kind}<small>Frame: {item.frame}</small></td><td>{item.materiaPrima}</td><td>{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
+            {templateCatalogo.map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
           </tbody></table></div>
           <p className="ce-admin-detail-note">Contrato da área administrativa: hero <strong>{templateContracts.area.hero}</strong>, breadcrumbs <strong>{String(templateContracts.area.crumbs)}</strong>. A ausência de página não é aprovação de conteúdo.</p>
         </Panel>}

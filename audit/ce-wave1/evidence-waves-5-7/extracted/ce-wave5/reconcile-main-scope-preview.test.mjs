@@ -1,0 +1,23 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {classify,propose} from './reconcile-main-scope-preview.mjs';
+const sha=(c)=>c.repeat(40);
+const names=['main','archivamento','audit/ce-wave1-evidence-20261101','audit-hardening-2026-10-24','backup/research-hub-complete-20261026','feat/career-youth-db-first-20261026','feat/curiosidades-mem-87-20261026','feat/projection-unica-f0-suite-real','feat/research-hub-governed-20261026','feat/research-participation-layer-20261026','fix/governed-activities-cli-20261026','fix/shell-consolidation','grook_10_26','idioma/consolidado-19','idioma/de-v1','idioma/pt-PT-v1','implementation-governed-ecosystem','import/drive-cko-nurseos-20261026','integration/structural-overlay-20261101','plan/pmokernel-finalization-20261031','planning','preview/central-comando-20261026','revert-26-plan/pmokernel-finalization-20261031','simulados-enfermagem-db-canonico','staging/bibliotecas-corpus-20261026','viladocuidado','work/editorial-canonical-learning-20261026'];
+function fixture(){
+ const refs=Object.fromEntries(names.map(n=>[n,sha('a')]));
+ const orig={recordId:'CE-MAIN-CANONICAL-MIGRATION-SCOPE-20261031',repository:'IndiciumFIN/dev-chatgpt-workspace',releaseGate:'HOLD_HUMAN',date:'2026-10-31',sourceBranchesCount:23,main:{branch:'main',observedSha:sha('b')},knownBlockers:[{id:'GAP-01',status:'OPEN'}],branches:names.filter(n=>n!=='main'&&!['integration/structural-overlay-20261101','audit/ce-wave1-evidence-20261101','revert-26-plan/pmokernel-finalization-20261031'].includes(n)).map(n=>({name:n,category:'product',gate:'HOLD_HUMAN',pr:null,status:'ahead',changedFiles:10,ahead:1,behind:0,source:'original',note:'preserve'})),otherKey:'must-preserve'};
+ const metrics=Object.fromEntries(names.filter(n=>n!=='main').map(n=>[n,{sha:sha('a'),status:'diverged',ahead:7,behind:3,changedFiles:42}]));
+ return {refs,orig,metrics};
+}
+test('ahead/behind/diverged classification',()=>{assert.equal(classify(1,0,true),'ahead');assert.equal(classify(0,1,true),'behind');assert.equal(classify(1,1,true),'diverged');assert.equal(classify(null,null,false),'no_common_ancestor')});
+test('identical source to main fails closed',()=>assert.throws(()=>classify(0,0,true),/HOLD_SOURCE_IDENTICAL/));
+test('creates 26 source records while preserving original governance metadata',()=>{const {refs,orig,metrics}=fixture();const {manifest,report}=propose(orig,refs,metrics);assert.equal(manifest.branches.length,26);assert.equal(manifest.sourceBranchesCount,26);assert.equal(manifest.classificationCounts.diverged,26);assert.equal(manifest.main.observedSha,sha('a'));assert.equal(manifest.releaseGate,'HOLD_HUMAN');assert.equal(manifest.otherKey,'must-preserve');assert.equal(manifest.branches.find(x=>x.name==='archivamento').note,'preserve');assert.equal(report.writesAuthorized,false);assert.equal(report.changedRecords.length,26);assert.equal(orig.branches.length,23)});
+test('new refs remain HOLD and are not approved',()=>{const x=fixture(),v=propose(x.orig,x.refs,x.metrics).manifest;for(const n of ['integration/structural-overlay-20261101','audit/ce-wave1-evidence-20261101','revert-26-plan/pmokernel-finalization-20261031'])assert.equal(v.branches.find(b=>b.name===n).gate,'HOLD_HUMAN')});
+test('missing metric blocks',()=>{const x=fixture();delete x.metrics['grook_10_26'];assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_UNTRUSTED_BRANCH_METRICS/)});
+test('drifted SHA blocks',()=>{const x=fixture();x.metrics.grook_10_26.sha=sha('c');assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_UNTRUSTED_BRANCH_METRICS/)});
+test('unlisted 27th ref blocks',()=>{const x=fixture();delete x.refs['grook_10_26'];assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_EXPECTED_27_REFS/)});
+test('removing original branch fails closed',()=>{const x=fixture();x.orig.branches.push({name:'untracked',category:'audit',gate:'HOLD_HUMAN'});x.orig.sourceBranchesCount=24;assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_ORIGINAL_BRANCH_REMOVED/)});
+test('cannot silently close gates',()=>{const x=fixture();x.orig.releaseGate='APPROVED';assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_CANONICAL_CONTRACT/)});
+test('cannot silently remove blockers',()=>{const x=fixture();x.orig.knownBlockers[0].status='CLOSED';assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_EXISTING_HOLDS_MUTATED/)});
+test('noncanonical repo refused',()=>{const x=fixture();x.orig.repository='other';assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_CANONICAL_CONTRACT/)});
+test('duplicate branch refused',()=>{const x=fixture();x.orig.branches[0].name=x.orig.branches[1].name;assert.throws(()=>propose(x.orig,x.refs,x.metrics),/HOLD_DUPLICATE_ORIGINAL_BRANCH/)});

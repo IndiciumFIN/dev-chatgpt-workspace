@@ -221,18 +221,19 @@ export const legacySeoLocales = localeRegistry.filter(item => item.seoEligibilit
 /**
  * Idiomas que tem DICIONARIO DE INTERFACE proprio.
  *
- * `interfaceDictionary: "missing"` significa que o chrome NAO tem texto nesse
- * idioma e cai no fallback de `src/lib/chrome.tsx` — o visitante ve portugues.
- * Sao exatamente os 15 que o registro marca como
- * `blocked_pending_verified_localization`.
+ * `partial_existing` marca os quatro idiomas que o site realmente entrega.
+ * Ter vocabulario de acessibilidade em outros idiomas nao prova que a
+ * interface completa ou o conteudo estejam traduzidos.
  *
  * Importante: "interface dictionary" nao e "conteudo traduzido". O
  * `content` de todos os 19 continua `not_verified` — o texto clinico e
  * pt-BR por decisao. O que esta aqui e o que o chrome consegue exibir.
  */
-export const localesWithInterface = localeRegistry.filter(item => item.interfaceDictionary !== "missing").map(item => item.id);
+export const localesWithInterface: CanonicalLocale[] = localeRegistry
+  .filter(item => item.interfaceDictionary !== "missing")
+  .map(item => item.id);
 export function hasInterfaceDictionary(value: unknown): boolean {
-  return typeof value === "string" && localesWithInterface.includes(value as never);
+  return isCanonicalLocale(value) && localesWithInterface.includes(value);
 }
 /**
  * O idioma em que a PAGINA ESTA DE FATO.

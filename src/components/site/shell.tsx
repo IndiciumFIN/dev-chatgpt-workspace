@@ -191,10 +191,9 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
         <div className="header-utility-end">
           <Link to="/secao/$slug" params={{ slug: "assinatura" }} className="utility-subscribe">{chrome.t("subscribe")}</Link>
-          {/* `VITE_AUTH_ENABLED=false` esconde a interface de entrada — e o que o
-              `.env.example` promete. Sem isso, o cabecalho anuncia "Entrar" para um
-              login que a propria pagina /login diz estar desligado. */}
-          {authEnabled ? <Link to="/assinante" className="utility-login">{chrome.t("enter")}</Link> : null}
+          <Link to="/login" className="utility-login" aria-label={chrome.t("enter")}>
+            {chrome.t("enter")}
+          </Link>
           <button ref={a11yBtn} className="a11y-mobile-toggle" type="button" aria-label={hw.accessibility} aria-controls="header-accessibility-controls" aria-expanded={a11yOpen} onClick={() => setA11yOpen((v) => !v)}><Accessibility size={19} aria-hidden="true" /><span>{hw.accessibility}</span></button>
         </div>
       </div>

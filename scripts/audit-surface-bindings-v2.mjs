@@ -14,12 +14,12 @@ for(const x of actual) if(!reg.entries[x]) findings.push({id:'UNKNOWN_ROUTE',rou
 for(const x of expected) if(!actual.includes(x)) findings.push({id:'MISSING_ROUTE',route:x});
 for(const file of expected.filter(x=>actual.includes(x))){
  const spec=reg.entries[file], body=readFileSync(resolve(directory,file),'utf8');
- const imports=[...body.matchAll(/from\s+['"]([^'"]+)['"]/g)].map(m=>m[1]);
+ const imports=[...body.matchAll(/from\s+['"]([^'"]+)['"]|^\s*import\s+['"]([^'"]+)['"]/gm)].map(m=>m[1]??m[2]);
  const missing=spec.requiredImports.filter(x=>!imports.includes(x));
  for(const x of missing) findings.push({id:'MISSING_REQUIRED_IMPORT',route:file,import:x});
  if(spec.kind==='endpoint'&&spec.templateKind!==null)findings.push({id:'ENDPOINT_VISUAL_TEMPLATE',route:file});
  if(spec.role!==routeReg.routes[file]?.role || spec.templateKind!==routeReg.routes[file]?.templateKind)findings.push({id:'CONTRACT_DISAGREEMENT',route:file});
- if(spec.kind==='layout'&&!body.includes('<Outlet'))findings.push({id:'LAYOUT_WITHOUT_OUTLET',route:file});
+ if(spec.kind==='layout'&&!/<Outlet\b|component\s*:\s*Outlet\b/.test(body))findings.push({id:'LAYOUT_WITHOUT_OUTLET',route:file});
  if(spec.kind==='redirect'&&!/redirect\(|<Navigate/.test(body))findings.push({id:'REDIRECT_NOT_FOUND',route:file});
  if(spec.role==='administrator-local'&&/@\/lib\/(db|admin-data)/.test(body))findings.push({id:'ADMIN_REMOTE_ACCESS',route:file});
  records.push({file,kind:spec.kind,role:spec.role,templateKind:spec.templateKind,sourceSha256:createHash('sha256').update(body).digest('hex'),requiredImports:spec.requiredImports,missingImports:missing,status:missing.length?'FAIL':'STATIC_PASS'});

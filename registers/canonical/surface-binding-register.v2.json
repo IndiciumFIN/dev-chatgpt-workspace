@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2.0.0",
   "scope": "CE_PUBLIC_BACKUP_ONLY",
-  "generatedAt": "2026-10-26T20:08:28.936Z",
+  "generatedAt": "2026-11-01T02:27:34.310Z",
   "status": "STATIC_PASS_NOT_VISUAL",
   "summary": {
-    "total": 27,
-    "withExplicitContracts": 27,
+    "total": 33,
+    "withExplicitContracts": 33,
     "findings": 0,
     "visualHomologations": 0
   },
@@ -133,7 +133,7 @@
       "kind": "page",
       "role": "public",
       "templateKind": "artigo",
-      "sourceSha256": "25b25afd801d463611e6c54d438d11930ffae95d0c3ea7a9b0cc9ea1d914b316",
+      "sourceSha256": "012441b3ac1c9c8cf3652ff3f767233e4f3ca2baff46e20fbbca96801bc2c097",
       "requiredImports": [
         "@/components/article/article-page",
         "@/components/site/related-content",
@@ -143,6 +143,37 @@
         "@/lib/seo",
         "@/lib/translate",
         "@tanstack/react-router"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
+      "file": "blog.index.tsx",
+      "kind": "page",
+      "role": "public",
+      "templateKind": "secao",
+      "sourceSha256": "7f59c8efc1fd91cfa5028d6c279791a3c72dee88b48e67d1c1cc03266d3edc8f",
+      "requiredImports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/content/curiosidades/catalog",
+        "@tanstack/react-router"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
+      "file": "central-comando.tsx",
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "sourceSha256": "ddee0be5ad549a68537b0342e03903ccbac66c6bde19c3982b242dcb743d6d82",
+      "requiredImports": [
+        "@/lib/central-command-tables",
+        "@/styles/command-center.css",
+        "@tanstack/react-router",
+        "../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+        "../../registers/pmo/queue.v1.json"
       ],
       "missingImports": [],
       "status": "STATIC_PASS"
@@ -241,11 +272,47 @@
       "status": "STATIC_PASS"
     },
     {
+      "file": "kids.$section.tsx",
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "sourceSha256": "e1fc1d5aeea03ece9d49f453fd8482f3ccfce0586cf8189bce0f8ede009eb3fa",
+      "requiredImports": [
+        "@/components/vila/vila-hub"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
+      "file": "kids.index.tsx",
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "sourceSha256": "87daced55652dfb3d6741e14bc76590f6691f21ccb3c5230b759189c726057ad",
+      "requiredImports": [
+        "@/components/vila/vila-hub"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
+      "file": "kids.tsx",
+      "kind": "layout",
+      "role": "public",
+      "templateKind": null,
+      "sourceSha256": "d6ce8b2d327948321ea925f1f4a418de57d30017c1a0b286f072979d4a0ce300",
+      "requiredImports": [
+        "@tanstack/react-router"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
       "file": "login.tsx",
       "kind": "page",
       "role": "authentication",
       "templateKind": "entrada",
-      "sourceSha256": "87113a363d00ba8c796507e58735b37c73679597d5971ba98eecdf030f7aa733",
+      "sourceSha256": "e26203b1b562af3e9e80b321068df10031f17683d81753af58b096646f6012ee",
       "requiredImports": [
         "@/lib/auth/client",
         "@/lib/auth/gates"
@@ -354,6 +421,19 @@
         "@/lib/contract",
         "@/components/article/article-page",
         "@/components/site/shell"
+      ],
+      "missingImports": [],
+      "status": "STATIC_PASS"
+    },
+    {
+      "file": "viladocuidado.tsx",
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "sourceSha256": "5da18be9171e6f7adecea9714d96d5c5067b13c504eb29871a1975ed87baef10",
+      "requiredImports": [
+        "@/components/vila/vila-page",
+        "@tanstack/react-router"
       ],
       "missingImports": [],
       "status": "STATIC_PASS"

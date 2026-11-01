@@ -1,0 +1,54 @@
+name: Career + Youth DB-first candidate
+on:
+  push:
+    branches: [feat/career-youth-db-first-20261026]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VITE_AUTH_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: { node-version: "22", cache: npm }
+      - run: npm ci
+      - run: npm run audit:career-candidate
+      - run: npm run audit:career-content
+      - run: npm run audit:career-atomization
+      - run: npm run audit:career-promotion
+      - name: Validar CLI de aquisição sem gravação
+        run: npm run validate:career-acquisition -- --help
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build:spa
+      - name: Instalar Chromium para E2E de Carreira/Jovens
+        run: npx playwright install --with-deps chromium
+      - name: Executar jornadas DB-first em browser real
+        run: |
+          export PATH="$PWD/node_modules/.bin:$PATH"
+          node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 > /tmp/career-vite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 50); do
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/career-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4173/secao/carreira -o /dev/null 2>/dev/null; then break; fi
+            sleep 2
+          done
+          curl --fail http://127.0.0.1:4173/secao/carreira -o /dev/null || { cat /tmp/career-vite.log; exit 1; }
+          node scripts/career-youth-e2e.mjs
+      - name: Guardar evidências de Carreira/Jovens
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: career-youth-dbfirst-candidate-evidence
+          path: |
+            audit-evidence/career-youth/*.png
+            audit-evidence/career-youth/evidence.json
+            /tmp/career-vite.log
+          if-no-files-found: warn
+          retention-days: 7

@@ -1,0 +1,49 @@
+name: Research + Participation candidate
+on:
+  push:
+    branches: [feat/research-participation-layer-20261026]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      VITE_AUTH_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: { node-version: "22", cache: npm }
+      - run: npm ci
+      - run: npm run audit:research-candidate
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build:spa
+      - name: Instalar Chromium para E2E candidato
+        run: npx playwright install --with-deps chromium
+      - name: Executar jornadas Research + Participation em browser real
+        run: |
+          export PATH="$PWD/node_modules/.bin:$PATH"
+          node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 > /tmp/research-vite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 50); do
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/research-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4173/secao/pesquisa -o /dev/null 2>/dev/null; then break; fi
+            sleep 2
+          done
+          curl --fail http://127.0.0.1:4173/secao/pesquisa -o /dev/null || { cat /tmp/research-vite.log; exit 1; }
+          node scripts/research-participation-e2e.mjs
+      - name: Guardar evidências de browser
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: research-participation-candidate-evidence
+          path: |
+            audit-evidence/research-participation/*.png
+            audit-evidence/research-participation/evidence.json
+            /tmp/research-vite.log
+          if-no-files-found: warn
+          retention-days: 7

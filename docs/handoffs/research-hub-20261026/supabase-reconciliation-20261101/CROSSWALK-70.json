@@ -1,0 +1,505 @@
+{
+  "schema_version": "1.0.0",
+  "project_ref": "pgsybzggewhinaniybiy",
+  "date": "2026-11-01",
+  "approval": "HOLD_HUMAN",
+  "kernel_admission": "NOT_SUBMITTED",
+  "summary": {
+    "REUSE_PRIMARY_NO_NEW_TABLE": 3,
+    "ADAPTER_BEFORE_ADDING": 26,
+    "NEW_DOMAIN_CANDIDATE_UNAPPROVED": 23,
+    "REVIEW_SEMANTICS_NO_DDL": 18
+  },
+  "rows": [
+    {
+      "candidate_table": "research_projects",
+      "decision": "REUSE_PRIMARY_NO_NEW_TABLE",
+      "existing_relations": "ce_platform.research_projects",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "project_roles",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.research_participation",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_protocols",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.research_methods;ce_platform.protocol_steps",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "hypotheses",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "sampling_plans",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "study_tasks",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.workspace_items;ce_platform.calendar_events",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "study_milestones",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.calendar_events",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_diary_entries",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.personal_notes;ce_platform.media_assets",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "ethics_assessments",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.research_projects;cko_governance.decisions",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "retention_rules",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "recruitment_campaigns",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participant_tokens",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.consent_records;auth.users",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "consent_receipts",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.consent_records",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "source_searches",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.saved_searches",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "source_search_hits",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_collections",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.collections",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "collection_items",
+      "decision": "REUSE_PRIMARY_NO_NEW_TABLE",
+      "existing_relations": "ce_platform.collection_items",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "reading_annotations",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.personal_notes",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_alerts",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.alert_rules;ce_platform.notifications",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "learning_derivatives",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.content_variants;ce_platform.content_documents",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_instruments",
+      "decision": "REUSE_PRIMARY_NO_NEW_TABLE",
+      "existing_relations": "ce_platform.research_instruments",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "instrument_versions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.forms;ce_platform.content_variants",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "instrument_items",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.form_fields",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "instrument_responses",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "response_items",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "data_quality_findings",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "analysis_runs",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "analysis_outputs",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.output_artifacts",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_metrics",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "metric_observations",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "scientific_outputs",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.content_documents;ce_platform.output_artifacts",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "output_versions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.content_variants",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "render_jobs",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.output_requests",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "editorial_reviews",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "output_translations",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.content_variants",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "ai_assistance_records",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "cko_ai.jobs;cko_evidence.evidence_bundles",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "review_assignments",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.research_participation",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "review_decisions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "cko_governance.decisions",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "calls_for_proposals",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "proposal_applications",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_portfolio_items",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "funding_awards",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.organizations",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "budget_lines",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "funding_transactions",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "institutional_policy_links",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "cko_governance.decisions;cko_orch.policy_registry",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "project_skill_needs",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.skills;cko_ai.capability_requirements",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "training_assignments",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "impact_indicators",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.coverage_requirements",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "impact_observations",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_risks",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "cko_risk.risks",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "risk_scenarios",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "workspace_preferences",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.settings;ce_platform.experience_state",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "focus_sessions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.interaction_events",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "localized_content",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.content_variants",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "accessibility_findings",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.coverage_findings;cko_validation.findings",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_processes",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.community_spaces",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_statements",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_contributions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.community_posts",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_proposals",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.community_posts",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_reactions",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.community_reactions",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "consensus_votes",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "moderation_cases",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.moderation_reports",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_outcomes",
+      "decision": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "existing_relations": null,
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "official_referrals",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "cko_evidence.evidence_bundles",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "representation_snapshots",
+      "decision": "REVIEW_SEMANTICS_NO_DDL",
+      "existing_relations": "ce_platform.coverage_snapshots",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "canonical_bindings",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.external_registry_bindings;ce_platform.source_mappings;cko_master.relationships",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "research_audit_receipts",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "cko_evidence.evidence_bundles;cko_validation.runs",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "capability_catalog",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.capabilities;cko_governance.platform_capabilities",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "capability_storage_bindings",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.object_capability_bindings",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    },
+    {
+      "candidate_table": "participation_experience_catalog",
+      "decision": "ADAPTER_BEFORE_ADDING",
+      "existing_relations": "ce_platform.capabilities",
+      "ddl_authorized": false,
+      "promotion_authorized": false
+    }
+  ]
+}

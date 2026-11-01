@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/export_profile.schema.json",
+  "title": "CKO | export_profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "channel",
+    "field_policy_refs",
+    "redaction_policy_ref",
+    "citation_format_ref",
+    "copyright_policy_ref",
+    "output_format",
+    "page_profile_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "PDF",
+        "PRINT",
+        "DOCX",
+        "PPTX",
+        "SVG",
+        "AVIF",
+        "SOCIAL"
+      ]
+    },
+    "field_policy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "redaction_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "citation_format_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "copyright_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_format": {
+      "type": "string",
+      "minLength": 1
+    },
+    "page_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "patient_identity_exclusion": {
+      "type": "boolean",
+      "const": true
+    }
+  }
+}

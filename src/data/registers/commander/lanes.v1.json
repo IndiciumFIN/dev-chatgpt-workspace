@@ -1,0 +1,169 @@
+{
+  "documentType": "COMMANDER_HANDOFF_CANDIDATE",
+  "schemaVersion": "1.0.0",
+  "date": "2026-10-26",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "authority": {
+    "pmo": "registers/pmo/queue.v1.json",
+    "agentSchema": "contracts/cko-schemas/agent.schema.json",
+    "operationalUI": "src/components/admin/commander-panel.tsx",
+    "issue": 14,
+    "pr": 13,
+    "baselineCommit": "6c62bb61791631681979b229ccfbb05f7f5ac411"
+  },
+  "governance": {
+    "mode": "READ_ONLY_PREPARATION",
+    "dispatchImplemented": false,
+    "externalAgentsInvoked": false,
+    "remoteWritesAllowed": false,
+    "repoWritesAllowedForAgents": false,
+    "dbWritesAllowed": false,
+    "publicationAllowed": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "mergeAllowed": false,
+    "requiredOutputs": [
+      "delivery-manifest.json",
+      "findings.json",
+      "validation.json",
+      "handoff.md"
+    ]
+  },
+  "lanes": [
+    {
+      "id": "MINIMAX",
+      "agentType": "SPECIALIST",
+      "role": "MAKER",
+      "workOrderId": "WO-ADM-001",
+      "issueUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/15",
+      "status": "CANDIDATE",
+      "dispatched": false,
+      "sourceCommit": "5b116957b6a8cb2719aad216b9a3250ba76c1890",
+      "objective": "Auditoria de integração do Commander, reuso de componentes e testes Playwright",
+      "expectedArtifact": "Auditoria de integração do Commander, reuso de componentes e testes Playwright",
+      "outputDir": "docs/governance/commander/deliveries/minimax/",
+      "allowlist": [
+        "read_repo",
+        "prepare_docs",
+        "prepare_candidate_json",
+        "report_findings"
+      ],
+      "disallowed": [
+        "run_shell_from_llm",
+        "write_main",
+        "commit_without_wo",
+        "write_database",
+        "publish",
+        "deploy",
+        "manage_secrets",
+        "approve_own_output"
+      ],
+      "acceptance": [
+        "Manifest and SHA-256 for each output",
+        "Source traceability and independent validation",
+        "Explicit limitations and HOLDs"
+      ]
+    },
+    {
+      "id": "MANUS",
+      "agentType": "SPECIALIST",
+      "role": "MAKER",
+      "workOrderId": "WO-DS-001",
+      "issueUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/16",
+      "status": "CANDIDATE",
+      "dispatched": false,
+      "sourceCommit": "5b116957b6a8cb2719aad216b9a3250ba76c1890",
+      "objective": "Entrega editável do design, fluxos, estados e mapeamento ao DS canônico",
+      "expectedArtifact": "Entrega editável do design, fluxos, estados e mapeamento ao DS canônico",
+      "outputDir": "docs/governance/commander/deliveries/manus/",
+      "allowlist": [
+        "read_repo",
+        "prepare_docs",
+        "prepare_candidate_json",
+        "report_findings"
+      ],
+      "disallowed": [
+        "run_shell_from_llm",
+        "write_main",
+        "commit_without_wo",
+        "write_database",
+        "publish",
+        "deploy",
+        "manage_secrets",
+        "approve_own_output"
+      ],
+      "acceptance": [
+        "Manifest and SHA-256 for each output",
+        "Source traceability and independent validation",
+        "Explicit limitations and HOLDs"
+      ]
+    },
+    {
+      "id": "DEEPSEEK",
+      "agentType": "REASONING",
+      "role": "MAKER",
+      "workOrderId": "WO-AUTO-001",
+      "issueUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/17",
+      "status": "CANDIDATE",
+      "dispatched": false,
+      "sourceCommit": "5b116957b6a8cb2719aad216b9a3250ba76c1890",
+      "objective": "Proposta de resposta JSON, análise de privacidade e testes de prompt injection",
+      "expectedArtifact": "Proposta de resposta JSON, análise de privacidade e testes de prompt injection",
+      "outputDir": "docs/governance/commander/deliveries/deepseek/",
+      "allowlist": [
+        "read_repo",
+        "prepare_docs",
+        "prepare_candidate_json",
+        "report_findings"
+      ],
+      "disallowed": [
+        "run_shell_from_llm",
+        "write_main",
+        "commit_without_wo",
+        "write_database",
+        "publish",
+        "deploy",
+        "manage_secrets",
+        "approve_own_output"
+      ],
+      "acceptance": [
+        "Manifest and SHA-256 for each output",
+        "Source traceability and independent validation",
+        "Explicit limitations and HOLDs"
+      ]
+    },
+    {
+      "id": "AUDITOR",
+      "agentType": "AUDITOR",
+      "role": "AUDITOR",
+      "workOrderId": "WO-SEC-001",
+      "issueUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/18",
+      "status": "CANDIDATE",
+      "dispatched": false,
+      "sourceCommit": "5b116957b6a8cb2719aad216b9a3250ba76c1890",
+      "objective": "Revisão independente de gates, permissões, SHAs e evidências",
+      "expectedArtifact": "Revisão independente de gates, permissões, SHAs e evidências",
+      "outputDir": "docs/governance/commander/deliveries/auditor/",
+      "allowlist": [
+        "read_repo",
+        "prepare_docs",
+        "prepare_candidate_json",
+        "report_findings"
+      ],
+      "disallowed": [
+        "run_shell_from_llm",
+        "write_main",
+        "commit_without_wo",
+        "write_database",
+        "publish",
+        "deploy",
+        "manage_secrets",
+        "approve_own_output"
+      ],
+      "acceptance": [
+        "Manifest and SHA-256 for each output",
+        "Source traceability and independent validation",
+        "Explicit limitations and HOLDs"
+      ]
+    }
+  ]
+}

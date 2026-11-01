@@ -1,0 +1,64 @@
+{
+  "golden_dataset": {
+    "n": 103,
+    "confusion": {
+      "TP": 35,
+      "FN": 0,
+      "FP": 0,
+      "TN": 68
+    },
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "calibration": "não mensurável (confidence constante) — universo desconhecido"
+  },
+  "property_fuzz": {
+    "cases": 2000,
+    "invariants": {
+      "violacao": 500,
+      "negacao": 500,
+      "junk": 500,
+      "fronteira": 500
+    },
+    "violations": 0
+  },
+  "mutation_testing": {
+    "mutants": 6,
+    "killed": 6,
+    "score": 1.0,
+    "report": [
+      [
+        "M1-cegueira-de-negacao",
+        "KILLED",
+        "-"
+      ],
+      [
+        "M2-janela-de-negacao-zero",
+        "KILLED",
+        "-"
+      ],
+      [
+        "M3-morfologia-perdida",
+        "KILLED",
+        "-"
+      ],
+      [
+        "M4-padrao-iniciar-perdido",
+        "KILLED",
+        "-"
+      ],
+      [
+        "M5-detector-morto",
+        "KILLED",
+        "-"
+      ],
+      [
+        "M6-fronteira-cega",
+        "KILLED",
+        "-"
+      ]
+    ]
+  },
+  "verdict": "PASSED",
+  "failures": []
+}

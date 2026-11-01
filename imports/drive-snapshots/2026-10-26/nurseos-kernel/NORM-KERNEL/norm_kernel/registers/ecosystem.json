@@ -1,0 +1,494 @@
+{
+ "register": "ecosystem",
+ "version": "1.0.0",
+ "governance": "POL-NK-013",
+ "stakeholders": [
+  {
+   "id": "STK-0001",
+   "name": "Enfermeiros assistenciais (usuário final)",
+   "interest": "alta",
+   "power": "media",
+   "what_they_value": "decisão segura no ponto de cuidado, em pt-BR, rápida, sem fricção",
+   "evaluation": "dor real: protocolos fragmentados e em PDF; nossa resposta: átomos com linguagem simples (H3) + evidência por campo",
+   "engagement": "co-design + pilotos SAE",
+   "status": "mapped"
+  },
+  {
+   "id": "STK-0002",
+   "name": "Lideranças de enfermagem/gestão hospitalar",
+   "interest": "alta",
+   "power": "alta",
+   "what_they_value": "conformidade auditável, redução de variabilidade, defensabilidade em auditoria",
+   "evaluation": "nosso diferencial exato: trilha evidência por campo (POL-NK-009) + gates",
+   "engagement": "piloto institucional + safety case",
+   "status": "mapped"
+  },
+  {
+   "id": "STK-0003",
+   "name": "Reguladores (COREN/COFEN, ANVISA, ANS)",
+   "interest": "alta",
+   "power": "alta",
+   "what_they_value": "rastreabilidade a norma oficial, dados íntegros, LGPD",
+   "evaluation": "cânone normativo oficial (DOU/Planalto) é pré-requisito — já é nossa espinha dorsal; ANS/RIPD para interoperabilidade",
+   "engagement": "adesão a normas + canal formal",
+   "status": "mapped"
+  },
+  {
+   "id": "STK-0004",
+   "name": "Pacientes (beneficiário final)",
+   "interest": "alta",
+   "power": "baixa",
+   "what_they_value": "segurança do cuidado",
+   "evaluation": "impact indireto: segurança medica­ta e protocolos corretos; LGPD quando dados pessoais (bloqueante até política completa)",
+   "engagement": "governança de consentimento",
+   "status": "mapped"
+  },
+  {
+   "id": "STK-0005",
+   "name": "Escolas de enfermagem/universidades",
+   "interest": "media",
+   "power": "media",
+   "what_they_value": "base científica, material didático citável",
+   "evaluation": "parceiro de validação científica + usuário acadêmico; citação canônica (Lei 9.610) é atrativo",
+   "engagement": "convênios de pesquisa",
+   "status": "mapped"
+  },
+  {
+   "id": "STK-0006",
+   "name": "Investidores/ecossistema de inovação",
+   "interest": "alta",
+   "power": "alta",
+   "what_they_value": "defensibilidade, tração, modelo de receita",
+   "evaluation": "governança auditável é ativo de due diligence (docs C-level); licenças (SNOMED/NANDA) são condição de escala",
+   "engagement": "report governado por evidência",
+   "status": "mapped"
+  }
+ ],
+ "competitors": [
+  {
+   "id": "CMP-0001",
+   "name": "UpToDate (Wolters Kluwer)",
+   "market": "global/en",
+   "strengths": "marca, profundidade clínica, adesão médica",
+   "weaknesses": "caro, não nativo pt-BR, foco médico, sem rastreabilidade norma→campo",
+   "differentiation": "nós: evidência por campo em pt-BR nativo + conformidade auditável"
+  },
+  {
+   "id": "CMP-0002",
+   "name": "ClinicalKey (Elsevier)",
+   "market": "global/en",
+   "strengths": "catálogo, integração acadêmica",
+   "weaknesses": "modelo de busca, não atômico",
+   "differentiation": "átomos deônticos reutilizáveis + API de conformidade"
+  },
+  {
+   "id": "CMP-0003",
+   "name": "BMJ Best Practice / DynaMed",
+   "market": "global/en",
+   "strengths": "qualidade editorial",
+   "weaknesses": "mesmo modelo de guia integral",
+   "differentiation": "atomização = composição por contexto de cuidado"
+  },
+  {
+   "id": "CMP-0004",
+   "name": "BVS/SciELO/BIREME (gratuito)",
+   "market": "BR/LATAM",
+   "strengths": "grátis, confiável, em pt",
+   "weaknesses": "biblioteca (busca), não decisão estruturada",
+   "differentiation": "nós consumimos e citamos (fontes) e entregamos decisão por campo — complementar, não concorrente direto; risco de percepção 'por que pagar'"
+  },
+  {
+   "id": "CMP-0005",
+   "name": "Apps nacionais (Sanar, Whitebook)",
+   "market": "BR",
+   "strengths": "marca local, base médica estudantil",
+   "weaknesses": "sem rastreabilidade normativa, sem governança de dados",
+   "differentiation": "espinha dorsal de conformidade (não só conteúdo) + foco enfermagem"
+  }
+ ],
+ "suppliers": [
+  {
+   "id": "SUP-0001",
+   "name": "Base44 (plataforma)",
+   "criticality": "alta",
+   "risk": "dependência de plataforma",
+   "mitigation": "backups semanais assinados + export OSCAL/PROV-O planejado + código portável (Deno/TS padrão, instrumentos Python)"
+  },
+  {
+   "id": "SUP-0002",
+   "name": "Licenças de terminologia (SNOMED CT, NANDA-I)",
+   "criticality": "alta",
+   "risk": "condição comercial de escala bloqueada",
+   "mitigation": "registro KL de cada uma + plano de aquisição (débita ativa do backlog NURSE-OS)"
+  },
+  {
+   "id": "SUP-0003",
+   "name": "Fontes oficiais (ANVISA/DOU, Planalto, LOINC, WHO)",
+   "criticality": "alta",
+   "risk": "mudança de API/estrutura",
+   "mitigation": "checksum na ingestão + revalidação programada + detecção de drift"
+  },
+  {
+   "id": "SUP-0004",
+   "name": "Provedor LLM",
+   "criticality": "media",
+   "risk": "custos/alterações de modelo",
+   "mitigation": "abstração de provider (Model Router) + gates próprios independem de LLM"
+  },
+  {
+   "id": "SUP-0005",
+   "name": "ISO/ABNT (textos de norma)",
+   "criticality": "media",
+   "risk": "licença pendente",
+   "mitigation": "metadata_alternative evidenciado no cânone (POL-NK-009 C3) + upgrade por transição"
+  }
+ ],
+ "partners": [
+  {
+   "id": "PAR-0001",
+   "name": "COREN/COFEN",
+   "what": "validação profissional + canal de adoção da enfermagem",
+   "status": "candidate"
+  },
+  {
+   "id": "PAR-0002",
+   "name": "Universidades (escolas de enfermagem)",
+   "what": "validação científica + estudos + pilotos",
+   "status": "candidate"
+  },
+  {
+   "id": "PAR-0003",
+   "name": "Hospital parceiro (piloto SAE)",
+   "what": "piloto assistencial com safety case",
+   "status": "candidate"
+  },
+  {
+   "id": "PAR-0004",
+   "name": "HL7 Brasil/SBIS",
+   "what": "interoperabilidade FHIR + comunidade",
+   "status": "candidate"
+  }
+ ],
+ "continuity_risks": [
+  {
+   "id": "RSK-0001",
+   "risk": "Dependência da plataforma (Base44)",
+   "probability": "media",
+   "impact": "alto",
+   "mitigation": "backups + exportabilidade + portabilidade",
+   "owner": "kernel/Leivis",
+   "status": "mitigated"
+  },
+  {
+   "id": "RSK-0002",
+   "risk": "Licenças não adquiridas (SNOMED CT/NANDA-I)",
+   "probability": "alta",
+   "impact": "alto",
+   "mitigation": "plano comercial explícito + uso de fontes livres onde possível + registro KL",
+   "owner": "Leivis",
+   "status": "open"
+  },
+  {
+   "id": "RSK-0003",
+   "risk": "Pessoa-chave (concentração no fundador)",
+   "probability": "media",
+   "impact": "alto",
+   "mitigation": "governança documentada = conhecimento fora da cabeça (ADRs, políticas, docs)",
+   "owner": "Leivis",
+   "status": "mitigating"
+  },
+  {
+   "id": "RSK-0004",
+   "risk": "Percepção 'conteúdo é grátis' (BVS/SciELO)",
+   "probability": "media",
+   "impact": "medio",
+   "mitigation": "posicionamento: conformidade auditável e decisão estruturada, não conteúdo; complementaridade com BVS (citamos)",
+   "owner": "Leivis",
+   "status": "mitigating"
+  },
+  {
+   "id": "RSK-0005",
+   "risk": "Mudança regulatória (LGPD/novas normas)",
+   "probability": "media",
+   "impact": "medio",
+   "mitigation": "cânone com revalidação programada + find de fonte com cadência",
+   "owner": "kernel",
+   "status": "mitigated"
+  },
+  {
+   "id": "RSK-0006",
+   "risk": "Custo/risco de LLM na operação",
+   "probability": "media",
+   "impact": "medio",
+   "mitigation": "gates locais sem LLM + router multi-provider",
+   "owner": "kernel",
+   "status": "mitigated"
+  },
+  {
+   "id": "RSK-0007",
+   "risk": "Financiamento antes da tração",
+   "probability": "media",
+   "impact": "alto",
+   "mitigation": "fatias de valor independentes (Fase 0/1 provam produto) + documento C-level para due diligence",
+   "owner": "Leivis",
+   "status": "open"
+  }
+ ],
+ "opportunity_process": "candidato (entrada por OS) -> universe scan (POL-NK-012: bibliotecas/dicionarios/camadas/conflitos/nova estrutura) -> analyzed -> validated (ADR da decisão) -> converted (vira item do backlog com fonte/método/OS — gate G11) OU rejected COM MOTIVO evidenciado",
+ "opportunities": [
+  {
+   "id": "OPP-0001",
+   "title": "Biblioteca de protocolos SAE em pt-BR com rastreabilidade norma-campo (nicho sem dono: enfermagem + conformidade)",
+   "status": "validated",
+   "hypothesis": "enfermeiros e gestão hospitalar pagam por decisão auditável — não por conteúdo",
+   "evidence": "STK-0001/0002 evaluation + diferencial vs CMP-0001..0005",
+   "next": "converted com piloto (PAR-0003)",
+   "adr_ref": "NK-ADR-0002 (humano como autoridade) — faturamento exige análise comercial dedicada"
+  },
+  {
+   "id": "OPP-0002",
+   "title": "Internacionalização CPLP (PT, AO) antes do espanhol",
+   "status": "analyzed",
+   "hypothesis": "pt-BR nativo é vantagem imediata em mercados lusófonos com regulação própria (DGS/Ordem dos Enfermeiros)",
+   "evidence": "internationalization[PT] + i18n já no metamodelo (pt-BR/en/es)",
+   "next": "universe scan completo + cânone local das normas do país antes de entrar"
+  },
+  {
+   "id": "OPP-0003",
+   "title": "API de conformidade (evidência por campo) para EHRs parceiros",
+   "status": "candidate",
+   "hypothesis": "integradores pagam por rastreabilidade normativa via API",
+   "evidence": "SUP-0001 mitigation + PAR-0004 (HL7/SBIS)",
+   "next": "OS de registro + universe scan"
+  }
+ ],
+ "internationalization": [
+  {
+   "market": "Brasil (base)",
+   "segment": "saúde digital/enfermagem; consumo: app ponto-de-cuidado + EHR",
+   "regulation": "LGPD, CFM 2.314/2022, ANS/RIPD, COREN/COFEN",
+   "organisms": "COREN/COFEN, ANS, SBIS, ABNT (NBR ISO 81001), Sindsaúde, escolas de enfermagem (USP/UNIFESP/EEAN-UFRJ), Fiocruz/ENSP",
+   "notes": "mercado inicial; consumo mobile-first; compra por gestão hospitalar"
+  },
+  {
+   "market": "Portugal (CPLP primeiro)",
+   "segment": "enfermagem; consumo similar ao BR",
+   "regulation": "RGPD, DGS (Direção-Geral da Saúde), Ordem dos Enfermeiros",
+   "organisms": "DGS, OE (Ordem dos Enfermeiros), ENSP/ISPUP",
+   "notes": "mesmo idioma, regulação diferente: cânone local obrigatório (POL-NK-013 C5)"
+  },
+  {
+   "market": "Espanha + LATAM (es)",
+   "segment": "enfermería; consumo mobile-first",
+   "regulation": "RGPD/leis nacionais de dados, SANIDAD, colegios oficiales",
+   "organisms": "OMC/colegios de enfermería, OPS/OMS Américas, ministries",
+   "notes": "i18n es já no metamodelo; LATAM via OPS como validador"
+  },
+  {
+   "market": "EUA (longo prazo)",
+   "segment": "clinical decision support integrado ao EHR",
+   "regulation": "FDA (CDS guidance), HIPAA, ONC certification",
+   "organisms": "ANA, NCSBN, Joint Commission (JCI), HL7, NLM (LOINC/SNOMED US)",
+   "notes": "alta litigiosidade = evidência auditável é vantagem competitiva real; exigência: litígio defensável"
+  },
+  {
+   "market": "Global (referência)",
+   "segment": "-",
+   "regulation": "-",
+   "organisms": "WHO/OPS, ICN (International Council of Nurses), ISO/TC 215 (health informatics), HL7/IHE",
+   "notes": "organismos de excelência do mercado: sindicatos de enfermagem nacionais via ICN; universidades como validadoras; empresas (Elsevier/WK) como concorrentes E como mantenedoras de padrão via HL7"
+  }
+ ],
+ "tech_radar": [
+  {
+   "technology": "LLMs (providers)",
+   "status": "assess",
+   "review_cycle": "trimestral",
+   "obsolescence_risk": "alto — modelos mudam em meses",
+   "note": "mitigação: Model Router provider-agnostic + gates independentes de LLM"
+  },
+  {
+   "technology": "Deno/TypeScript (funções)",
+   "status": "adopt",
+   "review_cycle": "semestral",
+   "obsolescence_risk": "baixo",
+   "note": "runtime oficial da plataforma"
+  },
+  {
+   "technology": "Python 3.11 (instrumentos)",
+   "status": "adopt",
+   "review_cycle": "semestral",
+   "obsolescence_risk": "baixo"
+  },
+  {
+   "technology": "CNCF SWF v1.0",
+   "status": "adopt",
+   "review_cycle": "anual",
+   "obsolescence_risk": "baixo",
+   "note": "workflows do guard provados (F-0006)"
+  },
+  {
+   "technology": "WCAG 2.2 AA",
+   "status": "adopt",
+   "review_cycle": "trimestral",
+   "obsolescence_risk": "média — WCAG 3.0 em rascunho (watch)",
+   "note": "validação runtime (axe/Lighthouse em execução) ainda é débita"
+  },
+  {
+   "technology": "FHIR R4 (interoperabilidade)",
+   "status": "assess",
+   "review_cycle": "trimestral",
+   "obsolescence_risk": "baixa",
+   "note": "pré-requisito da OPP-0003 (API de conformidade) e do mercado EUA"
+  },
+  {
+   "technology": "OSCAL / PROV-O (export GRC)",
+   "status": "trial",
+   "review_cycle": "semestral",
+   "obsolescence_risk": "baixa",
+   "note": "débita ativa — exportadores planejados"
+  },
+  {
+   "technology": "Monitores de carbono por página",
+   "status": "trial",
+   "review_cycle": "trimestral",
+   "obsolescence_risk": "baixa",
+   "note": "débita da Fase 0 — sustentabilidade digital"
+  }
+ ],
+ "knowledge_trust": {
+  "pyramid": [
+   {
+    "level": 1,
+    "what": "Oficiais (DOU/Planalto, ANVISA, WHO, RFCs/IETF, NIST)",
+    "why_trust": "autoridade normativa + citação canônica estável + texto público verificável (Lei 9.610 art. 8º)"
+   },
+   {
+    "level": 2,
+    "what": "Peer-reviewed (PubMed/LILACS/SciELO)",
+    "why_trust": "revisão por pares + DOI citável — entra como fonte candidata via OS"
+   },
+   {
+    "level": 3,
+    "what": "Padrões técnicos (W3C/ISO/ECMA com licença)",
+    "why_trust": "governança de consórcio + licença verificada por spec (KL-0008/0009)"
+   },
+   {
+    "level": 4,
+    "what": "Comunidade técnica (blogs, fóruns)",
+    "why_trust": "SÓ com proveniência e citação; sem proveniência = não entra (kernel bloqueia)"
+   }
+  ],
+  "how_we_create_evidence": "método EV-NK: toda claim nasce com checksum JCS (RFC 8785) + sha256 + OS de cobertura + gates; findings com 5W; recusas ficam no journal (a evidência de que o controle funciona); para claims de MERCADO a mesma regra: nenhuma afirmação comercial sem evidência apontável (CDC art. 37)"
+ },
+ "brand": {
+  "voice": "técnico-acolhedor em pt-BR: humano ao centro, sem jargão desnecessário, sem promessa clínica indevida (CDC art. 37 / CONAR — ambos no cânone); afirmações de valor sempre apontáveis para evidência",
+  "channels": [
+   {
+    "channel": "LinkedIn",
+    "why": "B2B: gestão hospitalar, reguladores, investidores — conteúdo técnico com evidência (docs C-level como base)"
+   },
+   {
+    "channel": "Instagram",
+    "why": "comunidade de enfermagem — educacional, linguagem simples por átomo"
+   },
+   {
+    "channel": "YouTube",
+    "why": "demonstrações e protocolos — consumo educacional do segmento"
+   },
+   {
+    "channel": "WhatsApp (grupos)",
+    "why": "onde a enfermagem vive — comunidade + suporte"
+   },
+   {
+    "channel": "X/Twitter",
+    "why": "comunidade tech/saúde digital — radar de novidades"
+   }
+  ],
+  "appearance": "identidade visual: tokens do design system (consistência obrigatória — front-end gerado); OG image padrão (cânone NK-UNIV-0011); apresentação em eventos: vestimenta institucional profissional (informática clínica) — decisões de marca mudam por OS e aprovação humana",
+  "claims_policy": "toda claim comercial passa pelo mesmo processo: evidência apontável + CDC/CONAR verificados"
+ },
+ "swot": {
+  "strengths": [
+   "governança auditável única no nicho (16 gates, trilha norma→campo)",
+   "pt-BR nativo + i18n no metamodelo",
+   "fatias provadas de ponta a ponta (Fase 0/1, primeiro normativo real atomizado)",
+   "domain expertise: fundador clinician-informatician",
+   "evidência por claim (método EV-NK)"
+  ],
+  "weaknesses": [
+   "licenças pendentes (SNOMED CT/NANDA-I)",
+   "pessoa-chave (concentração no fundador)",
+   "sem piloto comercial/tração ainda",
+   "custo LLM na operação",
+   "marca desconhecida"
+  ],
+  "opportunities": [
+   "OPP-0001 protocolos SAE pt-BR (validated)",
+   "CPLP antes do espanhol (OPP-0002)",
+   "API de conformidade para EHRs (OPP-0003)",
+   "parcerias COREN/universidades (PAR-0001/0002)",
+   "grandes players ignoram enfermagem BR"
+  ],
+  "threats": [
+   "entrada de grande player (Elsevier/WK) no nicho",
+   "percepção 'conteúdo é grátis' (BVS)",
+   "mudança regulatória rápida",
+   "custo/obsolescência de LLMs"
+  ]
+ },
+ "monitoring": [
+  {
+   "scope": "pipeline/credits/findings novos",
+   "frequency": "semanal",
+   "owner": "kernel"
+  },
+  {
+   "scope": "revalidação de fontes (cadência do NormSource) + release notes dos 5 concorrentes",
+   "frequency": "mensal",
+   "owner": "kernel/Leivis"
+  },
+  {
+   "scope": "tech radar + SWOT + revisão do ecossistema (OS de revisão)",
+   "frequency": "trimestral",
+   "owner": "Leivis"
+  },
+  {
+   "scope": "mudança regulatória → cânone atualizado (POL-NK-009 C6)",
+   "frequency": "gatilho (on-change)",
+   "owner": "kernel"
+  }
+ ],
+ "rnd_department": {
+  "definition": "P&D governado pelo mesmo processo: nada de pesquisa solta — tudo entra pela OS com evidência por estágio",
+  "stages": [
+   "pesquisa (findings/ADR + fonte verificada)",
+   "protótipo (CHG dev→test)",
+   "piloto (safety case + parceiro PAR-0003)",
+   "produto (OPP converted → backlog → fatia)"
+  ],
+  "roles": [
+   {
+    "role": "Pesquisa clínica (champion)",
+    "who": "Leivis + conselheiro clínico (a recrutar)",
+    "status": "partial"
+   },
+   {
+    "role": "Engenharia/kernel",
+    "who": "agente NORM-KERNEL (instrumentos + gates)",
+    "status": "active"
+   },
+   {
+    "role": "Validação científica",
+    "who": "universidade parceira (PAR-0002)",
+    "status": "candidate"
+   }
+  ],
+  "ip": [
+   "Lei 9.610/1998 — direitos autorais sobre código e conteúdo (cânone ativo)",
+   "INPI registro de programa de computador — candidato (análise futura)",
+   "INPI registro de marca — candidato"
+  ],
+  "budget_note": "P&D priorizado pelo backlog com fatias de valor independentes (Fase 0/1 provam o método com custo mínimo)"
+ }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:source-homologation-record:v1",
+  "title": "CKO Source Homologation Record",
+  "type": "object",
+  "required": [
+    "authority_id",
+    "organization",
+    "homologation_state",
+    "scope",
+    "primary_source",
+    "verification_state",
+    "verification_class",
+    "verified_on"
+  ],
+  "properties": {
+    "authority_id": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "homologation_state": {
+      "type": "string"
+    },
+    "precedence_priority": {
+      "type": "integer"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "primary_source": {
+      "type": "string"
+    },
+    "current_document": {
+      "type": "string"
+    },
+    "verification_state": {
+      "type": "string"
+    },
+    "verification_class": {
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "verified_on": {
+      "type": "string"
+    },
+    "local_evidence_state": {
+      "type": "string"
+    },
+    "local_sha256": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "edition": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

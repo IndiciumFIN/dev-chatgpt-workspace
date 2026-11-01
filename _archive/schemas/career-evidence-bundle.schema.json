@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Evidence Bundle Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "claim_id",
+    "source_id",
+    "fragment_id",
+    "atomic_fact_id",
+    "source_sha256",
+    "fragment_sha256",
+    "fact_sha256",
+    "lineage_path",
+    "status",
+    "review"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "claim_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "fragment_id": {
+      "type": "string"
+    },
+    "atomic_fact_id": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fragment_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fact_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "lineage_path": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "EVIDENCE_BOUND",
+        "ASSURED"
+      ]
+    },
+    "review": {
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "REJECTED"
+      ]
+    }
+  }
+}

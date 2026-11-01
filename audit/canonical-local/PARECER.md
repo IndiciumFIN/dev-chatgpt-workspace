@@ -32,5 +32,5 @@ A base desta branch é `integration/structural-overlay-20261101` em `621f73b`: 2
 
 `0001` a `0003` são iguais aos de `grook_10_26`. `0004` a `0035` foram copiados dessa branch e aplicados num banco local. `0036` e `0037` acrescentam `review_item`. `0038` grava as divergências em `canonical_divergence`.
 
-`0045` registra a comparação com o inventário do backup (16.433 arquivos, o mesmo do parecer de 2026-11-01; o TAR não estava no disco nesta sessão) e com as 28 branches. Não está tudo migrado. 1.060 caminhos batem hash. 15.251 faltam. 122 divergem. 3.103 blobs do backup não existem em branch alguma. Nada disso foi marcado como revisado.
+`scripts/migrar-canonico.py` recupera o arquivo ausente cujo blob já está no clone. Nesta execução: 12.244 recuperados, 1.059 já iguais, 122 hashes divergentes não sobrescritos, 3.006 sem blob, 2 caminhos de segredo ignorados. A migração não está fechada. Nada foi marcado como revisado.
 

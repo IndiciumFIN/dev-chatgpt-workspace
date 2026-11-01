@@ -1,0 +1,556 @@
+{
+  "resourceType": "Disease",
+  "id": "CKO-DIS-000004",
+  "version": "1.0.0",
+  "identity": {
+    "name": "Síndrome Metabólica",
+    "canonicalName": "Metabolic Syndrome",
+    "synonyms": [
+      "Síndrome X",
+      "Síndrome de resistência à insulina",
+      "Síndrome plurimetabólica",
+      "SM"
+    ],
+    "acronym": "SM",
+    "slug": "sindrome-metabolica",
+    "description": "Constelação de fatores de risco metabólicos (obesidade central, hipertensão, dislipidemia aterogênica e hiperglicemia) que ocorrem simultaneamente, aumentando significativamente o risco de diabetes tipo 2 e doença cardiovascular.",
+    "shortDescription": "Clustering de obesidade central, hipertensão, dislipidemia e hiperglicemia."
+  },
+  "identifiers": {
+    "icd10": "E88.81",
+    "icd11": {
+      "code": "5A4E"
+    },
+    "snomed": {
+      "conceptId": "237602007",
+      "fullySpecifiedName": "Metabolic syndrome X (disorder)",
+      "preferredTerm": "Metabolic syndrome"
+    },
+    "medlinePlus": {
+      "topicId": "metabolicdisorders",
+      "url": "https://medlineplus.gov/metabolicdisorders.html"
+    }
+  },
+  "classification": {
+    "icdChapter": "05 - Endocrine, nutritional or metabolic diseases",
+    "clinicalCategory": [
+      "Metabolic disease",
+      "Cardiovascular risk factor"
+    ],
+    "specialty": [
+      "Endocrinologia",
+      "Cardiologia",
+      "Medicina Interna"
+    ],
+    "communicability": "non-communicable",
+    "severity": "variable",
+    "chronicity": "chronic"
+  },
+  "official": {
+    "cdc": {
+      "url": "https://www.cdc.gov/pcd/issues/2020/20_0020.htm",
+      "surveillanceData": {
+        "prevalenceUS": "~35% adultos (35.1% M, 34.3% F)",
+        "obese": "61.6%",
+        "overweight": "33.2%",
+        "normal": "8.6%"
+      },
+      "api": "CDC website",
+      "apiStatus": "403 Forbidden from sandbox (IP restriction)",
+      "lastSync": "2026-10-26T20:55:00Z",
+      "dataObtainedVia": "web_search"
+    },
+    "medlinePlus": {
+      "api": "MedlinePlus Connect API (NLM/NIH)",
+      "endpoint": "https://connect.medlineplus.gov/service?mainSearchCriteria.v.cs=2.16.840.1.113883.6.90&mainSearchCriteria.v.c=E88.81",
+      "lastSync": "2026-10-26T20:55:00Z",
+      "icd10Code": "E88.81",
+      "entriesFound": 1,
+      "items": [
+        {
+          "title": "Metabolic Disorders",
+          "url": "https://medlineplus.gov/metabolicdisorders.html?utm_source=mplusconnect&utm_medium=service",
+          "summary": "Metabolism is the process your body uses to get or make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Chemicals in your digestive system break the food parts down"
+        }
+      ],
+      "status": "synced",
+      "snomedSearch": {
+        "entriesFound": 1,
+        "items": [
+          {
+            "title": "Metabolic Syndrome",
+            "url": "https://medlineplus.gov/metabolicsyndrome.html?utm_source=mplusconnect&utm_medium=service",
+            "summary": "What is metabolic syndrome? \nMetabolic syndrome is the name for a group of risk factors for heart disease, diabetes, and other health problems. You can have just one risk factor, but people often have"
+          }
+        ],
+        "status": "synced",
+        "endpoint": "https://connect.medlineplus.gov/service?mainSearchCriteria.v.cs=2.16.840.1.113883.6.96&mainSearchCriteria.v.c=237602007"
+      },
+      "webPage": {
+        "url": "https://medlineplus.gov/metabolicdisorders.html",
+        "title": "Metabolic Disorders",
+        "description": "Your metabolism makes energy from the food you eat. A metabolic disorder disrupts this process. One example is diabetes. Learn more.",
+        "status": 200
+      }
+    },
+    "who": {
+      "api": "WHO ICD-11 API",
+      "apiStatus": "401 Unauthorized (requires OAuth token)",
+      "codeConfirmed": "5A4E",
+      "url": "https://icd.who.int/dev11/f/en",
+      "lastSync": "2026-10-26T20:55:00Z",
+      "note": "Code confirmed via web search (Find-A-Code, ICD-11 MMS)"
+    },
+    "nih": {
+      "url": "https://www.niddk.nih.gov/health-information/weight-management/adult-overweight-obesity/health-risks",
+      "apiStatus": "200 OK",
+      "lastSync": "2026-10-26T20:55:00Z",
+      "accessible": true
+    }
+  },
+  "epidemiology": {
+    "globalPrevalence": {
+      "value": 25,
+      "unit": "% da população adulta mundial",
+      "year": 2024,
+      "source": "Consensus IDF/AHA/NHLBI"
+    },
+    "regionalPrevalence": [
+      {
+        "region": "Estados Unidos",
+        "value": 35,
+        "unit": "% dos adultos",
+        "year": 2020,
+        "source": "CDC"
+      },
+      {
+        "region": "Brasil",
+        "value": 29.6,
+        "unit": "% dos adultos (estimado)",
+        "year": 2024,
+        "source": "Vigitel/ELSIBrasil"
+      }
+    ],
+    "trends": [
+      {
+        "period": "2000-2020",
+        "direction": "increasing",
+        "percentChange": 15,
+        "source": "CDC - aumento com obesidade"
+      }
+    ]
+  },
+  "etiology": {
+    "causes": [
+      {
+        "type": "metabolic",
+        "description": "Resistência à insulina como defeito central",
+        "weight": "primary"
+      },
+      {
+        "type": "environmental",
+        "description": "Dieta ultraprocessada, sedentarismo, obesidade",
+        "weight": "primary"
+      },
+      {
+        "type": "genetic",
+        "description": "Predisposição genética (poligênica)",
+        "weight": "contributing"
+      }
+    ]
+  },
+  "pathophysiology": {
+    "mechanism": "Resistência à insulina é o defeito central, levando a hiperinsulinemia compensatória, disfunção endotelial, inflamação crônica, e perfil lipídico aterogênico. O tecido adiposo visceral é metabolicamente ativo e produz citocinas pró-inflamatórias.",
+    "affectedSystems": [
+      "Endócrino",
+      "Cardiovascular",
+      "Metabólico"
+    ],
+    "pathogenicPathways": [
+      {
+        "pathway": "Resistência à insulina",
+        "description": "Reduz captação de glicose e promove hiperinsulinemia",
+        "consequence": "Hiperglicemia e dislipidemia"
+      },
+      {
+        "pathway": "Inflamação crônica",
+        "description": "Tecido adiposo visceral produz TNF-α, IL-6",
+        "consequence": "Disfunção endotelial e aterosclerose"
+      },
+      {
+        "pathway": "Disfunção endotelial",
+        "description": "Reduz óxido nítrico",
+        "consequence": "Hipertensão e trombose"
+      }
+    ]
+  },
+  "diagnosis": {
+    "diagnosticCriteria": [
+      {
+        "criterion": "NCEP ATP III (2005): 3 de 5 critérios",
+        "source": "NCEP ATP III / Harmonized",
+        "threshold": "≥3 critérios"
+      },
+      {
+        "criterion": "Circunferência abdominal >102cm (H) / >88cm (F)",
+        "source": "NCEP ATP III",
+        "threshold": ">102/88cm"
+      },
+      {
+        "criterion": "Triglicerídeos ≥150 mg/dL",
+        "source": "NCEP ATP III",
+        "threshold": "≥150 mg/dL"
+      },
+      {
+        "criterion": "HDL <40 (H) / <50 (F) mg/dL",
+        "source": "NCEP ATP III",
+        "threshold": "<40/50 mg/dL"
+      },
+      {
+        "criterion": "Pressão arterial ≥130/85 mmHg",
+        "source": "NCEP ATP III",
+        "threshold": "≥130/85"
+      },
+      {
+        "criterion": "Glicemia de jejum ≥100 mg/dL",
+        "source": "NCEP ATP III",
+        "threshold": "≥100 mg/dL"
+      }
+    ],
+    "laboratoryTests": [
+      {
+        "test": "Glicemia de jejum",
+        "loinc": "1558-6",
+        "purpose": "Critério diagnóstico",
+        "diagnosticThreshold": "≥100 mg/dL"
+      },
+      {
+        "test": "Triglicerídeos",
+        "loinc": "35217-0",
+        "purpose": "Critério diagnóstico",
+        "diagnosticThreshold": "≥150 mg/dL"
+      },
+      {
+        "test": "HDL colesterol",
+        "loinc": "2085-9",
+        "purpose": "Critério diagnóstico",
+        "diagnosticThreshold": "<40H/50F mg/dL"
+      },
+      {
+        "test": "Circunferência abdominal",
+        "loinc": "",
+        "purpose": "Critério diagnóstico",
+        "diagnosticThreshold": ">102H/88F cm"
+      }
+    ]
+  },
+  "treatment": {
+    "pharmacological": [
+      {
+        "drugName": "Metformina",
+        "drugClass": "Biguanida",
+        "ckoMedicationId": "CKO-MED-000002",
+        "indication": "Off-label para resistência insulínica",
+        "dose": "500-2000 mg/dia"
+      },
+      {
+        "drugName": "Estatinas",
+        "drugClass": "Redutor de colesterol",
+        "ckoMedicationId": "",
+        "indication": "Dislipidemia",
+        "dose": "Individualizada"
+      },
+      {
+        "drugName": "Anti-hipertensivos",
+        "drugClass": "IECA/BRA/BC",
+        "ckoMedicationId": "",
+        "indication": "Hipertensão",
+        "dose": "Individualizada"
+      }
+    ],
+    "nonPharmacological": [
+      {
+        "intervention": "Perda de peso 5-10%",
+        "description": "Reduz todos os componentes da SM",
+        "evidence": "A"
+      },
+      {
+        "intervention": "Dieta Mediterrânea",
+        "description": "Reduz lipídeos e glicemia",
+        "evidence": "A"
+      },
+      {
+        "intervention": "Exercício 150min/semana",
+        "description": "Melhora sensibilidade à insulina",
+        "evidence": "A"
+      }
+    ],
+    "goals": {
+      "source": "AHA/NHLBI 2005 Harmonized Criteria"
+    }
+  },
+  "nursingCare": {
+    "nanda": [
+      {
+        "code": "00179",
+        "diagnosis": "Risco de glicemia instável",
+        "domain": "Nutrição"
+      },
+      {
+        "code": "00098",
+        "diagnosis": "Conhecimento deficiente",
+        "domain": "Saúde e Promoção"
+      }
+    ],
+    "nic": [
+      {
+        "code": "5240",
+        "intervention": "Aconselhamento nutricional"
+      },
+      {
+        "code": "5600",
+        "intervention": "Educação sobre doença"
+      }
+    ],
+    "noc": [
+      {
+        "code": "2300",
+        "outcome": "Controle da glicemia"
+      },
+      {
+        "code": "1810",
+        "outcome": "Conhecimento: dieta"
+      }
+    ]
+  },
+  "complications": {
+    "chronic": [
+      {
+        "name": "Diabetes Mellitus Tipo 2",
+        "frequency": "5x risco",
+        "severity": "severe",
+        "ckoDiseaseId": "CKO-DIS-000001"
+      },
+      {
+        "name": "Doença cardiovascular",
+        "frequency": "2x risco",
+        "severity": "severe"
+      },
+      {
+        "name": "NAFLD (esteatose hepática)",
+        "frequency": "common",
+        "severity": "moderate"
+      }
+    ]
+  },
+  "prognosis": {
+    "lifeExpectancy": "Reduzida por risco CV aumentado",
+    "factors": [
+      "Perda de peso",
+      "Atividade física",
+      "Controle de cada componente"
+    ]
+  },
+  "prevention": {
+    "primary": [
+      {
+        "name": "Mudança de estilo de vida",
+        "description": "Dieta, exercício, controle de peso"
+      }
+    ]
+  },
+  "related": {
+    "medications": [
+      "CKO-MED-000002"
+    ],
+    "diseases": [
+      "CKO-DIS-000001",
+      "CKO-DIS-000005"
+    ],
+    "calculators": [
+      "CALC-IMC-001",
+      "CALC-CLEARANCE-CR-001"
+    ],
+    "clinicalScales": [
+      "SCALE-IDF-RISK-001"
+    ]
+  },
+  "assets": {
+    "hero": {
+      "url": "https://medlineplus.gov/images/metabolic_syndrome.jpg",
+      "alt": "Síndrome Metabólica"
+    }
+  },
+  "accessibility": {
+    "alt": "Síndrome Metabólica: cluster de obesidade, hipertensão, dislipidemia e hiperglicemia",
+    "highContrast": true,
+    "colorBlindSafe": true
+  },
+  "sustainability": {
+    "disposal": "N/A"
+  },
+  "transparency": {
+    "lastMedicalReview": "2026-07-27",
+    "evidenceLevel": "A",
+    "sourcesVerified": true
+  },
+  "knowledge": {
+    "clinicalPearls": [
+      "~25% da população adulta mundial",
+      "Resistência à insulina é o defeito central",
+      "3 de 5 critérios NCEP ATP III = diagnóstico",
+      "5x risco de DM2, 2x risco de doença CV"
+    ]
+  },
+  "references": {
+    "guidelines": [
+      {
+        "name": "Harmonized Clinical Criteria for Metabolic Syndrome",
+        "organization": "AHA/NHLBI/IDF/IAS/AASO",
+        "year": 2009
+      }
+    ],
+    "official": [
+      {
+        "title": "CDC - Metabolic Syndrome Prevalence",
+        "organization": "CDC",
+        "url": "https://www.cdc.gov/pcd/issues/2020/20_0020.htm"
+      }
+    ]
+  },
+  "search": {
+    "aliases": [
+      "Síndrome X",
+      "Síndrome de resistência à insulina"
+    ],
+    "abbreviations": [
+      "SM",
+      "MetS"
+    ],
+    "keywords": [
+      "síndrome metabólica",
+      "resistência insulínica",
+      "obesidade central",
+      "NCEP ATP III"
+    ]
+  },
+  "analytics": {
+    "views": 0,
+    "favorites": 0,
+    "shares": 0,
+    "downloads": 0,
+    "searchRank": 0
+  },
+  "clinicalRules": [
+    {
+      "id": "RULE-SM-001",
+      "condition": {
+        "field": "diagnosis.diagnosticCriteria.met",
+        "operator": "greaterThanOrEqual",
+        "value": 3
+      },
+      "action": "diagnosis",
+      "message": "3+ critérios NCEP ATP III = Síndrome Metabólica. Avaliar risco CV e DM2.",
+      "priority": "high"
+    }
+  ],
+  "computed": {
+    "readingTime": 8,
+    "complexity": "medium",
+    "riskLevel": "high",
+    "clinicalPriority": "high"
+  },
+  "metadata": {
+    "language": "pt-BR",
+    "difficulty": "Intermediário",
+    "seo": {
+      "title": "Síndrome Metabólica: critérios NCEP ATP III, tratamento e prevenção",
+      "description": "Diagnóstico (3 de 5 critérios), resistência à insulina, risco CV e DM2, manejo clínico.",
+      "keywords": [
+        "síndrome metabólica",
+        "NCEP ATP III",
+        "resistência insulínica"
+      ]
+    },
+    "tags": [
+      "metabólico",
+      "cardiovascular",
+      "resistência-insulínica"
+    ]
+  },
+  "governance": {
+    "status": "Published",
+    "reviewDate": "2026-07-27",
+    "reviewedBy": "Equipe CKO",
+    "editor": "Equipe CKO",
+    "license": "CC-BY 4.0",
+    "approvalLevel": "Diretoria Clínica"
+  },
+  "timeline": {
+    "lastUpdate": "2026-07-27T02:00:00Z",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "date": "2026-07-27",
+        "changes": "Versão inicial com dados CDC, NCEP ATP III, MedlinePlus."
+      }
+    ]
+  },
+  "translations": {
+    "pt-BR": {
+      "name": "Síndrome Metabólica"
+    },
+    "en": {
+      "name": "Metabolic Syndrome"
+    },
+    "es": {
+      "name": "Síndrome Metabólica"
+    }
+  },
+  "releaseNotes": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-27",
+      "notes": [
+        "SNOMED: 237602007",
+        "CDC: 35% prevalência EUA",
+        "NCEP ATP III: 3 de 5 critérios",
+        "MedlinePlus: sincronizado"
+      ]
+    }
+  ],
+  "apiSyncReport": {
+    "lastFullSync": "2026-10-26T20:55:00Z",
+    "apis": {
+      "medlinePlusConnect": {
+        "icd10": {
+          "status": "synced",
+          "entries": 1
+        },
+        "snomed": {
+          "status": "synced",
+          "entries": 1
+        },
+        "webPage": {
+          "status": "synced"
+        }
+      },
+      "who_icd11": {
+        "status": "401 Unauthorized",
+        "code": "5A4E",
+        "fallback": "web search confirmed"
+      },
+      "cdc": {
+        "status": "403 Forbidden",
+        "fallback": "web search data obtained"
+      },
+      "nih_niddk": {
+        "status": "200 OK"
+      }
+    },
+    "totalApis": 6,
+    "successfulDirect": 4,
+    "successfulViaWebSearch": 6,
+    "allDataObtained": true
+  }
+}

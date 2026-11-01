@@ -1,0 +1,35 @@
+
+  AUDITORIA DO DIRETÓRIO — fae0482
+  9 ok · 9 aviso(s) · 1 defeito(s)
+
+  ! árvore de trabalho com pendência — 2 arquivo(s)
+      git status
+  ✓ tudo publicado — HEAD igual ao remoto
+  ✓ repositório com tamanho saudável — 43 MB em .git
+  ✗ segredo rastreado: senha declarada — SECRET =
+  "…
+      src/lib/auth/preview.ts
+  ✓ nenhum segredo no histórico recente — 400 commits verificados
+  ✓ nenhum TODO/FIXME no código — 8845 arquivos
+  ✓ sem console.log em src/
+  ✓ sem any em src/
+  ! arquivo versionado vazio — 1 arquivo(s)
+      .node_modules.lock
+  ! conteúdo duplicado entre arquivos — 2 par(es)
+      migrations/auth/0001_auth.sql = migrations/0001_auth.sql; scripts/seed-public.mjs = scripts/seed-file-tables.mjs
+  ! arquivos grandes no repositório — 5 arquivo(s), 32 MB
+      artifacts/fonte/catalogo.json, migrations/0015_site_route_body.sql, migrations/0017_publish_languages.sql
+  ! documentação cita caminho inexistente — 58 referência(s)
+      AGENTS.md → src/routes/auth/popup.tsx; deliverables/normas-requisitos/entrega.md → contracts/cko-schemas/source.schema.json; deliverables/normas-requisitos/entrega.md → contracts/cko-schemas/source.schema.json; deliverables/source-processo/deliverable.md → src/core/governance/{kernel,types,source-contract,state-machine}.ts; deliverables/source-processo/deliverable.md → contracts/cko-governance/opa/{kernel_admission.rego,kernel_admission.test.rego,kernel_admission.fixture.json}; deliverables/source-processo/deliverable.md → deliverables/source-processo/{entrega.md,entrega.json,deliverable.md}
+  ! dependência de runtime que nada importa — @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, @radix-ui/react-label, @radix-ui/react-popover, @radix-ui/react-progress, @radix-ui/react-radio-group, @radix-ui/react-scroll-area, @radix-ui/react-select, @radix-ui/react-separator, @radix-ui/react-slider, @radix-ui/react-slot, @radix-ui/react-switch, @radix-ui/react-tabs, @radix-ui/react-toggle, @radix-ui/react-toggle-group, @radix-ui/react-tooltip, @tanstack/react-query, @tanstack/react-table, @tanstack/router-plugin, class-variance-authority, clsx, cmdk, date-fns, lightningcss, react-day-picker, react-dom, react-hook-form, react-resizable-panels, recharts, sonner, tailwind-merge, tw-animate-css, typescript, vaul, zustand
+      package.json → dependencies
+  ! dependência de desenvolvimento sem uso — @types/node, @types/pg, @types/react, @types/react-dom, eslint-plugin-prettier
+      package.json → devDependencies
+  ! sem .vercelignore — o deploy sobe artefatos grandes (o corpus tem 120 MB)
+      deploy
+  ✓ CI com portões presente — .github/workflows/portoes.yml
+  ✓ nenhum .env versionado
+  ✓ migrations com número único — 41 migrations
+  ! migration sem cabeçalho que diga o propósito — 0002_source.sql, 0003_community.sql, 0031_nav_tone.sql
+      migrations/
+

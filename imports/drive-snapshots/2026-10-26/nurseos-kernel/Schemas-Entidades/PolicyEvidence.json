@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "agent_slug": {
+      "type": "string"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "artifact_type": {
+      "enum": [
+        "ci_gate",
+        "policy_evaluation",
+        "runtime_assertion",
+        "red_team",
+        "model_card",
+        "gate_report"
+      ],
+      "type": "string"
+    },
+    "checksum": {
+      "type": "string"
+    },
+    "evidence_id": {
+      "type": "string"
+    },
+    "gate_result": {
+      "type": "string"
+    },
+    "generated_by": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "policy_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "PolicyEvidence"
+}

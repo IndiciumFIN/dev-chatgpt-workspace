@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/reference.schema.json",
+  "title": "CKO | reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "source_id",
+    "citation_style",
+    "direct_uri",
+    "citation_type",
+    "locator",
+    "accessed_at",
+    "rights_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "citation_style": {
+      "type": "string",
+      "enum": [
+        "ABNT_6023_2018",
+        "OTHER_GOVERNED"
+      ]
+    },
+    "direct_uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "citation_type": {
+      "type": "string",
+      "enum": [
+        "DIRECT_SHORT",
+        "DIRECT_LONG",
+        "PARAPHRASE",
+        "APUD",
+        "TRANSLATION",
+        "LEGAL",
+        "TECHNICAL_STANDARD",
+        "SCIENTIFIC",
+        "DATASET",
+        "SOFTWARE",
+        "IMAGE",
+        "AI_DISCLOSURE"
+      ]
+    },
+    "locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "accessed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "rights_status": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "CLEAR",
+        "LICENSED",
+        "HOLD"
+      ]
+    },
+    "citation_text_key": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+ "evidence_id": "EV-NK-0012",
+ "kind": "primeiro job de extração REAL (Fase 1, Passo 2 — fatia de valor V1)",
+ "job": {
+  "job_id": "NK-JOB-0001",
+  "backlog_ref": "NK-BL-0001",
+  "source_ref": "SRC-RFC",
+  "license_ref": "KL-0003 (IETF Trust Legal Provisions — atribuição obrigatória)"
+ },
+ "download": {
+  "url": "https://www.rfc-editor.org/rfc/rfc2119.txt",
+  "http_status": 200,
+  "bytes": 4723,
+  "sha256": "sha256:3c2ceb7bfc84cd34720f4a5271338ab9d8280d34bdd1eb250c64306202f2ed8b",
+  "stored": "raw/rfc2119.txt",
+  "hash_antes_do_parse": true
+ },
+ "document": {
+  "doc_id": "NK-DOC-00002 (gerado pelo kernel)",
+  "type": "rfc",
+  "citation": "Bradner, S., RFC 2119, DOI 10.17487/RFC2119, March 1997 (IETF)",
+  "status": "valid (OS-0047)"
+ },
+ "atoms": {
+  "v2_ids": [
+   "NK-ATOM-0000017..0000022"
+  ],
+  "confidence": 0.9,
+  "status": "review_pending (aguardando revisão HUMANA do Leivis — transição valid exige R8 e aprovação)",
+  "counts": {
+   "definitions": 5,
+   "obligations": 1
+  },
+  "reconstruction": "todo verbatim é substring do raw (verificado programaticamente)"
+ },
+ "incident_F0006": {
+  "what": "v1 (NK-ATOM-0000011..16) quarentenados automaticamente pelo guard: confidence ausente",
+  "detection": "workflows NK Guard (entidade→intake) — captura em segundos",
+  "root_cause": "contradição instrumento×instrumento latente da Fase 0 (fixtures sempre tinham confidence)",
+  "fix": "order v0.5.1 exige confidence 0-1 no nascimento; v2 recriados com version_of -> quarentenados (imutáveis como registro)",
+  "prevention": "contrato de nascimento único com o intake; emenda futura para validação compartilhada"
+ },
+ "endpoint_verification": {
+  "rfc-editor": "HTTP 200 OK",
+  "datatracker-api": "HTTP 200 OK",
+  "dou-in": "sem resposta do sandbox (verificar de ambiente de produção)",
+  "mqd-api": "sem resposta do sandbox (verificar)"
+ },
+ "os_chain": "NK-OS-0040 (doc) .. NK-OS-0066 (run) — 27 OSes: criações, transições, 6 recusas de transição fora da máquina (legítimas, registradas)",
+ "run": "NK-RUN-0011 passed (id gerado pelo kernel)",
+ "checksum": "sha256:9da9595176345e37c78e08513c2917e40c067478b7a123a8667b014f80f8dad5"
+}

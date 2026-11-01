@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/measurement.schema.json",
+  "title": "CKO | measurement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "quantity_kind",
+    "dimension_ref",
+    "canonical_unit_ref",
+    "precision_policy_ref",
+    "conversion_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "quantity_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dimension_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_unit_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "precision_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conversion_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "ucum_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

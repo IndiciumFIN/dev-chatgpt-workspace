@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-regulatory-profile:v1.0.0",
+  "title": "CKO Vaccine Regulatory Profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "profile_id",
+    "product_ref",
+    "authority",
+    "regulatory_status",
+    "registration_number",
+    "holder",
+    "approved_use_summary",
+    "dose_or_presentation_summary",
+    "route",
+    "current_regulatory_note",
+    "source_refs",
+    "verified_on",
+    "freshness",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "vaccine_regulatory_profile"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^cko\\.regulatory-profile\\.vaccine\\.[a-z0-9-]+\\.anvisa$"
+    },
+    "product_ref": {
+      "type": "string",
+      "pattern": "^cko\\.product\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "authority": {
+      "const": "Anvisa"
+    },
+    "regulatory_status": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "registration_number": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "holder": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "approved_use_summary": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "dose_or_presentation_summary": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "route": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "current_regulatory_note": {
+      "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "verified_on": {
+      "const": "2026-08-09"
+    },
+    "freshness": {
+      "type": "object",
+      "required": [
+        "review_due",
+        "staleness_warning_required"
+      ],
+      "properties": {
+        "review_due": {
+          "const": "2027-01-31"
+        },
+        "staleness_warning_required": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

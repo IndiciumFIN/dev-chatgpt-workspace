@@ -83,7 +83,42 @@ export const primaryNav: NavNode[] = [
       },
     ],
   },
-  { id: "emprego", label: "Sites de Emprego", dest: { kind: "section", slug: "emprego" } },
+  {
+    id: "carreira",
+    label: "Carreira",
+    dest: { kind: "section", slug: "carreira" },
+    groups: [
+      { label: "Minha carreira", items: [
+        { id: "career-passport", label: "Passaporte profissional", dest: { kind: "section", slug: "carreira", hash: "passaporte" } },
+        { id: "career-skills", label: "Skills e gaps", dest: { kind: "section", slug: "carreira", hash: "skills" } },
+        { id: "career-paths", label: "Trilhas de carreira", dest: { kind: "section", slug: "carreira", hash: "trilhas" } },
+        { id: "career-learning", label: "Cursos e desenvolvimento", dest: { kind: "section", slug: "carreira", hash: "aprendizagem" } },
+        { id: "career-compare", label: "Comparar caminhos", dest: { kind: "section", slug: "carreira", hash: "comparador" } },
+        { id: "career-docs", label: "Currículo e documentos", dest: { kind: "section", slug: "carreira", hash: "documentos" } },
+      ]},
+      { label: "Oportunidades", items: [
+        { id: "career-opps", label: "Vagas, concursos e oportunidades", dest: { kind: "section", slug: "carreira", hash: "oportunidades" } },
+        { id: "career-apps", label: "Minhas candidaturas", dest: { kind: "section", slug: "carreira", hash: "candidaturas" } },
+        { id: "career-credentials", label: "Credenciais", dest: { kind: "section", slug: "carreira", hash: "credenciais" } },
+        { id: "emprego", label: "Sites de Emprego", dest: { kind: "section", slug: "emprego" } },
+      ]},
+    ],
+  },
+  {
+    id: "jovens",
+    label: "Jovens",
+    dest: { kind: "section", slug: "jovens" },
+    groups: [
+      { items: [
+        { id: "youth-discover", label: "Descobrir profissões", dest: { kind: "section", slug: "jovens", hash: "descobrir" } },
+        { id: "youth-nursing", label: "Enfermagem como carreira", dest: { kind: "section", slug: "jovens", hash: "enfermagem-carreira" } },
+        { id: "youth-reflect", label: "Explorar interesses", dest: { kind: "section", slug: "jovens", hash: "autoconhecimento" } },
+        { id: "youth-first", label: "Primeiros passos", dest: { kind: "section", slug: "jovens", hash: "primeiros-passos" } },
+        { id: "youth-games", label: "Jogos e quizzes", dest: { kind: "section", slug: "jovens", hash: "jogos-quizzes" } },
+        { id: "youth-health", label: "Saúde para jovens", dest: { kind: "section", slug: "jovens", hash: "saude-jovem" } },
+      ]},
+    ],
+  },
   {
     id: "simulados",
     label: "Simulados",

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Jurisdiction Requirement Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "jurisdiction",
+    "requirement_kind",
+    "title",
+    "description",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "requirement_kind": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "SOURCE_REQUIRED",
+        "VERIFIED_CANDIDATE"
+      ]
+    }
+  }
+}

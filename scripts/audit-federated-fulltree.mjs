@@ -131,7 +131,8 @@ try{
  }
  const classifications={singleReference:0,identicalWherePresent:0,conflictingVersions:0,sharedAcrossRepositories:0};
  const records=[];
- const priority=path=>/^(contracts|schemas|policies|agents|src\/core|packages\/cli\/kernel|rego|opa)\//i.test(path)?'P0_GOVERNANCE':
+ const priority=path=>/^registers\/i18n\//i.test(path)?'P2_LOCALIZATION':
+ /^(contracts|schemas|policies|agents|src\/core|packages\/cli\/kernel|rego|opa)\//i.test(path)?'P0_GOVERNANCE':
  /^(migrations|registers|data|database|supabase|packages\/builder)\//i.test(path)?'P1_STRUCTURE':
  /^(src|public|reference-website|NIFS|i18n-pipeline|cko-controlled)\//i.test(path)?'P2_PRODUCT_CORPUS':'P3_OTHER';
  const rows=['priority,path,versions,references,repositories,existsInCandidate'];

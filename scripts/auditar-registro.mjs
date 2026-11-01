@@ -156,10 +156,19 @@ export async function auditar(opcoes = {}) {
 
   // 3) Os números de migration reservados são únicos e batem com o disco.
   const existentes = new Map();
-  for (const nome of await readdir(migrations)) {
-    if (!nome.endsWith(".sql")) continue;
+  const nomesPorNumero = new Map();
+  for (const nome of (await readdir(migrations)).sort()) {
+    if (!/^\\d{4}_.+\\.sql$/.test(nome)) continue;
     const numero = nome.slice(0, 4);
+    if (!nomesPorNumero.has(numero)) nomesPorNumero.set(numero, []);
+    nomesPorNumero.get(numero).push(nome);
     existentes.set(numero, nome.slice(5, -4).replace(/-/g, "_"));
+  }
+  for(const [numero, nomes] of nomesPorNumero){
+    if(nomes.length > 1) violacoes.push({
+      tipo:"migration-numero-duplicado",
+      detalhe:"número "+numero+" usado por "+nomes.join(", ")+"; reconciliar ordem e histórico antes de novas migrations",
+    });
   }
   const vistos = new Set();
   for (const reserva of reservas) {
@@ -244,7 +253,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         ? "[self-test] ok: o portão acusou a referência que não existe."
         : "[self-test] FALHA: o portão aceitou uma referência quebrada.",
     );
-    process.exit(peguou ? 0 : 1);
+    process.exit(pegou ? 0 : 1);
   }
   process.exit(relatorio.violacoes.length === 0 ? 0 : 1);
 }

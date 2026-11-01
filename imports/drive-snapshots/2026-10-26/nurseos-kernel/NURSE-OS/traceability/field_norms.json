@@ -1,0 +1,207 @@
+{
+  "principle": "A norma não é exibida — sustenta. Cada campo carrega a norma granular que evidencia e suporta aderência regulatória. O front-end mostra ADERÊNCIA por campo; a norma fica como evidência acessível em registro.",
+  "entity_fields": {
+    "PatientTwin": [
+      "consent_care",
+      "consent_research",
+      "consent_twin_simulation",
+      "news2_score",
+      "pews_score",
+      "sepsis_qsofa_score",
+      "braden_score",
+      "morse_fall_score",
+      "fhir_patient_ref",
+      "twin_version"
+    ],
+    "NurseTwin": [
+      "pseudonym",
+      "fatigue_index",
+      "hours_current_shift",
+      "nas_workload_score"
+    ],
+    "AgentRun": [
+      "human_review_status",
+      "policy_violations",
+      "evidence_id",
+      "run_id",
+      "status"
+    ],
+    "SafetyEvent": [
+      "severity",
+      "corrective_action",
+      "status",
+      "icps_category"
+    ],
+    "AgentPolicy": [
+      "expression",
+      "effective_date",
+      "severity",
+      "status"
+    ],
+    "PolicyEvidence": [
+      "checksum",
+      "gate_result",
+      "payload"
+    ],
+    "KnowledgeLicense": [
+      "restrictions",
+      "valid_until",
+      "source"
+    ],
+    "ThreatEvent": [
+      "threat_type",
+      "severity",
+      "response"
+    ],
+    "BehaviorProfile": [
+      "envelope",
+      "baseline",
+      "anomalies_detected"
+    ],
+    "DelegationRequest": [
+      "selection_reason",
+      "policies_satisfied",
+      "selected"
+    ]
+  },
+  "fields": [
+    {
+      "entity": "PatientTwin",
+      "field": "consent_care",
+      "norm": "LGPD art. 11 §1º — consentimento específico e destacado para dado sensível (saúde)",
+      "evidencia": "Uso do twin para cuidado só ocorre com consentimento específico registrado; a recusa bloqueia o processamento."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "consent_research",
+      "norm": "LGPD art. 11 §1º c/ art. 7º, II — pesquisa (§ a verificar)",
+      "evidencia": "Dado de saúde em pesquisa exige finalidade consentida distinta do cuidado."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "consent_twin_simulation",
+      "norm": "LGPD art. 11 §1º — finalidade específica declarada",
+      "evidencia": "Simulação no twin é finalidade separada, consentida à parte do cuidado (caso 88412: recusada = simulação bloqueada)."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "news2_score",
+      "norm": "RCP NEWS2 — protocolo nacional/internacional de detecção de deterioração",
+      "evidencia": "Escore segue protocolo clínico documentado e versionado, não cálculo ad hoc."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "braden_score",
+      "norm": "Escala de Braden — protocolo validado de risco de lesão por pressão",
+      "evidencia": "Risco de LPP quantificado por instrumento validado, rastreável a intervenções NIC 0840."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "morse_fall_score",
+      "norm": "Escala de Morse — protocolo validado de risco de queda",
+      "evidencia": "Escore validado lastreia o diagnóstico NANDA 00047 e as intervenções NIC 6490."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "fhir_patient_ref",
+      "norm": "HL7 FHIR R4 — Patient",
+      "evidencia": "Referência de paciente interoperável com o prontuário eletrônico (REG-FHIR)."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "twin_version",
+      "norm": "ISO/IEC 42001 — rastreabilidade documental (cláusula a verificar)",
+      "evidencia": "Cada estado do twin é versionado; regressão e auditoria de estado são possíveis."
+    },
+    {
+      "entity": "NurseTwin",
+      "field": "pseudonym",
+      "norm": "LGPD art. 2º, V — pseudoanonimização",
+      "evidencia": "Profissional identificado por pseudônimo no processamento analítico; dado pessoal protegido por técnica."
+    },
+    {
+      "entity": "NurseTwin",
+      "field": "fatigue_index",
+      "norm": "NAS Nursing Activities Score — carga de trabalho (normativa COFEN a verificar)",
+      "evidencia": "Carga e fadiga medidas por instrumento validado, lastreando dimensionamento."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "human_review_status",
+      "norm": "EU AI Act — supervisão humana de IA de alto risco (art. a verificar)",
+      "evidencia": "Toda saída de nível L2/L3 carrega estado de revisão humana (POL-002)."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "policy_violations",
+      "norm": "LGPD art. 37 — registro das operações de tratamento",
+      "evidencia": "Violações registradas por run; auditoria completa de execuções."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "evidence_id",
+      "norm": "IEC 62304 — rastreabilidade de software de saúde (cláusula a verificar)",
+      "evidencia": "Cada execução referencia artefato de evidência assinado (POL-008)."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "severity",
+      "norm": "ISO 14971 — análise de risco",
+      "evidencia": "Severidade classificada por framework de risco, não opinião."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "corrective_action",
+      "norm": "ISO 14971 — controle de risco implantado",
+      "evidencia": "Ação corretiva obrigatória vinculada ao evento; estado rastreável (POL-010)."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "icps_category",
+      "norm": "WHO ICPS — Classificação Internacional para Segurança do Paciente",
+      "evidencia": "Incidente classificado em taxonomia WHO, comparável entre instituições."
+    },
+    {
+      "entity": "AgentPolicy",
+      "field": "expression",
+      "norm": "Princípio da legalidade — norma computável auditável (ISO/IEC 42001, a verificar)",
+      "evidencia": "Cada regra é executável e auditável; nenhuma decisão sem expressão verificável."
+    },
+    {
+      "entity": "AgentPolicy",
+      "field": "effective_date",
+      "norm": "LGPD art. 37 — trilha temporal",
+      "evidencia": "Vigência temporal de cada norma do sistema é auditável."
+    },
+    {
+      "entity": "PolicyEvidence",
+      "field": "checksum",
+      "norm": "LGPD art. 46 — segurança do tratamento (integridade)",
+      "evidencia": "Integridade do artefato verificável criptograficamente."
+    },
+    {
+      "entity": "KnowledgeLicense",
+      "field": "restrictions",
+      "norm": "Lei 9.610/1998 — direitos autorais; licenças de uso (NANDA-I)",
+      "evidencia": "Uso de terminologia proprietária restrito à licença vigente; sem licença, sem produção."
+    },
+    {
+      "entity": "ThreatEvent",
+      "field": "threat_type",
+      "norm": "OWASP Top 10 para aplicações LLM",
+      "evidencia": "Ameaças classificadas por taxonomia OWASP (POL-017)."
+    },
+    {
+      "entity": "BehaviorProfile",
+      "field": "envelope",
+      "norm": "NIST AI RMF — função 'Manage' (verificar)",
+      "evidencia": "Envelope comportamental define limites aceitáveis e detecta anomalia (POL-019)."
+    },
+    {
+      "entity": "DelegationRequest",
+      "field": "selection_reason",
+      "norm": "LGPD art. 37 — auditabilidade de decisão",
+      "evidencia": "Delegação só com justificativa registrada e políticas satisfeitas (POL-020)."
+    }
+  ]
+}

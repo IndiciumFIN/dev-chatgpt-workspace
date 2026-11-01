@@ -1,19 +1,48 @@
+# ── dependencias e build ─────────────────────────────────────────────────────
+# Sem barra final de proposito:  NAO casa com um symlink para
+# outro diretorio — e  (o symlink) casa com os dois casos.
 node_modules
 .vercel
 dist
+# Artefatos CKO referenciados pelo manifesto SHA256 precisam integrar o clone.
+!contracts/cko-tokens/dist/
 build
 .tanstack
 .output
 .nitro
-coverage
+coverage/
 *.tsbuildinfo
+
+# ── segredos ────────────────────────────────────────────────────────────────
+# A regra do `.env*` vem DEPOIS da excecao do `.env.example`: sem esta ordem,
+# o git ignora tambem o exemplo, e o exemplo e o que documenta as variaveis.
 .env
 .env.*
 !.env.example
+
+# ── ruido ───────────────────────────────────────────────────────────────────
 *.log
 *.zip
+# O TAR do backup pode conter .env. Nao versionar o arquivo baixado.
+/backup/
 .DS_Store
-attachments
-screenshots
+Thumbs.db
+.vscode/
+.idea/
 
-.grok
+# ── NOTA sobre os pacotes CKO ────────────────────────────────────────────────
+# `contracts/cko-*` NAO e ignorado de proposito.
+#
+# A ideia elegante seria nao versionar pacote de terceiro e puxar por hash.
+# Aqui isso criaria TRABALHO para quem abre o repositorio: sem rede, sem
+# hash conferido, a auditoria de paridade simply nao roda.
+#
+# Como o requisito e "zero trabalho para quem abre", os pacotes ficam
+# versionados — e o que garante a integridade e o gate de hash
+# (`scripts/check-cko-packages.mjs`), nao a ausencia de commit. Ele confere
+# cada arquivo contra o SHA256 declarado pelo proprio pacote. Divergencia
+# reprova.
+#
+# O `.vercelignore` e o oposto deste arquivo: la `audit/` e `audit-evidence/`
+# ficam de fora porque nao sao produto publicado. Aqui eles ENTRAM, porque sao
+# a evidencia do trabalho.

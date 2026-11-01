@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vacinas:full-schema-example:v1.0.0",
+  "title": "CKO Vacinas Full Schema Example v1",
+  "type": "object",
+  "required": [
+    "bundle_version",
+    "bundle_type",
+    "status",
+    "architecture",
+    "semantic_layer",
+    "presentation_layer",
+    "composition_layer",
+    "asset_layer",
+    "provenance_layer",
+    "build_layer",
+    "anti_hallucination"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "bundle_version": {
+      "const": "1.0.0"
+    },
+    "bundle_type": {
+      "const": "cko_vacinas_full_schema_example"
+    },
+    "status": {
+      "const": "EXAMPLE_B_DERIVED_FROM_CANONICAL_CONTRACTS"
+    },
+    "architecture": {
+      "type": "object"
+    },
+    "semantic_layer": {
+      "type": "object",
+      "required": [
+        "library",
+        "sample_library_object",
+        "vaccine_extension_instance",
+        "formulations",
+        "products",
+        "regulatory_profiles"
+      ],
+      "properties": {
+        "library": {
+          "type": "object"
+        },
+        "sample_library_object": {
+          "type": "object"
+        },
+        "vaccine_extension_instance": {
+          "type": "object"
+        },
+        "formulations": {
+          "type": "array"
+        },
+        "products": {
+          "type": "array"
+        },
+        "regulatory_profiles": {
+          "type": "array"
+        }
+      }
+    },
+    "presentation_layer": {
+      "type": "object",
+      "required": [
+        "library_content_page",
+        "object_content_page"
+      ]
+    },
+    "composition_layer": {
+      "type": "object",
+      "required": [
+        "library_composition_profile",
+        "object_composition_profile"
+      ]
+    },
+    "asset_layer": {
+      "type": "object"
+    },
+    "provenance_layer": {
+      "type": "object"
+    },
+    "build_layer": {
+      "type": "object"
+    },
+    "anti_hallucination": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

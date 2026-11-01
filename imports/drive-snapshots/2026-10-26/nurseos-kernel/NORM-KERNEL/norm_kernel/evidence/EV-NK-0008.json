@@ -1,0 +1,108 @@
+{
+ "evidence_id": "EV-NK-0008",
+ "generated_by": "norm-kernel-pipeline-v0.5.0",
+ "generated_at": "2026-09-29T16:01:13+00:00",
+ "policy_ids": [
+  "POL-NK-001"
+ ],
+ "gates": [
+  {
+   "gate": "G1-reconstruction",
+   "doc": "NK-DOC-FIX-0001",
+   "status": "PASSED",
+   "detail": "sha256:fc3d964fbac179c2874cf5b0d3df535cbc32d6ff62914a1f45cbcf745aabae96"
+  },
+  {
+   "gate": "G1-reconstruction",
+   "doc": "NK-DOC-FIX-0002",
+   "status": "PASSED",
+   "detail": "sha256:6bcbb601d4b3af3c422c701995b30839eec5045de4b7f65e5b797fdeacbda7cd"
+  },
+  {
+   "gate": "G2-coverage",
+   "status": "PASSED",
+   "detail": "9 trechos não-normativos explícitos, 0 não classificados"
+  },
+  {
+   "gate": "G4-field_norms",
+   "status": "PASSED",
+   "detail": "66 campos, 0 órfãos",
+   "missing": []
+  },
+  {
+   "gate": "G4-pin",
+   "status": "PASSED",
+   "detail": "pin=sha256:cdef1b1ad0472a8f070c5c1548c0d0df8aee3eb38c543d624a9fe200eee3933b computed=sha256:cdef1b1ad0472a8f070c5c1548c0d0df8aee3eb38c543d624a9fe200eee3933b",
+   "drift": false
+  },
+  {
+   "gate": "G3-links",
+   "status": "PASSED",
+   "detail": "10 átomos verificados, 0 problemas",
+   "problems": []
+  },
+  {
+   "gate": "G5-iso8000-completude",
+   "status": "PASSED",
+   "detail": "10 átomos, 0 incompletos",
+   "problems": []
+  },
+  {
+   "gate": "G6-value-conformance",
+   "status": "PASSED",
+   "detail": "34 registros verificados contra composição/enum declarados, 0 violações",
+   "problems": []
+  },
+  {
+   "gate": "G7-normative-layers",
+   "status": "PASSED",
+   "detail": "85 campos, 542 vinculos normativos (6.4 camadas/campo), 0 violações",
+   "problems": []
+  },
+  {
+   "gate": "G8-materialization",
+   "status": "PASSED",
+   "detail": "3 artefatos, 11 movimentos do kernel, 0 violações",
+   "problems": []
+  },
+  {
+   "gate": "G9-universal-registration",
+   "status": "PASSED",
+   "detail": "44 artefatos registrados, 44 cobertos, 0 violações",
+   "problems": []
+  }
+ ],
+ "run": {
+  "run_id": "NK-RUN-0006",
+  "source_ref": "SRC-CAL-FIXTURE",
+  "doc_refs": [
+   "NK-DOC-FIX-0001",
+   "NK-DOC-FIX-0002"
+  ],
+  "atoms_created": 10,
+  "coverage_percent": 100.0,
+  "failures": [],
+  "extractor_version": "atomizer-v0.1.1",
+  "evidence_id": "EV-NK-0008",
+  "status": "passed"
+ },
+ "unknown_universe": [
+  "multi-átomo por linha (1 linha = 1 segmento no v0.1)",
+  "OCR/PDF e diários reais (fixtures sintéticos apenas)",
+  "deôntica implícita sem modal explícito",
+  "condicionais aninhadas e exceções estruturadas (R7 parcial)",
+  "serialização de floats no JCS (RFC 8785 ES6)",
+  "PUBLISH: gates axe/pa11y/Lighthouse/OG no build_frontend (Fase 0.2)",
+  "OSCAL e PROV-O export (Fase 0.2)",
+  "ISO 8000: partes citadas '(verificar)', aquisição pendente",
+  "definições de DictionaryTerm pendentes (Fase 0)",
+  "enums duplicados entre anexo (Python) e guards/kernel-order (TS) — fonte única de enums é débita",
+  "máquina de estados duplicada entre POL-NK-002 Anexo I e normKernelOrder (TS) — débita de fonte única"
+ ],
+ "artifacts": {
+  "atoms": "evidence/atoms.json",
+  "documents": "evidence/documents.json",
+  "terms": "evidence/terms.json"
+ },
+ "checksum": "sha256:73477dc61bcb762a1ddd879a973b2f353e01be8df5041df7b2ca7e85edcad88c"
+}

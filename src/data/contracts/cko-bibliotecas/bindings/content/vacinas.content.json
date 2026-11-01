@@ -1,0 +1,846 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "vacinas",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Vacinas",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre imunização, calendários, indicações, contraindicações, cadeia de frio, vias de administração, eventos adversos e orientações ao paciente.",
+  "template_family": "knowledge-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Atualizado",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Baseado em evidências",
+      "tone": "green",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Vacinas"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "overview",
+          "vaccine_types",
+          "national_schedule_by_age",
+          "cold_chain_and_storage",
+          "administration_techniques",
+          "patient_guidance",
+          "videos",
+          "articles_and_evidence",
+          "clinical_attention",
+          "attention_signs",
+          "monitoring_frequency",
+          "support_materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "calendario",
+        "label": "Calendário",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "national_schedule_by_age"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "vaccine_types",
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "administracao",
+        "label": "Administração",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "administration_techniques",
+          "cold_chain_and_storage"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "eventos-adversos",
+        "label": "Eventos Adversos",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "attention_signs",
+          "monitoring_frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "patient_guidance",
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "articles_and_evidence",
+          "videos",
+          "support_materials"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "campanhas",
+        "label": "Campanhas",
+        "status": "mapped",
+        "module_refs": [
+          "freshness-disclaimer",
+          "campaigns_2026"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/vacinas/hero_vacinas.png",
+          "alt": "Vacinas",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Produtos biológicos que estimulam o sistema imunológico a produzir proteção contra doenças.",
+                "icon": "system:syringe"
+              },
+              {
+                "title": "Importância",
+                "text": "Previnem doenças, reduzem complicações, internações e óbitos e promovem saúde coletiva.",
+                "icon": "system:syringe"
+              },
+              {
+                "title": "Objetivo do cuidado",
+                "text": "Garantir imunização segura, eficaz e oportuna conforme calendários e recomendações oficiais.",
+                "icon": "system:syringe"
+              },
+              {
+                "title": "Papel da Enfermagem",
+                "text": "Planejar, administrar, monitorar e orientar sobre vacinas e eventos adversos.",
+                "icon": "system:syringe"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Imunogenicidade",
+                "text": "Capacidade de induzir resposta imune protetora.",
+                "icon": "system:syringe"
+              },
+              {
+                "title": "Segurança",
+                "text": "Eventos adversos geralmente leves e autolimitados.",
+                "icon": "system:shield"
+              },
+              {
+                "title": "Especificidade",
+                "text": "Proteção direcionada ao agente infeccioso ou toxina.",
+                "icon": "system:syringe"
+              },
+              {
+                "title": "Imunidade coletiva",
+                "text": "Reforça a proteção da comunidade e de grupos vulneráveis.",
+                "icon": "system:syringe"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "vaccine_types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TIPOS DE VACINAS",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Vivas atenuadas",
+            "description": "Contêm microrganismos atenuados.",
+            "examples": "Ex.: BCG, tríplice viral, febre amarela.",
+            "asset": "../assets/vacinas/tipo_vivas_atenuadas.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Inativadas",
+            "description": "Microrganismos mortos ou inativados.",
+            "examples": "Ex.: Hepatite A, poliomielite inativada, influenza.",
+            "asset": "../assets/vacinas/tipo_inativadas.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Toxoides",
+            "description": "Toxinas inativadas que induzem imunidade.",
+            "examples": "Ex.: DTP, dT.",
+            "asset": "../assets/vacinas/tipo_toxoides.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Subunidades/Recombinantes",
+            "description": "Componentes específicos do microrganismo.",
+            "examples": "Ex.: Hepatite B, HPV.",
+            "asset": "../assets/vacinas/tipo_subunidades_recombinantes.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Conjugadas",
+            "description": "Polissacarídeos ligados a proteínas carreadoras.",
+            "examples": "Ex.: Hib, pneumocócica.",
+            "asset": "../assets/vacinas/tipo_conjugadas.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Vetores virais",
+            "description": "Utilizam vírus como vetor para o antígeno.",
+            "examples": "Ex.: Covid-19 (adenovírus).",
+            "asset": "../assets/vacinas/tipo_vetores_virais.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/vaccine_types"
+    },
+    {
+      "module_id": "national_schedule_by_age",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "CALENDÁRIO NACIONAL POR FAIXA ETÁRIA",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "title": "Recém-nascido",
+            "highlights": "BCG, Hepatite B",
+            "asset": "../assets/vacinas/faixa_recem_nascido.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "2 meses",
+            "highlights": "Penta, VIP, Rotavírus, Pneumo 10, Meningo C",
+            "asset": "../assets/vacinas/faixa_2_meses.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "6 meses",
+            "highlights": "Penta, VIP, Hepatite B, Influenza (1ª dose)",
+            "asset": "../assets/vacinas/faixa_6_meses.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "1 ano",
+            "highlights": "Tríplice viral, Pneumo 10, Meningo C, Febre amarela",
+            "asset": "../assets/vacinas/faixa_1_ano.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "4–6 anos",
+            "highlights": "DTP, VOP, Varicela, Febre amarela",
+            "asset": "../assets/vacinas/faixa_4_6_anos.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Adolescente",
+            "highlights": "HPV, dT, Meningo ACWY, Hepatite B",
+            "asset": "../assets/vacinas/faixa_adolescente.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Adulto e idoso",
+            "highlights": "Influenza, Hepatite B, Covid-19, dT",
+            "asset": "../assets/vacinas/faixa_adulto_idoso.png",
+            "action": {
+              "label": "Ver calendário",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver calendário completo por idade",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/national_schedule_by_age"
+    },
+    {
+      "module_id": "cold_chain_and_storage",
+      "module_type": "item_grid",
+      "semantic_role": "orientation",
+      "title": "CONSERVAÇÃO E CADEIA DE FRIO",
+      "priority": 25,
+      "payload": {
+        "items": [
+          {
+            "label": "Armazenar conforme temperatura recomendada (2 °C a 8 °C).",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Não congelar vacinas que sejam sensíveis ao frio.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Monitorar e registrar temperatura diariamente.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Transportar em caixas térmicas com gelo reciclável.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Seguir plano de contingência em falhas de energia.",
+            "icon": "system:clock"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver guia completo",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/cold_chain_and_storage"
+    },
+    {
+      "module_id": "administration_techniques",
+      "module_type": "item_grid",
+      "semantic_role": "intervention",
+      "title": "TÉCNICAS DE ADMINISTRAÇÃO",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "label": "Via intramuscular: deltoide e vasto lateral.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Via subcutânea: região do tríceps ou abdome.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Via intradérmica: BCG.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Aspirar quando recomendado.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Não massagear o local após aplicação.",
+            "icon": "system:clock"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver técnicas e orientações",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/administration_techniques"
+    },
+    {
+      "module_id": "patient_guidance",
+      "module_type": "item_grid",
+      "semantic_role": "orientation",
+      "title": "ORIENTAÇÕES AO PACIENTE",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "label": "Informar benefícios e possíveis reações.",
+            "icon": "system:user"
+          },
+          {
+            "label": "Manter cartão de vacinação atualizado.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Observar sinais de alerta e procurar serviço de saúde se necessário.",
+            "icon": "system:alert"
+          },
+          {
+            "label": "Manter hidratação e repouso conforme orientação.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Retornar para próximas doses conforme calendário.",
+            "icon": "system:user"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver orientações completas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/patient_guidance"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TÉCNICAS",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "title": "Técnica IM no vasto lateral",
+            "subtitle": "Passo a passo",
+            "duration": "02:45",
+            "asset": "../assets/vacinas/video_tecnica_im_vasto_lateral.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Aplicação em lactentes",
+            "subtitle": "Deltoide e coxa",
+            "duration": "02:12",
+            "asset": "../assets/vacinas/video_aplicacao_lactentes.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Reconstituição de vacinas",
+            "subtitle": "Diluição e preparo",
+            "duration": "02:10",
+            "asset": "../assets/vacinas/video_reconstituicao_vacinas.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Cadeia de frio na prática",
+            "subtitle": "Armazenamento e transporte",
+            "duration": "02:36",
+            "asset": "../assets/vacinas/video_cadeia_frio_pratica.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Manejo de eventos adversos",
+            "subtitle": "Avaliação e condutas",
+            "duration": "03:06",
+            "asset": "../assets/vacinas/video_manejo_eventos_adversos.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:syringe"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e técnicas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 45,
+      "payload": {
+        "items": [
+          {
+            "title": "Atualizações do Calendário Nacional de Vacinação 2024",
+            "source_label": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Segurança das vacinas: evidências e vigilância",
+            "source_label": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Eventos adversos pós-vacinação: manejo na atenção primária",
+            "source_label": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Imunização e enfermagem: boas práticas e desafios",
+            "source_label": "DECISION_REQUIRED"
+          }
+        ],
+        "verification_note": "Títulos, fontes e anos são transcrição da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "clinical_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO CLÍNICA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Cuidados prioritários",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Conferir indicação e esquema vacinal",
+              "Avaliar contraindicações e precauções",
+              "Manter cadeia de frio e armazenamento correto",
+              "Aplicar técnica asséptica e segura",
+              "Orientar e monitorar eventos adversos"
+            ],
+            "action": null
+          },
+          {
+            "title": "Evitar / Monitorar",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Aplicar vacina vencida ou fora da validade",
+              "Quebra da cadeia de frio",
+              "Administrar em via/volume incorretos"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos relacionados",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/clinical_attention"
+    },
+    {
+      "module_id": "attention_signs",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "SINAIS DE ATENÇÃO",
+      "priority": 68,
+      "payload": {
+        "items": [
+          "Reação alérgica imediata (anafilaxia)",
+          "Febre alta persistente (> 39 °C)",
+          "Choro inconsolável por > 3 horas",
+          "Convulsões",
+          "Inchaço, vermelhidão intensa ou dor que piora no local",
+          "Falta de ar ou sibilos"
+        ],
+        "tone": "danger",
+        "section_icon": "system:alert"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os sinais de atenção",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/attention_signs"
+    },
+    {
+      "module_id": "monitoring_frequency",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "FREQUÊNCIA DE MONITORIZAÇÃO",
+      "priority": 72,
+      "payload": {
+        "columns": [
+          "event",
+          "time"
+        ],
+        "rows": [
+          {
+            "event": "Pós-vacinação imediata",
+            "time": "15–30 minutos"
+          },
+          {
+            "event": "Reações locais",
+            "time": "Até 48 horas"
+          },
+          {
+            "event": "Reações sistêmicas leves",
+            "time": "Até 72 horas"
+          },
+          {
+            "event": "Reações graves",
+            "time": "Notificação imediata"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/monitoring_frequency"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 76,
+      "payload": {
+        "items": [
+          {
+            "label": "Calendário Nacional de Vacinação (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Manual de Normas e Procedimentos (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Guia de Eventos Adversos (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Fluxograma de Condutas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Cartilha para Orientação ao Paciente (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:syringe",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:syringe",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:syringe",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:syringe",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/page-actions"
+    },
+    {
+      "module_id": "campaigns_2026",
+      "module_type": "list_panel",
+      "semantic_role": "campaigns",
+      "title": "Campanhas e estratégias nacionais de vacinação — 2026",
+      "priority": 85,
+      "payload": {
+        "items": [
+          {
+            "title": "Influenza 2026",
+            "description": "Campanha de 28/03/2026 a 30/05/2026; Dia D em 28/03/2026.",
+            "source_ref": "sbim.campanhas.2026"
+          },
+          {
+            "title": "Vacinação escolar 2026",
+            "description": "Estratégia de 01/04/2026 a 31/05/2026 para atualização da situação vacinal de estudantes menores de 15 anos.",
+            "source_ref": "sbim.campanhas.2026"
+          },
+          {
+            "title": "Multivacinação 2026",
+            "description": "Campanha de 03/08/2026 a 01/09/2026; Dia D em 08/08/2026.",
+            "source_ref": "sbim.campanhas.2026"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/campaigns_2026"
+    },
+    {
+      "module_id": "freshness-disclaimer",
+      "module_type": "warning_list",
+      "semantic_role": "governance_warning",
+      "title": "Atualização e validade das informações",
+      "priority": 2,
+      "payload": {
+        "items": [
+          {
+            "title": "Possível desatualização",
+            "description": "ATENÇÃO: informações sobre vacinas podem mudar com frequência. Este conteúdo foi revisado com base nas fontes indicadas em 09/08/2026, mas recomendações, esquemas, indicações, contraindicações, disponibilidade, campanhas, produtos e orientações podem ser atualizados antes da próxima revisão programada. Antes de uso clínico, confirme a versão vigente nas fontes oficiais aplicáveis. Próxima revisão programada: 31/01/2027."
+          },
+          {
+            "title": "Última verificação",
+            "description": "09/08/2026"
+          },
+          {
+            "title": "Próxima revisão programada",
+            "description": "31/01/2027"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vacinas.provenance.json#/module_provenance/freshness-disclaimer"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/vacinas.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/vacinas.provenance.json"
+}

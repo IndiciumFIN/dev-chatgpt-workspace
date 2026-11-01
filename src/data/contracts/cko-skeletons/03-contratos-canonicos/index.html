@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Catálogo canônico · 56 contratos · Esqueleto CKO</title>
+<meta name="description" content="Catálogo canônico · 56 contratos">
+<style>
+/* === TOKENS OFICIAIS (espelho de src/styles.css) === */
+:root{
+  --font-sans:Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;
+  --color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;
+  --color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;
+  --color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;
+  --color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:var(--color-canvas);
+  font-family:var(--font-sans);color:var(--color-body);line-height:1.5;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;
+  z-index:9999;padding:10px;border-radius:4px}
+.skip-link:focus{top:3px}
+
+/* Cabeçalho canônico (master data) */
+.cko-masterhead{
+  background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));
+  color:#fff;padding:22px 24px;border-radius:12px;margin:18px auto;
+  width:min(1380px,calc(100% - 40px));
+}
+.cko-masterhead .eyebrow{
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:#bbd8ff;font-weight:800;
+}
+.cko-masterhead h1{
+  font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);
+  margin:6px 0 4px;letter-spacing:-.03em;line-height:1.15;
+}
+.cko-masterhead .meta{
+  font-size:12px;color:#cfdff5;display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;
+}
+.cko-masterhead .meta span b{color:#fff;font-weight:700}
+
+/* Container principal */
+.cko-wrap{width:min(1380px,calc(100% - 40px));margin:0 auto;padding-bottom:48px}
+
+/* Painel padrão */
+.cko-panel{
+  background:var(--color-paper);border:1px solid var(--color-line);
+  border-radius:11px;box-shadow:0 8px 22px #1433600d;padding:18px;margin:14px 0;
+}
+.cko-panel h2{
+  font-size:18px;color:var(--color-navy-deep);margin:0 0 10px;
+  letter-spacing:-.02em;font-weight:850;
+}
+.cko-panel h3{
+  font-size:14px;color:var(--color-navy);margin:14px 0 6px;font-weight:800;
+}
+.cko-muted{color:var(--color-muted);font-size:12px}
+
+/* Bloco TODO — marca o que ainda precisa ser preenchido */
+.todo{
+  background:#fff8e9;border:1px solid #e5ae29;border-left:4px solid #d49a13;
+  color:#79530d;padding:10px 14px;border-radius:8px;font-size:12px;margin:8px 0;
+}
+.todo strong{color:#5a3f06}
+.todo code{
+  background:#fff;border-radius:3px;padding:1px 5px;font-family:ui-monospace,monospace;
+}
+
+/* Tabela canônica */
+.cko-table{border-collapse:collapse;width:100%;font-size:12px;background:var(--color-paper)}
+.cko-table th{
+  background:var(--color-ice);font-weight:800;color:var(--color-navy);
+  text-align:left;padding:10px 12px;white-space:nowrap;border:1px solid var(--color-line);
+}
+.cko-table td{
+  padding:9px 12px;border:1px solid var(--color-line);vertical-align:top;
+}
+.cko-table .mono{font-family:ui-monospace,monospace;font-size:11px}
+
+/* Status badges */
+.status{
+  display:inline-block;padding:3px 9px;border-radius:14px;
+  font-size:11px;font-weight:750;border:1px solid var(--color-line);
+  background:var(--color-ice);color:var(--color-navy);
+}
+.status.hold{background:#fff2d9;border-color:#ecd49f;color:#825400}
+.status.candidate{background:var(--color-stage);color:var(--color-muted)}
+.status.released{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+
+/* Grid para preview */
+.preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin-top:14px;
+}
+.preview-card{
+  background:var(--color-pane);border:1px dashed var(--color-line);
+  border-radius:8px;padding:14px;min-height:120px;
+}
+.preview-card .label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-muted);margin-bottom:6px;
+}
+
+/* Rodapé */
+.cko-footer{
+  text-align:center;padding:18px;border-top:1px solid var(--color-line);
+  color:var(--color-muted);font-size:11px;margin-top:24px;
+}
+
+@media(max-width:770px){
+  .cko-masterhead{padding:16px}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .cko-masterhead{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="cko-masterhead">
+  <div class="eyebrow">CKO · Esqueleto canônico · Contratos canônicos</div>
+  <h1>Catálogo canônico · 56 contratos</h1>
+  <div class="meta">
+    <span><b>canonical_id:</b> <code>CKO-SCHEMA-CATALOG</code></span>
+    <span><b>schema_version:</b> 0.1.0</span>
+    <span><b>status:</b> <span class="status candidate">CANDIDATE</span></span>
+    <span><b>updated_at:</b> 2026-10-23</span>
+  </div>
+</header>
+
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<section class="cko-panel">
+  <h2>Panorama do catálogo canônico</h2>
+  <p class="cko-muted">Esqueleto dos <strong>56 contratos canônicos</strong> do Sistema Universal. Cada contrato é um arquivo JSON Schema Draft 2020-12 com <code>additionalProperties:false</code> e <code>required</code> explícito. Famílias (5):</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px;margin-top:14px">
+    <a href="interface-e-experiencia/README.html" class="preview-card"><div class="label">Família</div><strong>Interface e experiência</strong><p class="cko-muted">11 contratos</p></a><a href="governanca-e-execucao/README.html" class="preview-card"><div class="label">Família</div><strong>Governança e execução</strong><p class="cko-muted">14 contratos</p></a><a href="fundamentos-e-evidencia/README.html" class="preview-card"><div class="label">Família</div><strong>Fundamentos e evidência</strong><p class="cko-muted">10 contratos</p></a><a href="bibliotecas-e-conteudo/README.html" class="preview-card"><div class="label">Família</div><strong>Bibliotecas e conteúdo</strong><p class="cko-muted">8 contratos</p></a><a href="clinica-e-seguranca/README.html" class="preview-card"><div class="label">Família</div><strong>Clínica e segurança</strong><p class="cko-muted">13 contratos</p></a>
+  </div>
+</section>
+
+<section class="cko-panel">
+  <h2>Interface e experiência <span class="status candidate" style="margin-left:8px">11 contratos</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="interface-e-experiencia/accessibility.html"><div class="label">accessibility</div><strong>Acessibilidade</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/component.html"><div class="label">component</div><strong>Componente</strong><p class="cko-muted">16 campos · 14 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/design_adapter.html"><div class="label">design_adapter</div><strong>Adaptador do Design System</strong><p class="cko-muted">11 campos · 10 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/export_profile.html"><div class="label">export_profile</div><strong>Exportação</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/i18n.html"><div class="label">i18n</div><strong>Internacionalização</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/metadata_seo.html"><div class="label">metadata_seo</div><strong>Metadados e SEO</strong><p class="cko-muted">16 campos · 14 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/performance_budget.html"><div class="label">performance_budget</div><strong>Orçamento de performance</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/route.html"><div class="label">route</div><strong>Rota</strong><p class="cko-muted">14 campos · 12 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/search_index.html"><div class="label">search_index</div><strong>Índice de busca</strong><p class="cko-muted">12 campos · 11 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/ui_interaction.html"><div class="label">ui_interaction</div><strong>Interação da interface</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="interface-e-experiencia/user_state.html"><div class="label">user_state</div><strong>Estado do usuário</strong><p class="cko-muted">11 campos · 10 obrigatórios</p></a></div>
+  <p style="margin-top:14px"><a href="interface-e-experiencia/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo da família →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Governança e execução <span class="status candidate" style="margin-left:8px">14 contratos</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="governanca-e-execucao/advertising.html"><div class="label">advertising</div><strong>Publicidade</strong><p class="cko-muted">13 campos · 13 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/agent.html"><div class="label">agent</div><strong>Agente</strong><p class="cko-muted">18 campos · 13 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/analytics_event.html"><div class="label">analytics_event</div><strong>Evento analítico</strong><p class="cko-muted">12 campos · 11 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/audit_evidence.html"><div class="label">audit_evidence</div><strong>Evidência de auditoria</strong><p class="cko-muted">16 campos · 14 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/find.html"><div class="label">find</div><strong>FIND</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/monitoring.html"><div class="label">monitoring</div><strong>Monitoramento</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/privacy.html"><div class="label">privacy</div><strong>Privacidade</strong><p class="cko-muted">12 campos · 11 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/release_gate.html"><div class="label">release_gate</div><strong>Gate de liberação</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/risk_control.html"><div class="label">risk_control</div><strong>Risco e controle</strong><p class="cko-muted">17 campos · 15 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/runtime_test.html"><div class="label">runtime_test</div><strong>Teste de runtime</strong><p class="cko-muted">16 campos · 14 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/state_machine.html"><div class="label">state_machine</div><strong>Máquina de estados</strong><p class="cko-muted">11 campos · 10 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/task.html"><div class="label">task</div><strong>Tarefa</strong><p class="cko-muted">15 campos · 14 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/work_order.html"><div class="label">work_order</div><strong>Ordem de trabalho</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="governanca-e-execucao/workflow.html"><div class="label">workflow</div><strong>Fluxo de trabalho</strong><p class="cko-muted">12 campos · 10 obrigatórios</p></a></div>
+  <p style="margin-top:14px"><a href="governanca-e-execucao/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo da família →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Fundamentos e evidência <span class="status candidate" style="margin-left:8px">10 contratos</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="fundamentos-e-evidencia/applicability.html"><div class="label">applicability</div><strong>Aplicabilidade</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/authority_binding.html"><div class="label">authority_binding</div><strong>Autoridade por campo</strong><p class="cko-muted">15 campos · 12 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/canonical_object.html"><div class="label">canonical_object</div><strong>Objeto canônico</strong><p class="cko-muted">16 campos · 12 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/claim.html"><div class="label">claim</div><strong>Alegação sustentada</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/field_definition.html"><div class="label">field_definition</div><strong>Definição de campo</strong><p class="cko-muted">16 campos · 12 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/measurement.html"><div class="label">measurement</div><strong>Medida</strong><p class="cko-muted">13 campos · 11 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/reference.html"><div class="label">reference</div><strong>Referência bibliográfica</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/relation.html"><div class="label">relation</div><strong>Relação semântica</strong><p class="cko-muted">12 campos · 11 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/source.html"><div class="label">source</div><strong>Fonte</strong><p class="cko-muted">18 campos · 14 obrigatórios</p></a><a class="preview-card" href="fundamentos-e-evidencia/terminology.html"><div class="label">terminology</div><strong>Terminologia</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a></div>
+  <p style="margin-top:14px"><a href="fundamentos-e-evidencia/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo da família →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Bibliotecas e conteúdo <span class="status candidate" style="margin-left:8px">8 contratos</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="bibliotecas-e-conteudo/assessment_item.html"><div class="label">assessment_item</div><strong>Item de avaliação</strong><p class="cko-muted">16 campos · 13 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/learning_resource.html"><div class="label">learning_resource</div><strong>Recurso de aprendizagem</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/library.html"><div class="label">library</div><strong>Biblioteca</strong><p class="cko-muted">17 campos · 13 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/media_asset.html"><div class="label">media_asset</div><strong>Asset de mídia</strong><p class="cko-muted">20 campos · 14 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/projection.html"><div class="label">projection</div><strong>Projeção</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/publication.html"><div class="label">publication</div><strong>Publicação</strong><p class="cko-muted">14 campos · 12 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/research_method.html"><div class="label">research_method</div><strong>Método de pesquisa</strong><p class="cko-muted">16 campos · 15 obrigatórios</p></a><a class="preview-card" href="bibliotecas-e-conteudo/visualization.html"><div class="label">visualization</div><strong>Visualização</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a></div>
+  <p style="margin-top:14px"><a href="bibliotecas-e-conteudo/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo da família →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Clínica e segurança <span class="status candidate" style="margin-left:8px">13 contratos</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="clinica-e-seguranca/clinical_result.html"><div class="label">clinical_result</div><strong>Resultado clínico</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/clinical_rule.html"><div class="label">clinical_rule</div><strong>Regra clínica</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/device.html"><div class="label">device</div><strong>Dispositivo</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/formula.html"><div class="label">formula</div><strong>Fórmula</strong><p class="cko-muted">16 campos · 15 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/inference.html"><div class="label">inference</div><strong>Inferência</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/interpretation.html"><div class="label">interpretation</div><strong>Interpretação</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/laboratory_exam.html"><div class="label">laboratory_exam</div><strong>Exame laboratorial</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/medication.html"><div class="label">medication</div><strong>Medicamento</strong><p class="cko-muted">16 campos · 14 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/procedure.html"><div class="label">procedure</div><strong>Procedimento</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/protocol.html"><div class="label">protocol</div><strong>Protocolo</strong><p class="cko-muted">15 campos · 13 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/safety_check.html"><div class="label">safety_check</div><strong>Verificação de segurança</strong><p class="cko-muted">13 campos · 12 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/tool.html"><div class="label">tool</div><strong>Ferramenta</strong><p class="cko-muted">17 campos · 14 obrigatórios</p></a><a class="preview-card" href="clinica-e-seguranca/vaccine.html"><div class="label">vaccine</div><strong>Vacina</strong><p class="cko-muted">14 campos · 13 obrigatórios</p></a></div>
+  <p style="margin-top:14px"><a href="clinica-e-seguranca/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo da família →</a></p>
+</section>
+
+</main>
+
+<footer class="cko-footer">
+  Calculadoras de Enfermagem · Esqueleto CKO · Página local para preenchimento · Não publicada
+</footer>
+</body>
+</html>

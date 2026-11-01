@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "0.1.0",
+  "registerId": "CE-AUDIT-POLICY",
+  "snapshotDate": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "populationStatus": "TODO",
+  "note": "Esqueleto executavel. Secoes com listas vazias NAO produzem achado — ausencia de item na politica nao e conformidade. Task T2.022 popula com o inventario real (Supabase, Drive, fontes).",
+  "engine": "scripts/audit_data_kernel.py",
+  "safety": {
+    "readOnly": true,
+    "neverWriteProduction": true,
+    "productionTargets": [],
+    "transactionMode": "READ ONLY",
+    "allowedSchemas": ["public", "core", "app"]
+  },
+  "contentGlobs": ["src/lib/content/**/*.json"],
+  "migrationGlobs": ["migrations/**/*.sql", "supabase/migrations/**/*.sql"],
+  "i18n": {
+    "defaultLocale": "pt-BR",
+    "requiredLocales": ["pt-BR", "en"],
+    "register": "registers/i18n/locale-register.v1.json",
+    "policy": {
+      "neverMarkCompleteWithoutReview": true,
+      "remoteTranslationIsNotProof": true,
+      "emptyTranslationIsError": true,
+      "identicalToSourceIsWarning": true
+    }
+  },
+  "seo": {
+    "metaTitleMin": 30,
+    "metaTitleMax": 60,
+    "metaDescriptionMin": 120,
+    "metaDescriptionMax": 160,
+    "slugFields": ["slug", "canonical", "url"],
+    "titleFields": ["metaTitle", "title"],
+    "descriptionFields": ["metaDescription", "description"],
+    "slugPattern": "^[a-z0-9-]+$",
+    "altTextMinLength": 10,
+    "altTextMustNotEqualFileName": true
+  },
+  "jsonLd": {
+    "requiredByType": {
+      "Product": ["name", "image", "sku", "price", "priceCurrency"],
+      "Article": ["headline", "image", "datePublished", "dateModified", "author"],
+      "Organization": ["name", "url", "logo"],
+      "BreadcrumbList": ["position", "item", "name"]
+    },
+    "temporalRule": "dateModified >= datePublished"
+  },
+  "security": {
+    "piiColumns": [],
+    "rlsRequiredTables": [],
+    "authorizedRoles": [],
+    "note": "PII e RLS dependem do inventario real de roles do Supabase (T2.022)."
+  },
+  "tables": [],
+  "logicalRelations": [],
+  "typedFields": [],
+  "masterData": {
+    "businessKeys": [],
+    "activeFlag": "is_active",
+    "atomizationPatterns": [],
+    "note": "Sem dado versionado no repo, MST-01 e MST-02 ficam especificados e nao executaveis (ver catalogo de cenarios)."
+  }
+}

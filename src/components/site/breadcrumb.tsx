@@ -4,9 +4,15 @@ import type { ReactNode } from "react";
 
 export type Crumb = {
   label: ReactNode;
-  to?: "/" | "/admin" | "/assinante" | "/modelos" | "/blog/mary-eliza-mahoney" | "/pacote" | "/sistema" | "/secao/$slug" | "/institucional" | "/institucional/$hub";
+  to?: "/" | "/assinante" | "/modelos" | "/blog/$slug" | "/pacote" | "/sistema" | "/secao/$slug" | "/institucional" | "/institucional/$hub";
   params?: { slug?: string; hub?: string };
   hash?: string;
+  /**
+   * Link externo ao roteador. Para consumidores que nao tem rota registrada
+   * (a biblioteca usa `href` porque seus hubs sao caminhos planos).
+   * Quando ausente, o comportamento e o de sempre — o markup nao muda.
+   */
+  href?: string;
 };
 
 export function Breadcrumb({ items }: { items: Crumb[] }) {
@@ -15,7 +21,9 @@ export function Breadcrumb({ items }: { items: Crumb[] }) {
       <ol>
         {items.map((item, index) => (
           <li key={index}>
-            {item.to === "/secao/$slug" ? (
+            {item.href ? (
+              <a href={item.href}>{item.label}</a>
+            ) : item.to === "/secao/$slug" ? (
               <Link to="/secao/$slug" params={{ slug: item.params?.slug ?? "" }} hash={item.hash}>{item.label}</Link>
             ) : item.to === "/institucional/$hub" ? (
               <Link to="/institucional/$hub" params={{ hub: item.params?.hub ?? "" }}>{item.label}</Link>

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Youth Activity Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "description",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "QUIZ",
+        "GAME",
+        "CARD_SET",
+        "SCENARIO",
+        "GUIDED_REFLECTION"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "linked_module_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

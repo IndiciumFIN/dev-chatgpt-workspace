@@ -1,0 +1,28 @@
+# CE — HANDOFF MULTIBRANCH E PLANO DE EXECUÇÃO ATÉ HOMOLOGAÇÃO
+Data: 2026-10-18. Fonte autoritativa documental: GitHub `IndiciumFIN/calculadorasdeenfermagem`.
+## 1. Instrução inicial obrigatória
+Ler este documento, `STATE.json`, `BRANCH_REGISTER.csv` e o pacote anterior `CE_MASTER_CONTINUITY_20261018.zip` na Biblioteca `Calculadoras de Enfermagem/Backups/CE Master Continuity 2026-10-18`. Recuperar também `CE_MASTER_HANDOFF_20261017.md`, `CE_CONTINUATION_STATE_20261017.json`, as 38 tarefas e a WO candidata da branch de auditoria. Não solicitar nem usar Drive. Supabase Calculadoras-Smart exclusivamente para confronto autorizado, READ_ONLY inicial.
+## 2. Inventário verificado agora
+14 branches; todas as árvores recursivas lidas sem truncamento; HEADs e contagens em `BRANCH_REGISTER.csv`. ATENÇÃO: `migration/candidate-f08-20261017` (19.136 arquivos) é a maior branch, acima de `migration/full-directory-20261017` (19.119). Contagens não são arquivos únicos nem aprovação de conteúdo.
+## 3. Trabalho já executado: não repetir
+- Dois maiores snapshots internos de full-directory: 9.356 iguais por caminho+Git SHA, 7 divergentes, 3 exclusivos do snapshot cursor-drive-sa-key-refactor, 0 exclusivos do cursor-fix-governance-gaps-ec54; união 9.366 caminhos. Pacote `CE_SNAPSHOT_RECON_20261018.zip`.
+- Três snapshots menores comparados ao snapshot-base: staging normativos CLI (79: 46 iguais, 21 divergentes, 12 exclusivos), cursor-wf-gdrive-sakey (78: 46 iguais, 21 divergentes, 11 exclusivos), cursor-wf-v3 (69: 46 iguais, 21 divergentes, 2 exclusivos). Esses grupos podem se sobrepor: NÃO somar como arquivos únicos.
+- `audit/ce04...` 238 arquivos, `integration/canonical-main...` 134. Handoff anterior preservou evidências locais e respectivos SHA256. Normativos 1.020 rastreáveis estruturalmente conforme histórico; NÃO homologados. CE04 65 hashes verificados segundo manifesto histórico, sem nova repetição automática.
+- `CE_MASTER_CONTINUITY_20261018.zip` e `CE_PRESERVATION_REGISTER_20261018.zip` são backups/índices locais; verificar bytes antes de confiar em integridade. NÃO afirmar que 19 mil arquivos estão no ZIP.
+## 4. Pendências por frente
+CE-00: consolidar mapa de cobertura e decisões, inventário de riscos e gates. CE-01: reconciliar branches e PR#6, manter histórico, não merge. CE-02: usar somente evidências históricas já migradas, nunca Drive. CE-03: confronto Supabase READ_ONLY, 61 linhagens não verificadas, 303 eventos outbox pendentes (dados históricos, revalidar), não reprocessar. CE-04: matriz REQUIRED×PRESENT×VALIDATED×PASS, conflitos, 65 arquivos e conteúdo editorial. CE-05: política de admissão, validador e Kernel reais, testes isolados. CE-06: auditoria independente, aprovação e homologação.
+## 5. Plano determinístico até o final
+G0 — Recuperar pacotes e arquivos existentes por hash, confirmar HEADs; registrar mudanças de cutoff. Não reexecutar tarefas PASS comprovadas.
+G1 — Priorizar `migration/candidate-f08-20261017` (maior); confrontar por caminho relativo, Git blob SHA e tamanho com `migration/full-directory-20261017`, depois as 12 branches restantes. Gerar matriz por branch/arquivo, conjunto único, idênticos, exclusivos, divergentes, blobs compartilhados, formatos e domínios. Não deduplicar destrutivamente.
+G2 — Vincular cada item ao artefato, tarefa, WO, FIND, origem, cutoff, evidência, licença e validador. Classificar dados clínicos, normativos, editoriais, HTML, componentes, scripts, testes, agentes, contratos, documentação, ZIPs e binários. Onde faltam evidências: HOLD_SOURCE/HOLD_HUMAN.
+G3 — Para cada mudança: FIND formal → política aplicável ou criação/ajuste governado → validador implementado/testado → tarefa formal → WO → admissão verificável pelo Kernel (recibo persistente). Nenhuma mutação sem G3.
+G4 — Executar microlotes isolados (preferencialmente <=5 mudanças por lote), preflight, SHA esperado, dry-run, verificação de segredos/licenças/PHI, commit, readback por SHA, CI. Salvar artefatos no GitHub quando autorizado; backup persistente enquanto bloqueado.
+G5 — Testes técnicos, clínicos/editoriais quando aplicáveis, segurança, regressão, acessibilidade, i18n, licenças, integridade, consistência e proveniência. Registrar PASS/FAIL/HOLD, sem declarar 100% por cobertura estrutural.
+G6 — Auditoria CE-06 independente, revisão de conflitos, aprovação humana quando requerida; PR DRAFT e revisão. Main apenas com autorização explícita, gates PASS e readback.
+G7 — Homologação final: matriz completa, zero pendências críticas não aceitas, release, evidências, inventário e handoff de manutenção.
+## 6. Contrato de progresso
+A cada microlote informar: objetivo, base SHA, itens novos, itens reutilizados, divergências, FINDs, testes, arquivo salvo e próximo lote. Barras separadas: inventário, reconciliação, admissões, testes, publicação, homologação. Nunca converter 100% inventariado em 100% concluído.
+## 7. Proibições
+Sem Drive; sem escrita Supabase produção; sem replay outbox; sem exclusão/desduplicação destrutiva; sem promoção main; sem alegar Kernel admitido sem recibo; sem prometer backup que não foi salvo e verificado.
+## 8. Primeira tarefa da nova conversa
+Comparar integralmente `migration/candidate-f08-20261017` (19.136 arquivos, SHA e7add8e510077c2ea4c0591cdafe2440c1ffd418) contra `migration/full-directory-20261017` (19.119 arquivos, SHA bad54d1d9b6d281a0a2bb8077895e2ad45571b68). Identificar exatamente as diferenças e reaproveitar os 9.356 blobs idênticos já verificados dentro dos snapshots. Emitir matriz de exceções, atualizar registro-mestre e salvar backup, sem modificar remoto.

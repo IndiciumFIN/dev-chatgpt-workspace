@@ -1,0 +1,115 @@
+{
+  "properties": {
+    "a2a_agent_card": {
+      "type": "string"
+    },
+    "agent_type": {
+      "enum": [
+        "clinical_reasoning",
+        "safety_monitor",
+        "administrative",
+        "patient_facing",
+        "educator",
+        "orchestrator",
+        "twin_simulator"
+      ],
+      "type": "string"
+    },
+    "autonomy_level": {
+      "enum": [
+        "L0_suggest",
+        "L1_draft_review",
+        "L2_hitl",
+        "L3_autonomous"
+      ],
+      "type": "string"
+    },
+    "care_settings": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "clinical_champion": {
+      "type": "string"
+    },
+    "contract_ref": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "guardrail_policy_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "handoff_targets": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "knowledge_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "model_card_ref": {
+      "type": "string"
+    },
+    "model_ref": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nursebench_score": {
+      "type": "number"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "requires_human_approval_for": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "risk_class": {
+      "enum": [
+        "I",
+        "II",
+        "III"
+      ],
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "sandbox",
+        "pilot",
+        "production",
+        "deprecated"
+      ],
+      "type": "string"
+    },
+    "tools": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "Agent"
+}

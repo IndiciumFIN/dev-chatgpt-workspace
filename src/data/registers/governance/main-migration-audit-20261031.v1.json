@@ -1,0 +1,288 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-MAIN-MIGRATION-AUDIT-20261031",
+  "date": "2026-10-31",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "baseline": {
+    "branch": "main",
+    "sha": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+    "verifiedDuringAudit": true
+  },
+  "audit": {
+    "sources": {
+      "branches": 23,
+      "ahead": 11,
+      "diverged": 8,
+      "noCommonAncestor": 2,
+      "behind": 2,
+      "missingRefs": 0
+    },
+    "diffPaths": {
+      "totalAcrossBranches": 11288,
+      "sourcePathsAlreadyInMain": 1,
+      "pendingAcrossBranches": 11287,
+      "distinctPendingPaths": 10679,
+      "collisionPaths": 115,
+      "duplicatePaths": 258
+    },
+    "firstRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223479751",
+    "refinedRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41224102293",
+    "riskGroupsAtRefinedRun": {
+      "SOURCE_CORPUS_HOLD": 8250,
+      "SOURCE_IMPORT_HOLD": 236,
+      "SOURCE_LIBRARY_HOLD": 105,
+      "TEMP_ARTIFACT_QUARANTINE": 16,
+      "AUDIT_ARTIFACT_REVIEW": 15,
+      "SECURITY_HOLD": 46,
+      "DATABASE_HOLD": 136,
+      "CLINICAL_HOLD": 8,
+      "I18N_VALIDATE": 1270,
+      "CANDIDATE_REVIEW": 1205
+    },
+    "note": "Git-file structural classification only; many clinically relevant HTML pages inside source corpus were counted under SOURCE_CORPUS_HOLD, not the 8 paths matching CLINICAL_HOLD.",
+    "conflictCategories": {
+      "i18n": 59,
+      "src": 28,
+      "other": 13,
+      "docs": 6,
+      "governance": 5,
+      "ciAndDependencies": 4,
+      "total": 115,
+      "grouping": "Heuristic by collision path; exact names and blob SHAs are available in full GitHub Actions artifact."
+    },
+    "highPriorityCollisionPaths": [
+      "package.json",
+      "package-lock.json",
+      "src/components/site/shell.tsx",
+      "src/routes/login.tsx",
+      "src/styles.css",
+      "src/components/admin/pmo-panel.tsx",
+      "registers/pmo/queue.v1.json",
+      "contracts/cko-governance/opa/kernel_admission.rego",
+      "registers/canonical/surface-contracts.v2.json",
+      "contracts/entities/routes.v1.json",
+      "src/core/governance/kernel.ts"
+    ]
+  },
+  "sourceCorpus": {
+    "origin": {
+      "branch": "feat/projection-unica-f0-suite-real",
+      "sourceCommit": "6d712dd47029286869f909a2014f42083f5db2a9",
+      "path": "artifacts/fonte/corpus/paginas"
+    },
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41224102293",
+    "indexArtifactName": "ce-source-corpus-candidate-index",
+    "indexSha256": "827624bb70b78b7e333904a5e411a855f08094a3ad6fda528cf86540d3db9f14",
+    "pagesExpected": 8250,
+    "pagesIndexed": 8250,
+    "batches": 33,
+    "batchSize": 250,
+    "kinds": {
+      "CONTENT_CANDIDATE_HOLD": 4374,
+      "BACKUP_QUARANTINE": 3817,
+      "TEMPLATE_QUARANTINE": 31,
+      "SHARED_FRAGMENT_HOLD": 21,
+      "AUTOMATION_HOLD": 7
+    },
+    "structurallyValid": 8206,
+    "structuralProblems": 44,
+    "problemOccurrences": {
+      "INVALID_LOCALE": 43,
+      "UNRESOLVED_CANONICAL_TEMPLATE": 2
+    },
+    "emptyTexts": 590,
+    "duplicateIdentityGroups": 0,
+    "licenseEvidenceInIndex": 0,
+    "licenseUnverified": 8250,
+    "limitations": [
+      "Duplicated identities are checked only for exact language+sourcePath; content similarity and semantic duplicates are not yet assessed",
+      "A source SHA-256 is declared by the extracted page but cannot be cryptographically checked against missing original HTML",
+      "No license field in extracted page JSON does not imply user lacks rights; ownership, attribution and source rights require evidence",
+      "Structural validity is not clinical, linguistic, editorial or regulatory homologation",
+      "Some invalid locale values belong to backups/templates rather than publishable pages"
+    ],
+    "releaseGate": "HOLD_HUMAN",
+    "note": "Templates/backups are source-preserving classifications derived from document path, not deletions or proof of semantic duplicates."
+  },
+  "header": {
+    "pr": 27,
+    "branch": "fix/shell-consolidation",
+    "commit": "8090077a256c4986a29d07e488158f349b1df1ab",
+    "candidateCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223233001",
+    "candidateCIResult": "SUCCESS",
+    "generalCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41223232987",
+    "generalCIResult": "FAILURE_PMO_VALIDATION",
+    "knownMergeRisk": "The PR includes older large src/styles.css changes unrelated to the login change; selective integration and diff review required.",
+    "loginBehavior": "Entrar always visible and links to /login; when VITE_AUTH_ENABLED=false the page says sign-in is unavailable, no fake session.",
+    "releaseGate": "HOLD_HUMAN",
+    "newCandidate": {
+      "pr": 13,
+      "branch": "fix/governed-activities-cli-20261026",
+      "sha": "337b0338fd639762dc1ec3740cdfb4f0877a34bc",
+      "note": "Entrar moved to governed admin candidate without unrelated CSS diff; actual auth continues gated by VITE_AUTH_ENABLED",
+      "ciRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41227928335",
+      "ciResult": "SUCCESS",
+      "latestPreviewAttempt": "BLOCKED_VERCEL_FREE_DAILY_DEPLOYMENT_LIMIT",
+      "vercelError": "402 payment_required/api-deployments-free-per-day (more than 100 daily deployments) - preview not created",
+      "releaseGate": "HOLD_HUMAN"
+    }
+  },
+  "releasePolicy": {
+    "mainUpdatedByThisAudit": false,
+    "kernelAdmission": "NOT_VERIFIED",
+    "pmoCanonicalRevision": "NOT_ELECTED",
+    "securityAndDbTests": "NOT_COMPLETE",
+    "clinicalRightsAndProvenance": "NOT_VERIFIED",
+    "branchConflictsResolved": 0,
+    "branchConflictsTotal": 115,
+    "requiredNextActions": [
+      "Reconcile 115 colliding paths, prioritizing package/auth, route contracts and i18n dictionaries without destructive overwrite",
+      "Separate 4374 content candidates from 3817 backups and verify rights/clinical provenance per page",
+      "Resolve 44 structural defects and inspect 590 entries without full text",
+      "Validate 236 Drive import items and 105 library corpus files against canonical IDs and duplicate hashes",
+      "Elect PMO revision, obtain verifiable Kernel admission, finish security and independent E2E before any promotion",
+      "Integrate topbar files selectively, excluding unintended stylesheet churn"
+    ],
+    "state": "CANDIDATE_RECONCILIATION_ONLY",
+    "gate": "HOLD_HUMAN",
+    "completionClaim": "NOT_100_PERCENT_MIGRATED",
+    "conflictResolutionStrategy": {
+      "method": "For each conflicting path, identify canonical owner/source and compare full blobs/lineage; classify as KEEP_MAIN, ADOPT_CANDIDATE, MERGE_SEMANTIC, QUARANTINE or SUPERSEDE with evidence; require human/Kernel authorization for restricted categories.",
+      "prohibited": "No automatic winner chosen from branch date, filename, or recency alone.",
+      "priority": [
+        "Kernel/PMO, access control and package dependencies",
+        "Canonical routes and Design System/topbar",
+        "i18n competing dictionaries",
+        "Editorial corpus/backup dedup and source rights",
+        "Product modules, DB staging and clinical governance"
+      ]
+    },
+    "semanticDedup": {
+      "equivalentPaths": 57,
+      "remainingPathReview": 58,
+      "resolvedForRelease": 0,
+      "doNotMergeReason": "No source authorization, PMO election or Kernel admission recorded for these paths",
+      "reviewPriority": [
+        "package.json and lockfile security",
+        "contracts/cko-governance/opa/kernel_admission.rego",
+        "registers/pmo/queue.v1.json",
+        "src/components/site/shell.tsx and src/routes/login.tsx",
+        "src/core/governance/kernel.ts and type contracts",
+        "German registry index/entry and 57 draft translation candidates"
+      ]
+    },
+    "collisionMapping": {
+      "status": "CANDIDATE_MAPPING_COMPLETE",
+      "candidateMappedPaths": 115,
+      "candidateUnmappedPaths": 0,
+      "releaseApprovals": 0,
+      "canonicalMergesPerformed": 0,
+      "notHomologated": true
+    },
+    "historicalCountsNotCurrent": true,
+    "runtimeGateAuthority": "scripts/audit-main-migration.mjs + complete current branch-population CI evidence, never static 115/258 snapshot"
+  },
+  "artifactPolicy": "Full candidate metadata/index exists in GitHub Actions artifacts with 30-day retention; this versioned summary + deterministic scripts remain in Git history. Re-run before retention expiry if audit evidence is required.",
+  "semanticCollisionAudit": {
+    "version": "1.0.0",
+    "date": "2026-10-31",
+    "method": "Normalize JSON object keys and order of unique provenance_refs only. Compare full normalized documents; never ignore value, status, other arrays or canonical IDs.",
+    "sourceRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41227985734",
+    "result": "CANDIDATE_AUDIT_PASS_RELEASE_HOLD",
+    "pathsInitiallyConflicting": 115,
+    "semanticEquivalentGermanTranslationContracts": 57,
+    "stillRequiringIndependentReconciliation": 58,
+    "unverifiable": 0,
+    "nonTranslationGermanRegistryFiles": [
+      "registers/i18n/incoming/de/index.json",
+      "registers/i18n/incoming/de/register-entry.json"
+    ],
+    "limitation": "Semantic equivalence is not approval of DRAFT translations, canonical-owner election or permission for main. The 58 others are not necessarily all textually distinct: most were outside the narrow allowlist.",
+    "sourceScript": "scripts/audit-i18n-collisions.mjs",
+    "tests": "scripts/semantic-collision-audit.test.mjs",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "collisionTriage": {
+    "version": "1.1.0",
+    "scope": "115 conflicting Git paths across 23 branches; distinct from total content corpus",
+    "workflow": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41228484305",
+    "result": "PASS_READ_ONLY_NOT_KERNEL_ADMITTED",
+    "sourceCommit": "05d390f60b83746acadc9d3414d6bb38f4f43a2d",
+    "artifactName": "ce-main-migration-source-collision-report",
+    "artifactSha256": "2fc393069cc70978301732fb79cc995d7595c8c6129ace2bc4ec1d14386e34a7",
+    "counts": {
+      "total": 115,
+      "semanticEquivalent": 57,
+      "remainingNonEquivalentOrNonAllowlisted": 58,
+      "candidateWoMappings": 115,
+      "unresolvedWoMappings": 0,
+      "sourceSuggestions": 3,
+      "formallyApproved": 0
+    },
+    "candidateWoCounts": {
+      "WO-PMO-001": 9,
+      "WO-AUTO-001": 7,
+      "WO-GOV-TRANS-001": 8,
+      "WO-CKO-001": 11,
+      "WO-SEC-001": 6,
+      "WO-ADM-001": 9,
+      "WO-DS-001": 63,
+      "WO-E2E-001": 2
+    },
+    "sourceFiles": [
+      "scripts/lib/canonical-conflict-triage.mjs",
+      "scripts/canonical-conflict-triage.test.mjs",
+      "scripts/audit-conflict-triage.mjs"
+    ],
+    "evidenceFiles": [
+      "audit-evidence/main-migration/runtime-report.json",
+      "audit-evidence/main-migration/semantic-i18n-collisions.v1.json",
+      "audit-evidence/main-migration/canonical-conflict-triage.v1.json"
+    ],
+    "limitations": [
+      "Each mapping is a deterministic PMO CANDIDATE to an already-existing WO, not a recorded Kernel authorization or signed assignment.",
+      "All 115 paths remain blocked for main promotion pending independent acceptance and source integrity.",
+      "57 semantic equivalence records compare JSON object keys and provenance_refs order only; translation human sign-off remains absent.",
+      "58 other conflicts remain in review, some are structurally different registries and were never compared semantically.",
+      "Artifacts retained 30 days; scripts and versioned summary reproduce the workflow; SHA-256 pins the exact run output."
+    ],
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "pmoForkAudit": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41229631327",
+    "ledger": "registers/governance/pmo-fork-reconciliation-20261031.v1.json",
+    "sourceQueues": 5,
+    "wos": 12,
+    "events": 28,
+    "extraEvents": 8,
+    "seqConflicts": 2,
+    "contestedStatuses": 2,
+    "revisionChosen": false,
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "snapshotSemantics": {
+    "classification": "HISTORICAL_SUPERSEDED_FOR_CURRENT_PATH_COUNTS",
+    "originalStatisticsValidFor": "2026-10-31 earlier source snapshot; do not treat audit.diffPaths, releasePolicy.branchConflictsTotal, semanticCollisionAudit, or collisionTriage counts as current",
+    "historicalDataPreserved": true,
+    "currentMeasurementsMustBeRecomputed": true,
+    "lastReviewedSnapshot": {
+      "sourceHeadSha": "0b0daf95cc7a12084dc83e639bd2befb3204c724",
+      "mainSha": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+      "runUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41250529047",
+      "sourceBranches": 23,
+      "sourcePaths": 11424,
+      "pendingPaths": 11422,
+      "distinctPendingPaths": 10796,
+      "collisions": 118,
+      "duplicates": 260,
+      "semanticEquivalentCandidates": 57,
+      "remainingReview": 61,
+      "releaseAuthorized": false
+    },
+    "sourceOfCurrentTruth": "Re-run scripts/audit-main-migration.mjs at current SHA after complete live branch ref enumeration; use corresponding GitHub Actions artifact and check explicit fail-closed status. These figures are a dated last-reviewed snapshot only, not a release metric.",
+    "reviewFinding": "FIND-IR-05",
+    "independentReviewUrl": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26#issuecomment-6550484028",
+    "newHeadRequiresRevalidation": true,
+    "releaseGate": "HOLD_HUMAN"
+  }
+}

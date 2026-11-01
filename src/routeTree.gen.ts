@@ -10,48 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SplatRouteImport } from './routes/$'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AlbumRouteImport } from './routes/album'
 import { Route as AssinanteRouteImport } from './routes/assinante'
-import { Route as BolsasRouteImport } from './routes/bolsas'
-import { Route as CalculadorasTrabalhistasRouteImport } from './routes/calculadoras-trabalhistas'
 import { Route as CentralComandoRouteImport } from './routes/central-comando'
-import { Route as ConcursoRouteImport } from './routes/concurso'
-import { Route as ConcursosRouteImport } from './routes/concursos'
 import { Route as ContaRouteImport } from './routes/conta'
-import { Route as CuriosidadesRouteImport } from './routes/curiosidades'
-import { Route as CursosSusRouteImport } from './routes/cursos-sus'
-import { Route as DoencasCompulsoriasRouteImport } from './routes/doencas-compulsorias'
-import { Route as EstudoRouteImport } from './routes/estudo'
-import { Route as ExamesLaboratoriaisRouteImport } from './routes/exames-laboratoriais'
-import { Route as FerramentasPesquisaRouteImport } from './routes/ferramentas-pesquisa'
-import { Route as ForumRouteImport } from './routes/forum'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
 import { Route as KidsRouteImport } from './routes/kids'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ModelosRouteImport } from './routes/modelos'
 import { Route as OficinaLocalRouteImport } from './routes/oficina-local'
-import { Route as OportunidadesRouteImport } from './routes/oportunidades'
 import { Route as PacoteRouteImport } from './routes/pacote'
-import { Route as ResidenciasRouteImport } from './routes/residencias'
-import { Route as SbarRouteImport } from './routes/sbar'
 import { Route as SessaoRouteImport } from './routes/sessao'
 import { Route as SistemaRouteImport } from './routes/sistema'
-import { Route as VagasRouteImport } from './routes/vagas'
 import { Route as ViladocuidadoRouteImport } from './routes/viladocuidado'
 import { Route as BibliotecasIndexRouteImport } from './routes/bibliotecas.index'
 import { Route as BibliotecasSlugRouteImport } from './routes/bibliotecas.$slug'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as BlogMaryElizaMahoneyRouteImport } from './routes/blog.mary-eliza-mahoney'
 import { Route as FerramentasSlugRouteImport } from './routes/ferramentas.$slug'
 import { Route as InstitucionalIndexRouteImport } from './routes/institucional.index'
 import { Route as InstitucionalHubRouteImport } from './routes/institucional.$hub'
 import { Route as KidsIndexRouteImport } from './routes/kids.index'
 import { Route as KidsSectionRouteImport } from './routes/kids.$section'
-import { Route as KidsColorirRouteImport } from './routes/kids.colorir'
-import { Route as KidsJogosRouteImport } from './routes/kids.jogos'
 import { Route as ModelosIndexRouteImport } from './routes/modelos.index'
 import { Route as ModelosIdRouteImport } from './routes/modelos.$id'
 import { Route as SecaoSlugRouteImport } from './routes/secao.$slug'
@@ -67,19 +47,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SplatRoute = SplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AlbumRoute = AlbumRouteImport.update({
-  id: '/album',
-  path: '/album',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssinanteRoute = AssinanteRouteImport.update({
@@ -87,70 +57,14 @@ const AssinanteRoute = AssinanteRouteImport.update({
   path: '/assinante',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BolsasRoute = BolsasRouteImport.update({
-  id: '/bolsas',
-  path: '/bolsas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalculadorasTrabalhistasRoute =
-  CalculadorasTrabalhistasRouteImport.update({
-    id: '/calculadoras-trabalhistas',
-    path: '/calculadoras-trabalhistas',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const CentralComandoRoute = CentralComandoRouteImport.update({
   id: '/central-comando',
   path: '/central-comando',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConcursoRoute = ConcursoRouteImport.update({
-  id: '/concurso',
-  path: '/concurso',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConcursosRoute = ConcursosRouteImport.update({
-  id: '/concursos',
-  path: '/concursos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContaRoute = ContaRouteImport.update({
   id: '/conta',
   path: '/conta',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CuriosidadesRoute = CuriosidadesRouteImport.update({
-  id: '/curiosidades',
-  path: '/curiosidades',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CursosSusRoute = CursosSusRouteImport.update({
-  id: '/cursos-sus',
-  path: '/cursos-sus',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DoencasCompulsoriasRoute = DoencasCompulsoriasRouteImport.update({
-  id: '/doencas-compulsorias',
-  path: '/doencas-compulsorias',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstudoRoute = EstudoRouteImport.update({
-  id: '/estudo',
-  path: '/estudo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExamesLaboratoriaisRoute = ExamesLaboratoriaisRouteImport.update({
-  id: '/exames-laboratoriais',
-  path: '/exames-laboratoriais',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FerramentasPesquisaRoute = FerramentasPesquisaRouteImport.update({
-  id: '/ferramentas-pesquisa',
-  path: '/ferramentas-pesquisa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForumRoute = ForumRouteImport.update({
-  id: '/forum',
-  path: '/forum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InstitucionalRoute = InstitucionalRouteImport.update({
@@ -178,24 +92,9 @@ const OficinaLocalRoute = OficinaLocalRouteImport.update({
   path: '/oficina-local',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OportunidadesRoute = OportunidadesRouteImport.update({
-  id: '/oportunidades',
-  path: '/oportunidades',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PacoteRoute = PacoteRouteImport.update({
   id: '/pacote',
   path: '/pacote',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResidenciasRoute = ResidenciasRouteImport.update({
-  id: '/residencias',
-  path: '/residencias',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SbarRoute = SbarRouteImport.update({
-  id: '/sbar',
-  path: '/sbar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SessaoRoute = SessaoRouteImport.update({
@@ -206,11 +105,6 @@ const SessaoRoute = SessaoRouteImport.update({
 const SistemaRoute = SistemaRouteImport.update({
   id: '/sistema',
   path: '/sistema',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VagasRoute = VagasRouteImport.update({
-  id: '/vagas',
-  path: '/vagas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ViladocuidadoRoute = ViladocuidadoRouteImport.update({
@@ -238,11 +132,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogMaryElizaMahoneyRoute = BlogMaryElizaMahoneyRouteImport.update({
-  id: '/blog/mary-eliza-mahoney',
-  path: '/blog/mary-eliza-mahoney',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FerramentasSlugRoute = FerramentasSlugRouteImport.update({
   id: '/ferramentas/$slug',
   path: '/ferramentas/$slug',
@@ -266,16 +155,6 @@ const KidsIndexRoute = KidsIndexRouteImport.update({
 const KidsSectionRoute = KidsSectionRouteImport.update({
   id: '/$section',
   path: '/$section',
-  getParentRoute: () => KidsRoute,
-} as any)
-const KidsColorirRoute = KidsColorirRouteImport.update({
-  id: '/colorir',
-  path: '/colorir',
-  getParentRoute: () => KidsRoute,
-} as any)
-const KidsJogosRoute = KidsJogosRouteImport.update({
-  id: '/jogos',
-  path: '/jogos',
   getParentRoute: () => KidsRoute,
 } as any)
 const ModelosIndexRoute = ModelosIndexRouteImport.update({
@@ -327,44 +206,24 @@ const InstitucionalHubPageRoute = InstitucionalHubPageRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/admin': typeof AdminRoute
-  '/album': typeof AlbumRoute
   '/assinante': typeof AssinanteRouteWithChildren
-  '/bolsas': typeof BolsasRoute
-  '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
   '/central-comando': typeof CentralComandoRoute
-  '/concurso': typeof ConcursoRoute
-  '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
-  '/curiosidades': typeof CuriosidadesRoute
-  '/cursos-sus': typeof CursosSusRoute
-  '/doencas-compulsorias': typeof DoencasCompulsoriasRoute
-  '/estudo': typeof EstudoRoute
-  '/exames-laboratoriais': typeof ExamesLaboratoriaisRoute
-  '/ferramentas-pesquisa': typeof FerramentasPesquisaRoute
-  '/forum': typeof ForumRoute
   '/institucional': typeof InstitucionalRouteWithChildren
   '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
   '/oficina-local': typeof OficinaLocalRoute
-  '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
-  '/residencias': typeof ResidenciasRoute
-  '/sbar': typeof SbarRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
-  '/vagas': typeof VagasRoute
   '/viladocuidado': typeof ViladocuidadoRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/mary-eliza-mahoney': typeof BlogMaryElizaMahoneyRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
   '/kids/$section': typeof KidsSectionRoute
-  '/kids/colorir': typeof KidsColorirRoute
-  '/kids/jogos': typeof KidsJogosRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
@@ -381,39 +240,19 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/admin': typeof AdminRoute
-  '/album': typeof AlbumRoute
   '/assinante': typeof AssinanteRouteWithChildren
-  '/bolsas': typeof BolsasRoute
-  '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
   '/central-comando': typeof CentralComandoRoute
-  '/concurso': typeof ConcursoRoute
-  '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
-  '/curiosidades': typeof CuriosidadesRoute
-  '/cursos-sus': typeof CursosSusRoute
-  '/doencas-compulsorias': typeof DoencasCompulsoriasRoute
-  '/estudo': typeof EstudoRoute
-  '/exames-laboratoriais': typeof ExamesLaboratoriaisRoute
-  '/ferramentas-pesquisa': typeof FerramentasPesquisaRoute
-  '/forum': typeof ForumRoute
   '/login': typeof LoginRoute
   '/oficina-local': typeof OficinaLocalRoute
-  '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
-  '/residencias': typeof ResidenciasRoute
-  '/sbar': typeof SbarRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
-  '/vagas': typeof VagasRoute
   '/viladocuidado': typeof ViladocuidadoRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/mary-eliza-mahoney': typeof BlogMaryElizaMahoneyRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/kids/$section': typeof KidsSectionRoute
-  '/kids/colorir': typeof KidsColorirRoute
-  '/kids/jogos': typeof KidsJogosRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas': typeof BibliotecasIndexRoute
@@ -431,44 +270,24 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/admin': typeof AdminRoute
-  '/album': typeof AlbumRoute
   '/assinante': typeof AssinanteRouteWithChildren
-  '/bolsas': typeof BolsasRoute
-  '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
   '/central-comando': typeof CentralComandoRoute
-  '/concurso': typeof ConcursoRoute
-  '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
-  '/curiosidades': typeof CuriosidadesRoute
-  '/cursos-sus': typeof CursosSusRoute
-  '/doencas-compulsorias': typeof DoencasCompulsoriasRoute
-  '/estudo': typeof EstudoRoute
-  '/exames-laboratoriais': typeof ExamesLaboratoriaisRoute
-  '/ferramentas-pesquisa': typeof FerramentasPesquisaRoute
-  '/forum': typeof ForumRoute
   '/institucional': typeof InstitucionalRouteWithChildren
   '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
   '/oficina-local': typeof OficinaLocalRoute
-  '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
-  '/residencias': typeof ResidenciasRoute
-  '/sbar': typeof SbarRoute
   '/sessao': typeof SessaoRoute
   '/sistema': typeof SistemaRoute
-  '/vagas': typeof VagasRoute
   '/viladocuidado': typeof ViladocuidadoRoute
   '/bibliotecas/$slug': typeof BibliotecasSlugRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/mary-eliza-mahoney': typeof BlogMaryElizaMahoneyRoute
   '/ferramentas/$slug': typeof FerramentasSlugRoute
   '/institucional/$hub': typeof InstitucionalHubRouteWithChildren
   '/kids/$section': typeof KidsSectionRoute
-  '/kids/colorir': typeof KidsColorirRoute
-  '/kids/jogos': typeof KidsJogosRoute
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
@@ -487,44 +306,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/$'
     | '/admin'
-    | '/album'
     | '/assinante'
-    | '/bolsas'
-    | '/calculadoras-trabalhistas'
     | '/central-comando'
-    | '/concurso'
-    | '/concursos'
     | '/conta'
-    | '/curiosidades'
-    | '/cursos-sus'
-    | '/doencas-compulsorias'
-    | '/estudo'
-    | '/exames-laboratoriais'
-    | '/ferramentas-pesquisa'
-    | '/forum'
     | '/institucional'
     | '/kids'
     | '/login'
     | '/modelos'
     | '/oficina-local'
-    | '/oportunidades'
     | '/pacote'
-    | '/residencias'
-    | '/sbar'
     | '/sessao'
     | '/sistema'
-    | '/vagas'
     | '/viladocuidado'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
-    | '/blog/mary-eliza-mahoney'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
     | '/kids/$section'
-    | '/kids/colorir'
-    | '/kids/jogos'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
@@ -541,39 +340,19 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$'
     | '/admin'
-    | '/album'
     | '/assinante'
-    | '/bolsas'
-    | '/calculadoras-trabalhistas'
     | '/central-comando'
-    | '/concurso'
-    | '/concursos'
     | '/conta'
-    | '/curiosidades'
-    | '/cursos-sus'
-    | '/doencas-compulsorias'
-    | '/estudo'
-    | '/exames-laboratoriais'
-    | '/ferramentas-pesquisa'
-    | '/forum'
     | '/login'
     | '/oficina-local'
-    | '/oportunidades'
     | '/pacote'
-    | '/residencias'
-    | '/sbar'
     | '/sessao'
     | '/sistema'
-    | '/vagas'
     | '/viladocuidado'
     | '/blog/$slug'
-    | '/blog/mary-eliza-mahoney'
     | '/ferramentas/$slug'
     | '/kids/$section'
-    | '/kids/colorir'
-    | '/kids/jogos'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas'
@@ -590,44 +369,24 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/$'
     | '/admin'
-    | '/album'
     | '/assinante'
-    | '/bolsas'
-    | '/calculadoras-trabalhistas'
     | '/central-comando'
-    | '/concurso'
-    | '/concursos'
     | '/conta'
-    | '/curiosidades'
-    | '/cursos-sus'
-    | '/doencas-compulsorias'
-    | '/estudo'
-    | '/exames-laboratoriais'
-    | '/ferramentas-pesquisa'
-    | '/forum'
     | '/institucional'
     | '/kids'
     | '/login'
     | '/modelos'
     | '/oficina-local'
-    | '/oportunidades'
     | '/pacote'
-    | '/residencias'
-    | '/sbar'
     | '/sessao'
     | '/sistema'
-    | '/vagas'
     | '/viladocuidado'
     | '/bibliotecas/$slug'
     | '/blog/$slug'
-    | '/blog/mary-eliza-mahoney'
     | '/ferramentas/$slug'
     | '/institucional/$hub'
     | '/kids/$section'
-    | '/kids/colorir'
-    | '/kids/jogos'
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
@@ -645,39 +404,21 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SplatRoute: typeof SplatRoute
   AdminRoute: typeof AdminRoute
-  AlbumRoute: typeof AlbumRoute
   AssinanteRoute: typeof AssinanteRouteWithChildren
-  BolsasRoute: typeof BolsasRoute
-  CalculadorasTrabalhistasRoute: typeof CalculadorasTrabalhistasRoute
   CentralComandoRoute: typeof CentralComandoRoute
-  ConcursoRoute: typeof ConcursoRoute
-  ConcursosRoute: typeof ConcursosRoute
   ContaRoute: typeof ContaRoute
-  CuriosidadesRoute: typeof CuriosidadesRoute
-  CursosSusRoute: typeof CursosSusRoute
-  DoencasCompulsoriasRoute: typeof DoencasCompulsoriasRoute
-  EstudoRoute: typeof EstudoRoute
-  ExamesLaboratoriaisRoute: typeof ExamesLaboratoriaisRoute
-  FerramentasPesquisaRoute: typeof FerramentasPesquisaRoute
-  ForumRoute: typeof ForumRoute
   InstitucionalRoute: typeof InstitucionalRouteWithChildren
   KidsRoute: typeof KidsRouteWithChildren
   LoginRoute: typeof LoginRoute
   ModelosRoute: typeof ModelosRouteWithChildren
   OficinaLocalRoute: typeof OficinaLocalRoute
-  OportunidadesRoute: typeof OportunidadesRoute
   PacoteRoute: typeof PacoteRoute
-  ResidenciasRoute: typeof ResidenciasRoute
-  SbarRoute: typeof SbarRoute
   SessaoRoute: typeof SessaoRoute
   SistemaRoute: typeof SistemaRoute
-  VagasRoute: typeof VagasRoute
   ViladocuidadoRoute: typeof ViladocuidadoRoute
   BibliotecasSlugRoute: typeof BibliotecasSlugRouteWithChildren
   BlogSlugRoute: typeof BlogSlugRoute
-  BlogMaryElizaMahoneyRoute: typeof BlogMaryElizaMahoneyRoute
   FerramentasSlugRoute: typeof FerramentasSlugRoute
   SecaoSlugRoute: typeof SecaoSlugRoute
   BibliotecasIndexRoute: typeof BibliotecasIndexRoute
@@ -694,25 +435,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$': {
-      id: '/$'
-      path: '/$'
-      fullPath: '/$'
-      preLoaderRoute: typeof SplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/album': {
-      id: '/album'
-      path: '/album'
-      fullPath: '/album'
-      preLoaderRoute: typeof AlbumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assinante': {
@@ -722,20 +449,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssinanteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bolsas': {
-      id: '/bolsas'
-      path: '/bolsas'
-      fullPath: '/bolsas'
-      preLoaderRoute: typeof BolsasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calculadoras-trabalhistas': {
-      id: '/calculadoras-trabalhistas'
-      path: '/calculadoras-trabalhistas'
-      fullPath: '/calculadoras-trabalhistas'
-      preLoaderRoute: typeof CalculadorasTrabalhistasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/central-comando': {
       id: '/central-comando'
       path: '/central-comando'
@@ -743,74 +456,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CentralComandoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/concurso': {
-      id: '/concurso'
-      path: '/concurso'
-      fullPath: '/concurso'
-      preLoaderRoute: typeof ConcursoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/concursos': {
-      id: '/concursos'
-      path: '/concursos'
-      fullPath: '/concursos'
-      preLoaderRoute: typeof ConcursosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/conta': {
       id: '/conta'
       path: '/conta'
       fullPath: '/conta'
       preLoaderRoute: typeof ContaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/curiosidades': {
-      id: '/curiosidades'
-      path: '/curiosidades'
-      fullPath: '/curiosidades'
-      preLoaderRoute: typeof CuriosidadesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cursos-sus': {
-      id: '/cursos-sus'
-      path: '/cursos-sus'
-      fullPath: '/cursos-sus'
-      preLoaderRoute: typeof CursosSusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/doencas-compulsorias': {
-      id: '/doencas-compulsorias'
-      path: '/doencas-compulsorias'
-      fullPath: '/doencas-compulsorias'
-      preLoaderRoute: typeof DoencasCompulsoriasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estudo': {
-      id: '/estudo'
-      path: '/estudo'
-      fullPath: '/estudo'
-      preLoaderRoute: typeof EstudoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/exames-laboratoriais': {
-      id: '/exames-laboratoriais'
-      path: '/exames-laboratoriais'
-      fullPath: '/exames-laboratoriais'
-      preLoaderRoute: typeof ExamesLaboratoriaisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ferramentas-pesquisa': {
-      id: '/ferramentas-pesquisa'
-      path: '/ferramentas-pesquisa'
-      fullPath: '/ferramentas-pesquisa'
-      preLoaderRoute: typeof FerramentasPesquisaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forum': {
-      id: '/forum'
-      path: '/forum'
-      fullPath: '/forum'
-      preLoaderRoute: typeof ForumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/institucional': {
@@ -848,32 +498,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OficinaLocalRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/oportunidades': {
-      id: '/oportunidades'
-      path: '/oportunidades'
-      fullPath: '/oportunidades'
-      preLoaderRoute: typeof OportunidadesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/pacote': {
       id: '/pacote'
       path: '/pacote'
       fullPath: '/pacote'
       preLoaderRoute: typeof PacoteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/residencias': {
-      id: '/residencias'
-      path: '/residencias'
-      fullPath: '/residencias'
-      preLoaderRoute: typeof ResidenciasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sbar': {
-      id: '/sbar'
-      path: '/sbar'
-      fullPath: '/sbar'
-      preLoaderRoute: typeof SbarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sessao': {
@@ -888,13 +517,6 @@ declare module '@tanstack/react-router' {
       path: '/sistema'
       fullPath: '/sistema'
       preLoaderRoute: typeof SistemaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/vagas': {
-      id: '/vagas'
-      path: '/vagas'
-      fullPath: '/vagas'
-      preLoaderRoute: typeof VagasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/viladocuidado': {
@@ -932,13 +554,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/mary-eliza-mahoney': {
-      id: '/blog/mary-eliza-mahoney'
-      path: '/blog/mary-eliza-mahoney'
-      fullPath: '/blog/mary-eliza-mahoney'
-      preLoaderRoute: typeof BlogMaryElizaMahoneyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/ferramentas/$slug': {
       id: '/ferramentas/$slug'
       path: '/ferramentas/$slug'
@@ -972,20 +587,6 @@ declare module '@tanstack/react-router' {
       path: '/$section'
       fullPath: '/kids/$section'
       preLoaderRoute: typeof KidsSectionRouteImport
-      parentRoute: typeof KidsRoute
-    }
-    '/kids/colorir': {
-      id: '/kids/colorir'
-      path: '/colorir'
-      fullPath: '/kids/colorir'
-      preLoaderRoute: typeof KidsColorirRouteImport
-      parentRoute: typeof KidsRoute
-    }
-    '/kids/jogos': {
-      id: '/kids/jogos'
-      path: '/jogos'
-      fullPath: '/kids/jogos'
-      preLoaderRoute: typeof KidsJogosRouteImport
       parentRoute: typeof KidsRoute
     }
     '/modelos/': {
@@ -1095,15 +696,11 @@ const InstitucionalRouteWithChildren = InstitucionalRoute._addFileChildren(
 
 interface KidsRouteChildren {
   KidsSectionRoute: typeof KidsSectionRoute
-  KidsColorirRoute: typeof KidsColorirRoute
-  KidsJogosRoute: typeof KidsJogosRoute
   KidsIndexRoute: typeof KidsIndexRoute
 }
 
 const KidsRouteChildren: KidsRouteChildren = {
   KidsSectionRoute: KidsSectionRoute,
-  KidsColorirRoute: KidsColorirRoute,
-  KidsJogosRoute: KidsJogosRoute,
   KidsIndexRoute: KidsIndexRoute,
 }
 
@@ -1138,39 +735,21 @@ const BibliotecasSlugRouteWithChildren = BibliotecasSlugRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SplatRoute: SplatRoute,
   AdminRoute: AdminRoute,
-  AlbumRoute: AlbumRoute,
   AssinanteRoute: AssinanteRouteWithChildren,
-  BolsasRoute: BolsasRoute,
-  CalculadorasTrabalhistasRoute: CalculadorasTrabalhistasRoute,
   CentralComandoRoute: CentralComandoRoute,
-  ConcursoRoute: ConcursoRoute,
-  ConcursosRoute: ConcursosRoute,
   ContaRoute: ContaRoute,
-  CuriosidadesRoute: CuriosidadesRoute,
-  CursosSusRoute: CursosSusRoute,
-  DoencasCompulsoriasRoute: DoencasCompulsoriasRoute,
-  EstudoRoute: EstudoRoute,
-  ExamesLaboratoriaisRoute: ExamesLaboratoriaisRoute,
-  FerramentasPesquisaRoute: FerramentasPesquisaRoute,
-  ForumRoute: ForumRoute,
   InstitucionalRoute: InstitucionalRouteWithChildren,
   KidsRoute: KidsRouteWithChildren,
   LoginRoute: LoginRoute,
   ModelosRoute: ModelosRouteWithChildren,
   OficinaLocalRoute: OficinaLocalRoute,
-  OportunidadesRoute: OportunidadesRoute,
   PacoteRoute: PacoteRoute,
-  ResidenciasRoute: ResidenciasRoute,
-  SbarRoute: SbarRoute,
   SessaoRoute: SessaoRoute,
   SistemaRoute: SistemaRoute,
-  VagasRoute: VagasRoute,
   ViladocuidadoRoute: ViladocuidadoRoute,
   BibliotecasSlugRoute: BibliotecasSlugRouteWithChildren,
   BlogSlugRoute: BlogSlugRoute,
-  BlogMaryElizaMahoneyRoute: BlogMaryElizaMahoneyRoute,
   FerramentasSlugRoute: FerramentasSlugRoute,
   SecaoSlugRoute: SecaoSlugRoute,
   BibliotecasIndexRoute: BibliotecasIndexRoute,

@@ -1,25 +1,32 @@
 import { Link } from "@tanstack/react-router";
-import { Accessibility, ArrowUp, ChevronDown, Instagram, Linkedin, Menu, Search, X, Youtube } from "lucide-react";
+import { Accessibility, ArrowUp, BookOpenText, ChevronDown, Contrast, Instagram, Keyboard, Linkedin, Menu, Moon, Search, X, Youtube } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AccountSlot, MobileNav, SiteNav } from "@/components/site/site-nav";
-import { useChrome, type FocusColor, type OptionalConsent } from "@/lib/chrome";
-import { selectableLocales } from "@/lib/header-i18n";
-import { navLabel } from "@/lib/translate";
-import { storedFooter, useStored } from "@/lib/stored";
+import { MobileNav, SiteNav } from "@/components/site/site-nav";
+import { brandLogo } from "@/lib/contracts";
 
-const focusColors: { id: FocusColor; hex: string; label: string }[] = [
-  { id: "yellow", hex: "#ff0", label: "Foco amarelo" },
-  { id: "lime", hex: "#b6ff00", label: "Foco verde" },
-  { id: "cyan", hex: "#22d3ee", label: "Foco ciano" },
-  { id: "magenta", hex: "#f0abfc", label: "Foco magenta" },
+import { useChrome, type FocusColor, type Locale, type OptionalConsent } from "@/lib/chrome";
+import { navLabel } from "@/lib/translate";
+import { headerWords, selectableLocales } from "@/lib/header-i18n";
+import { authEnabled } from "@/lib/auth/client";
+import { fontControlVisual } from "@/lib/country-icon-rendering";
+import { focusColorName } from "@/lib/focus-color-i18n";
+
+const focusColors: { id: FocusColor; hex: string }[] = [
+  { id: "yellow", hex: "#ff0" },
+  { id: "lime", hex: "#b6ff00" },
+  { id: "cyan", hex: "#22d3ee" },
+  { id: "magenta", hex: "#f0abfc" },
 ];
 
-export function Shell({ children, editions = [], currentPath }: { children: ReactNode; editions?: { code: string; label: string; path: string }[]; currentPath?: string }) {
+/** Caminho público derivado do contrato de marca (o prefixo `public/` sai fora). */
+const brandLogoPublicPath = brandLogo?.file?.replace(/^public/, "") ?? "/brand/logo.svg";
+
+export function Shell({ children }: { children: ReactNode }) {
   const chrome = useChrome();
-  const stored = useStored();
   const [menu, setMenu] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [a11yOpen, setA11yOpen] = useState(false);
+  const hw = headerWords[chrome.locale];
   const [shortcuts, setShortcuts] = useState(false);
   const [showTop, setShowTop] = useState(false);
   const [prefsOpen, setPrefsOpen] = useState(false);
@@ -42,26 +49,14 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close transient header surfaces without losing keyboard context.
   useEffect(() => {
     function onEscape(event: KeyboardEvent) {
-      if (event.key !== "Escape" || shortcutsRef.current) return;
-      if (langOpen) {
-        setLangOpen(false);
-        langBtn.current?.focus();
-        event.preventDefault();
-        return;
-      }
-      if (a11yOpen) {
-        setA11yOpen(false);
-        a11yBtn.current?.focus();
-        event.preventDefault();
-        return;
-      }
-      if (menu) {
-        setMenu(false);
-        menuBtn.current?.focus();
-        event.preventDefault();
-      }
+      if (event.key !== "Escape") return;
+      if (shortcutsRef.current) return; // handled by shortcut dialog
+      if (langOpen) { setLangOpen(false); langBtn.current?.focus(); event.preventDefault(); return; }
+      if (a11yOpen) { setA11yOpen(false); a11yBtn.current?.focus(); event.preventDefault(); return; }
+      if (menu) { setMenu(false); menuBtn.current?.focus(); event.preventDefault(); }
     }
     function onOutside(event: PointerEvent) {
       const target = event.target;
@@ -71,58 +66,54 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
     }
     document.addEventListener("keydown", onEscape);
     document.addEventListener("pointerdown", onOutside);
-    return () => {
-      document.removeEventListener("keydown", onEscape);
-      document.removeEventListener("pointerdown", onOutside);
-    };
+    return () => { document.removeEventListener("keydown", onEscape); document.removeEventListener("pointerdown", onOutside); };
   }, [langOpen, a11yOpen, menu]);
 
   useEffect(() => {
     if (!langOpen) return;
-    langWrap.current?.querySelector<HTMLElement>("button[aria-current='true']")?.focus();
+    document.querySelector<HTMLElement>("#header-language-menu button[aria-current='true']")?.focus();
   }, [langOpen]);
 
   useEffect(() => {
     if (!menu) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const panel = document.querySelector<HTMLElement>(".off-canvas");
-    const selector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    function trap(event: KeyboardEvent) {
-      if (event.key !== "Tab" || !panel) return;
-      const items = [...panel.querySelectorAll<HTMLElement>(selector)].filter((item) => item.getClientRects().length > 0);
-      if (!items.length) {
-        event.preventDefault();
-        panel.focus();
-        return;
-      }
-      const first = items[0];
-      const last = items[items.length - 1];
-      if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-    panel?.addEventListener("keydown", trap);
-    return () => {
-      document.body.style.overflow = previous;
-      panel?.removeEventListener("keydown", trap);
-    };
-  }, [menu]);
-
-  useEffect(() => {
-    if (!menu || !pendingNav.current) return;
     const target = pendingNav.current;
     pendingNav.current = null;
     const frame = requestAnimationFrame(() => {
-      const selector = target === "search" ? ".off-search input" : ".off-canvas-body a, .off-canvas-body button";
+      const selector = target === "search" ? ".off-search input" : target === "menu" ? ".off-canvas-body a, .off-canvas-body button" : ".off-canvas header button";
       const panel = document.querySelector<HTMLElement>(".off-canvas");
-      (panel?.querySelector<HTMLElement>(selector) ?? panel)?.focus();
+      (panel?.querySelector<HTMLElement>(selector) ?? panel?.querySelector<HTMLElement>('button') ?? panel)?.focus();
     });
     return () => cancelAnimationFrame(frame);
+  }, [menu]);
+
+  // Prevent background scrolling while the mobile dialog is open.
+  useEffect(() => {
+    if (!menu) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menu]);
+
+  // Keep keyboard focus inside the mobile navigation while it is open.
+  useEffect(() => {
+    if (!menu) return;
+    const panel = document.querySelector<HTMLElement>(".off-canvas");
+    if (!panel) return;
+    const selector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    function trapTab(event: KeyboardEvent) {
+      if (event.key !== "Tab" || !panel) return;
+      const items = Array.from(panel.querySelectorAll<HTMLElement>(selector)).filter((item) => item.getClientRects().length > 0);
+      if (!items.length) { event.preventDefault(); panel.focus(); return; }
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+        event.preventDefault(); first.focus();
+      }
+    }
+    panel.addEventListener("keydown", trapTab);
+    return () => panel.removeEventListener("keydown", trapTab);
   }, [menu]);
 
   useEffect(() => {
@@ -173,9 +164,6 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const editionCode = currentPath?.replace(/^\//, "").split("/")[0] ?? "";
-  const footer = storedFooter(stored.labels, /^[a-z]{2}$/.test(editionCode) ? editionCode : chrome.locale);
-
   function openPrefs() {
     setCookieDraft(chrome.consent === "unknown" ? { translation: false, audience: false } : chrome.consent);
     setPrefsOpen(true);
@@ -189,125 +177,75 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
       <div className="sr-only" aria-live="polite">
         {chrome.locale}
       </div>
-      <div className="header-utility">
+      <div className="header-utility" role="group" aria-label={hw.language}>
         <div className="header-utility-start">
           <div className="a11y-lang" ref={langWrap}>
-            <button
-              ref={langBtn}
-              className="lang-trigger"
-              type="button"
-              aria-expanded={langOpen}
-              aria-controls="header-language-menu"
-              aria-label={chrome.t("language")}
-              onClick={() => setLangOpen((v) => !v)}
-            >
-              {currentPath ? (editions.find((item) => item.path === currentPath)?.code ?? "PT").toUpperCase() : chrome.locale === "pt-BR" ? "PT" : chrome.locale.toUpperCase()}
-              <ChevronDown size={12} aria-hidden="true" />
+            <button ref={langBtn} className="lang-trigger" type="button" aria-haspopup="true" aria-label={hw.language} aria-controls="header-language-menu" aria-expanded={langOpen} onClick={() => setLangOpen((v) => !v)}>
+              {chrome.locale === "pt-BR" ? "PT" : chrome.locale.toUpperCase()} <ChevronDown size={14} aria-hidden="true" />
             </button>
-            {langOpen ? (
-              <div id="header-language-menu" className="lang-menu" role="group" aria-label={chrome.t("language")}>
-                {editions.length > 1
-                  ? editions.map((item) => (
-                      <Link
-                        key={item.path}
-                        to="/$"
-                        params={{ _splat: item.path.slice(1) }}
-                        lang={item.code}
-                        aria-current={item.path === currentPath ? "page" : undefined}
-                        onClick={() => setLangOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    ))
-                  : null}
-                {selectableLocales.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    lang={item.id}
-                    aria-current={chrome.locale === item.id ? "true" : undefined}
-                    onClick={() => {
-                      chrome.setLocale(item.id);
-                      setLangOpen(false);
-                      langBtn.current?.focus();
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            ) : null}
+            {langOpen ? <div id="header-language-menu" className="lang-menu" role="group" aria-label={hw.language}>
+              {selectableLocales.map((item) => <button key={item.id} type="button" lang={item.id} aria-current={chrome.locale === item.id ? "true" : undefined} onClick={() => { chrome.setLocale(item.id); setLangOpen(false); langBtn.current?.focus(); }}>{item.label}</button>)}
+            </div> : null}
           </div>
-          <button
-            className="utility-search"
-            type="button"
-            aria-label={chrome.t("search")}
-            onClick={() => {
-              if (window.matchMedia("(max-width: 1179px)").matches) {
-                pendingNav.current = "search";
-                setMenu(true);
-              } else {
-                window.dispatchEvent(new Event("cde-open-search"));
-              }
-            }}
-          >
-            <Search size={16} aria-hidden="true" />
-            <span>{chrome.t("search").split(" ")[0]}</span>
-          </button>
-        </div>
-        <div ref={a11yBar} id="barra-acessibilidade" className={`a11y-tools${a11yOpen ? " is-open" : ""}`} role="toolbar" aria-label={chrome.t("a11y")}>
-          <button type="button" disabled={chrome.font === "sm"} aria-label={chrome.t("fontDown")} onClick={() => chrome.setFont(chrome.font === "lg" ? "md" : "sm")}>
-            A−
-          </button>
-          <button type="button" disabled={chrome.font === "lg"} aria-label={chrome.t("fontUp")} onClick={() => chrome.setFont(chrome.font === "sm" ? "md" : "lg")}>
-            A+
-          </button>
-          <button type="button" aria-pressed={chrome.contrast} onClick={() => chrome.setContrast(!chrome.contrast)}>
-            {chrome.t("contrast")}
-          </button>
-          <button type="button" aria-pressed={chrome.dyslexia} onClick={() => chrome.setDyslexia(!chrome.dyslexia)}>
-            {chrome.t("dyslexia")}
-          </button>
-          <button type="button" aria-pressed={chrome.theme === "dark"} onClick={() => chrome.setTheme(chrome.theme === "dark" ? "light" : "dark")}>
-            {chrome.t("dark")}
-          </button>
-          <button ref={shortcutBtn} type="button" aria-expanded={shortcuts} aria-controls="atalhos" onClick={() => setShortcuts((open) => !open)}>
-            {chrome.t("shortcuts")}
-          </button>
-          {focusColors.map((color) => (
-            <button
-              key={color.id}
-              type="button"
-              className="focus-dot"
-              data-on={chrome.focus === color.id}
-              aria-label={color.label}
-              style={{ background: color.hex }}
-              onClick={() => chrome.setFocus(color.id)}
-            />
-          ))}
-          <button type="button" onClick={chrome.resetA11y}>
-            {chrome.t("reset")}
-          </button>
+          <button className="utility-search" type="button" aria-label={hw.search} onClick={() => { if (window.matchMedia("(max-width: 1179px)").matches) { pendingNav.current = "search"; setMenu(true); } else { window.dispatchEvent(new Event("cde-open-search")); } }}><Search size={17} aria-hidden="true" /><span>{hw.search}</span></button>
         </div>
         <div className="header-utility-end">
-          <Link to="/secao/$slug" params={{ slug: "assinatura" }} className="utility-subscribe">
-            {chrome.t("subscribe")}
+          <Link to="/secao/$slug" params={{ slug: "assinatura" }} className="utility-subscribe">{chrome.t("subscribe")}</Link>
+          <Link to="/login" className="utility-login" aria-label={chrome.t("enter")}>
+            {chrome.t("enter")}
           </Link>
-          <AccountSlot className="utility-login" />
-          <button
-            ref={a11yBtn}
-            className="a11y-mobile-toggle"
-            type="button"
-            aria-expanded={a11yOpen}
-            aria-controls="barra-acessibilidade"
-            onClick={() => setA11yOpen((open) => !open)}
-          >
-            <Accessibility size={18} aria-hidden="true" />
-            <span>{chrome.t("a11y")}</span>
-          </button>
+          <button ref={a11yBtn} className="a11y-mobile-toggle" type="button" aria-label={hw.accessibility} aria-controls="header-accessibility-controls" aria-expanded={a11yOpen} onClick={() => setA11yOpen((v) => !v)}><Accessibility size={19} aria-hidden="true" /><span>{hw.accessibility}</span></button>
         </div>
       </div>
-
+      <div ref={a11yBar} id="header-accessibility-controls" className={`a11y-bar ${a11yOpen ? "is-open" : ""}`} role="toolbar" aria-label={hw.accessibility}>
+        <button type="button" disabled={chrome.font === "sm"} aria-label={hw.fontDown} onClick={() => chrome.setFont(chrome.font === "lg" ? "md" : "sm")}>
+          <span aria-hidden="true">{fontControlVisual(chrome.locale, "down")}</span><span className="a11y-action-label">{hw.fontDown}</span>
+        </button>
+        <button type="button" disabled={chrome.font === "lg"} aria-label={hw.fontUp} onClick={() => chrome.setFont(chrome.font === "sm" ? "md" : "lg")}>
+          <span aria-hidden="true">{fontControlVisual(chrome.locale, "up")}</span><span className="a11y-action-label">{hw.fontUp}</span>
+        </button>
+        <button type="button" aria-pressed={chrome.contrast} onClick={() => chrome.setContrast(!chrome.contrast)}>
+          <Contrast aria-hidden="true" />
+          {hw.contrast}
+        </button>
+        <button type="button" aria-pressed={chrome.dyslexia} onClick={() => chrome.setDyslexia(!chrome.dyslexia)}>
+          <BookOpenText aria-hidden="true" />
+          {hw.dyslexia}
+        </button>
+        <button
+          type="button"
+          aria-pressed={chrome.theme === "dark"}
+          onClick={() => chrome.setTheme(chrome.theme === "dark" ? "light" : "dark")}
+        >
+          <Moon aria-hidden="true" />
+          {hw.dark}
+        </button>
+        <button
+          ref={shortcutBtn}
+          type="button"
+          aria-expanded={shortcuts}
+          aria-controls="atalhos"
+          onClick={() => setShortcuts((open) => !open)}
+        >
+          <Keyboard aria-hidden="true" />
+          {hw.shortcuts}
+        </button>
+        {focusColors.map((color) => (
+          <button
+            key={color.id}
+            type="button"
+            className="focus-dot"
+            data-on={chrome.focus === color.id}
+            aria-pressed={chrome.focus === color.id}
+            aria-label={`${hw.accessibility}: ${focusColorName(chrome.locale, color.id)}`}
+            style={{ background: color.hex }}
+            onClick={() => chrome.setFocus(color.id)}
+          />
+        ))}
+        <button type="button" onClick={chrome.resetA11y}>
+          {hw.reset}
+        </button>
+      </div>
       {shortcuts ? (
         <div
           id="atalhos"
@@ -387,11 +325,14 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
       <header className="site-header">
         <div className="site-header-inner">
           <Link to="/" className="brand" aria-label="Calculadoras de Enfermagem">
-            <img src="/brand/logo.webp" alt="" width={48} height={48} />
-            <span className="brand-name">
-              Calculadoras
-              <small>de Enfermagem</small>
-            </span>
+            {/* Só o símbolo. O wordmark ao lado do logotipo foi removido por
+                decisão do dono do produto: a marca já se identifica pelo ícone
+                e o nome completo vive no <title> e no aria-label do link.
+
+                O caminho vem do contrato CE-CONTRACT-BRAND, não de uma string
+                solta aqui: se o contrato deixar de declarar um logo live, a
+                aplicação não sobe. É o que distingue um contrato de uma nota. */}
+            <img src={brandLogoPublicPath} alt="" width={56} height={56} />
           </Link>
           <SiteNav />
           <button
@@ -409,8 +350,8 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
 
       {menu ? (
         <>
-          <button className="menu-overlay" aria-label={chrome.t("close")} onClick={() => { setMenu(false); menuBtn.current?.focus(); }} />
-          <nav className="off-canvas" aria-label="Menu" tabIndex={-1}>
+          <button tabIndex={-1} className="menu-overlay" aria-label={chrome.t("close")} onClick={() => { setMenu(false); menuBtn.current?.focus(); }} />
+          <nav className="off-canvas" aria-label={chrome.t("menu")} aria-modal="true" role="dialog" tabIndex={-1}>
             <header>
               <span>{chrome.t("menu")}</span>
               <button
@@ -424,7 +365,7 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
                 <X size={22} />
               </button>
             </header>
-            <MobileNav menuLabel={chrome.t("menu")} onNavigate={() => setMenu(false)} />
+            <MobileNav menuLabel={chrome.t("menu")} onNavigate={() => { setMenu(false); menuBtn.current?.focus(); }} />
           </nav>
         </>
       ) : null}
@@ -437,40 +378,40 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
       <footer id="rodape" className="site-footer" tabIndex={-1}>
         <div className="footer-grid">
           <div>
-            <h2>{footer.institutional}</h2>
-            <Link to="/secao/$slug" params={{ slug: "missao-visao-valores" }}>{footer.about}</Link>
+            <h2>{chrome.t("institutional")}</h2>
+            <Link to="/secao/$slug" params={{ slug: "missao-visao-valores" }}>{chrome.t("about")}</Link>
             <Link to="/secao/$slug" params={{ slug: "politicas" }}>{navLabel("politicas", "Políticas do site", chrome.locale)}</Link>
-            <Link to="/secao/$slug" params={{ slug: "termos" }}>{footer.terms}</Link>
-            <Link to="/secao/$slug" params={{ slug: "acessibilidade" }}>{footer.accessibilityPolicy}</Link>
+            <Link to="/secao/$slug" params={{ slug: "termos" }}>{navLabel("termos", "Termos e Condições de Uso", chrome.locale)}</Link>
+            <Link to="/secao/$slug" params={{ slug: "acessibilidade" }}>{navLabel("acessibilidade", "Política de Acessibilidade", chrome.locale)}</Link>
             <Link to="/secao/$slug" params={{ slug: "politica-editorial" }}>Editorial</Link>
             <Link to="/secao/$slug" params={{ slug: "planos" }}>Assinante</Link>
             <Link to="/secao/$slug" params={{ slug: "contato" }}>{navLabel("contato", "Fale conosco", chrome.locale)}</Link>
-            <Link to="/secao/$slug" params={{ slug: "mapa" }}>{footer.siteMap}</Link>
+            <Link to="/secao/$slug" params={{ slug: "mapa" }}>{navLabel("mapa", "Mapa do Site", chrome.locale)}</Link>
           </div>
           <div>
-            <h2>{footer.digitalSustainability}</h2>
-            <Link to="/secao/$slug" params={{ slug: "compromisso" }}>{footer.ourCommitment}</Link>
+            <h2>{chrome.t("sustainability")}</h2>
+            <Link to="/secao/$slug" params={{ slug: "compromisso" }}>{chrome.t("commitment")}</Link>
             <Link to="/secao/$slug" params={{ slug: "metodologia-de-medicao" }}>Metodologia</Link>
-            <Link to="/secao/$slug" params={{ slug: "relatorios-de-sustentabilidade" }}>{footer.impact}</Link>
+            <Link to="/secao/$slug" params={{ slug: "relatorios-de-sustentabilidade" }}>Relatórios</Link>
           </div>
           <div>
-            <h2>{footer.ourCommitment}</h2>
-            <p>{footer.commitmentText}</p>
+            <h2>{chrome.t("commitment")}</h2>
+            <p>{chrome.t("commitmentText")}</p>
           </div>
           <div>
-            <h2>{footer.followUs}</h2>
+            <h2>{chrome.t("follow")}</h2>
             <div className="social-row">
               <a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noreferrer" aria-label="Instagram"><Instagram size={18} aria-hidden="true" /></a>
               <a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noreferrer" aria-label="YouTube"><Youtube size={18} aria-hidden="true" /></a>
               <a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={18} aria-hidden="true" /></a>
             </div>
             <button className="linkish" type="button" onClick={openPrefs}>
-              {footer.manageCookies}
+              {chrome.t("cookiesManage")}
             </button>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>{footer.copyright}</span>
+          <span>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados.</span>
         </div>
       </footer>
 

@@ -30,8 +30,12 @@ export function AppLink({
     );
   }
   if (dest.kind === "page") {
+    // Uma rota parametrizada precisa do parametro. Sem isto o Link aponta para
+    // o padrao do segmento e o usuario cai em 404 — o parametro nao e opcional
+    // so porque o tipo dizia que era.
+    const params = dest.to.includes("$slug") && dest.slug ? { slug: dest.slug } : undefined;
     return (
-      <Link to={dest.to} className={className} onClick={onClick} aria-label={ariaLabel}>
+      <Link to={dest.to} params={params} className={className} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </Link>
     );

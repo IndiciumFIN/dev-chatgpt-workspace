@@ -1,0 +1,767 @@
+{
+  "migrations": 41,
+  "violacoes": [],
+  "pendencias": [
+    {
+      "tabela": "catalog_item",
+      "coluna": "dest_id",
+      "pendentes": 32,
+      "linhas": 46,
+      "preenchidas": 14,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de catálogo: ou aponta para um destino (dest_id) ou é um arquivo/seção da biblioteca — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "file",
+      "pendentes": 13,
+      "linhas": 46,
+      "preenchidas": 33,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de catálogo que é arquivo da biblioteca; item de link não tem arquivo (o hash e o nome do arquivo andam juntos)",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "hash",
+      "pendentes": 40,
+      "linhas": 46,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "sha256 do arquivo: existe só quando o item é arquivo",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "icon",
+      "pendentes": 9,
+      "linhas": 46,
+      "preenchidas": 37,
+      "classificacao": "estrutura-declarada",
+      "razao": "ícone do item de ferramenta ou seção; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "section",
+      "pendentes": 38,
+      "linhas": 46,
+      "preenchidas": 8,
+      "classificacao": "estrutura-declarada",
+      "razao": "seção de destino do item; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "slug",
+      "pendentes": 40,
+      "linhas": 46,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "slug do destino do item; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "content_object",
+      "coluna": "tool_slug",
+      "pendentes": 1639,
+      "linhas": 1721,
+      "preenchidas": 82,
+      "classificacao": "estrutura-declarada",
+      "razao": "o objeto carrega o instrumento quando é ferramenta; página e institucional não têm",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "inst_path",
+      "pendentes": 1715,
+      "linhas": 1743,
+      "preenchidas": 28,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma página canônica (object_slug) ou uma página legada (inst_path) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "object_slug",
+      "pendentes": 42,
+      "linhas": 1743,
+      "preenchidas": 1701,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma seção (section_slug) ou um objeto canônico (object_slug) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "section_slug",
+      "pendentes": 1725,
+      "linhas": 1743,
+      "preenchidas": 18,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma seção (section_slug) ou um objeto canônico (object_slug) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "data_specification",
+      "coluna": "unit",
+      "pendentes": 110,
+      "linhas": 115,
+      "preenchidas": 5,
+      "classificacao": "estrutura-declarada",
+      "razao": "a unidade só existe para característica mensurável",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_child",
+      "coluna": "path",
+      "pendentes": 6,
+      "linhas": 28,
+      "preenchidas": 22,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho do pai: '' é a raiz da árvore — o app lê e ignora explicitamente `child.path !== ''` (src/lib/stored.functions.ts:367)",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_page",
+      "coluna": "path",
+      "pendentes": 1,
+      "linhas": 29,
+      "preenchidas": 28,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho da página: '' é a raiz institucional (kind='hub'); as demais carregam o próprio nome",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_section",
+      "coluna": "path",
+      "pendentes": 6,
+      "linhas": 142,
+      "preenchidas": 136,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho da página dona da seção: '' são as seções da raiz institucional (kind='hub')",
+      "alvo": false
+    },
+    {
+      "tabela": "kernel_atom",
+      "coluna": "source_canonical_id",
+      "pendentes": 4,
+      "linhas": 4,
+      "preenchidas": 0,
+      "classificacao": "estrutura-declarada",
+      "razao": "o átomo aponta para a fonte canônica registrada; átomo de metamodelo interno não tem fonte externa (o registry cai no id do átomo, src/core/registry/source-registry.ts:159) e a coluna é opcional no dicionário (0038, required=false)",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_hash",
+      "pendentes": 26,
+      "linhas": 74,
+      "preenchidas": 48,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_model",
+      "pendentes": 68,
+      "linhas": 74,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_slug",
+      "pendentes": 8,
+      "linhas": 74,
+      "preenchidas": 66,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_to",
+      "pendentes": 73,
+      "linhas": 74,
+      "preenchidas": 1,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "parent_id",
+      "pendentes": 11,
+      "linhas": 74,
+      "preenchidas": 63,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de menu raiz não tem pai",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "tone",
+      "pendentes": 71,
+      "linhas": 74,
+      "preenchidas": 3,
+      "classificacao": "estrutura-declarada",
+      "razao": "tom visual é opcional: só o item em destaque o carrega",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_column",
+      "coluna": "ref_entity",
+      "pendentes": 105,
+      "linhas": 127,
+      "preenchidas": 22,
+      "classificacao": "estrutura-declarada",
+      "razao": "a referência só existe quando a coluna é entidade",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_column",
+      "coluna": "unit",
+      "pendentes": 124,
+      "linhas": 127,
+      "preenchidas": 3,
+      "classificacao": "estrutura-declarada",
+      "razao": "a unidade só existe para coluna mensurável",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_entity",
+      "coluna": "links",
+      "pendentes": 38,
+      "linhas": 99,
+      "preenchidas": 61,
+      "classificacao": "estrutura-declarada",
+      "razao": "entidade sem ligação declarada a outra",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "hash",
+      "pendentes": 26,
+      "linhas": 77,
+      "preenchidas": 51,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "model_id",
+      "pendentes": 70,
+      "linhas": 77,
+      "preenchidas": 7,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "page_to",
+      "pendentes": 75,
+      "linhas": 77,
+      "preenchidas": 2,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "place_id",
+      "pendentes": 15,
+      "linhas": 77,
+      "preenchidas": 62,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "tool_slug",
+      "pendentes": 72,
+      "linhas": 77,
+      "preenchidas": 5,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_hash",
+      "pendentes": 91,
+      "linhas": 103,
+      "preenchidas": 12,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_id",
+      "pendentes": 54,
+      "linhas": 103,
+      "preenchidas": 49,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_kind",
+      "pendentes": 54,
+      "linhas": 103,
+      "preenchidas": 49,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_model",
+      "pendentes": 96,
+      "linhas": 103,
+      "preenchidas": 7,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_slug",
+      "pendentes": 64,
+      "linhas": 103,
+      "preenchidas": 39,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_to",
+      "pendentes": 101,
+      "linhas": 103,
+      "preenchidas": 2,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "specimen_line",
+      "coluna": "text",
+      "pendentes": 30,
+      "linhas": 170,
+      "preenchidas": 140,
+      "classificacao": "estrutura-declarada",
+      "razao": "campo opcional do espécime: a extração percorre um conjunto fixo de campos (id, title, subtitle, description, attributes) e o item sem vídeo fica sem duração — as '' são gravadas de propósito em migrations/0032_public_files.sql",
+      "alvo": false
+    },
+    {
+      "tabela": "work_order",
+      "coluna": "block_reason",
+      "pendentes": 1,
+      "linhas": 2,
+      "preenchidas": 1,
+      "classificacao": "estrutura-declarada",
+      "razao": "o motivo do bloqueio só existe quando o portão está fechado (gate_open = false)",
+      "alvo": false
+    }
+  ],
+  "estados": [],
+  "caminhos": [],
+  "marcador": {
+    "source_tool": 82,
+    "content_text": 15,
+    "content_text_revisao": 2158,
+    "locale": 31,
+    "kernel_atom": 4,
+    "business_rule": 14,
+    "ai_control": 5,
+    "governance_item": 43,
+    "data_specification": 115,
+    "phase_note": 1,
+    "editorial_line": 10,
+    "inst_section": 18,
+    "section_block": 6,
+    "specimen": 1
+  },
+  "estruturais": [
+    {
+      "tabela": "catalog_item",
+      "coluna": "dest_id",
+      "pendentes": 32,
+      "linhas": 46,
+      "preenchidas": 14,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de catálogo: ou aponta para um destino (dest_id) ou é um arquivo/seção da biblioteca — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "file",
+      "pendentes": 13,
+      "linhas": 46,
+      "preenchidas": 33,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de catálogo que é arquivo da biblioteca; item de link não tem arquivo (o hash e o nome do arquivo andam juntos)",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "hash",
+      "pendentes": 40,
+      "linhas": 46,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "sha256 do arquivo: existe só quando o item é arquivo",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "icon",
+      "pendentes": 9,
+      "linhas": 46,
+      "preenchidas": 37,
+      "classificacao": "estrutura-declarada",
+      "razao": "ícone do item de ferramenta ou seção; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "section",
+      "pendentes": 38,
+      "linhas": 46,
+      "preenchidas": 8,
+      "classificacao": "estrutura-declarada",
+      "razao": "seção de destino do item; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "catalog_item",
+      "coluna": "slug",
+      "pendentes": 40,
+      "linhas": 46,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "slug do destino do item; item de arquivo não tem",
+      "alvo": false
+    },
+    {
+      "tabela": "content_object",
+      "coluna": "tool_slug",
+      "pendentes": 1639,
+      "linhas": 1721,
+      "preenchidas": 82,
+      "classificacao": "estrutura-declarada",
+      "razao": "o objeto carrega o instrumento quando é ferramenta; página e institucional não têm",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "inst_path",
+      "pendentes": 1715,
+      "linhas": 1743,
+      "preenchidas": 28,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma página canônica (object_slug) ou uma página legada (inst_path) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "object_slug",
+      "pendentes": 42,
+      "linhas": 1743,
+      "preenchidas": 1701,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma seção (section_slug) ou um objeto canônico (object_slug) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "content_place",
+      "coluna": "section_slug",
+      "pendentes": 1725,
+      "linhas": 1743,
+      "preenchidas": 18,
+      "classificacao": "estrutura-declarada",
+      "razao": "o lugar é uma seção (section_slug) ou um objeto canônico (object_slug) — um dos dois, nunca os dois",
+      "alvo": false
+    },
+    {
+      "tabela": "data_specification",
+      "coluna": "unit",
+      "pendentes": 110,
+      "linhas": 115,
+      "preenchidas": 5,
+      "classificacao": "estrutura-declarada",
+      "razao": "a unidade só existe para característica mensurável",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_child",
+      "coluna": "path",
+      "pendentes": 6,
+      "linhas": 28,
+      "preenchidas": 22,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho do pai: '' é a raiz da árvore — o app lê e ignora explicitamente `child.path !== ''` (src/lib/stored.functions.ts:367)",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_page",
+      "coluna": "path",
+      "pendentes": 1,
+      "linhas": 29,
+      "preenchidas": 28,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho da página: '' é a raiz institucional (kind='hub'); as demais carregam o próprio nome",
+      "alvo": false
+    },
+    {
+      "tabela": "inst_section",
+      "coluna": "path",
+      "pendentes": 6,
+      "linhas": 142,
+      "preenchidas": 136,
+      "classificacao": "estrutura-declarada",
+      "razao": "caminho da página dona da seção: '' são as seções da raiz institucional (kind='hub')",
+      "alvo": false
+    },
+    {
+      "tabela": "kernel_atom",
+      "coluna": "source_canonical_id",
+      "pendentes": 4,
+      "linhas": 4,
+      "preenchidas": 0,
+      "classificacao": "estrutura-declarada",
+      "razao": "o átomo aponta para a fonte canônica registrada; átomo de metamodelo interno não tem fonte externa (o registry cai no id do átomo, src/core/registry/source-registry.ts:159) e a coluna é opcional no dicionário (0038, required=false)",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_hash",
+      "pendentes": 26,
+      "linhas": 74,
+      "preenchidas": 48,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_model",
+      "pendentes": 68,
+      "linhas": 74,
+      "preenchidas": 6,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_slug",
+      "pendentes": 8,
+      "linhas": 74,
+      "preenchidas": 66,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "dest_to",
+      "pendentes": 73,
+      "linhas": 74,
+      "preenchidas": 1,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino do item de menu é um entre: hash, slug, caminho, modelo ou id — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "parent_id",
+      "pendentes": 11,
+      "linhas": 74,
+      "preenchidas": 63,
+      "classificacao": "estrutura-declarada",
+      "razao": "item de menu raiz não tem pai",
+      "alvo": false
+    },
+    {
+      "tabela": "nav_item",
+      "coluna": "tone",
+      "pendentes": 71,
+      "linhas": 74,
+      "preenchidas": 3,
+      "classificacao": "estrutura-declarada",
+      "razao": "tom visual é opcional: só o item em destaque o carrega",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_column",
+      "coluna": "ref_entity",
+      "pendentes": 105,
+      "linhas": 127,
+      "preenchidas": 22,
+      "classificacao": "estrutura-declarada",
+      "razao": "a referência só existe quando a coluna é entidade",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_column",
+      "coluna": "unit",
+      "pendentes": 124,
+      "linhas": 127,
+      "preenchidas": 3,
+      "classificacao": "estrutura-declarada",
+      "razao": "a unidade só existe para coluna mensurável",
+      "alvo": false
+    },
+    {
+      "tabela": "schema_entity",
+      "coluna": "links",
+      "pendentes": 38,
+      "linhas": 99,
+      "preenchidas": 61,
+      "classificacao": "estrutura-declarada",
+      "razao": "entidade sem ligação declarada a outra",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "hash",
+      "pendentes": 26,
+      "linhas": 77,
+      "preenchidas": 51,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "model_id",
+      "pendentes": 70,
+      "linhas": 77,
+      "preenchidas": 7,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "page_to",
+      "pendentes": 75,
+      "linhas": 77,
+      "preenchidas": 2,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "place_id",
+      "pendentes": 15,
+      "linhas": 77,
+      "preenchidas": 62,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "screen_dest",
+      "coluna": "tool_slug",
+      "pendentes": 72,
+      "linhas": 77,
+      "preenchidas": 5,
+      "classificacao": "estrutura-declarada",
+      "razao": "o destino da tela é um entre: hash, slug, caminho, modelo, lugar ou instrumento — uma forma por linha",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_hash",
+      "pendentes": 91,
+      "linhas": 103,
+      "preenchidas": 12,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_id",
+      "pendentes": 54,
+      "linhas": 103,
+      "preenchidas": 49,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_kind",
+      "pendentes": 54,
+      "linhas": 103,
+      "preenchidas": 49,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_model",
+      "pendentes": 96,
+      "linhas": 103,
+      "preenchidas": 7,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_slug",
+      "pendentes": 64,
+      "linhas": 103,
+      "preenchidas": 39,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "section_link",
+      "coluna": "dest_to",
+      "pendentes": 101,
+      "linhas": 103,
+      "preenchidas": 2,
+      "classificacao": "estrutura-declarada",
+      "razao": "o link aponta para um destino; a forma preenchida é uma das seis — ou o link é só texto, sem destino",
+      "alvo": false
+    },
+    {
+      "tabela": "specimen_line",
+      "coluna": "text",
+      "pendentes": 30,
+      "linhas": 170,
+      "preenchidas": 140,
+      "classificacao": "estrutura-declarada",
+      "razao": "campo opcional do espécime: a extração percorre um conjunto fixo de campos (id, title, subtitle, description, attributes) e o item sem vídeo fica sem duração — as '' são gravadas de propósito em migrations/0032_public_files.sql",
+      "alvo": false
+    },
+    {
+      "tabela": "work_order",
+      "coluna": "block_reason",
+      "pendentes": 1,
+      "linhas": 2,
+      "preenchidas": 1,
+      "classificacao": "estrutura-declarada",
+      "razao": "o motivo do bloqueio só existe quando o portão está fechado (gate_open = false)",
+      "alvo": false
+    }
+  ],
+  "semDeclaracao": []
+}

@@ -28,7 +28,7 @@ export function SubscriptionPanel() {
       </p>
       {isPending || status === "loading" ? <p className="tool-help">Consultando a conta…</p> : null}
       {!isPending && !user ? (
-        <Link to="/login" className="btn-assine">
+        <Link to="/login" search={{ de: "assinatura" }} className="btn-assine">
           Entrar para pedir
         </Link>
       ) : null}

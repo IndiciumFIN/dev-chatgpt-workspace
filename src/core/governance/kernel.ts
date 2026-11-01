@@ -1,7 +1,20 @@
 import type { KernelDecision, Manifest, PolicyRule, WorkOrder } from "./types";
 
-export type NamedValidator = { id: string; run: () => Promise<boolean> };
-export type PolicyAssessment = { allow: boolean; decisionId: string; bundleRef: string };
+export type NamedValidator = {
+  id: string;
+  /** A true boolean alone lacks independently traceable evidence. */
+  run: () => Promise<boolean | { passed: boolean; evidenceRef: string; runRef: string }>;
+};
+export type PolicyAssessment = {
+  allow: boolean;
+  decisionId: string;
+  bundleRef: string;
+  /** Read-only parity with the already-existing OPA policy contract. */
+  bundleSignatureVerified?: boolean;
+  decisionEvidenceRef?: string;
+  workOrderRef?: string;
+  inputHash?: string;
+};
 export type PolicyEvaluator = (request: {
   workOrder: WorkOrder;
   manifest: Manifest;
@@ -34,6 +47,13 @@ export async function evaluateWorkOrder(
   if (!uniqueNames(workOrder.policySet)) return { outcome: "reject", reason: "policy-set-required" };
   if (!nonempty(workOrder.sourceRef) || !uniqueNames(workOrder.acceptanceCriteria)) {
     return { outcome: "hold", reason: "work-order-source-or-acceptance-missing" };
+  }
+
+  if (!nonempty(workOrder.findRef) || !nonempty(workOrder.taskRef)) {
+    return { outcome: "hold", reason: "find-task-lineage-required" };
+  }
+  if (!nonempty(workOrder.owner) || !nonempty(workOrder.approver) || workOrder.owner === workOrder.approver) {
+    return { outcome: "hold", reason: "independent-owner-approver-required" };
   }
 
   const activePolicies = policyRules.filter(rule => rule.active);
@@ -74,11 +94,22 @@ export async function evaluateWorkOrder(
     return { outcome: "hold", reason: "policy-decision-evidence-missing" };
   }
   if (assessment.allow !== true) return { outcome: "reject", reason: "policy-denied" };
+  if (assessment.bundleSignatureVerified !== true ||
+      !nonempty(assessment.decisionEvidenceRef) ||
+      assessment.workOrderRef !== workOrder.id ||
+      assessment.inputHash !== manifest.hash) {
+    return { outcome: "hold", reason: "policy-bundle-or-decision-evidence-unverified" };
+  }
 
   for (const validator of validators) {
     try {
-      if ((await validator.run()) !== true) {
+      const outcome = await validator.run();
+      if (outcome === false || (typeof outcome === "object" && outcome !== null && outcome.passed !== true)) {
         return { outcome: "reject", reason: `validator-failed:${validator.id}` };
+      }
+      if (outcome === true || !outcome || typeof outcome !== "object" ||
+          !nonempty(outcome.evidenceRef) || !nonempty(outcome.runRef)) {
+        return { outcome: "hold", reason: `validator-evidence-required:${validator.id}` };
       }
     } catch {
       return { outcome: "hold", reason: `validator-error:${validator.id}` };

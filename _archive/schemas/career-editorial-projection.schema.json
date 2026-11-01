@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Editorial Projection Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "dek",
+    "content_type",
+    "audience",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "dek": {
+      "type": "string"
+    },
+    "content_type": {
+      "enum": [
+        "ARTICLE",
+        "GUIDE",
+        "CAMPAIGN",
+        "CHECKLIST",
+        "STORY",
+        "QUIZ_INTRO"
+      ]
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "linked_object_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "linked_object_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "DRAFT_CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

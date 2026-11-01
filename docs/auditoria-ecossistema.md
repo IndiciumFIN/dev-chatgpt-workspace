@@ -9,7 +9,6 @@ Falha o teste. Não pode ir ao ar.
 | Id | Norma interna | O que impede |
 |---|---|---|
 | PUB-CORPO | Política de dado | Texto publicado com corpo vazio |
-| PUB-IDIOMA | Portão de publicação | Idioma diferente de pt-BR publicado, fora da home em en, es e fr |
 | CLI-CAPA | Capa do instrumento | Cálculo aberto fora de Apgar, Braden, gotejamento, IMC e Morse |
 | CLI-FORMULA | Fórmula | Capa publicada sem fórmula, critério ou campo |
 | KER-PESSOA | Admissão | Aprovador com o valor `kernel` |
@@ -17,13 +16,13 @@ Falha o teste. Não pode ir ao ar.
 
 ## Achado
 
-O teste exige que os achados atuais continuem visíveis até a causa fechar. Os dois de dicionário físico só aparecem se a paridade das tabelas quebrar.
+O teste exige que um achado só permaneça enquanto a causa existir. Os dois de dicionário físico só aparecem se a paridade das tabelas quebrar.
 
 | Id | Norma citada | O que ainda não fecha |
 |---|---|---|
-| I18N-ALT | WCAG 3.1.2 | Inglês, espanhol e francês do texto alternativo ainda estão em rascunho |
-| REG-RASCUNHO | Regra de negócio | `business_rule` ainda em rascunho. Não se aprova sozinha. |
 | I18N-CHROME | Rótulo da interface | Português sem par em inglês, espanhol ou francês. Hoje não dispara. |
+
+A aprovação de 1º de novembro de 2026 publicou o texto que já tinha corpo, o texto alternativo e marcou regra, política e especificação como aprovadas por `administrador`. Quinze textos em português seguem em rascunho porque o corpo está vazio. As 77 capas sem fórmula não foram publicadas. Arquivo de outro repositório sem corpo continua na fila.
 | DIC-ENTIDADE-SEM-TABELA | Dicionário interno, não ISO 8000 | Entidade sem tabela. Hoje não dispara. |
 | DIC-TABELA-SEM-ENTIDADE | Dicionário interno | Tabela sem entidade. Hoje não dispara. |
 

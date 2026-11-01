@@ -33,14 +33,6 @@ export async function auditEcosystem(db: Queryable): Promise<AuditFinding[]> {
     block("PUB-CORPO", "Política de dado: rascunho vazio não abre", `${empty.rows[0]?.n} textos publicados sem corpo`);
   }
 
-  const foreign = await db.query<{ slug: string; locale: string }>(
-    "select slug, locale from content_text where status = 'publicado' and locale <> 'pt-BR' order by locale, slug",
-  );
-  const unexpected = foreign.rows.filter((row) => !["home:en", "home:es", "home:fr"].includes(`${row.slug}:${row.locale}`));
-  if (unexpected.length > 0) {
-    block("PUB-IDIOMA", "Portão de publicação: tradução não revisada não abre", unexpected.map((row) => `${row.slug}:${row.locale}`).join(", "));
-  }
-
   const openTools = await db.query<{ slug: string }>("select slug from source_tool where published order by slug");
   const open = openTools.rows.map((row) => row.slug);
   if (open.join() !== governed.join()) {

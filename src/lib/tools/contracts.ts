@@ -73,12 +73,12 @@ export type TipoFonte =
 export type FonteNormativa = IdentidadeContrato & {
   source_type: TipoFonte;
   /**
-   * Porque este valor e este `source_type` — por natureza do documento.
-   * O enum classifica o que o documento E, nao como o rotulo antigo se
-   * traduzia. Uma linha por fonte; sem esta linha, a reclassificacao fica
-   * sem justificacao e a proxima traducao de rotulo volta a acontecer.
+   * NOTA: o contrato canonico `source` tem `additionalProperties: false` —
+   * nao existe campo para a justificativa da classificacao. A razao pela qual
+   * cada fonte foi classificada pela natureza do documento vive no registo
+   * (docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md, §13.5), e nao dentro do
+   * contrato. Nao reintroduzir aqui um campo que o contrato nao admite.
    */
-  source_type_rationale?: string;
   title: string;
   /** Quem assina: "Conselho Federal de Medicina (CFM)", "CAPES/MEC", "OMS/WHO". */
   authority: string;

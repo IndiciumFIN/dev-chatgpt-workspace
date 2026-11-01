@@ -1,5 +1,13 @@
 name: Prévia administrativa — browser e capturas
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/components/admin/**'
+      - 'src/components/local/local-workbench-page.tsx'
+      - 'src/styles/admin-console.css'
+      - 'scripts/admin-ux-e2e.mjs'
+      - '.github/workflows/admin-ux-e2e.yml'
   push:
     branches: [main]
     paths:

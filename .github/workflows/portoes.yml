@@ -60,8 +60,10 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: ce-p1-migration-collision-evidence
-          path: artifacts/migration-collision-evidence.json
+          name: ce-p1-foundation-reconciliation-evidence
+          path: |
+            artifacts/migration-collision-evidence.json
+            artifacts/db-indice.json
           if-no-files-found: warn
           retention-days: 60
 

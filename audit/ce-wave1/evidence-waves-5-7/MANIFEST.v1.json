@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "CE_AUDIT_WAVES_ARCHIVE_INDEX",
+  "repo": "IndiciumFIN/dev-chatgpt-workspace",
+  "branch": "integration/structural-overlay-20261101",
+  "createdOn": "2026-11-01",
+  "source": "ChatGPT conversation; prior snapshots plus GitHub Actions evidence",
+  "isAuthoritativeRegistry": false,
+  "releaseGate": "HOLD_HUMAN",
+  "kernelAdmission": "NOT_VERIFIED",
+  "patchApplied": false,
+  "mainMergeAuthorized": false,
+  "waves": {
+    "5": {
+      "file": "CE-WAVE5-reconciliacao-readonly.zip",
+      "bytes": 10481,
+      "sha256": "02294c0d0962c445ab6649d373648b5c2426dcc7369475b037dcb0b5eb117dfb",
+      "gitBlobSha": "bb75550b7b4fd9d30795c90c458c9f2b89a1ff69",
+      "files": [
+        {
+          "path": "ce-wave5/wave5-pinned-heads.readonly.json",
+          "sha256": "fcd2214d1d66ddacb411b54944632565cab9a436404e473addd8673c72bae3de",
+          "bytes": 2330
+        },
+        {
+          "path": "ce-wave5/wave5-proposed-reclassification.readonly.json",
+          "sha256": "5285e231f21a8c97bf116e470628d07ff3b70e2883459f7bb85e6cafeb269b30",
+          "bytes": 1927
+        },
+        {
+          "path": "ce-wave5/README.md",
+          "sha256": "4cd78a5c252b13480c3579f371af206788fb3dffe58464b829292dd2b966ca9e",
+          "bytes": 3297
+        },
+        {
+          "path": "ce-wave5/reconcile-main-scope-preview.test.mjs",
+          "sha256": "dd7ee5b30fbb446c7d7dfa521f1120cb944e74e64d0807ab1915636491983a0f",
+          "bytes": 4721
+        },
+        {
+          "path": "ce-wave5/reconcile-main-scope-preview.mjs",
+          "sha256": "b4f399e7778d230697b4c5ebb02ef6ea88b5fe977e1551614cb13be9d081da1d",
+          "bytes": 9322
+        }
+      ]
+    },
+    "6": {
+      "file": "CE-WAVE6-evidencias-reconciliacao.zip",
+      "bytes": 722957,
+      "sha256": "74e2d8c1e27b2bf51985ce7478fe7f5b3da63903b05ee0623abe69044bb0bb98",
+      "gitBlobSha": "57bc0784b72a574e7543daf299ad99deee2b1c59",
+      "files": [
+        {
+          "path": "ce-wave6/README.md",
+          "sha256": "edd186a375c42858b71a6a289baa61a7028e533c60f2dd1ee2c26f75b9c397ca",
+          "bytes": 2268
+        },
+        {
+          "path": "ce-wave6/historical-collision-backlog.csv",
+          "sha256": "a0327bd8acbba0e8dfa2a4b972dc8e3875aac0f3cda5e39eca6a91b50c2759e5",
+          "bytes": 6600
+        },
+        {
+          "path": "ce-wave6/wave6-delta-readonly.json",
+          "sha256": "a03828085b846f01cf4850abe6a2d96b23909d73083b8e6f26b4b026f1f5433f",
+          "bytes": 3269
+        },
+        {
+          "path": "ce-wave6/evidence/canonical-conflict-triage.v1.json",
+          "sha256": "3cbcdf31c2008a672b7789972e7f85f0aa09b024337b531fe3439603e6699fb0",
+          "bytes": 95305
+        },
+        {
+          "path": "ce-wave6/evidence/fork-reconciliation.v1.json",
+          "sha256": "1c145c9906080e162de2aa5d5195448ea55d1dd1dce3177175d87ae19d237824",
+          "bytes": 51448
+        },
+        {
+          "path": "ce-wave6/evidence/runtime-report.json",
+          "sha256": "cbde14f3ef5b0dbb0eb38a9d5baaf31e89cc0f60d850e06b4434e0cd0fdfb667",
+          "bytes": 3558033
+        },
+        {
+          "path": "ce-wave6/evidence/semantic-i18n-collisions.v1.json",
+          "sha256": "d5363a21237bc2e7589a50c89f56e22945669552e893e70dc648bdc0bc1b43be",
+          "bytes": 39236
+        }
+      ]
+    },
+    "7": {
+      "file": "CE-WAVE7-fulltree-auditoria.zip",
+      "bytes": 5835,
+      "sha256": "83ebf2b73d938c727ba1be2eefbd032a53df5cf8010dce9b72e36f322f6db456",
+      "gitBlobSha": "a909a5ea94f7e97f700f33472f41dd430b622b94",
+      "files": [
+        {
+          "path": "ce-wave7/README.md",
+          "sha256": "5c2ac39d47df4222e5fe36e653f3f17d1042ad487f1c0830da4b23b5514e6246",
+          "bytes": 2297
+        },
+        {
+          "path": "ce-wave7/wave7-branch-coverage.csv",
+          "sha256": "830d3feaa8af660cfeba649e9dab1dcdf183dc0ab565a8a4af63bfdeef4d5f1d",
+          "bytes": 2594
+        },
+        {
+          "path": "ce-wave7/wave7-fulltree-snapshot.readonly.json",
+          "sha256": "624b9ba2a0b8e90893fff08f204053c9509242470abc6112723e7c3a5070667c",
+          "bytes": 9481
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Waves 5 and 6 contain historical snapshots; pinned HEADs require revalidation before reuse.",
+    "Wave 7 validates 27 recursive Git trees per fixed SHA, but does not give cross-batch global collision counts.",
+    "Zip6 includes a 3.5MB legacy runtime report only within the archive; linked original GitHub Actions run 41252304361.",
+    "These audit-only archives neither authorize execution nor replace registers/governance/main-migration-scope.v1.json.",
+    "Content in the audit-only extracted directory is documentation/test reference and not an active scripts or migration path."
+  ]
+}

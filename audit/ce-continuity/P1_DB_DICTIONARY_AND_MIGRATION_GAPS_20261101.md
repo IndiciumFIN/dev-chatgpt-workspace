@@ -131,3 +131,25 @@ As duplicidades são de **nomeação/linhagem**; não eliminar, renomear ou exec
 - **Próximas decisões controladas:** FIND/WO para correções por responsável, com validação de invariante OPA antes de tocar workflow; corrigir defeitos não controversos na candidata com testes; confrontar 10 grupos de migrations com conteúdo e ledger sem reescrever histórico; documentar 67 entidades a partir dos contratos e suas relações antes de preencher o dicionário.
 
 **Gate final:** `HOLD_HUMAN / MERGE_NOT_RECOMMENDED_NOW`. Esta seção é evidência de reconciliação e diagnóstico, **não autorização técnica/clínica nem execução remota**.
+
+## R11 — Reconciliação canônica de templates, contratos, schemas e arquivos históricos (01/11/2026)
+
+**Escopo:** leitura recursiva das árvores Git de **29 branches** (29 refs, consultas sem truncamento), incluindo as duas árvores com histórico desconexo, e recuperação selecionada por **blob SHA Git exato**, sem reinterpretação de conteúdo. Base inicial da candidata: `44baab440211b0ec80b1105c757b9af02bee5eac` com **15.582 arquivos blob** (16.881 entradas incluindo árvores). A referência da main permanece `e9f7fe66075ebe5d7346072dc3a1b4934678c6de`.
+
+### Reconciliação de identidade (não copiar conteúdos já presentes)
+- **31 schemas de carreira** em `feat/career-youth-db-first-20261026` ausentes no caminho antigo `schemas/career-*.schema.json`, mas **31/31 hashes idênticos** na candidata, majoritariamente em `_archive/schemas/`. Classificação `ALIAS_IDENTICAL_BLOB/HOLD`; não duplicar nem ativar automaticamente.
+- **9 schemas de pesquisa e participação** em `feat/research-participation-layer-20261026`: **9/9 hashes idênticos** em `_archive/schemas/`; mesma classificação.
+- **i18n**: dos 1.092 arquivos sem caminho correspondente em `registers/i18n/incoming/` da branch `idioma/consolidado-19`, **1.091 hashes já existem** na candidata, sobretudo em `src/data/registers/i18n/incoming/` ou `registers/i18n/candidates/`. Os 60 arquivos antigos da origem `idioma/pt-PT-v1` também possuem equivalentes por blob SHA. Não confundir a existência de traduções `DRAFT` com aprovação, qualidade, SEO ou ativação de idioma.
+- **865 arquivos `src/families` e cinco módulos `src/core/experience`** foram localizados sob `upload/ce-skeleton/ce-skeleton/`. Permanecem `CANDIDATE_HOLD`, fora do runtime; não são 410 serviços concluídos.
+- A candidata já tem representações de templates em `src/components/templates/`, `src/lib/admin-form-template-registry.ts`, `contracts/cko-editorial/`, `contracts/cko-skeleton/catalog/profiles/` e seus registros; variações com mesmo caminho e SHA diferente em branches de origem **não foram sobrescritas**.
+
+### Blobs de fato exclusivos fisicamente recuperados (somente evidência, sem ativação)
+- **Seis JSONC originais** de `import/drive-cko-nurseos-20261026`, sob `imports/drive-snapshots/2026-10-26/nurseos-kernel/Workflows-NK-Guard/`: `DictionaryTerm`, `ExtractionRun`, `NormAtom`, `NormDocument`, `NormSource`, `ServiceOrder`. Todos parseáveis como JSON na versão inspecionada, chamam `normKernelIntake` como contrato histórico, **não possuem integração operacional ou aprovação inferida**. Preservação via blob Git original; nenhuma execução, agendamento ou ativação Base44.
+- **`registers/i18n/incoming/sugestoes.json`** original, SHA `da8f97a25572a80ff908687128a35b2a638e3cdd`, registra `aprovado:false`, `REVIEW_REQUIRED` e `DRAFT`; preservar como candidato e não interpretar o número de itens como aprovados.
+
+### Contratos exclusivos mantidos em fonte de origem, sob HOLD, sem import runtime
+- `feat/projection-unica-f0-suite-real@6d712dd47029286869f909a2014f42083f5db2a9` possui os blobs independentes `src/components/admin/registry.tsx`, `src/core/registry/source-registry.ts`, `src/core/registry/source-registry.test.ts`. O registro administrativo histórico importa `saveClinicalSheet`, contrato ausente na interface endurecida atual; o `SourceRegistry.admitir` altera diretamente status em memória, sem autoridade Kernel independente. **Não integrar esses arquivos diretamente**. Permanecem recuperáveis no SHA original, com decisão/WO pendente e reaproveitamento semântico controlado.
+- O histórico `norm_kernel_v1.0.0_backup_2026-09-29.zip` da importação Drive permanece na branch-fonte e não foi expandido nem incorporado cegamente. Segredos e TARs brutos não entram na árvore ativa.
+
+### Invariantes pós-recuperação
+`CANDIDATE_HOLD` · `NO_MAIN_MERGE` · `NO_REMOTE_DB_WRITE` · `NO_DEPLOY` · `NO_AUTOMATIC_APPROVAL`. Essa seção registra proveniência e localização dos objetos, **não uma nova autoridade, dicionário ou catálogo paralelo**. Validação de CI, FIND/WO, admissão Kernel, revisão clínica e reconciliação dos blobs divergentes continuam obrigatórias.

@@ -363,7 +363,7 @@ export const contractToolSources = [
     "canonical_id": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
     "authority": "Prática assistencial de gotejamento",
     "jurisdiction": "BR",
-    "source_type": "STANDARD"
+    "source_type": "INTERNAL_GOVERNED"
   }
 ] as const;
 export const contractToolBindings = [

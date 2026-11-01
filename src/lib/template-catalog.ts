@@ -52,3 +52,15 @@ export const templateCatalog: CatalogRow[] = [
 export function catalogById(id: string) {
   return templateCatalog.find((item) => item.id === id);
 }
+
+/** Nome antigo dos campos. A mesa e os testes leem este formato. */
+export const templateCatalogo = templateCatalog.map((item) => ({
+  id: item.id,
+  nome: item.name,
+  url: item.href,
+  kind: item.kind,
+  frame: item.frame,
+  note: item.note,
+  situacao: item.situacao,
+  materiaPrima: item.source,
+}));

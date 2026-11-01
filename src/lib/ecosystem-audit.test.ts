@@ -4,7 +4,11 @@ import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import { auditEcosystem } from "./ecosystem-audit.ts";
 
-const known: string[] = [];
+// Achados abertos. Não são bloqueio e não se fecham por aprovação em lote:
+// alt em en/es/fr ainda é rascunho, o hreflang dos 4 idiomas de interface
+// anuncia chrome traduzido com corpo clínico em pt-BR, e a regra de negócio
+// continua em rascunho depois da reversão da aprovação automática.
+const known = ["I18N-ALT", "I18N-HREFLANG", "REG-RASCUNHO"];
 
 test("a auditoria bloqueia o que não pode ir ao ar e registra o que ainda não fecha", async () => {
   const db = new PGlite();

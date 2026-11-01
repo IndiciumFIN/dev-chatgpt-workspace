@@ -1,4 +1,5 @@
 import { siteOrigin } from "@/lib/seo";
+import { indexablePaths } from "@/lib/route-registry";
 import { tools } from "@/lib/tools/catalog";
 
 export type ContractCheck = { id: string; ok: boolean; detail: string };
@@ -14,14 +15,12 @@ export function nandaLabels() {
   return [...labels];
 }
 
-export function publicPaths(pages: ContractPage[]) {
-  const sections = pages.map((page) => `/secao/${page.slug}`);
-  const clinical = tools.map((tool) => `/ferramentas/${tool.slug}`);
-  return ["/", "/blog/mary-eliza-mahoney", ...sections, ...clinical];
+export function publicPaths() {
+  return indexablePaths();
 }
 
-export function sitemapXml(pages: ContractPage[]) {
-  const body = publicPaths(pages)
+export function sitemapXml() {
+  const body = publicPaths()
     .map((path) => `  <url><loc>${siteOrigin}${path}</loc></url>`)
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
@@ -67,8 +66,8 @@ export function contractReport(pages: ContractPage[]): ContractCheck[] {
   });
   checks.push({
     id: "mapa",
-    ok: publicPaths(pages).length >= tools.length + required.length,
-    detail: `${publicPaths(pages).length} endereços públicos no mapa para buscadores.`,
+    ok: publicPaths().length >= tools.length + required.length,
+    detail: `${publicPaths().length} endereços públicos no mapa para buscadores.`,
   });
   return checks;
 }

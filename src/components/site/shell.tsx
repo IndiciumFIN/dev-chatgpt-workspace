@@ -2,16 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { Accessibility, ArrowUp, ChevronDown, Instagram, Linkedin, Menu, Search, X, Youtube } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccountSlot, MobileNav, SiteNav } from "@/components/site/site-nav";
-import { useChrome, type FocusColor, type Locale, type OptionalConsent } from "@/lib/chrome";
+import { useChrome, type FocusColor, type OptionalConsent } from "@/lib/chrome";
+import { selectableLocales } from "@/lib/header-i18n";
 import { navLabel } from "@/lib/translate";
 import { storedFooter, useStored } from "@/lib/stored";
-
-const locales: { id: Locale; label: string }[] = [
-  { id: "pt-BR", label: "Português" },
-  { id: "en", label: "English" },
-  { id: "es", label: "Español" },
-  { id: "fr", label: "Français" },
-];
 
 const focusColors: { id: FocusColor; hex: string; label: string }[] = [
   { id: "yellow", hex: "#ff0", label: "Foco amarelo" },
@@ -226,7 +220,7 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
                       </Link>
                     ))
                   : null}
-                {locales.map((item) => (
+                {selectableLocales.map((item) => (
                   <button
                     key={item.id}
                     type="button"

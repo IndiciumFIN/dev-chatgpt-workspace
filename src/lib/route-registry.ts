@@ -18,7 +18,7 @@
  */
 import { listSections } from "@/lib/sections";
 import { articleSlugs, findArticle } from "@/lib/content/articles/index";
-import { tools } from "@/lib/tools/catalog";
+import { candidateTools, tools } from "@/lib/tools/catalog";
 import { localesWithInterface } from "@/lib/locale-registry";
 import { siteOrigin } from "@/lib/site-origin";
 
@@ -64,7 +64,7 @@ function artigos(): RouteEntry[] {
 }
 
 function ferramentas(): RouteEntry[] {
-  return tools.map((tool) => ({
+  return [...tools, ...candidateTools].map((tool) => ({
     path: `/ferramentas/${tool.slug}`,
     kind: "ferramenta" as const,
     title: tool.title,

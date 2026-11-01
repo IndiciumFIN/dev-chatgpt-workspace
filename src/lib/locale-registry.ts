@@ -229,7 +229,7 @@ export const legacySeoLocales = localeRegistry.filter(item => item.seoEligibilit
  * `content` de todos os 19 continua `not_verified` — o texto clinico e
  * pt-BR por decisao. O que esta aqui e o que o chrome consegue exibir.
  */
-export const localesWithInterface = localeRegistry.filter(item => true /* todos têm dicionário após merge consolidado-19 */).map(item => item.id);
+export const localesWithInterface = localeRegistry.filter(item => item.interfaceDictionary === "partial_existing").map(item => item.id);
 export function hasInterfaceDictionary(value: unknown): boolean {
   return typeof value === "string" && localesWithInterface.includes(value as never);
 }

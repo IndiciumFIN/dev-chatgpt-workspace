@@ -71,4 +71,4 @@ jobs:
       - run: node scripts/audit-execution-gates.mjs
       - run: npm run build:spa
       - name: Verificar arquivos estaticos basicos
-        run: test -s .vercel/output/static/index.html && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt
+        run: test -s .vercel/output/nitro.json && test -d .vercel/output/functions/__server.func && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt

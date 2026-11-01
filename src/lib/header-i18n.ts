@@ -15,7 +15,7 @@ export type HeaderLocale = typeof headerLocales[number]["id"];
  * Nos 15 marcados interface_ready a pagina continua em portugues, entao o
  * idioma do documento nao muda. Conteudo clinico e SEO nao entram aqui.
  */
-export const selectableLocales = localeRegistry.filter((item) => true /* todos têm dicionário após merge consolidado-19 */);
+export const selectableLocales = localeRegistry.filter((item) => item.interfaceDictionary === "partial_existing");
 
 export const headerWords: Record<HeaderLocale, Record<"accessibility" | "fontDown" | "fontUp" | "contrast" | "dyslexia" | "dark" | "shortcuts" | "reset" | "search" | "language", string>> = {
   "pt-BR": {

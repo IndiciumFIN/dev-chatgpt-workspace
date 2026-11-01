@@ -1,8 +1,8 @@
 import type { ClinicalTool } from "@/lib/tools/types";
+import { siteOrigin } from "@/lib/site-origin";
+import { alternateLocales, canonicalLocale, routeEntry } from "@/lib/route-registry";
 
-export const siteOrigin = "https://calculadorasdeenfermagem.com.br";
-
-const offered = ["pt-BR", "en", "es", "fr"] as const;
+export { siteOrigin };
 
 export function pageLang(value: unknown) {
   if (value === "en" || value === "es" || value === "fr" || value === "pt-BR") return value;
@@ -15,20 +15,22 @@ export function absoluteUrl(path: string, lang: string = "pt-BR") {
   return url.toString();
 }
 
-export function languageLinks(path: string, lang: unknown, published: readonly string[] = ["pt-BR"]) {
-  const locales = offered.filter((code) => published.includes(code));
-  const list = locales.includes("pt-BR") ? [...locales] : ["pt-BR", ...locales];
-  const requested = pageLang(lang);
-  const current = list.includes(requested) ? requested : "pt-BR";
+export function languageLinks(path: string, lang: unknown, _published?: readonly string[]) {
+  const canonicalLang = canonicalLocale(lang);
   return [
-    { rel: "canonical", href: absoluteUrl(path, current) },
-    ...list.map((code) => ({
+    { rel: "canonical", href: absoluteUrl(path, canonicalLang) },
+    ...alternateLocales().map((code) => ({
       rel: "alternate" as const,
       hrefLang: code,
       href: absoluteUrl(path, code),
     })),
     { rel: "alternate" as const, hrefLang: "x-default", href: absoluteUrl(path, "pt-BR") },
   ];
+}
+
+export function canonicalPath(path: string): string {
+  const entry = routeEntry(path);
+  return entry ? entry.path : path;
 }
 
 export function websiteJsonLd() {

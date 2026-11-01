@@ -16,6 +16,7 @@ import { Route as AlbumRouteImport } from './routes/album'
 import { Route as AssinanteRouteImport } from './routes/assinante'
 import { Route as BolsasRouteImport } from './routes/bolsas'
 import { Route as CalculadorasTrabalhistasRouteImport } from './routes/calculadoras-trabalhistas'
+import { Route as CentralComandoRouteImport } from './routes/central-comando'
 import { Route as ConcursoRouteImport } from './routes/concurso'
 import { Route as ConcursosRouteImport } from './routes/concursos'
 import { Route as ContaRouteImport } from './routes/conta'
@@ -30,6 +31,7 @@ import { Route as InstitucionalRouteImport } from './routes/institucional'
 import { Route as KidsRouteImport } from './routes/kids'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ModelosRouteImport } from './routes/modelos'
+import { Route as OficinaLocalRouteImport } from './routes/oficina-local'
 import { Route as OportunidadesRouteImport } from './routes/oportunidades'
 import { Route as PacoteRouteImport } from './routes/pacote'
 import { Route as ResidenciasRouteImport } from './routes/residencias'
@@ -40,6 +42,7 @@ import { Route as VagasRouteImport } from './routes/vagas'
 import { Route as ViladocuidadoRouteImport } from './routes/viladocuidado'
 import { Route as BibliotecasIndexRouteImport } from './routes/bibliotecas.index'
 import { Route as BibliotecasSlugRouteImport } from './routes/bibliotecas.$slug'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BlogMaryElizaMahoneyRouteImport } from './routes/blog.mary-eliza-mahoney'
 import { Route as FerramentasSlugRouteImport } from './routes/ferramentas.$slug'
@@ -95,6 +98,11 @@ const CalculadorasTrabalhistasRoute =
     path: '/calculadoras-trabalhistas',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CentralComandoRoute = CentralComandoRouteImport.update({
+  id: '/central-comando',
+  path: '/central-comando',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConcursoRoute = ConcursoRouteImport.update({
   id: '/concurso',
   path: '/concurso',
@@ -165,6 +173,11 @@ const ModelosRoute = ModelosRouteImport.update({
   path: '/modelos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OficinaLocalRoute = OficinaLocalRouteImport.update({
+  id: '/oficina-local',
+  path: '/oficina-local',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OportunidadesRoute = OportunidadesRouteImport.update({
   id: '/oportunidades',
   path: '/oportunidades',
@@ -213,6 +226,11 @@ const BibliotecasIndexRoute = BibliotecasIndexRouteImport.update({
 const BibliotecasSlugRoute = BibliotecasSlugRouteImport.update({
   id: '/bibliotecas/$slug',
   path: '/bibliotecas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -315,6 +333,7 @@ export interface FileRoutesByFullPath {
   '/assinante': typeof AssinanteRouteWithChildren
   '/bolsas': typeof BolsasRoute
   '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
+  '/central-comando': typeof CentralComandoRoute
   '/concurso': typeof ConcursoRoute
   '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
@@ -329,6 +348,7 @@ export interface FileRoutesByFullPath {
   '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
+  '/oficina-local': typeof OficinaLocalRoute
   '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
   '/residencias': typeof ResidenciasRoute
@@ -348,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/institucional/': typeof InstitucionalIndexRoute
   '/kids/': typeof KidsIndexRoute
   '/modelos/': typeof ModelosIndexRoute
@@ -366,6 +387,7 @@ export interface FileRoutesByTo {
   '/assinante': typeof AssinanteRouteWithChildren
   '/bolsas': typeof BolsasRoute
   '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
+  '/central-comando': typeof CentralComandoRoute
   '/concurso': typeof ConcursoRoute
   '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
@@ -377,6 +399,7 @@ export interface FileRoutesByTo {
   '/ferramentas-pesquisa': typeof FerramentasPesquisaRoute
   '/forum': typeof ForumRoute
   '/login': typeof LoginRoute
+  '/oficina-local': typeof OficinaLocalRoute
   '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
   '/residencias': typeof ResidenciasRoute
@@ -394,6 +417,7 @@ export interface FileRoutesByTo {
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas': typeof BibliotecasIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/institucional': typeof InstitucionalIndexRoute
   '/kids': typeof KidsIndexRoute
   '/modelos': typeof ModelosIndexRoute
@@ -413,6 +437,7 @@ export interface FileRoutesById {
   '/assinante': typeof AssinanteRouteWithChildren
   '/bolsas': typeof BolsasRoute
   '/calculadoras-trabalhistas': typeof CalculadorasTrabalhistasRoute
+  '/central-comando': typeof CentralComandoRoute
   '/concurso': typeof ConcursoRoute
   '/concursos': typeof ConcursosRoute
   '/conta': typeof ContaRoute
@@ -427,6 +452,7 @@ export interface FileRoutesById {
   '/kids': typeof KidsRouteWithChildren
   '/login': typeof LoginRoute
   '/modelos': typeof ModelosRouteWithChildren
+  '/oficina-local': typeof OficinaLocalRoute
   '/oportunidades': typeof OportunidadesRoute
   '/pacote': typeof PacoteRoute
   '/residencias': typeof ResidenciasRoute
@@ -446,6 +472,7 @@ export interface FileRoutesById {
   '/modelos/$id': typeof ModelosIdRoute
   '/secao/$slug': typeof SecaoSlugRoute
   '/bibliotecas/': typeof BibliotecasIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/institucional/': typeof InstitucionalIndexRoute
   '/kids/': typeof KidsIndexRoute
   '/modelos/': typeof ModelosIndexRoute
@@ -466,6 +493,7 @@ export interface FileRouteTypes {
     | '/assinante'
     | '/bolsas'
     | '/calculadoras-trabalhistas'
+    | '/central-comando'
     | '/concurso'
     | '/concursos'
     | '/conta'
@@ -480,6 +508,7 @@ export interface FileRouteTypes {
     | '/kids'
     | '/login'
     | '/modelos'
+    | '/oficina-local'
     | '/oportunidades'
     | '/pacote'
     | '/residencias'
@@ -499,6 +528,7 @@ export interface FileRouteTypes {
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
+    | '/blog/'
     | '/institucional/'
     | '/kids/'
     | '/modelos/'
@@ -517,6 +547,7 @@ export interface FileRouteTypes {
     | '/assinante'
     | '/bolsas'
     | '/calculadoras-trabalhistas'
+    | '/central-comando'
     | '/concurso'
     | '/concursos'
     | '/conta'
@@ -528,6 +559,7 @@ export interface FileRouteTypes {
     | '/ferramentas-pesquisa'
     | '/forum'
     | '/login'
+    | '/oficina-local'
     | '/oportunidades'
     | '/pacote'
     | '/residencias'
@@ -545,6 +577,7 @@ export interface FileRouteTypes {
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas'
+    | '/blog'
     | '/institucional'
     | '/kids'
     | '/modelos'
@@ -563,6 +596,7 @@ export interface FileRouteTypes {
     | '/assinante'
     | '/bolsas'
     | '/calculadoras-trabalhistas'
+    | '/central-comando'
     | '/concurso'
     | '/concursos'
     | '/conta'
@@ -577,6 +611,7 @@ export interface FileRouteTypes {
     | '/kids'
     | '/login'
     | '/modelos'
+    | '/oficina-local'
     | '/oportunidades'
     | '/pacote'
     | '/residencias'
@@ -596,6 +631,7 @@ export interface FileRouteTypes {
     | '/modelos/$id'
     | '/secao/$slug'
     | '/bibliotecas/'
+    | '/blog/'
     | '/institucional/'
     | '/kids/'
     | '/modelos/'
@@ -615,6 +651,7 @@ export interface RootRouteChildren {
   AssinanteRoute: typeof AssinanteRouteWithChildren
   BolsasRoute: typeof BolsasRoute
   CalculadorasTrabalhistasRoute: typeof CalculadorasTrabalhistasRoute
+  CentralComandoRoute: typeof CentralComandoRoute
   ConcursoRoute: typeof ConcursoRoute
   ConcursosRoute: typeof ConcursosRoute
   ContaRoute: typeof ContaRoute
@@ -629,6 +666,7 @@ export interface RootRouteChildren {
   KidsRoute: typeof KidsRouteWithChildren
   LoginRoute: typeof LoginRoute
   ModelosRoute: typeof ModelosRouteWithChildren
+  OficinaLocalRoute: typeof OficinaLocalRoute
   OportunidadesRoute: typeof OportunidadesRoute
   PacoteRoute: typeof PacoteRoute
   ResidenciasRoute: typeof ResidenciasRoute
@@ -643,6 +681,7 @@ export interface RootRouteChildren {
   FerramentasSlugRoute: typeof FerramentasSlugRoute
   SecaoSlugRoute: typeof SecaoSlugRoute
   BibliotecasIndexRoute: typeof BibliotecasIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -695,6 +734,13 @@ declare module '@tanstack/react-router' {
       path: '/calculadoras-trabalhistas'
       fullPath: '/calculadoras-trabalhistas'
       preLoaderRoute: typeof CalculadorasTrabalhistasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/central-comando': {
+      id: '/central-comando'
+      path: '/central-comando'
+      fullPath: '/central-comando'
+      preLoaderRoute: typeof CentralComandoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/concurso': {
@@ -795,6 +841,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModelosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/oficina-local': {
+      id: '/oficina-local'
+      path: '/oficina-local'
+      fullPath: '/oficina-local'
+      preLoaderRoute: typeof OficinaLocalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/oportunidades': {
       id: '/oportunidades'
       path: '/oportunidades'
@@ -863,6 +916,13 @@ declare module '@tanstack/react-router' {
       path: '/bibliotecas/$slug'
       fullPath: '/bibliotecas/$slug'
       preLoaderRoute: typeof BibliotecasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -1084,6 +1144,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssinanteRoute: AssinanteRouteWithChildren,
   BolsasRoute: BolsasRoute,
   CalculadorasTrabalhistasRoute: CalculadorasTrabalhistasRoute,
+  CentralComandoRoute: CentralComandoRoute,
   ConcursoRoute: ConcursoRoute,
   ConcursosRoute: ConcursosRoute,
   ContaRoute: ContaRoute,
@@ -1098,6 +1159,7 @@ const rootRouteChildren: RootRouteChildren = {
   KidsRoute: KidsRouteWithChildren,
   LoginRoute: LoginRoute,
   ModelosRoute: ModelosRouteWithChildren,
+  OficinaLocalRoute: OficinaLocalRoute,
   OportunidadesRoute: OportunidadesRoute,
   PacoteRoute: PacoteRoute,
   ResidenciasRoute: ResidenciasRoute,
@@ -1112,6 +1174,7 @@ const rootRouteChildren: RootRouteChildren = {
   FerramentasSlugRoute: FerramentasSlugRoute,
   SecaoSlugRoute: SecaoSlugRoute,
   BibliotecasIndexRoute: BibliotecasIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

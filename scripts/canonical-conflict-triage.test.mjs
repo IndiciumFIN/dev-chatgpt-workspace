@@ -130,3 +130,106 @@ test('null blob is never accepted outside D, and D with fabricated hash fails cl
   assert.throws(()=>buildCanonicalTriage([c],{equivalent:[]}),/INVALID_BLOB_LINEAGE/);
  }
 });
+
+test('Wave 8: 22 observed unassigned paths get existing WO CANDIDATES, never authorization',()=>{
+  const paths=[
+  [
+    "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml",
+    "WO-PMO-001"
+  ],
+  [
+    "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
+    "WO-PMO-001"
+  ],
+  [
+    "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json",
+    "WO-PMO-001"
+  ],
+  [
+    "scripts/admin-mobile-first.test.mjs",
+    "WO-DS-001"
+  ],
+  [
+    "scripts/canonical-conflict-triage.test.mjs",
+    "WO-PMO-001"
+  ],
+  [
+    "scripts/cko-canonical-pilot.test.mjs",
+    "WO-CKO-001"
+  ],
+  [
+    "scripts/cko-db-first-evidence.test.mjs",
+    "WO-CKO-001"
+  ],
+  [
+    "scripts/cko-db-first-replay.test.mjs",
+    "WO-CKO-001"
+  ],
+  [
+    "scripts/cko-governance-pilot.test.mjs",
+    "WO-GOV-TRANS-001"
+  ],
+  [
+    "scripts/governance-continuity.test.mjs",
+    "WO-GOV-TRANS-001"
+  ],
+  [
+    "scripts/lib/canonical-conflict-triage.mjs",
+    "WO-PMO-001"
+  ],
+  [
+    "scripts/test-commander-read-model.mjs",
+    "WO-ADM-001"
+  ],
+  [
+    "scripts/test-curiosidades-source-alternatives.mjs",
+    "WO-CKO-001"
+  ],
+  [
+    "scripts/test-locale-registry.mjs",
+    "WO-DS-001"
+  ],
+  [
+    "src/components/article/curiosity-page.tsx",
+    "WO-CKO-001"
+  ],
+  [
+    "src/components/career/career-hub.tsx",
+    "WO-ADM-001"
+  ],
+  [
+    "src/components/templates/curiosity-view.tsx",
+    "WO-CKO-001"
+  ],
+  [
+    "src/components/vila/vila-source-home.tsx",
+    "WO-ADM-001"
+  ],
+  [
+    "src/lib/commander/read-model.ts",
+    "WO-ADM-001"
+  ],
+  [
+    "src/lib/contract-index.generated.ts",
+    "WO-CKO-001"
+  ],
+  [
+    "src/lib/header-i18n.ts",
+    "WO-DS-001"
+  ],
+  [
+    "src/lib/locale-registry.ts",
+    "WO-DS-001"
+  ]
+];
+  assert.equal(paths.length,22);
+  for(const [path,expectedWo] of paths) {
+    const r=triageCanonicalConflict(path);
+    assert.equal(r.proposedWo,expectedWo,'missing candidate for '+path);
+    assert.equal(r.mappingStatus,'CANDIDATE_WO_MAPPING');
+    assert.equal(r.decision,'NOT_APPROVED');
+    assert.equal(r.kernelAdmission,'NOT_VERIFIED');
+    assert.equal(r.releaseGate,'HOLD_HUMAN');
+  }
+  assert.equal(triageCanonicalConflict('unseen/2026-11-01/unknown.dat').mappingStatus,'WO_MAPPING_REQUIRED');
+});

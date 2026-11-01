@@ -1,6 +1,5 @@
 export type Severity = "info" | "warning" | "critical" | "blocker";
 export type FindingStatus = "open" | "in_review" | "resolved" | "closed";
-
 export type Finding = {
   id: string;
   workflowId?: string;
@@ -20,11 +19,10 @@ export type Finding = {
   signature: string;
 };
 
+/** Draft finding only. The trusted evidence subsystem must hash and sign separately. */
 export function createFinding(input: Omit<Finding, "hash" | "signature">): Finding {
-  const hash = `finding:${input.id}:${input.createdAt}`;
-  return {
-    ...input,
-    hash,
-    signature: `kernel:${input.id}:${hash}`,
-  };
+  if (!input.id || !input.reason || !input.createdBy || !input.createdAt) {
+    throw new Error("INVALID_FIND_CANDIDATE");
+  }
+  return { ...input, hash: "", signature: "" };
 }

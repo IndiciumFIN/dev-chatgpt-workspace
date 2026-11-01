@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "CE_PUBLIC_BACKUP_ONLY",
   "base": "v2.6.9",
-  "generatedAt": "2026-10-26T20:08:29.506Z",
+  "generatedAt": "2026-11-01T01:24:53.820Z",
   "remoteIntegration": "PROHIBITED",
   "results": [
     {
@@ -40,10 +40,10 @@
     {
       "id": "surface-bindings",
       "command": "node scripts/audit-surface-bindings-v2.mjs",
-      "status": "PASS",
-      "exitCode": 0,
+      "status": "FAIL",
+      "exitCode": 1,
       "error": null,
-      "output": "{\"total\":27,\"withExplicitContracts\":27,\"findings\":0,\"visualHomologations\":0}\n"
+      "output": "{\"total\":33,\"withExplicitContracts\":27,\"findings\":6,\"visualHomologations\":0}\n[\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"blog.index.tsx\"\n  },\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"central-comando.tsx\"\n  },\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"kids.$section.tsx\"\n  },\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"kids.index.tsx\"\n  },\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"kids.tsx\"\n  },\n  {\n    \"id\": \"UNKNOWN_ROUTE\",\n    \"route\": \"viladocuidado.tsx\"\n  }\n]\n"
     },
     {
       "id": "header-p0",
@@ -75,7 +75,7 @@
       "status": "PASS",
       "exitCode": 0,
       "error": null,
-      "output": "PASS: 19 canonical locales, 4 partial dictionaries, SEO policy, shared imports\n"
+      "output": "PASS: 19 canonical locales, 4 delivered interface dictionaries, SEO still blocked, shared imports\n"
     },
     {
       "id": "focus-color-i18n",

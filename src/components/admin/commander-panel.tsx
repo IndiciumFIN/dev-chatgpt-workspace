@@ -1,4 +1,8 @@
+import queue from '../../../registers/pmo/queue.v1.json';
+import taskContract from '../../../contracts/cko-schemas/task.schema.json';
 import { useState, type FormEvent } from 'react';
+import { validateCommanderReadModel } from '../../lib/commander/read-model';
+import { inspectFormalWoEvidence } from '../../lib/commander/formal-readiness';
 import {
   AlertTriangle,
   Bot,
@@ -48,6 +52,10 @@ const capabilityCards: CapabilityCard[] = [
 ];
 
 export function CommanderPanel() {
+  const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>(queue.items[0]?.id ?? '');
+  const selectedWorkOrder = queue.items.find(item => item.id === selectedWorkOrderId);
+  const formalEvidence = selectedWorkOrder ? inspectFormalWoEvidence(selectedWorkOrder) : null;
+  const outstanding = selectedWorkOrder?.dependencies.filter(id => queue.items.find(item => item.id === id)?.status !== 'DONE') ?? [];
   const [objective, setObjective] = useState('');
   const [scope, setScope] = useState('');
   const [draft, setDraft] = useState<CommanderDraft | null>(null);
@@ -79,6 +87,8 @@ export function CommanderPanel() {
     setFeedback('Rascunho removido da memória desta página.');
   }
 
+  const modelIssues = validateCommanderReadModel(queue);
+  if (modelIssues.length) return <section className="ce-admin-panel" role="alert"><h2>Commander indisponível</h2><p>Validação determinística de dados falhou; nenhuma atividade pode ser preparada.</p><code>{modelIssues.join(', ')}</code></section>;
   return (
     <div className="ce-commander">
       <section className="ce-admin-panel" aria-labelledby="commander-heading">
@@ -98,6 +108,28 @@ export function CommanderPanel() {
         </div>
       </section>
 
+      <section className="ce-admin-panel" aria-labelledby="commander-upstream-heading" data-testid="commander-upstream-chain">
+        <h2 id="commander-upstream-heading">Da demanda à autorização · cadeia de governança</h2>
+        <p>Demanda → classificação → escopo → planejamento → fontes → FIND → política → validador → Task → WO → OPA → Kernel → testes → auditoria → promoção autorizada.</p>
+        <p><strong>Fonte do PMO:</strong> <code>{queue.canonicalSource}</code> · <strong>Registros na fila:</strong> {queue.items.length}</p>
+        <p><strong>Contrato da Task:</strong> <code>{taskContract.title}</code> · <strong>Vínculos obrigatórios:</strong> {taskContract.required.filter(field => ['find_ref', 'policy_ref', 'validator_ref', 'depends_on', 'acceptance_tests', 'executor_role', 'work_order_ref'].includes(field)).join(', ')}</p>
+        <p role="status"><strong>Admissão formal:</strong> NÃO VERIFICADA. Um registro de fila não equivale a WO admitida; a interface não cria Task, política ou aprovação por inferência.</p>
+        <label className="ce-admin-field" htmlFor="commander-wo-inspector">
+          <span>Consultar atividade existente no PMO</span>
+          <select id="commander-wo-inspector" value={selectedWorkOrderId} onChange={event => setSelectedWorkOrderId(event.target.value)}>
+            {queue.items.map(item => <option key={item.id} value={item.id}>{item.id} · {item.title}</option>)}
+          </select>
+        </label>
+        {selectedWorkOrder && <div data-testid="commander-wo-readiness">
+          <p><strong>Estado:</strong> {selectedWorkOrder.status} · <strong>Prioridade:</strong> {selectedWorkOrder.priority} · <strong>Ordem:</strong> {selectedWorkOrder.order}</p>
+          <p><strong>Dependências não concluídas:</strong> {outstanding.length ? outstanding.join(', ') : 'Nenhuma no PMO'}</p>
+          <p><strong>Próxima ação registrada:</strong> {selectedWorkOrder.next}</p>
+          <p><strong>Campos formais sem evidência na entrada PMO:</strong> {formalEvidence?.missing.join(', ') || 'Nenhum campo ausente; admissão ainda não verificada'}</p>
+          <p role="status"><strong>Execução:</strong> BLOQUEADA ATÉ ADMISSÃO FORMAL. Consultar o registro e seus vínculos não concede autorização.</p>
+        </div>}
+
+      </section>
+
       <section className="ce-commander-grid" aria-label="Condições atuais de integração">
         {capabilityCards.map(({ label, detail, icon: Icon }) => (
           <article className="ce-commander-capability" key={label}>
@@ -108,6 +140,17 @@ export function CommanderPanel() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="ce-admin-panel" data-testid="commander-handoff-inbox" aria-labelledby="commander-handoff-heading">
+        <div className="ce-admin-panel-heading">
+          <div>
+            <h2 id="commander-handoff-heading">Atividades especializadas · entregas</h2>
+            <p>Ordens do PMO canônico. O GitHub recebe artefatos; ainda não existe despacho remoto de agentes.</p>
+          </div>
+          <span className="ce-admin-indicator ce-admin-indicator--warn">Não despachadas</span>
+        </div>
+        <p role="status">Os registros de handoff aguardam a etapa de dados. Nenhuma equipe foi despachada; execução e gravações remotas permanecem bloqueadas.</p>
       </section>
 
       <section className="ce-admin-panel" aria-labelledby="commander-draft-heading">

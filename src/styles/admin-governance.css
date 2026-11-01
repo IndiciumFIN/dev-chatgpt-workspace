@@ -1,0 +1,53 @@
+
+/* Governança: leitura do registro Git; mobile-first, sem tokens visuais globais concorrentes. */
+.ce-gov,.ce-gov *{box-sizing:border-box;min-width:0}
+.ce-gov{display:grid;gap:.9rem}
+.ce-gov-heading{display:grid;gap:.7rem}
+.ce-gov-heading h3{color:var(--color-ink);font-size:1.18rem;line-height:1.25;margin:.25rem 0}
+.ce-gov-heading p{font-size:.8rem;color:var(--color-slate);line-height:1.6;margin:.25rem 0}
+.ce-gov-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .6rem;justify-self:start;border:1px solid var(--color-line);border-radius:999px;background:var(--color-pane);color:var(--color-slate);font-size:.7rem;font-weight:750}
+.ce-gov-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.ce-gov-metrics>div{display:grid;justify-items:start;gap:.3rem;padding:.8rem;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper)}
+.ce-gov-metrics svg{color:var(--color-navy)}
+.ce-gov-metrics strong{font-size:1.5rem;line-height:1.1;color:var(--color-ink)}
+.ce-gov-metrics span{color:var(--color-slate);font-size:.7rem;line-height:1.45}
+.ce-gov-warning{display:flex;gap:.55rem;align-items:flex-start;padding:.8rem;border:1px solid var(--color-line);border-left:3px solid var(--color-navy);border-radius:var(--radius-control);background:var(--color-ice)}
+.ce-gov-warning svg{flex:none;color:var(--color-navy)}
+.ce-gov-warning strong{font-size:.8rem;color:var(--color-ink)}
+.ce-gov-warning p{font-size:.73rem;line-height:1.55;margin:.25rem 0 0;color:var(--color-slate)}
+.ce-gov-controls{display:grid;gap:.7rem}
+.ce-gov-controls>div[role=tablist]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem;padding:.3rem;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-pane)}
+.ce-gov-controls button[role=tab]{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:.55rem .6rem;border:1px solid transparent;border-radius:var(--radius-control);background:transparent;color:var(--color-slate);font:inherit;font-size:.78rem;font-weight:750}
+.ce-gov-controls button[aria-selected=true]{border-color:var(--color-line);background:var(--color-paper);color:var(--color-navy)}
+.ce-gov-controls label{display:grid;gap:.35rem;font-size:.74rem;font-weight:750;color:var(--color-ink)}
+.ce-gov-controls label>span{display:flex;align-items:center;gap:.4rem;border:1px solid var(--color-line);border-radius:var(--radius-control);padding-left:.65rem}
+.ce-gov-controls label>span svg{flex:none;color:var(--color-muted)}
+.ce-gov-controls input,.ce-gov-controls select{font:inherit;font-size:16px;font-weight:400;min-height:46px;width:100%;min-width:0;padding:.6rem .65rem;background:var(--color-paper);color:var(--color-ink);border:1px solid var(--color-line);border-radius:var(--radius-control)}
+.ce-gov-controls input{border:0}
+.ce-gov-list-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.74rem}
+.ce-gov-list-heading strong{color:var(--color-ink)}
+.ce-gov-list-heading span{color:var(--color-muted)}
+.ce-gov-list{display:grid;gap:.6rem}
+.ce-gov-item{border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper)}
+.ce-gov-item summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:.55rem;min-height:62px;padding:.85rem .7rem}
+.ce-gov-item summary::-webkit-details-marker{display:none}
+.ce-gov-item summary>svg{flex:none;color:var(--color-muted)}
+.ce-gov-item[open] summary>svg{transform:rotate(180deg)}
+.ce-gov-id{flex:0 1 42%;font-size:.74rem;font-weight:800;line-height:1.48;color:var(--color-navy);overflow-wrap:anywhere}
+.ce-gov-item-meta{display:grid;gap:.3rem;flex:1}
+.ce-gov-item-meta strong{font-size:.78rem;color:var(--color-ink);line-height:1.5;overflow-wrap:anywhere}
+.ce-gov-item-meta small{color:var(--color-muted);font-size:.69rem}
+.ce-gov-item-content{border-top:1px solid var(--color-line);padding:.8rem;color:var(--color-slate);font-size:.78rem;line-height:1.6}
+.ce-gov-item-content p{margin:0 0 .9rem;white-space:pre-line}
+.ce-gov-item-content dl{display:grid;gap:.6rem;margin:.7rem 0}
+.ce-gov-item-content dl>div{border:1px solid var(--color-line);border-radius:var(--radius-control);padding:.55rem;background:var(--color-pane)}
+.ce-gov-item-content dt{font-size:.69rem;color:var(--color-muted);font-weight:750}
+.ce-gov-item-content dd{margin:.2rem 0 0;font-size:.75rem;overflow-wrap:anywhere;color:var(--color-body)}
+.ce-gov-item-content ul{margin:.6rem 0 0;padding-left:1.3rem}
+.ce-gov-item-content li{padding:.25rem 0;overflow-wrap:anywhere}
+.ce-gov-item-content code,.ce-gov-footer code{font-size:.72rem;overflow-wrap:anywhere}
+.ce-gov-item-content a{display:inline-flex;min-height:44px;align-items:center;text-decoration:underline;text-underline-offset:2px;color:var(--color-navy);font-weight:750}
+.ce-gov-more{min-height:46px;padding:.7rem 1rem;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-ice);color:var(--color-navy);font:inherit;font-size:.78rem;font-weight:800}
+.ce-gov-empty,.ce-gov-footer{font-size:.74rem;line-height:1.6;color:var(--color-muted);overflow-wrap:anywhere;margin:0}
+.ce-gov-item summary:focus-visible,.ce-gov-more:focus-visible,.ce-gov-controls button:focus-visible{outline:3px solid var(--color-navy);outline-offset:2px}
+@media(min-width:680px){.ce-gov-heading{display:flex;justify-content:space-between;align-items:start}.ce-gov-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.ce-gov-controls{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(120px,.75fr);align-items:end}.ce-gov-id{flex-basis:28%}.ce-gov-item-content dl{grid-template-columns:repeat(2,minmax(0,1fr))}.ce-gov-more{width:auto;justify-self:start;min-width:230px}}

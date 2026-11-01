@@ -158,7 +158,7 @@ export async function auditar(opcoes = {}) {
   const existentes = new Map();
   const nomesPorNumero = new Map();
   for (const nome of (await readdir(migrations)).sort()) {
-    if (!/^\\d{4}_.+\\.sql$/.test(nome)) continue;
+    if (!/^\d{4}_.+\.sql$/.test(nome)) continue;
     const numero = nome.slice(0, 4);
     if (!nomesPorNumero.has(numero)) nomesPorNumero.set(numero, []);
     nomesPorNumero.get(numero).push(nome);

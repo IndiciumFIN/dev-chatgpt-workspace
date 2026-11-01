@@ -17,7 +17,7 @@ concurrency:
 jobs:
   portoes:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 50
     steps:
       - name: Código
         uses: actions/checkout@v4
@@ -50,19 +50,24 @@ jobs:
         run: node scripts/auditar-registro.mjs
 
       - name: Suíte
+        if: ${{ always() }}
         # Os testes de scripts correm em série: cada um abre um PGlite (um
         # Postgres em RAM) e, em paralelo, o runner mata o processo por
         # memória — foi assim que um arquivo de teste morreu com SIGKILL.
         run: npm test
 
       - name: Tipos
+        if: ${{ always() }}
         run: npx tsc --noEmit
 
       - name: Build
+        if: ${{ always() }}
         run: npm run build
 
       - name: Segurança — dependências de produção
+        if: ${{ always() }}
         run: npm audit --omit=dev --audit-level=high
 
       - name: Painel de status
+        if: ${{ always() }}
         run: node scripts/status-projeto.mjs --detalhe

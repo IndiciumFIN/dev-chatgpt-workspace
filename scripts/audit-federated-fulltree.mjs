@@ -155,10 +155,39 @@ try{
  const candidateMissing=[];
  for(const [sha,refs] of shaGlobal)if(!canonicalSha.has(sha))candidateMissing.push({sha,refs:[...refs].sort()});
  writeFileSync(output+'/blob-coverage-not-in-candidate.jsonl.gz',gzipSync(candidateMissing.map(x=>JSON.stringify(x)).join('\n')+'\n',{level:9}));
+ // The existing P0/P1 classification, not a new parallel authority, owns triage.
+ const structuralCrosswalk=[];
+ for(const [path,versions] of [...pathGlobal].sort(([a],[b])=>a.localeCompare(b))) {
+  const level=priority(path);
+  if(level!=='P0_GOVERNANCE'&&level!=='P1_STRUCTURE')continue;
+  const distinct=[...new Set(versions.map(v=>v.mode+':'+v.type+':'+v.sha))];
+  if(distinct.length<2)continue;
+  const variants=distinct.sort().map(key=>{
+   const refs=versions.filter(v=>v.mode+':'+v.type+':'+v.sha===key).map(v=>v.ref).sort();
+   const [,type,sha]=key.split(':');
+   return {sha,type,refs};
+  });
+  const candidateVersion=candidate?.files.get(path);
+  const candidateSha=candidateVersion?.sha??null;
+  structuralCrosswalk.push({path,priority:level,variantCount:distinct.length,candidateSha,
+    repoCount:new Set(versions.map(v=>v.repo)).size,variants,
+    candidateShares:[...new Set(versions.filter(v=>v.sha===candidateSha).map(v=>v.ref))].sort(),
+    authority:'EXISTING_CONTRACTS_AND_WO_REQUIRED',decision:'HOLD_HUMAN',
+    approvedForMerge:false});
+ }
+ writeFileSync(output+'/p0-p1-crosswalk.jsonl.gz',gzipSync(
+  structuralCrosswalk.map(x=>JSON.stringify(x)).join('\n')+'\n',{level:9}));
+ const crosswalkStats={total:structuralCrosswalk.length,
+  p0:structuralCrosswalk.filter(x=>x.priority==='P0_GOVERNANCE').length,
+  p1:structuralCrosswalk.filter(x=>x.priority==='P1_STRUCTURE').length,
+  noCandidate:structuralCrosswalk.filter(x=>!x.candidateSha).length,
+  multiRepo:structuralCrosswalk.filter(x=>x.repoCount>1).length,
+  gate:'HOLD_HUMAN'};
+ if(crosswalkStats.total===0)errors.push('STRUCTURAL_CROSSWALK_EMPTY');
  const res={schemaVersion:1,kind:'FEDERATED_GIT_BLOB_PATH_RECONCILIATION',scope:'read_only',generatedAt:new Date().toISOString(),
   physicalBranchReferences:initial.reduce((n,r)=>n+r.heads.size,0),independentBranchReferences:sources.length,
   duplicateMirroredReferences:mir.size,gitPairwise:pairwise.length,distinctPaths:pathGlobal.size,distinctGitBlobs:shaGlobal.size,
-  classifications,perRepo,errors,gate:'HOLD_HUMAN',authorizedForMerge:false,
+  classifications,structuralCrosswalk:crosswalkStats,perRepo,errors,gate:'HOLD_HUMAN',authorizedForMerge:false,
   notes:['Git SHAs measure byte equality, not semantic, clinical, licensing or runtime equivalence',
   'Mirror branches are verified by ref name+SHA and not redundantly cloned',
   'Candidate missing blobs may be intentionally obsolete; not proof of loss',

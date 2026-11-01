@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "FIND_CI_RESTORE_MEM_CANDIDATE",
+  "status": "HOLD_HUMAN",
+  "sourceBranch": "feat/curiosidades-mem-87-20261026",
+  "sourceSha": "4131831be71246d3c6e6ac61498310a9adb575a0",
+  "targetBranch": "integration/structural-overlay-20261101",
+  "targetBaseline": "fad79e460c0e0843c8c2508f9f3700fa95791b88",
+  "verification": "IDENTICAL_GIT_BLOBS_NO_REGENERATION",
+  "files": [
+    {
+      "path": "registers/curiosidades/mem-content-inventory.v1.json",
+      "gitBlobSha": "8b33445b921f502d65ba68776ca97988f3a90623",
+      "purpose": "MISSING_MEM_CI_INPUT"
+    },
+    {
+      "path": "registers/curiosidades/mem-source-alternatives.v1.json",
+      "gitBlobSha": "2f265df4b3e74bd5978023f7a7eb2dc2bb5a642f",
+      "purpose": "MISSING_SOURCE_AUDIT_CI_INPUT"
+    }
+  ],
+  "ciFailures": [
+    {
+      "run": 41274773153,
+      "job": 124754616976,
+      "reason": "ENOENT_MEM_CONTENT_INVENTORY"
+    },
+    {
+      "run": 41274773084,
+      "job": 124754616622,
+      "reason": "ENOENT_MEM_SOURCE_ALTERNATIVES"
+    }
+  ],
+  "inventory": {
+    "items": 87,
+    "categories": 8,
+    "needsReview": 43,
+    "blockedSource": 44,
+    "missingSourceHash": 1
+  },
+  "alternatives": {
+    "uses": 48,
+    "withCandidates": 46,
+    "holdNoMatch": 2,
+    "sectionOnly": 2,
+    "rights": "NOT_ASSESSED",
+    "claimValidation": "NOT_VALIDATED"
+  },
+  "productionDeploy": false,
+  "databaseMutation": false,
+  "kernelAdmission": "NOT_VERIFIED",
+  "editorialApproval": false,
+  "publication": "BLOCKED"
+}

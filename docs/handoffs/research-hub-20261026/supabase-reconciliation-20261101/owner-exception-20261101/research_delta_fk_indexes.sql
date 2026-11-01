@@ -1,0 +1,5 @@
+-- Additive performance remediation; 4 FK indexes; no canonical state changes.
+create index idx_rh_calls_for_proposals_organization_ref on ce_research_candidate.calls_for_proposals(organization_ref);
+create index idx_rh_editorial_reviews_output_canonical_ref on ce_research_candidate.editorial_reviews(output_canonical_ref);
+create index idx_rh_research_training_assignments_skill_canonical_ref on ce_research_candidate.research_training_assignments(skill_canonical_ref);
+create index idx_rh_risk_scenarios_risk_ref on ce_research_candidate.risk_scenarios(risk_ref);

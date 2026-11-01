@@ -1,0 +1,67 @@
+{
+  "planning_key": "VILA",
+  "domain": "Vila",
+  "title": "Jogos, histórias, missões, printables e conteúdos",
+  "purpose": "Reutilizar navegação, jogos, histórias, missões e recursos imprimíveis, com consistência de personagens, direitos e asset hashes.",
+  "source_reference": "contracts/vila/vila-navigation.v0.2.0.json",
+  "original_source_blob_verified": "88bf9af19f30820ccb8db8edcc31fa06fda5f813",
+  "source_in_current_branch": false,
+  "github_archival_path": "docs/handoffs/global-tools-vila-20261101/source-snapshots/vila-navigation.json",
+  "original_catalog_status": "GIT_CONTRACT_CANDIDATE_FUNCTION_UNVERIFIED",
+  "operations": {
+    "status": "DEFINED_ONLY",
+    "input_fields": [
+      "content_ref",
+      "locale",
+      "asset_ref",
+      "activity_type"
+    ],
+    "output_fields": [
+      "rendered_activity",
+      "asset_refs",
+      "rights_state"
+    ]
+  },
+  "canonical_contract": {
+    "do_not_create_parallel_master_data": true,
+    "reconcile_existing_platform_bindings": true,
+    "source_claim_provenance_required": true
+  },
+  "controls": {
+    "ready_for_production": false,
+    "public_writes_enabled": false,
+    "kernel_admission": "NOT_SUBMITTED",
+    "privacy_risk_review_required": true,
+    "security_test_required": true
+  },
+  "acceptance_tests": [
+    {
+      "test": "data_parity",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "identity_and_access",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "functional_workflow",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "lineage_and_licensing",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "e2e_and_release_gate",
+      "status": "NOT_RUN"
+    }
+  ],
+  "outstanding": [
+    "Conferir cardinalidade dos itens e equivalência campo-a-campo com Supabase",
+    "Implementar ou concluir frontend/backend do domínio",
+    "Validar normas e licenças aplicáveis",
+    "Habilitar persistência apenas com identidade e proteção aprovadas",
+    "Executar testes negativos e revisão independente"
+  ],
+  "content_is_candidate": true
+}

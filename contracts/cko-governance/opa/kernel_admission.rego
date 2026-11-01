@@ -27,6 +27,7 @@ allow if {
 	nonempty(input.work_order.approver)
 	input.work_order.owner != input.work_order.approver
 	unique_string_list(input.work_order.policy_set)
+	unique_string_list(input.work_order.acceptance_criteria)
 
 	input.manifest.service_order_id == input.work_order.id
 	input.manifest.status == "approved"
@@ -58,6 +59,7 @@ allow if {
 	input.approval.human_status == "APPROVED"
 	input.approval.scope_ref == input.work_order.id
 	input.approval.actor_ref == input.work_order.approver
+	input.approval.approved_at == input.manifest.approved_at
 	nonempty(input.approval.evidence_ref)
 	input.approval.actor_ref != input.work_order.owner
 

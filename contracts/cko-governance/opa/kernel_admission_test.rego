@@ -3,11 +3,11 @@ package cko.kernel_admission
 import rego.v1
 
 fixture := {
-	"work_order": {"id": "WO-CAND-001", "source_ref": "source://qualified", "find_ref": "FIND-1", "task_ref": "TASK-1", "owner": "maker", "approver": "reviewer", "policy_set": ["POLICY-1"]},
+	"work_order": {"id": "WO-CAND-001", "source_ref": "source://qualified", "find_ref": "FIND-1", "task_ref": "TASK-1", "owner": "maker", "approver": "reviewer", "policy_set": ["POLICY-1"], "acceptance_criteria": ["TEST-COVERAGE", "INDEPENDENT-REVIEW"]},
 	"manifest": {"service_order_id": "WO-CAND-001", "status": "approved", "approved_by": "reviewer", "approved_at": "2026-10-26T12:00:00Z", "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "validators": ["VALIDATOR-1"], "policy_set": ["POLICY-1"]},
 	"policy": {"allow": true, "bundle_signature_verified": true, "bundle_ref": "BUNDLE-1", "decision_ref": "DEC-1", "decision_evidence_ref": "evidence://opa", "work_order_ref": "WO-CAND-001", "input_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
 	"validator_results": [{"id": "VALIDATOR-1", "result": "PASS", "evidence_ref": "evidence://test", "run_ref": "RUN-1"}],
-	"approval": {"human_required": true, "human_status": "APPROVED", "scope_ref": "WO-CAND-001", "actor_ref": "reviewer", "evidence_ref": "evidence://approval"},
+	"approval": {"human_required": true, "human_status": "APPROVED", "scope_ref": "WO-CAND-001", "actor_ref": "reviewer", "approved_at": "2026-10-26T12:00:00Z", "evidence_ref": "evidence://approval"},
 	"execution": {"requested": false},
 }
 
@@ -52,4 +52,20 @@ test_fails_for_failed_validator if {
 
 test_fails_for_execution_request if {
 	not allow with input as object.union(fixture, {"execution": {"requested": true}})
+}
+
+test_fails_without_acceptance_criteria if {
+	not allow with input as object.union(fixture, {"work_order": object.union(fixture.work_order, {"acceptance_criteria": []})})
+}
+
+test_fails_with_duplicate_acceptance_criteria if {
+	not allow with input as object.union(fixture, {"work_order": object.union(fixture.work_order, {"acceptance_criteria": ["DUPLICATE", "DUPLICATE"]})})
+}
+
+test_fails_when_human_approval_timestamp_differs_from_manifest if {
+	not allow with input as object.union(fixture, {"approval": object.union(fixture.approval, {"approved_at": "2026-10-27T12:00:00Z"})})
+}
+
+test_fails_when_approval_timestamp_is_absent if {
+	not allow with input as object.union(fixture, {"approval": object.remove(fixture.approval, {"approved_at"})})
 }

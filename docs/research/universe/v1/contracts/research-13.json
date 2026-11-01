@@ -1,0 +1,166 @@
+{
+  "planning_key": "13",
+  "scope": "RESEARCH_CAPABILITY",
+  "title": "Análise estatística e comparações populacionais",
+  "group": "Pesquisa",
+  "baseline_status": "CANDIDATE_UI_PARTIAL",
+  "priority": "P2",
+  "historical_source": "contracts/cko-schemas/measurement.schema.json",
+  "purpose": "Executar análises reproduzíveis e esclarecer limites estatísticos.",
+  "workflow": {
+    "route_candidate": "/secao/pesquisa",
+    "module_candidate": "analise",
+    "frontend_status": "PARTIAL",
+    "remote_backend": "NOT_CONNECTED",
+    "steps": [
+      "validar identidade, autorização e finalidade no servidor",
+      "resolver contratos existentes e vínculos canônicos",
+      "executar funcionalidade candidata sem perda de evidência",
+      "validar regras e registrar decisões independentes"
+    ]
+  },
+  "operation": {
+    "name": "research_13",
+    "status": "DEFINED_NOT_ENABLED",
+    "input_fields": [
+      {
+        "key": "dataset_ref",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      },
+      {
+        "key": "method_ref",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      },
+      {
+        "key": "parameters",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      }
+    ],
+    "output_fields": [
+      {
+        "key": "execucao",
+        "type": "governed_candidate"
+      },
+      {
+        "key": "metricas",
+        "type": "governed_candidate"
+      },
+      {
+        "key": "limitacoes",
+        "type": "governed_candidate"
+      }
+    ],
+    "idempotency": "server_scoped_operation_key",
+    "read_or_write": "TO_BE_CLASSIFIED_BY_VALIDATOR"
+  },
+  "storage": [
+    {
+      "semantic_alias": "analysis_runs",
+      "planning_owner_key": "13",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "physical_storage": [
+        "ce_research_candidate.analysis_runs"
+      ],
+      "observed_status": "PRIVATE_SUPABASE_CANDIDATE_20261101",
+      "approved_for_writes": false
+    },
+    {
+      "semantic_alias": "analysis_outputs",
+      "planning_owner_key": "13",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "ADAPTER_BEFORE_ADDING",
+      "physical_storage": [
+        "ce_platform.output_artifacts"
+      ],
+      "observed_status": "EXISTING_MAPPING_PENDING_FIELD_AUDIT",
+      "approved_for_writes": false
+    },
+    {
+      "semantic_alias": "research_metrics",
+      "planning_owner_key": "13",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "physical_storage": [
+        "ce_research_candidate.research_metrics"
+      ],
+      "observed_status": "PRIVATE_SUPABASE_CANDIDATE_20261101",
+      "approved_for_writes": false
+    },
+    {
+      "semantic_alias": "metric_observations",
+      "planning_owner_key": "13",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "NEW_DOMAIN_CANDIDATE_UNAPPROVED",
+      "physical_storage": [
+        "ce_research_candidate.metric_observations"
+      ],
+      "observed_status": "PRIVATE_SUPABASE_CANDIDATE_20261101",
+      "approved_for_writes": false
+    }
+  ],
+  "evidence": {
+    "system": "cko_evidence",
+    "source_claim_refs_required": true,
+    "traceability_required": true,
+    "validity_holds": [
+      "license",
+      "source_version",
+      "auditor_evidence"
+    ]
+  },
+  "controls": {
+    "production_release": false,
+    "remote_writes": false,
+    "public_access": false,
+    "collection_of_personal_data": false,
+    "independent_authz_pending": true,
+    "privacy_ethics_review_pending": true,
+    "kernel_status": "NOT_SUBMITTED",
+    "needs_rollback_procedure": true
+  },
+  "acceptance_tests": [
+    {
+      "purpose": "functional",
+      "rule": "Operação cumpre o propósito: Executar análises reproduzíveis e esclarecer limites estatísticos.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "security",
+      "rule": "Identidade, propriedade, propósito, RLS e acesso cruzado negativo validados.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "canonical",
+      "rule": "Nenhuma raiz, registro ou fonte duplicada; paridade de IDs e contratos.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "evidence",
+      "rule": "Fonte, licença, hash, decisões e lineage aferidos por evidência.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "release",
+      "rule": "Controle Kernel, LGPD, ética e revisão independente antes da publicação.",
+      "result": "NOT_RUN"
+    }
+  ],
+  "outstanding": [
+    "implementar backend real e validação funcional",
+    "reconciliar contrato de campos com tabelas reutilizadas",
+    "Auth e RLS por titular e organização",
+    "testes de integração, carga, acessibilidade e segurança",
+    "LGPD, ética e homologação"
+  ],
+  "provenance": {
+    "supabase_project": "pgsybzggewhinaniybiy",
+    "historical_readback": "2026-11-01",
+    "crosswalk": "docs/handoffs/research-hub-20261026/supabase-reconciliation-20261101/CROSSWALK-70.json",
+    "canonical_id_assigned": false,
+    "source_of_truth": "EXISTING_CE_PLATFORM_AND_CKO"
+  }
+}

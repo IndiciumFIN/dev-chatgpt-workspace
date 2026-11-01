@@ -1,0 +1,152 @@
+{
+  "planning_key": "08",
+  "scope": "RESEARCH_CAPABILITY",
+  "title": "Editor JSON, importação DOCX, exportação documentada",
+  "group": "Pesquisa",
+  "baseline_status": "NOT_EVIDENCED",
+  "priority": "P1",
+  "historical_source": "src/lib/template-contract.ts",
+  "purpose": "Editor estruturado com importação sanitizada e exportação versionada.",
+  "workflow": {
+    "route_candidate": "/secao/pesquisa",
+    "module_candidate": "relatorio",
+    "frontend_status": "NOT_COMPLETE",
+    "remote_backend": "NOT_CONNECTED",
+    "steps": [
+      "validar identidade, autorização e finalidade no servidor",
+      "resolver contratos existentes e vínculos canônicos",
+      "executar funcionalidade candidata sem perda de evidência",
+      "validar regras e registrar decisões independentes"
+    ]
+  },
+  "operation": {
+    "name": "research_08",
+    "status": "DEFINED_NOT_ENABLED",
+    "input_fields": [
+      {
+        "key": "document_ref",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      },
+      {
+        "key": "source_file",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      },
+      {
+        "key": "format",
+        "type": "validated_or_canonical_ref",
+        "required": true
+      }
+    ],
+    "output_fields": [
+      {
+        "key": "versao",
+        "type": "governed_candidate"
+      },
+      {
+        "key": "artefato",
+        "type": "governed_candidate"
+      }
+    ],
+    "idempotency": "server_scoped_operation_key",
+    "read_or_write": "TO_BE_CLASSIFIED_BY_VALIDATOR"
+  },
+  "storage": [
+    {
+      "semantic_alias": "scientific_outputs",
+      "planning_owner_key": "08",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "ADAPTER_BEFORE_ADDING",
+      "physical_storage": [
+        "ce_platform.content_documents",
+        "ce_platform.output_artifacts"
+      ],
+      "observed_status": "EXISTING_MAPPING_PENDING_FIELD_AUDIT",
+      "approved_for_writes": false
+    },
+    {
+      "semantic_alias": "output_versions",
+      "planning_owner_key": "08",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "REVIEW_SEMANTICS_NO_DDL",
+      "physical_storage": [
+        "ce_platform.content_variants"
+      ],
+      "observed_status": "EXISTING_MAPPING_PENDING_FIELD_AUDIT",
+      "approved_for_writes": false
+    },
+    {
+      "semantic_alias": "render_jobs",
+      "planning_owner_key": "08",
+      "relation": "PRIMARY_CANDIDATE_OWNER",
+      "crosswalk_treatment": "ADAPTER_BEFORE_ADDING",
+      "physical_storage": [
+        "ce_platform.output_requests"
+      ],
+      "observed_status": "EXISTING_MAPPING_PENDING_FIELD_AUDIT",
+      "approved_for_writes": false
+    }
+  ],
+  "evidence": {
+    "system": "cko_evidence",
+    "source_claim_refs_required": true,
+    "traceability_required": true,
+    "validity_holds": [
+      "license",
+      "source_version",
+      "auditor_evidence"
+    ]
+  },
+  "controls": {
+    "production_release": false,
+    "remote_writes": false,
+    "public_access": false,
+    "collection_of_personal_data": false,
+    "independent_authz_pending": true,
+    "privacy_ethics_review_pending": true,
+    "kernel_status": "NOT_SUBMITTED",
+    "needs_rollback_procedure": true
+  },
+  "acceptance_tests": [
+    {
+      "purpose": "functional",
+      "rule": "Operação cumpre o propósito: Editor estruturado com importação sanitizada e exportação versionada.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "security",
+      "rule": "Identidade, propriedade, propósito, RLS e acesso cruzado negativo validados.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "canonical",
+      "rule": "Nenhuma raiz, registro ou fonte duplicada; paridade de IDs e contratos.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "evidence",
+      "rule": "Fonte, licença, hash, decisões e lineage aferidos por evidência.",
+      "result": "NOT_RUN"
+    },
+    {
+      "purpose": "release",
+      "rule": "Controle Kernel, LGPD, ética e revisão independente antes da publicação.",
+      "result": "NOT_RUN"
+    }
+  ],
+  "outstanding": [
+    "implementar backend real e validação funcional",
+    "reconciliar contrato de campos com tabelas reutilizadas",
+    "Auth e RLS por titular e organização",
+    "testes de integração, carga, acessibilidade e segurança",
+    "LGPD, ética e homologação"
+  ],
+  "provenance": {
+    "supabase_project": "pgsybzggewhinaniybiy",
+    "historical_readback": "2026-11-01",
+    "crosswalk": "docs/handoffs/research-hub-20261026/supabase-reconciliation-20261101/CROSSWALK-70.json",
+    "canonical_id_assigned": false,
+    "source_of_truth": "EXISTING_CE_PLATFORM_AND_CKO"
+  }
+}

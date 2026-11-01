@@ -1,0 +1,67 @@
+{
+  "planning_key": "RESEARCH",
+  "domain": "Pesquisa",
+  "title": "Hub e participação com 36 capacidades/experiências",
+  "purpose": "Operacionalizar as 30 capacidades e 6 experiências com source-of-truth ce_platform, CKO e delta privado do Supabase.",
+  "source_reference": "docs/research/universe/v1/UNIVERSE-36.json",
+  "original_source_blob_verified": null,
+  "source_in_current_branch": true,
+  "github_archival_path": null,
+  "original_catalog_status": "GIT_CONTRACT_CANDIDATE_FUNCTION_UNVERIFIED",
+  "operations": {
+    "status": "DEFINED_ONLY",
+    "input_fields": [
+      "project_ref",
+      "capability_ref",
+      "policy_scope",
+      "authorized_user_ref"
+    ],
+    "output_fields": [
+      "research_artifact",
+      "participation_outcome",
+      "lineage"
+    ]
+  },
+  "canonical_contract": {
+    "do_not_create_parallel_master_data": true,
+    "reconcile_existing_platform_bindings": true,
+    "source_claim_provenance_required": true
+  },
+  "controls": {
+    "ready_for_production": false,
+    "public_writes_enabled": false,
+    "kernel_admission": "NOT_SUBMITTED",
+    "privacy_risk_review_required": true,
+    "security_test_required": true
+  },
+  "acceptance_tests": [
+    {
+      "test": "data_parity",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "identity_and_access",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "functional_workflow",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "lineage_and_licensing",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "e2e_and_release_gate",
+      "status": "NOT_RUN"
+    }
+  ],
+  "outstanding": [
+    "Conferir cardinalidade dos itens e equivalência campo-a-campo com Supabase",
+    "Implementar ou concluir frontend/backend do domínio",
+    "Validar normas e licenças aplicáveis",
+    "Habilitar persistência apenas com identidade e proteção aprovadas",
+    "Executar testes negativos e revisão independente"
+  ],
+  "content_is_candidate": true
+}

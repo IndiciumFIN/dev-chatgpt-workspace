@@ -21,15 +21,20 @@ OUT="$OUT_ROOT/$STAMP"
 mkdir -p "$OUT"
 SNAPSHOT="$OUT/catalog.json"
 REPORT="$OUT/reconciliation.json"
+GOVERNANCE="$OUT/governance-aggregate.json"
 
 # Defense in depth: read-only at both session and transaction levels.
 export PGOPTIONS="${PGOPTIONS:-} -c default_transaction_read_only=on -c statement_timeout=30000"
 psql -X -q -A -t -v ON_ERROR_STOP=1 \
   -f "$ROOT/scripts/sql/ce-supabase-catalog-readonly.sql" > "$SNAPSHOT"
 
+psql -X -q -A -t -v ON_ERROR_STOP=1 \
+  -f "$ROOT/scripts/sql/ce-supabase-governance-readonly.sql" > "$GOVERNANCE"
+
 node "$ROOT/scripts/ce-reconcile-supabase-catalog.mjs" \
   --snapshot "$SNAPSHOT" --output "$REPORT"
 
 echo "Catalog: $SNAPSHOT"
 echo "Reconciliation: $REPORT"
+echo "Governance aggregate: $GOVERNANCE"
 echo "Authority: INVENTORY_ONLY / HOLD_HUMAN. Review before committing sanitized evidence."

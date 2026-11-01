@@ -60,3 +60,26 @@
 **Evidência de crosswalk de 92 conflitos originalmente estruturais/P0:** o artifact federado passou a gerar `p0-p1-crosswalk.jsonl.gz`, contendo variantes, refs e hashes por caminho, origem de candidata e decisão `HOLD_HUMAN`. A classificação revisada deve gerar 24 P0 e 8 P1; os 60 registros de idioma continuam no relatório geral de conflitos. Não escolher "último SHA" como vencedor.
 
 **Ordem preservada:** P0 (24) → P1 (8) → serviços/banco → aplicativo/admin → traduções (60 e demais) → homologação. Findings e WOs existentes permanecem a fonte dos controles; esta atualização não cria tasks duplicadas nem admite qualquer migração.
+
+## R6 — Foundation DB / PMO / acesso administrativo: read-back real (01/11/2026)
+
+**Escopo e segurança:** leitura somente de metadados do projeto Supabase **Calculadoras-Smart**, sem executar alterações SQL, consultar prontuários, aplicar migrations, criar papéis ou liberar acesso. O banco do workspace PGlite e o Supabase não têm histórico de migrations demonstradamente equivalente.
+
+**Estado de migrations no Supabase:** `list_migrations` retornou **240 entradas**, a última `20261011082439` (`curiosidades_pmo_gate_status_constraint_20261011`). O catálogo de migrations do Supabase usa versões por timestamp e nomenclatura diferente das migrations numeradas `0004`, `0036`, `0037`, `0042` do workspace. O histórico não confirmou correspondência nominal para estas; **isso não prova que nenhum SQL equivalente tenha sido executado fora do registro**. Exigir comparação de DDL/schema, dependências, SHAs e ledger antes de aplicar ou renumerar qualquer migration.
+
+**Estado estrutural por schemas, obtido de `information_schema`:** `public` possui 48 tabelas, `cko_governance` 88, `cko_orch` 27, `ce_admin_preview` duas, `ce_form_release_hold` sete. Foram identificadas **85 tabelas sem RLS em `cko_governance` e 27 em `cko_orch`** (112 no total). A leitura de grants mostrou **zero tabelas com `SELECT` direto para os papéis `anon` ou `authenticated` nessas duas schemas**, e nenhum grant de escrita direto para `anon`. Assim, **não está demonstrado acesso público direto a essas 112 tabelas**; ainda há lacuna de defesa em profundidade e exposição possível por funções/rotas não examinadas. Não habilitar RLS em massa sem avaliar acessos internos e políticas: isso pode bloquear processos existentes. `public` possui RLS habilitado nas 48 tabelas examinadas, com grants distintos sujeitos a suas políticas; a avaliação de políticas específicas ficou pendente.
+
+**Controles de segurança administrativa, somente candidata:** `src/lib/source.functions.ts` deixou de atribuir `admin` ao primeiro login, inserir catálogo via GET e publicar ferramentas sem evidência Kernel; a leitura pública passou a filtrar `published = true`. A elevação de papel administrativo pela tela também foi bloqueada. Este bloqueio cria uma **dependência explícita de provisionamento governado** do primeiro administrador por processo independente; não realizar bootstrap informal. Testes estáticos registrados em `scripts/source-admin-security.test.mjs`, ainda dependentes da suíte final.
+
+**PMO — colisões reais vs falso conflito:** o auditor não escolhe mais o último nome para cada número: verifica todas as variantes. As reservas de `0036`, `0037` e `0042` têm correspondência declarada, mas os números seguem duplicados e bloqueados; `0039` e `0040` têm divergências genuínas de reserva. O script `scripts/inventory-migration-collisions.mjs` produz evidência por SHA256 e tabelas `CREATE TABLE`; nenhuma renumeração, alteração de SQL ou apply foi feita. O workflow Portões foi configurado para anexar os relatórios `artifacts/migration-collision-evidence.json` e `artifacts/db-indice.json` como evidências de base.
+
+**Revisão futura de RLS (proposta ilustrativa, NÃO executar sem WO/rollback e política por papel):**
+```sql
+-- Uso exclusivamente como proposta após análise de dependências e autorização.
+ALTER TABLE cko_governance.documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cko_orch.workflow_instances ENABLE ROW LEVEL SECURITY;
+-- NÃO habilitar diretamente nas outras 110 tabelas sem decisão por grupo,
+-- políticas, teste de regressão negativo e comprovante de privilégios.
+```
+
+**Gates que permanecem:** `HOLD_HUMAN` para banco, Kernel corporativo, direitos/clinical, migrations colidentes, RBAC/RLS e publicação remota. A triagem não declara aprovação de produção nem revoga FINDs/WO já existentes.

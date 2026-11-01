@@ -1,4 +1,5 @@
 import {ArrowUpRight,BookOpenCheck,ChevronRight,Eye,FileClock,Layers3} from 'lucide-react';
+import {type ReactNode} from 'react';
 import {templateCatalogo} from '@/lib/template-catalog';
 import {type LocalWorkbench} from '@/lib/local-workbench-store';
 
@@ -17,7 +18,7 @@ function Metric({label,value,note,icon:Icon}:{
  <span className="ce-admin-stat-label">{label}</span><strong>{value}</strong><small>{note}</small></div>;
 }
 function Section({title,subtitle,children}:{
- title:string;subtitle:string;children:React.ReactNode
+ title:string;subtitle:string;children:ReactNode
 }){
  return <section className="ce-admin-panel"><div className="ce-admin-panel-heading"><div><h2>{title}</h2><p>{subtitle}</p></div></div>{children}</section>;
 }

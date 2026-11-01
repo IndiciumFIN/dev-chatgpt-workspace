@@ -51,18 +51,34 @@ export type IdentidadeContrato = {
 };
 
 /* ── source.schema.json ─────────────────────────────────────────────────── */
+/**
+ * `source_type` — enum CANONICO do contrato `source` (contracts/cko-skeleton/
+ * catalog/cko-data.json). Medido em 01/11/2026: os valores anteriores
+ * (NORMATIVA/VALIDACAO/GUIA/PROTOCOLO/TECNICA/ARTIGO/MANUAL/PAGINA_OFICIAL)
+ * nao pertencem a nenhum enum do catalogo CKO.
+ */
 export type TipoFonte =
-  | "NORMATIVA"
-  | "VALIDACAO"
-  | "GUIA"
-  | "PROTOCOLO"
-  | "TECNICA"
-  | "ARTIGO"
-  | "MANUAL"
-  | "PAGINA_OFICIAL";
+  | "OFFICIAL_LAW"
+  | "REGULATOR"
+  | "STANDARD"
+  | "TERMINOLOGY"
+  | "PRIMARY_STUDY"
+  | "GUIDELINE"
+  | "TEXTBOOK"
+  | "DATASET_API"
+  | "SOFTWARE"
+  | "IMAGE"
+  | "INTERNAL_GOVERNED";
 
 export type FonteNormativa = IdentidadeContrato & {
   source_type: TipoFonte;
+  /**
+   * Porque este valor e este `source_type` — por natureza do documento.
+   * O enum classifica o que o documento E, nao como o rotulo antigo se
+   * traduzia. Uma linha por fonte; sem esta linha, a reclassificacao fica
+   * sem justificacao e a proxima traducao de rotulo volta a acontecer.
+   */
+  source_type_rationale?: string;
   title: string;
   /** Quem assina: "Conselho Federal de Medicina (CFM)", "CAPES/MEC", "OMS/WHO". */
   authority: string;
@@ -72,7 +88,19 @@ export type FonteNormativa = IdentidadeContrato & {
   /** "BR" para a autoridade brasileira. E o eixo do produto. */
   jurisdiction: string;
   retrieved_at: string;
-  integrity: { sha256: string; snapshot_ref: string };
+  /**
+   * Integridade declarada: `sha256` = 64 hex (hash real do artefacto preservado)
+   * OU "NOT_AVAILABLE" — e nesse caso `reason` e `artifact_ref` tem de estar
+   * declarados. 64 zeros e um placeholder, nunca integridade. Hash atesta
+   * bytes, nao correccao; ausencia declarada e ausencia, nao integridade.
+   */
+  integrity: {
+    sha256: string;
+    snapshot_ref: string;
+    reason?: string;
+    artifact_ref?: string | null;
+    method?: string;
+  };
   effective_from?: string;
   effective_until?: string;
   license_ref?: string;
@@ -88,10 +116,19 @@ export type AuthorityBinding = IdentidadeContrato & {
   requirement_id: string;
   /** `source_ids` referencia `FonteNormativa.canonical_id`. */
   source_ids: string[];
-  /** "CLINICAL" | "REGULATORY" | "TECHNICAL" | "EDITORIAL" | "INTERNAL_CONFIG". */
+  /**
+   * `authority_class` — enum CANONICO do contrato `authority_binding`:
+   * REGULATORY | TECHNICAL_STANDARD | AUTHORITATIVE_TERMINOLOGY |
+   * CLINICAL_EVIDENCE | INTERNAL_NONCLINICAL.
+   */
   authority_class: string;
   validity: { from?: string; until?: string; jurisdiction?: string };
-  /** "BOUND" | "HOLD" | "NOT_APPLICABLE_JUSTIFIED" | "PENDING". */
+  /**
+   * `decision` — enum CANONICO do contrato `authority_binding`:
+   * ALLOW | HOLD_HUMAN | REJECT | NOT_APPLICABLE_JUSTIFIED.
+   * (O `decision` do contrato `release_gate` — HOLD/REJECTED/APPROVED — e outro
+   * vocabulario e nao governa os bindings.)
+   */
   decision: string;
   validator_ids?: string[];
   evidence_bundle_ids?: string[];

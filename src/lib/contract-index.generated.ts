@@ -333,37 +333,37 @@ export const contractToolSources = [
     "canonical_id": "SRC-CFM-PARECER-28-2020",
     "authority": "Conselho Federal de Medicina (CFM)",
     "jurisdiction": "BR",
-    "source_type": "NORMATIVA"
+    "source_type": "REGULATOR"
   },
   {
     "canonical_id": "SRC-REV-ENF-USP-BRADEN-1999",
     "authority": "Revista de Enfermagem da USP",
     "jurisdiction": "BR",
-    "source_type": "VALIDACAO"
+    "source_type": "PRIMARY_STUDY"
   },
   {
     "canonical_id": "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA",
     "authority": "CAPES/MEC",
     "jurisdiction": "BR",
-    "source_type": "GUIA"
+    "source_type": "GUIDELINE"
   },
   {
     "canonical_id": "SRC-OMS-OBESIDADE-2000",
     "authority": "Organização Mundial da Saúde (OMS/WHO)",
     "jurisdiction": "INTERNACIONAL",
-    "source_type": "NORMATIVA"
+    "source_type": "GUIDELINE"
   },
   {
     "canonical_id": "SRC-APGAR-1953",
     "authority": "Current Researches in Anesthesia & Analgesia",
     "jurisdiction": "INTERNACIONAL",
-    "source_type": "ARTIGO"
+    "source_type": "PRIMARY_STUDY"
   },
   {
     "canonical_id": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
     "authority": "Prática assistencial de gotejamento",
     "jurisdiction": "BR",
-    "source_type": "TECNICA"
+    "source_type": "STANDARD"
   }
 ] as const;
 export const contractToolBindings = [
@@ -373,8 +373,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-RESPIRACAO",
@@ -382,8 +382,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-CIRCULACAO",
@@ -391,8 +391,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-CONSCIENCIA",
@@ -400,8 +400,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-SATURACAO",
@@ -409,8 +409,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-BAND-OK",
@@ -418,8 +418,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-BAND-WARN",
@@ -427,8 +427,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-ALDRETE-BAND-DANGER",
@@ -436,8 +436,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CFM-PARECER-28-2020"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-SENSORIAL",
@@ -445,8 +445,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-UMIDADE",
@@ -454,8 +454,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-ATIVIDADE",
@@ -463,8 +463,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-MOBILIDADE",
@@ -472,8 +472,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-NUTRICAO",
@@ -481,8 +481,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-FRICCAO",
@@ -490,8 +490,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-BAND-MUITOALTO",
@@ -499,8 +499,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-BAND-ALTO",
@@ -508,8 +508,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-BAND-MODERADO",
@@ -517,8 +517,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-BAND-BAIXO",
@@ -526,8 +526,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-BRADEN-BAND-SEMRISCO",
@@ -535,8 +535,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-REV-ENF-USP-BRADEN-1999"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-QUEDAS",
@@ -544,8 +544,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-DIAGNOSTICO",
@@ -553,8 +553,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-AUXILIO",
@@ -562,8 +562,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-VENOSO",
@@ -571,8 +571,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-MARCHA",
@@ -580,8 +580,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-MENTAL",
@@ -589,8 +589,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-BAND-BAIXO",
@@ -598,8 +598,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-BAND-MEDIO",
@@ -607,8 +607,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-MORSE-BAND-ALTO",
@@ -616,8 +616,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-APARENCIA",
@@ -625,8 +625,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-PULSO",
@@ -634,8 +634,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-REFLEXO",
@@ -643,8 +643,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-TONUS",
@@ -652,8 +652,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-COR",
@@ -661,8 +661,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-BAND-NORMAL",
@@ -670,8 +670,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-BAND-DEPRESSAO",
@@ -679,8 +679,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-APGAR-BAND-GRAVE",
@@ -688,8 +688,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-APGAR-1953"
     ],
-    "authority_class": "CLINICAL",
-    "decision": "BOUND"
+    "authority_class": "CLINICAL_EVIDENCE",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-GOTEJAMENTO-VOLUME",
@@ -697,8 +697,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-GOTEJAMENTO-HORAS",
@@ -706,8 +706,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-GOTEJAMENTO-MINUTOS",
@@ -715,8 +715,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-GOTEJAMENTO-FATOR",
@@ -724,8 +724,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-IMC-PESO",
@@ -733,8 +733,8 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-OMS-OBESIDADE-2000"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-IMC-ALTURA",
@@ -742,36 +742,36 @@ export const contractToolBindings = [
     "source_ids": [
       "SRC-OMS-OBESIDADE-2000"
     ],
-    "authority_class": "TECHNICAL",
-    "decision": "BOUND"
+    "authority_class": "TECHNICAL_STANDARD",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-CTX-NOME",
     "field_path": "tool.contexto.nome",
     "source_ids": [],
-    "authority_class": "INTERNAL_CONFIG",
-    "decision": "BOUND"
+    "authority_class": "INTERNAL_NONCLINICAL",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-CTX-IDADE",
     "field_path": "tool.contexto.idade",
     "source_ids": [],
-    "authority_class": "INTERNAL_CONFIG",
-    "decision": "BOUND"
+    "authority_class": "INTERNAL_NONCLINICAL",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-CTX-SETOR",
     "field_path": "tool.contexto.setor",
     "source_ids": [],
-    "authority_class": "INTERNAL_CONFIG",
-    "decision": "BOUND"
+    "authority_class": "INTERNAL_NONCLINICAL",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "AB-CTX-DATA",
     "field_path": "tool.contexto.data",
     "source_ids": [],
-    "authority_class": "INTERNAL_CONFIG",
-    "decision": "BOUND"
+    "authority_class": "INTERNAL_NONCLINICAL",
+    "decision": "HOLD_HUMAN"
   },
   {
     "canonical_id": "FD-ALDRETE-ATIVIDADE",

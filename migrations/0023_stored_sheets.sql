@@ -125,7 +125,7 @@ on conflict do nothing;
 
 insert into tool_reference (tool_slug, position, citation)
 values
-  ('braden', 1, 'Braden B, Bergstrom N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing. 1987;12(1):8-12.'),
+  ('braden', 1, 'Braden B, Bergstrom N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing. 1987 on conflict do nothing;12(1):8-12.'),
   ('braden', 2, 'Paranhos WY, Santos VLCG. Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa. Rev Esc Enferm USP. 1999;33(esp):191-206.')
 on conflict do nothing;
 
@@ -195,7 +195,7 @@ on conflict do nothing;
 
 insert into tool_reference (tool_slug, position, citation)
 values
-  ('morse', 1, 'Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989;8(4):366-377.')
+  ('morse', 1, 'Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989 on conflict do nothing;8(4):366-377.')
 on conflict do nothing;
 
 insert into tool_related (tool_slug, related_slug, position)
@@ -276,7 +276,7 @@ on conflict do nothing;
 
 insert into tool_reference (tool_slug, position, citation)
 values
-  ('apgar', 1, 'Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953;32(4):260-267.')
+  ('apgar', 1, 'Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953 on conflict do nothing;32(4):260-267.')
 on conflict do nothing;
 
 insert into tool_related (tool_slug, related_slug, position)
@@ -373,7 +373,7 @@ on conflict do nothing;
 
 insert into tool_reference (tool_slug, position, citation)
 values
-  ('imc', 1, 'World Health Organization. Obesity: preventing and managing the global epidemic. Geneva: WHO; 2000. Cortes de IMC para adultos.')
+  ('imc', 1, 'World Health Organization. Obesity: preventing and managing the global epidemic. Geneva: WHO on conflict do nothing; 2000. Cortes de IMC para adultos.')
 on conflict do nothing;
 
 insert into tool_related (tool_slug, related_slug, position)

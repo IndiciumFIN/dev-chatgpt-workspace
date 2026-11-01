@@ -10,7 +10,7 @@ create table if not exists canonical_asset (
   nota text not null
 );
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
-('src/core/experience/resolver.ts', 266, '4fb21137a302525b21d2a4a5c6d1f21ccf9564dd', 'c471a5ecb77fe62c0b318543abc8b46cfa67ee21ca222b4ccd5c4815f6b58eb2', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
+('src/core/experience/resolver.ts', 266, '4fb21137a302525b21d2a4a5c6d1f21ccf9564dd', 'c471a5ecb77fe62c0b318543abc8b46cfa67ee21ca222b4ccd5c4815f6b58eb2', null, 'Corpo ausente. O TAR nao estava no disco on conflict do nothing; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/core/experience/metamodel.ts', 270, 'beb509a9a55d31ea9501079c1e62bbbe4fe316f4', '34615d4b1267230f58dd77947f14afc1792c5db3e90a2b1d967c71a27ea0772b', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/core/experience/profile-contracts.ts', 299, '832bda4417c63c7cd8ef64527c1f15275f744a8f', '13c1f815d051f917b8fb323f2a8c56ccd0af18dff56c1abf9a7d573009af03f9', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/core/experience/module-status.ts', 283, 'd15573b35af8f80f253447d2170a2996c31fe27f', '0a1aa6d9b61706fe4b525cc2f3bb0f6a3dfd1fa6921a50788ff8df89ed0510c6', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
@@ -212,7 +212,7 @@ insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) va
 ('src/families/learning/quiz-service/index.ts', 710, '5d89e02e4e6188e196bdc25a192cb8175c983ee2', '7ddfa51ef3227d5fd98ba6fd46075972628d501ea4fcfc38bc5f98155f67e802', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.')
 on conflict (path) do nothing;
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
-('src/families/learning/credential-service/contract.ts', 890, 'fbcf7600e0fad50c20c9eaeb635996f2d88d2f34', 'b9a3c1c48143d0042cf8a00852c7d07b8f07c41d63d6a258a7e85638185b7600', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
+('src/families/learning/credential-service/contract.ts', 890, 'fbcf7600e0fad50c20c9eaeb635996f2d88d2f34', 'b9a3c1c48143d0042cf8a00852c7d07b8f07c41d63d6a258a7e85638185b7600', null, 'Corpo ausente. O TAR nao estava no disco on conflict do nothing; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/learning/credential-service/index.ts', 752, '901372ecc54468e2dcb88ac3fd6b9b0f985d7b27', 'bced6e12f4ebad8489135a7c9f752f8c90d8f575cd8e77fceed1a649b1bce927', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/learning/course-registry/contract.ts', 872, 'bb896de344033688a1446be2c33757e668a4553f', 'c17fc220825f6b0cf93ae8857b2db54c381060e3ded48e1cce8d19416abe8e7d', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/learning/course-registry/index.ts', 731, 'b765b0f48fb2e309c20623e9d4739907bc03f606', '8fd5fab4df8402d774548399d0a7999ef0eef17aa5758197995818714fc9200c', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
@@ -414,7 +414,7 @@ insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) va
 ('src/families/configuracoes/module-settings/index.ts', 736, '9272ab1a280b874544fca3fe27e02ca0460b4344', '25590242befba04e6ae902122a5b85a90b77808de27dbe3a7cef772d08c34d69', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.')
 on conflict (path) do nothing;
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
-('src/families/configuracoes/default-view/contract.ts', 871, 'ebba0fe5dcf9fcd60ab6d9a23edd83b7e09d3249', '3e002055f8c9d52ca3782fa148c80d67ec925087e7b9725376d42a17b2036725', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
+('src/families/configuracoes/default-view/contract.ts', 871, 'ebba0fe5dcf9fcd60ab6d9a23edd83b7e09d3249', '3e002055f8c9d52ca3782fa148c80d67ec925087e7b9725376d42a17b2036725', null, 'Corpo ausente. O TAR nao estava no disco on conflict do nothing; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/configuracoes/default-view/index.ts', 715, '198e93e58cd70d4aec374efcfa2fc1c80602c9b3', 'd107278cc1e837a8a88f677f333eacffd82ae20254c95d79aa400a6324c07190', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/configuracoes/notification-settings/contract.ts', 925, 'b034a9ff1a1a98b39352c470262469fe31cd64e7', '8270b829a782eb72f88c96cc752854e58f892e452751544b8b14af436e56e494', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/configuracoes/notification-settings/index.ts', 778, '25b0c2500c4a61044a98cafb86a050959f9253ea', 'e451ae9e6d8bbc4c7787f760beeb8cdec0d413341d99ce2aba282bb1e7054c4b', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
@@ -616,7 +616,7 @@ insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) va
 ('src/families/ajuda-contextual/field-help/index.ts', 704, 'e4699240b544bec6535c2c6bf0bf2ca3e412ad20', '20f4db487b19aa926c5944ad59727e16212b2a62aaf668e9f1cbfb63a203d303', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.')
 on conflict (path) do nothing;
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
-('src/families/ajuda-contextual/warning-explanation/contract.ts', 920, 'd5a492ad3b48692ecf8aacc690b4ff9f86d66410', '7d4fd32e9e54a9003acfbd02dc21d46583e9c2657984475136621a29a935feea', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
+('src/families/ajuda-contextual/warning-explanation/contract.ts', 920, 'd5a492ad3b48692ecf8aacc690b4ff9f86d66410', '7d4fd32e9e54a9003acfbd02dc21d46583e9c2657984475136621a29a935feea', null, 'Corpo ausente. O TAR nao estava no disco on conflict do nothing; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/ajuda-contextual/warning-explanation/index.ts', 767, 'd8e43e9d38b502fb442a8ec1709ed9a10f6f339e', '4c0f37e0716493b2eb88687fdf5863a98dbc6038b37ad76f502f897dfbdf169b', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/ajuda-contextual/definition/contract.ts', 868, '764a3be73a98e8a02a864e15d3f3c11a8ba84424', '0064374ce2b5d2db6ea57a5674cf68f73ebfe62cc9a5017d4198c24c99677a60', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/ajuda-contextual/definition/index.ts', 709, '0375a99edb590b7144b8c262a6903950ced46c38', '7c194d2cd0bf6ed6d8c420523ee5fe9d985183ded0b348a5fc7d386c681cab3f', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
@@ -818,7 +818,7 @@ insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) va
 ('src/families/preview/document-preview/index.ts', 737, '040098f1f8b398f563b254d0613d2eb05d860ff3', '7a10b96dcf5a45d1b0d18546f75dc9f2085c4b414b5e66b0acf266ffe53329ac', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.')
 on conflict (path) do nothing;
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
-('src/families/preview/preview.test.ts', 3175, '344b3a6dcefa4d853f7fe2fe6496982f4bf4e812', 'a520cc14043287b0b0f96ac6354f82695a36be2302d9bbed5fcd91f79e4b2eeb', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
+('src/families/preview/preview.test.ts', 3175, '344b3a6dcefa4d853f7fe2fe6496982f4bf4e812', 'a520cc14043287b0b0f96ac6354f82695a36be2302d9bbed5fcd91f79e4b2eeb', null, 'Corpo ausente. O TAR nao estava no disco on conflict do nothing; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/preview/source-preview/contract.ts', 863, 'c8f63c4343cfa235023cd3ffe8bd7b492d16e46e', '9f497a2f67cfcb256b18b5d66c534e0dbf069b0574a510bcb50d85d6fa358955', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/preview/source-preview/index.ts', 723, '961adddeb562b5cb3ffd36432692dfa1a6cbf53e', '20664134255158b3e76b5755b1ef2662d597bc458c2138308d9d7b309c454107', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
 ('src/families/preview/quick-preview/contract.ts', 857, '03fbec0db98ffd5ebf41baf5a98bc285ce24009d', '84780eff9561cff3a81f4fb3a4e504a4a487d29ecf66e842a96f4f2cd92b7753', null, 'Corpo ausente. O TAR nao estava no disco; o inventario traz caminho e hashes. Nao revisado.'),
@@ -892,7 +892,7 @@ on conflict (path) do nothing;
 insert into canonical_asset (path, bytes, git_blob_sha1, sha256, corpo, nota) values
 ('imports/drive-snapshots/2026-10-26/nurseos-kernel/Workflows-NK-Guard/NK Guard — DictionaryTerm.jsonc', 1137, '1b02951992ae99010e8eed54509477a2ea696614', 'a124a2dce2fd7358104165e50d2176d63d458853159d27d003d3dd6ab5da3ef2', '{
   "name": "NK Guard \u2014 DictionaryTerm",
-  "description": "Kernel bloqueia artefato sem registro: valida todo DictionaryTerm criado/atualizado contra o metamodelo (POL-NK-001 v1.0.1); inv\u00e1lido \u2192 quarantined",
+  "description": "Kernel bloqueia artefato sem registro: valida todo DictionaryTerm criado/atualizado contra o metamodelo (POL-NK-001 v1.0.1) on conflict do nothing; inv\u00e1lido \u2192 quarantined",
   "trigger": {
     "condition": "${ .trigger.data.status != \"quarantined\" }",
     "config": {

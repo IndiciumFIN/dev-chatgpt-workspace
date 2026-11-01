@@ -36,7 +36,7 @@ insert into review_item (
     'idioma/pt-PT-v1',
     'pt-PT',
     'pt-BR',
-    'Locale fora dos 19. A interface ja esta na fila; o conteudo deste idioma nao tem traducao.',
+    'Locale fora dos 19. A interface ja esta na fila on conflict do nothing; o conteudo deste idioma nao tem traducao.',
     '',
     'nao_aplicavel',
     'pendencia'

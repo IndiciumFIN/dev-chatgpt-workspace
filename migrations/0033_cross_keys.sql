@@ -128,7 +128,7 @@ where section is not null and dest_id is null;
 
 insert into schema_entity (name, layer_id, primary_key, purpose, links)
 values
-  ('content_place', 'conteudo', 'id', 'A mesma página nas três famílias.', 'section_slug → section_page.slug; inst_path → inst_page.path; object_slug → content_object.slug'),
+  ('content_place', 'conteudo', 'id', 'A mesma página nas três famílias.', 'section_slug → section_page.slug on conflict do nothing; inst_path → inst_page.path; object_slug → content_object.slug'),
   ('screen_dest', 'conteudo', 'id', 'Destino de menu, card e item.', 'place_id → content_place.id; tool_slug → source_tool.slug')
 on conflict (name) do nothing;
 

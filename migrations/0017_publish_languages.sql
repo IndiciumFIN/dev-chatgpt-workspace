@@ -84,7 +84,7 @@ values
 تقييم الهذيان في العناية المركزة.
 المرجع الببليوغرافي
 COREN-SP. (2018). التوجيه المؤسس 077/2018 - APACHE II . المجلس الإقليمي للتمريض في ساو باولو. متاح على: Coren-SP .
-Knaus WA, Draper EA, Wagner DP, Zimmerman JE. APACHE II: a severity of disease classification system. Crit Care Med. 1985 Oct;13(10):818-29.', 'publicado'),
+Knaus WA, Draper EA, Wagner DP, Zimmerman JE. APACHE II: a severity of disease classification system. Crit Care Med. 1985 Oct on conflict do nothing;13(10):818-29.', 'publicado'),
 ('/ar/apgar.html', 'ar', 'secao', 'مقياس أبغار - تقييم حديثي الولادة - التمريض', 'احسب درجة أبغار لتقييم الحالة البدنية لحديثي الولادة بسرعة ودقة. أداة أساسية للممرضين في حديثي الولادة.', 'البداية
 مؤشر أبغار
 تقييم حديثي الولادة والحيوية

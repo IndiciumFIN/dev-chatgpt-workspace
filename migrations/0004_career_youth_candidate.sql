@@ -208,7 +208,7 @@ insert into career_module_candidate(id,slug,title,description,object_class,audie
 ('MOD-EDITORIAL','conteudos-carreira','Conteúdos e campanhas','Guias, histórias, campanhas e checklists editoriais ligados aos objetos canônicos.','EDITORIAL','PROFESSIONAL','editorial','CANDIDATE',14),
 ('MOD-YOUTH-DISCOVER','descobrir','Descobrir profissões','Explorar áreas, rotinas, formação e possibilidades.','HYBRID','YOUTH','youth','CANDIDATE',1),
 ('MOD-YOUTH-NURSING','enfermagem-carreira','Enfermagem como carreira','Entender caminhos formativos e trajetórias possíveis.','HYBRID','YOUTH','youth','CANDIDATE',2),
-('MOD-YOUTH-REFLECT','autoconhecimento','Explorar interesses','Reflexão educativa por interesses; não é teste psicométrico.','FUNCTIONAL','YOUTH','youth','CANDIDATE',3),
+('MOD-YOUTH-REFLECT','autoconhecimento','Explorar interesses','Reflexão educativa por interesses on conflict do nothing; não é teste psicométrico.','FUNCTIONAL','YOUTH','youth','CANDIDATE',3),
 ('MOD-YOUTH-FIRST','primeiros-passos','Primeiros passos','Estágio, voluntariado, residência, concursos e preparação inicial.','HYBRID','YOUTH','youth','CANDIDATE',4),
 ('MOD-YOUTH-GAMES','jogos-quizzes','Jogos e quizzes','Experiências educativas conectadas ao mesmo conteúdo canônico.','EDITORIAL','YOUTH','youth','CANDIDATE',5),
 ('MOD-YOUTH-EDITORIAL','conteudos-jovens','Conteúdos para jovens','Guias e histórias projetados para o público jovem.','EDITORIAL','YOUTH','youth','CANDIDATE',6)

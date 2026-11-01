@@ -1,11 +1,12 @@
 -- S01 a S05 viram registro local. S06 permanece a fila review_item, sem fechar.
 
-alter table canonical_suggestion add column situacao text not null default 'aberta'
+alter table canonical_suggestion add column if not exists situacao text not null default 'aberta'
   check (situacao in ('aberta', 'atendida_local', 'em_revisao'));
 
 update canonical_suggestion set situacao = 'atendida_local' where id in ('S01', 'S02', 'S03', 'S04', 'S05');
 update canonical_suggestion set situacao = 'em_revisao' where id = 'S06';
 
+alter table canonical_suggestion drop constraint if exists s06_permanece_em_revisao;
 alter table canonical_suggestion add constraint s06_permanece_em_revisao
   check (id <> 'S06' or situacao = 'em_revisao');
 
@@ -29,7 +30,7 @@ insert into kernel_coluna_citada (relacao, coluna, origem) values
   ('cko_governance.decisions', 'human_required', 'trigger check_candidate_kernel_admission'),
   ('cko_governance.decisions', 'human_status', 'trigger check_candidate_kernel_admission'),
   ('cko_governance.decisions', 'decided_at', 'trigger check_candidate_kernel_admission'),
-  ('cko_governance.decisions', 'scope_ref', 'trigger check_candidate_kernel_admission');
+  ('cko_governance.decisions', 'scope_ref', 'trigger check_candidate_kernel_admission') on conflict do nothing;
 
 create table if not exists blob_conflict (
   id text primary key,
@@ -49,7 +50,7 @@ insert into blob_conflict (id, caminho, sha_a, sha_b, vencedor, nota) values
     null,
     null,
     'Wave 10 conta 92 conflitos nao equivalentes e zero aprovacoes. A lista caminho a caminho nao esta no pacote de auditoria desta sessao, entao nenhum vencedor pode ser escolhido.'
-  );
+  ) on conflict do nothing;
 
 create table if not exists historia_nao_mesclada (
   branch text primary key,
@@ -60,9 +61,9 @@ create table if not exists historia_nao_mesclada (
 
 insert into historia_nao_mesclada (branch, head_sha, ancestral_comum_com_main) values
   ('grook_10_26', 'eb2d47925dcbea40307d4078c991e76abc4189dc', false),
-  ('feat/projection-unica-f0-suite-real', '6d712dd47029286869f909a2014f42083f5db2a9', false);
+  ('feat/projection-unica-f0-suite-real', '6d712dd47029286869f909a2014f42083f5db2a9', false) on conflict do nothing;
 
-create view kernel_planos as
+create or replace view kernel_planos as
   select 'conteudo'::text as plano,
          'public.kernel_order'::text as relacao,
          'admitida exige approver_id e proibe o aprovador kernel'::text as regra
@@ -79,9 +80,9 @@ create table if not exists mudanca_producao (
 );
 
 insert into mudanca_producao (id, destino, autorizada) values
-  ('supabase-calculadoras-smart', 'Calculadoras-Smart', false);
+  ('supabase-calculadoras-smart', 'Calculadoras-Smart', false) on conflict do nothing;
 
-create view revisao_fila as
+create or replace view revisao_fila as
   select id, classe, familia, locale, source_locale, source_text, texto,
          revisao_clinica, fila, status, translation_status, aprovado,
          (texto = '') as traducao_ausente

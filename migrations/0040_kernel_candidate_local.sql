@@ -12,7 +12,7 @@ begin;
 set local lock_timeout = '5s';
 set local statement_timeout = '30s';
 
-create table cko_orch.work_order_admission_requests (
+create table if not exists cko_orch.work_order_admission_requests (
   work_order_id text primary key check (length(trim(work_order_id)) > 0),
   workflow_id text not null references cko_orch.workflow_instances(workflow_id) on delete restrict,
   find_id text not null references cko_validation.findings(finding_id) on delete restrict,
@@ -29,14 +29,14 @@ create table cko_orch.work_order_admission_requests (
   constraint admission_segregation check (maker_actor <> checker_actor)
 );
 
-create table cko_orch.work_order_policy_bindings (
+create table if not exists cko_orch.work_order_policy_bindings (
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   policy_id text not null references cko_orch.policy_registry(policy_id) on delete restrict,
   pinned_version text not null check (length(trim(pinned_version)) > 0),
   primary key (work_order_id,policy_id)
 );
 
-create table cko_orch.policy_bundle_artifacts (
+create table if not exists cko_orch.policy_bundle_artifacts (
   bundle_ref text primary key check (length(trim(bundle_ref)) > 0),
   policy_id text not null references cko_orch.policy_registry(policy_id) on delete restrict,
   policy_version text not null check (length(trim(policy_version)) > 0),
@@ -50,7 +50,7 @@ create table cko_orch.policy_bundle_artifacts (
   unique (policy_id,policy_version,bundle_sha256)
 );
 
-create table cko_orch.work_order_policy_evaluations (
+create table if not exists cko_orch.work_order_policy_evaluations (
   decision_ref text primary key check (length(trim(decision_ref)) > 0),
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   bundle_ref text not null references cko_orch.policy_bundle_artifacts(bundle_ref) on delete restrict,
@@ -65,14 +65,14 @@ create table cko_orch.work_order_policy_evaluations (
   unique (work_order_id,decision_ref)
 );
 
-create table cko_orch.work_order_required_validators (
+create table if not exists cko_orch.work_order_required_validators (
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   validator_id text not null references cko_validation.validators(validator_id) on delete restrict,
   pinned_version text not null check (length(trim(pinned_version)) > 0),
   primary key(work_order_id,validator_id)
 );
 
-create table cko_orch.work_order_validator_results (
+create table if not exists cko_orch.work_order_validator_results (
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   validator_id text not null references cko_validation.validators(validator_id) on delete restrict,
   run_ref text not null check (length(trim(run_ref)) > 0),
@@ -84,7 +84,7 @@ create table cko_orch.work_order_validator_results (
   primary key (work_order_id,validator_id,run_ref)
 );
 
-create table cko_orch.kernel_admission_decisions (
+create table if not exists cko_orch.kernel_admission_decisions (
   decision_id text primary key check (length(trim(decision_id)) > 0),
   work_order_id text not null references cko_orch.work_order_admission_requests(work_order_id) on delete restrict,
   policy_decision_ref text references cko_orch.work_order_policy_evaluations(decision_ref) on delete restrict,
@@ -103,7 +103,7 @@ create table cko_orch.kernel_admission_decisions (
 
 -- Narrow agent tool scopes, not live grants. The runtime enforcement point
 -- MUST re-evaluate policy and Kernel admission before invoking any tool.
-create table cko_governance.agent_tool_scopes (
+create table if not exists cko_governance.agent_tool_scopes (
   agent_id text not null references cko_governance.agent_registry(agent_id) on delete restrict,
   tool_ref text not null check (length(trim(tool_ref)) > 0),
   policy_id text not null references cko_orch.policy_registry(policy_id) on delete restrict,
@@ -121,7 +121,7 @@ create table cko_governance.agent_tool_scopes (
 
 -- Stronger DB gate for the recorded ADMITTED assertion; do not assume a row
 -- authorizes execution, as authorization still belongs to the runtime/Kernel.
-create function cko_orch.check_candidate_kernel_admission()
+create or replace function cko_orch.check_candidate_kernel_admission()
 returns trigger
 language plpgsql
 security invoker
@@ -190,6 +190,8 @@ begin
 end;
 $$;
 
+drop trigger if exists candidate_kernel_admission_gate on cko_orch.kernel_admission_decisions;
+
 create trigger candidate_kernel_admission_gate
   before insert or update on cko_orch.kernel_admission_decisions
   for each row execute function cko_orch.check_candidate_kernel_admission();
@@ -220,19 +222,19 @@ revoke all on cko_orch.work_order_admission_requests,
   from public, anon, authenticated;
 revoke all on function cko_orch.check_candidate_kernel_admission() from public, anon, authenticated;
 
-create index wo_admission_by_workflow on cko_orch.work_order_admission_requests(workflow_id);
-create index wo_admission_by_finding on cko_orch.work_order_admission_requests(find_id);
-create index wo_admission_by_evidence on cko_orch.work_order_admission_requests(evidence_bundle_id);
-create index wo_policy_by_policy on cko_orch.work_order_policy_bindings(policy_id);
-create index policy_bundle_by_policy on cko_orch.policy_bundle_artifacts(policy_id);
-create index policy_evaluation_by_request on cko_orch.work_order_policy_evaluations(work_order_id,evaluated_at desc);
-create index policy_evaluation_by_bundle on cko_orch.work_order_policy_evaluations(bundle_ref);
-create index wo_required_validator_by_validator on cko_orch.work_order_required_validators(validator_id);
-create index wo_validator_by_validator on cko_orch.work_order_validator_results(validator_id);
-create index wo_validator_by_evidence on cko_orch.work_order_validator_results(evidence_bundle_id);
-create index admission_decision_by_request on cko_orch.kernel_admission_decisions(work_order_id,decided_at desc);
-create index agent_tool_scope_by_policy on cko_governance.agent_tool_scopes(policy_id,work_order_id);
-create index agent_tool_scope_by_work_order on cko_governance.agent_tool_scopes(work_order_id);
+create index if not exists wo_admission_by_workflow on cko_orch.work_order_admission_requests(workflow_id);
+create index if not exists wo_admission_by_finding on cko_orch.work_order_admission_requests(find_id);
+create index if not exists wo_admission_by_evidence on cko_orch.work_order_admission_requests(evidence_bundle_id);
+create index if not exists wo_policy_by_policy on cko_orch.work_order_policy_bindings(policy_id);
+create index if not exists policy_bundle_by_policy on cko_orch.policy_bundle_artifacts(policy_id);
+create index if not exists policy_evaluation_by_request on cko_orch.work_order_policy_evaluations(work_order_id,evaluated_at desc);
+create index if not exists policy_evaluation_by_bundle on cko_orch.work_order_policy_evaluations(bundle_ref);
+create index if not exists wo_required_validator_by_validator on cko_orch.work_order_required_validators(validator_id);
+create index if not exists wo_validator_by_validator on cko_orch.work_order_validator_results(validator_id);
+create index if not exists wo_validator_by_evidence on cko_orch.work_order_validator_results(evidence_bundle_id);
+create index if not exists admission_decision_by_request on cko_orch.kernel_admission_decisions(work_order_id,decided_at desc);
+create index if not exists agent_tool_scope_by_policy on cko_governance.agent_tool_scopes(policy_id,work_order_id);
+create index if not exists agent_tool_scope_by_work_order on cko_governance.agent_tool_scopes(work_order_id);
 
 comment on table cko_orch.work_order_admission_requests is 'CANDIDATE: canonical WO admission envelope, not an execution command';
 comment on table cko_orch.kernel_admission_decisions is 'CANDIDATE: admission evidence, not a runtime authorization token';

@@ -167,7 +167,7 @@ insert into canonical_conflict (path, domain, priority, proposed_wo, disposition
 ('src/routeTree.gen.ts', 'CANONICAL_ROUTING', 'P1', 'WO-ADM-001', 'CONFLICT_REQUIRES_REVIEW', 'artifact:13073497996'),
 ('src/styles.css', 'SITE_UI', 'P1', 'WO-ADM-001', 'CONFLICT_REQUIRES_REVIEW', 'artifact:13073497996'),
 ('src/styles/admin-console.css', 'SITE_UI', 'P1', 'WO-ADM-001', 'CONFLICT_REQUIRES_REVIEW', 'artifact:13073497996'),
-('vercel.json', 'SITE_UI', 'P1', 'WO-ADM-001', 'CONFLICT_REQUIRES_REVIEW', 'artifact:13073497996');
+('vercel.json', 'SITE_UI', 'P1', 'WO-ADM-001', 'CONFLICT_REQUIRES_REVIEW', 'artifact:13073497996') on conflict do nothing;
 insert into canonical_conflict_source (path, branch, blob, status) values
 ('.github/workflows/admin-ux-e2e.yml', 'idioma/consolidado-19', '3f3bd3105f77be0f236595f1b5e755aa0bfd980c', 'M'),
 ('.github/workflows/admin-ux-e2e.yml', 'idioma/de-v1', '3f3bd3105f77be0f236595f1b5e755aa0bfd980c', 'M'),
@@ -368,7 +368,7 @@ insert into canonical_conflict_source (path, branch, blob, status) values
 ('registers/i18n/incoming/de/contracts/interface__home.json', 'idioma/de-v1', 'd66b68a81e1d12db1f6f70e16eab3988d3dc13a2', 'A'),
 ('registers/i18n/incoming/de/contracts/interface__home.json', 'integration/structural-overlay-20261101', '18057e4e1c957b6ff5848122617e83baab05addf', 'A'),
 ('registers/i18n/incoming/de/contracts/interface__institutional.json', 'idioma/consolidado-19', '9bb95f12c514a9d4015770de73e1b8a027d6dcba', 'A'),
-('registers/i18n/incoming/de/contracts/interface__institutional.json', 'idioma/de-v1', '1782b4111b2b100e49b8b0f019f306109653c342', 'A');
+('registers/i18n/incoming/de/contracts/interface__institutional.json', 'idioma/de-v1', '1782b4111b2b100e49b8b0f019f306109653c342', 'A') on conflict do nothing;
 insert into canonical_conflict_source (path, branch, blob, status) values
 ('registers/i18n/incoming/de/contracts/interface__institutional.json', 'integration/structural-overlay-20261101', '5e9a3fb258957663f2def1fc713064cef0958aaa', 'A'),
 ('registers/i18n/incoming/de/contracts/interface__jobs.json', 'idioma/consolidado-19', '0a4375af339ef4b27f2a8674f74436ece51aa1bd', 'A'),
@@ -569,7 +569,7 @@ insert into canonical_conflict_source (path, branch, blob, status) values
 ('src/lib/dictionary.test.ts', 'feat/projection-unica-f0-suite-real', '6256a71d2a098f8126ca77a81a693b59a93baa8e', 'A'),
 ('src/lib/dictionary.test.ts', 'grook_10_26', '35422c91b5a51f5ed6b8f4c6c526f09c7392868b', 'A'),
 ('src/lib/header-i18n.ts', 'idioma/consolidado-19', '42067284295949af53fc7e6e5502bd673164c842', 'M'),
-('src/lib/header-i18n.ts', 'integration/structural-overlay-20261101', '99e0b2792fd754dd6db178edc6e00b395e8a531b', 'M');
+('src/lib/header-i18n.ts', 'integration/structural-overlay-20261101', '99e0b2792fd754dd6db178edc6e00b395e8a531b', 'M') on conflict do nothing;
 insert into canonical_conflict_source (path, branch, blob, status) values
 ('src/lib/intake.test.ts', 'feat/projection-unica-f0-suite-real', '83419249d0d083582c53931c90fe320cf7f79c47', 'A'),
 ('src/lib/intake.test.ts', 'grook_10_26', '39d47ef95f1c65b29bcd154a13f44b26c9a43045', 'A'),
@@ -636,4 +636,4 @@ insert into canonical_conflict_source (path, branch, blob, status) values
 ('src/styles/admin-console.css', 'revert-26-plan/pmokernel-finalization-20261031', '8c3984a230a1940c8fbd48759b7cb937e8f59b65', 'M'),
 ('vercel.json', 'audit-hardening-2026-10-24', '903aae7e80e6c81244d674fa2ec7fecce0cdf93b', 'M'),
 ('vercel.json', 'feat/projection-unica-f0-suite-real', '1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6', 'A'),
-('vercel.json', 'grook_10_26', '1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6', 'A');
+('vercel.json', 'grook_10_26', '1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6', 'A') on conflict do nothing;

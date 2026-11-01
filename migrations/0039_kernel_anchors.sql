@@ -55,4 +55,4 @@ comment on table cko_orch.policy_registry is
   'Ancora local. Colunas active e version existem porque a trigger do Kernel as le. Nao reproduz o catalogo do Supabase.';
 
 insert into canonical_divergence (code, classe, detalhe) values
-  ('D03', 'corrigida_local', 'Ancoras criadas com as colunas citadas pelo SQL candidato. As oito tabelas do Kernel passam a poder ser criadas neste banco. O Supabase nao foi alterado.');
+  ('D03', 'corrigida_local', 'Ancoras criadas com as colunas citadas pelo SQL candidato. As oito tabelas do Kernel passam a poder ser criadas neste banco. O Supabase nao foi alterado.') on conflict do nothing;

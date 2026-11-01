@@ -16,6 +16,6 @@ insert into canonical_divergence (code, classe, detalhe) values
 ('D03','candidato_bloqueado','cko_orch.kernel_admission_decisions'),
 ('D03','candidato_bloqueado','cko_governance.agent_tool_scopes'),
 ('D04','nao_equivalente','Wave 10 registrou 149 conflitos de caminho, 92 nao equivalentes. Sao blobs de arquivo, nao colisao de tabela. Nenhum foi aprovado.'),
-('D05','historia','grook_10_26 e feat/projection-unica-f0-suite-real nao tem ancestral comum com main. O SQL foi copiado; o historico nao foi mesclado.'),
+('D05','historia','grook_10_26 e feat/projection-unica-f0-suite-real nao tem ancestral comum com main. O SQL foi copiado on conflict do nothing; o historico nao foi mesclado.'),
 ('D06','revisao','0036 e 0037 trazem review_item. aprovado permanece falso. Isso nao publica conteudo.'),
 ('D07','supabase','As dez relacoes cko_* lidas no Supabase nao foram recriadas aqui. Este banco e local e nao altera o projeto Calculadoras-Smart.');

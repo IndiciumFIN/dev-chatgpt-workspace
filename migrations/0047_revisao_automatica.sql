@@ -10,7 +10,7 @@ create table if not exists canonical_auto_review (
   revisao_humana boolean not null default false check (revisao_humana = false)
 );
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('skills/image-generation/SKILL.md', 'AUSENTE', '5289ce13539bf70b922893a676b5d9047e7ec0af', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('skills/image-generation/SKILL.md', 'AUSENTE', '5289ce13539bf70b922893a676b5d9047e7ec0af', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('skills/image-generation/scripts/image-generation.ts', 'AUSENTE', '7596f320f3c0fa72e6bcfe4e5d703deb88d14eee', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('skills/image-generation/LICENSE.txt', 'AUSENTE', '1e5453945ededac43297078965ca9f1eecfe42a6', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('skills/TTS/SKILL.md', 'AUSENTE', 'd92d22506d12770936fccab10c5f4123c431fc85', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -312,7 +312,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/deterministic-agent-runtime/index.ts', 'AUSENTE', 'b8184d32e54f27c27b5d9bef31eafc7847340e13', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/human-escalation/contract.ts', 'AUSENTE', '1a9d918c0df642f4495f8ac59a56adfacc65528c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/human-escalation/contract.ts', 'AUSENTE', '1a9d918c0df642f4495f8ac59a56adfacc65528c', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/human-escalation/index.ts', 'AUSENTE', '0634a4d06b249da7f71269c0176b603df81ff04f', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/model-router/contract.ts', 'AUSENTE', 'bad0352bc1f020125a2b408d2a3255c6ee86cf4d', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/ai-agents/model-router/index.ts', 'AUSENTE', '6f4032e4dcaac856c7b1f60bab269231b26bff87', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -614,7 +614,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/claim-service/index.ts', 'AUSENTE', 'a6e12e7275957a06a50f11624b6ff1713506c5f1', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/confidence-quality-service/contract.ts', 'AUSENTE', 'b77912ff35d4aa26ea3e2684aa030cdbff0cf324', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/confidence-quality-service/contract.ts', 'AUSENTE', 'b77912ff35d4aa26ea3e2684aa030cdbff0cf324', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/confidence-quality-service/index.ts', 'AUSENTE', '46f6401f9a60a99bc4f0ccabfdf0d97f4cfc4bd4', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/contradiction-detection/contract.ts', 'AUSENTE', 'acf68a8224a1424d23ab873eb73e6cd28e58b806', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/evidence-claims/contradiction-detection/index.ts', 'AUSENTE', 'a9dc0974d4e0ea855128b829d543f4c44d3c3474', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -916,7 +916,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('upload/ce-skeleton/ce-skeleton/src/families/preview/asset-preview/contract.ts', 'AUSENTE', '32ce0b4f7e89903daf9589d2b02517841879b40f', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('upload/ce-skeleton/ce-skeleton/src/families/preview/asset-preview/index.ts', 'AUSENTE', '6daf637dbc094f7019c4328403e433ec3e8c73d1', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('upload/ce-skeleton/ce-skeleton/src/families/preview/asset-preview/index.ts', 'AUSENTE', '6daf637dbc094f7019c4328403e433ec3e8c73d1', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/preview/before-after-preview/contract.ts', 'AUSENTE', '0e240d84b180c9ef7fd76dbaf199559d36e79f5d', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/preview/before-after-preview/index.ts', 'AUSENTE', 'a4f84c5d61fc2034bfe58a62f8d6fed81d6571ee', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('upload/ce-skeleton/ce-skeleton/src/families/preview/detail-preview/contract.ts', 'AUSENTE', '27018c9e9fda71d91b9039429e209cb4a80cfb9f', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -1225,7 +1225,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/contracts/cko-schemas/analytics_event.schema.json', 'CONFERIDO', 'ca98f814581fd57b67b80839cc01356bf0c656a8', 'ca98f814581fd57b67b80839cc01356bf0c656a8', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-schemas/inference.schema.json', 'CONFERIDO', '18725c7c22a2c6e7ff4b58fd637973009a26951e', '18725c7c22a2c6e7ff4b58fd637973009a26951e', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-schemas/canonical_object.schema.json', 'CONFERIDO', '27d3ac5d75ab11045120e1b3dfc361fdc04dd4e9', '27d3ac5d75ab11045120e1b3dfc361fdc04dd4e9', 'hash do arquivo igual ao hash do inventario'),
-('src/data/contracts/cko-schemas/album_item.schema.json', 'AUSENTE', '52a5955191d55775f714ffe54bfaa66850629a87', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/contracts/cko-schemas/album_item.schema.json', 'AUSENTE', '52a5955191d55775f714ffe54bfaa66850629a87', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/contracts/cko-schemas/export_profile.schema.json', 'CONFERIDO', 'becd575f1fc59a7daa7addc77161928fda664bfb', 'becd575f1fc59a7daa7addc77161928fda664bfb', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-schemas/cko-data.json', 'CONFERIDO', 'd7b882df986aaf13cccd027e4a585e0a6d06389d', 'd7b882df986aaf13cccd027e4a585e0a6d06389d', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-schemas/tool.schema.json', 'CONFERIDO', 'c0049ab09464281a3ef8fd4686eeb6ff19524306', 'c0049ab09464281a3ef8fd4686eeb6ff19524306', 'hash do arquivo igual ao hash do inventario'),
@@ -1612,7 +1612,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/contracts/simulados-enfermagem/tests/attempt-lifecycle.contract.test.py', 'CONFERIDO', '6ca9100e2dcba899ba59f77c26bc86726a6ce3f5', '6ca9100e2dcba899ba59f77c26bc86726a6ce3f5', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/simulados-enfermagem/tests/answer-key-rls.regression.sql', 'CONFERIDO', 'a44dbc5348537419f55b55a295a4db8982e98c1d', 'a44dbc5348537419f55b55a295a4db8982e98c1d', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-governance/opa/kernel_admission.test.rego', 'CONFERIDO', '77033b75f5a06bf7bf58e3288ca7cb8950307c1d', '77033b75f5a06bf7bf58e3288ca7cb8950307c1d', 'hash do arquivo igual ao hash do inventario'),
-('src/data/contracts/cko-governance/opa/kernel_admission_test.rego', 'AUSENTE', '92fb7aeb2b817992ff5a85e63f0b372698d942d5', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/contracts/cko-governance/opa/kernel_admission_test.rego', 'AUSENTE', '92fb7aeb2b817992ff5a85e63f0b372698d942d5', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/contracts/cko-governance/opa/kernel_admission.rego', 'AUSENTE', 'a78815803898bcbc126160db85cbac161ba13469', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/contracts/cko-governance/opa/import_read.rego', 'CONFERIDO', 'a429acfcec1e8acb8c4fcb4279e4a9b61ed0bd6f', 'a429acfcec1e8acb8c4fcb4279e4a9b61ed0bd6f', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/contracts/cko-governance/opa/kernel_admission.fixture.json', 'CONFERIDO', '126041bebc06aac26cf95505682ca1fbd43e5123', '126041bebc06aac26cf95505682ca1fbd43e5123', 'hash do arquivo igual ao hash do inventario'),
@@ -1822,7 +1822,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/contracts/entities/curricula.v1.json', 'AUSENTE', 'b6a89aa994ee04de4a836d25c207f666bc5a3e8a', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('src/data/contracts/entities/assessment-items.v1.json', 'AUSENTE', '865d03bdbc5821e829065b99c4acb94da1dc473c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/contracts/entities/assessment-items.v1.json', 'AUSENTE', '865d03bdbc5821e829065b99c4acb94da1dc473c', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/contracts/entities/clinical-tools.v1.json', 'AUSENTE', 'ba9a96be527cdc4671c92b2ae368ee4fd74df91c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/contracts/entities/tool-sources.v1.json', 'AUSENTE', '3bc35cf8c45be557f42ebabf6edbfedad9a055b2', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/contracts/entities/brand-assets.v1.json', 'CONFERIDO', '5b6bd374425f72fa709439cf660913f2a2aa7631', '5b6bd374425f72fa709439cf660913f2a2aa7631', 'hash do arquivo igual ao hash do inventario'),
@@ -2146,7 +2146,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/registers/governance/transversal-standards-candidates.v1.json', 'CONFERIDO', '893972807b6f5f52e696e7bf3fafd1fb70b2ce9d', '893972807b6f5f52e696e7bf3fafd1fb70b2ce9d', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/research/candidate.v1.json', 'CONFERIDO', '0b21dc83183f66b4d960e75bf8c0f7b3c5170731', '0b21dc83183f66b4d960e75bf8c0f7b3c5170731', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/commander/lanes.v1.json', 'CONFERIDO', 'b6bbe8393961db9ecd0038c3a145bac2edd99147', 'b6bbe8393961db9ecd0038c3a145bac2edd99147', 'hash do arquivo igual ao hash do inventario'),
-('src/data/registers/canonical/route-contracts.v1.json', 'AUSENTE', '8d2dcc9335d7fcb6f501e6226092be6f9d6a7b48', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/registers/canonical/route-contracts.v1.json', 'AUSENTE', '8d2dcc9335d7fcb6f501e6226092be6f9d6a7b48', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/registers/canonical/surface-binding-register.v2.json', 'AUSENTE', '29a1cb3a2e6f217c532221a0d7bacb23ebc6286e', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/registers/canonical/route-template-register.v1.json', 'CONFERIDO', '7731af99b7acaa8f8a6e95709e0f69bdab26335b', '7731af99b7acaa8f8a6e95709e0f69bdab26335b', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/canonical/experience-capability-registry.candidate.v0.1.json', 'CONFERIDO', 'ab610115cf4ef8bd9544cf562215efcfe941e86e', 'ab610115cf4ef8bd9544cf562215efcfe941e86e', 'hash do arquivo igual ao hash do inventario'),
@@ -3091,7 +3091,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/registers/i18n/incoming/hi/contracts/interface__dark.json', 'CONFERIDO', 'aaef9b185a426973749cb0e83e3aa32f4ef6f944', 'aaef9b185a426973749cb0e83e3aa32f4ef6f944', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/hi/index.json', 'CONFERIDO', 'd920c1506342277204382e9483f2735bfb0311b8', 'd920c1506342277204382e9483f2735bfb0311b8', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/hi/register-entry.json', 'CONFERIDO', '8b7b1d1218e1862a2fb72f471e087e426ac9c026', '8b7b1d1218e1862a2fb72f471e087e426ac9c026', 'hash do arquivo igual ao hash do inventario'),
-('src/data/registers/i18n/incoming/sugestoes.json', 'AUSENTE', 'c49f962f14c0ff8e3824e2ce5de764a82dc104e9', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/registers/i18n/incoming/sugestoes.json', 'AUSENTE', 'c49f962f14c0ff8e3824e2ce5de764a82dc104e9', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/registers/i18n/incoming/ko/candidate.json', 'CONFERIDO', 'c80fb9f2a74ab7aca56b6d27116a96b8e41d75ee', 'c80fb9f2a74ab7aca56b6d27116a96b8e41d75ee', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/ko/contracts/interface__sustainability.json', 'CONFERIDO', 'c1493ab42b1417d675b6d1e843c790acf4fa9509', 'c1493ab42b1417d675b6d1e843c790acf4fa9509', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/ko/contracts/interface__fontUp.json', 'CONFERIDO', '3044c733f8e207ecc61bd259954bdbbef53c16d7', '3044c733f8e207ecc61bd259954bdbbef53c16d7', 'hash do arquivo igual ao hash do inventario'),
@@ -3394,7 +3394,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/data/registers/i18n/incoming/fr/contracts/interface__dark.json', 'CONFERIDO', '80ee9a2acd4d2fb64261c0c29f555c9d22d51740', '80ee9a2acd4d2fb64261c0c29f555c9d22d51740', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/fr/index.json', 'CONFERIDO', 'ee5a0909ab14fd33d3893870aa08160782a8128a', 'ee5a0909ab14fd33d3893870aa08160782a8128a', 'hash do arquivo igual ao hash do inventario'),
 ('src/data/registers/i18n/incoming/fr/register-entry.json', 'CONFERIDO', '0e72ba0344568c19119fed05ad1866ee5f78eb42', '0e72ba0344568c19119fed05ad1866ee5f78eb42', 'hash do arquivo igual ao hash do inventario'),
-('src/data/registers/tenants/vila.v1.json', 'AUSENTE', '00b11da53860bb24838f9d35c771674dbea99d70', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/data/registers/tenants/vila.v1.json', 'AUSENTE', '00b11da53860bb24838f9d35c771674dbea99d70', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/data/registers/tenants/ce.v1.json', 'AUSENTE', '333ec6cf601ea2ecbadd969e33f39f6c7d5f353c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/registers/tenants/_index.json', 'AUSENTE', '8932a7cfd5ce3c17065ccca049159959b6314505', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/data/registers/tenants/simulados.v1.json', 'AUSENTE', '3b8487d4938b4aa8495da4108ba8978a6ac8963a', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -3637,7 +3637,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/lib/community.functions.ts', 'CONFERIDO', '6aa7a3b1ad852b1ea780b0ceac9187bd1f4088af', '6aa7a3b1ad852b1ea780b0ceac9187bd1f4088af', 'hash do arquivo igual ao hash do inventario'),
 ('src/lib/visible-text.ts', 'CONFERIDO', '5eb54a9d25a2d9e5169055830b00735ad336e2ce', '5eb54a9d25a2d9e5169055830b00735ad336e2ce', 'hash do arquivo igual ao hash do inventario'),
 ('src/lib/preview-path-prefix.ts', 'CONFERIDO', '1d6c9cb051f1745b4711f159025fcba582c2b682', '1d6c9cb051f1745b4711f159025fcba582c2b682', 'hash do arquivo igual ao hash do inventario'),
-('src/lib/contract-index.generated.ts', 'DIVERGENTE', 'edc5b34c718a50c0cd8dd95540d58b148863ca35', 'd647535d2e2ddce2062f45347e81f0d9ec0ccf89', 'hash local diferente; nenhum vencedor foi escolhido'),
+('src/lib/contract-index.generated.ts', 'DIVERGENTE', 'edc5b34c718a50c0cd8dd95540d58b148863ca35', 'd647535d2e2ddce2062f45347e81f0d9ec0ccf89', 'hash local diferente on conflict do nothing; nenhum vencedor foi escolhido'),
 ('src/lib/db.ts', 'DIVERGENTE', 'a99b849b4fd5bb4237ed7837b87f1313e45d2b20', '3168e939be202210a1b656b8676d2e09d7b25e93', 'hash local diferente; nenhum vencedor foi escolhido'),
 ('src/lib/stored.tsx', 'CONFERIDO', '5b3b264645129542844f1ca08ad44bd9001fd5ce', '5b3b264645129542844f1ca08ad44bd9001fd5ce', 'hash do arquivo igual ao hash do inventario'),
 ('src/lib/stored.functions.ts', 'CONFERIDO', 'a05c4ce06d7cabec8c5e2efd44c04313175a5332', 'a05c4ce06d7cabec8c5e2efd44c04313175a5332', 'hash do arquivo igual ao hash do inventario'),
@@ -3936,7 +3936,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/families/governance/policy-registry/index.ts', 'AUSENTE', 'e297d9b11a5576b8cdcebca8eabf63e00de4e4db', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('src/families/governance/policy-as-code/contract.ts', 'AUSENTE', 'b83c3b5b167af2871244f9bf5b9c5ccea76a092c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/families/governance/policy-as-code/contract.ts', 'AUSENTE', 'b83c3b5b167af2871244f9bf5b9c5ccea76a092c', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/families/governance/policy-as-code/index.ts', 'AUSENTE', '8f6cd885fe87c196109e5da8e729778633418b2c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/governance/kernel-admission-adapter/contract.ts', 'AUSENTE', '1186a9bcb5d42ab2ac5353f5aca68c6fbd84149c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/governance/kernel-admission-adapter/index.ts', 'AUSENTE', '862bb4fd23cc3f28b3c85eecd158430c371d9a2f', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -4238,7 +4238,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/families/community/block-mute/contract.ts', 'AUSENTE', 'ba3c3a81f71ee66ef42b4093e354ba7f946e2e9f', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('src/families/community/block-mute/index.ts', 'AUSENTE', '440cb04978a1d48652e4770ce5bdcd0f348f1295', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/families/community/block-mute/index.ts', 'AUSENTE', '440cb04978a1d48652e4770ce5bdcd0f348f1295', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/families/community/reputation/contract.ts', 'AUSENTE', '0c537ccac95603df2a2bc9a2c701c6da33c1cabb', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/community/reputation/index.ts', 'AUSENTE', '90c16227ef4cdaba576c971e70bb2e21c784c57e', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/community/moderation/contract.ts', 'AUSENTE', 'c19bf9660fb02d590d4d234c78a5e8615ef424d1', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -4540,7 +4540,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('src/families/jobs-opportunities/employer-organization-registry/contract.ts', 'AUSENTE', 'ca88d6a955ed5381f64d7a21f7294a549fc08b56', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('src/families/jobs-opportunities/employer-organization-registry/index.ts', 'AUSENTE', 'f068e8b25c5691c872d9c5181a14322e79f34ece', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('src/families/jobs-opportunities/employer-organization-registry/index.ts', 'AUSENTE', 'f068e8b25c5691c872d9c5181a14322e79f34ece', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('src/families/jobs-opportunities/residency-service/contract.ts', 'AUSENTE', '5d6e8eb2378352bc8cff1078a2152ac0af623aec', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/jobs-opportunities/residency-service/index.ts', 'AUSENTE', 'b42a651bc11fa4cd46f7fce24551f907d9c2f406', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('src/families/jobs-opportunities/internship-service/contract.ts', 'AUSENTE', '86f00efc25f9b57eb6934912f5d474b0bef67ccb', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -5088,7 +5088,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('public/brand/chapeu.webp', 'CONFERIDO', '45f13a6e6a6768f33b2c2a981f04f1e18f910d21', '45f13a6e6a6768f33b2c2a981f04f1e18f910d21', 'hash do arquivo igual ao hash do inventario'),
 ('public/brand/ext-gasometria.webp', 'CONFERIDO', '984dc8a0c54578021516f98be484527f3b56911b', '984dc8a0c54578021516f98be484527f3b56911b', 'hash do arquivo igual ao hash do inventario'),
 ('public/brand/logo.webp', 'CONFERIDO', '5fda34bcf5620714e6d10e8c3e325c3ebaed2a5e', '5fda34bcf5620714e6d10e8c3e325c3ebaed2a5e', 'hash do arquivo igual ao hash do inventario'),
-('public/sitemap.xml', 'DIVERGENTE', 'd03842eb5ba95005489cf7987e2f9385e3342730', '08675cad3cdac219fe1a3c97aebc65ef8f5157e4', 'hash local diferente; nenhum vencedor foi escolhido'),
+('public/sitemap.xml', 'DIVERGENTE', 'd03842eb5ba95005489cf7987e2f9385e3342730', '08675cad3cdac219fe1a3c97aebc65ef8f5157e4', 'hash local diferente on conflict do nothing; nenhum vencedor foi escolhido'),
 ('public/apple-touch-icon.png', 'CONFERIDO', '6c4b8795bdd3f7b888c1dc04a5abf23117b7587d', '6c4b8795bdd3f7b888c1dc04a5abf23117b7587d', 'hash do arquivo igual ao hash do inventario'),
 ('public/templates-piloto/case/resumo.html', 'AUSENTE', 'ed53fb17dead828a1dba644925e0e1eaf9a2f76a', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('public/templates-piloto/case/soap.html', 'AUSENTE', '26111ab1bdc1a59a9ba3e1401d77e4484917d103', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -5144,7 +5144,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('public/templates-piloto/quiz/index.html', 'AUSENTE', '67fb8fcd9fb8cedc4f94bf4ab304f312dc72ebea', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('public/templates-piloto/slides/resumo.html', 'AUSENTE', '98ac019148d65ea7b8aa109d01b36c09d3920691', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('public/templates-piloto/slides/resumo.html', 'AUSENTE', '98ac019148d65ea7b8aa109d01b36c09d3920691', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('public/templates-piloto/slides/assets/slide-case-presentation.png', 'AUSENTE', '1f4b998247fe4f98b28bdf54f72ba52043da03ea', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('public/templates-piloto/slides/assets/slide-hospital-cover.png', 'AUSENTE', 'd4a53fde48d8c0515214265a378a4f4dc927a683', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('public/templates-piloto/slides/assets/slide-team-discussion.png', 'AUSENTE', 'ab456ef108ca90e47aa41cafc4d12a707c229e88', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -5446,7 +5446,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('public/bibliotecas/catalog/assets/icone-avaliacao-inicial-272b4edeaf.html', 'AUSENTE', '2c2b7811bf7d7309ce855ef2e8fc701e92c616cc', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('public/bibliotecas/catalog/assets/a-clean-flat-infographic-image-photoset-of-many-ic.html', 'AUSENTE', '9452845be7062c478851f011e70a43048e1343b4', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('public/bibliotecas/catalog/assets/a-clean-flat-infographic-image-photoset-of-many-ic.html', 'AUSENTE', '9452845be7062c478851f011e70a43048e1343b4', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('public/bibliotecas/catalog/assets/a-clean-high-resolution-png-style-assets-sheet-o.html', 'AUSENTE', '11e1332961d475fa5a5fbd9ddea97a4e5441c629', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('public/bibliotecas/catalog/assets/sterile-gauze-compresses-display.html', 'AUSENTE', '597427be4a0eec7fac8f6a7792d94fffcc2bdea2', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('public/bibliotecas/catalog/assets/glossy-blue-binoculars-icon.html', 'AUSENTE', '9212dcdca2fc3e2a8400d6156219f54fff58e171', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -5793,7 +5793,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('migrations/0017_publish_languages.sql', 'CONFERIDO', '96b35ee3abbb7a8e85c8d3459093e5cc85240738', '96b35ee3abbb7a8e85c8d3459093e5cc85240738', 'hash do arquivo igual ao hash do inventario'),
 ('migrations/0036_indice_do_banco.sql', 'CONFERIDO', '665f2ccc6211f0894a7e8fd35cab2b24d816d1a4', '665f2ccc6211f0894a7e8fd35cab2b24d816d1a4', 'hash do arquivo igual ao hash do inventario'),
 ('migrations/0025_dictionary.sql', 'CONFERIDO', '9cc956be4c1bb1db00b13d4a1fe7b02597f4297b', '9cc956be4c1bb1db00b13d4a1fe7b02597f4297b', 'hash do arquivo igual ao hash do inventario'),
-('eslint.config.mjs', 'DIVERGENTE', '4baab20549a17f45ebcb1fedd24917fecbc63f0b', 'bfc3c2560b42997c103f92bb5b681ce46163eb0c', 'hash local diferente; nenhum vencedor foi escolhido'),
+('eslint.config.mjs', 'DIVERGENTE', '4baab20549a17f45ebcb1fedd24917fecbc63f0b', 'bfc3c2560b42997c103f92bb5b681ce46163eb0c', 'hash local diferente on conflict do nothing; nenhum vencedor foi escolhido'),
 ('vercel.json', 'CONFERIDO', 'b99d11a9f30bb767b650241cf4fad09f01a21800', 'b99d11a9f30bb767b650241cf4fad09f01a21800', 'hash do arquivo igual ao hash do inventario'),
 ('AGENTS.project.md', 'CONFERIDO', '30792e76468950f9aba29a21a525828e537908b3', '30792e76468950f9aba29a21a525828e537908b3', 'hash do arquivo igual ao hash do inventario'),
 ('server/virtual-grok-og-identity.d.ts', 'CONFERIDO', '2baed2dbb4a24d8374b25158e37f1e2bda8fab0d', '2baed2dbb4a24d8374b25158e37f1e2bda8fab0d', 'hash do arquivo igual ao hash do inventario'),
@@ -6050,7 +6050,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('scripts/test-country-icon-a11y.mjs', 'CONFERIDO', 'e71dda3e4d0ebe5e7bf3f78172183101b243b5af', 'e71dda3e4d0ebe5e7bf3f78172183101b243b5af', 'hash do arquivo igual ao hash do inventario')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('scripts/verify-transversal-public-materialization.py', 'DIVERGENTE', 'bcacd5cc31d25a901b8cba82526a9dcad7555fca', '8017c80ce2f8ca497cacf42d469b8445bd46ffed', 'hash local diferente; nenhum vencedor foi escolhido'),
+('scripts/verify-transversal-public-materialization.py', 'DIVERGENTE', 'bcacd5cc31d25a901b8cba82526a9dcad7555fca', '8017c80ce2f8ca497cacf42d469b8445bd46ffed', 'hash local diferente on conflict do nothing; nenhum vencedor foi escolhido'),
 ('scripts/brand-check.test.mjs', 'CONFERIDO', '5388c60198c91ea9cfcc5d9cb7f259e233b71462', '5388c60198c91ea9cfcc5d9cb7f259e233b71462', 'hash do arquivo igual ao hash do inventario'),
 ('scripts/test-canonical-contracts.mjs', 'DIVERGENTE', '9e4d0cfa2be248d7ce7771384088329c29704ad0', 'fe573be276f3bc5a1006d1a4c9a78f2dfe0ef7c7', 'hash local diferente; nenhum vencedor foi escolhido'),
 ('scripts/audit-domain-wo-candidates.mjs', 'CONFERIDO', '53d7034368273cc0c399905e6bd4c3f554b8253c', '53d7034368273cc0c399905e6bd4c3f554b8253c', 'hash do arquivo igual ao hash do inventario'),
@@ -6685,7 +6685,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('audit/baseline/v0.1.0/route-register.json', 'CONFERIDO', '6b11832cea346ffdd96464a034bf313f870c426c', '6b11832cea346ffdd96464a034bf313f870c426c', 'hash do arquivo igual ao hash do inventario'),
 ('audit/baseline/v0.1.0/file-register.json', 'CONFERIDO', '4fb25cddefe574812085637e8ef25a61533239cb', '4fb25cddefe574812085637e8ef25a61533239cb', 'hash do arquivo igual ao hash do inventario'),
 ('audit/baseline/v0.1.0/template-register.json', 'CONFERIDO', '9181681545927d2da356c2dac39633e52787d379', '9181681545927d2da356c2dac39633e52787d379', 'hash do arquivo igual ao hash do inventario'),
-('audit/execution/execution-gates-latest.json', 'DIVERGENTE', '7017940b391a732a1749ecb85bc2f8ef0de6e661', '2a24731e76f667dea8e3aa1cdd0a9ea869175aec', 'hash local diferente; nenhum vencedor foi escolhido'),
+('audit/execution/execution-gates-latest.json', 'DIVERGENTE', '7017940b391a732a1749ecb85bc2f8ef0de6e661', '2a24731e76f667dea8e3aa1cdd0a9ea869175aec', 'hash local diferente on conflict do nothing; nenhum vencedor foi escolhido'),
 ('audit/execution/render-readiness-latest.json', 'CONFERIDO', 'b92a8e68831200acd571a05f77df5d6cb0a6e7c2', 'b92a8e68831200acd571a05f77df5d6cb0a6e7c2', 'hash do arquivo igual ao hash do inventario'),
 ('audit/execution/test-failure-triage-v2.7.1.json', 'CONFERIDO', '60867ba4ae54cccd20db9984857c4ff934b1af8a', '60867ba4ae54cccd20db9984857c4ff934b1af8a', 'hash do arquivo igual ao hash do inventario'),
 ('audit/execution/local-runtime-latest.json', 'CONFERIDO', 'bff97a6f7a14d25b02b3c76e1ecb0ed40a75b39b', 'bff97a6f7a14d25b02b3c76e1ecb0ed40a75b39b', 'hash do arquivo igual ao hash do inventario'),
@@ -15022,7 +15022,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('artifacts/auditoria-diretorio.txt', 'CONFERIDO', '0d05c74e70d1b5e509856bc33d311da33d1bcef6', '0d05c74e70d1b5e509856bc33d311da33d1bcef6', 'hash do arquivo igual ao hash do inventario'),
 ('artifacts/pendencias.txt', 'CONFERIDO', 'dea6bd15e8968bc117655034836b2062de1bc146', 'dea6bd15e8968bc117655034836b2062de1bc146', 'hash do arquivo igual ao hash do inventario'),
 ('artifacts/registro.json', 'CONFERIDO', 'b6f4994840d44290a273e3a9b5ad0d3b866ad1eb', 'b6f4994840d44290a273e3a9b5ad0d3b866ad1eb', 'hash do arquivo igual ao hash do inventario'),
-('artifacts/source-processo.json', 'AUSENTE', 'e85d6471bbb7b6c2b3c78aa6a2aad9aa0709aa5e', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('artifacts/source-processo.json', 'AUSENTE', 'e85d6471bbb7b6c2b3c78aa6a2aad9aa0709aa5e', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('artifacts/branches/avaliacao.json', 'CONFERIDO', '46e46ba538103ef7ca844b442cf37fcff72d27cd', '46e46ba538103ef7ca844b442cf37fcff72d27cd', 'hash do arquivo igual ao hash do inventario'),
 ('artifacts/db-indice.json', 'CONFERIDO', 'ef1751f62b7e452de2a7fb46df2addddbe98ad53', 'ef1751f62b7e452de2a7fb46df2addddbe98ad53', 'hash do arquivo igual ao hash do inventario'),
 ('playwright.config.ts', 'AUSENTE', '3b7a12b92515bdb4a5f45587de3432c17d12c198', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -15128,7 +15128,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('_archive/audit-run/skip.mjs', 'CONFERIDO', '19ed59f66bc18cb5edca07d0756003cebeab1996', '19ed59f66bc18cb5edca07d0756003cebeab1996', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/audit-run/check-contraste.mjs', 'CONFERIDO', 'fdc13a0b85fb22a50e03c8c93147244ae91626aa', 'fdc13a0b85fb22a50e03c8c93147244ae91626aa', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/.nvmrc', 'CONFERIDO', '2bd5a0a98a36cc08ada88b804d3be047e6aa5b8a', '2bd5a0a98a36cc08ada88b804d3be047e6aa5b8a', 'hash do arquivo igual ao hash do inventario'),
-('_archive/download/README.md', 'AUSENTE', '9820ad3ac711f1b09a57ca3f5085bff88728d13c', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('_archive/download/README.md', 'AUSENTE', '9820ad3ac711f1b09a57ca3f5085bff88728d13c', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('_archive/download/cko-skeletons/00-manual-identidade/00-tokens-visuais.html', 'CONFERIDO', 'fa25d7ac1753a7b261cfa278fb4fce754360a550', 'fa25d7ac1753a7b261cfa278fb4fce754360a550', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/00-manual-identidade/03-componentes-base.html', 'CONFERIDO', 'bd55322e0a1bd603238b8ce0f02440fc965d66e0', 'bd55322e0a1bd603238b8ce0f02440fc965d66e0', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/00-manual-identidade/02-cores-e-estados.html', 'CONFERIDO', '0c1edf614d1994ec52da4ee08db9ec0216dec32e', '0c1edf614d1994ec52da4ee08db9ec0216dec32e', 'hash do arquivo igual ao hash do inventario'),
@@ -15434,7 +15434,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('_archive/download/cko-skeletons/03-contratos-canonicos/clinica-e-seguranca/protocol.html', 'CONFERIDO', '597233553e557df5e9975c20d170f7c6500ec018', '597233553e557df5e9975c20d170f7c6500ec018', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/03-contratos-canonicos/clinica-e-seguranca/safety_check.html', 'CONFERIDO', 'b386f52daefab9875be96936e2bc4cb2cfed60e7', 'b386f52daefab9875be96936e2bc4cb2cfed60e7', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/03-contratos-canonicos/clinica-e-seguranca/safety_check.schema.json', 'CONFERIDO', '425f03943a49a4a118c4040d22d306a00e565293', '425f03943a49a4a118c4040d22d306a00e565293', 'hash do arquivo igual ao hash do inventario'),
-('_archive/download/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/flashcard.schema.json', 'AUSENTE', 'ff176dc13d297b1cea00d1b0a9fdfd098b455181', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('_archive/download/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/flashcard.schema.json', 'AUSENTE', 'ff176dc13d297b1cea00d1b0a9fdfd098b455181', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('_archive/download/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/projection.html', 'CONFERIDO', '23444db70a048f27f2bb4dd250558ce6dcf7003d', '23444db70a048f27f2bb4dd250558ce6dcf7003d', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/README.html', 'CONFERIDO', '59e89cefa146cda328d5c26ed576adf59267e4a7', '59e89cefa146cda328d5c26ed576adf59267e4a7', 'hash do arquivo igual ao hash do inventario'),
 ('_archive/download/cko-skeletons/03-contratos-canonicos/bibliotecas-e-conteudo/learning_resource.html', 'CONFERIDO', '6f59e32cc327911a0f2514c4922ce18755b76669', '6f59e32cc327911a0f2514c4922ce18755b76669', 'hash do arquivo igual ao hash do inventario'),
@@ -15714,7 +15714,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('_archive/download/cko-image-library/assets/10-embolo-central-white.html', 'AUSENTE', 'ad8cada28fadd3161524b57437f601984adfc075', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('_archive/download/cko-image-library/assets/human-body-systems-anatomy-display.html', 'AUSENTE', '5dac7fa753ea41a88d0119754a85332d5dc7dbcf', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('_archive/download/cko-image-library/assets/human-body-systems-anatomy-display.html', 'AUSENTE', '5dac7fa753ea41a88d0119754a85332d5dc7dbcf', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('_archive/download/cko-image-library/assets/08-calcar-primeira-luva.html', 'AUSENTE', '21639555b39cab2db3088511afa00762f1e17927', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/download/cko-image-library/assets/icone-triagem-nutricional-20f2c936fb.html', 'AUSENTE', '43c582fd6bc82df00729a1a1b5bd6b63e4391494', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/download/cko-image-library/assets/05-avaliacao.html', 'AUSENTE', 'e0359e669ed0bd66edf7b52edfb131c49b342214', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -16016,7 +16016,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('_archive/download/cko-templates-piloto/flashcard/assets/anatomy-skeleton.png', 'AUSENTE', '6fb711c9528128ab7bac272baced86ad3adb00a9', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('_archive/download/cko-templates-piloto/flashcard/assets/anatomy-heart.png', 'AUSENTE', 'aa96c7d74f77d8dff2b19f981479261d1e3ef7b2', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('_archive/download/cko-templates-piloto/flashcard/assets/anatomy-heart.png', 'AUSENTE', 'aa96c7d74f77d8dff2b19f981479261d1e3ef7b2', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('_archive/download/cko-templates-piloto/flashcard/assets/anatomy-brain.png', 'AUSENTE', '3b7a94bfc90402eabcf8b868ee3d9e147f8e7ed8', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/download/cko-templates-piloto/flashcard/individual.html', 'AUSENTE', '72deba32be0684379b9e9c9ead21583f6e5432b1', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/download/cko-templates-piloto/flashcard/deck.html', 'AUSENTE', '7308fc07f12feba7d691ab4af095a60ee635d9c0', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
@@ -16318,7 +16318,7 @@ insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrad
 ('_archive/skills/pdf/SKILL.md', 'AUSENTE', '421657d3a3a788c957a0efc058b9152fbcc6d019', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado')
 on conflict (path) do nothing;
 insert into canonical_auto_review (path, veredito, blob_esperado, blob_encontrado, regra) values
-('_archive/skills/pdf/references/resume-academic.tex', 'AUSENTE', '3427839d9aba3f752882d96ef24cdd86a823377e', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
+('_archive/skills/pdf/references/resume-academic.tex', 'AUSENTE', '3427839d9aba3f752882d96ef24cdd86a823377e', '', 'blob nao existe em nenhuma branch on conflict do nothing; o corpo nao foi inventado'),
 ('_archive/skills/pdf/references/resume-altacv.tex', 'AUSENTE', '4edf73a1395968423d0248eb661cda6a07f99a12', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/skills/pdf/scripts/cover_validate.js', 'AUSENTE', 'e43d1a0b056410c141e84bda44abaf5869c6a991', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),
 ('_archive/skills/pdf/scripts/setup.sh', 'AUSENTE', 'f2fc22018b07d5e88c5eab03649b3d6117bb41e3', '', 'blob nao existe em nenhuma branch; o corpo nao foi inventado'),

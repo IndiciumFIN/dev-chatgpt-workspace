@@ -104,3 +104,30 @@ As duplicidades são de **nomeação/linhagem**; não eliminar, renomear ou exec
 4. Executar testes negativos e checks em PGlite isolado; testar PostgreSQL descartável e RBAC/RLS. Não fazer escrita Supabase, merge `main` ou deploy por este registro.
 
 **Critério de aceite:** 0 colisões não reconciliadas em ledger auditável, 0 tabelas reais sem contrato e dicionário, governança OPA/Kernel e CI completo verde; hoje não atingido.
+
+## R9 — Confronto remoto somente leitura e diagnóstico dos portões (01/11/2026)
+
+**Escopo e proteção:** referência da candidata `799d308fa0801a339d9842963cd824c6eb2c26d9` (PR #32, DRAFT/HOLD). A comparação usou a conexão Supabase para **SELECT de metadados**, sem DDL/DML, sem abertura de gate, sem deploy nem modificação da `main`.
+
+### Ledger real do projeto Supabase `Calculadoras-Smart`
+
+- Consulta `supabase_migrations.schema_migrations`: **240** registros; menor versão `20260816174704`; maior versão `20261011082439` (`curiosidades_pmo_gate_status_constraint_20261011`).
+- Nenhum registro do ledger contém os identificadores numéricos curtos locais `0004`, `0005`, `0006`, `0007`, `0036`, `0037`, `0038`, `0041`, `0042`, `0043` como segmento delimitado do nome. Duas migrations remotas contêm a palavra genérica `canonical`: `b3_canonical_object_crosswalk_v1` e `xlf_align_canonical_statuses_v1_0_1`; **homonímia não constitui identidade de DDL**.
+- `information_schema.tables`: **nenhuma tabela física** com prefixos `career_`, `canonical_`, `research_`, `participation_` ou nomes `blob_conflict`, `review_item`, `historia_nao_mesclada`, `kernel_coluna_citada`, `mudanca_producao` em schemas acessíveis à consulta. Isso abrange os 67 nomes pendentes no PGlite, sem demonstrar que o conteúdo não exista em outros objetos/modelos, nem que deva ser implantado.
+- **Decisão:** NÃO mapear automaticamente `0004`→ledger remoto por prefixo, nome aproximado ou ordinal; NÃO executar as 60 migrations SQL na base remota. Exigir confronto DDL/colunas/FKs/RLS/contratos e manifesto de dependências com SHA, assinatura e aprovação identificável.
+
+### Branches e PRs conferidas em GitHub
+
+- Busca GitHub retornou **29 branches**, incluindo a candidata; feita comparação Git `canonical/local-20261101...<branch>` para as **28 outras**. Resultado: **21 divergentes**, **5 atrás sem commits exclusivos**, **2 sem ancestral comum** (`feat/projection-unica-f0-suite-real` e `grook_10_26`).
+- Encontradas **12 PRs abertas**. O comparador GitHub limita a listagem de arquivos em certos diffs (por exemplo, `idioma/consolidado-19` retornou 300), logo essas comparações atuais de commits **NÃO são uma auditoria full-tree de blobs**. Reutilizar a evidência full-tree auditada de [Actions #41297971388](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41297971388) e [auditoria federada #41299470363](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41299470363) antes de qualquer escolha estrutural.
+
+### CI encerrado: falhas observadas, não apenas pendências
+
+- [OPA #41303129853](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41303129853): **SUCCESS**. [Portões #41303129856](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41303129856): **FAILURE**, no mesmo SHA.
+- Passos reprovados: **Índice do banco** (67 lacunas deliberadamente bloqueantes), **Registro PMO** (10 duplicidades + reservas `0039/politicas` vs `0039_kernel_anchors.sql` e `0040/atomos` vs `0040_kernel_candidate_local.sql`), **Suíte** e **Tipos**. Build e verificações OPA independentes concluíram com sucesso.
+- Suíte: **818 testes** = **790 PASS**, **10 FAIL**, **18 SKIP**. Scripts: 549 = 526 PASS / 5 FAIL / 18 SKIP; src: 269 = 264 PASS / 5 FAIL.
+- Entre as falhas: cobertura estrutural do dicionário; `scripts/governance-continuity.test.mjs` detecta ausência das exigências de **testes reais OPA e verificação de assinatura do bundle** na forma checada pelo contrato; três testes de metadados OG/PWA esperam título específico do documento, mas recebem título fixo; 1FN de `0004_research_participation_candidate.sql`; segunda aplicação de migrations falha em `work_order_admission_requests` (`42P07`); teste de acessibilidade do formulário procura label de busca; prova 2FN/3FN não cobre `career_projection_candidate`. Não relaxar testes nem equiparar expectativa desatualizada a bug sem exame do contrato.
+- TypeScript reportou exatamente: `src/data/contracts/cko-editorial/renderer/web/universal_renderer.js:33` **TS2304** (`CEUniversalRendererAPI` fora do escopo do JSDoc) e `src/lib/source.functions.ts:96` **TS2367** (comparação com `true` após guarda que já rejeita `true`).
+- **Próximas decisões controladas:** FIND/WO para correções por responsável, com validação de invariante OPA antes de tocar workflow; corrigir defeitos não controversos na candidata com testes; confrontar 10 grupos de migrations com conteúdo e ledger sem reescrever histórico; documentar 67 entidades a partir dos contratos e suas relações antes de preencher o dicionário.
+
+**Gate final:** `HOLD_HUMAN / MERGE_NOT_RECOMMENDED_NOW`. Esta seção é evidência de reconciliação e diagnóstico, **não autorização técnica/clínica nem execução remota**.

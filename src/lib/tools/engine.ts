@@ -1,4 +1,4 @@
-import { formulas } from "@/lib/tools/formulas";
+import { formulas } from "./formulas.ts";
 import type { Band, ClinicalTool, Criterion } from "@/lib/tools/types";
 
 export type MemoryRow = { label: string; value: string; max: string };
@@ -10,7 +10,7 @@ export type ToolSuccess = {
   max?: number;
   band?: Band;
   rows: MemoryRow[];
-  outputs?: { id: string; label: string; unit: string; value: number; digits: number }[];
+  outputs?: { id: string; label: string; unit: string; value: number; digits: number; text?: string }[];
   steps?: string[];
 };
 
@@ -46,14 +46,6 @@ export function evaluateScale(tool: ClinicalTool, answers: Record<string, number
       message: `Faltam ${missing.length} critério${missing.length === 1 ? "" : "s"}. O escore só aparece com a escala completa.`,
     };
   }
-  const invalid = criteria.filter((criterion) => !criterion.choices.some((choice) => choice.value === answers[criterion.id]));
-  if (invalid.length > 0) {
-    return {
-      ok: false,
-      message: 'Existe critério com resposta inválida. Revise as opções permitidas.',
-      fieldErrors: Object.fromEntries(invalid.map((criterion) => [criterion.id, 'Selecione uma opção válida.'])),
-    };
-  }
   const total = criteria.reduce((sum, criterion) => sum + answers[criterion.id], 0);
   const max = criteria.reduce((sum, criterion) => sum + criterionMax(criterion), 0);
   return {
@@ -79,7 +71,7 @@ export function evaluateFormula(tool: ClinicalTool, raw: Record<string, string>)
   for (const field of tool.fields ?? []) {
     const text = (raw[field.id] ?? "").trim().replace(",", ".");
     const value = Number(text);
-    if (text === "" || !Number.isFinite(value)) fieldErrors[field.id] = "Informe um número finito.";
+    if (text === "" || Number.isNaN(value)) fieldErrors[field.id] = "Informe um número.";
     else if (value < field.min || value > field.max) fieldErrors[field.id] = `Use um valor entre ${field.min} e ${field.max}.`;
     else values[field.id] = value;
   }
@@ -98,6 +90,7 @@ export function evaluateFormula(tool: ClinicalTool, raw: Record<string, string>)
   const outputs = (tool.outputs ?? []).map((output) => ({
     ...output,
     value: computed.outputs[output.id] ?? 0,
+    text: computed.texts?.[output.id],
   }));
   return {
     ok: true,

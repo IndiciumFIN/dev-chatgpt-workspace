@@ -1,8 +1,6 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { Plugin } from "vite";
-const isSpaBuild = process.env.SPA_BUILD === "1";
-
 import { defineConfig } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
@@ -46,8 +44,8 @@ function pgliteBootstrapPlugin(): Plugin {
           await mod.ensureDbReady();
         }
       } catch (err) {
-        console.info("[local-only] Database bootstrap skipped; remote integration remains blocked.");
-        // Local-only preview must not depend on a database.
+        console.error("[app-builder] DB bootstrap failed:", err);
+        throw err;
       }
     },
   };
@@ -168,31 +166,7 @@ export default defineConfig(({ command, isPreview }) => ({
     // PWA head + ?install=1 tutorial page; runs before Start/Nitro.
     grokPwaPlugin(),
     tailwindcss(),
-    // Build SPA: gera um `index.html` unico que serve de fallback para todas as
-    // rotas. Sem isso a saida e do Nitro (que manda tudo para /__server) e nao
-    // existe pagina estatica nenhuma — home 200, mas /blog/x e /ferramentas/x
-    // dariam 404 num CDN.
-    //
-    // `crawlLinks` segue a partir do inicio e gera um HTML por URL publica, o que
-    // da SEO de verdade (titulo e JSON-LD no HTML servido, nao so no cliente).
-    tanstackStart(
-      command === "build" && isSpaBuild
-        ? {
-            spa: {
-              enabled: true,
-              maskPath: "/",
-              // Esta versao do plugin so aceita `crawlLinks`, e o shell e
-              // renderizado no cliente: link que so existe no cliente nao
-              // existe para o crawler. Por isso a materializacao de uma pagina
-              // por rota acontece depois do build, em
-              // `scripts/materialize-static-routes.mjs`, com a lista vinda do
-              // contrato.
-              prerender: { crawlLinks: false, autoSubfolderIndex: true, retryCount: 2 },
-
-            },
-          }
-        : {},
-    ),
+    tanstackStart(),
     ...(command === "build" || isPreview
       ? [
           nitro({

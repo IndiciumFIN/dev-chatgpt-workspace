@@ -1,43 +1,13 @@
-import { createFileRoute, Navigate, retainSearchParams, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { GROK_PROVIDERS, authClient, authEnabled, signIn } from "@/lib/auth/client";
 import { SignInGate } from "@/lib/auth/gates";
-import { parseLocale } from "@/lib/translate";
-
-/**
- * A entrada é alcançada por mais de uma rota. `de` carrega a área que
- * redirecionou para cá e vira o rótulo do título, no mesmo vocabulário que a
- * área já usa na interface. Sem origem conhecida o título é o da própria tela.
- */
-const ENTRADA_ROTULOS = {
-  admin: "Entrada do administrador",
-  assinante: "Entrada do assinante",
-  assinatura: "Entrada para assinar",
-} as const;
-
-type EntradaOrigem = keyof typeof ENTRADA_ROTULOS;
-
-/** Só as origens declaradas viram rótulo; qualquer outra cai no título base. */
-function rotuloEntrada(de: unknown): string | undefined {
-  if (typeof de !== "string" || !Object.prototype.hasOwnProperty.call(ENTRADA_ROTULOS, de)) return undefined;
-  return ENTRADA_ROTULOS[de as EntradaOrigem];
-}
 
 export const Route = createFileRoute("/login")({
-  search: {
-    middlewares: [retainSearchParams(["lang", "de"])],
-  },
-  validateSearch: (search: Record<string, unknown>) => {
-    const lang = parseLocale(search.lang);
-    const de = typeof search.de === "string" && search.de in ENTRADA_ROTULOS ? (search.de as EntradaOrigem) : undefined;
-    return { ...(lang ? { lang } : null), ...(de ? { de } : null) };
-  },
   component: LoginPage,
-  head: ({ match }) => ({
+  head: () => ({
     meta: [
-      { title: rotuloEntrada(match.search?.de)
-          ? `${rotuloEntrada(match.search?.de)} · Calculadoras de Enfermagem`
-          : "Entrar · Calculadoras de Enfermagem" },
+      { title: "Entrar · Calculadoras de Enfermagem" },
       { name: "description", content: "Entrada separada do site público. O papel define a tela seguinte." },
       { name: "robots", content: "noindex" },
     ],
@@ -53,13 +23,32 @@ function LoginPage() {
         <p>
           Esta tela não é o site público. Depois da entrada, o assinante abre só o que foi publicado e o administrador altera a fonte única.
         </p>
-        <SignInGate fallback={<SignInPanel />}>
-          <Navigate to="/sessao" />
-        </SignInGate>
+        {authEnabled ? (
+          <SignInGate fallback={<SignInPanel />}>
+            <Navigate to="/sessao" />
+          </SignInGate>
+        ) : (
+          <AuthOffPanel />
+        )}
         <a className="login-back" href="/">
           Voltar ao site público
         </a>
       </div>
+    </div>
+  );
+}
+
+function AuthOffPanel() {
+  const navigate = useNavigate();
+  return (
+    <div className="login-panel">
+      <p>A autenticação está desligada neste ambiente. O site público abre sem entrar.</p>
+      <button className="btn-navy" type="button" onClick={() => void navigate({ to: "/" })}>
+        Continuar sem entrar
+      </button>
+      <button className="linkish" type="button" onClick={() => void navigate({ to: "/assinante" })}>
+        Abrir a área do assinante
+      </button>
     </div>
   );
 }
@@ -87,14 +76,6 @@ function SignInPanel() {
       return;
     }
     void navigate({ to: "/sessao" });
-  }
-
-  if (!authEnabled) {
-    return (
-      <p role="status" aria-live="polite">
-        A autenticação não está habilitada neste ambiente; esta tela não inicia sessão nem concede acesso.
-      </p>
-    );
   }
 
   return (

@@ -39,18 +39,11 @@ export function ClinicalForm({
   const showPatient = hasBlock(tool.kind, "paciente");
   const criteria = tool.criteria ?? [];
   const toastMessage = result && !result.ok ? result.message : result?.ok ? "Cálculo pronto." : null;
-  const entradaResumo = tool.kind === "escala"
-    ? { inteira: filled === criteria.length && criteria.length > 0, texto: `${filled} de ${criteria.length} critérios preenchidos.` }
-    : { inteira: Object.values(raw).some((value) => value.trim() !== ""), texto: "Dados do cálculo acima." };
   return (
     <div className="clinical-form tool-layout">
       <div className="tool-stack">
         {showPatient ? (
-        <Panel title="Dados do paciente" note={
-          <p className="tool-help">
-            Opcional. Só para a ficha que você imprime. O nome sai <strong>mascarado</strong> e não é enviado nem medido.
-          </p>
-        }>
+        <Panel title="Dados do paciente" note={<p className="tool-help">Fica só nesta tela. Não entra em cookie nem no navegador.</p>}>
           <div className="patient-grid">
             <label className="field"><span>Nome</span><input autoComplete="off" value={patient.nome} onChange={(event) => onPatient({ ...patient, nome: event.target.value })} /></label>
             <label className="field"><span>Idade</span><input value={patient.idade} onChange={(event) => onPatient({ ...patient, idade: event.target.value })} /></label>
@@ -78,7 +71,7 @@ export function ClinicalForm({
                 const max = Math.max(...criterion.choices.map((choice) => choice.value));
                 const value = answers[criterion.id] ?? 0;
                 return (
-                <fieldset key={criterion.id} className={result && !result.ok && result.missing?.includes(criterion.id) ? "criterion criterion-miss" : "criterion"}>
+                <fieldset key={criterion.id} className={result && !result.ok && result.missing?.includes(criterion.id) ? "criterion criterion-miss" : "criterion"} aria-invalid={result && !result.ok && result.missing?.includes(criterion.id) ? true : undefined}>
                   <legend>{criterion.label} <Hint text={criterion.help} /></legend>
                   <Meter value={answers[criterion.id] === undefined ? 0 : value} max={max} label={criterion.label} />
                   <div className="choice-list">
@@ -115,14 +108,15 @@ export function ClinicalForm({
                       max={field.max}
                       step={field.step}
                       aria-required="true"
-                      aria-describedby={`limite-${field.id}`}
+                      aria-invalid={result && !result.ok && result.fieldErrors?.[field.id] ? true : undefined}
+                      aria-describedby={result && !result.ok && result.fieldErrors?.[field.id] ? `limite-${field.id} erro-${field.id}` : `limite-${field.id}`}
                       title={`De ${field.min} a ${field.max} ${field.unit}`}
                       value={raw[field.id] ?? ""}
                       aria-label={field.label}
                       onChange={(event) => onRaw({ ...raw, [field.id]: event.target.value })}
                     />
                     <small id={`limite-${field.id}`} className="tool-help">De {field.min} a {field.max} {field.unit}.</small>
-                    {result && !result.ok && result.fieldErrors?.[field.id] ? <small className="err">{result.fieldErrors[field.id]}</small> : null}
+                    {result && !result.ok && result.fieldErrors?.[field.id] ? <small id={`erro-${field.id}`} className="err">{result.fieldErrors[field.id]}</small> : null}
                   </label>
                 ))}
                 {(tool.selects ?? []).map((field) => (
@@ -157,49 +151,11 @@ export function ClinicalForm({
         </section>
       </div>
       <aside className="paper tool-result" id="resultado" tabIndex={-1} aria-live="polite">
-        <div className="section-row">
-          <h2>Resultado</h2>
-          <p className={`tool-result-state${result ? (result.ok ? " is-ok" : " is-err") : ""}`}>
-            {result ? (result.ok ? "Calculado" : "Revisar entrada") : "Aguardando cálculo"}
-          </p>
-        </div>
-
-        {/* Trilha da coluna: entrada, resultado, interpretação. Cada passo
-            reflete o estado real do formulário, então a coluna nunca é um
-            bloco mudo esperando o olho. */}
-        <ol className="tool-result-steps">
-          <li className={`tool-result-step${entradaResumo.inteira ? " is-done" : " is-pending"}`}>
-            <b>Entrada</b>
-            <span>{entradaResumo.texto}</span>
-          </li>
-          <li className={`tool-result-step${result?.ok ? " is-done" : " is-pending"}`}>
-            <b>Resultado</b>
-            <span>{result?.ok ? "Escore e faixa prontos." : "Escore, faixa e memória do cálculo."}</span>
-          </li>
-          <li className={`tool-result-step${result?.ok && result.band ? " is-done" : " is-pending"}`}>
-            <b>Interpretação</b>
-            <span>{result?.ok && result.band ? "Conduta escrita abaixo do escore." : "O texto de conduta que fecha a leitura."}</span>
-          </li>
-        </ol>
-
+        <h2>Resultado</h2>
         {!result ? (
           <div className="tool-result-placeholder">
-            <div className="tool-result-skeleton" aria-hidden="true">
-              <span className="sk-score" />
-              <span className="sk-band" />
-              <span className="sk-line" />
-              <span className="sk-line is-short" />
-              <span className="sk-note" />
-              <span className="sk-grid">
-                <span /><span /><span /><span />
-              </span>
-            </div>
             <p className="tool-help">Aguardando cálculo. Confira o preenchimento antes de calcular.</p>
-            {tool.kind === "escala" ? (
-              <p className="tool-help">Critérios preenchidos: {filled} de {criteria.length}.</p>
-            ) : (
-              <p className="tool-help">O resultado e a memória do cálculo aparecerão aqui após a validação.</p>
-            )}
+            {tool.kind === "escala" ? <p className="tool-help">Critérios preenchidos: {filled} de {criteria.length}.</p> : <p className="tool-help">O resultado e a memória do cálculo aparecem aqui depois da validação.</p>}
           </div>
         ) : null}
         {result && !result.ok ? <p className="err" role="alert">{result.message}</p> : null}

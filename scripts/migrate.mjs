@@ -18,8 +18,6 @@ import { dirname, join } from "node:path";
 import pg from "pg";
 import { pendingMigrations } from "./migration-plan.mjs";
 
-console.error("REMOTE_INTEGRATION_BLOCKED: migrations are disabled unconditionally in this backup.");
-process.exit(4);
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) {
   console.log(

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/album_item.schema.json",
+  "title": "CKO | album_item",
+  "description": "Item do álbum visual de momentos da enfermagem. Deriva de media_asset.schema.json com metadados contextuais: legenda, período histórico, especialidade, fonte e direitos.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "title",
+    "caption",
+    "image_uri",
+    "license_ref",
+    "rights_status"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "canonical_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$" },
+    "version": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["CANDIDATE","DRAFT","SOURCE_QUALIFIED","EVIDENCE_BOUND","REVIEW_REQUIRED","HOLD_HUMAN","ASSURED","ELIGIBLE_FOR_RELEASE","RELEASED","RETIRED"]
+    },
+    "updated_at": { "type": "string", "format": "date" },
+    "provenance_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "title": { "type": "string", "minLength": 1, "description": "Título curto da imagem." },
+    "caption": { "type": "string", "minLength": 1, "description": "Legenda explicativa do que a imagem representa." },
+    "image_uri": { "type": "string", "format": "uri" },
+    "image_alt": { "type": "string", "description": "Texto alternativo para acessibilidade." },
+    "image_width": { "type": "integer", "minimum": 1 },
+    "image_height": { "type": "integer", "minimum": 1 },
+    "period": {
+      "type": "string",
+      "description": "Período histórico (ex.: 'anos 1950', 'década de 1980', 'século XIX')."
+    },
+    "year": { "type": "integer", "minimum": 1800, "maximum": 2100 },
+    "specialty": {
+      "type": "string",
+      "enum": ["GENERAL", "ADULT_ICU", "PEDIATRIC_ICU", "NEONATAL", "EMERGENCY", "SURGERY", "OBSTETRICS", "PSYCHIATRY", "COMMUNITY", "MILITARY", "HISTORY", "EDUCATION", "OTHER"]
+    },
+    "category": {
+      "type": "string",
+      "enum": ["HISTORICAL", "EQUIPMENT", "PROCEDURE", "PORTRAIT", "ENVIRONMENT", "EDUCATIONAL", "COMMEMORATIVE"]
+    },
+    "location": { "type": "string", "description": "Local/instituição (ex.: Hospital das Clínicas SP)." },
+    "country": { "type": "string", "default": "Brasil" },
+    "license_ref": { "type": "string", "minLength": 1, "description": "Referência da licença (CC-BY, domínio público, etc.)." },
+    "rights_status": {
+      "type": "string",
+      "enum": ["UNKNOWN","CLEAR","LICENSED","HOLD","PUBLIC_DOMAIN"]
+    },
+    "source_id": { "type": "string", "description": "Source ID canônico que sustenta a procedência." },
+    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}

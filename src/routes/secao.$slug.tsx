@@ -1,12 +1,11 @@
 import { createFileRoute, notFound, redirect, retainSearchParams } from "@tanstack/react-router";
 import { SectionPage } from "@/components/site/section-page";
 import { Shell } from "@/components/site/shell";
-import { getSection } from "@/lib/sections";
+import { readLiveSection } from "@/lib/stored.functions";
 import { parseLocale } from "@/lib/translate";
-import { languageLinks, sectionJsonLd } from "@/lib/seo";
-import type { Locale } from "@/lib/chrome";
+import { languageLinks } from "@/lib/seo";
 
-type SectionSearch = { q?: string; lang?: Locale };
+type SectionSearch = { q?: string; lang?: "pt-BR" | "en" | "es" | "fr" };
 
 export const Route = createFileRoute("/secao/$slug")({
   search: {
@@ -19,33 +18,30 @@ export const Route = createFileRoute("/secao/$slug")({
       ...(lang ? { lang } : {}),
     };
   },
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     if (params.slug === "sobre") {
       throw redirect({ to: "/secao/$slug", params: { slug: "missao-visao-valores" } });
     }
-    const section = getSection(params.slug);
-    if (!section) throw notFound();
-    return { slug: section.slug, title: section.title, lead: section.lead };
+    const live = await readLiveSection({ data: params.slug });
+    if (!live) throw notFound();
+    return live;
   },
   head: ({ loaderData, params, match }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.title} · Calculadoras de Enfermagem` : "Seção" },
-      { name: "description", content: loaderData?.lead ?? "" },
+      { title: loaderData ? `${loaderData.section.title} · Calculadoras de Enfermagem` : "Seção" },
+      { name: "description", content: loaderData?.section.lead ?? "" },
     ],
     links: languageLinks(`/secao/${params.slug}`, (match.search as { lang?: unknown }).lang),
-    scripts: loaderData ? [{ type: "application/ld+json", children: sectionJsonLd({ slug: params.slug, title: loaderData.title, lead: loaderData.lead }) }] : [],
   }),
   component: SectionRoute,
 });
 
 function SectionRoute() {
-  const { slug } = Route.useLoaderData();
+  const { section, framed, trail, related } = Route.useLoaderData();
   const { q } = Route.useSearch();
-  const section = getSection(slug);
-  if (!section) return null;
   return (
     <Shell>
-      <SectionPage section={section} query={q} />
+      <SectionPage section={section} query={q} framed={framed} trail={trail} related={related} />
     </Shell>
   );
 }

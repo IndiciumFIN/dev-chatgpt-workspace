@@ -1,5 +1,6 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useRole } from "@/components/site/areas";
+import { authEnabled } from "@/lib/auth/client";
 
 export const Route = createFileRoute("/sessao")({
   component: SessaoPage,
@@ -20,6 +21,6 @@ function SessaoPage() {
       </div>
     );
   }
-  if (!user || !role) return <Navigate to="/login" search={{ de: "assinante" }} />;
+  if (!user || !role) return <Navigate to={authEnabled ? "/login" : "/"} />;
   return <Navigate to={role === "admin" ? "/admin" : "/assinante"} />;
 }

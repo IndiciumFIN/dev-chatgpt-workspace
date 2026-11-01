@@ -2,7 +2,6 @@ import { ReferenceList } from "@/components/article/pieces";
 import { hasBlock, hasLaudo } from "@/lib/component-contract";
 import { formatNumber, type ToolFailure, type ToolSuccess } from "@/lib/tools/engine";
 import { disclaimer, type ClinicalTool } from "@/lib/tools/types";
-import { paraFicha } from "@/lib/tools/privacy";
 import type { ClinicalPatient } from "@/components/tools/clinical-form";
 
 export function ClinicalSheet({
@@ -34,7 +33,7 @@ export function ClinicalSheet({
       {hasBlock(tool.kind, "paciente") ? (
       <section className="sheet-section">
         <h3><span>1</span>Dados do paciente</h3>
-        <p>Nome: {paraFicha("nome", patient.nome)}. Idade: {paraFicha("idade", patient.idade)}. Unidade / leito: {paraFicha("setor", patient.setor)}. Data: {paraFicha("data", patient.data)}.</p>
+        <p>Nome: {patient.nome || "Não informado"}. Idade: {patient.idade || "Não informada"}. Unidade / leito: {patient.setor || "Não informado"}. Data: {patient.data || "Não informada"}.</p>
         {(tool.metaFields ?? []).map((field) => (
           <p key={field.id}>{field.label}: {field.options.find((option) => option.value === patient.meta[field.id])?.label ?? "Não informado"}.</p>
         ))}

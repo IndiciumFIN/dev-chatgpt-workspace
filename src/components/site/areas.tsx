@@ -41,7 +41,11 @@ export function AreaGuard({ allow, children }: { allow: "admin" | "member"; chil
       </div>
     );
   }
-  if (!user || !role) return <Navigate to="/login" search={{ de: allow === "admin" ? "admin" : "assinante" }} />;
+  if (!user || !role) {
+    if (!authEnabled && allow === "member") return <>{children}</>;
+    if (!authEnabled) return <Navigate to="/assinante" />;
+    return <Navigate to="/login" />;
+  }
   if (allow === "admin" && role !== "admin") return <Navigate to="/assinante" />;
   return <>{children}</>;
 }

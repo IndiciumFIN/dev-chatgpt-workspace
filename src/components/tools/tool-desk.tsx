@@ -19,7 +19,7 @@ export function readToolView(): ToolView {
 export function ToolViewBar({ view, onChange }: { view: ToolView; onChange: (view: ToolView) => void }) {
   return (
     <div className="view-bar no-print" role="group" aria-label="Vista da ferramenta">
-      <span className="view-bar-label">Modo de visualização:</span>
+      <span className="view-bar-label">Modo de visualização</span>
       {(Object.keys(toolViews) as ToolView[]).map((id) => (
         <button key={id} className={view === id ? "btn-navy btn-sm" : "btn-ghost btn-sm"} type="button" aria-pressed={view === id} onClick={() => onChange(id)}>
           {toolViews[id].label}

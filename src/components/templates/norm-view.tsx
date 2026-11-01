@@ -1,31 +1,24 @@
-import specimen from "@/content/norm-specimen.json";
 import { ArticlePage } from "@/components/article/article-page";
+import { lorem } from "@/lib/lorem";
+
+const articles = ["art_1", "art_2", "art_3", "art_4"];
 
 export function NormView() {
   return (
     <ArticlePage
       kind="norma"
-      crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: "Lei 7.498/1986" }]}
-      eyebrow="Biblioteca normativa"
-      title={specimen.title}
-      lead={specimen.lead}
-      extras={[{ href: "#art_1", label: "Artigo 1º" }]}
-      toc={specimen.articles.map((article) => {
-        const label = article.text.match(/^Art\.\s*\d+º?/)?.[0] ?? article.text;
-        return { id: article.id, label };
-      })}
+      crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: "Norma" }]}
+      eyebrow="Amostra visual"
+      title="Norma"
+      lead={lorem("Leitura contínua com índice. O texto da norma publicada fica na seção e no acervo.")}
+      toc={articles.map((id, index) => ({ id, label: `Artigo ${index + 1}` }))}
     >
-      {specimen.articles.map((article) => {
-        const heading = article.text.match(/^Art\.\s*\d+º?/)?.[0] ?? "Artigo";
-        const body = article.text.replace(/^Art\.\s*\d+º?\s*/, "");
-        return (
-          <section key={article.id} className="inst-sec" id={article.id} aria-labelledby={`${article.id}-h`}>
-            <h2 id={`${article.id}-h`}>{heading}</h2>
-            <p>{body}</p>
-          </section>
-        );
-      })}
-      <p className="sheet-note">{specimen.source} Amostra dos oito primeiros artigos. A lei completa permanece no pacote normativo.</p>
+      {articles.map((id, index) => (
+        <section key={id} className="inst-sec" id={id} aria-labelledby={`${id}-h`}>
+          <h2 id={`${id}-h`}>Artigo {index + 1}</h2>
+          <p>{lorem("Parágrafo de amostra do artigo, no mesmo ritmo da leitura contínua.")}</p>
+        </section>
+      ))}
     </ArticlePage>
   );
 }

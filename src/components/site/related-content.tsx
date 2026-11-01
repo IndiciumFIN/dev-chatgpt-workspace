@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 export type RelatedItem = {
   title: string;
   text?: string;
-  to: "/secao/$slug" | "/ferramentas/$slug" | "/assinante/ferramentas/$slug" | "/blog/$slug" | "/modelos" | "/modelos/$id";
+  to: "/secao/$slug" | "/ferramentas/$slug" | "/assinante/ferramentas/$slug" | "/blog/mary-eliza-mahoney" | "/modelos" | "/modelos/$id";
   params?: { slug?: string; id?: string };
   hash?: string;
 };
@@ -27,7 +27,7 @@ export function RelatedContent({ title = "Conteúdo relacionado", items }: { tit
                 {item.text ? <p>{item.text}</p> : null}
               </Link>
             ) : (
-              <Link className="nav-card" to={item.to === "/blog/$slug" || item.to === "/modelos" ? item.to : "/modelos"}>
+              <Link className="nav-card" to={item.to === "/blog/mary-eliza-mahoney" || item.to === "/modelos" ? item.to : "/modelos"}>
                 <h3>{item.title}</h3>
                 {item.text ? <p>{item.text}</p> : null}
               </Link>

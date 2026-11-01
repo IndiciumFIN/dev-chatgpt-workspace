@@ -703,3 +703,14 @@ O PDF do parecer do CFM foi **subido como texto**: o `push_files` gravou a strin
 
 **Onde o owner tinha razão e o parecer V6 não:** (1) `BOUND` → `HOLD` no vocabulário errado trocava um valor inválido por **outro** valor inválido — o enum do binding é `ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED`; (2) `field_definition` não recebe `authority_class`/`decision`; (3) classificar por **natureza do documento** (a OMS não é regulador; um parecer do CFM não é lei) e não por tradução de rótulo.
 **Onde o verificador tinha razão e o owner estava errado:** o gotejamento **não tem documento-fonte nenhum** ⇒ `STANDARD` implicava um standard publicado inexistente ⇒ `INTERNAL_GOVERNED`. Corrigido no repositório antes do registo.
+
+#### 13.6.1 Arbitragem do ciclo 1 da equipa (plano `plan_09af2008`)
+| Frente | Verificador | Decisão do owner |
+|---|---|---|
+| `fontes-classificacao` | canone-integridade: **PASS** | **aceite** — e foi ela que corrigiu o owner (gotejamento) |
+| `espelho-estatico` | *não reportou* | **aceite por arbitragem do owner** (o owner re-derivou do E4: 9.063 ocorrências · 5.520 quebras · 250 destinos · top-10 de navegação = 2.880 exactos; 251 páginas de catálogo + 17 templates-piloto = 268 varridas; `ce-bibliotecas-dev@main` tem zero `public/` — a hipótese do briefing era errada) |
+| `bindings-coerencia` | canone-integridade: **FAIL** (B1–B3) | **reprovado** → retry: o CSV escreve valores fora do enum, imputa classe a `field_definition` e tem dois testes negativos insatisfazíveis |
+| `gate-fail-closed` | Verifier: **FAIL** ((i)–(v)) | **reprovado** → retry: reconciliar a especificação com o portão S2 já executado e corrigir o dedup do agregador e os números |
+| `universos-git` | canone-integridade: **FAIL** (G1–G5) | **reprovado** → retry: marcadores com origem, destino concreto, auto-consistência (41 no texto vs 39 no CSV) |
+
+**Nenhum veredicto foi atribuído a quem não o deu:** a `espelho-estatico` está marcada como arbitragem do owner porque o verificador dessa frente não reportou.

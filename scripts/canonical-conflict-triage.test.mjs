@@ -96,3 +96,37 @@ test('R77: header Entrar regression is an admin WO candidate, not admission',()=
  assert.equal(r.kernelAdmission,'NOT_VERIFIED');
  assert.equal(r.releaseGate,'HOLD_HUMAN');
 });
+
+
+test('real Git deletion stays in lineage as D + null without authorizing removal',()=>{
+ const x={
+  path:'docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json',
+  sources:[
+   {branch:'revert-26-plan/pmokernel-finalization-20261031',blob:null,status:'D'},
+   {branch:'plan/pmokernel-finalization-20261031',blob:'a'.repeat(40),status:'M'}
+  ]
+ };
+ const out=buildCanonicalTriage([x],{equivalent:[]});
+ assert.equal(out.items.length,1);
+ assert.deepEqual(out.items[0].sources,x.sources);
+ assert.equal(out.items[0].decision,'NOT_APPROVED');
+ assert.equal(out.items[0].kernelAdmission,'NOT_VERIFIED');
+ assert.equal(out.items[0].releaseGate,'HOLD_HUMAN');
+ assert.equal(out.counts.formallyApproved,0);
+});
+
+test('null blob is never accepted outside D, and D with fabricated hash fails closed',()=>{
+ const base=collision('docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json');
+ const invalid=[
+  {branch:'valid-branch',blob:null,status:'M'},
+  {branch:'valid-branch',blob:'a'.repeat(40),status:'D'},
+  {branch:'valid-branch',blob:undefined,status:'D'},
+  {branch:'',blob:null,status:'D'},
+  {branch:'valid-branch',blob:'invalid',status:'A'},
+  {branch:42,blob:'a'.repeat(40),status:'A'}
+ ];
+ for(const source of invalid) {
+  const c={...base,sources:[source,base.sources[1]]};
+  assert.throws(()=>buildCanonicalTriage([c],{equivalent:[]}),/INVALID_BLOB_LINEAGE/);
+ }
+});

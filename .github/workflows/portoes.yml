@@ -32,24 +32,31 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Índice do banco — rótulo humano para tudo
+        if: ${{ !cancelled() }}
         run: node scripts/audit-indice-banco.mjs --check
 
       - name: Governança — rejeitar placeholders de aprovação
+        if: ${{ !cancelled() }}
         run: node scripts/check-governance-placeholders.mjs migrations/*.sql
 
       - name: CE — integridade dos 870 arquivos recuperados (sem autorização de release)
+        if: ${{ !cancelled() }}
         run: node scripts/audit-historical-recovery.mjs
 
       - name: DERBY — nada fica retido
+        if: ${{ !cancelled() }}
         run: node scripts/preencher-derby.mjs --check
 
       - name: Processo de source
+        if: ${{ !cancelled() }}
         run: node scripts/audit-source.mjs
 
       - name: Fonte — o texto no banco é o texto da fonte
+        if: ${{ !cancelled() }}
         run: node scripts/auditar-fonte.mjs --check
 
       - name: Registro — o mapa do PMO é verdade
+        if: ${{ !cancelled() }}
         run: node scripts/auditar-registro.mjs
 
       - name: P1 — inventário de colisões de migrations (evidência, sem DDL)

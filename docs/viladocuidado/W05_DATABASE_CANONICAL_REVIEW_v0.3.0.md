@@ -10,7 +10,7 @@ Status: DESIGN_COMPLETE_CANDIDATE / NOT_APPLIED / KERNEL_HOLD.
 ## Arquitetura proposta
 O conteúdo é independente da apresentação. Fonte → objeto canônico → traduções, objetivos e evidências → atividade/mecânica → assets/personagens/templates → experiências → saídas WEB/PWA/PDF/impressos/slides.
 
-A nova migration adiciona 21 tabelas no schema privado vila_canonical_candidate; nenhum usuário menor de idade, perfil infantil ou dado clínico é modelado. O progresso infantil permanece local e efêmero por padrão. Sem GRANT para anon/authenticated e com RLS ativa em todas as tabelas.
+A nova migration adiciona 22 tabelas no schema privado vila_canonical_candidate; nenhum usuário menor de idade, perfil infantil ou dado clínico é modelado. O progresso infantil permanece local e efêmero por padrão. Sem GRANT para anon/authenticated e com RLS ativa em todas as tabelas.
 
 ## Decisão de isolamento
 O projeto Supabase acessível pgsybzggewhinaniybiy é Calculadoras-Smart, compartilhado. Sem Kernel WO admitida e designação formal de namespace/destino, não executar migração remota. O outro projeto listado está INACTIVE.

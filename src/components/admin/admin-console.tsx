@@ -301,7 +301,7 @@ export function AdminConsole() {
             <div className="ce-admin-publication-state"><div><span>Rascunho marcado para exibição</span><strong>{draftCount} / {model.tools.length}</strong></div><div><span>Publicado no navegador</span><strong>{publishedCount} / {published.tools.length}</strong></div><div><span>Última revisão</span><strong>#{revision}</strong></div></div>
             <div className="ce-admin-publish-actions"><button type="button" className="ce-admin-btn ce-admin-btn--primary" onClick={save} disabled={!dirty || !dataIsValid || externalChange || loadingFailed}><Check size={16}/> Salvar rascunho local</button>
               <label className="ce-admin-confirm"><input type="checkbox" checked={confirmation} onChange={e => setConfirmation(e.target.checked)} disabled={dirty || loadingFailed || externalChange} /><span>Entendo que esta publicação é apenas local e não constitui homologação clínica.</span></label>
-              <button type="button" className="ce-admin-btn" onClick={publish} disabled={dirty}><Eye size={16}/> Publicar rascunho salvo (local)</button>
+              <button type="button" className="ce-admin-btn" onClick={publish} disabled={dirty || !confirmation || !dataIsValid || externalChange || loadingFailed}><Eye size={16}/> Publicar rascunho salvo (local)</button>
               <p className="ce-admin-detail-note">A publicação exige confirmação explícita; alterações ainda não salvas, conflito de revisão e registro inválido bloqueiam a operação.</p>
             </div>
           </Panel>

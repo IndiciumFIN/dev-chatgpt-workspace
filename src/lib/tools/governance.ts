@@ -146,8 +146,11 @@ export const FONTES: FonteNormativa[] = [
     status: "REVIEW_REQUIRED",
     updated_at: HOJE,
     provenance_refs: ["SRC-CKO-POL-UT-001"],
-    source_type: "STANDARD",
-    source_type_rationale: "formula tecnica de nursing: padrao de pratica, nem norma nem lei",
+    source_type: "INTERNAL_GOVERNED",
+    source_type_rationale:
+      "NAO existe documento-fonte: a entrada descreve uma pratica assistencial adotada internamente " +
+      "(authority = 'Pratica assistencial de gotejamento', locator sem URI). 'STANDARD' implicaria um standard " +
+      "publicado que nao existe. Fica governada internamente e exige fonte clinica + revisao humana antes de uso assistencial.",
     title: "Fórmula clássica de gotejamento",
     authority: "Prática assistencial de gotejamento",
     locator: { uri: "", pinpoint: "gts/min = (volume em mL × fator do equipo) / tempo em minutos" },

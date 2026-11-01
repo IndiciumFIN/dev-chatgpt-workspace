@@ -650,3 +650,56 @@ Ou seja: o `pilot/` foi copiado para `tools/experience-skeleton/pilot/`, mas os 
 - **Se o sandbox sobe** (5.746 ficheiros, com 24 saídas de audit removidas) — e por quem.
 - **O PR #29** (revert) e o **PR #30** (candidato estrutural, verde) — a reconciliação não os fecha nem os funde.
 - **A reclassificação das 22 fontes** quando não há equivalência automática segura (CFM parecer, publicação OMS, calendário de vacinação) — o valor canónico de um parecer de conselho profissional não é "lei".
+
+### 13.5 Execução das etapas S1 e S2 — medida, não afirmada (01/11/2026 04:45Z)
+
+**PR #31 (RASCUNHO, não fundido):** `plan/ce-reconciliacao-v6-20261101` → `main`.
+
+#### 13.5.1 A medição que precedeu a correcção
+O portão novo foi corrido **contra o estado real antes de qualquer correcção**: `REPROVADO: 172 violação(ões)` — 6×R1 (`source_type` fora do enum do contrato `source`), 6×R3 (`sha256` = 64 zeros), 78×R4 (`authority_class` fora do enum), 78×R5 (`decision` fora do enum), 4×R8 (autoridade não-interna sem fonte). Cada violação nomeia o item e a linha. **Sem esta leitura, a correcção seria um palpite.**
+
+#### 13.5.2 S1 — contratos no vocabulário canónico, pela natureza do documento
+A correcção foi feita **na fonte verdadeira** (`src/lib/tools/governance.ts`, `src/lib/tools/contracts.ts`) e os derivados foram **regenerados pelo gerador do repo** (`node scripts/generate-entity-contracts.mjs` → 183 entidades em 10 contratos). Nenhum JSON/TS gerado foi editado à mão.
+
+| Fonte | Antes | Agora | Natureza do documento | SHA-256 real |
+|---|---|---|---|---|
+| `SRC-CFM-PARECER-28-2020` | `OFFICIAL_LAW` | `REGULATOR` | parecer de conselho profissional — **não é lei** | `089dba14…` ✅ (PDF no repo) |
+| `SRC-REV-ENF-USP-BRADEN-1999` | `STANDARD` | `PRIMARY_STUDY` | artigo científico original | `NOT_AVAILABLE` + motivo |
+| `SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA` | `GUIDELINE` | `GUIDELINE` | manual institucional | `NOT_AVAILABLE` + motivo |
+| `SRC-OMS-OBESIDADE-2000` | `OFFICIAL_LAW` | `GUIDELINE` | relatório de ORGANIZAÇÃO (a OMS **não é** órgão regulador) | `NOT_AVAILABLE` + motivo |
+| `SRC-APGAR-1953` | `PRIMARY_STUDY` | `PRIMARY_STUDY` | artigo científico original | `NOT_AVAILABLE` + motivo |
+| `SRC-GOTEJAMENTO-FORMULA-CLASSICA` | `STANDARD` | **`INTERNAL_GOVERNED`** | **não existe documento** — prática assistencial adotada internamente | `NOT_AVAILABLE` + motivo |
+
+Bindings: 46 `authority_binding` com `authority_class` no enum do contrato e `decision` `BOUND` → `HOLD_HUMAN` (o `ALLOW` exigiria `validator_ids` **e** `evidence_bundle_ids`, que não existem) e `status` `EVIDENCE_BOUND` → `HOLD_HUMAN`. As 32 `field_definition` **não** recebem autoridade imputada: a autoridade vem do binding referenciado (**32/32 refs resolvem**).
+
+#### 13.5.3 S2 — portão de integridade fail-closed
+`scripts/check-contract-integrity.mjs` (14.076 B, 12 regras) + **17 testes** (17/17 verdes), incluindo as duas regras que o parecer V6 apontava e que o portão do sandbox não tinha:
+- **Enum escopado ao contrato** — o `decision` tem **três** vocabulários no catálogo CKO (`applicability`, `authority_binding`, `release_gate`); a resolução é feita pelo contrato que rege o registo.
+- **Escopo por tipo de objecto** — o ficheiro de bindings mistura 46 `authority_binding` e 32 `field_definition`; imputar `INTERNAL_NONCLINICAL` a uma definição de campo rotularia campos clínicos de Aldrete, Braden e Morse como não-clínicos (o próprio parecer V6 caiu nesta armadilha: chamou a isso "412 classes imputadas").
+
+O **consumidor** foi corrigido em conjunto: `scripts/check-contract-coverage.mjs` exigia `INTERNAL_CONFIG`/`BOUND` — valores que não pertencem a nenhum enum do catálogo — e a verificação de integridade aceitava apenas "truthy" (por isso os 64 zeros passavam).
+
+#### 13.5.4 Prova
+| Verificação | Antes | Depois |
+|---|---|---|
+| `check-contract-integrity.mjs` | REPROVADO — 172 violações | **PASS** — 6 fontes, 46 AB, 32 FD |
+| `check-contract-coverage.mjs` | reprovava (exigia o vocabulário legado) | **exit 0** |
+| `check-generated-fresh.mjs` | — | **tudo fresco** (derivados regenerados pelo gerador) |
+| `node --test check-contract-integrity.test.mjs` | — | **17/17** |
+| `npx tsc --noEmit` | 2 erros (`@types/pg`) | 2 erros — **pré-existentes** (devDependency declarada no `package.json`; falta só no clone local) |
+
+#### 13.5.5 Uma correcção de processo que ficou registada
+O PDF do parecer do CFM foi **subido como texto**: o `push_files` gravou a string base64 (314.112 B) em vez do binário (235.582 B). Detectado pelo tamanho (base64 de 235.582 B = exactamente 314.112 B) e confirmado pelos primeiros bytes (`JVBER…` em vez de `%PDF-`). Corrigido pela **Git Data API** (blob → tree → commit → ref) e re-verificado byte a byte: os dois ficheiros são idênticos e o SHA-256 remoto é `089dba1488ac8ee0…`, **o mesmo declarado no contrato**. ⇒ *binários não vão por `push_files`.*
+
+### 13.6 As cinco frentes da equipa — o que deliveram e como foi arbitrado (01/11/2026 04:45Z)
+
+| Frente | Entregável | Arbitragem do owner |
+|---|---|---|
+| `fontes-classificacao` | tabela das 22 fontes com acção, veredicto, rationale e `instrument_kind` | **5/6 coincidem com a implementação do owner; 1 corrigido pelo verificador** (gotejamento → `INTERNAL_GOVERNED`, aceite e já no repo) |
+| `bindings-coerencia` | 17 regras / 6 colunas, 14 automatizáveis + 3 com decisão nomeada, cada uma com **teste negativo** | **9/17 regras já cobertas** pelo portão S2; as 8 restantes entram na S3. A regra R05 (fonte sem hash ⇒ `HOLD`) foi implementada |
+| `universos-git` | 41 grupos com veredicto (PROMOVER/RECONCILIAR/ARQUIVAR/HOLD/DESCARTAR), destino em git, dependência e bloqueio | **base do §13.1** — 3 grupos `PROMOVER`, 1 `HOLD`, 2 `DESCARTAR` (`.env`, `test-results`), 4 `ARQUIVAR` |
+| `gate-fail-closed` | especificação do portão | **convergente** com a S2 (12 regras); a diferença de vocabulário foi resolvida pelo dono |
+| `espelho-estatico` | plano do espelho estático | **rejeitado comoobjectivo**: o espelho mede caminhos do **pacote**, não do site vivo (sem browser no sandbox ⇒ medições do site são `NOT_RUN`) |
+
+**Onde o owner tinha razão e o parecer V6 não:** (1) `BOUND` → `HOLD` no vocabulário errado trocava um valor inválido por **outro** valor inválido — o enum do binding é `ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED`; (2) `field_definition` não recebe `authority_class`/`decision`; (3) classificar por **natureza do documento** (a OMS não é regulador; um parecer do CFM não é lei) e não por tradução de rótulo.
+**Onde o verificador tinha razão e o owner estava errado:** o gotejamento **não tem documento-fonte nenhum** ⇒ `STANDARD` implicava um standard publicado inexistente ⇒ `INTERNAL_GOVERNED`. Corrigido no repositório antes do registo.

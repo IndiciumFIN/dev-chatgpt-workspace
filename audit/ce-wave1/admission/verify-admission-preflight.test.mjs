@@ -1,0 +1,28 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash,generateKeyPairSync,sign} from 'node:crypto';
+import {preflight,domainSeparatedBytes,validateClaim} from './verify-admission-preflight.mjs';
+const {publicKey,privateKey}=generateKeyPairSync('ed25519');
+const bad=generateKeyPairSync('ed25519');
+const fingerprint=createHash('sha256').update(publicKey.export({format:'der',type:'spki'})).digest('hex');
+const trust={keyId:'KERNEL_FIXTURE_ONLY_DO_NOT_PROVISION',publicKeyPem:publicKey.export({type:'spki',format:'pem'}).toString(),keyFingerprintSha256:fingerprint};
+const expected={repository:'IndiciumFIN/dev-chatgpt-workspace',targetBranch:'integration/structural-overlay-20261101',expectedHead:'d118df555fcaf27c257f1f17dd63fcc347119104',archiveSha256:'5b1c83586d4241e3f0f43a32c06aebd6e9934c289556f2a7302c61e5394634f7',manifestSha256:'958d5a91229e9ee7b186787a2a28b64e98eeb7e05fe293bf2cb80397b99fd7d2'};
+const claim={schemaVersion:1,kind:'CE_KERNEL_CANDIDATE_PATCH_V1',decision:'ADMIT_CANDIDATE_PATCH',...expected,workOrderId:'WO-GOV-TRANS-001',findRef:'FIND-FIXTURE',taskRef:'TASK-FIXTURE',policyBundleId:'PB-FIXTURE',policyVersion:'v1',ownerId:'owner-fixture',approverId:'checker-fixture',validatorRefs:['validator-fixture'],evidenceRefs:['evidence-fixture'],issuedAt:'2026-11-01T02:00:00Z',expiresAt:'2026-11-01T02:30:00Z',executionRequested:false};
+const time=new Date('2026-11-01T02:10:00Z');
+function pack(c=claim,sk=privateKey){return {algorithm:'Ed25519',keyId:trust.keyId,claim:c,signatureBase64:sign(null,domainSeparatedBytes(c),sk).toString('base64')}}
+const blockers=(c,t=trust,e=expected,n=time)=>preflight(c,e,t,n).blockers;
+test('valid fixture is NEVER executable or admitted by this preflight',()=>{const r=preflight(pack(),expected,trust,time);assert.equal(r.outcome,'PRECHECK_OK_KERNEL_LOOKUP_REQUIRED');assert.equal(r.writeAuthorized,false);assert.equal(r.releaseAuthorized,false)});
+test('no receipt always holds',()=>assert(blockers(null).includes('ADMISSION_RECEIPT_ABSENT')));
+test('wrong SHA holds',()=>assert(blockers(pack({...claim,expectedHead:'a'.repeat(40)})).includes('STALE_TARGET_SHA')));
+test('tampered claim without re-signing holds',()=>assert(blockers({...pack(),claim:{...claim,workOrderId:'WO-MALICIOUS'}}).includes('INVALID_DETACHED_SIGNATURE')));
+test('forged key holds',()=>assert(blockers(pack(claim,bad.privateKey)).includes('INVALID_DETACHED_SIGNATURE')));
+test('self approval holds',()=>assert(blockers(pack({...claim,approverId:claim.ownerId})).includes('MAKER_CHECKER_NOT_SEGREGATED')));
+test('no policy holds',()=>assert(blockers(pack({...claim,policyBundleId:''})).includes('MISSING_POLICYBUNDLEID')));
+test('missing validator holds',()=>assert(blockers(pack({...claim,validatorRefs:[]})).includes('VALIDATORS_MISSING_OR_DUPLICATE')));
+test('stale evidence time holds',()=>assert(blockers(pack(),trust,expected,new Date('2026-11-01T02:40:00Z')).includes('INVALID_EXPIRED_OR_FUTURE_WINDOW')));
+test('request execution true holds',()=>assert(blockers(pack({...claim,executionRequested:true})).includes('EXECUTION_MUST_NOT_BE_REQUESTED_BY_PREFLIGHT')));
+test('scope mismatch prevents swapped repo',()=>assert(blockers(pack(),trust,{...expected,repository:'attacker/repo'}).includes('WRONG_REPOSITORY_OR_BRANCH')));
+test('manifest mismatch prevents wrong bytes',()=>assert(blockers(pack(),trust,{...expected,manifestSha256:'b'.repeat(64)}).includes('MANIFEST_MISMATCH')));
+test('untrusted key fingerprint holds',()=>assert(blockers(pack(),{...trust,keyFingerprintSha256:'0'.repeat(64)}).includes('UNTRUSTED_KEY_FINGERPRINT')));
+test('claim must have exact fields',()=>assert(validateClaim({...claim,debugOverride:true},expected,time).includes('CLAIM_FIELDS_NOT_EXACT')));
+test('no trust anchor always holds',()=>assert(blockers(pack(),null).includes('TRUST_ANCHOR_NOT_PROVISIONED')));

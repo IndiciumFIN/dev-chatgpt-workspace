@@ -217,40 +217,23 @@ test("campo pendente sem DERBY: o portão acusa e nomeia a coluna", async () => 
   assert.equal(depois.rows[0].version, valorOriginal, "o teardown não restaurou o valor");
 });
 
-test("estado retido: o portão acusa e nomeia a tabela", async () => {
-  const original = await db.query(
-    "select status from content_text where slug = 'missao' and locale = 'pt-BR'",
-  );
-  const valorOriginal = original.rows[0].status;
-  let violacoes = [];
-  await comQuebrado(
-    () => db.query("update content_text set status = 'rascunho' where slug = 'missao' and locale = 'pt-BR'"),
-    () => db.query("update content_text set status = $1 where slug = 'missao' and locale = 'pt-BR'", [valorOriginal]),
-    async () => {
-      violacoes = (await auditar(db)).violacoes;
-    },
-  );
-  const achado = violacoes.find((v) => v.tipo === "estado-retido" && v.tabela === "content_text");
-  assert.ok(achado, `o portão não acusou o rascunho: ${JSON.stringify(violacoes)}`);
+test("rascunho é pendência legítima, não uma falha de autorização", async () => {
+ const report=await auditar(db);
+ assert.ok(report.estados.some(x=>x.tabela==="content_text"&&x.estado==="rascunho"),"a migration de correção deve restaurar revisão pendente");
+ assert.ok(!report.violacoes.some(x=>x.tipo==="estado-retido"&&x.tabela==="content_text"));
 });
 
-test("marcador apagado: o portão acusa a coluna sem dono", async () => {
-  // O id é capturado ANTES: restaurar por "limit 1" sem ordem pode voltar
-  // para a linha errada.
-  const alvo = await db.query("select id, admitted_by from kernel_atom order by id limit 1");
-  const { id, admitted_by: valorOriginal } = alvo.rows[0];
-  let violacoes = [];
-  await comQuebrado(
-    () => db.query("update kernel_atom set admitted_by = null where id = $1", [id]),
-    () => db.query("update kernel_atom set admitted_by = $1 where id = $2", [valorOriginal, id]),
-    async () => {
-      violacoes = (await auditar(db)).violacoes;
-    },
-  );
-  const achado = violacoes.find((v) => v.tabela === "kernel_atom" && v.coluna === "admitted_by");
-  assert.ok(achado, `o portão não acusou o marcador apagado: ${JSON.stringify(violacoes)}`);
-  const depois = await db.query("select id, admitted_by from kernel_atom where id = $1", [id]);
-  assert.equal(depois.rows[0].admitted_by, valorOriginal, "o teardown não restaurou a linha");
+test("autor técnico sintético é rejeitado como aprovador", async () => {
+ const found=await db.query("select id, admitted_by from kernel_atom order by id limit 1");
+ const {id,admitted_by}=found.rows[0];
+ await comQuebrado(
+  ()=>db.query("update kernel_atom set admitted_by = 'derby-normalizacao' where id = $1",[id]),
+  ()=>db.query("update kernel_atom set admitted_by = $1 where id = $2",[admitted_by,id]),
+  async ()=>{
+   const report=await auditar(db);
+   assert.ok(report.violacoes.some(x=>x.tipo==="autoridade-sintetica"&&x.tabela==="kernel_atom"),"autor técnico não pode assinar admissão");
+  },
+ );
 });
 
 test("título que é caminho: o portão acusa", async () => {
@@ -319,9 +302,11 @@ test("declaração em conflito com a lista de alvos: o portão acusa", async () 
 
 /* ─────────────────────────── nada fica retido ─────────────────────────── */
 
-test("nada fica retido: nenhuma linha fica em rascunho nem candidata", async () => {
-  const relatorio = await auditar(db);
-  assert.deepEqual(relatorio.estados, [], `estados retidos: ${JSON.stringify(relatorio.estados)}`);
+test("pendências reais permanecem identificáveis e não contam como aprovação", async () => {
+ const report=await auditar(db);
+ assert.ok(report.estados.length>0,"a correção deve reter candidatos sem aprovação humana");
+ assert.ok(report.estados.some(x=>x.estado==="candidato"||x.estado==="rascunho"));
+ assert.ok(!report.violacoes.some(x=>x.tipo==="estado-retido"),"estado pendente por si só não é defeito");
 });
 
 test("o marcador DERBY é o que está no campo, não um valor inventado", async () => {

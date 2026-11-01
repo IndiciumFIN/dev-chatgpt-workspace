@@ -38,7 +38,7 @@ export type StoredModule = { type: string; title: string; lines: { path: string;
 export type StoredSpecimen = { id: string; title: string; lead: string; source: string; modules: StoredModule[] };
 export type StoredPage = { slug: string; title: string; lead: string; items: string[] };
 
-export type StoredImage = { path: string; alt: string };
+export type StoredImage = { path: string; locale: string; alt: string; status: string };
 
 export type StoredSite = {
   nav: NavNode[];
@@ -108,8 +108,9 @@ export function storedFooter(labels: StoredLabel[], locale: string): FooterCopy 
   return unflatten(rows.length ? rows : fallback) as FooterCopy;
 }
 
-export function imageAlt(images: StoredImage[], path: string, fallback: string) {
-  return images.find((row) => row.path === path)?.alt || fallback;
+export function imageAlt(images: StoredImage[], path: string, locale: string, fallback: string) {
+  const published = images.filter((row) => row.path === path && row.status === "publicado" && row.alt.trim() !== "");
+  return published.find((row) => row.locale === locale)?.alt || published.find((row) => row.locale === "pt-BR")?.alt || fallback;
 }
 
 export function cardsOf(catalog: StoredCard[], listId: string) {

@@ -17,11 +17,13 @@ Falha o teste. Não pode ir ao ar.
 
 ## Achado
 
-O teste exige que o achado atual continue visível até uma pessoa aprovar a regra. Os dois de dicionário físico só aparecem se a paridade das tabelas quebrar.
+O teste exige que os achados atuais continuem visíveis até a causa fechar. Os dois de dicionário físico só aparecem se a paridade das tabelas quebrar.
 
 | Id | Norma citada | O que ainda não fecha |
 |---|---|---|
+| I18N-ALT | WCAG 3.1.2 | Inglês, espanhol e francês do texto alternativo ainda estão em rascunho |
 | REG-RASCUNHO | Regra de negócio | `business_rule` ainda em rascunho. Não se aprova sozinha. |
+| I18N-CHROME | Rótulo da interface | Português sem par em inglês, espanhol ou francês. Hoje não dispara. |
 | DIC-ENTIDADE-SEM-TABELA | Dicionário interno, não ISO 8000 | Entidade sem tabela. Hoje não dispara. |
 | DIC-TABELA-SEM-ENTIDADE | Dicionário interno | Tabela sem entidade. Hoje não dispara. |
 

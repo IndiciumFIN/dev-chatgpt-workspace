@@ -116,13 +116,42 @@ export async function auditEcosystem(db: Queryable): Promise<AuditFinding[]> {
     note("DIC-SINTAXE", "Dicionário interno: a sintaxe gravada não descreve o slug que existe", syntax.rows[0]?.syntax ?? "");
   }
 
-  const alt = await db.query<{ n: unknown }>(
+  const altGap = await db.query<{ n: unknown }>(
     `select count(*)::int as n
-     from media_asset
-     where kind = 'imagem' and (alt is null or btrim(alt) = '' or alt = note or alt = path)`,
+     from media_asset as image
+     where image.kind = 'imagem'
+       and (
+         not exists (
+           select 1 from media_alt as alt
+           where alt.path = image.path and alt.locale = 'pt-BR' and alt.status = 'publicado' and btrim(alt.text) <> ''
+         )
+         or exists (
+           select 1 from (values ('en'), ('es'), ('fr')) as offered (locale)
+           where not exists (
+             select 1 from media_alt as alt
+             where alt.path = image.path and alt.locale = offered.locale and alt.status = 'publicado' and btrim(alt.text) <> ''
+           )
+         )
+       )`,
   );
-  if (numberOf(alt.rows[0]?.n) > 0) {
-    note("MID-SEM-ALT", "WCAG 1.1.1: imagem pública sem texto alternativo próprio", `${alt.rows[0]?.n} imagens`);
+  if (numberOf(altGap.rows[0]?.n) > 0) {
+    note("I18N-ALT", "WCAG 3.1.2: texto alternativo dos outros idiomas do seletor ainda está em rascunho", `${altGap.rows[0]?.n} imagens`);
+  }
+
+  const chromeGap = await db.query<{ n: unknown }>(
+    `select count(*)::int as n
+     from chrome_label as source
+     where source.locale = 'pt'
+       and exists (
+         select 1 from (values ('en'), ('es'), ('fr')) as offered (locale)
+         where not exists (
+           select 1 from chrome_label as other
+           where other.locale = offered.locale and other.group_id = source.group_id and other.key = source.key and btrim(other.text) <> ''
+         )
+       )`,
+  );
+  if (numberOf(chromeGap.rows[0]?.n) > 0) {
+    note("I18N-CHROME", "Rótulo em português sem par em inglês, espanhol ou francês", `${chromeGap.rows[0]?.n} rótulos`);
   }
 
   const draftRules = await db.query<{ n: unknown }>("select count(*)::int as n from business_rule where status = 'rascunho'");

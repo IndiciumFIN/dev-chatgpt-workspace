@@ -108,7 +108,7 @@ export function SectionPage({
   trail: { label: string; slug?: string }[];
   related: { slug: string; label: string; text: string }[];
 }) {
-  const { t } = useChrome();
+  const { locale, t } = useChrome();
   const { images } = useStored();
   const [sent, setSent] = useState(false);
   const q = query ?? "";
@@ -146,7 +146,7 @@ export function SectionPage({
         {framed && index === 0 && visual ? (
           <div className="inst-split is-fig-esquerda">
             <figure className="inst-fig has-frame">
-              <img src={visual.src} alt={imageAlt(images, visual.src, visual.alt)} />
+              <img src={visual.src} alt={imageAlt(images, visual.src, locale, visual.alt)} />
               <figcaption>{visual.caption}</figcaption>
             </figure>
             {text}

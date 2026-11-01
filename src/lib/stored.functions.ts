@@ -103,8 +103,8 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
   const lineRows = await sql<{ specimen_id: string; module_position: number; position: number; path: string; text: string }>`select specimen_id, module_position, position, path, text from specimen_line order by position`;
   const pageRows = await sql<{ slug: string; title: string; lead: string }>`select slug, title, lead from section_page order by title`;
   const linkTitles = await sql<{ slug: string; title: string }>`select slug, title from section_link order by position`;
-  const images = await sql<{ path: string; alt: string }>`
-    select path, alt from media_asset where kind = 'imagem' and alt is not null and btrim(alt) <> '' order by path
+  const images = await sql<{ path: string; locale: string; alt: string; status: string }>`
+    select path, locale, text as alt, status from media_alt order by path, locale
   `;
   const instPages = await sql<{ path: string; title: string; lead: string }>`select path, title, lead from inst_page where kind = 'page' order by path`;
   const pages: StoredPage[] = pageRows.map((row) => ({
@@ -153,7 +153,7 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
     shelves: shelves.map((shelf) => {
       const items = shelfItems.filter((item) => item.shelf_id === shelf.id);
       if (shelf.kind === "images") {
-        return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: "images", items: items.map((item) => ({ src: item.href, alt: images.find((image) => image.path === item.href)?.alt || item.text, caption: item.title })) };
+        return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: "images", items: items.map((item) => ({ src: item.href, alt: images.find((image) => image.path === item.href && image.locale === "pt-BR" && image.status === "publicado")?.alt || item.text, caption: item.title })) };
       }
       if (shelf.kind === "thumbs" || shelf.kind === "pdfs") {
         return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: shelf.kind, items: items.map((item) => ({ title: item.title, text: item.text, href: item.href })) };

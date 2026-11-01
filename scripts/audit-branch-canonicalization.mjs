@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { parseTreeEntries, entryKey, summarizePath } from './lib/branch-canonicalization.mjs';
 import { classifyCandidateRisk } from './lib/main-migration-core.mjs';
 import { analyzeSemanticI18nCollisions } from './lib/semantic-collision-audit.mjs';
+import { auditSourceSecuritySignals } from './lib/source-security-signals.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const defaultOutput = resolve(root, 'audit/branch-canonicalization/current.json');
@@ -208,6 +209,10 @@ const semanticI18n = analyzeSemanticI18nCollisions(
     })),
   blob => git(['cat-file', 'blob', blob]),
 );
+const sourceSecuritySignals = auditSourceSecuritySignals(
+  records,
+  blob => git(['cat-file', 'blob', blob]),
+);
 const remoteHeadsAfter = readRemoteHeads();
 if (
   remoteHeadsBefore.size !== remoteHeadsAfter.size ||
@@ -236,6 +241,7 @@ const report = {
     unableToVerify: semanticI18n.unableToVerify,
     canonicalWinnerSelected: false,
   },
+  sourceSecuritySignals,
   records,
   limitations: [
     'A matching Git tree entry proves byte and mode identity only; it does not prove correctness, ownership, clinical validity or rights.',

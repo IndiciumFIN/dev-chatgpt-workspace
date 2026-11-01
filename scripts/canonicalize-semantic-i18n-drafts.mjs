@@ -43,17 +43,26 @@ function verifyReportIsCurrent() {
     .filter(([, , symref]) => !symref);
   const expected = new Map([
     ['main', report.baseline.commit],
-    [report.candidate.branch, report.candidate.commit],
     ...report.sourceBranches.map(source => [source.name, source.commit]),
   ]);
+  const candidateRemoteRef = `refs/remotes/origin/${report.candidate.branch}`;
+  const candidateRemote = refs.find(([ref]) => ref === candidateRemoteRef);
   if (
-    refs.length !== expected.size ||
+    refs.length !== expected.size + 1 ||
+    !candidateRemote ||
     refs.some(([ref, commit]) => {
       const prefix = 'refs/remotes/origin/';
+      if (ref === candidateRemoteRef) return false;
       return !ref.startsWith(prefix) || expected.get(ref.slice(prefix.length)) !== commit;
     })
   ) {
     throw new Error('REMOTE_BRANCHES_CHANGED_SINCE_AUDIT');
+  }
+  try {
+    git(['merge-base', '--is-ancestor', candidateRemote[1], commit]);
+  } catch (error) {
+    if (error.status !== 1) throw error;
+    throw new Error('REMOTE_CANDIDATE_NOT_ANCESTOR_OF_AUDITED_HEAD');
   }
 }
 

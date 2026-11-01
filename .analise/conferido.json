@@ -1,0 +1,1292 @@
+{
+  "relatorio": [
+    {
+      "tabela": "blob_conflict",
+      "camada": "canonica",
+      "label": "Conflitos de blob",
+      "produto": "Camada canônica",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 1,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Conflito entre dois blobs, sem vencedor escolhido.",
+      "colunasPortadoras": [
+        "sha_a",
+        "sha_b",
+        "vencedor",
+        "nota"
+      ]
+    },
+    {
+      "tabela": "canonical_asset",
+      "camada": "canonica",
+      "label": "Arquivos da camada canônica",
+      "produto": "Camada canônica",
+      "primaryKey": "path",
+      "pkReal": "path",
+      "linhas": 876,
+      "colunas": 8,
+      "fks": 0,
+      "finalidade": "Arquivo da camada canônica, com o tamanho, a impressão digital e o estado da revisão.",
+      "colunasPortadoras": [
+        "bytes",
+        "corpo",
+        "status",
+        "nota"
+      ]
+    },
+    {
+      "tabela": "canonical_auto_review",
+      "camada": "canonica",
+      "label": "Revisão automática",
+      "produto": "Camada canônica",
+      "primaryKey": "path",
+      "pkReal": "path",
+      "linhas": 16433,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Veredito da revisão automática de um arquivo, com a regra aplicada.",
+      "colunasPortadoras": [
+        "veredito",
+        "blob_esperado",
+        "blob_encontrado",
+        "regra",
+        "revisor",
+        "revisao_humana"
+      ]
+    },
+    {
+      "tabela": "canonical_conflict",
+      "camada": "canonica",
+      "label": "Conflitos de arquivo",
+      "produto": "Camada canônica",
+      "primaryKey": "path",
+      "pkReal": "path",
+      "linhas": 146,
+      "colunas": 10,
+      "fks": 0,
+      "finalidade": "Conflito entre versões de um arquivo, com a disposição e a decisão.",
+      "colunasPortadoras": [
+        "domain",
+        "priority",
+        "proposed_wo",
+        "disposition",
+        "decision",
+        "kernel_admission",
+        "vencedor",
+        "fonte"
+      ]
+    },
+    {
+      "tabela": "canonical_conflict_source",
+      "camada": "canonica",
+      "label": "Fontes de conflito",
+      "produto": "Camada canônica",
+      "primaryKey": "path + branch + blob",
+      "pkReal": "path + branch + blob",
+      "linhas": 466,
+      "colunas": 4,
+      "fks": 1,
+      "finalidade": "Branch e blob de origem de um conflito.",
+      "colunasPortadoras": [
+        "branch",
+        "blob",
+        "status"
+      ]
+    },
+    {
+      "tabela": "canonical_divergence",
+      "camada": "canonica",
+      "label": "Divergências entre camadas",
+      "produto": "Camada canônica",
+      "primaryKey": "sem chave primária",
+      "pkReal": "(sem PK)",
+      "linhas": 16,
+      "colunas": 3,
+      "fks": 0,
+      "finalidade": "Divergência entre camadas, com o código e o detalhe. O DDL não declara chave primária e o código se repete.",
+      "colunasPortadoras": [
+        "code",
+        "classe",
+        "detalhe"
+      ]
+    },
+    {
+      "tabela": "canonical_migration_gap",
+      "camada": "canonica",
+      "label": "Lacunas de migração",
+      "produto": "Camada canônica",
+      "primaryKey": "path + motivo",
+      "pkReal": "path + motivo",
+      "linhas": 16567,
+      "colunas": 5,
+      "fks": 0,
+      "finalidade": "Lacuna de migração de um arquivo, com o backup e a versão local.",
+      "colunasPortadoras": [
+        "motivo",
+        "blob_backup",
+        "blob_local"
+      ]
+    },
+    {
+      "tabela": "canonical_migration_recovered",
+      "camada": "canonica",
+      "label": "Arquivos recuperados",
+      "produto": "Camada canônica",
+      "primaryKey": "path",
+      "pkReal": "path",
+      "linhas": 12244,
+      "colunas": 4,
+      "fks": 0,
+      "finalidade": "Arquivo recuperado da migração, com a origem.",
+      "colunasPortadoras": [
+        "blob",
+        "origem"
+      ]
+    },
+    {
+      "tabela": "canonical_suggestion",
+      "camada": "canonica",
+      "label": "Sugestões de camada canônica",
+      "produto": "Camada canônica",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 6,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Sugestão de conciliação da camada canônica, com a evidência e a referência.",
+      "colunasPortadoras": [
+        "divergence",
+        "proposta",
+        "evidencia",
+        "referencia",
+        "aplicar_em_producao",
+        "situacao"
+      ]
+    },
+    {
+      "tabela": "career_application_candidate",
+      "camada": "carreira",
+      "label": "Candidaturas a oportunidades",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 7,
+      "fks": 1,
+      "finalidade": "Candidatura de uma pessoa a uma oportunidade, com a etapa em que está.",
+      "colunasPortadoras": [
+        "opportunity_kind",
+        "label",
+        "stage"
+      ]
+    },
+    {
+      "tabela": "career_atomic_fact_candidate",
+      "camada": "carreira",
+      "label": "Fatos atômicos",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 19,
+      "colunas": 12,
+      "fks": 2,
+      "finalidade": "Fato atômico: afirmação de um átomo sobre sujeito e predicado, tirada de um fragmento de fonte.",
+      "colunasPortadoras": [
+        "normalized_statement",
+        "fact_type",
+        "object_value",
+        "jurisdiction",
+        "status",
+        "review"
+      ]
+    },
+    {
+      "tabela": "career_authority_binding_candidate",
+      "camada": "carreira",
+      "label": "Vínculos de autoridade",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 16,
+      "colunas": 14,
+      "fks": 1,
+      "finalidade": "Vínculo entre um campo e a exigência de norma que o governa, com a jurisdição.",
+      "colunasPortadoras": [
+        "field_path",
+        "authority_class",
+        "jurisdiction",
+        "applicable_from",
+        "applicable_until",
+        "decision",
+        "status",
+        "source_ids_json",
+        "evidence_bundle_ids_json",
+        "validator_ids_json"
+      ]
+    },
+    {
+      "tabela": "career_capability_governance_candidate",
+      "camada": "carreira",
+      "label": "Governança das capacidades",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 7,
+      "colunas": 11,
+      "fks": 0,
+      "finalidade": "Regras de uso de uma capacidade: identidade, consentimento, moderação, reporte, bloqueio, auditoria, retenção e idade.",
+      "colunasPortadoras": [
+        "capability_ref",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_claim_candidate",
+      "camada": "carreira",
+      "label": "Afirmações de carreira",
+      "produto": "Carreira",
+      "primaryKey": "canonical_id",
+      "pkReal": "canonical_id",
+      "linhas": 19,
+      "colunas": 15,
+      "fks": 1,
+      "finalidade": "Afirmação versionada sobre um objeto, com a procedência e a jurisdição.",
+      "colunasPortadoras": [
+        "version",
+        "status",
+        "provenance_refs",
+        "source_ids",
+        "binding_ids",
+        "jurisdiction",
+        "applicability",
+        "review",
+        "claim_type",
+        "confidence_framework_ref"
+      ]
+    },
+    {
+      "tabela": "career_content_claim_binding_candidate",
+      "camada": "carreira",
+      "label": "Vínculos de conteúdo e afirmação",
+      "produto": "Carreira",
+      "primaryKey": "document_id + block_id + claim_id",
+      "pkReal": "document_id + block_id + claim_id",
+      "linhas": 26,
+      "colunas": 5,
+      "fks": 2,
+      "finalidade": "Vínculo entre um bloco de documento e a afirmação que ele carrega.",
+      "colunasPortadoras": [
+        "binding_role",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_credential_candidate",
+      "camada": "carreira",
+      "label": "Credenciais",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 5,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Credencial de carreira, com o escopo de quem a emite.",
+      "colunasPortadoras": [
+        "title",
+        "category",
+        "issuer_scope",
+        "validity_note",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_document_template_candidate",
+      "camada": "carreira",
+      "label": "Modelos de documento",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Modelo de documento de carreira, com o público a que se destina.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_editorial_block_candidate",
+      "camada": "carreira",
+      "label": "Blocos de documento",
+      "produto": "Carreira",
+      "primaryKey": "document_id + block_id",
+      "pkReal": "document_id + block_id",
+      "linhas": 75,
+      "colunas": 10,
+      "fks": 1,
+      "finalidade": "Bloco de um documento editorial, com o papel semântico e a origem do texto.",
+      "colunasPortadoras": [
+        "block_order",
+        "block_type",
+        "semantic_role",
+        "heading",
+        "body",
+        "payload_json",
+        "source_mode",
+        "source_refs_json"
+      ]
+    },
+    {
+      "tabela": "career_editorial_candidate",
+      "camada": "carreira",
+      "label": "Editoriais de carreira",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 17,
+      "colunas": 11,
+      "fks": 0,
+      "finalidade": "Editorial de carreira, com o tipo de conteúdo e a audiência.",
+      "colunasPortadoras": [
+        "slug",
+        "title",
+        "dek",
+        "content_type",
+        "audience",
+        "linked_object_type",
+        "linked_object_ref",
+        "status",
+        "sort_order"
+      ]
+    },
+    {
+      "tabela": "career_editorial_document_candidate",
+      "camada": "carreira",
+      "label": "Documentos editoriais",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 17,
+      "colunas": 12,
+      "fks": 1,
+      "finalidade": "Documento editorial de uma edição, com o portão de fonte e o portão humano.",
+      "colunasPortadoras": [
+        "slug",
+        "locale",
+        "audience",
+        "title",
+        "lead",
+        "source_gate",
+        "human_gate",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_evidence_bundle_candidate",
+      "camada": "carreira",
+      "label": "Pacotes de evidência",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 19,
+      "colunas": 11,
+      "fks": 4,
+      "finalidade": "Pacote de evidências que liga afirmação, fonte e fragmento, com a linhagem.",
+      "colunasPortadoras": [
+        "lineage_path",
+        "status",
+        "review"
+      ]
+    },
+    {
+      "tabela": "career_ingestion_run_candidate",
+      "camada": "carreira",
+      "label": "Passagens de ingestão",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 11,
+      "fks": 1,
+      "finalidade": "Passagem de ingestão de uma fonte, com o que entrou, o que foi aceito, recusado e deduplicado.",
+      "colunasPortadoras": [
+        "object_family",
+        "input_count",
+        "accepted_count",
+        "rejected_count",
+        "deduplicated_count",
+        "state",
+        "evidence_ref"
+      ]
+    },
+    {
+      "tabela": "career_interview_scenario_candidate",
+      "camada": "carreira",
+      "label": "Cenários de entrevista",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Cenário de entrevista, com o público a que se destina.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_jurisdiction_requirement_candidate",
+      "camada": "carreira",
+      "label": "Exigências por jurisdição",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Exigência que uma jurisdição impõe, com a referência de origem.",
+      "colunasPortadoras": [
+        "jurisdiction",
+        "requirement_kind",
+        "title",
+        "description",
+        "source_ref",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_learning_resource_candidate",
+      "camada": "carreira",
+      "label": "Recursos de aprendizagem",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 15,
+      "fks": 3,
+      "finalidade": "Recurso de aprendizagem disponível, com a origem e o período de validade.",
+      "colunasPortadoras": [
+        "title",
+        "provider",
+        "modality",
+        "workload_text",
+        "price_text",
+        "jurisdiction",
+        "source_locator",
+        "available_from",
+        "available_until",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_learning_resource_type_candidate",
+      "camada": "carreira",
+      "label": "Tipos de recurso de aprendizagem",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 5,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Tipo de recurso de aprendizagem, com a exigência de fonte.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_market_observation_candidate",
+      "camada": "carreira",
+      "label": "Observações de mercado",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 13,
+      "fks": 4,
+      "finalidade": "Observação de mercado com o valor medido, a unidade e o período.",
+      "colunasPortadoras": [
+        "role_ref",
+        "jurisdiction",
+        "statistic_kind",
+        "observed_value",
+        "unit",
+        "period_start",
+        "period_end",
+        "methodology_note",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_market_signal_candidate",
+      "camada": "carreira",
+      "label": "Sinais de mercado",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 3,
+      "colunas": 9,
+      "fks": 1,
+      "finalidade": "Sinal de mercado com o valor, a região e a referência de origem.",
+      "colunasPortadoras": [
+        "label",
+        "role_ref",
+        "region",
+        "metric_value",
+        "unit",
+        "source_ref",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_milestone_candidate",
+      "camada": "carreira",
+      "label": "Marcos da trajetória",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 6,
+      "fks": 1,
+      "finalidade": "Marco da trajetória de uma pessoa.",
+      "colunasPortadoras": [
+        "milestone_type",
+        "label",
+        "achieved_on"
+      ]
+    },
+    {
+      "tabela": "career_module_candidate",
+      "camada": "carreira",
+      "label": "Módulos de carreira",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 24,
+      "colunas": 9,
+      "fks": 0,
+      "finalidade": "Módulo de carreira, com a classe de objeto e o público a que se destina.",
+      "colunasPortadoras": [
+        "slug",
+        "title",
+        "description",
+        "object_class",
+        "audience",
+        "family",
+        "status",
+        "sort_order"
+      ]
+    },
+    {
+      "tabela": "career_network_capability_candidate",
+      "camada": "carreira",
+      "label": "Capacidades em rede",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Capacidade que a pessoa exerce em rede, com as exigências de identidade e moderação.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "requires_identity",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_opportunity_candidate",
+      "camada": "carreira",
+      "label": "Oportunidades",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 13,
+      "fks": 3,
+      "finalidade": "Oportunidade de trabalho com a organização, a jurisdição e a origem.",
+      "colunasPortadoras": [
+        "title",
+        "organization",
+        "jurisdiction",
+        "location_text",
+        "source_locator",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_opportunity_type_candidate",
+      "camada": "carreira",
+      "label": "Tipos de oportunidade",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 9,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Tipo de oportunidade, com a exigência de fonte oficial.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_path_candidate",
+      "camada": "carreira",
+      "label": "Trilhas",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 5,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Trilha de carreira, com o resumo e o público.",
+      "colunasPortadoras": [
+        "slug",
+        "title",
+        "summary",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_path_step_candidate",
+      "camada": "carreira",
+      "label": "Passos da trilha",
+      "produto": "Carreira",
+      "primaryKey": "path_id + step_order",
+      "pkReal": "path_id + step_order",
+      "linhas": 10,
+      "colunas": 6,
+      "fks": 1,
+      "finalidade": "Passo de uma trilha, na ordem em que aparece.",
+      "colunasPortadoras": [
+        "step_order",
+        "title",
+        "description",
+        "object_type",
+        "object_ref"
+      ]
+    },
+    {
+      "tabela": "career_profile_candidate",
+      "camada": "carreira",
+      "label": "Perfis de carreira",
+      "produto": "Carreira",
+      "primaryKey": "participant_key",
+      "pkReal": "participant_key",
+      "linhas": 0,
+      "colunas": 6,
+      "fks": 1,
+      "finalidade": "Perfil de uma pessoa na trilha, com o estágio e o objetivo.",
+      "colunasPortadoras": [
+        "stage",
+        "goal"
+      ]
+    },
+    {
+      "tabela": "career_profile_credential_candidate",
+      "camada": "carreira",
+      "label": "Credenciais do perfil",
+      "produto": "Carreira",
+      "primaryKey": "participant_key + credential_id",
+      "pkReal": "participant_key + credential_id",
+      "linhas": 0,
+      "colunas": 4,
+      "fks": 2,
+      "finalidade": "Estado da credencial de uma pessoa no perfil.",
+      "colunasPortadoras": [
+        "state"
+      ]
+    },
+    {
+      "tabela": "career_profile_skill_candidate",
+      "camada": "carreira",
+      "label": "Competências do perfil",
+      "produto": "Carreira",
+      "primaryKey": "participant_key + skill_id",
+      "pkReal": "participant_key + skill_id",
+      "linhas": 0,
+      "colunas": 4,
+      "fks": 2,
+      "finalidade": "Nível que a própria pessoa declara numa competência.",
+      "colunasPortadoras": [
+        "self_level"
+      ]
+    },
+    {
+      "tabela": "career_projection_candidate",
+      "camada": "carreira",
+      "label": "Projeções",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 2,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Projeção de carreira, com a rota em que ela aparece.",
+      "colunasPortadoras": [
+        "route_slug",
+        "title",
+        "lead",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_projection_contract_candidate",
+      "camada": "carreira",
+      "label": "Contratos de projeção",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 13,
+      "fks": 0,
+      "finalidade": "Contrato de uma projeção: fontes permitidas, portões e canais.",
+      "colunasPortadoras": [
+        "projection_kind",
+        "audience",
+        "source_object_family",
+        "cko_projection_schema_ref",
+        "editorial_projection_schema_ref",
+        "allowed_channels",
+        "sources_gate",
+        "rights_gate",
+        "a11y_gate",
+        "privacy_gate",
+        "human_gate",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_projection_item_candidate",
+      "camada": "carreira",
+      "label": "Itens da projeção",
+      "produto": "Carreira",
+      "primaryKey": "projection_id + module_id",
+      "pkReal": "projection_id + module_id",
+      "linhas": 30,
+      "colunas": 3,
+      "fks": 2,
+      "finalidade": "Módulo dentro de uma projeção, com a ordem.",
+      "colunasPortadoras": [
+        "sort_order"
+      ]
+    },
+    {
+      "tabela": "career_publication_candidate",
+      "camada": "carreira",
+      "label": "Publicações",
+      "produto": "Carreira",
+      "primaryKey": "canonical_id",
+      "pkReal": "canonical_id",
+      "linhas": 2,
+      "colunas": 13,
+      "fks": 0,
+      "finalidade": "Publicação de carreira com o portão, a aprovação humana e o alvo de implantação.",
+      "colunasPortadoras": [
+        "version",
+        "status",
+        "provenance_refs",
+        "required_gate_ids",
+        "gate_results",
+        "human_approval",
+        "deployment_target",
+        "release_ref"
+      ]
+    },
+    {
+      "tabela": "career_reflection_question_candidate",
+      "camada": "carreira",
+      "label": "Perguntas de reflexão",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 8,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Pergunta de reflexão, com a dimensão e o peso.",
+      "colunasPortadoras": [
+        "prompt",
+        "dimension",
+        "weight",
+        "audience",
+        "status",
+        "sort_order"
+      ]
+    },
+    {
+      "tabela": "career_release_gate_candidate",
+      "camada": "carreira",
+      "label": "Portões de liberação",
+      "produto": "Carreira",
+      "primaryKey": "canonical_id",
+      "pkReal": "canonical_id",
+      "linhas": 6,
+      "colunas": 12,
+      "fks": 0,
+      "finalidade": "Portão de liberação com a decisão, as aprovações exigidas e o escopo.",
+      "colunasPortadoras": [
+        "version",
+        "status",
+        "provenance_refs",
+        "upstream_gate_refs",
+        "required_approvals",
+        "evidence_bundle_refs",
+        "decision",
+        "replay_hash",
+        "deployment_scope",
+        "reviewed_by"
+      ]
+    },
+    {
+      "tabela": "career_review_item_candidate",
+      "camada": "carreira",
+      "label": "Itens de revisão",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 36,
+      "colunas": 9,
+      "fks": 0,
+      "finalidade": "Item de revisão de carreira, com a área, a decisão e o papel exigido.",
+      "colunasPortadoras": [
+        "item_kind",
+        "review_area",
+        "decision",
+        "required_role",
+        "evidence_ref",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_role_candidate",
+      "camada": "carreira",
+      "label": "Funções",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 10,
+      "colunas": 8,
+      "fks": 0,
+      "finalidade": "Função de carreira, com a família e o caminho de formação.",
+      "colunasPortadoras": [
+        "slug",
+        "title",
+        "family",
+        "summary",
+        "education_path",
+        "audience",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_role_skill_candidate",
+      "camada": "carreira",
+      "label": "Competências da função",
+      "produto": "Carreira",
+      "primaryKey": "role_id + skill_id",
+      "pkReal": "role_id + skill_id",
+      "linhas": 17,
+      "colunas": 4,
+      "fks": 2,
+      "finalidade": "Competência exigida por uma função, com o nível e a importância.",
+      "colunasPortadoras": [
+        "required_level",
+        "importance"
+      ]
+    },
+    {
+      "tabela": "career_skill_candidate",
+      "camada": "carreira",
+      "label": "Competências",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 10,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Competência de carreira, com a categoria.",
+      "colunasPortadoras": [
+        "slug",
+        "name",
+        "category",
+        "description",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_source_candidate",
+      "camada": "carreira",
+      "label": "Fontes de carreira",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 6,
+      "colunas": 15,
+      "fks": 0,
+      "finalidade": "Fonte de carreira, com a autoridade, o direito de uso e a impressão digital do documento.",
+      "colunasPortadoras": [
+        "source_type",
+        "title",
+        "authority",
+        "uri",
+        "pinpoint",
+        "rights",
+        "jurisdiction",
+        "snapshot_ref",
+        "effective_from",
+        "effective_until",
+        "language",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_source_fragment_candidate",
+      "camada": "carreira",
+      "label": "Fragmentos de fonte",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 19,
+      "colunas": 10,
+      "fks": 1,
+      "finalidade": "Fragmento de uma fonte, com o localizador e a impressão digital do fragmento.",
+      "colunasPortadoras": [
+        "fact_index",
+        "fragment_kind",
+        "locator",
+        "locator_status",
+        "normalized_text",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_worklife_capability_candidate",
+      "camada": "carreira",
+      "label": "Capacidades de vida e trabalho",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 4,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Capacidade de vida e trabalho, com a exigência de fonte normativa.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "status"
+      ]
+    },
+    {
+      "tabela": "career_youth_activity_candidate",
+      "camada": "carreira",
+      "label": "Atividades para jovens",
+      "produto": "Carreira",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 5,
+      "colunas": 6,
+      "fks": 0,
+      "finalidade": "Atividade para jovens, com o módulo ligado.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "description",
+        "linked_module_ref",
+        "status"
+      ]
+    },
+    {
+      "tabela": "historia_nao_mesclada",
+      "camada": "canonica",
+      "label": "Histórias não mescladas",
+      "produto": "Camada canônica",
+      "primaryKey": "branch",
+      "pkReal": "branch",
+      "linhas": 2,
+      "colunas": 3,
+      "fks": 0,
+      "finalidade": "Branch que não foi mesclada, com o ancestral comum com a main.",
+      "colunasPortadoras": [
+        "branch",
+        "head_sha",
+        "ancestral_comum_com_main"
+      ]
+    },
+    {
+      "tabela": "kernel_coluna_citada",
+      "camada": "processo",
+      "label": "Colunas citadas pelo kernel",
+      "produto": "Ingestão e conhecimento",
+      "primaryKey": "relacao + coluna",
+      "pkReal": "relacao + coluna",
+      "linhas": 13,
+      "colunas": 3,
+      "fks": 0,
+      "finalidade": "Coluna de relação do kernel que outra tabela cita, com a origem da citação.",
+      "colunasPortadoras": [
+        "relacao",
+        "coluna",
+        "origem"
+      ]
+    },
+    {
+      "tabela": "mudanca_producao",
+      "camada": "processo",
+      "label": "Mudanças em produção",
+      "produto": "Governança e políticas",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 1,
+      "colunas": 3,
+      "fks": 0,
+      "finalidade": "Mudança em produção registrada, com o destino e a autorização.",
+      "colunasPortadoras": [
+        "destino",
+        "autorizada"
+      ]
+    },
+    {
+      "tabela": "participation_consensus_vote_candidate",
+      "camada": "participacao",
+      "label": "Votos de consenso",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 8,
+      "fks": 2,
+      "finalidade": "Voto de uma pessoa numa afirmação, com o perfil e a região.",
+      "colunasPortadoras": [
+        "position",
+        "profile",
+        "region"
+      ]
+    },
+    {
+      "tabela": "participation_contribution_candidate",
+      "camada": "participacao",
+      "label": "Contribuições",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 8,
+      "fks": 1,
+      "finalidade": "Contribuição de uma pessoa a um processo, com o estado da moderação.",
+      "colunasPortadoras": [
+        "contribution_kind",
+        "body",
+        "payload_json",
+        "moderation_status"
+      ]
+    },
+    {
+      "tabela": "participation_outcome_candidate",
+      "camada": "participacao",
+      "label": "Resultados do processo",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 7,
+      "fks": 1,
+      "finalidade": "Resultado publicado de um processo, com a evidência oficial.",
+      "colunasPortadoras": [
+        "title",
+        "summary",
+        "outcome_state",
+        "official_evidence_ref"
+      ]
+    },
+    {
+      "tabela": "participation_process_candidate",
+      "camada": "participacao",
+      "label": "Processos participativos",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 1,
+      "colunas": 7,
+      "fks": 0,
+      "finalidade": "Processo participativo, com o estado e a referência normativa.",
+      "colunasPortadoras": [
+        "title",
+        "description",
+        "status",
+        "official",
+        "normative_ref"
+      ]
+    },
+    {
+      "tabela": "participation_proposal_candidate",
+      "camada": "participacao",
+      "label": "Propostas de participação",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 8,
+      "fks": 1,
+      "finalidade": "Proposta de uma pessoa a um processo, com o problema e a proposta.",
+      "colunasPortadoras": [
+        "title",
+        "problem",
+        "proposal",
+        "status"
+      ]
+    },
+    {
+      "tabela": "participation_reaction_candidate",
+      "camada": "participacao",
+      "label": "Reações às propostas",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 5,
+      "fks": 1,
+      "finalidade": "Reação de uma pessoa a uma proposta.",
+      "colunasPortadoras": [
+        "reaction"
+      ]
+    },
+    {
+      "tabela": "participation_statement_candidate",
+      "camada": "participacao",
+      "label": "Afirmações do processo",
+      "produto": "Participação social",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 3,
+      "colunas": 5,
+      "fks": 1,
+      "finalidade": "Afirmação que o processo põe à discussão.",
+      "colunasPortadoras": [
+        "statement",
+        "display_order",
+        "active"
+      ]
+    },
+    {
+      "tabela": "research_instrument_candidate",
+      "camada": "pesquisa",
+      "label": "Instrumentos de pesquisa",
+      "produto": "Pesquisa",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 7,
+      "fks": 1,
+      "finalidade": "Instrumento de pesquisa de um projeto, com a definição.",
+      "colunasPortadoras": [
+        "kind",
+        "title",
+        "definition_json",
+        "status"
+      ]
+    },
+    {
+      "tabela": "research_project_candidate",
+      "camada": "pesquisa",
+      "label": "Projetos de pesquisa",
+      "produto": "Pesquisa",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 8,
+      "fks": 0,
+      "finalidade": "Projeto de pesquisa, com o tipo e o estado da ética.",
+      "colunasPortadoras": [
+        "title",
+        "summary",
+        "research_type",
+        "status",
+        "ethics_state"
+      ]
+    },
+    {
+      "tabela": "research_risk_candidate",
+      "camada": "pesquisa",
+      "label": "Riscos de pesquisa",
+      "produto": "Pesquisa",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 9,
+      "fks": 1,
+      "finalidade": "Risco de um projeto, com a probabilidade, o impacto e o tratamento.",
+      "colunasPortadoras": [
+        "category",
+        "description",
+        "likelihood",
+        "impact",
+        "treatment",
+        "status"
+      ]
+    },
+    {
+      "tabela": "research_skill_need_candidate",
+      "camada": "pesquisa",
+      "label": "Necessidades de competência",
+      "produto": "Pesquisa",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 0,
+      "colunas": 5,
+      "fks": 1,
+      "finalidade": "Competência que o projeto precisa, com a prioridade e a cobertura.",
+      "colunasPortadoras": [
+        "skill",
+        "priority",
+        "coverage_state"
+      ]
+    },
+    {
+      "tabela": "review_item",
+      "camada": "conteudo",
+      "label": "Textos em revisão",
+      "produto": "Revisão de conteúdo",
+      "primaryKey": "id",
+      "pkReal": "id",
+      "linhas": 24881,
+      "colunas": 13,
+      "fks": 0,
+      "finalidade": "Texto na fila de revisão, com o idioma de origem e a situação da revisão clínica.",
+      "colunasPortadoras": [
+        "classe",
+        "familia",
+        "origem",
+        "locale",
+        "source_locale",
+        "source_text",
+        "texto",
+        "revisao_clinica",
+        "fila",
+        "status",
+        "translation_status"
+      ]
+    }
+  ],
+  "problemas": []
+}

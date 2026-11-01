@@ -18,8 +18,14 @@ test("o dicionário nomeia cada tabela e a coluna estrutural", async () => {
   const dropped = new Set<string>();
   for (const name of names) {
     const sql = await readFile(new URL(name, base), "utf8");
-    for (const match of sql.matchAll(/create table if not exists "?(\w+)"?/gi)) tables.add(match[1]);
-    for (const match of sql.matchAll(/drop table if exists "?(\w+)"?/gi)) dropped.add(match[1]);
+    // A regex pegava o nome do schema ("cko_orch") em vez do nome da tabela: as
+    // tabelas do Kernel vivem em schemas próprios e não são tabelas do schema
+    // público que o dicionário descreve. Sem esta distinção, a lista de
+    // tabelas do teste-mentira tinha 4 nomes a mais do que o banco tem.
+    for (const match of sql.matchAll(/create table if not exists "?([\w.]+)"?/gi)) {
+      if (!match[1].includes(".")) tables.add(match[1]);
+    }
+    for (const match of sql.matchAll(/drop table if exists "?([\w.]+)"?/gi)) dropped.add(match[1]);
   }
   const entities = await db.query<{ name: string }>("select name from schema_entity");
   assert.deepEqual(

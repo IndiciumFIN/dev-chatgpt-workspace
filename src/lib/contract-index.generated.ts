@@ -6,8 +6,16 @@ export interface Contract<T> { contract: string; domain: string; items: T[] }
 
 export const contractRoutes = [
   {
+    "id": "CE-ROUTE-$",
+    "file": "src/routes/$.tsx"
+  },
+  {
     "id": "CE-ROUTE-admin",
     "file": "src/routes/admin.tsx"
+  },
+  {
+    "id": "CE-ROUTE-album",
+    "file": "src/routes/album.tsx"
   },
   {
     "id": "CE-ROUTE-assinante.ferramentas.$slug",
@@ -38,12 +46,68 @@ export const contractRoutes = [
     "file": "src/routes/blog.$slug.tsx"
   },
   {
+    "id": "CE-ROUTE-blog.index",
+    "file": "src/routes/blog.index.tsx"
+  },
+  {
+    "id": "CE-ROUTE-blog.mary-eliza-mahoney",
+    "file": "src/routes/blog.mary-eliza-mahoney.tsx"
+  },
+  {
+    "id": "CE-ROUTE-bolsas",
+    "file": "src/routes/bolsas.tsx"
+  },
+  {
+    "id": "CE-ROUTE-calculadoras-trabalhistas",
+    "file": "src/routes/calculadoras-trabalhistas.tsx"
+  },
+  {
+    "id": "CE-ROUTE-central-comando",
+    "file": "src/routes/central-comando.tsx"
+  },
+  {
+    "id": "CE-ROUTE-concurso",
+    "file": "src/routes/concurso.tsx"
+  },
+  {
+    "id": "CE-ROUTE-concursos",
+    "file": "src/routes/concursos.tsx"
+  },
+  {
     "id": "CE-ROUTE-conta",
     "file": "src/routes/conta.tsx"
   },
   {
+    "id": "CE-ROUTE-curiosidades",
+    "file": "src/routes/curiosidades.tsx"
+  },
+  {
+    "id": "CE-ROUTE-cursos-sus",
+    "file": "src/routes/cursos-sus.tsx"
+  },
+  {
+    "id": "CE-ROUTE-doencas-compulsorias",
+    "file": "src/routes/doencas-compulsorias.tsx"
+  },
+  {
+    "id": "CE-ROUTE-estudo",
+    "file": "src/routes/estudo.tsx"
+  },
+  {
+    "id": "CE-ROUTE-exames-laboratoriais",
+    "file": "src/routes/exames-laboratoriais.tsx"
+  },
+  {
+    "id": "CE-ROUTE-ferramentas-pesquisa",
+    "file": "src/routes/ferramentas-pesquisa.tsx"
+  },
+  {
     "id": "CE-ROUTE-ferramentas.$slug",
     "file": "src/routes/ferramentas.$slug.tsx"
+  },
+  {
+    "id": "CE-ROUTE-forum",
+    "file": "src/routes/forum.tsx"
   },
   {
     "id": "CE-ROUTE-index",
@@ -70,6 +134,26 @@ export const contractRoutes = [
     "file": "src/routes/institucional.tsx"
   },
   {
+    "id": "CE-ROUTE-kids.$section",
+    "file": "src/routes/kids.$section.tsx"
+  },
+  {
+    "id": "CE-ROUTE-kids.colorir",
+    "file": "src/routes/kids.colorir.tsx"
+  },
+  {
+    "id": "CE-ROUTE-kids.index",
+    "file": "src/routes/kids.index.tsx"
+  },
+  {
+    "id": "CE-ROUTE-kids.jogos",
+    "file": "src/routes/kids.jogos.tsx"
+  },
+  {
+    "id": "CE-ROUTE-kids",
+    "file": "src/routes/kids.tsx"
+  },
+  {
     "id": "CE-ROUTE-login",
     "file": "src/routes/login.tsx"
   },
@@ -90,8 +174,20 @@ export const contractRoutes = [
     "file": "src/routes/oficina-local.tsx"
   },
   {
+    "id": "CE-ROUTE-oportunidades",
+    "file": "src/routes/oportunidades.tsx"
+  },
+  {
     "id": "CE-ROUTE-pacote",
     "file": "src/routes/pacote.tsx"
+  },
+  {
+    "id": "CE-ROUTE-residencias",
+    "file": "src/routes/residencias.tsx"
+  },
+  {
+    "id": "CE-ROUTE-sbar",
+    "file": "src/routes/sbar.tsx"
   },
   {
     "id": "CE-ROUTE-secao.$slug",
@@ -104,6 +200,14 @@ export const contractRoutes = [
   {
     "id": "CE-ROUTE-sistema",
     "file": "src/routes/sistema.tsx"
+  },
+  {
+    "id": "CE-ROUTE-vagas",
+    "file": "src/routes/vagas.tsx"
+  },
+  {
+    "id": "CE-ROUTE-viladocuidado",
+    "file": "src/routes/viladocuidado.tsx"
   }
 ] as const;
 export const contractTools = [
@@ -138,6 +242,10 @@ export const contractTools = [
 ] as const;
 export const contractComponents = [
   {
+    "id": "CE-COMP-agent-roster",
+    "file": "src/components/site/agent-roster.tsx"
+  },
+  {
     "id": "CE-COMP-app-link",
     "file": "src/components/site/app-link.tsx"
   },
@@ -152,6 +260,10 @@ export const contractComponents = [
   {
     "id": "CE-COMP-callout",
     "file": "src/components/site/callout.tsx"
+  },
+  {
+    "id": "CE-COMP-command-center",
+    "file": "src/components/site/command-center.tsx"
   },
   {
     "id": "CE-COMP-community",
@@ -936,6 +1048,10 @@ export const contractToolBindings = [
 ] as const;
 export const contractToolComponents = [
   {
+    "id": "CE-COMP-agent-roster",
+    "component_key": "agent-roster"
+  },
+  {
     "id": "CE-COMP-app-link",
     "component_key": "app-link"
   },
@@ -950,6 +1066,10 @@ export const contractToolComponents = [
   {
     "id": "CE-COMP-callout",
     "component_key": "callout"
+  },
+  {
+    "id": "CE-COMP-command-center",
+    "component_key": "command-center"
   },
   {
     "id": "CE-COMP-community",

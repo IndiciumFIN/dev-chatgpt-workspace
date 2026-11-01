@@ -9,6 +9,8 @@
  *   - label vazia, label igual ao nome técnico, label com acento ou caixa alta
  *   - tabela do dicionário sem linha no índice, ou linha do índice sem tabela
  *   - duas tabelas com a mesma label
+ *   - finalidade vazia: a tabela está no dicionário e o dicionário não diz o que ela responde
+ *   - chave primária declarada que não é a chave que o DDL declara
  *
  * Achado bloqueante de cobertura (HOLD_HUMAN, sai no relatório):
  *   - tabela do banco que o dicionário não cobre
@@ -44,6 +46,17 @@ export async function nomesDoIndice() {
   return [...texto.matchAll(/name:\s*"([a-z0-9_]+)"/g)].map((achado) => achado[1]);
 }
 
+/** Compara uma chave escrita com a chave medida, sem distinguir vírgula de "+". */
+export function mesmaChave(escrita, medida) {
+  const normaliza = (texto) =>
+    String(texto)
+      .split(/[,+]/)
+      .map((parte) => parte.trim().toLowerCase())
+      .filter(Boolean)
+      .join("+");
+  return normaliza(escrita) === normaliza(medida);
+}
+
 /**
  * @param {object} db        PGlite já com as migrations aplicadas
  * @param {string[]} nomesIndice  nomes de tabela declarados no índice em código
@@ -53,9 +66,28 @@ export async function auditar(db, nomesIndice) {
   const achados = [];
 
   const entidades = await db.query(
-    "select name, label, layer_id, purpose from schema_entity order by name",
+    "select name, label, layer_id, purpose, primary_key from schema_entity order by name",
   );
   const dicionario = entidades.rows;
+
+  // A chave que o DDL declara. O dicionário descreve o banco: quando ele afirma
+  // uma chave, tem que ser a chave que existe — e quando o DDL não declara
+  // nenhuma, o dicionário tem que dizer isso em vez de inventar uma coluna.
+  const chaves = await db.query(
+    `select c.relname as name, a.attname as col
+     from pg_constraint con
+     join pg_class c on c.oid = con.conrelid
+     join pg_namespace n on n.oid = c.relnamespace
+     join pg_attribute a on a.attrelid = c.oid and a.attnum = any(con.conkey)
+     where con.contype = 'p' and n.nspname = 'public'
+     order by c.relname, array_position(con.conkey, a.attnum)`,
+  );
+  const chaveReal = new Map();
+  for (const linha of chaves.rows) {
+    const lista = chaveReal.get(linha.name) ?? [];
+    lista.push(linha.col);
+    chaveReal.set(linha.name, lista);
+  }
 
   const labelsVistas = new Map();
   for (const entidade of dicionario) {
@@ -117,6 +149,37 @@ export async function auditar(db, nomesIndice) {
       });
     } else {
       labelsVistas.set(label, nome);
+    }
+
+    // A finalidade responde a pergunta que a tabela responde. Sem ela, a área
+    // admin mostra o nome de uso e não diz para que a coisa serve.
+    const finalidade = String(entidade.purpose ?? "").trim();
+    if (!finalidade) {
+      violacoes.push({
+        tipo: "finalidade-vazia",
+        tabela: nome,
+        detalhe: `schema_entity.purpose de "${nome}" está vazia: a tabela não diz o que ela responde.`,
+      });
+    }
+
+    // A chave declarada tem que ser a chave do DDL. Onde o DDL não declara
+    // chave, o dicionário tem que dizer isso — não inventar coluna.
+    const colunas = chaveReal.get(nome) ?? [];
+    const declarada = String(entidade.primary_key ?? "").trim();
+    if (colunas.length === 0) {
+      if (declarada && !/sem/i.test(declarada)) {
+        violacoes.push({
+          tipo: "chave-primaria-inventada",
+          tabela: nome,
+          detalhe: `o DDL de "${nome}" não declara chave primária e o dicionário declara "${declarada}".`,
+        });
+      }
+    } else if (!mesmaChave(declarada, colunas.join("+"))) {
+      violacoes.push({
+        tipo: "chave-primaria-divergente",
+        tabela: nome,
+        detalhe: `o dicionário declara a chave "${declarada}" e o DDL de "${nome}" declara "${colunas.join(" + ")}".`,
+      });
     }
   }
 
@@ -206,23 +269,52 @@ async function principal() {
   let relatorio = await auditar(db, nomesIndice);
 
   if (selfTest) {
-    // Quebra uma coisa de propósito: o portão tem que saber falhar.
-    const alvo = relatorio.contagens.tabelasNoDicionario > 0 ? "user" : null;
-    if (alvo) {
-      await db.query("update schema_entity set label = '' where name = $1", [alvo]);
-      relatorio = await auditar(db, nomesIndice);
-      console.log(`[self-test] removi a label de "${alvo}". O portão tem que acusar:`);
-      console.log(formatar(relatorio));
-      const acusou = relatorio.violacoes.some((v) => v.tabela === alvo);
-      console.log(
-        acusou
-          ? `[self-test] ok: o portão falhou e nomeou "${alvo}".`
-          : `[self-test] FALHA: o portão não acusou a label removida.`,
-      );
-      process.exit(acusou ? 0 : 1);
+    // Cada rodada quebra UMA coisa de propósito e exige que o portão acuse,
+    // nomeando a tabela. Um portão que passa em tudo não é garantia.
+    const rodadas = [
+      { tabela: "user", campo: "label", tipo: "label-vazia", valor: "" },
+      { tabela: "canonical_asset", campo: "purpose", tipo: "finalidade-vazia", valor: "" },
+      {
+        tabela: "canonical_divergence",
+        campo: "primary_key",
+        tipo: "chave-primaria-inventada",
+        valor: "code",
+      },
+    ];
+    const originais = new Map();
+    for (const rodada of rodadas) {
+      const atual = await db.query(`select ${rodada.campo} as valor from schema_entity where name = $1`, [
+        rodada.tabela,
+      ]);
+      originais.set(rodada.tabela, atual.rows[0]?.valor ?? null);
     }
-    console.log("[self-test] não há tabela para quebrar.");
-    process.exit(1);
+    let acusouTodas = true;
+    for (const rodada of rodadas) {
+      await db.query(`update schema_entity set ${rodada.campo} = $2 where name = $1`, [
+        rodada.tabela,
+        rodada.valor,
+      ]);
+      relatorio = await auditar(db, nomesIndice);
+      console.log(
+        `[self-test] quebrei ${rodada.campo} de "${rodada.tabela}". O portão tem que acusar ${rodada.tipo}:`,
+      );
+      console.log(formatar(relatorio));
+      const achado = relatorio.violacoes.find(
+        (v) => v.tabela === rodada.tabela && v.tipo === rodada.tipo,
+      );
+      const barrou = !indexAuditReleaseAllowed(relatorio);
+      console.log(
+        achado && barrou
+          ? `[self-test] ok: o portão falhou, nomeou "${rodada.tabela}" e barrou a passagem.`
+          : `[self-test] FALHA: o portão não acusou ${rodada.tipo} em "${rodada.tabela}".`,
+      );
+      if (!achado || !barrou) acusouTodas = false;
+      await db.query(`update schema_entity set ${rodada.campo} = $2 where name = $1`, [
+        rodada.tabela,
+        originais.get(rodada.tabela),
+      ]);
+    }
+    process.exit(acusouTodas ? 0 : 1);
   }
 
   const saida = formatar(relatorio);

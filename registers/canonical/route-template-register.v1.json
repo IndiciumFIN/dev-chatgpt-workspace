@@ -1,30 +1,39 @@
 {
   "schemaVersion": "1.1.0",
   "scope": "CE_PUBLIC_BACKUP_ONLY",
-  "generatedAt": "2026-10-23T02:06:07.395Z",
+  "generatedAt": "2026-11-01T18:54:14.876Z",
   "authority": "explicit-route-contracts-no-runtime-or-visual-homologation",
-  "templateKinds": [
-    "home",
-    "secao",
-    "artigo",
-    "guia",
-    "biblioteca",
-    "norma",
-    "ferramenta",
-    "editorial",
-    "area",
-    "aviso",
-    "entrada"
-  ],
+  "templateKinds": [],
   "summary": {
-    "files": 27,
-    "routesWithDefinition": 26,
+    "files": 53,
+    "routesWithDefinition": 52,
     "declaredVisualBindings": 24,
     "nonvisual": 3,
-    "unregistered": 0,
-    "errors": 0
+    "unregistered": 26,
+    "errors": 50
   },
   "records": [
+    {
+      "id": "route:$.tsx",
+      "file": "src/routes/$.tsx",
+      "route": "/$",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "75e3e7cf83d39811056d67c3449862ce4d0f05bae9426f0474443546a42843ea",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/home-page",
+        "@/components/site/shell",
+        "@/lib/content-object.functions",
+        "@/lib/seo",
+        "@/lib/sitemap-kind",
+        "@/lib/translate",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
     {
       "id": "route:__root.tsx",
       "file": "src/routes/__root.tsx",
@@ -56,6 +65,24 @@
       "imports": [
         "@/components/local/local-workbench-page",
         "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:album.tsx",
+      "file": "src/routes/album.tsx",
+      "route": "/album",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "e0c1610f620428e17c13b4bf725483e2fa038667538e411c9cd8f4c4413cc843",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/editorial/album.seed",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
       ]
     },
     {
@@ -118,7 +145,7 @@
       "surface": "page",
       "templateKind": "biblioteca",
       "templateBindingStatus": "DECLARED_UNTESTED",
-      "sourceSha256": "045d8ae0c3c901f98bdd12fef1709b3638a42bde980ada7c674cdeed5dba764c",
+      "sourceSha256": "e4419035af23c030ebc2d55c0829f51f8f1098fafb67c68c0f3521a81e4112f6",
       "imports": [
         "@/components/site/shell",
         "@/components/templates/library-canonical",
@@ -137,7 +164,7 @@
       "surface": "page",
       "templateKind": "biblioteca",
       "templateBindingStatus": "DECLARED_UNTESTED",
-      "sourceSha256": "d8e2593ca915c6d91ce8d2c7641659a47e5af095857678f0471450c4197aebf2",
+      "sourceSha256": "7ed80615f20123cc721784543745c2401724f83e2837ad9f4300c27230529d3e",
       "imports": [
         "@/components/site/shell",
         "@/components/templates/library-canonical",
@@ -191,16 +218,136 @@
       "surface": "page",
       "templateKind": "artigo",
       "templateBindingStatus": "DECLARED_UNTESTED",
-      "sourceSha256": "25b25afd801d463611e6c54d438d11930ffae95d0c3ea7a9b0cc9ea1d914b316",
+      "sourceSha256": "012441b3ac1c9c8cf3652ff3f767233e4f3ca2baff46e20fbbca96801bc2c097",
       "imports": [
         "@/components/article/article-page",
+        "@/components/article/curiosity-page",
         "@/components/site/related-content",
         "@/components/site/shell",
         "@/components/templates/biography-view",
         "@/lib/content/articles/index",
+        "@/lib/content/curiosidades/catalog",
+        "@/lib/content/curiosidades/load",
         "@/lib/seo",
         "@/lib/translate",
         "@tanstack/react-router",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:blog.index.tsx",
+      "file": "src/routes/blog.index.tsx",
+      "route": "/blog/",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "7f59c8efc1fd91cfa5028d6c279791a3c72dee88b48e67d1c1cc03266d3edc8f",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/content/curiosidades/catalog",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:blog.mary-eliza-mahoney.tsx",
+      "file": "src/routes/blog.mary-eliza-mahoney.tsx",
+      "route": "/blog/mary-eliza-mahoney",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "7b5370ef113d72d39bd0b269b05950bb5d29e69fff7a39d8b8856e27f8a4b68b",
+      "imports": [
+        "@/components/site/shell",
+        "@/components/templates/biography-view",
+        "@/lib/content-object.functions",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:bolsas.tsx",
+      "file": "src/routes/bolsas.tsx",
+      "route": "/bolsas",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "37df3ff1429e6a9d0998e945349ae1664d43a88bde0e41b983b70a473b3c7fa6",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:calculadoras-trabalhistas.tsx",
+      "file": "src/routes/calculadoras-trabalhistas.tsx",
+      "route": "/calculadoras-trabalhistas",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "98de0fc16aebdd1c5bdb366bdb6090f6b5afbaaa1c23d0f44e7649811e9969a8",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:central-comando.tsx",
+      "file": "src/routes/central-comando.tsx",
+      "route": "/central-comando",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "ddee0be5ad549a68537b0342e03903ccbac66c6bde19c3982b242dcb743d6d82",
+      "imports": [
+        "../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+        "../../registers/pmo/queue.v1.json",
+        "@/lib/central-command-tables",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:concurso.tsx",
+      "file": "src/routes/concurso.tsx",
+      "route": "/concurso",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "68ea7072944053a00aaa3739ddc63f36ab29fa42f6fc47996ca736083156e45e",
+      "imports": [
+        "@/components/career/curriculum-editor",
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:concursos.tsx",
+      "file": "src/routes/concursos.tsx",
+      "route": "/concursos",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "08edd0d28ba97b60c6783e79b554d6fe40ca7e541f3caabaae5a22bbed879c13",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
         "@tanstack/react-router"
       ]
     },
@@ -215,6 +362,119 @@
       "sourceSha256": "5ae59b0909a88c3c3756e32844db48f91cffe66acf9490894eae7760af36f881",
       "imports": [
         "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:curiosidades.tsx",
+      "file": "src/routes/curiosidades.tsx",
+      "route": "/curiosidades",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "a0516b7c48542a8a6b3115a025adb108868e31161bba72375bb1f22c979a5d3c",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/editorial/fun-facts.seed",
+        "@/lib/editorial/types",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:cursos-sus.tsx",
+      "file": "src/routes/cursos-sus.tsx",
+      "route": "/cursos-sus",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "e51ad93b3cc294353ba44963489af6e4819f65ca989630fd422f300647581aa7",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:doencas-compulsorias.tsx",
+      "file": "src/routes/doencas-compulsorias.tsx",
+      "route": "/doencas-compulsorias",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "beac64267f56c8ed7d30399e8b9fddc14c193796a52ef9d855dc56660bbffb77",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/saude-publica/doencas-compulsorias.data",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:estudo.tsx",
+      "file": "src/routes/estudo.tsx",
+      "route": "/estudo",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "279ba212a2104e835823e1352494169d3fe899fdb7b31f08eaff24ce4305c7c3",
+      "imports": [
+        "@/components/education/flashcards-panel",
+        "@/components/education/quizzes-panel",
+        "@/components/education/simulados-panel",
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/education/store",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:exames-laboratoriais.tsx",
+      "file": "src/routes/exames-laboratoriais.tsx",
+      "route": "/exames-laboratoriais",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "c649ce10ea1232bee63d1e105c436340860fc8f79cd319d6e9f8033800fbfe16",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/tools/exames-laboratoriais.data",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
+      ]
+    },
+    {
+      "id": "route:ferramentas-pesquisa.tsx",
+      "file": "src/routes/ferramentas-pesquisa.tsx",
+      "route": "/ferramentas-pesquisa",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "52ce998b494b32f3a689137688e04fd205675665278c6ee9745935bdaea08a58",
+      "imports": [
+        "@/components/research/pico-panel",
+        "@/components/research/references-panel",
+        "@/components/research/sources-panel",
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/research/store",
+        "@/lib/research/store",
+        "@tanstack/react-router",
+        "lucide-react",
+        "react"
       ]
     },
     {
@@ -233,6 +493,25 @@
         "@/lib/seo",
         "@/lib/tools/catalog",
         "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:forum.tsx",
+      "file": "src/routes/forum.tsx",
+      "route": "/forum",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "e4e4fab59cf92f40fc37bb3460204516aafe665b36a89c60d35d7f5ade629f40",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@/lib/editorial/forum-types",
+        "@/lib/editorial/forum.store",
+        "@tanstack/react-router",
+        "lucide-react",
         "react"
       ]
     },
@@ -321,6 +600,77 @@
       ]
     },
     {
+      "id": "route:kids.$section.tsx",
+      "file": "src/routes/kids.$section.tsx",
+      "route": "/kids/$section",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "e1fc1d5aeea03ece9d49f453fd8482f3ccfce0586cf8189bce0f8ede009eb3fa",
+      "imports": [
+        "@/components/vila/vila-hub",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:kids.colorir.tsx",
+      "file": "src/routes/kids.colorir.tsx",
+      "route": "/kids/colorir",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "b2a36a99f9614d957306333e908b4e551569eb934cf5a9264ea2cf007c7acd85",
+      "imports": [
+        "@/components/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:kids.index.tsx",
+      "file": "src/routes/kids.index.tsx",
+      "route": "/kids/",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "87daced55652dfb3d6741e14bc76590f6691f21ccb3c5230b759189c726057ad",
+      "imports": [
+        "@/components/vila/vila-hub",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:kids.jogos.tsx",
+      "file": "src/routes/kids.jogos.tsx",
+      "route": "/kids/jogos",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "40a4453f5bbb931fdb7eeeb902c5aad2fe5952cefafe8f90fadeb15831ad5fd7",
+      "imports": [
+        "@/components/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:kids.tsx",
+      "file": "src/routes/kids.tsx",
+      "route": "/kids",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "d6ce8b2d327948321ea925f1f4a418de57d30017c1a0b286f072979d4a0ce300",
+      "imports": [
+        "@tanstack/react-router"
+      ]
+    },
+    {
       "id": "route:login.tsx",
       "file": "src/routes/login.tsx",
       "route": "/login",
@@ -328,7 +678,7 @@
       "surface": "page",
       "templateKind": "entrada",
       "templateBindingStatus": "DECLARED_UNTESTED",
-      "sourceSha256": "87113a363d00ba8c796507e58735b37c73679597d5971ba98eecdf030f7aa733",
+      "sourceSha256": "e26203b1b562af3e9e80b321068df10031f17683d81753af58b096646f6012ee",
       "imports": [
         "@/lib/auth/client",
         "@/lib/auth/gates",
@@ -408,6 +758,21 @@
       ]
     },
     {
+      "id": "route:oportunidades.tsx",
+      "file": "src/routes/oportunidades.tsx",
+      "route": "/oportunidades",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "58dd63b31e16ccf16628112633051b1491d6920aca196cf7bfd65fcad5b43316",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
       "id": "route:pacote.tsx",
       "file": "src/routes/pacote.tsx",
       "route": "/pacote",
@@ -423,6 +788,37 @@
         "@/lib/site-data",
         "@/lib/tools/catalog",
         "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:residencias.tsx",
+      "file": "src/routes/residencias.tsx",
+      "route": "/residencias",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "1f5e7c28d94d31325969d04c15051a4426b1cb74711f130e39145fbcf2f72ec9",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:sbar.tsx",
+      "file": "src/routes/sbar.tsx",
+      "route": "/sbar",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "aac11e8c5d01394f8a69cfa9abdd3d960c402adfa6679444125c50202530b2d1",
+      "imports": [
+        "@/components/sbar/sbar-editor",
+        "@/components/site/page-hero",
+        "@/components/site/shell",
         "@tanstack/react-router"
       ]
     },
@@ -475,9 +871,89 @@
         "@/lib/site-data",
         "@tanstack/react-router"
       ]
+    },
+    {
+      "id": "route:vagas.tsx",
+      "file": "src/routes/vagas.tsx",
+      "route": "/vagas",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "51b3f27ab2832be5ac51b5bf3331ecbbfc4107c3a6711d0cf5941ff5df4cd792",
+      "imports": [
+        "@/components/site/page-hero",
+        "@/components/site/shell",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:viladocuidado.tsx",
+      "file": "src/routes/viladocuidado.tsx",
+      "route": "/viladocuidado",
+      "role": null,
+      "surface": null,
+      "templateKind": null,
+      "templateBindingStatus": "UNREGISTERED",
+      "sourceSha256": "5da18be9171e6f7adecea9714d96d5c5067b13c504eb29871a1975ed87baef10",
+      "imports": [
+        "@/components/vila/vila-page",
+        "@tanstack/react-router"
+      ]
     }
   ],
   "findings": {
-    "errors": []
+    "errors": [
+      "UNREGISTERED_ROUTE_FILE $.tsx",
+      "INVALID_TEMPLATE admin.tsx",
+      "UNREGISTERED_ROUTE_FILE album.tsx",
+      "INVALID_TEMPLATE assinante.ferramentas.$slug.tsx",
+      "INVALID_TEMPLATE assinante.tsx",
+      "INVALID_TEMPLATE bibliotecas.$slug.$object.tsx",
+      "INVALID_TEMPLATE bibliotecas.$slug.index.tsx",
+      "INVALID_TEMPLATE bibliotecas.index.tsx",
+      "INVALID_TEMPLATE blog.$slug.tsx",
+      "UNREGISTERED_ROUTE_FILE blog.index.tsx",
+      "UNREGISTERED_ROUTE_FILE blog.mary-eliza-mahoney.tsx",
+      "UNREGISTERED_ROUTE_FILE bolsas.tsx",
+      "UNREGISTERED_ROUTE_FILE calculadoras-trabalhistas.tsx",
+      "UNREGISTERED_ROUTE_FILE central-comando.tsx",
+      "UNREGISTERED_ROUTE_FILE concurso.tsx",
+      "UNREGISTERED_ROUTE_FILE concursos.tsx",
+      "INVALID_TEMPLATE conta.tsx",
+      "UNREGISTERED_ROUTE_FILE curiosidades.tsx",
+      "UNREGISTERED_ROUTE_FILE cursos-sus.tsx",
+      "UNREGISTERED_ROUTE_FILE doencas-compulsorias.tsx",
+      "UNREGISTERED_ROUTE_FILE estudo.tsx",
+      "UNREGISTERED_ROUTE_FILE exames-laboratoriais.tsx",
+      "UNREGISTERED_ROUTE_FILE ferramentas-pesquisa.tsx",
+      "INVALID_TEMPLATE ferramentas.$slug.tsx",
+      "UNREGISTERED_ROUTE_FILE forum.tsx",
+      "INVALID_TEMPLATE index.tsx",
+      "INVALID_TEMPLATE institucional.$hub.$page.tsx",
+      "INVALID_TEMPLATE institucional.$hub.index.tsx",
+      "INVALID_TEMPLATE institucional.$hub.tsx",
+      "INVALID_TEMPLATE institucional.index.tsx",
+      "INVALID_TEMPLATE institucional.tsx",
+      "UNREGISTERED_ROUTE_FILE kids.$section.tsx",
+      "UNREGISTERED_ROUTE_FILE kids.colorir.tsx",
+      "UNREGISTERED_ROUTE_FILE kids.index.tsx",
+      "UNREGISTERED_ROUTE_FILE kids.jogos.tsx",
+      "UNREGISTERED_ROUTE_FILE kids.tsx",
+      "INVALID_TEMPLATE login.tsx",
+      "INVALID_TEMPLATE modelos.$id.tsx",
+      "INVALID_TEMPLATE modelos.index.tsx",
+      "INVALID_TEMPLATE modelos.tsx",
+      "INVALID_TEMPLATE oficina-local.tsx",
+      "UNREGISTERED_ROUTE_FILE oportunidades.tsx",
+      "INVALID_TEMPLATE pacote.tsx",
+      "UNREGISTERED_ROUTE_FILE residencias.tsx",
+      "UNREGISTERED_ROUTE_FILE sbar.tsx",
+      "INVALID_TEMPLATE secao.$slug.tsx",
+      "INVALID_TEMPLATE sessao.tsx",
+      "INVALID_TEMPLATE sistema.tsx",
+      "UNREGISTERED_ROUTE_FILE vagas.tsx",
+      "UNREGISTERED_ROUTE_FILE viladocuidado.tsx"
+    ]
   }
 }

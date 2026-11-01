@@ -64,10 +64,10 @@ Gerado por `scripts/audit-cko-parity.mjs`. Nao editavel a mao.
 | `media_asset` | `BrandAsset` | DECLARADO-MORTO | 0 | 0 | — |
 | `privacy` | `PrivacyProfile` | DECLARADO-MORTO | 9 | 0 | `sensitive_capture`, `lgpd_capture`, `optional_context_fields`, `forbidden_fields`, `persistence`, `transmission`, `analytics`, `advertising`, `logs` |
 | `route` | `RotaContrato` | DECLARADO-MORTO | 0 | 0 | — |
-| `authority_binding` | `AuthorityBinding` | PARCIAL | 9 | 4 | `requirement_id`, `validity`, `validator_ids`, `evidence_bundle_ids`, `exception_reason` |
+| `authority_binding` | `AuthorityBinding` | PARCIAL | 9 | 7 | `validity`, `exception_reason` |
 | `clinical_result` | `ResultadoContrato` | PARCIAL | 8 | 1 | `tool_ref`, `raw_value_ref`, `normalized_value_ref`, `precision_policy_ref`, `interpretation_ref`, `replay_hash_ref`, `unit_ref` |
-| `component` | `ComponenteContrato` | PARCIAL | 10 | 1 | `owner_module`, `semantic_role`, `props_schema_ref`, `state_machine_ref`, `design_system_token_refs`, `a11y_profile_ref`, `reusability_scope`, `deprecated_aliases`, `exceptions` |
+| `component` | `ComponenteContrato` | PARCIAL | 10 | 3 | `owner_module`, `props_schema_ref`, `state_machine_ref`, `design_system_token_refs`, `a11y_profile_ref`, `reusability_scope`, `deprecated_aliases` |
 | `field_definition` | `CampoDefinido` | PARCIAL | 10 | 2 | `semantic_concept_ref`, `value_type`, `privacy_policy`, `applicability_ref`, `unit_ref`, `validation_rule_ids`, `message_key`, `allowed_values_ref` |
-| `interpretation` | `InterpretacaoContrato` | PARCIAL | 8 | 1 | `result_ref`, `rule_refs`, `population_ref`, `limitations`, `evidence_refs`, `review_state`, `display_message_key` |
-| `source` | `FonteNormativa` | PARCIAL | 13 | 8 | `retrieved_at`, `effective_from`, `effective_until`, `license_ref`, `citacao` |
-| `tool` | `ToolContrato` | PARCIAL | 28 | 4 | `input_bindings`, `engine_ref`, `result_schema_ref`, `privacy_profile`, `safety_profile`, `test_vector_refs`, `inference_policy_ref`, `ui_profile_ref`, `output_precision_policy_ref`, `authority_binding_refs`, `field_definition_refs`, `formula_ref`, `rule_refs`, `interpretation_ref`, `result_ref`, `component_refs`, `about_tool`, `required_fields`, `conditional_fields`, `evidence_refs`, `patient_safety`, `seo_profile_ref`, `i18n_profile_ref`, `analytics_profile_ref` |
+| `interpretation` | `InterpretacaoContrato` | PARCIAL | 8 | 3 | `result_ref`, `rule_refs`, `population_ref`, `limitations`, `display_message_key` |
+| `source` | `FonteNormativa` | PARCIAL | 13 | 13 | — |
+| `tool` | `ToolContrato` | PARCIAL | 28 | 6 | `input_bindings`, `engine_ref`, `result_schema_ref`, `safety_profile`, `test_vector_refs`, `inference_policy_ref`, `ui_profile_ref`, `output_precision_policy_ref`, `authority_binding_refs`, `field_definition_refs`, `formula_ref`, `rule_refs`, `interpretation_ref`, `result_ref`, `component_refs`, `about_tool`, `required_fields`, `conditional_fields`, `patient_safety`, `seo_profile_ref`, `i18n_profile_ref`, `analytics_profile_ref` |

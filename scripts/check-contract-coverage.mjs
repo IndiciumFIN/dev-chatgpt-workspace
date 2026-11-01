@@ -282,8 +282,18 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
   const bindingPorCampo = new Map(bindings.filter((b) => b.field_path).map((b) => [b.field_path, b]));
 
   // ── CKO-POL-R-002: fonte sem jurisdiction/rights/integridade nao e autoridade
+  // Integridade declarada: hash real (64 hex, nao zeros) OU NOT_AVAILABLE com motivo
+  // e artifact_ref declarado. 64 zeros e um placeholder, nao integridade.
+  const shaReal = (f) => {
+    const sha = f?.integrity?.sha256;
+    if (typeof sha !== "string") return false;
+    if (/^[0-9a-f]{64}$/.test(sha) && sha !== "0".repeat(64)) return true;
+    return sha === "NOT_AVAILABLE"
+      && typeof f.integrity?.reason === "string" && f.integrity.reason.trim() !== ""
+      && "artifact_ref" in f.integrity;
+  };
   const fonteIncompleta = fontes.filter(
-    (f) => !f.jurisdiction || !f.rights || !f.integrity?.sha256 || !f.locator?.pinpoint,
+    (f) => !f.jurisdiction || !f.rights || !shaReal(f) || !f.locator?.pinpoint,
   );
   check("CE-TOOLS:fonte-com-jurisdicao-rights-integridade", fonteIncompleta.length === 0,
     fonteIncompleta.length
@@ -325,8 +335,12 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
 
   // ── UTC-016: contexto assistencial opcional, mascarado e sem captura LGPD
   const contexto = bindings.filter((b) => (b.canonical_id ?? "").startsWith("AB-CTX-"));
+  // Vocabulário canónico: `authority_class` do contrato `authority_binding`
+  // (INTERNAL_NONCLINICAL) e `decision` do mesmo contrato (ALLOW | HOLD_HUMAN |
+  // REJECT | NOT_APPLICABLE_JUSTIFIED). Os valores legados INTERNAL_CONFIG/BOUND
+  // nao pertencem a nenhum enum do catalogo CKO (medido em 01/11/2026).
   const contextoRuim = contexto.filter(
-    (b) => b.authority_class !== "INTERNAL_CONFIG" || b.decision !== "BOUND",
+    (b) => b.authority_class !== "INTERNAL_NONCLINICAL" || !["HOLD_HUMAN", "ALLOW", "NOT_APPLICABLE_JUSTIFIED"].includes(b.decision),
   );
   check("CE-TOOLS:contexto-como-config-interna-governada", contextoRuim.length === 0,
     contextoRuim.length ? contextoRuim.map((b) => b.canonical_id).join(", ") : `${contexto.length} campos de contexto como configuracao interna governada`);

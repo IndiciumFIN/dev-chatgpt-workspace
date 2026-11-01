@@ -227,6 +227,14 @@ export async function withSqlTransaction<T>(fn: (sql: Sql) => Promise<T>): Promi
   }
 }
 
+/** Public read. The role only sees published text; the role ends with the transaction. */
+export async function withReader<T>(fn: (sql: Sql) => Promise<T>): Promise<T> {
+  return withSqlTransaction(async (sql) => {
+    await sql.query("set local role leitor");
+    return fn(sql);
+  });
+}
+
 /**
  * The shared PGLite instance (preview only), with `migrations/*.sql` applied.
  * Lets Better Auth persist to the SAME embedded DB as app data in preview (via a

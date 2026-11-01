@@ -30,4 +30,22 @@ test("o papel leitor não vê rascunho", async () => {
 
   const owner = await db.query<{ view: string }>("select view from content_text where slug = 'rls-prova' order by view");
   assert.deepEqual(owner.rows.map((row) => row.view), ["calculadora", "leitura"]);
+
+  await db.exec(`
+    insert into content_alias (path, slug, locale, view) values
+      ('/rls-prova', 'rls-prova', 'pt-BR', 'leitura'),
+      ('/rls-prova-rascunho', 'rls-prova', 'pt-BR', 'calculadora');
+  `);
+  await db.transaction(async (tx) => {
+    await tx.exec("set local role leitor");
+    const published = await tx.query<{ path: string }>(
+      `select a.path
+       from content_alias a
+       join content_object o on o.slug = a.slug
+       join content_text t on t.slug = a.slug and t.locale = a.locale and t.view = a.view
+       where t.status = 'publicado' and a.slug = 'rls-prova'
+       order by a.path`,
+    );
+    assert.deepEqual(published.rows.map((row) => row.path), ["/rls-prova"]);
+  });
 });

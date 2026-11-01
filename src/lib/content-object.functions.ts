@@ -36,54 +36,55 @@ function assertPath(path: string) {
 export const readPublishedContent = createServerFn({ method: "GET" })
   .inputValidator(assertPath)
   .handler(async ({ data }): Promise<PublishedContent | null> => {
-    const { getSql } = await import("@/lib/db");
-    const sql = await getSql();
-    const rows = await sql.query<{
-      path: string;
-      locale: string;
-      kind: string;
-      title: string;
-      lead: string;
-      body: string;
-      origin_path: string;
-      slug: string;
-      view: string;
-    }>(
-      `select a.path, a.locale, o.kind, t.title, t.lead, t.body, o.origin_path, o.slug, a.view
-       from content_alias a
-       join content_object o on o.slug = a.slug
-       join content_text t on t.slug = a.slug and t.locale = a.locale and t.view = a.view
-       where a.path = $1 and t.status = 'publicado'`,
-      [data],
-    );
-    const row = rows[0];
-    if (!row) return null;
-    const editions = await sql.query<{ path: string }>(
-      `select a.path
-       from content_alias a
-       join content_text t on t.slug = a.slug and t.locale = a.locale and t.view = a.view
-       where a.slug = $1 and a.view = $2 and t.status = 'publicado'
-       order by a.locale`,
-      [row.slug, row.view],
-    );
-    const kind = row.view === "formulario"
-      ? "guia"
-      : row.view === "calculadora"
-        ? "ferramenta"
-        : row.kind === "simulado"
-          ? "secao"
-          : templateKind[row.kind] ?? "secao";
-    return {
-      path: row.path,
-      locale: row.locale,
-      kind,
-      title: row.title,
-      lead: row.lead,
-      body: row.body,
-      status: "publicado",
-      canonical_path: row.origin_path,
-      slug: row.slug,
-      view: row.view,
-      editions: editions.map((item) => editionOf(item.path)),
-    };
+    const { withReader } = await import("@/lib/db");
+    return withReader(async (sql) => {
+      const rows = await sql.query<{
+        path: string;
+        locale: string;
+        kind: string;
+        title: string;
+        lead: string;
+        body: string;
+        origin_path: string;
+        slug: string;
+        view: string;
+      }>(
+        `select a.path, a.locale, o.kind, t.title, t.lead, t.body, o.origin_path, o.slug, a.view
+         from content_alias a
+         join content_object o on o.slug = a.slug
+         join content_text t on t.slug = a.slug and t.locale = a.locale and t.view = a.view
+         where a.path = $1 and t.status = 'publicado'`,
+        [data],
+      );
+      const row = rows[0];
+      if (!row) return null;
+      const editions = await sql.query<{ path: string }>(
+        `select a.path
+         from content_alias a
+         join content_text t on t.slug = a.slug and t.locale = a.locale and t.view = a.view
+         where a.slug = $1 and a.view = $2 and t.status = 'publicado'
+         order by a.locale`,
+        [row.slug, row.view],
+      );
+      const kind = row.view === "formulario"
+        ? "guia"
+        : row.view === "calculadora"
+          ? "ferramenta"
+          : row.kind === "simulado"
+            ? "secao"
+            : templateKind[row.kind] ?? "secao";
+      return {
+        path: row.path,
+        locale: row.locale,
+        kind,
+        title: row.title,
+        lead: row.lead,
+        body: row.body,
+        status: "publicado" as const,
+        canonical_path: row.origin_path,
+        slug: row.slug,
+        view: row.view,
+        editions: editions.map((item) => editionOf(item.path)),
+      };
+    });
   });

@@ -1,5 +1,3 @@
-import type { EstadoContrato } from "./contracts";
-
 export type ToolKind = "escala" | "calculadora";
 
 export type Choice = { value: number; label: string };
@@ -43,8 +41,7 @@ export type Band = {
 
 export type OutputSpec = { id: string; label: string; unit: string; digits: number };
 
-
-export type ComputeResult = { outputs: Record<string, number> } | { error: string };
+export type ComputeResult = { outputs: Record<string, number>; texts?: Record<string, string> } | { error: string };
 
 export type ClinicalTool = {
   slug: string;
@@ -63,41 +60,15 @@ export type ClinicalTool = {
   howTo: string[];
   faqs: { q: string; a: string }[];
   references: string[];
-  /**
-   * Estado de PUBLICACAO da ferramenta.
-   *
-   *   "publicada"  — homologada e no indice. As cinco ferramentas herdadas.
-   *   "candidata"  — governada, com fonte e bindings, mas ainda sem a
-   *                  homologacao humana que a politica exige. Fica
-   *                  ALCANCAVEL para revisao e FORA do indice.
-   *
-   * A Aldrete e a primeira "candidata": seu proprio relatorio de validacao
-   * carrega 7 HOLDs (FIND-CTR-009) e a politica diz que exemplares servem de
-   * testes, nao de autoridade.
-   */
-  publicacao?: "publicada" | "candidata";
-  /**
-   * Os HOLDs que impedem a homologacao. Declarados aqui porque a ferramenta
-   * candidata nao pode ser promovida sem eles — o gate exige que a lista
-   * exista e nao esteja vazia.
-   */
-  holds?: string[];
-  /**
-   * Estado do contrato, no vocabulario do CKO (`CANDIDATE` … `RELEASED`, com
-   * `HOLD_HUMAN` bloqueando). A camada Clinical Calculators/Scales herda HOLD
-   * enquanto o gate de MD do CKO-MD estiver fechado — ver `POLITICA_FERRAMENTAS`.
-   */
-  status?: EstadoContrato;
-  /**
-   * `canonical_id` das fontes normativas que sustentam o uso (ver
-   * `src/lib/tools/governance.ts`). A autoridade mora em `FonteNormativa`, com
-   * jurisdiction, rights, locator com pinpoint e integridade — nunca aqui.
-   */
-  sourceIds?: string[];
   related: string[];
   version?: string;
   evidence?: string;
   specific?: string[];
+  /** Candidata fica fora do menu até homologação humana. */
+  publicacao?: "candidata" | "publicada";
+  holds?: string[];
+  sourceIds?: string[];
+  status?: string;
 };
 
 export const disclaimer =

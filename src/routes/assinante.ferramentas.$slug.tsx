@@ -1,37 +1,30 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { AreaFrame, AreaGuard } from "@/components/site/areas";
 import { ClinicalToolPage } from "@/components/tools/clinical-tool";
-import { tools } from "@/lib/tools/catalog";
-import { localTool } from "@/lib/local-canonical";
-import { AreaFrame } from "@/components/site/areas";
+import { readTool } from "@/lib/source.functions";
+
 export const Route = createFileRoute("/assinante/ferramentas/$slug")({
-  loader: ({ params }) => {
-    const tool = tools.find(item => item.slug === params.slug);
-    if (!tool) throw notFound();
-    return { slug: tool.slug };
+  loader: async ({ params }) => {
+    const loaded = await readTool({ data: params.slug }).catch(() => null);
+    if (!loaded || !loaded.published) throw notFound();
+    return { tool: loaded.tool };
   },
-  head: () => ({ meta: [{ title: "Ferramenta · Área do assinante" }, { name: "robots", content: "noindex" }] }),
-  component: ToolRoute,
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: loaderData ? `${loaderData.tool.title} · Área do assinante` : "Ferramenta" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: AssinanteTool,
 });
-function ToolRoute() {
-  const { slug } = Route.useLoaderData();
-  const [state, setState] = useState<{ ready: boolean; tool: ReturnType<typeof localTool>; error: boolean }>({ ready: false, tool: undefined, error: false });
-  useEffect(() => {
-    function refresh() {
-      try { setState({ ready: true, tool: localTool(slug), error: false }); }
-      catch { setState({ ready: true, tool: undefined, error: true }); }
-    }
-    refresh();
-    window.addEventListener("storage", refresh);
-    window.addEventListener("cde-publication-updated", refresh);
-    return () => {
-      window.removeEventListener("storage", refresh);
-      window.removeEventListener("cde-publication-updated", refresh);
-    };
-  }, [slug]);
-  const content = !state.ready ? <p role="status">Carregando publicação local…</p>
-    : state.error ? <p role="alert">Registro local inválido. Revise a oficina administrativa.</p>
-    : !state.tool ? <p role="status">Ferramenta não publicada nesta base local.</p>
-    : <ClinicalToolPage key={state.tool.slug} tool={state.tool} area="assinante" />;
-  return <AreaFrame role="assinante">{content}</AreaFrame>;
+
+function AssinanteTool() {
+  const { tool } = Route.useLoaderData();
+  return (
+    <AreaGuard allow="member">
+      <AreaFrame role="assinante">
+        <ClinicalToolPage key={tool.slug} tool={tool} area="assinante" />
+      </AreaFrame>
+    </AreaGuard>
+  );
 }

@@ -5,7 +5,9 @@ import { AppLink } from "@/components/site/app-link";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { useChrome } from "@/lib/chrome";
 import { ensureRole, type SourceRole } from "@/lib/source.functions";
-import { accountNav, findByQuery, primaryNav, type NavNode } from "@/lib/nav";
+import type { NavNode } from "@/lib/nav";
+import { findByQuery } from "@/lib/nav-query";
+import { useStored } from "@/lib/stored";
 import type { Dest } from "@/lib/sections";
 import { navLabel } from "@/lib/translate";
 
@@ -29,9 +31,42 @@ function ItemLink({ node, className, onClick }: { node: NavNode; className?: str
   );
 }
 
-function AccountSlot({ className, onClick }: { className?: string; onClick?: () => void }) {
+export function AccountSlot({ className, onClick }: { className?: string; onClick?: () => void }) {
+  const { locale } = useChrome();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  return <span className={className}><Link to="/admin" className={pathname === '/admin' ? 'is-current' : ''} onClick={onClick}>Administração local</Link> · <Link to="/assinante" onClick={onClick}>Assinante</Link></span>;
+  const { user, isPending } = useCurrentUserState();
+  const [role, setRole] = useState<SourceRole | null>(null);
+  useEffect(() => {
+    if (isPending || !user) {
+      setRole(null);
+      return;
+    }
+    let live = true;
+    ensureRole()
+      .then((result) => {
+        if (live) setRole(result.role);
+      })
+      .catch(() => {
+        if (live) setRole(null);
+      });
+    return () => {
+      live = false;
+    };
+  }, [isPending, user?.id]);
+  if (isPending || (user && !role)) return <span className="auth-skeleton" aria-hidden="true" />;
+  const signedIn = Boolean(user && role);
+  const to = role === "admin" ? "/admin" : role === "subscriber" ? "/assinante" : "/login";
+  const label =
+    role === "admin"
+      ? navLabel("admin", "Administrador", locale)
+      : role === "subscriber"
+        ? navLabel("assinante", "Assinante", locale)
+        : navLabel("entrar", "Entrar", locale);
+  return (
+    <Link to={to} className={`${className ?? ""} ${pathname === to ? "is-current" : ""}`.trim()} onClick={onClick}>
+      {signedIn ? label : navLabel("entrar", "Entrar", locale)}
+    </Link>
+  );
 }
 
 function go(navigate: ReturnType<typeof useNavigate>, dest: Dest, query: string) {
@@ -44,12 +79,13 @@ function go(navigate: ReturnType<typeof useNavigate>, dest: Dest, query: string)
 
 export function SiteNav({ onNavigate }: { onNavigate?: () => void }) {
   const { locale, t } = useChrome();
+  const { nav, accountNav } = useStored();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const navigate = useNavigate();
   const [open, setOpen] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const items = primaryNav;
+  const items = [...nav, ...accountNav].filter((node) => node.id !== "entrar" && node.id !== "assinatura");
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -89,7 +125,7 @@ export function SiteNav({ onNavigate }: { onNavigate?: () => void }) {
 
   function onSearch(event: FormEvent) {
     event.preventDefault();
-    const dest = findByQuery(query);
+    const dest = findByQuery(query, [...nav, ...accountNav]);
     setSearchOpen(false);
     setOpen(null);
     onNavigate?.();
@@ -109,6 +145,19 @@ export function SiteNav({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <>
+      <button
+        className="search-toggle"
+        type="button"
+        aria-expanded={searchOpen}
+        aria-controls="busca-menu"
+        aria-label={t("search")}
+        onClick={() => {
+          setSearchOpen((value) => !value);
+          setOpen(null);
+        }}
+      >
+        <Search size={16} aria-hidden="true" />
+      </button>
       <nav id="menu-principal" className="desktop-nav" aria-label="Principal">
         {items.map((node) =>
           node.id === "entrar" ? (
@@ -164,14 +213,15 @@ export function SiteNav({ onNavigate }: { onNavigate?: () => void }) {
 
 export function MobileNav({ menuLabel, onNavigate }: { menuLabel: string; onNavigate?: () => void }) {
   const { locale, t } = useChrome();
+  const { nav, accountNav } = useStored();
   const navigate = useNavigate();
   const [group, setGroup] = useState<string | null>(null);
   const [query, setQuery] = useState("");
-  const items = primaryNav;
+  const items = [...nav, ...accountNav];
 
   function onSearch(event: FormEvent) {
     event.preventDefault();
-    const dest = findByQuery(query);
+    const dest = findByQuery(query, items);
     onNavigate?.();
     if (!dest) {
       void navigate({ to: "/secao/$slug", params: { slug: "calculadoras" }, search: { q: query } });

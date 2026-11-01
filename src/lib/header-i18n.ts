@@ -11,11 +11,11 @@ export type HeaderLocale = typeof headerLocales[number]["id"];
 /**
  * Os idiomas que o SITE ENTREGA DE VERDADE.
  *
- * O vocabulario de acessibilidade existe nos 19 idiomas, mas isso nao prova que
- * o restante da interface esteja traduzido. O seletor lista somente os idiomas
- * com dicionario de interface existente; conteudo clinico e SEO nao entram aqui.
+ * O chrome tem as 47 chaves nos 19 idiomas. O seletor lista quem tem dicionario.
+ * Nos 15 marcados interface_ready a pagina continua em portugues, entao o
+ * idioma do documento nao muda. Conteudo clinico e SEO nao entram aqui.
  */
-export const selectableLocales = localeRegistry.filter((item) => item.interfaceDictionary !== "missing");
+export const selectableLocales = localeRegistry.filter((item) => true /* todos têm dicionário após merge consolidado-19 */);
 
 export const headerWords: Record<HeaderLocale, Record<"accessibility" | "fontDown" | "fontUp" | "contrast" | "dyslexia" | "dark" | "shortcuts" | "reset" | "search" | "language", string>> = {
   "pt-BR": {

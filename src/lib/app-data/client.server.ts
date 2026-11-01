@@ -36,7 +36,10 @@ function connectorsBaseFor(publicHost: string | null): string | null {
 
   const host = publicHost?.toLowerCase();
   if (!host || isLoopbackHost(host)) return null;
-  if (host === "app-builder-testing.com" || host.endsWith(".app-builder-testing.com")) {
+  if (
+    host === "app-builder-testing.com" ||
+    host.endsWith(".app-builder-testing.com")
+  ) {
     return `https://${CONNECTORS_HOST_STAGING}`;
   }
   if (host === "grok.me" || host.endsWith(".grok.me")) {
@@ -56,7 +59,8 @@ function tryGetRequest(): Request | null {
 function inboundContext(): InboundContext {
   const req = tryGetRequest();
   const xf = req?.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const publicHost = (xf || req?.headers.get("host") || "").split(":")[0]?.trim() || null;
+  const publicHost =
+    (xf || req?.headers.get("host") || "").split(":")[0]?.trim() || null;
   const headerToken = req?.headers.get(CONNECTOR_TOKEN_HEADER)?.trim() || null;
   const envToken =
     process.env.NODE_ENV === "production"
@@ -79,6 +83,10 @@ export function getConnectorAccessToken(): string | null {
 
 export { isWorkspacePreview } from "../env.server.ts";
 
+// Digest of the last preview token the gate answered 401 for. The readiness
+// probe reports "not ready" while that exact token is still the one on the
+// request, so the client waits for the preview panel to push a fresh token
+// instead of re-calling the gate with a token already known to be rejected.
 let rejectedTokenDigest: string | null = null;
 
 function tokenDigest(token: string): string {
@@ -93,6 +101,11 @@ function noteTokenAccepted(token: string): void {
   if (rejectedTokenDigest === tokenDigest(token)) rejectedTokenDigest = null;
 }
 
+/**
+ * True when the inbound request carries a connector token the gate has not
+ * rejected. This is what the preview readiness probe reports; it never calls
+ * the gate.
+ */
 export function isConnectorTokenReady(): boolean {
   const token = inboundContext().token;
   return token !== null && tokenDigest(token) !== rejectedTokenDigest;
@@ -164,9 +177,14 @@ function gateSigninUrl(ctx: InboundContext): string | undefined {
     const gateHost = connectorsHost.replace(/^connectors\./, "gate.");
     if (gateHost === connectorsHost) return undefined;
     const publicHost = ctx.publicHost?.toLowerCase();
-    const gated = publicHost && !isLoopbackHost(publicHost) ? `https://${publicHost}` : undefined;
+    const gated =
+      publicHost && !isLoopbackHost(publicHost)
+        ? `https://${publicHost}`
+        : undefined;
     const signin = `https://${gateHost}/__gate/signin`;
-    return gated ? `${signin}?return_to=${encodeURIComponent(gated)}` : signin;
+    return gated
+      ? `${signin}?return_to=${encodeURIComponent(gated)}`
+      : signin;
   } catch {
     return undefined;
   }
@@ -188,6 +206,9 @@ function pendingTokenResult(reason: string): CallToolResult {
   };
 }
 
+// Deployed apps only reach here when the request bypassed the gate (the gate
+// injects the token on every proxied request), so a sign-in redirect cannot
+// fix it: no loginRequired / loginUrl.
 function missingAuthResult(): CallToolResult {
   if (isWorkspacePreview()) return pendingTokenResult(PENDING_TOKEN_MISSING);
   return {
@@ -210,7 +231,9 @@ function unauthorizedResult(
   }
   const loginUrl =
     gateSigninUrl(ctx) ??
-    (typeof json.loginUrl === "string" && json.loginUrl ? json.loginUrl : undefined);
+    (typeof json.loginUrl === "string" && json.loginUrl
+      ? json.loginUrl
+      : undefined);
   return {
     ok: false,
     data: null,
@@ -249,13 +272,13 @@ function tokenIdentityKey(token: string): string {
         };
         if (typeof sub === "string" && sub) {
           return createHash("sha256")
-            .update(JSON.stringify([sub, typeof teamId === "string" ? teamId : null]))
+            .update(
+              JSON.stringify([sub, typeof teamId === "string" ? teamId : null]),
+            )
             .digest("base64url");
         }
       }
-    } catch {
-      // ignore malformed token payload; fallback to raw-token hash below
-    }
+    } catch {}
   }
   return createHash("sha256").update(token).digest("base64url");
 }

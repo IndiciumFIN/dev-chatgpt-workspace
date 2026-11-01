@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/fun_fact.schema.json",
+  "title": "CKO | fun_fact",
+  "description": "Curiosidade ou fato histórico sobre a enfermagem. Deriva de learning_resource.schema.json (resource_type=ARTICLE) com campos específicos para fatos curtos, fonte e categorização temática.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "title",
+    "body_text",
+    "fact_type",
+    "category",
+    "source_id",
+    "rights_status"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "canonical_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$" },
+    "version": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["CANDIDATE","DRAFT","SOURCE_QUALIFIED","EVIDENCE_BOUND","REVIEW_REQUIRED","HOLD_HUMAN","ASSURED","ELIGIBLE_FOR_RELEASE","RELEASED","RETIRED"]
+    },
+    "updated_at": { "type": "string", "format": "date" },
+    "provenance_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "title": { "type": "string", "minLength": 1, "description": "Título curto da curiosidade." },
+    "body_text": { "type": "string", "minLength": 1, "description": "Texto da curiosidade (1-3 parágrafos)." },
+    "fact_type": {
+      "type": "string",
+      "enum": ["HISTORICAL","BIOGRAPHICAL","SCIENTIFIC","CULTURAL","STATISTICAL","ETYMOLOGICAL","PROFESSIONAL","OTHER"]
+    },
+    "category": {
+      "type": "string",
+      "enum": ["HISTORY","PIONEERS","WARS","BRAZIL","SPECIALTIES","EDUCATION","TECHNOLOGY","PROFESSION","FUNDS_AND_AWARDS","OTHER"]
+    },
+    "year_ref": { "type": "integer", "minimum": 1800, "maximum": 2100, "description": "Ano do evento relatado." },
+    "person_ref": { "type": "string", "description": "Pessoa referenciada (ex.: Florence Nightingale)." },
+    "source_id": { "type": "string", "minLength": 1, "description": "Source ID canônico que sustenta o fato." },
+    "rights_status": {
+      "type": "string",
+      "enum": ["UNKNOWN","CLEAR","LICENSED","HOLD","PUBLIC_DOMAIN"]
+    },
+    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "estimated_reading_seconds": { "type": "integer", "minimum": 10, "maximum": 600 }
+  }
+}

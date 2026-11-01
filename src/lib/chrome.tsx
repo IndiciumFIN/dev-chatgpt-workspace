@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useRouter, useRouterState } from "@tanstack/react-router";
 import { parseLocale } from "@/lib/translate";
-import { contentLocale } from "@/lib/locale-registry";
+import { useStored } from "@/lib/stored";
 
-import type { HeaderLocale } from "@/lib/header-i18n";
-export type Locale = HeaderLocale;
+export type Locale = "pt-BR" | "en" | "es" | "fr";
 export type FontStep = "sm" | "md" | "lg";
 export type FocusColor = "yellow" | "lime" | "cyan" | "magenta";
 export type OptionalConsent = { translation: boolean; audience: boolean };
@@ -51,6 +50,8 @@ const copy = {
     dyslexia: "Dislexia",
     dark: "Escuro",
     shortcuts: "Atalhos",
+    a11y: "Acessibilidade",
+    language: "Idioma",
     reset: "Reset",
     fontDown: "A− diminuir fonte",
     fontUp: "A+ aumentar fonte",
@@ -100,6 +101,8 @@ const copy = {
     dyslexia: "Dyslexia",
     dark: "Dark",
     shortcuts: "Shortcuts",
+    a11y: "Accessibility",
+    language: "Language",
     reset: "Reset",
     fontDown: "A− decrease text",
     fontUp: "A+ increase text",
@@ -149,6 +152,8 @@ const copy = {
     dyslexia: "Dislexia",
     dark: "Oscuro",
     shortcuts: "Atajos",
+    a11y: "Accesibilidad",
+    language: "Idioma",
     reset: "Restablecer",
     fontDown: "A− reducir texto",
     fontUp: "A+ aumentar texto",
@@ -198,6 +203,8 @@ const copy = {
     dyslexia: "Dyslexie",
     dark: "Sombre",
     shortcuts: "Raccourcis",
+    a11y: "Accessibilité",
+    language: "Langue",
     reset: "Réinitialiser",
     fontDown: "A− réduire le texte",
     fontUp: "A+ agrandir le texte",
@@ -232,13 +239,20 @@ const copy = {
 const ChromeContext = createContext<ChromeState | null>(null);
 
 export function ChromeProvider({ children }: { children: ReactNode }) {
+  const stored = useStored();
   const router = useRouter();
   const routerRef = useRef(router);
   routerRef.current = router;
   const urlLang = useRouterState({
     select: (state) => parseLocale((state.location.search as { lang?: unknown }).lang),
   });
-  const [locale, setLocaleState] = useState<Locale>(urlLang ?? "pt-BR");
+  const pathLang = useRouterState({
+    select: (state) => {
+      const top = state.location.pathname.replace(/^\//, "").split("/")[0];
+      return top === "en" || top === "es" || top === "fr" ? top : undefined;
+    },
+  });
+  const [locale, setLocaleState] = useState<Locale>(urlLang ?? pathLang ?? "pt-BR");
   const [font, setFontState] = useState<FontStep>("sm");
   const [contrast, setContrastState] = useState(false);
   const [focus, setFocusState] = useState<FocusColor>("yellow");
@@ -274,9 +288,13 @@ export function ChromeProvider({ children }: { children: ReactNode }) {
       }
     }
     const fromUrl = parseLocale(new URLSearchParams(window.location.search).get("lang"));
+    const top = window.location.pathname.replace(/^\//, "").split("/")[0];
+    const fromPath = top === "en" || top === "es" || top === "fr" ? top : undefined;
     if (fromUrl) {
       setLocaleState(fromUrl);
       localStorage.setItem("cde-locale", fromUrl);
+    } else if (fromPath) {
+      setLocaleState(fromPath);
     } else if (storedLocale === "en" || storedLocale === "es" || storedLocale === "fr") {
       setLocaleState(storedLocale);
       const url = new URL(window.location.href);
@@ -286,17 +304,16 @@ export function ChromeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!urlLang) return;
-    setLocaleState(urlLang);
-  }, [urlLang]);
+    if (urlLang) {
+      setLocaleState(urlLang);
+      return;
+    }
+    if (pathLang) setLocaleState(pathLang);
+  }, [urlLang, pathLang]);
 
   useEffect(() => {
     const root = document.documentElement;
-    // O idioma do TEXTO que esta na tela, nao o idioma escolhido. Para os 15
-    // idiomas sem dicionario de interface, a pagina esta em portugues e
-    // dizer `lang="ja"` quebra a pronuncia do leitor de tela (WCAG 3.1.1).
-    root.lang = contentLocale(locale);
-    root.dir = locale === "ar" ? "rtl" : "ltr";
+    root.lang = locale;
     root.dataset.font = font;
     root.dataset.contrast = contrast ? "high" : "off";
     root.dataset.focus = focus;
@@ -361,9 +378,9 @@ export function ChromeProvider({ children }: { children: ReactNode }) {
       resetA11y,
       consent,
       setConsent,
-      t: (key) => (copy[locale as keyof typeof copy] ?? copy["pt-BR"])[key],
+      t: (key) => stored.labels.find((row) => row.groupId === "chrome" && row.locale === locale && row.key === key)?.text ?? copy[locale][key],
     };
-  }, [locale, font, contrast, focus, dyslexia, theme, consent]);
+  }, [locale, font, contrast, focus, dyslexia, theme, consent, stored.labels]);
 
   return <ChromeContext.Provider value={value}>{children}</ChromeContext.Provider>;
 }

@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { ReferenceList } from "@/components/article/pieces";
 import { ClinicalForm, type ClinicalPatient } from "@/components/tools/clinical-form";
 import { hasBlock } from "@/lib/component-contract";
-import { contractOf } from "@/lib/template-contract";
 import { ClinicalSheet } from "@/components/tools/clinical-sheet";
 import { ToolEcosystem, ToolFeedback, ToolMeta, ToolTutorial, ToolViewBar, useToolView } from "@/components/tools/tool-desk";
 import { Breadcrumb } from "@/components/site/breadcrumb";
@@ -13,14 +12,13 @@ import { evaluateFormula, evaluateScale, formatNumber, type ToolFailure, type To
 import { getTool, tools } from "@/lib/tools/catalog";
 import { disclaimer, type ClinicalTool } from "@/lib/tools/types";
 import { downloadDocx } from "@/lib/docx";
-import { paraFicha } from "@/lib/tools/privacy";
 import { useChrome } from "@/lib/chrome";
 
 type Patient = ClinicalPatient;
 
 function resultText(result: ToolSuccess) {
   const base = result.outputs
-    ? result.outputs.map((output) => `${output.label}: ${formatNumber(output.value, output.digits)} ${output.unit}`).join(" · ")
+    ? result.outputs.map((output) => output.text ?? `${output.label}: ${formatNumber(output.value, output.digits)} ${output.unit}`).join(" · ")
     : `${result.totalLabel}: ${result.total}`;
   return result.band ? `${base} · ${result.band.label}` : base;
 }
@@ -76,10 +74,10 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
       { text: tool.title, bold: true },
       ...(hasBlock(tool.kind, "paciente")
         ? [
-            { text: `Paciente: ${paraFicha("nome", patient.nome)}` },
-            { text: `Idade: ${paraFicha("idade", patient.idade)}` },
-            { text: `Unidade / leito: ${paraFicha("setor", patient.setor)}` },
-            { text: `Data: ${paraFicha("data", patient.data)}` },
+            { text: `Paciente: ${patient.nome || "Não informado"}` },
+            { text: `Idade: ${patient.idade || "Não informada"}` },
+            { text: `Unidade / leito: ${patient.setor || "Não informado"}` },
+            { text: `Data: ${patient.data || "Não informada"}` },
           ]
         : []),
       ...(tool.metaFields ?? []).map((field) => ({
@@ -160,7 +158,6 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
       <PageHero eyebrow={tool.category} title={tool.title} lead={tool.lead} />
       <PageTools kind="ferramenta" onDocx={saveDoc} onClear={clearCalc} />
 
-      {contractOf("ferramenta").resources.includes("formulario") ? (
       <ClinicalForm
         tool={tool}
         patient={patient}
@@ -176,10 +173,7 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
         onClearPatient={() => setPatient(emptyPatient(tool))}
         compact={compact}
       />
-      ) : null}
-      {contractOf("ferramenta").resources.includes("laudo") ? (
-        <ClinicalSheet tool={tool} patient={patient} raw={raw} answers={answers} notes={notes} result={result} />
-      ) : null}
+      <ClinicalSheet tool={tool} patient={patient} raw={raw} answers={answers} notes={notes} result={result} />
       <ToolMeta tool={tool} />
       <ToolViewBar view={view} onChange={change} />
       <div className="tool-switch no-print">

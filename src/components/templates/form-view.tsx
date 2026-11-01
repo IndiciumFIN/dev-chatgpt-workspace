@@ -2,14 +2,9 @@ import { useState, type FormEvent } from "react";
 import { ArticlePage } from "@/components/article/article-page";
 import { Callout } from "@/components/site/callout";
 import { RelatedContent } from "@/components/site/related-content";
+import { lorem } from "@/lib/lorem";
 
-const checks = [
-  "Carrinho em local acessível e sem obstrução",
-  "Identificação das gavetas legível",
-  "Estrutura, rodízios e travas íntegros",
-  "Desfibrilador testado conforme o protocolo",
-  "Lacre conferido",
-];
+const checks = [lorem("Item um"), lorem("Item dois"), lorem("Item três"), lorem("Item quatro"), lorem("Item cinco")];
 
 export function FormView() {
   const [sent, setSent] = useState(false);
@@ -23,9 +18,9 @@ export function FormView() {
     <ArticlePage
       kind="editorial"
       crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: "Formulário" }]}
-      eyebrow="Documento institucional"
-      title="Checklist do carrinho de emergência"
-      lead="Modelo preenchível para conferência de plantão. O que for digitado fica só nesta tela e some ao sair. Não grava paciente, cookie nem banco."
+      eyebrow="Amostra visual"
+      title="Formulário"
+      lead={lorem("Checklist preenchível. O que for digitado fica só nesta tela. O impresso da instituição fica na seção.")}
       related={
         <RelatedContent
           items={[
@@ -36,7 +31,7 @@ export function FormView() {
       }
     >
       <Callout>
-        <strong>Modelo para validação.</strong> Quantidades, medicamentos e periodicidade precisam ser os da instituição. Este impresso não é prescrição.
+        <strong>{lorem("Amostra")}</strong> {lorem("Os campos desta tela não gravam e não substituem o impresso da seção.")}
       </Callout>
       {sent ? (
         <p>Conferência anotada só nesta tela. Nada foi enviado.</p>

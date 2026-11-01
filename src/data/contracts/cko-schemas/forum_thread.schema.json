@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/forum_thread.schema.json",
+  "title": "CKO | forum_thread",
+  "description": "Thread de fórum de discussão para profissionais de enfermagem. Combina post inicial + respostas + tags + categorização. Deriva de learning_resource.schema.json (resource_type=ARTICLE) com estrutura de discussão.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "title",
+    "body_text",
+    "author_id",
+    "category",
+    "visibility",
+    "moderation_status"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "canonical_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$" },
+    "version": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["CANDIDATE","DRAFT","SOURCE_QUALIFIED","EVIDENCE_BOUND","REVIEW_REQUIRED","HOLD_HUMAN","ASSURED","ELIGIBLE_FOR_RELEASE","RELEASED","RETIRED"]
+    },
+    "updated_at": { "type": "string", "format": "date" },
+    "provenance_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "title": { "type": "string", "minLength": 5, "maxLength": 200, "description": "Título do tópico." },
+    "body_text": { "type": "string", "minLength": 10, "description": "Texto do post inicial." },
+    "author_id": { "type": "string", "minLength": 1, "description": "ID do autor (Coren, ORCID, ou pseudônimo)." },
+    "author_display_name": { "type": "string", "description": "Nome de exibição do autor." },
+    "author_role": {
+      "type": "string",
+      "enum": ["NURSE","TECHNICIAN","STUDENT","PROFESSOR","COORDINATOR","OTHER"]
+    },
+    "category": {
+      "type": "string",
+      "enum": ["CLINICAL_PRACTICE","MANAGEMENT","EDUCATION","RESEARCH","CAREER","ETHICS","WELLBEING","TECHNOLOGY","GENERAL"]
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["PUBLIC","PROFESSIONALS_ONLY","INSTITUTIONAL"]
+    },
+    "moderation_status": {
+      "type": "string",
+      "enum": ["PENDING","APPROVED","FLAGGED","HIDDEN","DELETED"]
+    },
+    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "replies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id","author_id","body_text","posted_at","moderation_status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "author_id": { "type": "string", "minLength": 1 },
+          "author_display_name": { "type": "string" },
+          "author_role": { "type": "string", "enum": ["NURSE","TECHNICIAN","STUDENT","PROFESSOR","COORDINATOR","OTHER"] },
+          "body_text": { "type": "string", "minLength": 1 },
+          "posted_at": { "type": "string", "format": "date-time" },
+          "moderation_status": { "type": "string", "enum": ["PENDING","APPROVED","FLAGGED","HIDDEN","DELETED"] },
+          "parent_reply_id": { "type": "string", "description": "ID da resposta pai (para threading aninhado)." },
+          "likes_count": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "views_count": { "type": "integer", "minimum": 0 },
+    "likes_count": { "type": "integer", "minimum": 0 },
+    "pinned": { "type": "boolean", "description": "Tópico fixado no topo do fórum." },
+    "closed": { "type": "boolean", "description": "Tópico fechado para novas respostas." }
+  }
+}

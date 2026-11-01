@@ -31,8 +31,8 @@ const VITE_PREFIX = "VITE_";
 
 /**
  * Parse an app-env document, keeping only `VITE_`-prefixed string entries.
- * Anything unparseable is an empty environment. A workspace without the file
- * defaults to auth OFF by the policy documented in COMO-USAR.md.
+ * Anything unparseable is an empty environment — a workspace without the file
+ * must behave exactly like today (auth on, no overrides).
  */
 export function parseAppEnv(text) {
   let parsed;
@@ -62,7 +62,7 @@ export function readAppEnv(root) {
 
 /** File values under the process environment: an explicit override wins. */
 export function mergeAppEnv(appEnv, processEnv) {
-  return { VITE_AUTH_ENABLED: "false", ...appEnv, ...processEnv };
+  return { ...appEnv, ...processEnv };
 }
 
 /**

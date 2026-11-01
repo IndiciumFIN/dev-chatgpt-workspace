@@ -6,9 +6,11 @@ import { RelatedContent } from "@/components/site/related-content";
 import { StudyDesk } from "@/components/site/study";
 import { SubscriptionPanel } from "@/components/site/subscription";
 import { Translated } from "@/components/site/translated";
+import { imageAlt, useStored } from "@/lib/stored";
+import { LibraryShelves } from "@/components/templates/library-shelves";
+import { HeartSheet } from "@/components/templates/heart-sheet";
 import { useChrome } from "@/lib/chrome";
 import { navLabel } from "@/lib/translate";
-import { familyTabs, institutionalTrail, isInstitutionalPage } from "@/lib/institutional-sections";
 import type { CatalogItem, Section } from "@/lib/sections";
 
 const pageVisual: Record<string, { src: string; alt: string; caption: string }> = {
@@ -95,8 +97,21 @@ function matches(item: CatalogItem, query: string) {
   return `${item.title} ${item.text}`.toLowerCase().includes(q);
 }
 
-export function SectionPage({ section, query }: { section: Section; query?: string }) {
-  const { t } = useChrome();
+export function SectionPage({
+  section,
+  query,
+  framed,
+  trail,
+  related,
+}: {
+  section: Section;
+  query?: string;
+  framed: boolean;
+  trail: { label: string; slug?: string }[];
+  related: { slug: string; label: string; text: string }[];
+}) {
+  const { locale, t } = useChrome();
+  const { images } = useStored();
   const [sent, setSent] = useState(false);
   const q = query ?? "";
 
@@ -105,7 +120,6 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
     setSent(true);
   }
 
-  const framed = isInstitutionalPage(section.slug);
   const notes = framed ? section.blocks.filter((block) => /transpar/i.test(block.title)) : [];
   const content = framed ? section.blocks.filter((block) => !/transpar/i.test(block.title)) : section.blocks;
   const shorts = framed ? content.filter((block) => (block.text?.length ?? 0) < 90 && block.items.length === 0) : [];
@@ -120,6 +134,7 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
       {section.kind === "subscribe" ? <SubscriptionPanel /> : null}
       {q ? <p className="tool-help">Busca: “{q}”.</p> : null}
       {section.slug === "simulados" && !q ? <StudyDesk /> : null}
+      {section.slug === "biblioteca" && !q ? <LibraryShelves /> : null}
     </>
   );
   const catalog = longs.map((block, index) => {
@@ -134,7 +149,7 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
         {framed && index === 0 && visual ? (
           <div className="inst-split is-fig-esquerda">
             <figure className="inst-fig has-frame">
-              <img src={visual.src} alt={visual.alt} />
+              <img src={visual.src} alt={imageAlt(images, visual.src, locale, visual.alt)} />
               <figcaption>{visual.caption}</figcaption>
             </figure>
             {text}
@@ -171,6 +186,8 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
     </Callout>
   ));
 
+  if (section.slug === "coracao-humano") return <HeartSheet />;
+
   if (!framed) {
     return (
       <ArticlePage
@@ -191,8 +208,8 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
       kind="artigo"
       crumbs={[
         { label: t("home"), to: "/" },
-        ...institutionalTrail(section.slug).map((item) => (
-          "slug" in item
+        ...trail.map((item) => (
+          item.slug
             ? { label: item.label, to: "/secao/$slug" as const, params: { slug: item.slug } }
             : { label: item.label }
         )),
@@ -207,9 +224,7 @@ export function SectionPage({ section, query }: { section: Section; query?: stri
       ]}
       related={
         <RelatedContent
-          items={familyTabs(section.slug)
-            .filter((tab) => tab.slug !== section.slug)
-            .map((tab) => ({ title: tab.label, text: tab.text, to: "/secao/$slug" as const, params: { slug: tab.slug } }))}
+          items={related.map((tab) => ({ title: tab.label, text: tab.text, to: "/secao/$slug" as const, params: { slug: tab.slug } }))}
         />
       }
     >

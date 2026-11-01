@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/inference.schema.json",
+  "title": "CKO | inference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "inference_class",
+    "allowed_use",
+    "source_claim_refs",
+    "model_or_rule_ref",
+    "human_review",
+    "prohibited_authority_mutation"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "inference_class": {
+      "type": "string",
+      "enum": [
+        "DETERMINISTIC",
+        "RULE_BASED",
+        "ONTOLOGICAL",
+        "SEMANTIC",
+        "STATISTICAL",
+        "PROBABILISTIC",
+        "LLM_ASSISTED",
+        "HYBRID"
+      ]
+    },
+    "allowed_use": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_claim_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "model_or_rule_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "human_review": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "HOLD"
+      ]
+    },
+    "prohibited_authority_mutation": {
+      "type": "boolean",
+      "const": true
+    },
+    "output_schema_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/sbar_handoff.schema.json",
+  "title": "CKO | sbar_handoff",
+  "description": "Passagem de plantão estruturada conforme protocolo SBAR (Situation, Background, Assessment, Recommendation). Deriva de safety_check.schema.json e adapta para handoff clínico entre turnos.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "severity",
+    "disclosure_policy",
+    "handoff_context",
+    "situation",
+    "background",
+    "assessment",
+    "recommendation"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "canonical_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$" },
+    "version": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["CANDIDATE","DRAFT","SOURCE_QUALIFIED","EVIDENCE_BOUND","REVIEW_REQUIRED","HOLD_HUMAN","ASSURED","ELIGIBLE_FOR_RELEASE","RELEASED","RETIRED"]
+    },
+    "updated_at": { "type": "string", "format": "date" },
+    "provenance_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "severity": {
+      "type": "string",
+      "enum": ["INFO","CAUTION","WARNING","BLOCKER"],
+      "description": "Severidade da passagem: INFO (rotina), CAUTION (atenção), WARNING (alerta), BLOCKER (crítico)."
+    },
+    "disclosure_policy": { "type": "string", "minLength": 1 },
+    "handoff_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from_shift","to_shift","location","handoff_at"],
+      "properties": {
+        "from_shift": { "type": "string", "enum": ["MORNING","AFTERNOON","NIGHT","CONTINUOUS"] },
+        "to_shift": { "type": "string", "enum": ["MORNING","AFTERNOON","NIGHT","CONTINUOUS"] },
+        "location": { "type": "string", "minLength": 1, "description": "Setor/leito (ex.: UTI-Adulto, Leito 12)" },
+        "handoff_at": { "type": "string", "format": "date-time" },
+        "from_professional": { "type": "string", "description": "Nome/Coren de quem passa" },
+        "to_professional": { "type": "string", "description": "Nome/Coren de quem recebe" }
+      }
+    },
+    "situation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["patient_id","reason"],
+      "properties": {
+        "patient_id": { "type": "string", "minLength": 1, "description": "Identificação do paciente (iniciais ou prontuário)" },
+        "patient_age": { "type": "integer", "minimum": 0 },
+        "patient_sex": { "type": "string", "enum": ["F","M","UNKNOWN"] },
+        "reason": { "type": "string", "minLength": 1, "description": "Motivo da internação/atendimento atual" },
+        "allergies": { "type": "array", "items": { "type": "string" } },
+        "isolation_precautions": { "type": "array", "items": { "type": "string", "enum": ["CONTACT","DROPLET","AIRBORNE","STANDARD"] } }
+      }
+    },
+    "background": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clinical_history"],
+      "properties": {
+        "clinical_history": { "type": "string", "minLength": 1, "description": "Histórico clínico relevante" },
+        "comorbidities": { "type": "array", "items": { "type": "string" } },
+        "medications_current": { "type": "array", "items": { "type": "string" } },
+        "vital_signs_last": {
+          "type": "object",
+          "properties": {
+            "pas": { "type": "number" },
+            "pad": { "type": "number" },
+            "fc": { "type": "number" },
+            "fr": { "type": "number" },
+            "tax": { "type": "number" },
+            "spo2": { "type": "number" },
+            "glasgow": { "type": "integer", "minimum": 3, "maximum": 15 }
+          }
+        },
+        "lines_drains": { "type": "array", "items": { "type": "string" }, "description": "Acessos, drenos, sondas" }
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_status"],
+      "properties": {
+        "current_status": { "type": "string", "minLength": 1, "description": "Estado atual e principais achados" },
+        "pending_results": { "type": "array", "items": { "type": "string" } },
+        "risk_assessments": {
+          "type": "object",
+          "properties": {
+            "braden_score": { "type": "integer", "minimum": 6, "maximum": 23 },
+            "morse_score": { "type": "integer", "minimum": 0, "maximum": 125 },
+            "fall_risk": { "type": "string", "enum": ["LOW","MEDIUM","HIGH"] },
+            "pressure_injury_risk": { "type": "string", "enum": ["LOW","MODERATE","HIGH","VERY_HIGH"] }
+          }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plan"],
+      "properties": {
+        "plan": { "type": "string", "minLength": 1, "description": "Plano de cuidado para o próximo turno" },
+        "medications_to_administer": { "type": "array", "items": { "type": "string" } },
+        "procedures_scheduled": { "type": "array", "items": { "type": "string" } },
+        "alerts_to_monitor": { "type": "array", "items": { "type": "string" } },
+        "escalation_criteria": { "type": "string", "description": "Quando chamar médico/responsável" }
+      }
+    },
+    "critical_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item","checked"],
+        "properties": {
+          "item": { "type": "string", "minLength": 1 },
+          "checked": { "type": "boolean" },
+          "notes": { "type": "string" }
+        }
+      },
+      "description": "Checklist crítico (tipo checklist cirúrgico WHO)."
+    }
+  }
+}

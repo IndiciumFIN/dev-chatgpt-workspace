@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/flashcard.schema.json",
+  "title": "CKO | flashcard",
+  "description": "Cartão de estudo com frente (pergunta/conceito) e verso (resposta/explicação). Deriva de assessment_item mas simplifica para o caso de flashcard — não há múltipla escolha, mas o verso pode conter claims e referências para sustentar a afirmação.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "learning_objective_ref",
+    "front_text",
+    "back_text",
+    "rationale_claim_refs",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "learning_objective_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ID do objetivo de aprendizagem ao qual o flashcard se vincula."
+    },
+    "front_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Texto da frente do cartão (pergunta, conceito, termo)."
+    },
+    "back_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Texto do verso do cartão (resposta, definição, explicação)."
+    },
+    "rationale_claim_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Lista de claim_ids que justificam o conteúdo do verso."
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Lista de source_ids que sustentam o conteúdo do flashcard."
+    },
+    "topic": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["BASIC", "INTERMEDIATE", "ADVANCED"],
+      "description": "Nível de dificuldade para repetição espaçada."
+    },
+    "linked_tool_slug": {
+      "type": "string",
+      "description": "Slug da ferramenta (escala/calculadora) vinculada."
+    },
+    "spaced_repetition_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "box": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7,
+          "description": "Caixa atual do sistema Leitner (1-7)."
+        },
+        "next_review_at": {
+          "type": "string",
+          "format": "date",
+          "description": "Data da próxima revisão programada."
+        },
+        "last_reviewed_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "success_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fail_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

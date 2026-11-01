@@ -1,0 +1,559 @@
+{
+  "version": "1.0.0",
+  "scope": "Career + Youth + professional labor, archival crosswalk only",
+  "source_branch": "feat/career-youth-db-first-20261026",
+  "source_commit": "ad4c683890779eda3a096743b70cf6be2bfc4605",
+  "source_registry_blob": "6ff34a5f9f3af1d19222fc9ac14760c4653ac0ee",
+  "as_of": "2026-11-01",
+  "verified_in_git": true,
+  "verified_live_supabase_this_turn": false,
+  "source_code": [
+    "src/components/career/career-hub.tsx",
+    "src/components/career/curriculum-editor.tsx",
+    "src/lib/career/projector.ts",
+    "src/lib/career/store.ts",
+    "src/lib/career.functions.ts",
+    "src/lib/career-candidate-db.server.ts"
+  ],
+  "candidate_modules": [
+    {
+      "id": "MOD-CAREER-OVERVIEW",
+      "slug": "visao-geral",
+      "title": "Visão geral",
+      "description": "Jornada, estado do perfil e próximos passos.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "orchestration",
+      "status": "CANDIDATE",
+      "order": 1
+    },
+    {
+      "id": "MOD-PASSPORT",
+      "slug": "passaporte",
+      "title": "Passaporte profissional",
+      "description": "Perfil pseudônimo, skills, credenciais, marcos e objetivos.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "identity",
+      "status": "CANDIDATE",
+      "order": 2
+    },
+    {
+      "id": "MOD-SKILLS",
+      "slug": "skills",
+      "title": "Skills e gaps",
+      "description": "Competências, nível atual, requisitos de papéis e gaps.",
+      "kind": "FUNCTIONAL",
+      "audience": "BOTH",
+      "family": "intelligence",
+      "status": "CANDIDATE",
+      "order": 3
+    },
+    {
+      "id": "MOD-PATHS",
+      "slug": "trilhas",
+      "title": "Trilhas de carreira",
+      "description": "Caminhos do estudante ao profissional, especialização, liderança, pesquisa e exterior.",
+      "kind": "FUNCTIONAL",
+      "audience": "BOTH",
+      "family": "learning",
+      "status": "CANDIDATE",
+      "order": 4
+    },
+    {
+      "id": "MOD-OPPORTUNITIES",
+      "slug": "oportunidades",
+      "title": "Oportunidades",
+      "description": "Família única para vagas, estágio, concursos, residência, voluntariado, bolsas, pesquisa, mentoria e exterior.",
+      "kind": "FUNCTIONAL",
+      "audience": "BOTH",
+      "family": "opportunity",
+      "status": "CANDIDATE",
+      "order": 5
+    },
+    {
+      "id": "MOD-APPLICATIONS",
+      "slug": "candidaturas",
+      "title": "Application Tracker",
+      "description": "Acompanhar processos salvos, candidatura, entrevista, oferta e fechamento.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "journey",
+      "status": "CANDIDATE",
+      "order": 6
+    },
+    {
+      "id": "MOD-CREDENTIALS",
+      "slug": "credenciais",
+      "title": "Credenciais e certificações",
+      "description": "Planejar, acompanhar e revisar credenciais sem inventar validade ou autoridade.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "identity",
+      "status": "CANDIDATE",
+      "order": 7
+    },
+    {
+      "id": "MOD-DOCUMENTS",
+      "slug": "documentos",
+      "title": "Documentos profissionais",
+      "description": "Currículo, carta, portfólio e resumo profissional como projeções do passaporte.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "documents",
+      "status": "CANDIDATE",
+      "order": 8
+    },
+    {
+      "id": "MOD-INTERVIEW",
+      "slug": "entrevistas",
+      "title": "Entrevistas e presença profissional",
+      "description": "Preparação para entrevistas, LinkedIn, apresentação e posicionamento.",
+      "kind": "HYBRID",
+      "audience": "PROFESSIONAL",
+      "family": "journey",
+      "status": "CANDIDATE",
+      "order": 9
+    },
+    {
+      "id": "MOD-MARKET",
+      "slug": "mercado",
+      "title": "Mercado e salários",
+      "description": "Sinais de mercado somente quando houver fonte atual verificável.",
+      "kind": "FUNCTIONAL",
+      "audience": "BOTH",
+      "family": "intelligence",
+      "status": "CANDIDATE",
+      "order": 10
+    },
+    {
+      "id": "MOD-WORKLIFE",
+      "slug": "vida-profissional",
+      "title": "Vida profissional",
+      "description": "Direitos, escalas, negociação, bem-estar e organização do trabalho.",
+      "kind": "HYBRID",
+      "audience": "PROFESSIONAL",
+      "family": "professional-life",
+      "status": "CANDIDATE",
+      "order": 11
+    },
+    {
+      "id": "MOD-NETWORK",
+      "slug": "rede",
+      "title": "Networking e mentoria",
+      "description": "Conexões, mentoria, comunidades, grupos e desenvolvimento.",
+      "kind": "FUNCTIONAL",
+      "audience": "PROFESSIONAL",
+      "family": "network",
+      "status": "CANDIDATE",
+      "order": 12
+    },
+    {
+      "id": "MOD-INTERNATIONAL",
+      "slug": "exterior",
+      "title": "Carreira internacional",
+      "description": "Idioma, reconhecimento, registro e preparação por jurisdição.",
+      "kind": "HYBRID",
+      "audience": "PROFESSIONAL",
+      "family": "international",
+      "status": "CANDIDATE",
+      "order": 13
+    },
+    {
+      "id": "MOD-EDITORIAL",
+      "slug": "conteudos-carreira",
+      "title": "Conteúdos e campanhas",
+      "description": "Guias, histórias, campanhas e checklists editoriais ligados aos objetos canônicos.",
+      "kind": "EDITORIAL",
+      "audience": "PROFESSIONAL",
+      "family": "editorial",
+      "status": "CANDIDATE",
+      "order": 14
+    },
+    {
+      "id": "MOD-YOUTH-DISCOVER",
+      "slug": "descobrir",
+      "title": "Descobrir profissões",
+      "description": "Explorar áreas, rotinas, formação e possibilidades.",
+      "kind": "HYBRID",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 1
+    },
+    {
+      "id": "MOD-YOUTH-NURSING",
+      "slug": "enfermagem-carreira",
+      "title": "Enfermagem como carreira",
+      "description": "Entender caminhos formativos e trajetórias possíveis.",
+      "kind": "HYBRID",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 2
+    },
+    {
+      "id": "MOD-YOUTH-REFLECT",
+      "slug": "autoconhecimento",
+      "title": "Explorar interesses",
+      "description": "Reflexão educativa por interesses; não é teste psicométrico.",
+      "kind": "FUNCTIONAL",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 3
+    },
+    {
+      "id": "MOD-YOUTH-FIRST",
+      "slug": "primeiros-passos",
+      "title": "Primeiros passos",
+      "description": "Estágio, voluntariado, residência, concursos e preparação inicial.",
+      "kind": "HYBRID",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 4
+    },
+    {
+      "id": "MOD-YOUTH-GAMES",
+      "slug": "jogos-quizzes",
+      "title": "Jogos e quizzes",
+      "description": "Experiências educativas conectadas ao mesmo conteúdo canônico.",
+      "kind": "EDITORIAL",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 5
+    },
+    {
+      "id": "MOD-YOUTH-EDITORIAL",
+      "slug": "conteudos-jovens",
+      "title": "Conteúdos para jovens",
+      "description": "Guias e histórias projetados para o público jovem.",
+      "kind": "EDITORIAL",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 6
+    },
+    {
+      "id": "MOD-LEARNING",
+      "slug": "aprendizagem",
+      "title": "Cursos e desenvolvimento",
+      "description": "Cursos, certificações, idioma, workshops e educação permanente como tipos de recurso com fonte/validade próprias.",
+      "kind": "HYBRID",
+      "audience": "BOTH",
+      "family": "learning",
+      "status": "CANDIDATE",
+      "order": 4
+    },
+    {
+      "id": "MOD-COMPARE",
+      "slug": "comparador",
+      "title": "Comparador de caminhos",
+      "description": "Comparar papéis, famílias e skills sem transformar diferenças em ranking de profissões.",
+      "kind": "FUNCTIONAL",
+      "audience": "BOTH",
+      "family": "intelligence",
+      "status": "CANDIDATE",
+      "order": 5
+    },
+    {
+      "id": "MOD-ENTREPRENEUR",
+      "slug": "empreendedorismo",
+      "title": "Empreendedorismo",
+      "description": "Explorar caminhos profissionais autônomos e projetos sem prometer renda ou substituir orientação jurídica/contábil.",
+      "kind": "HYBRID",
+      "audience": "PROFESSIONAL",
+      "family": "journey",
+      "status": "CANDIDATE",
+      "order": 15
+    },
+    {
+      "id": "MOD-YOUTH-HEALTH",
+      "slug": "saude-jovem",
+      "title": "Saúde para jovens",
+      "description": "Conteúdos de saúde e cidadania projetados para jovens, governados separadamente do domínio de carreira.",
+      "kind": "EDITORIAL",
+      "audience": "YOUTH",
+      "family": "youth",
+      "status": "CANDIDATE",
+      "order": 7
+    }
+  ],
+  "candidate_tables": [
+    {
+      "table_name": "career_projection_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_module_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_projection_item_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_role_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_skill_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_role_skill_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_path_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_path_step_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_opportunity_type_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_credential_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_document_template_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_market_signal_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_editorial_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_reflection_question_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_profile_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_profile_skill_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_application_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_profile_credential_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_milestone_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_learning_resource_type_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_interview_scenario_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_network_capability_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_jurisdiction_requirement_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_worklife_capability_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_youth_activity_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_source_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_authority_binding_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_ingestion_run_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_opportunity_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_learning_resource_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_market_observation_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_projection_contract_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_capability_governance_candidate",
+      "file": "migrations/0004_career_youth_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_editorial_document_candidate",
+      "file": "migrations/0005_career_editorial_content_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_editorial_block_candidate",
+      "file": "migrations/0005_career_editorial_content_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_source_fragment_candidate",
+      "file": "migrations/0006_career_atomization_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_atomic_fact_candidate",
+      "file": "migrations/0006_career_atomization_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_claim_candidate",
+      "file": "migrations/0006_career_atomization_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_evidence_bundle_candidate",
+      "file": "migrations/0006_career_atomization_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_content_claim_binding_candidate",
+      "file": "migrations/0006_career_atomization_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_review_item_candidate",
+      "file": "migrations/0007_career_promotion_control_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_release_gate_candidate",
+      "file": "migrations/0007_career_promotion_control_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    },
+    {
+      "table_name": "career_publication_candidate",
+      "file": "migrations/0007_career_promotion_control_candidate.sql",
+      "status": "PGLITE_CANDIDATE_GIT",
+      "promotion": false
+    }
+  ],
+  "counts": {
+    "existing_modules": 24,
+    "pglite_tables_in_git": 43,
+    "schema_contracts": 31,
+    "editorial_documents": 17,
+    "review_items": 36,
+    "release_gates": 6,
+    "unverified_capabilities": 38
+  },
+  "governance": {
+    "status": "CANDIDATE_HOLD",
+    "kernel_admission": "NOT_SUBMITTED",
+    "public_release": false,
+    "main_modified": false
+  }
+}

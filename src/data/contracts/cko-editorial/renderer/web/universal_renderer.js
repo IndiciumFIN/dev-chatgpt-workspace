@@ -1,5 +1,16 @@
+/** @typedef {{block_id:string, type:string, semantic_role?:string}} CKOBlock
+ * @typedef {{text?:string, resource_id?:string, caption?:string}} CKOResource
+ * @typedef {{block_plan:CKOBlock[]}} CKOProjection
+ * @typedef {{renderProjection:(request:CKOProjection,resolved?:Record<string,CKOResource>)=>string}} CKOAPI
+ */
 (function(global){
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  /** @param {unknown} value */
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => {
+    /** @type {Record<string,string>} */
+    const entities = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
+    return entities[ch] ?? ch;
+  });
+  /** @param {CKOBlock} block @param {Record<string,CKOResource>} resolved */
   function renderBlock(block, resolved){
     const role = esc(block.semantic_role);
     const source = resolved?.[block.block_id] || {};
@@ -13,9 +24,10 @@
       default: return `<section data-type="${esc(block.type)}" data-role="${role}">${esc(source.text || `[${block.type}: resolved projection]`)}</section>`;
     }
   }
+  /** @param {CKOProjection} request @param {Record<string,CKOResource>} [resolved] */
   function renderProjection(request, resolved={}){
     if(!request || !Array.isArray(request.block_plan)) throw new Error('Invalid projection request');
     return request.block_plan.map(b => renderBlock(b,resolved)).join('\n');
   }
   global.CKOUniversalRenderer = {renderProjection};
-})(window);
+})(/** @type {Window & {CKOUniversalRenderer?:CKOAPI}} */ (window));

@@ -2310,7 +2310,7 @@
    "status": "BLOCKED",
    "covers": [],
    "artifacts": [],
-   "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar."
+   "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar. | MEDIDO (owner, 01/11/2026 03:25Z): o port JA EXISTE em main, apesar do BLOCKED - em tools/experience-skeleton/ (12 ficheiros: os 2 scripts + 8 do pilot/ com resolver, state, metamodel, module-status, profile-contracts, experience-state e os 3 schemas). MAS O PORT ESTA PEL A METADE E NAO CORRE (ver TASK-PLAN-163): os scripts resolvem ROOT como o directorio pai e procuram catalog/ e src/core/experience/ nesse root, que nao existem no repo canonico. O catalogo real esta em docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json (84.569 B) e src/core/experience/ nao existe no repo. NOT_RUN: se o kernel quer o esqueleto na raiz do repo ou dentro de tools/ - essa e a decisao que falta."
   },
   {
    "id": "TASK-PLAN-125",
@@ -2415,7 +2415,7 @@
    "status": "BLOCKED",
    "covers": [],
    "artifacts": [],
-   "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada."
+   "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada. | MEDIDO (owner, 01/11/2026 03:25Z): o gate em CI continua a depender de TASK-PLAN-012 (a escrita em .github/workflows/ esta bloqueada ao agente, a copia e do owner). ACRESCENTADO: o gate que existe no repo canonico (tools/experience-skeleton/check-skeleton.mjs) NAO EXECUTA - por isso, ate a correccao do port, a unica prova de gate e a local e datada (11/11 verde em /workspace/ce-skeleton, 73 declaracoes de teste). Um gate que nao corre no sitio onde esta nao pode contar como gate de nao-regressao."
   },
   {
    "id": "TASK-PLAN-132",
@@ -2425,9 +2425,9 @@
    "deps": [
     "TASK-PLAN-121"
    ],
-   "owner": "Mavis + equipa especializada",
+   "owner": "Mavis",
    "language": "MD",
-   "status": "BLOCKED",
+   "status": "DONE",
    "covers": [],
    "artifacts": [
     "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
@@ -2438,7 +2438,7 @@
     "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
     "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml"
    ],
-   "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido."
+   "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido. | MEDIDO E ENTREGUE (01/11/2026): as 6 frentes + sintese estao persistidas em docs/evidence/ce-comparacao-2026-10-31/ (6 relatorios de frente + RELATORIO-COMPARACAO.md com 136 KB, 31 linhas de TABELA-MESTRE, 56 deltas accionaveis, cadeia de evidencia por linha critica, glossario §0.3 e 3 anexos de inventario). A verificacao adversarial reprovou a sintese em duas rondas; as 5 observacoes sobreviventes foram medidas pelo owner e corrigidas (fonte dos contratos re-verificada, 46/78 -> 78/78, 70/72 -> 73 declaracoes de teste, gate 8/8 -> 11/11 executado, marcadores [V] -> [P-RP]). Plano de equipa plan_2973fb1f = completed; ZIP comparacao-ce-2026-11-01.zip verificado por re-extraccao (esqueleto sem drift, capturas 36/36). FIND registados: contratos fora dos enums canonicos (TASK-PLAN-156/157), as tres camadas do esqueleto nao se tocam (236/410 servicos sem capability mapeavel), e o port ao repo canonico nao corre (TASK-PLAN-163). NOT_RUN: a medicao em browser do dono (timeout), e o conteudo do DOCX original da matriz."
   },
   {
    "id": "TASK-PLAN-133",
@@ -2954,6 +2954,26 @@
     "scripts/check-better-auth-lock.mjs"
    ],
    "acceptance": "MEDIDO (owner, 01/11/2026 03:15Z): as tres superficies automaticas estao inactivas - Dependabot alerts DESLIGADO (HTTP 403), secret scanning DESLIGADO (HTTP 404), code scanning sem analise (HTTP 404 'no analysis found'). Isto NAO e 'zero alertas': e 'alertas nao existem porque a ferramenta esta desligada'. O repo compensa localmente com scripts/check-better-auth-lock.mjs, scripts/check-auth-invariant.mjs e scripts/test-auth-secret-env.mjs. OBRIGATORIO: decisao do dono - activar Dependabot e secret scanning no repo (settings, nao codigo) ou assumir o risco explicitamente no registo; e confirmar que os guardios locais cobrem o mesmo. NOT_RUN: o conteudo das settings de seguranca do repo (exige acesso de escrita as settings - nao tentado, e fora do mandato)."
+  },
+  {
+   "id": "TASK-PLAN-163",
+   "phase": "F2",
+   "title": "O port do esqueleto CE ao repo canonico esta pela metade e NAO EXECUTA (ENOENT) - corrigir antes de qualquer admissao",
+   "wo": "WO-E2E-001",
+   "deps": [
+    "TASK-PLAN-124"
+   ],
+   "owner": "Mavis",
+   "language": "JS+JSON",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "tools/experience-skeleton/generate-skeleton.mjs",
+    "tools/experience-skeleton/check-skeleton.mjs",
+    "docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json",
+    "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
+   ],
+   "acceptance": "MEDIDO POR EXECUCAO (owner, 01/11/2026 03:25Z): no repo canonico (main, e9f7fe66) o port existe em tools/experience-skeleton/ com 12 ficheiros, mas node tools/experience-skeleton/check-skeleton.mjs e node tools/experience-skeleton/generate-skeleton.mjs falham ambos com Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'. CAUSA: os dois scripts fazem ROOT = resolve(dirname(import.meta.url), '..') - ou seja, esperando a raiz do esqueleto no diretorio PAI - e leem catalog/service-catalog.v1.json, catalog/capability-registry.candidate.v0.1.json, catalog/object-capability-binding.candidate.v0.1.json, src/core/experience/{resolver,state,metamodel,module-status}.ts e schemas/*.json. Nada disso existe nesse caminho no repo: o catalogo real esta em docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json (84.569 B) e src/core/experience/ nao existe no repo. O pilot/ foi copiado para tools/experience-skeleton/pilot/ mas os scripts continuam a esperar src/core/experience/ - ou seja, nem o catalogo nem o nucleo estao onde o codigo os procura. CONSEQUENCIA DE GOVERNANCA: um artefacto do esqueleto esta no repo canonico e aparenta estar portado, mas nao corre - e o PR #29 apagaria essa copia (semelhante ao resto do pacote). OBRIGATORIO: (a) decidir a localizacao canonica (raiz do repo vs tools/experience-skeleton/) e tornar o ROOT explicito e configuravel; (b) portar o catalogo e o nucleo para o caminho que o codigo le, ou corrigir os caminhos; (c) PROVA: correr o gate no repo canonico e mostrar 11/11 verde a partir do commit, e o --check do gerador sem drift; (d) o port passa a ser 'entregue e verificado', nao 'portado'. NOT_RUN: a suite completa de testes do esqueleto no repo canonico (o port nao tem os 65 ficheiros de teste nem o package.json do esqueleto)."
   }
  ],
  "candidateVerification": {
@@ -3803,6 +3823,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 03:20Z - 4 tasks novas do PR #29 (impacto medido, regressao de fail-closed, downgrade better-auth, superficie de alertas) + TASK-PLAN-015 fechado como DONE (medicao definitiva: as 3 ferramentas de alertas estao desligadas ou sem analise). Total 141."
+  "ultima_revisao_owner": "01/11/2026 03:30Z - TASK-PLAN-132 fechada como DONE (comparacao entregue e verificada); TASK-PLAN-124/131 actualizadas com a medicao do port; nova TASK-PLAN-163 (port pela metade, nao executa). Total 142."
  }
 }

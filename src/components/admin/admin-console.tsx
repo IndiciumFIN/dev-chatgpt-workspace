@@ -22,6 +22,7 @@ import { AdminErrorBoundary } from '@/components/admin/admin-error-boundary';
 import { AdminOverviewModule } from '@/components/admin/modules/admin-overview-module';
 import { TemplatesPanel } from '@/components/admin/templates-panel';
 import { SourcesPanel } from '@/components/admin/sources-panel';
+import { AdminModuleWorkspace } from '@/components/admin/admin-module-workspace';
 import { CommanderPanel } from '@/components/admin/commander-panel';
 import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
 import { getAdminModule, type AdminModuleId, type AdminSurface } from '@/lib/admin-module-registry';
@@ -218,11 +219,11 @@ export function AdminConsole() {
         {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <AdminErrorBoundary moduleName="PMO"><PmoPanel /></AdminErrorBoundary>}
         {tab === 'commander' && <AdminErrorBoundary moduleName="Commander"><CommanderPanel /></AdminErrorBoundary>}
-        {tab === 'module-detail' && <Panel title={activeModule.title} subtitle={activeModule.purpose}>
-          <p>Este módulo consta no catálogo administrativo, mas ainda não possui uma superfície operacional conectada.</p>
-          {activeModule.previewScope && <p className="ce-admin-detail-note">{activeModule.previewScope}</p>}
-          <ul>{activeModule.submodules.map(item => <li key={item}>{item}</li>)}</ul>
-        </Panel>}
+        {tab === 'module-detail' && <AdminErrorBoundary moduleName={activeModule.title}>
+          <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule}
+            onOpenExisting={(view) => setTab(view === 'governance' ? 'sources' : view)}
+            onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}}/>
+        </AdminErrorBoundary>}
         {tab === 'overview' && <AdminErrorBoundary moduleName="Visão geral"><AdminOverviewModule model={model} published={published} revision={revision}
           onOpenContent={() => setTab('content')} onOpenSources={() => setTab('sources')}
           onSelectPublished={slug => { setSelected(slug); setPreviewVersion('published'); setTab('content'); }} /></AdminErrorBoundary>}

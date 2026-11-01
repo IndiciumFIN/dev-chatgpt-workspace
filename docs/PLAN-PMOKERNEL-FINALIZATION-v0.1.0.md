@@ -568,3 +568,29 @@ O corpo do PR #29 esteve **NOT_RUN** por falha do conector durante a comparaçã
 Isto **não é "zero alertas"** — é "não existe superfície de alertas activa". O repo compensa com guardios locais (`check-better-auth-lock.mjs`, `check-auth-invariant.mjs`, `test-auth-secret-env.mjs`), dois dos quais o PR #29 modifica. Registado em `TASK-PLAN-162`.
 
 **Nenhuma acção foi tomada sobre o PR #29.** Abrir, fechar ou fundir um revert continua a ser decisão do dono/Kernel. Registado: `TASK-PLAN-159` (inventário e decisão), `TASK-PLAN-160` (regressão de fail-closed: os 4 invariantes removidos), `TASK-PLAN-161` (downgrade do `better-auth`).
+
+### 12.9 O port do esqueleto CE ao repo canónico está pela metade e não executa (medido por execução, 01/11/2026 03:25Z)
+
+Ao procurar a origem do esqueleto no repo canónico, encontrou-se `tools/experience-skeleton/` em `main` — com 12 ficheiros: os dois scripts (`generate-skeleton.mjs`, `check-skeleton.mjs`) e `pilot/` com o núcleo (`resolver.ts`, `state.ts`, `metamodel.ts`, `module-status.ts`, `profile-contracts.ts`, `experience-state.ts`) e os 3 schemas do piloto.
+
+**Mas não corre.** Executado no repo canónico:
+
+```
+$ node tools/experience-skeleton/check-skeleton.mjs
+Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'
+$ node tools/experience-skeleton/generate-skeleton.mjs --check
+Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'
+```
+
+**Causa:** os dois scripts fazem `ROOT = resolve(dirname(import.meta.url), '..')` — esperam a raiz do esqueleto no **directório pai** — e leem `catalog/service-catalog.v1.json`, `catalog/capability-registry.candidate.v0.1.json`, `catalog/object-capability-binding.candidate.v0.1.json`, `src/core/experience/{resolver,state,metamodel,module-status}.ts` e `schemas/*.json`. Nada disso existe nesse caminho no repo: o catálogo real está em `docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json` (84.569 B) e `src/core/experience/` **não existe no repo**.
+
+Ou seja: o `pilot/` foi copiado para `tools/experience-skeleton/pilot/`, mas os scripts continuam a esperar `src/core/experience/` — nem o catálogo nem o núcleo estão onde o código os procura.
+
+**Consequências de governança:**
+1. Um artefacto do esqueleto **está no repo canónico e aparenta estar portado, mas não executa** — o `TASK-PLAN-124` estava BLOCKED à espera de decisão de WO, e mesmo assim houve um port parcial em `main`.
+2. O gate canónico **não pode contar como gate de não-regressão** enquanto não correr (`TASK-PLAN-131`): a única prova de gate é a local e datada (11/11 verde, 73 declarações de teste).
+3. O PR #29 apagaria esta cópia pela mesma razão que apaga o resto — o que não é argumento a favor do revert, é facto.
+
+**Registado em `TASK-PLAN-163`**, com a prova exigida: correr o gate no repo canónico a mostrar 11/11 verde a partir do commit, e o `--check` do gerador sem drift. Só depois o port passa de "portado" a "entregue e verificado".
+
+**Nota de honestidade:** a comparação CE mediu o esqueleto a partir da cópia local (`/workspace/ce-skeleton`), que é coerente e tem o gate verde. O port canónico, esse, está partido — e é exactamente o que o `TASK-PLAN-124` ia decidir quando for desbloqueado.

@@ -221,7 +221,7 @@ export function AdminConsole() {
         {tab === 'commander' && <AdminErrorBoundary moduleName="Commander"><CommanderPanel /></AdminErrorBoundary>}
         {tab === 'module-detail' && <AdminErrorBoundary moduleName={activeModule.title}>
           <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule}
-            onOpenExisting={(view) => setTab(view === 'governance' ? 'sources' : view)}
+            onOpenExisting={(view) => { if (view === 'governance') { setSelectedModule('M04'); setTab('module-detail'); } else { setTab(view); } }}
             onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}}/>
         </AdminErrorBoundary>}
         {tab === 'overview' && <AdminErrorBoundary moduleName="Visão geral"><AdminOverviewModule model={model} published={published} revision={revision}

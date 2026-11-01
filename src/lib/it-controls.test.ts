@@ -9,7 +9,9 @@ test("as migrations não guardam lista nem JSON", async () => {
   const names = (await readdir(new URL("../../migrations/", import.meta.url))).filter((name) => name.endsWith(".sql"));
   for (const name of names) {
     const sql = await readFile(new URL(`../../migrations/${name}`, import.meta.url), "utf8");
-    const body = sql.replace(/--.*$/gm, "");
+    // A string literal containing a JSON Schema filepath is not a JSON column.
+    // Strip comments and SQL single-quoted values before checking real type tokens.
+    const body = sql.replace(/--.*$/gm, "").replace(/'(?:''|[^'])*'/g, "''");
     assert.equal(/\bjsonb?\b/i.test(body), false, name);
     if (/create table/i.test(body)) assert.match(body, /primary key/i);
   }

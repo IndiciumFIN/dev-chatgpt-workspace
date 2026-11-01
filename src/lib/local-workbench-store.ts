@@ -1,3 +1,4 @@
+import {parseAdminContent} from './admin-content-schema';
 import { tools } from '@/lib/tools/catalog';
 
 export type LocalToolPublication = { slug: string; title: string; lead: string; published: boolean };
@@ -26,14 +27,10 @@ export function validateWorkbench(input: unknown): LocalWorkbench {
   if (raw.tools.length !== defaults.tools.length) throw new Error('Quantidade de instrumentos incompatível.');
   const seen = new Set<string>();
   const validated = raw.tools.map((value) => {
-    if (!value || typeof value !== 'object') throw new Error('Instrumento inválido.');
-    const item = value as Record<string, unknown>;
-    if (typeof item.slug !== 'string' || seen.has(item.slug) || !defaults.tools.some(({ slug }) => slug === item.slug)) throw new Error('Slug duplicado ou desconhecido.');
-    if (typeof item.title !== 'string' || item.title.trim().length < 3 || item.title.length > 80) throw new Error('Título inválido.');
-    if (typeof item.lead !== 'string' || item.lead.trim().length < 10 || item.lead.length > 400) throw new Error('Descrição inválida.');
-    if (typeof item.published !== 'boolean') throw new Error('Estado de publicação inválido.');
+    const item = parseAdminContent(value);
+    if (seen.has(item.slug) || !defaults.tools.some(({slug}) => slug === item.slug)) throw new Error('Slug duplicado ou desconhecido.');
     seen.add(item.slug);
-    return { slug: item.slug, title: item.title.trim(), lead: item.lead.trim(), published: item.published };
+    return item;
   });
   if (seen.size !== defaults.tools.length) throw new Error('Catálogo incompleto.');
   return { schemaVersion: 1, updatedAt: typeof raw.updatedAt === 'string' ? raw.updatedAt : '', tools: validated };

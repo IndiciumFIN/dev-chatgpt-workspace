@@ -1,0 +1,13 @@
+/* Scoped administrative details; all colors inherit canonical theme tokens. */
+.ce-admin-detail-overlay{position:fixed;inset:0;background:rgb(0 0 0 / .42);z-index:1500;}
+.ce-admin-detail-dialog{position:fixed;z-index:1501;left:50%;top:50%;transform:translate(-50%,-50%);width:min(94vw,650px);max-height:min(85vh,800px);overflow:auto;background:var(--color-paper);color:var(--color-ink);border:1px solid var(--color-line);border-radius:var(--radius-panel);box-shadow:0 18px 50px rgb(0 0 0 / .18);padding:clamp(16px,2vw,28px);}
+.ce-admin-detail-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--color-line);padding-bottom:14px;}
+.ce-admin-detail-heading h2{font:inherit;font-size:1.2rem;font-weight:700;margin:0 0 5px;}
+.ce-admin-detail-heading p{margin:0;font-size:.9rem;line-height:1.5;}
+.ce-admin-detail-close{display:inline-grid;place-items:center;min-width:44px;min-height:44px;border:1px solid var(--color-line);border-radius:var(--radius-control);background:var(--color-paper);color:inherit;cursor:pointer;}
+.ce-admin-detail-dialog :focus-visible{outline:3px solid var(--color-navy);outline-offset:3px;}
+.ce-admin-detail-body{padding-top:16px;overflow-wrap:anywhere;}
+.ce-admin-detail-body dt{font-weight:600;margin-top:12px;}
+.ce-admin-detail-body dd{margin:3px 0 8px;}
+.ce-admin-detail-body code{white-space:normal;overflow-wrap:anywhere;}
+@media(max-width:640px){.ce-admin-detail-dialog{left:0;right:0;bottom:0;top:auto;width:100%;max-height:88dvh;transform:none;border-radius:var(--radius-panel) var(--radius-panel) 0 0;}}

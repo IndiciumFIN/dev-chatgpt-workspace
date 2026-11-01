@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/research-risk.candidate.v1.json",
+  "title": "CE | Research Risk Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "category",
+    "description",
+    "likelihood",
+    "impact",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^RISK-[A-Z0-9-]+$"
+    },
+    "project_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "category": {
+      "enum": [
+        "ETHICS",
+        "PRIVACY",
+        "METHOD",
+        "FINANCIAL",
+        "REPUTATION",
+        "SECURITY",
+        "BIAS",
+        "OTHER"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "likelihood": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "impact": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "treatment": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "MITIGATING",
+        "HOLD_HUMAN",
+        "CLOSED_CANDIDATE"
+      ]
+    }
+  }
+}

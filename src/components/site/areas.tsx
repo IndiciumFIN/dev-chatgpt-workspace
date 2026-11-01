@@ -34,7 +34,6 @@ export function useRole() {
 
 export function AreaGuard({ allow, children }: { allow: "admin" | "member"; children: ReactNode }) {
   const { user, isPending, role } = useRole();
-  if (!authEnabled) return <>{children}</>;
   if (isPending) {
     return (
       <div className="login-screen">
@@ -42,7 +41,7 @@ export function AreaGuard({ allow, children }: { allow: "admin" | "member"; chil
       </div>
     );
   }
-  if (!user || !role) return <Navigate to="/login" />;
+  if (!user || !role) return <Navigate to="/login" search={{ de: allow === "admin" ? "admin" : "assinante" }} />;
   if (allow === "admin" && role !== "admin") return <Navigate to="/assinante" />;
   return <>{children}</>;
 }

@@ -10,12 +10,7 @@ import { SlideDeck } from "@/components/templates/slide-deck";
 import { ArticlePage } from "@/components/article/article-page";
 import { Shell } from "@/components/site/shell";
 import { RelatedContent } from "@/components/site/related-content";
-import { readEditorial } from "@/lib/stored.functions";
-import { unflatten, useStored } from "@/lib/stored";
-import { lorem, loremData } from "@/lib/lorem";
-import { ContractView } from "@/components/templates/contract-view";
-import { recoveredTemplate } from "@/components/templates/recovered-templates";
-import { catalogById } from "@/lib/template-catalog";
+import { getTemplate, listTemplates, templateFamilies } from "@/lib/templates";
 import { parseLocale } from "@/lib/translate";
 
 export const Route = createFileRoute("/modelos/$id")({
@@ -26,7 +21,7 @@ export const Route = createFileRoute("/modelos/$id")({
     const lang = parseLocale(search.lang);
     return lang ? { lang } : {};
   },
-  loader: async ({ params }) => {
+  loader: ({ params }) => {
     if (params.id === "folha") throw redirect({ to: "/ferramentas/$slug", params: { slug: "gotejamento" } });
     if (params.id === "guia") return { kind: "guia" as const };
     if (params.id === "biblioteca") return { kind: "biblioteca" as const };
@@ -35,24 +30,34 @@ export const Route = createFileRoute("/modelos/$id")({
     if (params.id === "laudo") return { kind: "laudo" as const };
     if (params.id === "institucional") return { kind: "institucional" as const };
     if (params.id === "slides") return { kind: "slides" as const };
-    const contract = catalogById(params.id);
-    if (contract && contract.href === `/modelos/${params.id}`) return { kind: "contrato" as const, row: contract };
-    const template = await readEditorial({ data: params.id });
+    const template = getTemplate(params.id);
     if (!template) throw notFound();
     return { kind: "editorial" as const, template };
   },
   component: Modelo,
-  head: ({ loaderData }) => ({
+  head: ({ loaderData, params }) => ({
     meta: [
-      { title: loaderData?.kind === "editorial" ? `${loaderData.template.name} · Templates` : "Template · Calculadoras de Enfermagem" },
+      { title: modeloTitle(loaderData, params.id) },
       { name: "robots", content: "noindex" },
     ],
   }),
 });
 
+/**
+ * Cada rota /modelos/$id recebe o título da peça que ela carrega.
+ * Peças editoriais usam o nome do template; as famílias usam o nome que
+ * /modelos já publica em templateFamilies. Sem dado, o slug entra no título
+ * em vez de repetir um literal.
+ */
+function modeloTitle(data: { kind: string; template?: { name: string } } | undefined, slug: string): string {
+  if (data?.kind === "editorial" && data.template) return `${data.template.name} · Templates`;
+  const family = data ? templateFamilies.find((item) => item.id === data.kind) : undefined;
+  if (family) return `${family.name} · Templates`;
+  return `Template ${slug} · Calculadoras de Enfermagem`;
+}
+
 function Modelo() {
   const data = Route.useLoaderData();
-  const templates = useStored().templates;
   if (data.kind === "guia") return <Shell><GuideView /></Shell>;
   if (data.kind === "biblioteca") return <Shell><LibraryView /></Shell>;
   if (data.kind === "norma") return <Shell><NormView /></Shell>;
@@ -60,18 +65,15 @@ function Modelo() {
   if (data.kind === "laudo") return <Shell><ReportView /></Shell>;
   if (data.kind === "institucional") return <Shell><InstitutionalTemplate /></Shell>;
   if (data.kind === "slides") return <Shell><SlideDeck /></Shell>;
-  if (data.kind === "contrato") {
-    const Recovered = recoveredTemplate(data.row.id);
-    return <Shell>{Recovered ? <Recovered /> : <ContractView row={data.row} />}</Shell>;
-  }
+  const templates = listTemplates();
   return (
     <Shell>
       <ArticlePage
         kind="editorial"
         crumbs={[{ label: "Início", to: "/" }, { label: "Templates", to: "/modelos" }, { label: data.template.name }]}
-        eyebrow="Amostra visual"
-        title={data.template.id}
-        lead={lorem(data.template.description)}
+        eyebrow="Template"
+        title={data.template.name}
+        lead={data.template.description}
         related={
           <RelatedContent
             title="Outras peças"
@@ -84,7 +86,7 @@ function Modelo() {
           />
         }
       >
-        <EditorialView template={{ ...data.template, name: data.template.id, category: lorem(data.template.category), description: lorem(data.template.description), data: loremData(unflatten(data.template.lines.map((line) => ({ key: line.path, text: line.text })))) as Record<string, unknown> }} />
+        <EditorialView template={data.template} />
       </ArticlePage>
     </Shell>
   );

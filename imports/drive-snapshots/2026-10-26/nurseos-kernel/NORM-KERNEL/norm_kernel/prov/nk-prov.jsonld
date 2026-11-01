@@ -1,0 +1,114 @@
+{
+ "@context": {
+  "nk": "https://brio-b69a3423.base44.app/functions/norm-kernel#",
+  "prov": "http://www.w3.org/ns/prov#"
+ },
+ "@graph": [
+  {
+   "@id": "nk:annex-field-norms",
+   "@type": "prov:Entity",
+   "nk:description": "field_norms.json v1.0.1 — norma granular por campo, pinada na política",
+   "prov:value": "sha256:f72441e8d40e0e21c54106e7f48baa00b5d383743f94dbab1f37385a119650ba"
+  },
+  {
+   "@id": "nk:ev-0001",
+   "@type": "prov:Entity",
+   "prov:value": "sha256:96a5c0901b1d987250a30b4807138fa664e85d520ac2a4bd6adfe3a716d3cf84"
+  },
+  {
+   "@id": "nk:ev-0002",
+   "@type": "prov:Entity",
+   "prov:value": "sha256:be117c20eede4377c608ef450fbd3eb43b7a83dcb2c684ebdb6cc19b72496110",
+   "prov:wasGeneratedBy": {
+    "@id": "nk:run-0002"
+   },
+   "prov:wasRevisionOf": {
+    "@id": "nk:ev-0001"
+   }
+  },
+  {
+   "@id": "nk:ev-0003",
+   "@type": "prov:Entity",
+   "nk:note": "policy act: POL-NK-001 v1.0.1 re-pin (composição/enum + G6)",
+   "prov:value": "sha256:54b6da4a2d1741ec9a2ee0fdcae0cbbd82ce464af53aa27c3c531c1e2bf30767",
+   "prov:wasGeneratedBy": {
+    "@id": "nk:run-0003"
+   },
+   "prov:wasRevisionOf": {
+    "@id": "nk:ev-0002"
+   }
+  },
+  {
+   "@id": "nk:run-0001",
+   "@type": "prov:Activity",
+   "prov:startedAtTime": "2026-09-29T14:05:00-03:00",
+   "prov:wasAssociatedWith": {
+    "@id": "nk:pipeline-v010"
+   }
+  },
+  {
+   "@id": "nk:run-0002",
+   "@type": "prov:Activity",
+   "prov:startedAtTime": "2026-09-29T14:20:00-03:00",
+   "prov:wasAssociatedWith": {
+    "@id": "nk:pipeline-v020"
+   }
+  },
+  {
+   "@id": "nk:run-0003",
+   "@type": "prov:Activity",
+   "prov:startedAtTime": "2026-09-29T14:30:00-03:00",
+   "prov:wasAssociatedWith": {
+    "@id": "nk:pipeline-v020"
+   }
+  },
+  {
+   "@id": "nk:pipeline-v010",
+   "@type": "prov:Agent",
+   "nk:version": "norm-kernel-pipeline-v0.1.0 + atomizer-v0.1.0"
+  },
+  {
+   "@id": "nk:pipeline-v020",
+   "@type": "prov:Agent",
+   "nk:version": "norm-kernel-pipeline-v0.2.0 + atomizer-v0.1.1",
+   "prov:actedOnBehalfOf": {
+    "@id": "nk:leivis"
+   }
+  },
+  {
+   "@id": "nk:leivis",
+   "@type": [
+    "prov:Agent",
+    "prov:Person"
+   ],
+   "nk:name": "Leivis Lima"
+  },
+  {
+   "@id": "nk:atoms-artifact",
+   "@type": "prov:Entity",
+   "nk:description": "10 átomos: checksums verbatim, coverage_tokens, localizadores R2",
+   "prov:wasGeneratedBy": {
+    "@id": "nk:run-0002"
+   }
+  },
+  {
+   "@id": "nk:render-page",
+   "@type": "prov:Entity",
+   "nk:og-image": "https://media.base44.com/images/public/6a66b1a87d027966b69a3423/15ba699ea_generated_image.png",
+   "nk:url": "https://brio-b69a3423.base44.app/functions/normKernelRenderPage",
+   "prov:wasDerivedFrom": [
+    {
+     "@id": "nk:annex-field-norms"
+    },
+    {
+     "@id": "nk:ev-0003"
+    }
+   ]
+  },
+  {
+   "@id": "nk:intake-guard",
+   "@type": "prov:SoftwareAgent",
+   "nk:enforcement": "POL-NK-001 v1.0.1 C5 — bloqueia artefato sem registro (quarantined)"
+  }
+ ]
+}

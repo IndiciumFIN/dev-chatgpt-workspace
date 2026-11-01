@@ -37,8 +37,7 @@ jobs:
         run: npm run build:spa
       - name: Confirmar arquivos resultantes
         run: |
-          test -s .vercel/output/nitro.json
-          test -d .vercel/output/functions/__server.func
+          test -s .vercel/output/static/index.html
           test -s .vercel/output/static/robots.txt
           git diff --check
           git diff --stat -- package.json package-lock.json

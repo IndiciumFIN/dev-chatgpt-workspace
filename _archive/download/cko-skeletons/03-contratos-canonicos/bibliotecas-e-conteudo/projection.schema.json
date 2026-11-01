@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/projection.schema.json",
+  "title": "CKO | projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "source_object_ids",
+    "template_profile_id",
+    "block_bindings",
+    "output",
+    "renderer_ref",
+    "gate_results"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_object_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+      },
+      "minItems": 1
+    },
+    "template_profile_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "block_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "block_id",
+          "semantic_role",
+          "binding_kind",
+          "binding_ids"
+        ],
+        "properties": {
+          "block_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+          },
+          "semantic_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "binding_kind": {
+            "type": "string",
+            "enum": [
+              "OBJECT",
+              "CLAIM",
+              "EVIDENCE",
+              "MEDIA",
+              "RELATION",
+              "COMPUTED_METADATA",
+              "I18N_KEY"
+            ]
+          },
+          "binding_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "overlay_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "visibility_rule_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": [
+        "channel",
+        "locale"
+      ],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "WEB",
+            "PDF",
+            "PRINT",
+            "SLIDES",
+            "SOCIAL",
+            "EPUB",
+            "OFFLINE"
+          ]
+        },
+        "locale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "route_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "renderer_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gate_results": {
+      "type": "object",
+      "required": [
+        "sources",
+        "rights",
+        "a11y",
+        "privacy",
+        "human"
+      ],
+      "properties": {
+        "sources": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "HOLD",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "rights": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "HOLD",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "a11y": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "HOLD",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "privacy": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "HOLD",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "human": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "HOLD",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "resolved_model_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

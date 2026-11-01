@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Module Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "object_class",
+    "audience",
+    "family",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "object_class": {
+      "enum": [
+        "FUNCTIONAL",
+        "EDITORIAL",
+        "HYBRID"
+      ]
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "family": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

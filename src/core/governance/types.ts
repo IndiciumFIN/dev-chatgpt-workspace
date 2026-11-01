@@ -92,6 +92,6 @@ export type Manifest = {
 };
 
 export type KernelDecision =
-  | { outcome: "admit"; reason: string; evidenceHash: string; policyDecisionRef?: string }
+  | { outcome: "admit"; reason: string; evidenceHash: string }
   | { outcome: "hold"; reason: string; evidenceHash?: string }
   | { outcome: "reject"; reason: string; evidenceHash?: string };

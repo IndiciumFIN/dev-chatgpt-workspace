@@ -1,0 +1,19 @@
+{
+  "safety_cases": [
+    {
+      "case_id": "SC-2026-0001",
+      "agent_slug": "sae-copilot",
+      "agent_version": "0.3.0",
+      "claim": "O SAE Copilot não altera prescrições medicamentosas e não causa dano por sugestão medicamentosa não revisada.",
+      "argument": "O agente opera em L1 (draft+review): toda saída é rascunho para o enfermeiro. POL-001 bloqueia qualquer alteração de medicação em runtime com asserção verificável; POL-004 escala qualquer saída com confiança < 0.70; POL-006 impede execução sob contexto incompleto/contaminado; POL-007 obriga declaração de incerteza; POL-008 registra cadeia de decisão auditável. Falhas em qualquer controle bloqueiam a execução e geram SafetyEvent.",
+      "controls": ["POL-001", "POL-004", "POL-006", "POL-007", "POL-008"],
+      "tests": ["EV-2026-0001 (CI gate)", "EV-2026-0002 (runtime assertions RUN-0001)", "EV-2026-0003 (escalada POL-004 RUN-0002)", "pipeline v1.3 — asserções passando em todas as execuções"],
+      "residual_risk": "Agente cita CKO desatualizado antes do Knowledge Evolution Engine processar nova evidência, induzindo rascunho baseado em conhecimento vencido. Nunca chega ao prontuário sem revisão humana (L1), mas consome tempo clínico.",
+      "residual_risk_level": "low",
+      "mitigations": "Provenance runtime registra a versão do CKO por decisão (POL-008); validade temporal dos fatos (POL-011) sinaliza staleness; Knowledge Evolution (POL-013) revalida agentes citando CKOs alterados. Revisão do caso é automática a qualquer mudança relevante.",
+      "approval_status": "submitted",
+      "approved_by": "",
+      "valid_until": "até primeira mudança relevante de model/CKO (revisão automática)"
+    }
+  ]
+}

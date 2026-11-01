@@ -96,6 +96,9 @@ const braden: ClinicalTool = {
     "Paranhos WY, Santos VLCG. Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa. Rev Esc Enferm USP. 1999;33(esp):191-206.",
   ],
   related: ["morse", "gotejamento", "imc"],
+  status: "EVIDENCE_BOUND",
+  publicacao: "publicada",
+  sourceIds: ["SRC-REV-ENF-USP-BRADEN-1999"],
 };
 
 const morse: ClinicalTool = {
@@ -131,6 +134,9 @@ const morse: ClinicalTool = {
     "Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989;8(4):366-377.",
   ],
   related: ["braden", "apgar", "imc"],
+  status: "EVIDENCE_BOUND",
+  publicacao: "publicada",
+  sourceIds: ["SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"],
 };
 
 const apgar: ClinicalTool = {
@@ -168,6 +174,9 @@ const apgar: ClinicalTool = {
     "Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953;32(4):260-267.",
   ],
   related: ["braden", "imc", "morse"],
+  status: "EVIDENCE_BOUND",
+  publicacao: "publicada",
+  sourceIds: ["SRC-APGAR-1953"],
 };
 
 const gotejamento: ClinicalTool = {
@@ -202,6 +211,9 @@ const gotejamento: ClinicalTool = {
     "Fórmula clássica de gotejamento: gotas/min = (volume em mL × fator do equipo) / tempo em minutos.",
   ],
   related: ["imc", "braden", "morse"],
+  status: "EVIDENCE_BOUND",
+  publicacao: "publicada",
+  sourceIds: ["SRC-GOTEJAMENTO-FORMULA-CLASSICA"],
 };
 
 const imc: ClinicalTool = {
@@ -238,8 +250,24 @@ const imc: ClinicalTool = {
     "World Health Organization. Obesity: preventing and managing the global epidemic. Geneva: WHO; 2000. Cortes de IMC para adultos.",
   ],
   related: ["gotejamento", "braden", "apgar"],
+  status: "EVIDENCE_BOUND",
+  publicacao: "publicada",
+  sourceIds: ["SRC-OMS-OBESIDADE-2000"],
 };
 
+
+/**
+ * PILOTO — primeira escala com autoridade normativa brasileira declarada.
+ *
+ * A fonte e o CFM Parecer nº 28/2020, e o corte de 8 pontos vem DELE: a
+ * remediacao `SCL-001-ALDRETE-universal-remediation-v0.3.0` remove a projecao
+ * de 9 e fixa 8. O site estatico publica a mesma escala com corte em 9 —
+ * limiar que contradiz a fonte que ele proprio declara.
+ *
+ * `status` nao e "RELEASED": o gate de MD do CKO-MD esta fechado e a camada
+ * Clinical Calculators/Scales herda HOLD ate reperformance e promocao formal
+ * (CKO-POL-UT-001 v1.1.0, nota de controle e §16).
+ */
 const aldrete: ClinicalTool = {
   slug: "aldrete",
   kind: "escala",
@@ -256,11 +284,11 @@ const aldrete: ClinicalTool = {
   ],
   bands: [
     { min: 8, max: 10, label: "Critério de recuperação atingido", tone: "ok", note: "Critério de recuperação atingido. A decisão de alta cabe ao médico responsável, considerando o quadro clínico.", nanda: [] },
-    { min: 7, max: 7, label: "Manter em observação", tone: "warn", note: "Manter em observação e reavaliar antes de considerar alta.", nanda: [] },
-    { min: 0, max: 6, label: "Paciente instável", tone: "danger", note: "Critério de recuperação não atingido. Manter monitorização e acionar o protocolo institucional.", nanda: [] },
+    { min: 7, max: 7, label: "Manter em observação", tone: "warn", note: "Manter em observação e reavaliar antes de considerar alta.", nanda: ["Risco de recuperação pós-anestésica"] },
+    { min: 0, max: 6, label: "Paciente instável", tone: "danger", note: "Critério de recuperação não atingido. Manter monitorização e acionar o protocolo institucional.", nanda: ["Risco de recuperação pós-anestésica"] },
   ],
   howTo: [
-    "Avalie cada um dos cinco critérios após a cirurgia, conferindo o paciente e o registro intraoperatório.",
+    "Avalie cada um dos cinco critérios após a-DC, conferindo o paciente e o registro intraoperatório.",
     "Some os pontos: o escore vai de 0 a 10.",
     "Leia a faixa: 8 ou mais atinge o critério de recuperação; 7 pede observação; abaixo de 7 o paciente está instável.",
     "O resultado não autoriza alta de forma autônoma: a decisão considera o quadro clínico e a avaliação do médico responsável.",
@@ -273,7 +301,11 @@ const aldrete: ClinicalTool = {
   references: [
     "CONSELHO FEDERAL DE MEDICINA. Parecer nº 28/2020. Assunto: Critérios para alta da sala de recuperação pós-anestésica. Brasília: CFM, 2020.",
   ],
+  status: "EVIDENCE_BOUND",
   publicacao: "candidata",
+  // Os 7 HOLDs do relatorio de validacao `SCL-001-ALDRETE-universal-validation-v0.3.0`.
+  // Enquanto qualquer um estiver aberto, a ferramenta nao pode ser homologada
+  // nem entrar no indice (FIND-CTR-009).
   holds: [
     "UTC-003/UTC-071: externalizar toda verdade clinica do source da pagina para binding governado em runtime",
     "UTC-004: reconciliar identidade tecnica UUIDv5 legado com UUIDv7, sem duplicidade",
@@ -288,11 +320,8 @@ const aldrete: ClinicalTool = {
   version: "1.0.0-piloto",
 };
 
-export const tools: ClinicalTool[] = [braden, morse, apgar, gotejamento, imc];
-
-/** Fora do menu e do sitemap. A branch de auditoria exige homologação humana antes do índice. */
-export const candidateTools: ClinicalTool[] = [aldrete, examesLaboratoriais];
+export const tools: ClinicalTool[] = [braden, morse, apgar, aldrete, gotejamento, imc, examesLaboratoriais];
 
 export function getTool(slug: string) {
-  return tools.find((tool) => tool.slug === slug) ?? candidateTools.find((tool) => tool.slug === slug);
+  return tools.find((tool) => tool.slug === slug);
 }

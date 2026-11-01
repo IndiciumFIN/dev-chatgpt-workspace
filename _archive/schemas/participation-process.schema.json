@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/participation-process.candidate.v1.json",
+  "title": "CE | Participation Process Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "status",
+    "official",
+    "title",
+    "purpose",
+    "normative_refs",
+    "feedback_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^PROC-[A-Z0-9-]+$"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "OPEN_CANDIDATE",
+        "CLOSED_CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    },
+    "official": {
+      "type": "boolean",
+      "const": false
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normative_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "feedback_policy": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

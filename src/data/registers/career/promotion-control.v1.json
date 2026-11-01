@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "0.1.0",
+  "registryId": "CE-CAREER-PROMOTION-CONTROL-001",
+  "status": "HOLD_HUMAN",
+  "branch": "feat/career-youth-db-first-20261026",
+  "reviewQueue": {
+    "claimItems": 19,
+    "editorialItems": 17,
+    "totalItems": 36,
+    "defaultDecision": "PENDING"
+  },
+  "releaseGates": [
+    {
+      "canonical_id": "RG-CAREER-SOURCE",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [],
+      "required_approvals": [
+        "SOURCE_APPLICABILITY_REVIEW"
+      ],
+      "evidence_bundle_refs": [
+        "registers/career/source-snapshots.v1.json"
+      ],
+      "replay_hash": "ee9fdaa39ffaf720ed12958b6fbeff58529fe3b738be7622236a3330cd585121",
+      "deployment_scope": "career-youth-candidate"
+    },
+    {
+      "canonical_id": "RG-CAREER-CLAIMS",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [
+        "RG-CAREER-SOURCE"
+      ],
+      "required_approvals": [
+        "CLAIM_REVIEW_19_OF_19"
+      ],
+      "evidence_bundle_refs": [
+        "registers/career/atomization.v1.json"
+      ],
+      "replay_hash": "18d5c180eda07383105bef4ea9b4b08b675f924899317411f714e01378bbf14a",
+      "deployment_scope": "career-youth-candidate"
+    },
+    {
+      "canonical_id": "RG-CAREER-EDITORIAL",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [
+        "RG-CAREER-CLAIMS"
+      ],
+      "required_approvals": [
+        "EDITORIAL_REVIEW_17_OF_17"
+      ],
+      "evidence_bundle_refs": [
+        "migrations/0005_career_editorial_content_candidate.sql"
+      ],
+      "replay_hash": "4127b9ffb9951bc3cca1c9c887a83bb528b57299fab3f7404a51c4c4250e56ab",
+      "deployment_scope": "career-youth-candidate"
+    },
+    {
+      "canonical_id": "RG-CAREER-A11Y",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [
+        "RG-CAREER-EDITORIAL"
+      ],
+      "required_approvals": [
+        "WCAG_2_2_AA_REVIEW"
+      ],
+      "evidence_bundle_refs": [
+        "GHA-RUN-40426637302"
+      ],
+      "replay_hash": "094bf81528d624877f3362b780a0a786b55e88ee56b32b40a9a2adbfb19d8179",
+      "deployment_scope": "career-youth-candidate"
+    },
+    {
+      "canonical_id": "RG-CAREER-KERNEL",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [
+        "RG-CAREER-A11Y"
+      ],
+      "required_approvals": [
+        "KERNEL_ADMISSION"
+      ],
+      "evidence_bundle_refs": [
+        "WO-CAREER-YOUTH-001"
+      ],
+      "replay_hash": "4b6a2b3475f523cc2b6fb19f8b2679d7d034b6fad0dee18f112a74e5397330e7",
+      "deployment_scope": "career-youth-candidate"
+    },
+    {
+      "canonical_id": "RG-CAREER-RELEASE",
+      "decision": "HOLD",
+      "status": "HOLD_HUMAN",
+      "upstream_gate_refs": [
+        "RG-CAREER-KERNEL"
+      ],
+      "required_approvals": [
+        "HUMAN_FINAL_APPROVAL"
+      ],
+      "evidence_bundle_refs": [
+        "GHA-ARTIFACT-12700680301"
+      ],
+      "replay_hash": "649197be51234ad029f80f6ee879abf3ee124612e270c23deecfb054a6d7c36b",
+      "deployment_scope": "career-youth-candidate"
+    }
+  ],
+  "publications": [
+    {
+      "canonical_id": "PUB-PROJ-CAREER",
+      "projection": "PROJ-CAREER",
+      "status": "HOLD_HUMAN",
+      "human_approval": "PENDING",
+      "output_sha256": "0b03af12576ac14b7b56a48023a1a15b07df65c1ca0d73dcc2227fd211fd5b24"
+    },
+    {
+      "canonical_id": "PUB-PROJ-YOUTH",
+      "projection": "PROJ-YOUTH",
+      "status": "HOLD_HUMAN",
+      "human_approval": "PENDING",
+      "output_sha256": "e2a435ef7b61660b2520e816d62c1bce1808bbb1331ce673ee73d96c76b79ddb"
+    }
+  ],
+  "ckoContractRefs": [
+    "contracts/cko-schemas/release_gate.schema.json",
+    "contracts/cko-schemas/publication.schema.json",
+    "contracts/cko-schemas/workflow.schema.json"
+  ],
+  "invariant": "NO_RELEASE_WHILE_ANY_REQUIRED_REVIEW_OR_KERNEL_ADMISSION_IS_PENDING"
+}

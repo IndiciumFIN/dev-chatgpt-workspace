@@ -602,7 +602,7 @@ Ou seja: o `pilot/` foi copiado para `tools/experience-skeleton/pilot/`, mas os 
 | Universo | Onde vive | Escala | Estado |
 |---|---|---|---|
 | **A — git, governança** | `IndiciumFIN/dev-chatgpt-workspace` (público) | `main` = 1.877 ficheiros · 27 branches | É **a app CE + o pacote PMO × Kernel**. `src/lib/tools/catalog.ts` (19.579 B), `src/routes/`, `src/core/`, `contracts/entities/`, `registers/governance/`, `tools/experience-skeleton/` (12 ficheiros), `audit/execution/`. PR #29 (revert do #26) e **PR #30** ("Integrate structural candidate and validate phase 3", 485 ficheiros, +483.797, **CI 12/12 verde**) |
-| **B — git, app CE** | `IndiciumFIN/calculadorasdeenfermagem` (privado) | `main` = 176 ficheiros · 17 branches | Snapshot antigo (17/10). **Medido em 17 branches: nenhum dos artefactos do sandbox lá está.** Maiores branches: `migration/full-directory-*` (18.441), `migration/candidate-f08-*` (18.458), `cursor/fix-governance-gaps-*` (9.043) — com `migration/source_snapshots/` e `data/legado/`, não o app |
+| **B — git, app CE** | `IndiciumFIN/calculadorasdeenfermagem` (público — **corrigido** em §13.10) | `main` = 176 ficheiros · 17 branches | Snapshot antigo (17/10). **Medido em 17 branches: nenhum dos artefactos do sandbox lá está.** Maiores branches: `migration/full-directory-*` (18.441), `migration/candidate-f08-*` (18.458), `cursor/fix-governance-gaps-*` (9.043) — com `migration/source_snapshots/` e `data/legado/`, não o app |
 | **C — sandbox local** | máquina do dono (TAR de 5.746 ficheiros) | `src/` 2.366 · `_archive/` 1.445 · `upload/` 927 · `public/` 614 · `scripts/` 150 · `e2e/` 8 · `tests/` 9 · `migrations/` 11 | **Não está em git em nenhum repositório.** Layout diferente do git (`src/data/contracts/`, `src/data/registers/`) |
 
 **Consequência:** o trabalho do sandbox (17 contratos, 62 schemas, 83 ferramentas com conteúdo editorial, 19 idiomas + 1.149 traduções, 251 páginas de catálogo, 385 testes, 17 gates) **nunca foi publicado**. O que existe em git é um universo diferente. Reconciliar é, antes de mais, **decidir qual dos três é canónico** — e o plano abaixo faz isso por etapas, sem bloquear.
@@ -860,3 +860,56 @@ Lição registada (Lição 10 do plano): *«pré-existente» é uma afirmação 
 Eu reusei a medição de uma frente anterior sem a re-derivar no estado novo, e a frente anterior
 tinha medido a **baseline R79 (68)**, não a **expansão R89 (112)** — o número estava certo em
 contexto e errado na conclusão.
+
+### 13.10 Comparação byte-a-byte com os repositórios — e duas correções a registos anteriores (01/11/2026 13:45Z)
+
+O dono pediu "comparar os repositórios e branches com os arquivos que temos aqui, e criar **só** o
+conteúdo em ZIP para avançar mais rápido". Feito por hash de conteúdo (`git blob-sha`), não por nome
+nem por data.
+
+#### 13.10.1 O delta real
+
+| | Ficheiros |
+|---|---|
+| Árvore local (sem `.git`, `node_modules`, `.vercel`, `.env`) | 1.834 |
+| **Já idênticos** a alguma branch de A ou de B | **1.805** |
+| Divergentes | 26 → **15** são trabalho local por commitar; **11** são ficheiros onde o repo já está mais à frente |
+| Novos (não existem em A nem em B) | 3 |
+
+**O delta são 15 ficheiros**: `src/lib/impact/impact-engine.ts` (novo) · `src/lib/admin/list-query.ts` ·
+`src/components/admin/pmo-panel.tsx` · `src/styles/admin-console.css` · `scripts/test-impact-engine.test.mjs`
+(novo) · `scripts/test-list-query.test.mjs` (novo) · 9 registos de auditoria regenerados.
+
+**Verificado antes de empacotar**: 23/23 testes verdes; `tsc` só com os **2 erros pré-existentes** de
+`@types/pg`; `git apply --check` **limpo** sobre a carrier; o `pmo-panel` **mantém o `PmoReviewIntake`**;
+e nada mais no repositório importa `list-query` (nem usa `queryPmo`/`ListSort`) ⇒ a troca da API é
+segura — **mas o `pmo-panel` e o `list-query` têm de subir juntos** (o painel usa
+`activeChips`/`queryList`/`SortDir`; a versão do repo exporta `queryPmo`/`ListSort`).
+
+#### 13.10.2 CORRECÇÃO 1 — o repositório das 182 branches já não responde
+O inventário antigo (`evidence_pack/branches-todas.json`) tem **dois** repositórios: `calculadoras-de-enfermagem`
+(**com hífens**, 182 branches) e `dev-chatgpt-workspace` (24). Medido agora:
+
+| Repositório | Branches registadas | Estado **agora** |
+|---|---|---|
+| `calculadoras-de-enfermagem` (com hífens) | 182 | **HTTP 404** — apagado, renomeado, ou privado sem o nosso acesso (**qual dos três não foi medido**) |
+| `dev-chatgpt-workspace` | 24 | existe, **29** branches (API e `ls-remote` concordam) |
+
+Sobreposição de nomes entre as 182 antigas e as 17 de `calculadorasdeenfermagem`: **1** (só `main`).
+⇒ **As medições publicadas como "181 branches do repositório público" (churn 137/181, 114/181 no
+núcleo conta→cobrança→ads, órfãos) descrevem esse repositório de 182 branches — que já não responde.**
+E o `dev-chatgpt-workspace` tem **29**, não 181.
+
+#### 13.10.3 CORRECÇÃO 2 — `calculadorasdeenfermagem` é público
+A API diz `private: false`; o inventário antigo tratava-o como privado.
+
+#### 13.10.4 CORRECÇÃO 3 — o "universo C" (5.746 ficheiros) não está neste ambiente
+O §13.0 descreve um sandbox com `src/data/contracts/`, `src/data/registers/`, `public/bibliotecas/catalog/`
+(251 HTML), `upload/` (927) e `_archive/` (1.445). **Nada disso está aqui.** O que existe é a árvore do
+universo A + os 15 ficheiros de delta. Em particular, **os 251 HTML do espelho não existem** ⇒ o corrector
+dos 5.520 links fica pronto e testado, mas **sem material sobre o qual correr**.
+
+#### 13.10.5 Entregue
+`avancar-ce-2026-11-01.zip` (332 KB, 20 entradas): `CONTEUDO/` (os 15 ficheiros nos caminhos exactos do repo) +
+`DELTA/` (`LEIA-ME.md` · `DELTA.csv` · `avancar.patch` · `COMPARACAO.md` · `verificacao.txt`).
+Registado em `TASK-PLAN-178`, que também pergunta ao dono **onde foi parar o conteúdo do repo de 182 branches**.

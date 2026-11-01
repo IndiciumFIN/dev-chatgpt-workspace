@@ -3163,6 +3163,17 @@
       "acceptance": "DECISAO DO DONO. O espelho `public/bibliotecas/catalog/` (251 paginas, 240 de item + 11 de hub) **nao esta em git** (medido em nenhum dos 182 refs do repo de governanca; `ce-bibliotecas-dev@main` tem zero `public/`), tem `noindex`, e o `releaseGate` do pacote estava BLOCKED. A pergunta e' de destino, nao de codigo: (a) **DESCARTAR** a copia (o acervo canonico ja' existe em `public/bibliotecas/assets/` com 262 AVIF e as 11 paginas de hub sao derivaveis), (b) **CORRIGIR** com o `fix-espelho-links.mjs` e promover, ou (c) **PROMOVER sem correcao** (mantendo 5.520 links quebrados, o que nao se recomenda). Medido que sustenta a opcao (a)/(b): as 5.520 quebras sao **100% mecanicas** (3 regras, destinos todos existentes no acervo). O que a decisao precisa de dizer: **para que repo/branch sobe o espelho**, se fica no repo da app (`IndiciumFIN/calculadorasdeenfermagem`) ou no de governanca, e se o `noindex` se mantém. Nada foi promovido nem apagado por mim.",
       "created_at": "2026-11-01T08:00:00Z",
       "updated_at": "2026-11-01T08:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-178",
+      "title": "CORRECAO: o repositorio de 182 branches ja' nao responde (404) e o 'universo C' nao esta' neste ambiente — o delta real sao 15 ficheiros",
+      "status": "PROPOSTO",
+      "phase": "F0",
+      "owner": "dono",
+      "blocked_by": [],
+      "acceptance": "MEDIDO (owner, 01/11 13:45Z, por git blob-sha + API REST + ls-remote). (a) `IndiciumFIN/calculadoras-de-enfermagem` (COM HIFENS, 182 branches no inventario antigo) devolve **HTTP 404** para este token: apagado, renomeado, ou privado sem o nosso acesso — **qual dos tres NAO foi medido**. A sobreposicao de nomes com as 17 branches de `calculadorasdeenfermagem` e' de **1** (so `main`). (b) `dev-chatgpt-workspace` tem **29** branches (API e ls-remote concordam), nao 181. (c) `calculadorasdeenfermagem` e' **PUBLICO** (o inventario antigo tratava-o como privado). (d) O 'universo C' descrito no §13.0 (TAR de 5.746 ficheiros, `src/data/contracts/`, 251 HTML do espelho) **NAO ESTA' NESTE AMBIENTE**: o que existe e' a arvore do universo A + 15 ficheiros por commitar. **Consequencia pratica:** o delta real entre 'o que temos aqui' e 'os repositorios' e' de **15 ficheiros**, nao 5.746 — e' o motor de impacto, o list-query, o pmo-panel, o CSS da consola, 2 ficheiros de teste e 9 registos de auditoria regenerados. Entregue em `avancar-ce-2026-11-01.zip` (conteudo + patch aplicavel + manifesto + comparacao), verificado: 23/23 testes, typecheck so' com os 2 erros pre-existentes de @types/pg, `git apply --check` limpo sobre a carrier, sha256 do manifesto a bater. **Decisao do dono:** (i) onde vai parar o conteudo do repo de 182 branches (esta tudo la dentro?) e (ii) se os 6 ficheiros funcionais sobem para a carrier ou se o registo de auditoria (9 ficheiros gerados) so' sobe quando a auditoria voltar a correr no CI.",
+      "created_at": "2026-11-01T13:45:00Z",
+      "updated_at": "2026-11-01T13:45:00Z"
     }
   ],
   "candidateVerification": {
@@ -4012,6 +4023,6 @@
     "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
   },
   "meta": {
-    "ultima_revisao_owner": "01/11/2026 08:10Z - CORRIGIDO: TASK-PLAN-175 estava errada (dizia drift pre-existente em main); medicao correcta: main PASSA (312/313), a carrier tem 153->155 tasks contra as 112 que o modelo R89 admite, e as 22 falhas (R78:5 R86:3 R87:6 R89:8) sao consequencia do crescimento do registo pela comparacao CE — logo, minha. Gate nao tocado. Espelho: plano de rewrite dos 5.520 links validado por execucao (5.520/5.520); TASK-PLAN-176 (DONE) e 177 (decisao do dono). 155 tasks."
+    "ultima_revisao_owner": "01/11/2026 13:45Z - comparacao byte-a-byte das arvores locais contra todas as branches de A (29) e B (17): 1.805 ficheiros ja identicos, 26 divergentes (15 = trabalho local por commitar; 11 = o repo ja esta' mais a frente), 3 novos. CORRECCOES registadas em TASK-PLAN-178: o repo de 182 branches (`calculadoras-de-enfermagem`) da' 404; A tem 29 branches (nao 181); B e' publico; o 'sandbox de 5.746 ficheiros' nao esta' neste ambiente. ZIP `avancar-ce-2026-11-01.zip` (15 ficheiros + patch + manifesto). 156 tasks."
   }
 }

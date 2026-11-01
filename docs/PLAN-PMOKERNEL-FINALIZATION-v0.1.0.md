@@ -750,9 +750,16 @@ O PDF do parecer do CFM foi **subido como texto**: o `push_files` gravou a strin
 ⇒ **A afirmação "PASS" que ficou escrita em §13.5 na rev.1 está superada.** O portão hoje está **vermelho**, e está vermelho porque o repo tem 16 casos que o contrato não representa — não porque os dados estejam errados.
 
 #### 13.7.3 O que ficou registado para o dono (nada disto é meu para decidir)
-- **`registers/governance/r85-source-evidence-pending-20261101.v1.json`** — intake de evidência das 5 fontes sem documento preservado (`EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate `HOLD_HUMAN`, 0 admitidas).
-- **`R84-CKO-SRC-EVIDENCE-STATE`** em r84 — emendar o contrato `source` para ter um estado de evidência ausente, ou preservar os documentos. **A segunda via é impossível para `SRC-GOTEJAMENTO-FORMULA-CLASSICA`**: é uma fórmula sem documento, e o enum do contrato inclui `INTERNAL_GOVERNED`, que descreve precisamente esse caso ⇒ **inconsistência interna do contrato**, medida.
-- **`R84-CKO-SRC-CITATION-SLOT`** em r84 — o contrato não tem campo `citacao`, embora tenha `language`, `effective_from` e `license_ref`; a prática carrega `citacao` em todas as 6 fontes.
+- **`registers/governance/r86-source-evidence-pending-20261101.v1.json`** — intake de evidência das 5 fontes sem documento preservado (`EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate `HOLD_HUMAN`, 0 admitidas).
+- **`R84-CKO-SRC-EVIDENCE-STATE`** no r86 — emendar o contrato `source` para ter um estado de evidência ausente, ou preservar os documentos. **A segunda via é impossível para `SRC-GOTEJAMENTO-FORMULA-CLASSICA`**: é uma fórmula sem documento, e o enum do contrato inclui `INTERNAL_GOVERNED`, que descreve precisamente esse caso ⇒ **inconsistência interna do contrato**, medida.
+- **`R86-CKO-SRC-CITATION-SLOT`** no r86 — o contrato não tem campo `citacao`, embora tenha `language`, `effective_from` e `license_ref`; a prática carrega `citacao` em todas as 6 fontes.
 - **`TASK-PLAN-171..174`** no registo canónico.
 
 **Nota de correcção de forma:** o portão de cobertura (`check-contract-coverage.mjs`) foi **revertido** para a regra fiel ao contrato (integridade = hash real + artefacto preservado). A variante "NOT_AVAILABLE com motivo" que eu tinha introduzido na rev.1 era a mesma invenção que o parecer V6ews — e é exactamente o que o contrato não admite. Os dois portões agora reprovam **as mesmas 5 fontes, pela mesma causa nomeada**.
+
+#### 13.7.4 O CI apanhou outra coisa minha (01/11/2026 07:15Z)
+A primeira versão desta correcção **acrescentou as duas decisões ao `r84`** e **criou um registo `r85`**. Ambos estavam errados, e o CI do repo disse-me antes de eu publicar:
+- **`r84` é um registo fechado e validado**: `scripts/verify-r84-pmo-decision-intake.mjs:56` exige `decisions.length === 4` e indexa-as contra `r83.decisionMatrix[index]` e `r77.decisionsRequired[index]`. Acrescentar decisões quebra um validador fail-closed.
+- **Já existia um `r85`** (`r85-pmo-conversation-owner-assent-20261031.v1.json`) com o seu próprio validador (`verify-r85-owner-assent.mjs`).
+
+⇒ **Revertido**: o `r84` ficou intacto e as decisões foram para um registo **novo, `r86`**, que não colide com nada. Registado em `TASK-PLAN-172`/`173`: o intake de decisões do dono que se pode acrescentar é o `r86`, e o `r84` só muda por WORK ORDER.

@@ -3088,7 +3088,7 @@
    "title": "5 fontes de ferramenta sem documento preservado — intake de evidencia pendente (r85)",
    "status": "PROPOSTO",
    "phase": "F1",
-   "acceptance": "Registado em `registers/governance/r85-source-evidence-pending-20261101.v1.json` (5 linhas, `EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate HOLD_HUMAN, 0 admitidas). Cada linha declara a fonte, o locator, o facto de o artefacto nao estar preservado e a lacuna de contrato. **Pendente de decisao do dono** (R84-CKO-SRC-EVIDENCE-STATE): preservar os documentos (impossivel para o gotejamento) ou emendar o contrato.",
+   "acceptance": "Registado em `registers/governance/r86-source-evidence-pending-20261101.v1.json` (5 linhas, `EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate HOLD_HUMAN, 0 admitidas). Cada linha declara a fonte, o locator, o facto de o artefacto nao estar preservado e a lacuna de contrato. **Pendente de decisao do dono** (R84-CKO-SRC-EVIDENCE-STATE): preservar os documentos (impossivel para o gotejamento) ou emendar o contrato.",
    "owner": "dono/Kernel",
    "blocked_by": [
     "TASK-PLAN-172"
@@ -3101,7 +3101,7 @@
    "title": "Decisao do dono: emendar o contrato `source` para ter estado de evidencia ausente",
    "status": "BLOCKED",
    "phase": "F0",
-   "acceptance": "Decisao registada em `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json` (id `R84-CKO-SRC-EVIDENCE-STATE`, `selection: null`, `statusEffectsAllowed: false`, `reviewState: PENDING_OWNER_SPECIFIC_DECISION`). Medido: o contrato `source` exige hash de um artefacto preservado e nao tem estado para 'documento nao preservado'; o enum inclui `INTERNAL_GOVERNED`, que descreve uma formula sem documento — **inconsistencia interna do contrato**. Opcoes: emendar o contrato / preservar os 5 documentos (impossivel para 1) / adiar.",
+   "acceptance": "Decisao registada em `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json` (id `R86-CKO-SRC-EVIDENCE-STATE`, `selection: null`, `statusEffectsAllowed: false`, `reviewState: PENDING_OWNER_SPECIFIC_DECISION`). Medido: o contrato `source` exige hash de um artefacto preservado e nao tem estado para 'documento nao preservado'; o enum inclui `INTERNAL_GOVERNED`, que descreve uma formula sem documento — **inconsistencia interna do contrato**. Opcoes: emendar o contrato / preservar os 5 documentos (impossivel para 1) / adiar.",
    "owner": "dono/Kernel",
    "blocked_by": [],
    "created_at": "2026-11-01T07:00:00Z",
@@ -3112,7 +3112,7 @@
    "title": "Decisao do dono: campo `citacao` no contrato `source`",
    "status": "BLOCKED",
    "phase": "F0",
-   "acceptance": "Decisao registada em r84 (id `R84-CKO-SRC-CITATION-SLOT`, `selection: null`). Medido: as 6 fontes carregam `citacao`, que o contrato nao declara (`additionalProperties: false`), embora declare `language`, `effective_from` e `license_ref`. Opcoes: declarar `citacao` no contrato / mover para `locator.pinpoint` e remover / adiar.",
+   "acceptance": "Decisao registada no r86 (id `R86-CKO-SRC-CITATION-SLOT`, `selection: null`). Medido: as 6 fontes carregam `citacao`, que o contrato nao declara (`additionalProperties: false`), embora declare `language`, `effective_from` e `license_ref`. Opcoes: declarar `citacao` no contrato / mover para `locator.pinpoint` e remover / adiar.",
    "owner": "dono/Kernel",
    "blocked_by": [],
    "created_at": "2026-11-01T07:00:00Z",
@@ -3977,6 +3977,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 07:05Z - S1/S2 rev.2: o portao foi endurecido para ser fiel ao contrato canonico (a 1a versao era mais permissiva que o contrato - defeito D0, medido e confirmado por 3 fontes). Dados corrigidos na fonte verdadeira; 4 propriedades que eu tinha inventado removidas. Estado medido: 30 -> 16 violacoes, 0 erros de dado, 16 lacunas de contrato em 3 classes. Registado: r85 (5 fontes em evidencia pendente) e 2 decisoes em r84. Total 152 tasks."
+  "ultima_revisao_owner": "01/11/2026 07:15Z - REV.2 do portao (fiel ao contrato) + revisao do registo: o `r84` e um intake FECHADO (validador exige 4 decisoes indexadas) e ja existia um `r85` no repo; as duas decisoes novas foram para um registo NOVO `r86`, sem colisao. 152 tasks."
  }
 }

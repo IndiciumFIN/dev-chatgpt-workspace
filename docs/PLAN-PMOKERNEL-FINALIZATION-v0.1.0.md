@@ -594,3 +594,59 @@ Ou seja: o `pilot/` foi copiado para `tools/experience-skeleton/pilot/`, mas os 
 **Registado em `TASK-PLAN-163`**, com a prova exigida: correr o gate no repo canónico a mostrar 11/11 verde a partir do commit, e o `--check` do gerador sem drift. Só depois o port passa de "portado" a "entregue e verificado".
 
 **Nota de honestidade:** a comparação CE mediu o esqueleto a partir da cópia local (`/workspace/ce-skeleton`), que é coerente e tem o gate verde. O port canónico, esse, está partido — e é exactamente o que o `TASK-PLAN-124` ia decidir quando for desbloqueado.
+
+## 13. Reconciliação CE v6 — plano sequenciado e execução em etapas (01/11/2026 03:45Z)
+
+### 13.0 Os três universos (medido por API REST, não presumido)
+
+| Universo | Onde vive | Escala | Estado |
+|---|---|---|---|
+| **A — git, governança** | `IndiciumFIN/dev-chatgpt-workspace` (público) | `main` = 1.877 ficheiros · 27 branches | É **a app CE + o pacote PMO × Kernel**. `src/lib/tools/catalog.ts` (19.579 B), `src/routes/`, `src/core/`, `contracts/entities/`, `registers/governance/`, `tools/experience-skeleton/` (12 ficheiros), `audit/execution/`. PR #29 (revert do #26) e **PR #30** ("Integrate structural candidate and validate phase 3", 485 ficheiros, +483.797, **CI 12/12 verde**) |
+| **B — git, app CE** | `IndiciumFIN/calculadorasdeenfermagem` (privado) | `main` = 176 ficheiros · 17 branches | Snapshot antigo (17/10). **Medido em 17 branches: nenhum dos artefactos do sandbox lá está.** Maiores branches: `migration/full-directory-*` (18.441), `migration/candidate-f08-*` (18.458), `cursor/fix-governance-gaps-*` (9.043) — com `migration/source_snapshots/` e `data/legado/`, não o app |
+| **C — sandbox local** | máquina do dono (TAR de 5.746 ficheiros) | `src/` 2.366 · `_archive/` 1.445 · `upload/` 927 · `public/` 614 · `scripts/` 150 · `e2e/` 8 · `tests/` 9 · `migrations/` 11 | **Não está em git em nenhum repositório.** Layout diferente do git (`src/data/contracts/`, `src/data/registers/`) |
+
+**Consequência:** o trabalho do sandbox (17 contratos, 62 schemas, 83 ferramentas com conteúdo editorial, 19 idiomas + 1.149 traduções, 251 páginas de catálogo, 385 testes, 17 gates) **nunca foi publicado**. O que existe em git é um universo diferente. Reconciliar é, antes de mais, **decidir qual dos três é canónico** — e o plano abaixo faz isso por etapas, sem bloquear.
+
+### 13.1 Etapas de execução (independentes; cada uma é uma branch + um PR)
+
+| # | Etapa | Produz | Depende de | Bloqueia |
+|---|---|---|---|---|
+| **S1** | Contratos: reclassificar as 22 fontes pela **natureza** do documento + 1.031 bindings coerentes | `contracts/entities/tool-sources.v1.json`, `tool-bindings.v1.json` + registo | frente "fontes" + "bindings" | nada |
+| **S2** | Gate fail-closed de integridade e referência dos contratos (não só de enum) | `scripts/check-contract-integrity.mjs` + `*.test.mjs` | S1 (para os valores) | nada |
+| **S3** | Corrigir o port partido do esqueleto (`TASK-PLAN-163`) e absorver os 5 módulos `src/core/experience/` | `tools/experience-skeleton/` + `src/core/experience/` | frente "universos" | nada |
+| **S4** | `FIND-CTR-010` com `canonical_id` (não `id`) e no registo activo | `registers/governance/find-register.v1.json` | S1 (para a authorityClass) | nada |
+| **S5** | Espelho estático: os 5.520 destinos não resolvidos | `public/bibliotecas/catalog/` | frente "espelho" + produção | nada |
+| **S6** | Evidência: os 318 recuperados, os 24 `tool-results/` removidos, os 5 symlinks de raiz, `.env` saneado | `docs/evidence/` + `.gitignore` | frente "universos" | nada |
+| **S7** | Registo + fecho: tasks novas, §13, ZIP final | `docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json`, plano | S1…S6 | — |
+
+**Regra de sequenciação:** cada etapa é uma branch própria, com o seu PR, e **nenhuma espera por decisão do dono** — o que precisa de decisão fica registado como `HOLD` com o nome, não trava a etapa. As etapas S2 a S6 não dependem da entrada do sandbox no git: o que já está no repositório governança é executável hoje.
+
+### 13.2 O que já está medido e é executável sem esperar pela equipa
+
+**Fontes (6 no git) vs artefactos preservados** — medido por SHA-256 sobre o pacote de capturas (36 artefactos, 36/36 com hash válido):
+
+| Fonte | Artefacto preservado | Consequência |
+|---|---|---|
+| `SRC-CFM-PARECER-28-2020` | **SIM** — `cfm_parecer28_2020.pdf` (`089dba14…`), `cfm28.txt` (`54d2c13d…`), `cofen_search_parecer.html` (`01df1d0d…`) | `integrity.sha256` pode ser o hash real |
+| `SRC-REV-ENF-USP-BRADEN-1999` | **NÃO** (só menções no dump do banco) | `NOT_AVAILABLE` + motivo; a fonte fica HOLD |
+| `SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA` | **NÃO** | idem |
+| `SRC-OMS-OBESIDADE-2000` | **NÃO** | idem |
+| `SRC-APGAR-1953` | **NÃO** | idem |
+| `SRC-GOTEJAMENTO-FORMULA-CLASSICA` | **NÃO** | idem |
+
+**5 das 6 fontes não têm documento preservado.** Uma menção num dump de banco não é o documento-fonte: não é hash, não é integridade. `NOT_AVAILABLE` é ausência honesta; ausência **não** é integridade.
+
+### 13.3 Regras da reconciliação (o que sobe e o que não)
+
+1. **Fonte canónica ≠ cópia.** Um artefacto que existe em dois universos só sobe de uma vez, e a cópia fica marcada (`DUPLICATE_EXPORT`/`EMBEDDED_ONLY`) — não se duplica conteúdo.
+2. **O que não corre, não está portado.** O port do esqueleto no repositório canónico **não executa** (`ENOENT`): os scripts esperam `catalog/` e `src/core/experience/` na raiz do repo. Um ficheiro que existe não é um port.
+3. **Ausência declarada ≠ valor inventado.** `sha256` sem artefacto é `NOT_AVAILABLE` com motivo; `authority_class` sem fonte é ausência explícita — **nunca** `INTERNAL_NONCLINICAL` por omissão (o parecer V6 mostrou que essa imputação atingiu campos clínicos de Aldrete, Braden e Morse).
+4. **Gate só é gate se falhar no caminho certo.** Um portão que aceita `NOT_AVAILABLE` sem motivo, lista vazia e `decision` em conflito com `status`, não é homologação.
+5. **O `.env` do backup não é publicado** (valores não vazios) e os 5 symlinks de raiz não são silenciosamente substituídos por cópias.
+
+### 13.4 Decisões do dono que esta reconciliação não pode tomar
+
+- **Qual universo é canónico** para o app CE (o git tem a governança; o sandbox tem o conteúdo).
+- **Se o sandbox sobe** (5.746 ficheiros, com 24 saídas de audit removidas) — e por quem.
+- **O PR #29** (revert) e o **PR #30** (candidato estrutural, verde) — a reconciliação não os fecha nem os funde.
+- **A reclassificação das 22 fontes** quando não há equivalência automática segura (CFM parecer, publicação OMS, calendário de vacinação) — o valor canónico de um parecer de conselho profissional não é "lei".

@@ -1,0 +1,619 @@
+{
+  "schemaVersion": "0.1.0",
+  "classification": "CANDIDATE_READ_ONLY_BASELINE",
+  "source": {
+    "github": "IndiciumFIN/dev-chatgpt-workspace",
+    "githubBaseSha": "e9f7fe66075ebe5d7346072dc3a1b4934678c6de",
+    "overlaySha": "081c61ac6c6ea674934d1cad3c310e96476fc9a1",
+    "observedDate": "2026-11-01",
+    "supabaseProject": "Calculadoras-Smart",
+    "supabaseReadOnlyObserved": "2026-11-01"
+  },
+  "projectStatus": "HOLD_HUMAN",
+  "migrationApplied": false,
+  "kernelAdmission": "NOT_VERIFIED",
+  "database": {
+    "schemas": [
+      {
+        "name": "cko_ai",
+        "tables": 17,
+        "withPrimaryKey": 17,
+        "withForeignKey": 14,
+        "rlsEnabled": 0
+      },
+      {
+        "name": "cko_evidence",
+        "tables": 7,
+        "withPrimaryKey": 7,
+        "withForeignKey": 4,
+        "rlsEnabled": 0
+      },
+      {
+        "name": "cko_governance",
+        "tables": 88,
+        "withPrimaryKey": 88,
+        "withForeignKey": 36,
+        "rlsEnabled": 3
+      },
+      {
+        "name": "cko_orch",
+        "tables": 27,
+        "withPrimaryKey": 27,
+        "withForeignKey": 17,
+        "rlsEnabled": 0
+      },
+      {
+        "name": "cko_validation",
+        "tables": 21,
+        "withPrimaryKey": 21,
+        "withForeignKey": 18,
+        "rlsEnabled": 0
+      }
+    ],
+    "observedMigrations": 240,
+    "notes": [
+      "RLS disabled is not proof of exposure: private schema grants and API exposure must be verified.",
+      "PK coverage is not proof of referential completeness or valid lineage."
+    ]
+  },
+  "baseTables": [
+    {
+      "name": "cko_governance.control_frameworks",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_governance.control_framework_nodes",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_governance.control_framework_mappings",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_governance.decisions",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_governance.agent_registry",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_orch.policy_registry",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_orch.workflow_instances",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_orch.idempotency_keys",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_orch.outbox_events",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_validation.findings",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_validation.validators",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    },
+    {
+      "name": "cko_evidence.evidence_bundles",
+      "observed": "EXISTS_IN_LIVE_DB",
+      "change": "REUSE_NOT_RECREATE"
+    }
+  ],
+  "candidateTables": [
+    {
+      "name": "cko_orch.work_order_admission_requests",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.workflow_instances",
+        "cko_validation.findings",
+        "cko_evidence.evidence_bundles"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.work_order_policy_bindings",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.policy_registry"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.policy_bundle_artifacts",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.policy_registry"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.work_order_policy_evaluations",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.policy_bundle_artifacts"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.work_order_required_validators",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_validation.validators"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.work_order_validator_results",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_validation.validators",
+        "cko_evidence.evidence_bundles"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_orch.kernel_admission_decisions",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_orch.work_order_admission_requests",
+        "cko_orch.work_order_policy_evaluations",
+        "cko_governance.decisions",
+        "cko_evidence.evidence_bundles"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    },
+    {
+      "name": "cko_governance.agent_tool_scopes",
+      "observed": "ABSENT_IN_LIVE_DB",
+      "refs": [
+        "cko_governance.agent_registry",
+        "cko_orch.policy_registry",
+        "cko_orch.work_order_admission_requests",
+        "cko_governance.decisions"
+      ],
+      "deployment": "CANDIDATE_HOLD",
+      "ddlAuthorization": "NOT_GRANTED"
+    }
+  ],
+  "branchPopulation": {
+    "main": {
+      "branch": "main",
+      "sha": "e9f7fe66075ebe5d7346072dc3a1b4934678c6de"
+    },
+    "sources": [
+      {
+        "branch": "archivamento",
+        "sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "status": "behind",
+        "ahead": 0,
+        "behind": 293,
+        "firstPhase": "BASE-00",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "audit-hardening-2026-10-24",
+        "sha": "9c9ca4640dedf705fe1c3cccca474af4f8d1a422",
+        "status": "diverged",
+        "ahead": 1,
+        "behind": 298,
+        "firstPhase": "BASE-04",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "backup/research-hub-complete-20261026",
+        "sha": "4204f3cba702ee6d5f9514f8df37b312fd5fcb24",
+        "status": "diverged",
+        "ahead": 46,
+        "behind": 288,
+        "firstPhase": "BASE-05",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "feat/career-youth-db-first-20261026",
+        "sha": "ad4c683890779eda3a096743b70cf6be2bfc4605",
+        "status": "diverged",
+        "ahead": 146,
+        "behind": 288,
+        "firstPhase": "BASE-03",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "feat/curiosidades-mem-87-20261026",
+        "sha": "4131831be71246d3c6e6ac61498310a9adb575a0",
+        "status": "diverged",
+        "ahead": 55,
+        "behind": 288,
+        "firstPhase": "BASE-05",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "feat/projection-unica-f0-suite-real",
+        "sha": "6d712dd47029286869f909a2014f42083f5db2a9",
+        "status": "no_common_ancestor",
+        "ahead": null,
+        "behind": null,
+        "firstPhase": "BASE-07",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "feat/research-hub-governed-20261026",
+        "sha": "01574c5bfbe366a6ede9c0aee6bf2e3a907d92a1",
+        "status": "diverged",
+        "ahead": 1,
+        "behind": 288,
+        "firstPhase": "BASE-05",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "feat/research-participation-layer-20261026",
+        "sha": "53f896fd6afcce66fc6d059b377024971e7a2c3f",
+        "status": "diverged",
+        "ahead": 42,
+        "behind": 288,
+        "firstPhase": "BASE-03",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "fix/governed-activities-cli-20261026",
+        "sha": "95a416c1e4ac422e435baf7e95f6ce5c09989c99",
+        "status": "diverged",
+        "ahead": 131,
+        "behind": 288,
+        "firstPhase": "BASE-04",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "fix/shell-consolidation",
+        "sha": "c68e3009556f140ece43ac23cb1ea0ed49395560",
+        "status": "diverged",
+        "ahead": 6,
+        "behind": 293,
+        "firstPhase": "BASE-07",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "grook_10_26",
+        "sha": "eb2d47925dcbea40307d4078c991e76abc4189dc",
+        "status": "no_common_ancestor",
+        "ahead": null,
+        "behind": null,
+        "firstPhase": "BASE-00",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "idioma/consolidado-19",
+        "sha": "a325db7448a14fd36f424a4e1bc9b1da926c1473",
+        "status": "diverged",
+        "ahead": 220,
+        "behind": 289,
+        "firstPhase": "BASE-07",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "idioma/de-v1",
+        "sha": "9a12fad8d32fc17f424d4425c0acfb11af3ef1d6",
+        "status": "diverged",
+        "ahead": 216,
+        "behind": 289,
+        "firstPhase": "BASE-07",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "idioma/pt-PT-v1",
+        "sha": "314199bc72f7be9928f120c85e14c2f644a28e9e",
+        "status": "diverged",
+        "ahead": 216,
+        "behind": 289,
+        "firstPhase": "BASE-07",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "implementation-governed-ecosystem",
+        "sha": "e16f0fb682dbf70adbca9987f2d0ac2adfd71149",
+        "status": "diverged",
+        "ahead": 2,
+        "behind": 293,
+        "firstPhase": "BASE-04",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "import/drive-cko-nurseos-20261026",
+        "sha": "cd851c4c0efeb8adf298af96851ad45e7685b3e1",
+        "status": "diverged",
+        "ahead": 24,
+        "behind": 288,
+        "firstPhase": "BASE-01",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "integration/structural-overlay-20261101",
+        "sha": "081c61ac6c6ea674934d1cad3c310e96476fc9a1",
+        "status": "ahead",
+        "ahead": 9,
+        "behind": 0,
+        "firstPhase": "BASE-02",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "plan/pmokernel-finalization-20261031",
+        "sha": "40a76eb40a132888afb8e0a5ca231016f18dc3e2",
+        "status": "diverged",
+        "ahead": 18,
+        "behind": 1,
+        "firstPhase": "BASE-04",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "planning",
+        "sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "status": "behind",
+        "ahead": 0,
+        "behind": 293,
+        "firstPhase": "BASE-00",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "preview/central-comando-20261026",
+        "sha": "3f004049945ebaa50e4efee313092974b83a5bf2",
+        "status": "diverged",
+        "ahead": 219,
+        "behind": 289,
+        "firstPhase": "BASE-06",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "revert-26-plan/pmokernel-finalization-20261031",
+        "sha": "bfcb0333a6b15a9afb0e224bdd156b0c04523f2c",
+        "status": "ahead",
+        "ahead": 1,
+        "behind": 0,
+        "firstPhase": "BASE-04",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "simulados-enfermagem-db-canonico",
+        "sha": "415a02a854a871fb5e9f72dcc8c4646b2708f1eb",
+        "status": "diverged",
+        "ahead": 75,
+        "behind": 288,
+        "firstPhase": "BASE-03",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "staging/bibliotecas-corpus-20261026",
+        "sha": "d81736c77852d8953672d334afc32de279c96878",
+        "status": "diverged",
+        "ahead": 4,
+        "behind": 289,
+        "firstPhase": "BASE-05",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "viladocuidado",
+        "sha": "f0d5579c8f76b13d1f2ca8690ea36ad2c9514112",
+        "status": "diverged",
+        "ahead": 22,
+        "behind": 288,
+        "firstPhase": "BASE-03",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      },
+      {
+        "branch": "work/editorial-canonical-learning-20261026",
+        "sha": "38a33fcec02e5bc996a1f84164bf13799b2f81c7",
+        "status": "diverged",
+        "ahead": 42,
+        "behind": 288,
+        "firstPhase": "BASE-05",
+        "review": "NOT_APPROVED",
+        "sourceReview": "READ_ONLY_API_COMPARE"
+      }
+    ],
+    "totalWithMain": 26,
+    "coverage": "ALL_REFS_AT_SNAPSHOT_NOT_LIVE_RELEASE_GATE",
+    "shaLedgerSha256": "85b599a4d7c4a0e2b086c682f4dcba5349557fca6f8c56fc040e17fdd2442bfd"
+  },
+  "openPRs": [
+    1,
+    13,
+    19,
+    20,
+    21,
+    22,
+    24,
+    27,
+    29,
+    30
+  ],
+  "candidateMigrations": [
+    {
+      "branch": "integration/structural-overlay-20261101",
+      "path": "migrations/candidates/20261026_governance_kernel_opa_agents.sql",
+      "state": "NOT_APPLIED"
+    },
+    {
+      "branch": "feat/career-youth-db-first-20261026",
+      "path": "migrations/0004_career_youth_candidate.sql",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "branch": "feat/career-youth-db-first-20261026",
+      "path": "migrations/0005_career_editorial_content_candidate.sql",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "branch": "feat/career-youth-db-first-20261026",
+      "path": "migrations/0006_career_atomization_candidate.sql",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "branch": "feat/career-youth-db-first-20261026",
+      "path": "migrations/0007_career_promotion_control_candidate.sql",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "branch": "feat/research-participation-layer-20261026",
+      "path": "migrations/0004_research_participation_candidate.sql",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "branch": "simulados-enfermagem-db-canonico",
+      "path": "migrations/candidate/simulados-enfermagem/0001_spe_core_candidate.sql",
+      "state": "NOT_APPLIED"
+    },
+    {
+      "branch": "simulados-enfermagem-db-canonico",
+      "path": "migrations/candidate/simulados-enfermagem/0002_spe_source_lineage_candidate.sql",
+      "state": "NOT_APPLIED"
+    },
+    {
+      "branch": "simulados-enfermagem-db-canonico",
+      "path": "migrations/candidate/simulados-enfermagem/0003_rpc_grade_gate_HOLD.sql",
+      "state": "NOT_APPLIED"
+    },
+    {
+      "branch": "viladocuidado",
+      "path": "migrations/candidate/vila/0001_vila_candidate.sql",
+      "state": "NOT_APPLIED"
+    }
+  ],
+  "phases": [
+    {
+      "id": "BASE-00",
+      "name": "Captura das refs, proveniência e baselines",
+      "dependsOn": [],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-01",
+      "name": "Identidades, fontes, snapshots, hashes, objetos e versões",
+      "dependsOn": [
+        "BASE-00"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-02",
+      "name": "Tabelas estruturais reais, chaves, constraints, ligações e direitos",
+      "dependsOn": [
+        "BASE-01"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-03",
+      "name": "Reconciliar candidatos DDL, contratos e modelos por domínio",
+      "dependsOn": [
+        "BASE-02"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-04",
+      "name": "FIND, políticas, validadores, WO, OPA, Kernel e agentes",
+      "dependsOn": [
+        "BASE-03"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-05",
+      "name": "Conteúdo, corpus, escalas, pesquisa e bibliotecas",
+      "dependsOn": [
+        "BASE-04"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-06",
+      "name": "Serviços, autorização, API, workflows, ingestão, auditoria",
+      "dependsOn": [
+        "BASE-05"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-07",
+      "name": "Componentes, rotas, DS, acessibilidade, i18n, UX",
+      "dependsOn": [
+        "BASE-06"
+      ],
+      "state": "HOLD_HUMAN"
+    },
+    {
+      "id": "BASE-08",
+      "name": "CI full, E2E, auditoria independente, homologação e promoção",
+      "dependsOn": [
+        "BASE-07"
+      ],
+      "state": "HOLD_HUMAN"
+    }
+  ],
+  "knownOpenReconciliation": {
+    "triageItems": 143,
+    "requiringReconciliation": 86,
+    "formallyApproved": 0,
+    "triageHeadStale": "3143107ba252b6213d1c98b2cae742221656e02a",
+    "currentHead": "081c61ac6c6ea674934d1cad3c310e96476fc9a1"
+  },
+  "restrictions": [
+    "No live DDL, table grants, source branch deletion or main merge",
+    "No approval invented from CI, local evidence, GitHub comment or WO text",
+    "No clinical or licensing promotion without provenance and review",
+    "Recompute tree collision report after every SHA change"
+  ],
+  "releaseGate": "HOLD_HUMAN"
+}

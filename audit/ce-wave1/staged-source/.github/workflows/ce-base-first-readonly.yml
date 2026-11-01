@@ -1,0 +1,38 @@
+name: CE Base First - full branch structural audit (HOLD)
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/governance/lib/structural-reconcile-core.mjs'
+      - 'scripts/governance/lib/structural-reconcile-core.test.mjs'
+      - 'scripts/governance/structural-reconcile-all-branches.mjs'
+      - '.github/workflows/ce-base-first-readonly.yml'
+permissions:
+  contents: read
+jobs:
+  read-only-inventory:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Test fail-closed structural audit
+        run: node --test scripts/governance/lib/structural-reconcile-core.test.mjs
+      - name: Fetch all refs and audit every path, without checkout changes
+        run: |
+          git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
+          node scripts/governance/structural-reconcile-all-branches.mjs --output /tmp/ce-base-first/branch-structural-audit.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: ce-base-first-candidate-hold
+          path: /tmp/ce-base-first/branch-structural-audit.json
+          retention-days: 30

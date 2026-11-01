@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "date": "2026-11-01",
+  "status": "HOLD_UNVERIFIED_BYTES_AND_SUPABASE_POPULATIONS",
+  "recorded_in_git": true,
+  "actual_source_bytes_verified_in_git_or_supabase": false,
+  "source_master_inventory": "docs/handoffs/global-tools-vila-20261101/FULL-MASTER-INVENTORY-854.csv",
+  "total_unique_source_entries": 854,
+  "file_types": {
+    "SOURCE_OR_DOCUMENT": 518,
+    "ARCHIVE": 4,
+    "IMAGE": 332
+  },
+  "source_zip": "Vila_do_Cuidado_CONSOLIDADO_MASTER_LOCAL_2026-08-26.zip",
+  "source_bytes_verified": 0,
+  "recovered_lists": {
+    "career": 13,
+    "career_compositions": 4,
+    "os_candidates": 13,
+    "sst_subareas": 20
+  },
+  "identity_resolution": "PENDING",
+  "supabase_external_populations": {
+    "tool_profiles": 220,
+    "canonical_objects_reported": 320,
+    "recovered_tool_set": 49,
+    "services": 410,
+    "domains": 45,
+    "open_findings": 27
+  },
+  "entire_ecosystem_confirmed": false,
+  "release_authorized": false,
+  "privacy_and_governance_approved": false,
+  "reasons": [
+    "854 catalog entries are metadata only, not verified bytes",
+    "254 Vila assets separately have no proven Git/Supabase binary custody",
+    "Supabase direct connector not available in this turn for readback of current 220/320/49/410/45/27 populations",
+    "source files and statuses may overlap; cannot sum populations as distinct tools",
+    "Kernel WO remains NOT_SUBMITTED and production release on HOLD"
+  ],
+  "next_validations": [
+    "Materialize exact archive bytes from user file into authenticated Git/Storage upload and verify SHA256 for each object",
+    "Read Supabase source tables by primary key, identity, status, canonical crosswalk and evidence",
+    "Deduplicate by canonical ID and exact content hashes; leave ambiguous in HOLD",
+    "Run integrated tests for user-facing functions under authorized scope"
+  ]
+}

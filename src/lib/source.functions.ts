@@ -30,17 +30,6 @@ async function sqlClient() {
   return getSql();
 }
 
-async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
-  const count = await sql<{ n: number }>`select count(*)::int as n from source_tool`;
-  if (Number(count[0]?.n ?? 0) > 0) return;
-  for (const tool of tools) {
-    await sql`
-      insert into source_tool (slug, kind, title, lead, published)
-      values (${tool.slug}, ${tool.kind}, ${tool.title}, ${tool.lead}, true)
-    `;
-  }
-}
-
 async function requireAdmin(sql: Awaited<ReturnType<typeof sqlClient>>, userId: string) {
   const rows = await sql<{ role: string }>`select role from member where user_id = ${userId}`;
   if (rows[0]?.role !== "admin") throw new Error("Somente o administrador altera a fonte.");
@@ -59,12 +48,12 @@ export const ensureRole = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
   .handler(async ({ context }) => {
     const sql = await sqlClient();
-    await seed(sql);
+    // Authentication does not imply authorization. The first visitor cannot become an admin.
+    // Provision initial admin only through a separately approved, audited server-side WO.
     await sql`
       insert into member (user_id, role)
-      select ${context.userId},
-        case when exists (select 1 from member where role = 'admin') then 'subscriber' else 'admin' end
-      where not exists (select 1 from member where user_id = ${context.userId})
+      values (${context.userId}, 'subscriber')
+      on conflict (user_id) do nothing
     `;
     const rows = await sql<{ role: SourceRole }>`select role from member where user_id = ${context.userId}`;
     return { role: rows[0]?.role === "admin" ? "admin" : "subscriber" } as const;
@@ -74,7 +63,6 @@ export const adminDesk = createServerFn({ method: "GET" })
   .middleware([authMiddleware])
   .handler(async ({ context }) => {
     const sql = await sqlClient();
-    await seed(sql);
     await requireAdmin(sql, context.userId);
     const catalog = await sql<{ slug: string; kind: string; title: string; lead: string; published: unknown }>`
       select slug, kind, title, lead, published from source_tool order by title
@@ -104,6 +92,8 @@ export const saveTool = createServerFn({ method: "POST" })
     if (!known.has(input.slug) || title.length < 3 || title.length > 80 || lead.length < 10 || lead.length > 400) {
       throw new Error("Título ou texto fora do limite.");
     }
+    // Published state is not authorized by a role check or the client form.
+    if (input.published === true) throw new Error("Publicação exige decisão verificada do Kernel.");
     return { slug: input.slug, title, lead, published: input.published === true };
   })
   .handler(async ({ context, data }) => {
@@ -123,6 +113,8 @@ export const setMemberRole = createServerFn({ method: "POST" })
     if (!input.userId || (input.role !== "admin" && input.role !== "subscriber")) {
       throw new Error("Papel inválido.");
     }
+    // Manual admin elevation is forbidden without independent maker-checker authorization.
+    if (input.role === "admin") throw new Error("Elevação administrativa requer WO e Kernel.");
     return input;
   })
   .handler(async ({ context, data }) => {

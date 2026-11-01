@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { decide, evaluateCompliance } from "./kernel.ts";
 import { signArtifact, type SignedArtifact } from "./signer.ts";
-import type { ExecutionGate } from "./gate.ts";
+import { canExecute, type ExecutionGate } from "./gate.ts";
 import type { PolicyBundle } from "../compliance/policy-bundle.ts";
 
 const gate: ExecutionGate = {
@@ -77,4 +77,11 @@ test("missing, inactive, duplicate or unknown normative evidence is a failure", 
   }
   assert.equal(evaluateCompliance(bundle, { "risk-owner": "owner", "risk-register": "register" })[0].ok, true);
   assert.equal(evaluateCompliance(bundle, {})[0].ok, false);
+});
+
+test("legacy gate status does not grant execution authority", () => {
+  assert.equal(canExecute(null), false);
+  assert.equal(canExecute(gate), false);
+  assert.equal(canExecute({ ...gate, status: "homologated" }), false);
+  assert.equal(canExecute({ ...gate, status: "draft" }), false);
 });

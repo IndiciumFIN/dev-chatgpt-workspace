@@ -115,14 +115,15 @@ export function ClinicalForm({
                       max={field.max}
                       step={field.step}
                       aria-required="true"
-                      aria-describedby={`limite-${field.id}`}
+                      aria-invalid={Boolean(result && !result.ok && result.fieldErrors?.[field.id])}
+                      aria-describedby={`limite-${field.id}${result && !result.ok && result.fieldErrors?.[field.id] ? ` erro-${field.id}` : ""}`}
                       title={`De ${field.min} a ${field.max} ${field.unit}`}
                       value={raw[field.id] ?? ""}
                       aria-label={field.label}
                       onChange={(event) => onRaw({ ...raw, [field.id]: event.target.value })}
                     />
                     <small id={`limite-${field.id}`} className="tool-help">De {field.min} a {field.max} {field.unit}.</small>
-                    {result && !result.ok && result.fieldErrors?.[field.id] ? <small className="err">{result.fieldErrors[field.id]}</small> : null}
+                    {result && !result.ok && result.fieldErrors?.[field.id] ? <small id={`erro-${field.id}`} className="err">{result.fieldErrors[field.id]}</small> : null}
                   </label>
                 ))}
                 {(tool.selects ?? []).map((field) => (

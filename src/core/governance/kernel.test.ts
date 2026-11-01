@@ -113,7 +113,7 @@ describe("governance kernel — fail-closed local gate", () => {
     const manifest = makeManifest(); manifest.approvedBy = "kernel";
     assert.equal((await assess(makeOrder(), manifest)).reason, "independent-approval-required");
     const order = makeOrder(); order.owner = "reviewer";
-    assert.equal((await assess(order, makeManifest(order))).reason, "independent-approval-required");
+    assert.equal((await assess(order, makeManifest(order))).reason, "independent-owner-approver-required");
     const absent = makeOrder(); absent.approvals = [];
     assert.equal((await assess(absent, makeManifest(absent))).reason, "independent-approval-required");
   });

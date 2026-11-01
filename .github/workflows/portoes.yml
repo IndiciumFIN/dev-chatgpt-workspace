@@ -52,6 +52,19 @@ jobs:
       - name: Registro — o mapa do PMO é verdade
         run: node scripts/auditar-registro.mjs
 
+      - name: P1 — inventário de colisões de migrations (evidência, sem DDL)
+        if: ${{ always() }}
+        run: node scripts/inventory-migration-collisions.mjs
+
+      - name: Preservar evidência P1 sem dados nem credenciais
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-p1-migration-collision-evidence
+          path: artifacts/migration-collision-evidence.json
+          if-no-files-found: warn
+          retention-days: 60
+
       - name: Suíte
         if: ${{ always() }}
         # Os testes de scripts correm em série: cada um abre um PGlite (um

@@ -1,4 +1,6 @@
-# Administração governada — esqueleto completo (modo local)
+# Administração governada — esqueleto local candidato
+
+Este diretório não é o console do repositório. O console real está em [docs/console-administrativo.md](../../docs/console-administrativo.md). O que segue vale apenas para este esqueleto: sem login, sem banco e sem rede.
 
 Esqueleto executável da área administrativa do CKO / Calculadoras de Enfermagem: design system canônico, biblioteca de componentes, 22 módulos e motor determinístico de impacto. **Não é produção:** sem login, sem banco, sem rede, sem LLM/Kernel. Tudo persiste só no `localStorage` do navegador e cada mutação entra numa trilha de auditoria com hash encadeado.
 

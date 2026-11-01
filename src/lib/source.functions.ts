@@ -265,9 +265,6 @@ export const readGovernance = createServerFn({ method: "GET" })
       from governance_item
       order by kind, title
     `;
-    for (const item of items) {
-      if (item.status === "aprovado") await approveItemTx(sql, item.id, context.userId);
-    }
     const specifications = await sql<{ id: string; entity: string; characteristic: string; definition: string; syntax: string; required: unknown; source: string; status: string; approved_by: string | null }>`
       select id, entity, characteristic, definition, syntax, required, source, status, approved_by
       from data_specification

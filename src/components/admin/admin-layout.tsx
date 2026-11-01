@@ -120,7 +120,7 @@ export function AdminShell({
         <header className="mb-6">
           <p className="text-xs font-semibold tracking-wide text-navy uppercase">{group ? group.title : "Painel"}</p>
           <h1 className="mt-1 text-2xl font-semibold text-ink">{current ? current.title : "Visão geral"}</h1>
-          <p className="mt-1 text-sm text-muted">{current ? current.purpose : "Conteúdo canônico desta mesa. Cada módulo abre o que o banco já guarda."}</p>
+          <p className="mt-1 text-sm text-muted">{current ? current.purpose : "Catálogo dos 22 módulos. A mesa só abre o que este banco já guarda."}</p>
           {current ? <p className="mt-2 text-sm text-slate">{current.screen}</p> : null}
         </header>
         {error ? <p className="err">{error}</p> : null}

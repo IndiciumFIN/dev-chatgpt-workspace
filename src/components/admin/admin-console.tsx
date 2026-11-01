@@ -26,6 +26,7 @@ import { AdminModuleWorkspace } from '@/components/admin/admin-module-workspace'
 import { CommanderPanel } from '@/components/admin/commander-panel';
 import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
 import { getAdminModule, type AdminModuleId, type AdminSurface } from '@/lib/admin-module-registry';
+import { ModuleBoundary } from '@/components/admin/module-boundary';
 import '@/styles/admin-console.css';
 
 type Tab = 'overview' | 'pmo' | 'commander' | 'content' | 'templates' | 'sources' | 'publication' | 'module-detail';
@@ -216,6 +217,7 @@ export function AdminConsole() {
             <Link className="ce-admin-site-link" to="/">Ver site <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </div>
+        <ModuleBoundary resetKey={`${tab}:${selectedModule}`}>
         {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
         {tab === 'pmo' && <AdminErrorBoundary moduleName="PMO"><PmoPanel /></AdminErrorBoundary>}
         {tab === 'commander' && <AdminErrorBoundary moduleName="Commander"><CommanderPanel /></AdminErrorBoundary>}
@@ -286,6 +288,7 @@ export function AdminConsole() {
             {events.length ? <ol className="ce-admin-history">{[...events].reverse().slice(0,20).map(event => <li key={event.id}><ClipboardCheck size={18}/><div><strong>{event.action === 'PUBLISHED' ? 'Publicação local' : 'Rascunho salvo'}</strong><small>{event.at} · Revisão {event.revision} · anterior {event.previousRevision}</small></div></li>)}</ol> : <p>Nenhuma alteração registrada nesta instalação.</p>}
           </Panel>
         </>}
+        </ModuleBoundary>
       </div>
     </div>
   </main>;

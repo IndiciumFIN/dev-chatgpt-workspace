@@ -93,7 +93,8 @@ export const saveTool = createServerFn({ method: "POST" })
     }
     // Published state is not authorized by a role check or the client form.
     if (input.published === true) throw new Error("Publicação exige decisão verificada do Kernel.");
-    return { slug: input.slug, title, lead, published: input.published === true };
+    // A publicacao ja foi rejeitada acima; o unico estado permitido aqui e rascunho.
+    return { slug: input.slug, title, lead, published: false };
   })
   .handler(async ({ context, data }) => {
     const sql = await sqlClient();

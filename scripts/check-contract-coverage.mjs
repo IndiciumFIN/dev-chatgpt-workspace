@@ -22,7 +22,7 @@ import { loadToolContracts } from "./load-tool-contracts.mjs";
  *   sai com 1 se qualquer violação existir
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, isAbsolute } from "node:path";
 
 const root = process.cwd();
 const read = (p) => (existsSync(join(root, p)) ? readFileSync(join(root, p), "utf8") : "");
@@ -282,22 +282,24 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
   const bindingPorCampo = new Map(bindings.filter((b) => b.field_path).map((b) => [b.field_path, b]));
 
   // ── CKO-POL-R-002: fonte sem jurisdiction/rights/integridade nao e autoridade
-  // Integridade declarada: hash real (64 hex, nao zeros) OU NOT_AVAILABLE com motivo
-  // e artifact_ref declarado. 64 zeros e um placeholder, nao integridade.
+  // Integridade = hash real (64 hex, nao zeros) + artefacto preservado, como o
+  // contrato `source` exige (sha256: ^[a-f0-9]{64}$). Nao existe estado para
+  // "documento nao preservado": uma fonte nessa situacao fica em evidencia
+  // pendente (cadeia r80) e NAO conta como integridade declarada.
   const shaReal = (f) => {
     const sha = f?.integrity?.sha256;
     if (typeof sha !== "string") return false;
-    if (/^[0-9a-f]{64}$/.test(sha) && sha !== "0".repeat(64)) return true;
-    return sha === "NOT_AVAILABLE"
-      && typeof f.integrity?.reason === "string" && f.integrity.reason.trim() !== ""
-      && "artifact_ref" in f.integrity;
+    if (!/^[0-9a-f]{64}$/.test(sha) || sha === "0".repeat(64)) return false;
+    const ref = f.integrity?.snapshot_ref;
+    if (typeof ref !== "string" || ref.trim() === "") return false;
+    return existsSync(isAbsolute(ref) ? ref : join(root, ref));
   };
   const fonteIncompleta = fontes.filter(
     (f) => !f.jurisdiction || !f.rights || !shaReal(f) || !f.locator?.pinpoint,
   );
   check("CE-TOOLS:fonte-com-jurisdicao-rights-integridade", fonteIncompleta.length === 0,
     fonteIncompleta.length
-      ? `fonte sem jurisdiction/rights/integridade/pinpoint: ${fonteIncompleta.map((f) => f.canonical_id).join(", ")}`
+      ? `fonte sem jurisdiction/rights/integridade/pinpoint (ou com evidencia em estado pendente, sem hash de artefacto preservado): ${fonteIncompleta.map((f) => f.canonical_id).join(", ")}`
       : `${fontes.length} fontes com jurisdiction, rights, integridade e pinpoint`);
 
   // ── UTC-002: binding por campo, nao por ferramenta

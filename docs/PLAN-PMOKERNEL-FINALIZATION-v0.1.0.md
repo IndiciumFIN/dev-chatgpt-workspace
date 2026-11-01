@@ -428,3 +428,77 @@ O dono pediu o "esqueleto completo localmente, com todos os recursos". Feito e m
 - **Toolchain fixada na canónica** (vite 8.2.0 · react 19.2.0 · lucide-react 0.510.0 · typescript 5.7.0) para portabilidade sem partir `npm audit --audit-level=high`.
 - **Persistido**: `docs/evidence/experience-platform-skeleton-2026-10-31/` (avaliação + catálogo) e `tools/experience-skeleton/` (gerador + gate + piloto) — tasks `TASK-PLAN-120` a `TASK-PLAN-124`.
 - **Aberto, por decisão do dono:** fundir o vocabulário antes de admitir qualquer WO (`T0.121`), schemas centrais no registo canónico (`T0.122`), acessibilidade real por medir (`T0.123`) e o port ao repo canónico (`T0.124`, BLOCKED).
+
+
+---
+
+## 12. Comparação CE × produção × repo × normativos × plataformas (01/11/2026)
+
+**Estado:** 6 frentes concluídas e verificadas; 22 tasks novas registadas (`TASK-PLAN-134` a `TASK-PLAN-155`). Nenhuma altera `main`, a fila PMO, Supabase de produção, segredos ou permissões. `WO-HOM-001` e o DS mantêm `HOLD_HUMAN`.
+
+**Evidência:** `docs/evidence/ce-comparacao-2026-10-31/` — os 6 relatórios de frente (`producao-conta-funil`, `producao-superficie-busca`, `repo-publico-branches`, `normativos-enfermagem`, `normativos-federais`, `benchmarks-plataformas`), o evidence pack E1–E5, a lista oficial das 182 refs e o relatório final de síntese.
+
+### 12.1 Números medidos que corrigem o registo anterior
+
+| Medida | Valor | Como foi medida |
+|---|---|---|
+| Branches do repo público | **181 + `main` = 182 refs** | `git for-each-ref` sobre o clone; 0 divergências de sha contra `branches-todas.json`. A lista de 30 do E2 vinha de paginação errada (`per_page` em vez de `perPage`) |
+| Churn de agente | **137/181 (75,7%)** | `fix` 61 · `codex` 52 · `copilot` 14 · `refactor` 10 |
+| Branches do núcleo conta→cobrança→ads | **114/181 (63%)** por nome | classificador por palavra-chave, regra explícita e auditável |
+| Conteúdo órfão em branches | **1.524.448 B** em 7 de 30 branches testadas | teste de blob exclusivo; **151 branches não testadas — risco não medido, não se afirma zero** |
+| Serviços sem capability mapeável | **236/410 (57%)** | cruzamento `service-catalog` × registo de capabilities, por sobreposição de tokens (heurística declarada) |
+| Capabilities sem serviço mapeável | **49/201 (24%)** | idem |
+| Tipos de objeto com schema | **3 de 16** | `article`, `clinical-tool`, `library-entity` |
+| Elementos da Composition de simulados com cobertura completa | **3 de 12** | 8 têm serviço mas nenhum tipo de objeto |
+| Bindings capability↔objeto aprovados | **0 de 16** (`support: PROPOSED` em todas) | registo canónico |
+| Normas federais confirmadas na API do Senado | **3** (7.498/1986, 8.080/1990, 5.905/1973) | 2 rotas de confirmação cada |
+| Normas provadas **ausentes** do dataset do Senado | **2** (Res. Cofen 736/2024, Portaria GM/MS 6.734/2025) | 11 estratégias + prova de escopo; sustentação pelo DOU/in.gov.br |
+
+### 12.2 Os quatro achados estruturais
+
+1. **As três camadas do esqueleto não se tocam.** O registo de 201 capabilities tem 14 campos e **nenhum aponta para um serviço**; os 16 bindings também não. 236 dos 410 serviços ficam inalcançáveis — incluindo `authority-binding` e `contradiction-detection` (que respondem ao `FIND-CTR-010` do corte de Aldrete) e `moderation`/`abuse-report` (de que o fórum vivo da produção precisa). **É esta a lacuna de maior consequência do esqueleto, e é estrutural, não de volume.**
+2. **A superfície mais trabalhada do produto é a que o esqueleto não modela.** 63% das branches são do núcleo conta→cobrança→ads; o esqueleto tem `owner_scope: ACCOUNT` como campo e mais nada.
+3. **Higiene clínica é o risco de maior consequência.** O corte de Aldrete implementado (8 pontos, fonte CFM) contra o publicado (9 pontos) é uma divergência real e não resolvida; a lista de notificação compulsória publica 73 entradas sob uma portaria de 2026, e a vigência das fontes não é modelada.
+4. **Guest-first é correcto para o núcleo clínico e falso para o resto.** A produção é guest no núcleo de cálculo/leitura/impressão e account-centric em monetização, identidade, comunidade e telemetria. O esqueleto modela o núcleo e omite o resto.
+
+### 12.3 As 22 tasks registadas
+
+| Task | Fase | Título | WO | Dono | Estado |
+|---|---|---|---|---|---|
+| `TASK-PLAN-134` | F1 | Ligar a camada de servico a camada de capability: campo service_ref + validacao fail-closed | WO-DS-001 | Mavis + equipa especializada | PROPOSTO |
+| `TASK-PLAN-135` | F4 | Expor a familia evidence-claims: authority-binding, applicability, contradiction-detection e lineage | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-136` | F4 | Expor a familia community: moderation, abuse-report e identity-aware-profile | WO-SEC-001 | Responsavel autorizado pelo broker + revisor de seguranca | PROPOSTO |
+| `TASK-PLAN-137` | F4 | Tipos de objeto da Composition de simulados: 8 de 12 sem tipo de objeto nem schema | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-138` | F4 | Completar os 13 tipos de objeto sem schema (3 de 16 com schema) | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-139` | F4 | Declarar as 4 familias transversais ausentes: Identity/Account, Billing, Entitlement, Telemetry/Consent | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-140` | F4 | Regra dura de entitlement: so owner_scope ACCOUNT autoriza, e desambiguar 'sync' | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-141` | F4 | Reescrever telemetry_contract como contrato e subir o Event Backbone de P1 a P0 | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-142` | F4 | Preencher os 11 campos em falta no registo de capabilities (supported_channels, permission_policy, audiences, policy_refs...) | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-143` | F1 | Divergence register producao-esqueleto: cada divergencia da comparacao vira FIND com dono | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-144` | F1 | Reverificar o corte de Aldrete: 8 pontos (fonte CFM) contra 9 pontos publicados | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-145` | F1 | Registo das alteracoes vetadas: art. 15-D (Lei 14.434/2022) e 15-E (Lei 14.602/2023) na Lei 7.498/1986 | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-146` | F1 | Res. Cofen 736/2024 e Portaria GM/MS 6.734/2025: prova de ausencia no dataset do Senado e sustentacao pelo DOU | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-147` | F1 | Divergencia de vigencia da lista de notificacao compulsoria: 73 entradas contra a Portaria 10.175/2026 | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-148` | F1 | Divergencia medida no simulado de notificacao: 30q (E1) contra 50 questoes (meta description ao vivo) | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-149` | F0 | Decisao do dono sobre as 3 tensoes entre promessa publicada e comportamento (politica, termos, oferta) | WO-PMO-001 | Owner | PROPOSTO |
+| `TASK-PLAN-150` | F0 | Decisao do dono: o CE local tera backend, e o que acontece a ACCOUNT e WORKSPACE | WO-PMO-001 | Owner | PROPOSTO |
+| `TASK-PLAN-151` | F1 | Registar as 10 branches backup como baseline com dono, e nao as arquivar | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-152` | F1 | Preservar o conteudo orfao das branches de billing/ads: 1,5 MB que so existem la | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-153` | F1 | Corrigir o registo de medicao: 181 branches + main (182 refs), nao 182 branches | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-154` | F4 | Reconciliar o contrato de saida (print/pdf/docx) com o template-contract de producao antes de escrever output.ts | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-155` | F4 | i18n: onde vivem os 19 idiomas - locale-registry.ts e site-data.ts nao estao no main de nenhum repo | WO-E2E-001 | Mavis | PROPOSTO |
+
+### 12.4 Decisões que ficam com o dono (não são tasks de execução)
+
+- **`TASK-PLAN-149`** — as 3 tensões entre promessa publicada e comportamento (política × login/checkout; termos × assinatura; oferta/paywall × fórum). **Não é parecer jurídico**; é uma leitura de texto publicado. A qualificação cabe ao dono.
+- **`TASK-PLAN-150`** — o CE local terá backend? Se não, `ACCOUNT`/`WORKSPACE` ficam permanentemente reservados e a produção não pode ser espelhada; se sim, é preciso dizer quando.
+- **`TASK-PLAN-151`** — registar as 10 branches `backup/*` como baseline com dono, sem as arquivar; e decidir qual dos 4 baselines paralelos de menu é o bom (não medido).
+- **`TASK-PLAN-152`** — preservar (ou não) os 1,5 MB órfãos de `audit/billing-ads-*` e `base44/setup-*` antes de qualquer limpeza de branches.
+
+### 12.5 O que ficou por medir (e não se afirma o contrário)
+
+- Teste de órfão em 151 das 181 branches (a varredura de blobs excedeu o orçamento no clone em NFS).
+- Conteúdo real de qualquer branch: o tema é **inferência pelo nome**, com regra explícita.
+- Medição em browser (a11y, layout, performance, funil): **NOT_RUN** — não há browser neste ambiente.
+- Texto integral de artigo das três leis federais: a API do Senado devolve metadados, não cláusulas.
+- `src/lib/locale-registry.ts` e `src/lib/site-data.ts` **não existem** no `main` de nenhum dos dois repositórios: onde vivem os 19 idiomas é `NOT_RUN`.

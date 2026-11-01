@@ -1,0 +1,739 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "exames-laboratoriais",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Exames laboratoriais",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre coleta, categorias, valores de referência, valores críticos, suporte à interpretação, manuseio de amostras e monitorização clínica.",
+  "template_family": "knowledge-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Clínico",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Atualizado",
+      "tone": "green",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Exames laboratoriais"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "exam_categories",
+          "preparation_and_collection",
+          "interpretation_clues",
+          "critical_values",
+          "clinical_monitoring",
+          "videos",
+          "articles_and_evidence",
+          "collection_attention",
+          "warning_signs",
+          "monitoring_frequency",
+          "support_materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "categorias",
+        "label": "Categorias",
+        "status": "mapped",
+        "module_refs": [
+          "exam_categories"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "coleta",
+        "label": "Coleta",
+        "status": "mapped",
+        "module_refs": [
+          "preparation_and_collection",
+          "collection_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "valores-de-referencia",
+        "label": "Valores de Referência",
+        "status": "mapped",
+        "module_refs": [
+          "interpretation_clues"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "valores-criticos",
+        "label": "Valores Críticos",
+        "status": "mapped",
+        "module_refs": [
+          "critical_values",
+          "warning_signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "monitorizacao",
+        "label": "Monitorização",
+        "status": "mapped",
+        "module_refs": [
+          "clinical_monitoring",
+          "monitoring_frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "clinical_monitoring"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "articles_and_evidence",
+          "videos",
+          "support_materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/exames-laboratoriais/hero_exames_laboratoriais.png",
+          "alt": "Exames laboratoriais",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Exames laboratoriais são análises realizadas em amostras biológicas para avaliar processos fisiológicos ou patológicos.",
+                "icon": "system:flask"
+              },
+              {
+                "title": "Importância",
+                "text": "Subsidiar decisões clínicas, diagnóstico, monitorização e avaliação de resposta ao tratamento.",
+                "icon": "system:flask"
+              },
+              {
+                "title": "Objetivo do cuidado",
+                "text": "Garantir coleta adequada, integridade da amostra e resultados confiáveis para apoiar o cuidado seguro.",
+                "icon": "system:flask"
+              },
+              {
+                "title": "Abrangência",
+                "text": "Envolve exames de sangue, urina, fezes, líquidos corporais e outros materiais.",
+                "icon": "system:flask"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Qualidade da amostra",
+                "text": "Amostra adequada e bem identificada assegura resultados confiáveis.",
+                "icon": "system:flask"
+              },
+              {
+                "title": "Interferências",
+                "text": "Fatores pré-analíticos, analíticos e pós-analíticos podem interferir nos resultados.",
+                "icon": "system:flask"
+              },
+              {
+                "title": "Interpretação clínica",
+                "text": "Resultados devem ser interpretados no contexto do quadro clínico do paciente.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Trabalho em equipe",
+                "text": "Comunicação efetiva entre enfermagem, laboratório e equipe multiprofissional.",
+                "icon": "system:flask"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "exam_categories",
+      "module_type": "card_grid",
+      "semantic_role": "assessment",
+      "title": "CATEGORIAS DE EXAMES",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Hematológicos",
+            "description": "Hemograma, coagulograma, tipagem, ferro e outros.",
+            "count_label": "18 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_hematologicos.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Bioquímicos",
+            "description": "Glicemia, função renal, hepática, eletrólitos e outros.",
+            "count_label": "30 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_bioquimicos.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Hormonais",
+            "description": "Tireoide, cortisol, função reprodutiva e outros.",
+            "count_label": "16 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_hormonais.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Urinálise",
+            "description": "EAS, creatinina, proteinúria, microalbuminúria e outros.",
+            "count_label": "12 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_urinalise.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Parasitológicos",
+            "description": "Exame de fezes, pesquisa de ovos e parasitas.",
+            "count_label": "10 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_parasitologicos.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Outros",
+            "description": "Gasometria, marcadores tumorais, imunológicos e mais.",
+            "count_label": "25 exames",
+            "asset": "../assets/exames-laboratoriais/categoria_outros.png",
+            "action": {
+              "label": "Ver exames",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver todas as categorias e exames",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/exam_categories"
+    },
+    {
+      "module_id": "preparation_and_collection",
+      "module_type": "step_flow",
+      "semantic_role": "workflow",
+      "title": "PREPARO E COLETA",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "step": 1,
+            "title": "Preparar o paciente",
+            "description": "Confirmar jejum, medicações, orientações e condições específicas do exame.",
+            "asset": "../assets/exames-laboratoriais/passo_preparar_paciente.png"
+          },
+          {
+            "step": 2,
+            "title": "Identificar o paciente",
+            "description": "Usar dois identificadores e conferir dados com a requisição.",
+            "asset": "../assets/exames-laboratoriais/passo_identificar_paciente.png"
+          },
+          {
+            "step": 3,
+            "title": "Selecionar materiais",
+            "description": "Escolher tubos, agulhas e materiais adequados para o exame.",
+            "asset": "../assets/exames-laboratoriais/passo_selecionar_materiais.png"
+          },
+          {
+            "step": 4,
+            "title": "Realizar a coleta",
+            "description": "Seguir técnica asséptica e preencher tubos na ordem correta.",
+            "asset": "../assets/exames-laboratoriais/passo_realizar_coleta.png"
+          },
+          {
+            "step": 5,
+            "title": "Identificar amostra",
+            "description": "Rotular imediatamente com os dados do paciente e do exame.",
+            "asset": "../assets/exames-laboratoriais/passo_identificar_amostra.png"
+          },
+          {
+            "step": 6,
+            "title": "Acondicionar e enviar",
+            "description": "Armazenar conforme requisitos e encaminhar ao laboratório.",
+            "asset": "../assets/exames-laboratoriais/passo_acondicionar_enviar.png"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos de coleta detalhados",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/preparation_and_collection"
+    },
+    {
+      "module_id": "interpretation_clues",
+      "module_type": "item_grid",
+      "semantic_role": "orientation",
+      "title": "PISTAS DE INTERPRETAÇÃO",
+      "priority": 25,
+      "payload": {
+        "items": [
+          {
+            "label": "Verde — Dentro da referência",
+            "description": "Resultado dentro da faixa esperada.",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Amarelo — Atenção",
+            "description": "Resultado próximo aos limites ou com tendência de alteração.",
+            "icon": "system:alert"
+          },
+          {
+            "label": "Vermelho — Alerta crítico",
+            "description": "Resultado fora da referência com risco potencial.",
+            "icon": "system:alert"
+          },
+          {
+            "label": "Roxo — Correlacionar",
+            "description": "Interpretar sempre com o quadro clínico e história do paciente.",
+            "icon": "system:clock"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver guia de interpretação completa",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/interpretation_clues"
+    },
+    {
+      "module_id": "critical_values",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "VALORES CRÍTICOS – AÇÃO IMEDIATA",
+      "priority": 30,
+      "payload": {
+        "items": [
+          "Potássio ≥ 6,5 mEq/L ou ≤ 2,5 mEq/L",
+          "Sódio ≥ 160 mEq/L ou ≤ 120 mEq/L",
+          "Glicemia ≥ 500 mg/dL ou ≤ 40 mg/dL",
+          "Hemoglobina ≤ 6,0 g/dL",
+          "Plaquetas ≤ 20.000/mm³"
+        ],
+        "tone": "danger",
+        "section_icon": "system:alert"
+      },
+      "actions": [
+        {
+          "label": "Ver lista completa de valores críticos",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/critical_values"
+    },
+    {
+      "module_id": "clinical_monitoring",
+      "module_type": "item_grid",
+      "semantic_role": "monitoring",
+      "title": "MONITORIZAÇÃO CLÍNICA",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "label": "Avaliar tendência dos resultados",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Correlacionar com sinais e sintomas",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Observar resposta ao tratamento",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Ajustar condutas conforme necessário",
+            "icon": "system:clock"
+          },
+          {
+            "label": "Registrar e comunicar alterações",
+            "icon": "system:clock"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver plano de monitorização",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/clinical_monitoring"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TÉCNICAS",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "title": "Coleta de sangue venoso",
+            "duration": "02:18",
+            "asset": "../assets/exames-laboratoriais/video_coleta_sangue_venoso.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Ordem de coleta em tubos",
+            "duration": "01:56",
+            "asset": "../assets/exames-laboratoriais/video_ordem_coleta_tubos.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Coleta de urina tipo I (EAS)",
+            "duration": "02:05",
+            "asset": "../assets/exames-laboratoriais/video_coleta_urina_eas.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Coleta de gasometria arterial",
+            "duration": "03:10",
+            "asset": "../assets/exames-laboratoriais/video_coleta_gasometria_arterial.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Acondicionamento e envio de amostras",
+            "duration": "02:44",
+            "asset": "../assets/exames-laboratoriais/video_acondicionamento_envio_amostras.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:flask"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e técnicas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 45,
+      "payload": {
+        "items": [
+          {
+            "title": "Boas práticas na fase pré-analítica",
+            "source_label": "SBPC/ML, 2023"
+          },
+          {
+            "title": "Valores críticos e comunicação efetiva",
+            "source_label": "CBPC/ML, 2023"
+          },
+          {
+            "title": "Interpretação laboratorial na prática clínica",
+            "source_label": "Medicine (Ribeirão Preto), 2022"
+          }
+        ],
+        "verification_note": "Títulos, fontes e anos são transcrição da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "collection_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO NA COLETA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Princípios essenciais",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Identificar corretamente o paciente",
+              "Confirmar o exame solicitado",
+              "Explicar o procedimento e obter consentimento",
+              "Assegurar conforto e segurança",
+              "Registrar e comunicar intercorrências"
+            ],
+            "action": null
+          },
+          {
+            "title": "Evitar / Atenção",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Jejum inadequado",
+              "Hemólise da amostra",
+              "Contaminação da amostra",
+              "Volume insuficiente",
+              "Amostras mal identificadas"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos de coleta",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/collection_attention"
+    },
+    {
+      "module_id": "warning_signs",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "SINAIS DE ALERTA",
+      "priority": 68,
+      "payload": {
+        "items": [
+          "Valores críticos",
+          "Resultados incoerentes com o quadro clínico",
+          "Tendências de piora clínica",
+          "Reações adversas a procedimentos",
+          "Suspeita de contaminação da amostra"
+        ],
+        "tone": "danger",
+        "section_icon": "system:alert"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os sinais de alerta",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/warning_signs"
+    },
+    {
+      "module_id": "monitoring_frequency",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "FREQUÊNCIA DE MONITORIZAÇÃO",
+      "priority": 72,
+      "payload": {
+        "columns": [
+          "period",
+          "focus"
+        ],
+        "rows": [
+          {
+            "period": "Rotineira",
+            "focus": "Conforme protocolo ou condição clínica"
+          },
+          {
+            "period": "Moderada",
+            "focus": "Semanal ou conforme evolução"
+          },
+          {
+            "period": "Intensiva",
+            "focus": "Diariamente ou conforme instabilidade"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/monitoring_frequency"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 76,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia de coleta de exames (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Valores de referência (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Interpretação de resultados (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Manuseio e transporte (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Checklist pré-analítico (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:flask",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:flask",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:flask",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:flask",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/exames-laboratoriais.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/exames-laboratoriais.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/exames-laboratoriais.provenance.json"
+}

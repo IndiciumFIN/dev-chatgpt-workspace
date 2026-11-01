@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:v2:provenance-manifest",
+  "title": "CKO v2 Provenance Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "page_slug",
+    "page_source",
+    "module_provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "page_slug": {
+      "type": "string"
+    },
+    "page_source": {
+      "type": "object"
+    },
+    "module_provenance": {
+      "type": "object"
+    },
+    "migration_record": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

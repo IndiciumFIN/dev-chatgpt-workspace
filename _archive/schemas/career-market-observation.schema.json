@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Market Observation Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "signal_id",
+    "source_id",
+    "jurisdiction",
+    "statistic_kind",
+    "observed_value",
+    "unit",
+    "methodology_note",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "signal_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "role_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "statistic_kind": {
+      "enum": [
+        "POSTED_SALARY",
+        "OFFICIAL_STATISTIC",
+        "SURVEY_ESTIMATE",
+        "MARKET_INDEX"
+      ]
+    },
+    "observed_value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "methodology_note": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "HOLD_HUMAN",
+        "RETIRED"
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Content Claim Binding Candidate",
+  "type": "object",
+  "required": [
+    "document_id",
+    "block_id",
+    "claim_id",
+    "binding_role",
+    "status"
+  ],
+  "properties": {
+    "document_id": {
+      "type": "string"
+    },
+    "block_id": {
+      "type": "string"
+    },
+    "claim_id": {
+      "type": "string"
+    },
+    "binding_role": {
+      "enum": [
+        "SUPPORTS",
+        "CONTEXT",
+        "LIMITS"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "EVIDENCE_BOUND"
+      ]
+    }
+  }
+}

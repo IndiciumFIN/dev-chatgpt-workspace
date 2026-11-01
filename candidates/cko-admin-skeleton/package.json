@@ -1,0 +1,27 @@
+{
+  "name": "cko-admin-skeleton",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Esqueleto da área administrativa governada (modo local: sem login, sem banco, sem rede).",
+  "scripts": {
+    "dev": "vite --port 8080",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test scripts/*.test.mjs",
+    "smoke": "node scripts/smoke.cjs http://127.0.0.1:4173/index.html evidence/screenshots node_modules/axe-core/axe.min.js",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "lucide-react": "1.66.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "4.7.0",
+    "typescript": "5.6.3",
+    "vite": "6.4.5"
+  }
+}

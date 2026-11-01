@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 const read = (path) => readFileSync(path, 'utf8');
 const admin = read('src/components/admin/admin-console.tsx');
 const adminCss = read('src/styles/admin-console.css');
+const templates = read('src/components/admin/templates-panel.tsx');
 const command = read('src/routes/central-comando.tsx');
 const commandCss = read('src/styles/command-center.css');
 
@@ -36,9 +37,10 @@ test('mobile is the starting admin composition, desktop expands progressively', 
 });
 
 test('templates and command catalog expose mobile card labels without dropping table semantics', () => {
-  for(const name of ['Template','Contrato','Origem','Disponibilidade']) {
-    assert.ok(admin.includes('data-label="'+name+'"'));
+  for(const name of ['Template','Contrato','Origem','Situação']) {
+    assert.ok(templates.includes('data-label="'+name+'"'), 'Template table lost mobile label: '+name);
   }
+  assert.match(admin, /<TemplatesPanel \/>/, 'Admin tab must render extracted canonical templates panel');
   for(const name of ['Domínio','Tabela','Fase','Estado']) {
     assert.ok(command.includes('data-label="'+name+'"'));
   }

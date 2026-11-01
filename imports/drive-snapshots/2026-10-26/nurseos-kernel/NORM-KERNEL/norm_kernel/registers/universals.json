@@ -1,0 +1,417 @@
+{
+ "universals": {
+  "NK-UNIV-0001": {
+   "name": "RFC 2119 — Key words for use in RFCs to Indicate Requirement Levels",
+   "aliases": [
+    "RFC 2119"
+   ],
+   "kind": "rfc",
+   "source_ref": "SRC-RFC",
+   "license_ref": "KL-0003",
+   "canon_status": "canon_complete",
+   "doc_ref": "NK-DOC-00002",
+   "atoms": [
+    "NK-ATOM-0000017",
+    "NK-ATOM-0000018",
+    "NK-ATOM-0000019",
+    "NK-ATOM-0000020",
+    "NK-ATOM-0000021",
+    "NK-ATOM-0000022"
+   ],
+   "analysis": {
+    "criterion": "todo átomo do normativo é avaliado: aplica/nao_aplica/parcial + motivo + evidência; nada fica sem análise (POL-NK-009 C2)",
+    "points": [
+     {
+      "ref": "NK-ATOM-0000017",
+      "applies": "aplica",
+      "reason": "a definição de MUST governa a leitura deôntica de TODO átomo de obrigação da plataforma (modality shall)",
+      "evidence": "EV-NK-0012"
+     },
+     {
+      "ref": "NK-ATOM-0000018",
+      "applies": "aplica",
+      "reason": "MUST NOT governa átomos de proibição (modality shall_not)",
+      "evidence": "EV-NK-0012"
+     },
+     {
+      "ref": "NK-ATOM-0000019",
+      "applies": "aplica",
+      "reason": "SHOULD governa átomos de recomendação (modality should)",
+      "evidence": "EV-NK-0012"
+     },
+     {
+      "ref": "NK-ATOM-0000020",
+      "applies": "aplica",
+      "reason": "SHOULD NOT governa recomendações contra (modality should_not)",
+      "evidence": "EV-NK-0012"
+     },
+     {
+      "ref": "NK-ATOM-0000021",
+      "applies": "aplica",
+      "reason": "MAY governa permissões (modality may)",
+      "evidence": "EV-NK-0012"
+     },
+     {
+      "ref": "NK-ATOM-0000022",
+      "applies": "aplica",
+      "reason": "a obrigação de uso restrito de imperativos vincula os artefatos do próprio kernel (normas e gates usam imperativos com parcimônia)",
+      "evidence": "EV-NK-0012"
+     }
+    ]
+   },
+   "evidence": "EV-NK-0012"
+  },
+  "NK-UNIV-0002": {
+   "name": "RFC 8785 — JSON Canonicalization Scheme (JCS)",
+   "aliases": [
+    "RFC 8785",
+    "JCS"
+   ],
+   "kind": "rfc",
+   "source_ref": "SRC-RFC",
+   "license_ref": "KL-0003",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL DE PRODUÇÃO: todo checksum do kernel (átomos, evidências, assinaturas de OS, pin do anexo) já usa JCS. Atomização do texto integral é trabalho futuro (job NK-JOB-0002 previsto); o uso vigente está evidenciado em 100% dos checksums assinados",
+   "evidence": "EV-NK-0006..0012 (checksums JCS em produção)"
+  },
+  "NK-UNIV-0003": {
+   "name": "LGPD — Lei 13.709/2018",
+   "aliases": [
+    "LGPD"
+   ],
+   "kind": "dou",
+   "source_ref": "SRC-PLANALTO",
+   "license_ref": "KL-0001",
+   "canon_status": "analysis_pending",
+   "pending_justification": "artigos citados em normas de campo (11, 46) e no gate H11; atomização integral + política de retenção/dados pessoais é PRÉ-REQUISITO para fontes com dados pessoais (NK-BL-0003 portarias) — bloqueante para a fatia ANVISA",
+   "evidence": "field_norms.json (normas de campo citam LGPD com '(verificar)' onde a base legal precisa confirmação)"
+  },
+  "NK-UNIV-0004": {
+   "name": "Lei 9.610/1998 — Direitos Autorais",
+   "aliases": [
+    "9.610",
+    "Lei 9.610"
+   ],
+   "kind": "dou",
+   "source_ref": "SRC-PLANALTO",
+   "license_ref": "KL-0001",
+   "canon_status": "analysis_pending",
+   "pending_justification": "art. 8º (obras oficiais) e art. 46 são a base do regime de citação em TODO artefato; uso real diário evidenciado (canonical_citation obrigatória em todo doc); atomização integral do texto é trabalho futuro (job previsto NK-JOB-0003)",
+   "evidence": "NK-DOC-* (citação canônica obrigatória em 7 docs), policies/POL-NK-002.md"
+  },
+  "NK-UNIV-0005": {
+   "name": "WCAG 2.2 — Web Content Accessibility Guidelines (W3C)",
+   "aliases": [
+    "WCAG",
+    "WCAG 2.2"
+   ],
+   "kind": "w3c",
+   "source_ref": "SRC-W3C",
+   "license_ref": "KL-0006",
+   "canon_status": "analysis_pending",
+   "pending_justification": "AA declarado para o front-end (H8, linguagem simples por átomo); spec completa pública e acessível (fonte ativa); atomização dos critérios de sucesso + validação axe/Lighthouse runtime é trabalho futuro (débita declarada no handoff §4)",
+   "evidence": "EV-NK-0008..0010 (gates PUBLISH de validação estática WCAG)"
+  },
+  "NK-UNIV-0006": {
+   "name": "ISO 8000 — Data quality",
+   "aliases": [
+    "ISO 8000"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "só há acesso a METADADOS de catálogo (título/escopo/status) — texto integral exige licença ISO/ABNT (KL-0004 pending_contract, NK-BL-0014)",
+    "support": "a ANÁLISE está suportada pela alternativa interna: mapeamento de dimensão ISO 8000 por campo no anexo pinado (90 campos com iso8000_dimension — o anexo É a análise aplicada)",
+    "upgrade_path": "obtida a licença, o cânone é completado por transição (POL-NK-009 C6)"
+   },
+   "evidence": "field_norms.json (38 referências ISO 8000; 90 campos com dimensão declarada)"
+  },
+  "NK-UNIV-0007": {
+   "name": "ISO/IEC/IEEE 26514 — Documentation design & development",
+   "aliases": [
+    "26514"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "texto integral licenciado (KL-0004 pending_contract)",
+    "support": "estrutura da documentação de sistemas (docs/system-documentation.md, 11 seções) adota as cláusulas CONHECIDAS da série; verificação formal contra o texto integral é débita registrada (licença pendente)",
+    "upgrade_path": "licença → verificação formal → canon_complete por transição"
+   },
+   "evidence": "docs/system-documentation.md (§ cabeçalho: nota de licença P7)"
+  },
+  "NK-UNIV-0008": {
+   "name": "ISO/IEC/IEEE 42010 — Architecture description",
+   "aliases": [
+    "42010"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "texto integral licenciado (KL-0004 pending_contract)",
+    "support": "a descrição de arquitetura (stakeholders/viewpoints/fluxos) segue o modelo conhecido; verificação formal pendente de licença",
+    "upgrade_path": "licença → canon_complete por transição"
+   },
+   "evidence": "docs/system-documentation.md §3 (arquitetura 42010)"
+  },
+  "NK-UNIV-0009": {
+   "name": "IETF Trust Legal Provisions (TLP)",
+   "aliases": [
+    "IETF Trust",
+    "IETF"
+   ],
+   "kind": "rfc",
+   "source_ref": "SRC-RFC",
+   "license_ref": "KL-0003",
+   "canon_status": "analysis_pending",
+   "pending_justification": "regras da TLP restringem TODO uso de RFCs na plataforma (KL-0003: atribuição obrigatória, texto não alterado); violação de atribuição verificada por gate (G2); atomização do texto TLP é trabalho futuro",
+   "evidence": "KL-0003 (registro de licença) + gates G1/G2 (atribuição verificada por artefato)"
+  },
+  "NK-UNIV-0010": {
+   "name": "JSON Schema (draft 2020-12)",
+   "aliases": [
+    "JSON Schema"
+   ],
+   "kind": "tech-schema",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: schemas de TODAS as entidades (Base44) e especificações do anexo derivam do mesmo modelo; análise ponto a ponto (keywords, tipos, composição) + formalização como política é trabalho futuro — destino: virar política formal (POL-NK-010 C2)",
+   "evidence": "field_norms.json (metamodelo de 90 campos com tipos/patterns/enums) + entities do app"
+  },
+  "NK-UNIV-0011": {
+   "name": "Open Graph protocol + schema.org + sitemaps.org (padrão SEO/meta/OG image)",
+   "aliases": [
+    "OG",
+    "OG image",
+    "SEO",
+    "meta",
+    "sitemaps"
+   ],
+   "kind": "tech-seo",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: seo_json.uri_slug por átomo (H16), OG images no PUBLISH, front-end gerado com meta; análise ponto a ponto (cada meta/OG/sitemap) + padrão formal de OG image é trabalho futuro",
+   "evidence": "EV-NK-0008..0010 (gates PUBLISH: OG/meta verificados estaticamente)"
+  },
+  "NK-UNIV-0012": {
+   "name": "Semantic Versioning 2.0.0",
+   "aliases": [
+    "SemVer",
+    "versionamento"
+   ],
+   "kind": "tech-versioning",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: versionamento de políticas (POL-NK-001 v1.0.x), anexo (v1.4.0), funções (v0.x.y); versionar é campo BLOQUEADO do kernel (INV-003); análise ponto a ponto + política formal de versionamento técnico é trabalho futuro",
+   "evidence": "POL-NK-004 (versionamento por OS) + pins em todas as políticas"
+  },
+  "NK-UNIV-0013": {
+   "name": "PEP 8 + typing (Python) — instrumentos do kernel",
+   "aliases": [
+    "PEP 8",
+    "Python"
+   ],
+   "kind": "tech-py",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: todo instrumento (pipeline, gates, atomizer) é Python; convenções aplicadas de fato; análise ponto a ponto + lint formal (ruff/flake8) no CI é trabalho futuro",
+   "evidence": "pipeline.py, check_links.py, build_* (instrumentos assinados no artifact register)"
+  },
+  "NK-UNIV-0014": {
+   "name": "TypeScript/Deno — funções do kernel",
+   "aliases": [
+    "TypeScript",
+    "Deno",
+    "JS"
+   ],
+   "kind": "tech-js",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: 5 funções backend em TS/Deno; análise ponto a ponto (convenções, tipagem estrita, tratamento de erro) + padrão formal de código JS é trabalho futuro",
+   "evidence": "functions/* (código assinado; contrato documentado em docs/system-documentation.md §5)"
+  },
+  "NK-UNIV-0015": {
+   "name": "Design system: tokens shadcn/ui + Tailwind (front-end gerado)",
+   "aliases": [
+    "design system",
+    "design tokens"
+   ],
+   "kind": "tech-design",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: front-end gerado usa tokens do design system do editor (nunca editado à mão, POL C4 herdados); análise ponto a ponto dos tokens + política formal de design é trabalho futuro",
+   "evidence": "EV-NK-0008..0010 (front-end gerado do grafo, PUBLISH gates)"
+  },
+  "NK-UNIV-0016": {
+   "name": "CNCF Serverless Workflow v1.0",
+   "aliases": [
+    "CNCF SWF",
+    "workflow"
+   ],
+   "kind": "tech-workflow",
+   "source_ref": "SRC-0001",
+   "license_ref": "KL-0008",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: os 6 workflows NK Guard (entidade→intake) são CNCF SWF v1.0 e PROVADOS (F-0006 capturado em segundos); análise ponto a ponto + padrão formal de workflows é trabalho futuro (licença exata da spec verificada no ato da atomização)",
+   "evidence": "workflows NK Guard ativos + F-0006 (captura em produção)"
+  },
+  "NK-UNIV-0017": {
+   "name": "Protocolo HTTP/REST de comunicação — RFC 9110 + contratos das funções do kernel",
+   "aliases": [
+    "HTTP",
+    "REST",
+    "API"
+   ],
+   "kind": "rfc",
+   "source_ref": "SRC-RFC",
+   "license_ref": "KL-0003",
+   "canon_status": "analysis_pending",
+   "pending_justification": "EM USO REAL: todas as funções do kernel expõem contrato HTTP (JSON de entrada/saída documentado em docs §5); análise ponto a ponto (métodos, códigos, payloads) + especificação formal do protocolo de comunicação com APIs é trabalho futuro",
+   "evidence": "docs/system-documentation.md §5 (interfaces HTTP) + código das 5 funções"
+  },
+  "NK-UNIV-0018": {
+   "name": "ISO/IEC 27001 — Segurança da informação (SGSI)",
+   "aliases": [
+    "ISO 27001"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "texto integral licenciado (KL-0004 pending_contract)",
+    "support": "controles correspondentes já existem como políticas NK: integridade (pins/checksums), rastreabilidade (OS/evidência), segregação de autoridade (kernel≠humano), resposta a incidente (findings 5W + quarentena)",
+    "upgrade_path": "licença → análise cláusula a cláusula → formalização como política NK"
+   },
+   "evidence": "docs/stack-clevel.md (mapa C-level: controles existentes vs 27001)"
+  },
+  "NK-UNIV-0019": {
+   "name": "ISO/IEC 42001 — Sistema de gestão de inteligência artificial",
+   "aliases": [
+    "ISO 42001"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "texto integral licenciado (KL-0004 pending_contract)",
+    "support": "gestão de agentes já coberta em NURSE-OS (POL-002 HITL, POL-009 sem auto-modificação) e aqui no DTH (homologação humana); análise formal pendente",
+    "upgrade_path": "licença → canon_complete por transição"
+   },
+   "evidence": "POL-NK-003 (autoridade humana) + POL-NK-011 (DTH)"
+  },
+  "NK-UNIV-0020": {
+   "name": "OWASP Top 10 / ASVS — segurança de aplicações (ciberataque)",
+   "aliases": [
+    "OWASP"
+   ],
+   "kind": "tech-security",
+   "source_ref": "SRC-0002",
+   "license_ref": "KL-0009",
+   "canon_status": "analysis_pending",
+   "pending_justification": "práticas de segurança ATIVAS hoje no kernel: pins anti-drift, quarentena automática, deploy gate com baseline, checksums assinados, guard em cada hook (F-0006 provado); a análise ponto a ponto do OWASP Top 10/ASVS (mapear cada risco às controles NK existentes) é trabalho futuro — destino: política formal de segurança + gate",
+   "evidence": "F-0006 + drills de drift/tamper (EV-NK-0006..0015) + docs/stack-clevel.md (CISO)"
+  },
+  "NK-UNIV-0021": {
+   "name": "NIST Cybersecurity Framework 2.0",
+   "aliases": [
+    "NIST CSF"
+   ],
+   "kind": "tech-security",
+   "source_ref": "SRC-0002",
+   "license_ref": "KL-0009",
+   "canon_status": "analysis_pending",
+   "pending_justification": "funções Identificar/Proteger/Detectar/Responder/Recuperar serão mapeadas às funções NK (guard=integrar/proteger, findings 5W=detectedar/responder, POL-NK-004 restauração=recuperar); análise ponto a ponto pendente — público (nist.gov)",
+   "evidence": "registers/dth_changes.json (resposta a incidente) + findings.json (5W)"
+  },
+  "NK-UNIV-0022": {
+   "name": "COBIT 2019 (ISACA) — governança de TI",
+   "aliases": [
+    "COBIT"
+   ],
+   "kind": "setorial",
+   "source_ref": "SRC-0002",
+   "license_ref": "KL-0009",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "framework licenciado (ISACA)",
+    "support": "objetivos de governança equivalentes já operam: alinhamento estratégico (fases/backlog), gestão de risco (findings/deploy gate), entrega de valor (fatiar), medição (gates/evidências)",
+    "upgrade_path": "análise formal exige aquisição de licença (evidenciado)"
+   },
+   "evidence": "docs/stack-clevel.md §3/§4"
+  },
+  "NK-UNIV-0023": {
+   "name": "ITIL 4 (Axelos/PeopleCert) — gestão de serviços",
+   "aliases": [
+    "ITIL"
+   ],
+   "kind": "setorial",
+   "source_ref": "SRC-0002",
+   "license_ref": "KL-0009",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "framework licenciado (PeopleCert/Axelos)",
+    "support": "gestão de mudança já coberta pelo DTH (POL-NK-011: dev→test→staged→approved→deployed com homologação humana); gestão de incidente pelos findings 5W + quarentena",
+    "upgrade_path": "licença → análise canônica"
+   },
+   "evidence": "POL-NK-011 + registers/dth_changes.json"
+  },
+  "NK-UNIV-0024": {
+   "name": "Código CONAR — auto-regulamentação publicitária",
+   "aliases": [
+    "CONAR",
+    "propaganda"
+   ],
+   "kind": "setorial",
+   "source_ref": "SRC-0002",
+   "license_ref": "KL-0009",
+   "canon_status": "analysis_pending",
+   "pending_justification": "aplicável quando houver comunicação comercial do produto (afirmações de valor em marketing); código público no site CONAR; análise das seções pertinentes (veracidade, identificação, comparações) antes de qualquer página pública de divulgação",
+   "evidence": "docs/stack-clevel.md §3 (CEO: afirmações de valor documentadas)"
+  },
+  "NK-UNIV-0025": {
+   "name": "CDC — Lei 8.078/1990, arts. 30-45 (publicidade e práticas comerciais)",
+   "aliases": [
+    "CDC",
+    "Lei 8.078"
+   ],
+   "kind": "dou",
+   "source_ref": "SRC-PLANALTO",
+   "license_ref": "KL-0001",
+   "canon_status": "analysis_pending",
+   "pending_justification": "proibição de publicidade enganosa (art. 37) e abusiva (art. 38) vincula TODA comunicação comercial; as afirmações do C-level doc são hoje verificáveis por evidência (cada claim tem EV) — análise integral dos artigos pertinentes prevista com a fatia de produto público",
+   "evidence": "docs/stack-clevel.md (cada claim mapeada a EV-NK-*)"
+  },
+  "NK-UNIV-0026": {
+   "name": "ISO 9241 — Ergonomia da interação humano-sistema (incl. -210 human-centered design, -171 acessibilidade de software)",
+   "aliases": [
+    "ISO 9241",
+    "human-centered"
+   ],
+   "kind": "iso",
+   "source_ref": "SRC-ISO",
+   "license_ref": "KL-0004",
+   "canon_status": "metadata_alternative",
+   "alternative_source": {
+    "what": "texto integral licenciado (KL-0004 pending_contract)",
+    "support": "princípios human-centered já operam: WCAG 2.2 AA (cânone), linguagem simples por átomo (H3), usabilidade verificada por gates estáticos + PUBLISH; sustentabilidade digital além do carbono: proibição de dark patterns (CDC/CONAR no cânone), longevidade dos dados (versionamento POL-NK-004)",
+    "upgrade_path": "licença → análise cláusula a cláusula → política de UX formal"
+   },
+   "evidence": "docs/stack-clevel.md + gates PUBLISH (WCAG/Lighthouse estáticos; runtime é débita declarada)"
+  }
+ },
+ "scope_note": "POL-NK-009 (normativos) + POL-NK-010 (padrões técnicos): mesma máquina de cânone, análise ponto a ponto e transições por OS. 17 entradas."
+}

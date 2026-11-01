@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:fixation-film-tape:v1.0.0",
+  "title": "CKO Fixação, Filmes e Fitas Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "fixation-film-tape"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "fixationType": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "substrate": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "adhesive": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "skinContact": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "compatibility": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "changeInterval": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "removalMethod": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

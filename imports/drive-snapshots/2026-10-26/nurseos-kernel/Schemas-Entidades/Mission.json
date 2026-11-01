@@ -1,0 +1,59 @@
+{
+  "properties": {
+    "agent_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "completed_at": {
+      "type": "string"
+    },
+    "mission_id": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "outcome_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "safety_criteria": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "executing",
+        "complete",
+        "blocked",
+        "failed"
+      ],
+      "type": "string"
+    },
+    "success_criteria": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "tasks": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "verification_note": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "Mission"
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Commander candidate delivery manifest (not authority)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "workOrderId",
+    "issueUrl",
+    "sourceCommit",
+    "producer",
+    "inputs",
+    "files",
+    "validation",
+    "review",
+    "releaseAuthorized"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "workOrderId": {
+      "type": "string",
+      "pattern": "^WO-[A-Z0-9-]+$"
+    },
+    "issueUrl": {
+      "type": "string",
+      "pattern": "^https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/[0-9]+$"
+    },
+    "sourceCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "agentId",
+        "role",
+        "executionEvidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "agentId": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "MAKER",
+            "CHECKER",
+            "AUDITOR",
+            "ORCHESTRATOR"
+          ]
+        },
+        "executionEvidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256",
+          "sourceRef",
+          "rightsReview"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "sourceRef": {
+            "type": "string"
+          },
+          "rightsReview": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "command",
+          "result",
+          "evidence"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "result": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "HOLD",
+              "NOT_RUN"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "reviewer",
+        "independent",
+        "approved"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "reviewer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "independent": {
+          "type": "boolean"
+        },
+        "approved": {
+          "type": "boolean"
+        }
+      }
+    },
+    "releaseAuthorized": {
+      "const": false
+    }
+  }
+}

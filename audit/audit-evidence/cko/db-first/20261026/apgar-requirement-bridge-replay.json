@@ -1,0 +1,43 @@
+{
+  "audit_id": "CKO-DB-BRIDGE-REPLAY-20261026",
+  "source_system": "Calculadoras-Smart Supabase",
+  "access": "READ_ONLY",
+  "scope": "METADATA_AND_SYNTHETIC_ARITHMETIC_ONLY",
+  "input_tools": [
+    "apgar",
+    "fugulin"
+  ],
+  "bridge_query": "docs/audits/sql/CKO_APGAR_REQUIREMENT_BRIDGE_20261026.sql",
+  "replay_query": "docs/audits/sql/CKO_APGAR_SYNTHETIC_ENUM_REPLAY_20261026.sql",
+  "source_extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+  "extraction_state": "CANDIDATE_UNCHECKED",
+  "bridge": {
+    "references_total": 6,
+    "bridged_to_requirement": 6,
+    "unchecked_extractions": 6,
+    "candidate_requirements": 6,
+    "awaiting_checker": 6,
+    "review_pending_references": 6
+  },
+  "arithmetic": {
+    "candidate_scoring_fields": 5,
+    "complete_scoring_domains": 5,
+    "synthetic_combinations": 243,
+    "arithmetic_min": 0,
+    "arithmetic_max": 10,
+    "distinct_totals": 11,
+    "all_in_bounds": true,
+    "fugulin_enum_fields": 0,
+    "fugulin_total_fields": 10,
+    "apgar_engine_ref": null,
+    "apgar_rule_pack_ref": null
+  },
+  "diagnostic": "STRUCTURAL_REPLAY_PASS_CLINICAL_RELEASE_HOLD",
+  "caveats": [
+    "No clinician validation",
+    "No rights evidence",
+    "No approved rule pack or engine",
+    "No clinical patient data",
+    "No production build or deployment"
+  ]
+}

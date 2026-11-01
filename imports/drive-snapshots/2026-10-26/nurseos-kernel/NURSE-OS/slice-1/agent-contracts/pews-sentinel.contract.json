@@ -1,0 +1,74 @@
+{
+  "contract_id": "AC-PEWS-SENTINEL-0.2.1",
+  "contract_version": "0.2.1",
+  "effective_date": "2026-09-03",
+
+  "identity": {
+    "slug": "pews-sentinel",
+    "name": "PEWS Sentinel",
+    "version": "0.2.1",
+    "agent_type": "safety_monitor",
+    "model_ref": "early-warning-model-v2 + nurse-palm-v0 (classificação)",
+    "owner": "Leivis Lima",
+    "clinical_champion": "Enfermeira plantonista (a designar)"
+  },
+
+  "purpose": "Monitorar escores PEWS/NEWS2 do PatientTwin e priorizar alertas de deterioração clínica. Estritamente consultivo (L0).",
+
+  "scope": {
+    "in_scope": ["cálculo/priorização de alertas PEWS/NEWS2", "classificação de urgência", "sugestão de bundle de resposta rápida citando CKOs"],
+    "out_of_scope": ["qualquer ação direta", "alteração de conduta", "escalonamento direto a médico sem enfermeiro", "administração de terapia"]
+  },
+
+  "capabilities_offered": ["CAP-004:deterioration-monitoring"],
+
+  "preconditions": [
+    "FHIR Observation subscription ativa",
+    "Context Package com integrity=complete (POL-006)",
+    "Parâmetros de escore vigentes (CKO procedures/pews-assessment)"
+  ],
+
+  "inputs": {"schema": "slice-1/schemas/context-package.schema.json", "channels": ["fhir:observation-subscription"]},
+
+  "outputs": {"schema": "slice-1/schemas/uncertainty.schema.json + estrutura de alerta", "guarantees": ["alerta priorizado + citação de CKO", "uncertainty obrigatório (POL-007)", "decision_id (POL-008)"]},
+
+  "policies": ["POL-004", "POL-005", "POL-006", "POL-007", "POL-008"],
+
+  "tools": ["fhir:observation-subscription", "mcp:cko-procedures"],
+
+  "authority": {
+    "autonomy_level": "L0_suggest",
+    "may_do": ["sugerir", "priorizar", "classificar"],
+    "may_not_do": ["executar", "escalonar sozinho", "silenciar alerta"],
+    "delegation": "não delega; convocado via CAP-004"
+  },
+
+  "risks": ["alarme falso reiterado (fatigue de alerta)", "perda de assinatura FHIR", "escore calculado com dado stale"],
+
+  "failure_modes": [
+    {"mode": "observação stale", "detection": "temporal_state do Context Package", "response": "degradar prioridade + sinalizar staleness"},
+    {"mode": "assinatura perdida", "detection": "CI gate de conectividade", "response": "fail-safe: alerta humano sobre monitoramento interrompido (nunca silêncio)"},
+    {"mode": "confiança < 0.70", "detection": "POL-004", "response": "escalated → nurse-on-duty"}
+  ],
+
+  "escalation": {
+    "targets": ["nurse-on-duty", "rapid-response-team (via enfermeiro)"],
+    "format": "SBAR + decision_id + uncertainty",
+    "slo": "alerta de deterioração crítica <= 2s após observação"
+  },
+
+  "evidence_contract": {
+    "emits": ["decision_id", "provenance por passo (incl. versão do escore e janela temporal)", "evidência de runtime assertions"],
+    "retention": "anexada ao encontro; incidentes de monitoramento viram SafetyEvent"
+  },
+
+  "sla": {"latency_p95_ms": 2000, "uptime_target": 0.999, "max_runtime_s": 5},
+
+  "certification": {
+    "nursebench_min": 0.80,
+    "current_score": 0.78,
+    "note": "abaixo do gate de produção (POL-003) — permanece em sandbox por design; evidência de que o gate funciona",
+    "last_ci_gate": "sandbox dispensa gate de produção; promovido apenas quando >= 0.80",
+    "recertification_cadence": "a cada mudança de modelo ou parâmetros de escore"
+  }
+}

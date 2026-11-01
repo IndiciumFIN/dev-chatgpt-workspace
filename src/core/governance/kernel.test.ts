@@ -12,6 +12,7 @@ const policies: PolicyRule[] = [
 const makeOrder = (): WorkOrder => ({
   id: "wo-test", type: "pilot", title: "Teste isolado", objective: "avaliar gate",
   scope: "public-backup", owner: "maker", approver: "reviewer", sourceRef: "source://test",
+  findRef: "FIND-TEST-1", taskRef: "TASK-TEST-1",
   policySet: ["policy.require.source", "policy.preview-required"], riskLevel: "medium",
   dataClassification: "internal", securityImpact: "low", environment: "pilot",
   status: "draft", dependencies: [], acceptanceCriteria: ["test"],
@@ -23,11 +24,13 @@ const makeManifest = (order = makeOrder()): Manifest => ({
   status: "approved", approvedBy: "reviewer", approvedAt: timestamp,
 });
 const validators: NamedValidator[] = [
-  { id: "schema", run: async () => true },
-  { id: "rights", run: async () => true },
+  { id: "schema", run: async () => ({ passed: true, evidenceRef: "evidence://schema", runRef: "run://schema" }) },
+  { id: "rights", run: async () => ({ passed: true, evidenceRef: "evidence://rights", runRef: "run://rights" }) },
 ];
 const policy: PolicyEvaluator = async () => ({
   allow: true, decisionId: "opa-decision-001", bundleRef: "bundle://candidate/1.0.0",
+  bundleSignatureVerified: true, decisionEvidenceRef: "evidence://opa",
+  workOrderRef: "wo-test", inputHash: hash,
 });
 const assess = (
   order = makeOrder(),
@@ -40,6 +43,41 @@ describe("governance kernel — fail-closed local gate", () => {
   it("rejects missing policy set", async () => {
     const order = makeOrder(); order.policySet = [];
     assert.equal((await assess(order)).reason, "policy-set-required");
+  });
+  it("holds missing FIND/TASK linkage and owner–approver conflicts", async () => {
+    const order = makeOrder(); delete order.findRef;
+    assert.equal((await assess(order)).reason, "find-task-lineage-required");
+    order.findRef = "FIND-TEST-1"; delete order.taskRef;
+    assert.equal((await assess(order)).reason, "find-task-lineage-required");
+    order.taskRef = "TASK-TEST-1"; order.approver = order.owner;
+    assert.equal((await assess(order)).reason, "independent-owner-approver-required");
+  });
+  it("requires a verified policy bundle and a bound policy decision", async () => {
+    const order = makeOrder();
+    const full = await policy({workOrder:order,manifest:makeManifest(order),activePolicies:policies});
+    for (const override of [
+      {bundleSignatureVerified:false},
+      {decisionEvidenceRef:""},
+      {workOrderRef:"WO-other"},
+      {inputHash:"b".repeat(64)},
+    ]) {
+      assert.equal((await assess(order,makeManifest(order),validators,async()=>({...full,...override}))).reason,
+        "policy-bundle-or-decision-evidence-unverified");
+    }
+  });
+  it("does not accept boolean-only validator successes without evidence", async () => {
+    const result = await assess(makeOrder(), makeManifest(), [
+      {id:"schema",run:async()=>true},
+      validators[1],
+    ]);
+    assert.equal(result.reason, "validator-evidence-required:schema");
+  });
+  it("holds a PASS with no run or evidence provenance", async () => {
+    const result = await assess(makeOrder(),makeManifest(),[
+      {id:"schema",run:async()=>({passed:true,evidenceRef:"",runRef:""})},
+      validators[1],
+    ]);
+    assert.equal(result.reason, "validator-evidence-required:schema");
   });
   it("holds without manifest", async () => {
     assert.deepEqual(await assess(makeOrder(), null), { outcome: "hold", reason: "manifest-required" });
@@ -75,7 +113,7 @@ describe("governance kernel — fail-closed local gate", () => {
     const manifest = makeManifest(); manifest.approvedBy = "kernel";
     assert.equal((await assess(makeOrder(), manifest)).reason, "independent-approval-required");
     const order = makeOrder(); order.owner = "reviewer";
-    assert.equal((await assess(order, makeManifest(order))).reason, "independent-approval-required");
+    assert.equal((await assess(order, makeManifest(order))).reason, "independent-owner-approver-required");
     const absent = makeOrder(); absent.approvals = [];
     assert.equal((await assess(absent, makeManifest(absent))).reason, "independent-approval-required");
   });

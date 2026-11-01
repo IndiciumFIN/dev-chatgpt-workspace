@@ -1,0 +1,112 @@
+{
+  "version": "0.2.0",
+  "updated_at": "2026-10-26",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace@simulados-enfermagem-db-canonico",
+  "overall_status": "NOT_HOMOLOGATED",
+  "waves_total": 12,
+  "counts": {
+    "waves_started": 11,
+    "waves_fully_homologated": 0
+  },
+  "items": [
+    {
+      "id": "P0-01",
+      "status": "HOLD",
+      "title": "Original database v1.4.0 as sole canonical baseline",
+      "work": "Reconcile original 47 migrations and candidate 0001/0002; never execute candidate alongside original",
+      "gate": "original migration parity + Kernel approval"
+    },
+    {
+      "id": "P0-02",
+      "status": "BLOCKED",
+      "title": "Disposable PostgreSQL migration replay",
+      "work": "Apply 47 original migrations in numbered order in isolated DB; verify extensions and roles",
+      "gate": "47/47 SQL applied"
+    },
+    {
+      "id": "P0-03",
+      "status": "NOT_RUN",
+      "title": "Original database tests + new RLS regressions",
+      "work": "Run 17 original pgTAP tests plus answer-key/guest/unauthorized checks; verify fixture compatibility",
+      "gate": "all actual tests PASS with logs"
+    },
+    {
+      "id": "P0-04",
+      "status": "SECURITY_FIND",
+      "title": "Public grading RPCs reveal answers",
+      "work": "Replace/guard evaluate_question and evaluate_question_set and all downstream callers; deny direct oracle",
+      "gate": "anon/authenticated proof before/after grading"
+    },
+    {
+      "id": "P0-05",
+      "status": "PARTIAL",
+      "title": "W10 runtime integration",
+      "work": "Wire canonical attempt lifecycle to original Next.js server actions and database authorization",
+      "gate": "end-to-end test and idempotency/ownership proof"
+    },
+    {
+      "id": "P0-06",
+      "status": "PARTIAL",
+      "title": "Full Drive PDF inventory",
+      "work": "Traverse paged batches limpas/ajustadas and verify actual files instead of historical 2205 count",
+      "gate": "100% enumerated with identifiers"
+    },
+    {
+      "id": "P0-07",
+      "status": "NOT_RUN",
+      "title": "SHA dedup and source recovery",
+      "work": "Resolve six case queue and historical 222 pre-hash duplicate-name groups by bytes",
+      "gate": "source hash and authoritativeness per admitted exam"
+    },
+    {
+      "id": "P0-08",
+      "status": "HOLD",
+      "title": "Evidence/rights review and question admission",
+      "work": "POL-017 provisional allows staging not approved publication",
+      "gate": "source SHA + QA + provenance + license + human review"
+    },
+    {
+      "id": "P0-09",
+      "status": "HOLD",
+      "title": "Kernel Work Order approval",
+      "work": "Candidate WO not admitted; policy-as-code/CI gates not proven",
+      "gate": "signed permitted WO"
+    },
+    {
+      "id": "P0-10",
+      "status": "HOLD",
+      "title": "Production merge/deploy",
+      "work": "No main merge, no production DB writes, no release until all P0 gates pass",
+      "gate": "explicit approval"
+    },
+    {
+      "id": "P1-11",
+      "status": "NOT_VERIFIED",
+      "title": "Published website live audit",
+      "work": "www.simuladosparaenfermagem.com.br inaccessible in previous attempted audit",
+      "gate": "live UX/API/security inspection"
+    },
+    {
+      "id": "P1-12",
+      "status": "PARTIAL",
+      "title": "GitHub CI gate execution",
+      "work": "Workflow committed; no run result confirmed; validate Python, TS and schema test statuses",
+      "gate": "GitHub Actions run PASS"
+    },
+    {
+      "id": "P1-13",
+      "status": "PARTIAL",
+      "title": "Original crosswalk artifact portability",
+      "work": "Full source ZIP and 23KB W05 crosswalk JSON remain local/Drive; only source references and decision are committed",
+      "gate": "consent and repository-safe representation; avoid full binary source or protected materials"
+    }
+  ],
+  "verification": {
+    "github_branch": "READBACK",
+    "candidate_sql": "PRESENT_ONLY",
+    "ci_runtime": "NOT_CONFIRMED",
+    "postgresql": "NOT_RUN",
+    "supabase_prod": "UNTOUCHED",
+    "main": "UNTOUCHED"
+  }
+}

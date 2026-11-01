@@ -1,0 +1,42 @@
+{
+  "name": "NK Guard \u2014 DictionaryTerm",
+  "description": "Kernel bloqueia artefato sem registro: valida todo DictionaryTerm criado/atualizado contra o metamodelo (POL-NK-001 v1.0.1); inv\u00e1lido \u2192 quarantined",
+  "trigger": {
+    "condition": "${ .trigger.data.status != \"quarantined\" }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "DictionaryTerm"
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "intake_guard": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {
+              "entity_name": "DictionaryTerm",
+              "record_id": "${ .trigger.entity_id }"
+            },
+            "function_name": "normKernelIntake"
+          },
+          "x-base44": {
+            "description": "Bloqueia registro sem registro vinculado",
+            "title": "Intake guard do termo"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "nk_guard_dictionary_term",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}

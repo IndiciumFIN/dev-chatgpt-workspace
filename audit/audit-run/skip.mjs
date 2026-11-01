@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto("http://127.0.0.1:4186/", { waitUntil: "domcontentloaded", timeout: 45000 });
+await p.waitForTimeout(1600);
+const rest = await p.evaluate(() => { const e = document.querySelector(".skip-link"); const b = e.getBoundingClientRect(); return { top: Math.round(b.top), visivelNaTela: b.bottom > 0 }; });
+await p.keyboard.press("Tab");
+await p.waitForTimeout(400);
+const foc = await p.evaluate(() => { const e = document.querySelector(".skip-link"); const b = e.getBoundingClientRect(); return { focado: document.activeElement === e, top: Math.round(b.top), altura: Math.round(b.height), texto: e.textContent.trim() }; });
+console.log(JSON.stringify({ semFoco: rest, comFoco: foc }, null, 1));
+await p.screenshot({ path: "/workspace/audit-out-prod/check/header-ok.png", clip: { x: 0, y: 0, width: 1440, height: 175 } });
+await p.screenshot({ path: "/workspace/audit-out-prod/check/header-ok-mobile.png", clip: { x: 0, y: 0, width: 390, height: 130 } });
+await b.close();

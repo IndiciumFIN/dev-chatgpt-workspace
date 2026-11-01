@@ -1,0 +1,35 @@
+{
+  "id": "SPE-W11-STATIC-20261026",
+  "origin": "simulados-platform-next-cms-v1.4.0.zip",
+  "origin_drive_file_id": "1O2drLtDpNoSl5Lk-GeOPRdaKzpsOJ2i9",
+  "original_zip_sha256": "5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47",
+  "checks": {
+    "zip_crc": "PASS",
+    "migration_files": 47,
+    "migration_sequence": "PASS_0001_TO_0047",
+    "database_test_files": 17,
+    "all_test_plans_present": true,
+    "all_test_files_rollback": true,
+    "security_definer_occurrences": 57
+  },
+  "execution": {
+    "postgres_server": "UNAVAILABLE",
+    "psql": "UNAVAILABLE",
+    "docker": "UNAVAILABLE",
+    "migration_apply": "NOT_RUN",
+    "pgtap_runtime": "NOT_RUN",
+    "security_e2e": "NOT_RUN"
+  },
+  "notes": [
+    "Security definer occurrence count is not vulnerability count.",
+    "Parsing checks are structural only, not SQL compilation.",
+    "Original ZIP preserved and main untouched.",
+    "No remote production database accessed."
+  ],
+  "next": [
+    "Provision disposable PostgreSQL with pgcrypto/pg_trgm/unaccent/pgTAP",
+    "Apply migrations 0001..0047 in order, fail fast",
+    "Run 17 original pgTAP tests and new RLS/answer-release regressions",
+    "Resolve public grading RPC exposure before production promotion"
+  ]
+}

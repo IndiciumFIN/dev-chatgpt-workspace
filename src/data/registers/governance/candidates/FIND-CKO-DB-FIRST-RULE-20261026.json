@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.0",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "updated_at": "2026-10-26",
+  "root_cause_status": "PENDING",
+  "remediation_task_refs": [],
+  "provenance_refs": [
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
+    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql"
+  ],
+  "blocking_policy_refs": [
+    "CKO-POL-UT-001@1.2.0"
+  ],
+  "canonical_id": "FIND-CKO-DB-FIRST-RULE-20261026",
+  "finding_type": "TEST_GAP",
+  "severity": "HIGH",
+  "fact": "Os registros B6 das ferramentas Apgar e Fugulin possuem object_engine_ref=null, rule_pack_ref=null, statuses de motor, rule pack e validador específico em HOLD. A busca no catálogo de testes e execuções por slug/nome não identificou registros diretos para essas ferramentas (catálogo geral possui testes). Não se pode comprovar o cálculo DB-first ou homologar motor a partir de vínculos normativos contextuais.",
+  "evidence_refs": [
+    "cko_governance.b6_clinical_train_v1_candidate:cko:tool:clinical:apgar@1",
+    "cko_governance.b6_clinical_train_v1_candidate:cko:tool:clinical:fugulin@1",
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
+    "src/lib/tools/engine.ts#evaluateScale"
+  ]
+}

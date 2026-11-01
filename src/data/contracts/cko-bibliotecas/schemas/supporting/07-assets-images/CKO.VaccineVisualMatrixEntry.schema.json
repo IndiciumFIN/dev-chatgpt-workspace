@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-visual-matrix:v1",
+  "title": "CKO Vaccine Visual Matrix Entry",
+  "type": "object",
+  "required": [
+    "vaccine_object_ref",
+    "slug",
+    "title",
+    "layer",
+    "visual_basis_type",
+    "archetype_candidate",
+    "label_text",
+    "color_scheme",
+    "color_rationale",
+    "label_rationale",
+    "generation_readiness"
+  ],
+  "properties": {
+    "vaccine_object_ref": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "layer": {
+      "enum": [
+        "VaccineObject"
+      ]
+    },
+    "visual_basis_type": {
+      "enum": [
+        "SOURCE_BACKED_TECHNICAL",
+        "EDITORIAL_CONTROLLED",
+        "PRODUCT_SPECIFIC"
+      ]
+    },
+    "archetype_candidate": {
+      "type": "object"
+    },
+    "label_text": {
+      "type": "string"
+    },
+    "color_scheme": {
+      "type": "object"
+    },
+    "color_rationale": {
+      "type": "string"
+    },
+    "label_rationale": {
+      "type": "string"
+    },
+    "generation_readiness": {
+      "enum": [
+        "READY_FOR_IMAGE_GENERATION",
+        "READY_FOR_SOURCE_REVIEW",
+        "BLOCKED"
+      ]
+    }
+  }
+}

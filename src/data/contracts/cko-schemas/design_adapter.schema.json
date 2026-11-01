@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/design_adapter.schema.json",
+  "title": "CKO | design_adapter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "site_ds_registry_ref",
+    "token_mappings",
+    "component_mappings",
+    "collision_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "site_ds_registry_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "token_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "external_token",
+          "official_token",
+          "resolution"
+        ],
+        "properties": {
+          "external_token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "official_token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "MAP",
+              "DEPRECATE",
+              "HOLD_HUMAN"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "component_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "external_component",
+          "official_component",
+          "resolution"
+        ],
+        "properties": {
+          "external_component": {
+            "type": "string",
+            "minLength": 1
+          },
+          "official_component": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "MAP",
+              "REUSE",
+              "REFACTOR",
+              "HOLD_HUMAN"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "collision_policy": {
+      "type": "string",
+      "const": "OFFICIAL_SITE_DS_WINS_FOR_RENDERING_UNLESS_APPROVED_CHANGE"
+    },
+    "requires_no_duplicate_css": {
+      "type": "boolean",
+      "const": true
+    }
+  }
+}

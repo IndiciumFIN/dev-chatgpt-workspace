@@ -120,3 +120,13 @@ Em leitura autorizada, foram localizados o blueprint `blueprint-norm-kernel.md`,
 
 **Conferência independente de SQL agregado:** o corpo `SELECT` de `scripts/sql/ce-supabase-governance-readonly.sql` foi executado pelo conector Supabase sem mutações e retornou os mesmos totais do item 2. O shell `psql` permanece sem comprovação de execução remota, pois requer acesso PostgreSQL próprio e role de leitura.
 
+
+## 8. Leitura de permissões — qualificação do risco (2026-11-01 20:47:22 UTC)
+
+O SQL agregado versionado foi ampliado com `has_schema_privilege` e `has_function_privilege` e seu corpo `SELECT` foi reexecutado com sucesso via Supabase. Resultado observado:
+
+- `anon` e `authenticated` possuem `USAGE` no schema `public`, **não** possuem `USAGE` em `calculadoras_de_enfermagem`, `cko_evidence`, `cko_governance`, `cko_orch`, `cko_regulatory`, `cko_validation`.
+- Funções `SECURITY DEFINER`: `cko_governance` 35 (20 com privilégio de `EXECUTE` reportado para cada papel), `cko_orch` 36 (zero), `cko_regulatory` 1 (zero), `cko_validation` 28 (22), `public` 56 (zero).
+- **Interpretação controlada:** `EXECUTE` sobre função em schema sem `USAGE` não basta para invocação direta por esses papéis. Ainda é necessário mapear wrappers/rpc expostos, encadeamento `SECURITY DEFINER`, `search_path` e ACLs no runtime antes de concluir segurança ou vulnerabilidade.
+
+Classificação atual `SECURITY_REVIEW_REQUIRED`, **não `CONFIRMED_EXPOSURE`**. Nenhuma permissão, policy ou função foi alterada.

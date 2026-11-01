@@ -1,0 +1,37 @@
+name: CE Supabase catalog — verificacao offline
+
+on:
+  push:
+    branches:
+      - plan/ce-best-excellence-supabase-readonly-20261101
+  pull_request:
+    paths:
+      - scripts/ce-reconcile-supabase-catalog.mjs
+      - scripts/ce-supabase-inventory-readonly.sh
+      - scripts/sql/ce-supabase-catalog-readonly.sql
+      - tests/ce-reconcile-supabase-catalog.test.mjs
+      - .github/workflows/ce-supabase-catalog-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  catalog-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Sintaxe de JS e Bash
+        run: |
+          node --check scripts/ce-reconcile-supabase-catalog.mjs
+          bash -n scripts/ce-supabase-inventory-readonly.sh
+      - name: Testes negativos e de reconciliacao offline
+        run: node --test tests/ce-reconcile-supabase-catalog.test.mjs
+      - name: Guarda de transacao somente leitura
+        run: |
+          grep -q 'BEGIN TRANSACTION READ ONLY;' scripts/sql/ce-supabase-catalog-readonly.sql
+          grep -q 'default_transaction_read_only=on' scripts/ce-supabase-inventory-readonly.sh
+          echo 'PASS: static read-only intent (not a runtime authorization)'

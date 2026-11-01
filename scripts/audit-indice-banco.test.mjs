@@ -8,7 +8,7 @@ import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { abrirBanco, auditar, nomesDoIndice } from "./audit-indice-banco.mjs";
+import { abrirBanco, auditar, nomesDoIndice, indexAuditReleaseAllowed } from "./audit-indice-banco.mjs";
 
 const rodar = promisify(execFile);
 const caminhoPortao = new URL("./audit-indice-banco.mjs", import.meta.url).pathname;
@@ -47,6 +47,18 @@ async function comLabelAlterada(tabela, valor, medicao) {
     await db.query("update schema_entity set label = $2 where name = $1", [tabela, rotulo]);
   }
 }
+
+test("o gate bloqueia cobertura parcial mesmo quando labels existentes são válidas", () => {
+  const report={violacoes:[],contagens:{
+    tabelasDoBanco:166,tabelasNoDicionario:99,linhasNoIndice:99,
+    tabelasComLabel:99,tabelasForaDoDicionario:67
+  }};
+  assert.equal(indexAuditReleaseAllowed(report), false);
+  const full={...report,contagens:{...report.contagens,tabelasDoBanco:99,tabelasForaDoDicionario:0}};
+  assert.equal(indexAuditReleaseAllowed(full), true);
+  assert.equal(indexAuditReleaseAllowed({...full,violacoes:[{tipo:"label-vazia"}]}),false);
+  assert.equal(indexAuditReleaseAllowed({...full,contagens:{...full.contagens,linhasNoIndice:98}}),false);
+});
 
 test("o banco tem toda tabela do dicionário com nome de uso", async () => {
   const relatorio = await auditar(db, nomesIndice);

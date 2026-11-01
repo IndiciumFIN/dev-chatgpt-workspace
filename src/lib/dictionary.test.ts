@@ -29,7 +29,15 @@ test("o dicionário nomeia cada tabela e a coluna estrutural", async () => {
   const spec = await db.query("select status from data_specification where entity = 'content_text' and characteristic = 'status'");
   assert.equal((spec.rows[0] as { status: string }).status, "rascunho");
   const orderColumns = await db.query<{ name: string }>("select name from schema_column where entity = 'kernel_order' order by name");
-  assert.deepEqual(orderColumns.rows.map((row) => row.name), ["approver_id", "id", "reason", "status", "title"]);
+  assert.deepEqual(orderColumns.rows.map((row) => row.name), [
+    "approver_id",
+    "execution_requested",
+    "id",
+    "owner_id",
+    "reason",
+    "status",
+    "title",
+  ]);
   const link = await db.query<{ cardinality: string }>(
     "select cardinality from schema_relation where from_entity = 'kernel_order' and to_entity = 'kernel_order_policy'",
   );

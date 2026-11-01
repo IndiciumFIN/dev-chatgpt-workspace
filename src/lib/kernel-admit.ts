@@ -17,6 +17,10 @@ export type AdmitInput = {
   policySignature?: string | null;
   /** Explicit HMAC key. Not read from the environment. */
   signatureKey?: string | null;
+  /** Who asked. Must differ from the approver. */
+  ownerId?: string | null;
+  /** Admission does not execute. True rejects. */
+  executionRequested?: boolean;
   /**
    * Ignored. A caller-supplied claim that a bundle signature was verified
    * is not a verification result and cannot admit.
@@ -49,6 +53,13 @@ export function admit(input: AdmitInput): AdmitDecision {
   if (input.validators.length === 0) return { outcome: "reject", reason: "validators-required" };
   if (input.validators.some((ok) => !ok)) return { outcome: "reject", reason: "validator-failed" };
 
+  if (input.executionRequested) return { outcome: "reject", reason: "execution-not-authorized" };
+
+  if (!input.ownerId) return { outcome: "reject", reason: "owner-required" };
+  if (input.ownerId === input.approverId || input.ownerId === "kernel") {
+    return { outcome: "reject", reason: "approver-must-differ-from-owner" };
+  }
+
   if (!input.approverId || input.approverId === "kernel") {
     return { outcome: "hold", reason: "human-approval-required" };
   }
@@ -78,8 +89,8 @@ export async function admitOrder(
     bundle_signature_verified?: boolean;
   } | null,
 ) {
-  const orders = await sql.query<{ approver_id: string | null }>(
-    "select approver_id from kernel_order where id = $1",
+  const orders = await sql.query<{ approver_id: string | null; owner_id: string | null; execution_requested: boolean | string }>(
+    "select approver_id, owner_id, execution_requested from kernel_order where id = $1",
     [orderId],
   );
   const order = orders[0];
@@ -104,6 +115,8 @@ export async function admitOrder(
     rules: rules.map((rule) => ({ code: rule.code, active: on(rule.active), effect: rule.effect })),
     validators: validators.map((row) => on(row.passed)),
     approverId: order.approver_id,
+    ownerId: order.owner_id,
+    executionRequested: on(order.execution_requested),
     policySignature: proof?.policySignature ?? null,
     signatureKey: proof?.signatureKey ?? null,
   });

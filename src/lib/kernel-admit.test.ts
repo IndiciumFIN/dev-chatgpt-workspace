@@ -28,6 +28,7 @@ test("validador vazio não admite e o kernel não se aprova", () => {
       rules: [allow],
       validators: [],
       approverId: "admin-1",
+      ownerId: "autor-1",
     }),
   );
   assert.equal(empty.outcome, "reject");
@@ -40,6 +41,7 @@ test("validador vazio não admite e o kernel não se aprova", () => {
       rules: [allow],
       validators: [true],
       approverId: "kernel",
+      ownerId: "autor-1",
       bundle_signature_verified: true,
     }),
   );
@@ -55,6 +57,7 @@ test("validador vazio não admite e o kernel não se aprova", () => {
       rules: [{ code: "publicar", active: true, effect: "deny" }],
       validators: [true],
       approverId: "admin-1",
+      ownerId: "autor-1",
     }),
   );
   assert.equal(denied.reason, "policy-denied:publicar");
@@ -66,6 +69,7 @@ test("validador vazio não admite e o kernel não se aprova", () => {
       rules: [allow],
       validators: [true],
       approverId: "admin-1",
+      ownerId: "autor-1",
       bundle_signature_verified: false,
     }),
   );
@@ -81,6 +85,7 @@ test("booleano do chamador não verifica a assinatura; forja e payload adulterad
     rules: [allow],
     validators: [true],
     approverId: "admin-1",
+    ownerId: "autor-1",
   };
 
   const forgedFlag = admit({ ...base, bundle_signature_verified: true });
@@ -126,6 +131,7 @@ test("assinatura válida admite só com política, validador e pessoa", () => {
       ],
       validators: [true, true],
       approverId: "admin-9",
+      ownerId: "autor-9",
     }),
   );
   assert.equal(valid.outcome, "admit");
@@ -141,10 +147,38 @@ test("assinatura válida admite só com política, validador e pessoa", () => {
       ],
       validators: [true, true],
       approverId: "kernel",
+      ownerId: "autor-9",
     }),
   );
   assert.equal(held.outcome, "hold");
   assert.equal(held.reason, "human-approval-required");
+
+  const samePerson = admit(
+    signed({
+      workOrderId: "wo-9",
+      policyCodes: ["publicar"],
+      rules: [allow],
+      validators: [true],
+      approverId: "admin-9",
+      ownerId: "admin-9",
+    }),
+  );
+  assert.equal(samePerson.outcome, "reject");
+  assert.equal(samePerson.reason, "approver-must-differ-from-owner");
+
+  const executing = admit(
+    signed({
+      workOrderId: "wo-9",
+      policyCodes: ["publicar"],
+      rules: [allow],
+      validators: [true],
+      approverId: "admin-9",
+      ownerId: "autor-9",
+      executionRequested: true,
+    }),
+  );
+  assert.equal(executing.outcome, "reject");
+  assert.equal(executing.reason, "execution-not-authorized");
 });
 
 function asSql(db: PGlite): Sql {
@@ -171,16 +205,16 @@ function proofFor(workOrderId: string, policyCodes: string[], policySignature?: 
 test("a admissão grava tabela e não aprova sem validador", async () => {
   const db = new PGlite();
   const base = new URL("../../migrations/", import.meta.url);
-  for (const name of ["0006_governance.sql", "0008_canonical.sql", "0025_dictionary.sql", "0026_control_plane.sql", "0027_kernel_admission.sql"]) {
+  for (const name of ["0006_governance.sql", "0008_canonical.sql", "0025_dictionary.sql", "0026_control_plane.sql", "0027_kernel_admission.sql", "0028_order_policy_rules.sql", "0056_kernel_independente.sql"]) {
     await db.exec(await readFile(new URL(name, base), "utf8"));
   }
   const sql = asSql(db);
   await db.exec(`
-    insert into kernel_order (id, title, approver_id) values
-      ('wo-vazio', 'Sem validador', 'admin-1'),
-      ('wo-ok', 'Completa', 'admin-1'),
-      ('wo-nega', 'Regra negada', 'admin-1'),
-      ('wo-forja', 'Assinatura forjada', 'admin-1');
+    insert into kernel_order (id, title, approver_id, owner_id) values
+      ('wo-vazio', 'Sem validador', 'admin-1', 'autor-1'),
+      ('wo-ok', 'Completa', 'admin-1', 'autor-1'),
+      ('wo-nega', 'Regra negada', 'admin-1', 'autor-1'),
+      ('wo-forja', 'Assinatura forjada', 'admin-1', 'autor-1');
     insert into kernel_order_policy (order_id, package_id, rule_id) values
       ('wo-vazio', 'acesso', 'admin-publica-idioma'),
       ('wo-ok', 'acesso', 'admin-publica-idioma'),

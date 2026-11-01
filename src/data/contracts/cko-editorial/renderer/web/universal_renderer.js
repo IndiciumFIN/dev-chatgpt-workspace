@@ -29,5 +29,8 @@
     if(!request || !Array.isArray(request.block_plan)) throw new Error('Invalid projection request');
     return request.block_plan.map(b => renderBlock(b,resolved)).join('\n');
   }
-  global.CKOUniversalRenderer = {renderProjection};
-})(/** @type {Window & {CKOUniversalRenderer?:CEUniversalRendererAPI}} */ (window));
+  // Keep the renderer contract inside the closure: it is not a global typedef.
+  /** @type {Window & {CKOUniversalRenderer?: CEUniversalRendererAPI}} */
+  const targetWindow = global;
+  targetWindow.CKOUniversalRenderer = {renderProjection};
+})(window);

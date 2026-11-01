@@ -57,8 +57,13 @@ test("paciente não tem armazenamento e o navegador só guarda preferência", as
 
 test("a gravação usa o usuário da sessão, não um id vindo do cliente", async () => {
   const source = await readFile(new URL("./source.functions.ts", import.meta.url), "utf8");
-  assert.match(source, /saveSheetTx\(tx, \{ \.\.\.base, title: data\.title, lead: data\.lead \}, data\.published, context\.userId\)/);
-  assert.equal(source.includes("userId: data.userId"), false);
+  // The current implementation uses the session-bound admin middleware and
+  // updates the known source_tool row, rather than the removed saveSheetTx helper.
+  const save = source.slice(source.indexOf("export const saveTool ="), source.indexOf("export const setMemberRole ="));
+  assert.match(save, /\.middleware\(\[authMiddleware\]\)/);
+  assert.match(save, /requireAdmin\(sql, context\.userId\)/);
+  assert.match(save, /where slug = \$\{data\.slug\}/);
+  assert.doesNotMatch(save, /\b(?:data\.userId|userId:\s*data\.userId)\b/);
 });
 
 test("o formulário da ferramenta marca obrigatório, erro e rótulo", async () => {

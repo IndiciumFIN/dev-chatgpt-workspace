@@ -513,3 +513,21 @@ O dono pediu o "esqueleto completo localmente, com todos os recursos". Feito e m
 | O que está só na branch (não em `main`) | As 22 tasks `TASK-PLAN-134..155`, o `TASK-PLAN-133` corrigido, o `TASK-PLAN-151` corrigido, a secção 12 deste plano e os 6 relatórios + `RELATORIO-COMPARACAO.md` em `docs/evidence/ce-comparacao-2026-10-31/` |
 
 **Consequência a considerar pelo dono:** se o PR #29 for fundido, `main` perde o plano **e** o `find-register` volta ao estado anterior — e as 22 tasks desta comparação (que dependem do registo canónico) ficam órfãs. **Não setook nenhuma acção sobre o PR #29**: abrir, fechar ou fundir um revert é decisão do dono/Kernel, não do agente.
+
+### 12.7 Fecho da comparação e correções da verificação final (01/11/2026 02:45Z)
+
+**Estado:** a comparação está **fechada** — 6 relatórios de frente + a síntese (`RELATORIO-COMPARACAO.md`, 136 KB, 31 linhas de TABELA-MESTRE, 56 deltas accionáveis, cadeia de evidência por linha crítica), todos persistidos em `docs/evidence/ce-comparacao-2026-10-31/` e no ZIP `comparacao-ce-2026-11-01.zip` (verificado por re-extracção: esqueleto sem drift, capturas 36/36 com SHA-256 OK).
+
+**A verificação adversarial reprovou a síntese em duas rondas.** As cinco observações que sobreviveram à segunda ronda foram **medidas pelo owner antes de corrigir** — não aceitei a reprovação como facto nem a descartei:
+
+| # | Observação do verificador | Medição do owner (01/11) | Correção |
+|---|---|---|---|
+| 1 | "`tool-sources.v1.json` e `tool-bindings.v1.json` não existem neste sandbox" | **FALSO** — existem em `contracts/entities/`; 6/6 `source_type` fora do enum canónico, 6/6 `integrity.sha256` = 64 zeros | Afirmação corrigida em L-11, C-15 e A-21 |
+| 2 | Contagem de bindings fora do enum | **78/78** fora do enum **ou ausentes** (46 com `decision: BOUND` + 32 sem o campo) — o número que circulava (46/78) contava só os preenchidos | Corrigido em L-11 |
+| 3 | E5 diz "70/72 testes (45+20+5)" | Contagem por leitura: **73 declarações** (65 ficheiros em `src/` com 1 cada + `tests/pilot.test.ts` com 8) | Corrigido; o E5 mede 8 no piloto, não 5 |
+| 4 | README diz "gate 8/8" | **Executado:** `node scripts/check-skeleton.mjs` → **11/11 checks verdes** | Corrigido |
+| 5 | Contagens de branches marcadas `[V]` | Vêm das frentes, não da verificação própria | Reetiquetadas para `[P-RP]` ( `[V]` é o nível mais forte e só vale para o que foi medido no próprio relatório) |
+
+**Achado novo, registado (não ficou só no relatório):** os contratos do repo canónico violam os enums canónicos de `contracts/cko-skeleton/catalog/cko-data.json` — `source_type` (11 valores canónicos) e `authority_class` (5) e `decision` (`HOLD`/`REJECTED`/`APPROVED`). Registado em **`TASK-PLAN-156`** (fontes: reclassificar + hash real), **`TASK-PLAN-157`** (bindings: reclassificar + tornar a decisão obrigatória) e **`TASK-PLAN-158`** (gate fail-closed que reprove qualquer contrato fora do enum — hoje o gate dá 11/11 verde a um contrato inválido). O registo passa a **137 tasks** (111 PROPOSTO · 16 BLOCKED · 9 DONE · 1 DELIVERED_PENDING_GATE).
+
+**O que NÃO mudou com a verificação:** a TABELA-MESTRE, a cadeia de evidência, os 56 deltas e o veredito por eixo. As correções foram de **rastreabilidade e de um número**, não de estrutura.

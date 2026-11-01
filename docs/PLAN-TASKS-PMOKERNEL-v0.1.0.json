@@ -3010,7 +3010,7 @@
     "scripts/check-contract-integrity.mjs",
     "scripts/check-contract-integrity.test.mjs"
    ],
-   "acceptance": "ENTREGUE E MEDIDO (owner, 01/11/2026 04:05Z): scripts/check-contract-integrity.mjs (10.989 B) + teste (12/12 verde). Distingue-se do portao do sandbox (`check-enum-conformity.mjs`) em 4 pontos: (1) resolve os enums **escopados ao contrato** (source_type do contrato `source`; authority_class e decision do `authority_binding`), porque `decision` tem TRES enums no catalogo CKO; (2) exige integridade (hash real com artefacto no disco, OU NOT_AVAILABLE com reason E artifact_ref declarados) - o portao do sandbox aceita NOT_AVAILABLE sem motivo; (3) exige integridade REFERENCIAL (todo source_id existe no contrato de fontes) e coerencia decisao/estado; (4) reprova authority_class ausente - ausencia nao e imputavel. MEDIDO contra o estado real do repo: **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8), com o item e a linha nomeados. O portao fica VERMELHO de proposito ate a S1 - e o que o torna uma prova, nao decoracao. FALTA: integrar no agregador de portoes (scripts/audit-execution-gates.mjs) e correr em CI - a integracao em .github/workflows/ exige copia pelo owner (TASK-PLAN-012). | EXECUTADO E VERIFICADO (owner, 01/11/2026 04:25Z): o portao esta no repo (scripts/check-contract-integrity.mjs, 14.076 B) com **17 testes** (17/17 verdes) e **12 regras**, incluindo as duas que o Parecer V6 apontava e que o portao do sandbox nao tinha: resolucao do enum **escopada ao contrato** (o `decision` tem tres enums no catalogo CKO) e reprova de authority_class ausente numa authority_binding. Acrescentou-se ainda o **escopo por tipo de objecto** (o ficheiro de bindings mistura 46 authority_bindings e 32 field_definitions: imputar autoridade a uma definicao de campo rotularia campos clinicos de Aldrete, Braden e Morse como nao-clinicos - o proprio Parecer V6 caiu nesta armadilha). O consumidor foi corrigido em conjunto: scripts/check-contract-coverage.mjs exigia INTERNAL_CONFIG/BOUND (valores fora de qualquer enum do catalogo) - passou a exigir o vocabulario canonico; e a verificacao de integridade das fontes passou a aceitar NOT_AVAILABLE com motivo e artifact_ref em vez de apenas 'truthy'. MEDIDO contra o estado anterior: o portao accusou **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8) - e o estado ja corrigido da S1 da PASS. AINDA POR FAZER: integrar no agregador scripts/audit-execution-gates.mjs e correr em CI (a escrita em .github/workflows/ exige copia pelo owner - TASK-PLAN-012)."
+   "acceptance": "ENTREGUE E MEDIDO (owner, 01/11/2026 04:05Z): scripts/check-contract-integrity.mjs (10.989 B) + teste (12/12 verde). Distingue-se do portao do sandbox (`check-enum-conformity.mjs`) em 4 pontos: (1) resolve os enums **escopados ao contrato** (source_type do contrato `source`; authority_class e decision do `authority_binding`), porque `decision` tem TRES enums no catalogo CKO; (2) exige integridade (hash real com artefacto no disco, OU NOT_AVAILABLE com reason E artifact_ref declarados) - o portao do sandbox aceita NOT_AVAILABLE sem motivo; (3) exige integridade REFERENCIAL (todo source_id existe no contrato de fontes) e coerencia decisao/estado; (4) reprova authority_class ausente - ausencia nao e imputavel. MEDIDO contra o estado real do repo: **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8), com o item e a linha nomeados. O portao fica VERMELHO de proposito ate a S1 - e o que o torna uma prova, nao decoracao. FALTA: integrar no agregador de portoes (scripts/audit-execution-gates.mjs) e correr em CI - a integracao em .github/workflows/ exige copia pelo owner (TASK-PLAN-012). | EXECUTADO E VERIFICADO (owner, 01/11/2026 04:25Z): o portao esta no repo (scripts/check-contract-integrity.mjs, 14.076 B) com **17 testes** (17/17 verdes) e **12 regras**, incluindo as duas que o Parecer V6 apontava e que o portao do sandbox nao tinha: resolucao do enum **escopada ao contrato** (o `decision` tem tres enums no catalogo CKO) e reprova de authority_class ausente numa authority_binding. Acrescentou-se ainda o **escopo por tipo de objecto** (o ficheiro de bindings mistura 46 authority_bindings e 32 field_definitions: imputar autoridade a uma definicao de campo rotularia campos clinicos de Aldrete, Braden e Morse como nao-clinicos - o proprio Parecer V6 caiu nesta armadilha). O consumidor foi corrigido em conjunto: scripts/check-contract-coverage.mjs exigia INTERNAL_CONFIG/BOUND (valores fora de qualquer enum do catalogo) - passou a exigir o vocabulario canonico; e a verificacao de integridade das fontes passou a aceitar NOT_AVAILABLE com motivo e artifact_ref em vez de apenas 'truthy'. MEDIDO contra o estado anterior: o portao accusou **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8) - e o estado ja corrigido da S1 da PASS. AINDA POR FAZER: integrar no agregador scripts/audit-execution-gates.mjs e correr em CI (a escrita em .github/workflows/ exige copia pelo owner - TASK-PLAN-012). | REV.2 (01/11 06:50Z — CORRECCAO DO REGISTO): a primeira versao do portao era **mais permissiva que o contrato**. A auditoria independente (frente `gate-fail-closed`) apanhou o defeito D0 e foi medido: o contrato canonico `source` declara `integrity.sha256.pattern = ^[a-f0-9]{64}$` e `integrity.additionalProperties: false` ⇒ `NOT_AVAILABLE`, `integrity.reason` e `integrity.artifact_ref` sao **invalidos pelo contrato**, e o portao acceptava-os. Confirmado por tres fontes independentes: o schema (catalogo e `contracts/cko-schemas/` sao identicos), as **43 instancias canonicas** em `registers/governance/transversal-source-instances/` (todas com hash real + snapshot preservado, sem `reason` nem `artifact_ref`) e o materializador `scripts/materialize-transversal-public.py:100` (que escreve exactamente `{sha256, snapshot_ref}`). REV.2: o portao passa a ser **derivado do contrato** (lê os enums, `required`, `pattern` e `additionalProperties` do catalogo), a **recalcula o SHA-256 do artefacto** (hash declarado != hash verificado deixa de passar), conta as violacoes derivadas a parte, aponta a **linha real** do registo, usa **codigos estaveis** nos testes, e separa **erro de dado** de **lacuna de contrato**. Os dados que eu tinha inventado (`source_type_rationale`, `integrity.method`, `integrity.artifact_ref`, `integrity.reason`) foram REMOVIDOS: nao existem no contrato. **MEDICAO:** o portao acusava 30 violacoes no estado anterior (6 `source_type` fora do enum, 6 SHA a 64 zeros, 6 `citacao` fora do contrato, 6 snapshot placeholder, 6 duplicadas) e agora acusa **16, todas de 3 classes de lacuna de contrato e ZERO erros de dado**."
   },
   {
    "id": "TASK-PLAN-167",
@@ -3082,6 +3082,52 @@
     "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md (seccao 13)"
    ],
    "acceptance": "MEDIDO (owner, 01/11/2026 03:35Z): o sandbox tem 5.746 ficheiros (src/ 2.366, _archive/ 1.445, upload/ 927, public/ 614, scripts/ 150, e2e/ 8, tests/ 9, migrations/ 11) e **nao esta em git em nenhum repositorio**: medido nas 17 branches de IndiciumFIN/calculadorasdeenfermagem e nas 27 de IndiciumFIN/dev-chatgpt-workspace - nenhum dos artefactos do sandbox la esta. O trabalho (17 contratos, 62 schemas, 83 ferramentas com conteudo editorial completo, 19 idiomas + 1.149 tradicoes, 251 paginas de catalogo, 385 testes, 17 portoes) esta apenas na maquina. DECISAO DO DONO (bloqueia a promocao, nao a analise): (a) o sandbox sobe? (b) para que repo e que branch? (c) com que correccoes - a classificacao das 22 fontes (TASK-PLAN-164), o portao de integridade (TASK-PLAN-165), a coerencia dos 1.031 bindings, e sem o `.env`; (d) os 5 modulos src/core/experience/ que so existem no ZIP - sobem para src/core/experience/ e o port partido de tools/experience-skeleton/ e corrigido (TASK-PLAN-163)? O PR #30 (candidato estrutural, 485 ficheiros, CI 12/12 verde) e o veiculo natural para (d) - e o PR #29 (revert) apaga-lo-ia."
+  },
+  {
+   "id": "TASK-PLAN-171",
+   "title": "5 fontes de ferramenta sem documento preservado — intake de evidencia pendente (r85)",
+   "status": "PROPOSTO",
+   "phase": "F1",
+   "acceptance": "Registado em `registers/governance/r85-source-evidence-pending-20261101.v1.json` (5 linhas, `EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate HOLD_HUMAN, 0 admitidas). Cada linha declara a fonte, o locator, o facto de o artefacto nao estar preservado e a lacuna de contrato. **Pendente de decisao do dono** (R84-CKO-SRC-EVIDENCE-STATE): preservar os documentos (impossivel para o gotejamento) ou emendar o contrato.",
+   "owner": "dono/Kernel",
+   "blocked_by": [
+    "TASK-PLAN-172"
+   ],
+   "created_at": "2026-11-01T07:00:00Z",
+   "updated_at": "2026-11-01T07:00:00Z"
+  },
+  {
+   "id": "TASK-PLAN-172",
+   "title": "Decisao do dono: emendar o contrato `source` para ter estado de evidencia ausente",
+   "status": "BLOCKED",
+   "phase": "F0",
+   "acceptance": "Decisao registada em `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json` (id `R84-CKO-SRC-EVIDENCE-STATE`, `selection: null`, `statusEffectsAllowed: false`, `reviewState: PENDING_OWNER_SPECIFIC_DECISION`). Medido: o contrato `source` exige hash de um artefacto preservado e nao tem estado para 'documento nao preservado'; o enum inclui `INTERNAL_GOVERNED`, que descreve uma formula sem documento — **inconsistencia interna do contrato**. Opcoes: emendar o contrato / preservar os 5 documentos (impossivel para 1) / adiar.",
+   "owner": "dono/Kernel",
+   "blocked_by": [],
+   "created_at": "2026-11-01T07:00:00Z",
+   "updated_at": "2026-11-01T07:00:00Z"
+  },
+  {
+   "id": "TASK-PLAN-173",
+   "title": "Decisao do dono: campo `citacao` no contrato `source`",
+   "status": "BLOCKED",
+   "phase": "F0",
+   "acceptance": "Decisao registada em r84 (id `R84-CKO-SRC-CITATION-SLOT`, `selection: null`). Medido: as 6 fontes carregam `citacao`, que o contrato nao declara (`additionalProperties: false`), embora declare `language`, `effective_from` e `license_ref`. Opcoes: declarar `citacao` no contrato / mover para `locator.pinpoint` e remover / adiar.",
+   "owner": "dono/Kernel",
+   "blocked_by": [],
+   "created_at": "2026-11-01T07:00:00Z",
+   "updated_at": "2026-11-01T07:00:00Z"
+  },
+  {
+   "id": "TASK-PLAN-174",
+   "title": "Portao de integridade rev.2 — derivado do contrato, com hash recalculado",
+   "status": "DONE",
+   "phase": "F1",
+   "acceptance": "EXECUTADO E VERIFICADO (owner, 01/11 06:50Z). `scripts/check-contract-integrity.mjs` reescrito para ser **derivado do contrato**: enums, `required`, `pattern` e `additionalProperties` sao lidos do catalogo CKO. Acrescentou: recalculo do SHA-256 do artefacto (R9.HASH_MISMATCH), forma contra o schema (R13), matriz estado x evidencia (R6), violacoes derivadas contadas a parte, **linha real** em vez de indice, **codigos estaveis** `[RULE.SUB]` nos testes, codigo de saida 2 para argumento desconhecido, sem stack trace, e `--json` para o agregador. Testes reescritos: **23/23**, com fixtures sinteticos independentes do estado do repo. Medido: 30 violacoes no estado anterior -> 16 agora, **0 erros de dado** e 16 lacunas de contrato em 3 classes.",
+   "owner": "owner",
+   "blocked_by": [],
+   "created_at": "2026-11-01T07:00:00Z",
+   "updated_at": "2026-11-01T07:00:00Z"
   }
  ],
  "candidateVerification": {
@@ -3931,6 +3977,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 05:05Z - ciclo 1 da equipa v6 arbitrado: fontes-classificacao aceite (PASS), espelho-estatico aceite por arbitragem do owner (verificador nao reportou), bindings-coerencia / gate-fail-closed / universos-git REPROVADOS com pontos concretos e em retry. S1 e S2 executadas e verificadas no repo (PR #31, rascunho)."
+  "ultima_revisao_owner": "01/11/2026 07:05Z - S1/S2 rev.2: o portao foi endurecido para ser fiel ao contrato canonico (a 1a versao era mais permissiva que o contrato - defeito D0, medido e confirmado por 3 fontes). Dados corrigidos na fonte verdadeira; 4 propriedades que eu tinha inventado removidas. Estado medido: 30 -> 16 violacoes, 0 erros de dado, 16 lacunas de contrato em 3 classes. Registado: r85 (5 fontes em evidencia pendente) e 2 decisoes em r84. Total 152 tasks."
  }
 }

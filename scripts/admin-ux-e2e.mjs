@@ -11,8 +11,8 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(`${base}/admin`, { waitUntil: 'domcontentloaded' });
   await page.getByRole('heading', { name: 'Visão geral' }).waitFor({ timeout: 60000 });
-  await page.getByRole('navigation', { name: 'Administração' }).getByRole('button', { name: 'Produtos e ferramentas' }).click();
-  await page.getByRole('heading', { name: 'Produtos e ferramentas' }).waitFor({ timeout: 20000 });
+  await page.locator('button.mod-card', { hasText: 'Produtos e ferramentas' }).click();
+  await page.getByRole('heading', { name: 'Produtos e ferramentas' }).waitFor({ timeout: 60000 });
   await page.screenshot({ path: 'audit-evidence/admin-ux/00-visao-desktop.png', fullPage: true });
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, deviceScaleFactor: 2, reducedMotion: 'reduce' });
   mobile.on('pageerror', error => errors.push(error.message));

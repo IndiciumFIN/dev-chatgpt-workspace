@@ -1,0 +1,154 @@
+{
+  "version": "0.3.0",
+  "status": "CANDIDATE_NOT_APPLIED",
+  "target": "vila_canonical_candidate",
+  "canonical_source": "contracts/vila/vila-navigation.v0.2.0.json",
+  "tools": [
+    {
+      "tool": "Início/hub",
+      "tables": "experiences,experience_items",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Descubra com a Lia",
+      "tables": "content_objects,translations,learning_goals,character_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Histórias",
+      "tables": "content_objects,activities,activity_steps",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Missões com Cauê",
+      "tables": "activities,activity_steps,character_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Caderno de atividades",
+      "tables": "activities,output_profiles",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Jogos educativos",
+      "tables": "activities,activity_steps",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Colorir",
+      "tables": "assets,output_profiles",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Emoções",
+      "tables": "content_objects,activities,safety_reviews",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Para adultos",
+      "tables": "content_objects,translations,experiences",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Biblioteca de personagens",
+      "tables": "characters,character_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Biblioteca de cenas",
+      "tables": "assets,asset_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Gerador de atividades",
+      "tables": "template_definitions,template_bindings,activities",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Biblioteca de mecânicas",
+      "tables": "activities,activity_steps",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Imprimíveis coloridos/PB",
+      "tables": "output_profiles,output_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Histórias interativas",
+      "tables": "activities,activity_steps",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Missões e progressão",
+      "tables": "activity_steps; client-only anonymous progress",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Faixas etárias",
+      "tables": "content_objects(age_min,age_max)",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Acessibilidade",
+      "tables": "accessibility_reviews,assets(alt_text_key)",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "i18n",
+      "tables": "translations",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Educadores",
+      "tables": "experiences,output_profiles",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "CMS e builder",
+      "tables": "template_definitions,content_objects,audit_events",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Proveniência",
+      "tables": "sources,evidence",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Segurança infantil",
+      "tables": "safety_reviews,release_decisions",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Multicanal",
+      "tables": "output_profiles,output_bindings",
+      "coverage": "MODELLED_ONLY"
+    },
+    {
+      "tool": "Governança Kernel",
+      "tables": "release_decisions,audit_events",
+      "coverage": "MODELLED_ONLY"
+    }
+  ],
+  "excluded": [
+    "child accounts",
+    "child profiles",
+    "analytics tied to identifiable minors",
+    "clinical data",
+    "public table grants"
+  ],
+  "not_modelled_yet": [
+    "consent workflow for adult-only services if later required",
+    "media binary storage setup",
+    "approved runtime APIs",
+    "translation workflow state machine enforcement",
+    "per-family retention policies",
+    "full review evidence immutability"
+  ],
+  "blockers": [
+    "WO HOLD_HUMAN / Kernel NOT_SUBMITTED",
+    "No dedicated Vila Supabase target selected",
+    "No schema runtime tests"
+  ],
+  "ready_for_prod": false
+}

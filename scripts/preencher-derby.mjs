@@ -27,6 +27,31 @@ export const GOVERNED_PENDING_FIELDS = new Set([
  "governance_item.approved_by","data_specification.approved_by",
  "policy_ack.owner_user_id",
 ]);
+export const EVIDENCE_HOLD_FIELDS=Object.freeze({
+  "blob_conflict.caminho": "Registro de colisão sem caminho de origem verificável.",
+  "blob_conflict.sha_a": "Hash de origem A não verificado.",
+  "blob_conflict.sha_b": "Hash de origem B não verificado.",
+  "blob_conflict.vencedor": "Seleção canônica depende de revisão e decisão autorizada.",
+  "canonical_asset.corpo": "Corpo do conteúdo não recuperado; preservar sem gerar texto fictício.",
+  "canonical_auto_review.blob_encontrado": "Blob de comparação não identificado para esta linha.",
+  "canonical_conflict.vencedor": "Conflito sem eleição de vencedor pelo owner e Kernel.",
+  "canonical_migration_gap.blob_backup": "Ausência de SHA do backup; não presume equivalência.",
+  "canonical_migration_gap.blob_local": "Ausência de SHA local; não presume equivalência.",
+  "career_claim_candidate.confidence_framework_ref": "Referencial de confiança ainda não vinculado.",
+  "career_editorial_block_candidate.body": "Conteúdo editorial não apresentado; permanece candidato.",
+  "career_editorial_candidate.campaign_key": "Campanha opcional ou ainda não vinculada.",
+  "career_jurisdiction_requirement_candidate.source_ref": "Exigência jurisdicional sem fonte comprovada.",
+  "career_market_signal_candidate.role_ref": "Sinal de mercado sem vínculo de papel validado.",
+  "career_market_signal_candidate.source_ref": "Sinal de mercado sem fonte validada.",
+  "career_publication_candidate.deployment_target": "Publicação candidata sem destino autorizado.",
+  "career_publication_candidate.release_ref": "Publicação candidata sem release assinado.",
+  "career_release_gate_candidate.reviewed_by": "Gate sem revisor humano autenticado.",
+  "career_review_item_candidate.evidence_ref": "Item de revisão sem evidência vinculada.",
+  "review_item.source_text": "Extração de origem não comprovada nesta revisão.",
+  "review_item.texto": "Texto de revisão ausente; não se reconstrói artificialmente.",
+  "revisao_fila.source_text": "Texto de fonte na fila não comprovado.",
+  "revisao_fila.texto": "Texto na fila sem recuperação comprovada."
+});
 export const GOVERNED_PENDING_STATES = new Set([
  "content_text","kernel_atom","kernel_claim","business_rule",
  "ai_control","governance_item","data_specification",
@@ -280,7 +305,7 @@ export async function auditar(db, opcoes = {}) {
 
   const violacoes = [];
   for (const achado of pendencias) {
-    if (GOVERNED_PENDING_FIELDS.has(achado.tabela + "." + achado.coluna)) continue;
+    if (GOVERNED_PENDING_FIELDS.has(achado.tabela + "." + achado.coluna) || EVIDENCE_HOLD_FIELDS[achado.tabela + "." + achado.coluna]) continue;
     if (achado.alvo) {
       violacoes.push({
         tipo: "pendencia-nao-preenchida",
@@ -366,9 +391,12 @@ export async function auditar(db, opcoes = {}) {
     tipo:"admissao-sem-ator",tabela:"kernel_claim",coluna:"admitted_by",
     detalhe:unapprovedClaims.rows[0].n + " claims admitidos sem aprovador identificável.",
   });
+  const pendenciasDeEvidencia=pendencias.filter(p=>EVIDENCE_HOLD_FIELDS[p.tabela+"."+p.coluna]).map(p=>({
+    ...p,razao:EVIDENCE_HOLD_FIELDS[p.tabela+"."+p.coluna],gate:"HOLD_HUMAN"
+  }));
   const estruturais = pendencias.filter((p) => p.classificacao === "estrutura-declarada");
-  const semDeclaracao = pendencias.filter((p) => p.classificacao === "PENDENCIA-SEM-DECLARACAO" && !GOVERNED_PENDING_FIELDS.has(p.tabela + "." + p.coluna));
-  return { violacoes, pendencias, estados, caminhos, marcador, estruturais, semDeclaracao };
+  const semDeclaracao = pendencias.filter((p) => p.classificacao === "PENDENCIA-SEM-DECLARACAO" && !GOVERNED_PENDING_FIELDS.has(p.tabela + "." + p.coluna) && !EVIDENCE_HOLD_FIELDS[p.tabela + "." + p.coluna]);
+  return { violacoes, pendencias, pendenciasDeEvidencia, estados, caminhos, marcador, estruturais, semDeclaracao, releaseGate:"HOLD_HUMAN" };
 }
 
 /**
@@ -413,6 +441,10 @@ export function formatar(relatorio) {
         `  ${p.tabela}.${p.coluna}: ${p.pendentes} de ${p.linhas} linhas vazias — ${p.razao}`,
       );
     }
+  }
+  if (relatorio.pendenciasDeEvidencia?.length) {
+    linhas.push("[derby] HOLD_HUMAN — " + relatorio.pendenciasDeEvidencia.length + " colunas com dados/evidências pendentes (não substituídos por marcador):");
+    for(const p of relatorio.pendenciasDeEvidencia)linhas.push("  " + p.tabela + "." + p.coluna + ": " + p.pendentes + " de " + p.linhas + " — " + p.razao);
   }
   if (relatorio.semDeclaracao?.length) {
     linhas.push(`[derby] PENDÊNCIA SEM DECLARAÇÃO (${relatorio.semDeclaracao.length} colunas):`);

@@ -1,7 +1,7 @@
-/** @typedef {{block_id:string, type:string, semantic_role?:string}} CKOBlock
- * @typedef {{text?:string, resource_id?:string, caption?:string}} CKOResource
- * @typedef {{block_plan:CKOBlock[]}} CKOProjection
- * @typedef {{renderProjection:(request:CKOProjection,resolved?:Record<string,CKOResource>)=>string}} CKOAPI
+/** @typedef {{block_id:string, type:string, semantic_role?:string}} CEUniversalRendererBlock
+ * @typedef {{text?:string, resource_id?:string, caption?:string}} CEUniversalRendererResource
+ * @typedef {{block_plan:CEUniversalRendererBlock[]}} CEUniversalRendererProjection
+ * @typedef {{renderProjection:(request:CEUniversalRendererProjection,resolved?:Record<string,CEUniversalRendererResource>)=>string}} CEUniversalRendererAPI
  */
 (function(global){
   /** @param {unknown} value */
@@ -10,7 +10,7 @@
     const entities = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
     return entities[ch] ?? ch;
   });
-  /** @param {CKOBlock} block @param {Record<string,CKOResource>} resolved */
+  /** @param {CEUniversalRendererBlock} block @param {Record<string,CEUniversalRendererResource>} resolved */
   function renderBlock(block, resolved){
     const role = esc(block.semantic_role);
     const source = resolved?.[block.block_id] || {};
@@ -24,10 +24,10 @@
       default: return `<section data-type="${esc(block.type)}" data-role="${role}">${esc(source.text || `[${block.type}: resolved projection]`)}</section>`;
     }
   }
-  /** @param {CKOProjection} request @param {Record<string,CKOResource>} [resolved] */
+  /** @param {CEUniversalRendererProjection} request @param {Record<string,CEUniversalRendererResource>} [resolved] */
   function renderProjection(request, resolved={}){
     if(!request || !Array.isArray(request.block_plan)) throw new Error('Invalid projection request');
     return request.block_plan.map(b => renderBlock(b,resolved)).join('\n');
   }
   global.CKOUniversalRenderer = {renderProjection};
-})(/** @type {Window & {CKOUniversalRenderer?:CKOAPI}} */ (window));
+})(/** @type {Window & {CKOUniversalRenderer?:CEUniversalRendererAPI}} */ (window));

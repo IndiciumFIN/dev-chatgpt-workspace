@@ -10,9 +10,11 @@ export type SignedArtifact = {
   policyVersion: string;
 };
 
-export function signArtifact(input: Omit<SignedArtifact, "signature">): SignedArtifact {
-  return {
-    ...input,
-    signature: `kernel:${input.artifactType}:${input.artifactId}:${input.hash}`,
-  };
+/**
+ * NO TRUST ANCHOR is provisioned in the client/runtime. Never manufacture a
+ * 'kernel:*' string that callers might treat as a cryptographic signature.
+ * Real signing must occur in an independent, authenticated service.
+ */
+export function signArtifact(_input: Omit<SignedArtifact, "signature">): SignedArtifact {
+  throw new Error("TRUSTED_KERNEL_SIGNER_NOT_CONFIGURED");
 }

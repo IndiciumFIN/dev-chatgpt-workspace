@@ -76,7 +76,10 @@ test("o formulário da ferramenta marca obrigatório, erro e rótulo", async () 
   assert.match(form, /<legend>/);
   const shell = await readFile(new URL("../components/site/shell.tsx", import.meta.url), "utf8");
   assert.match(shell, /className="skip-link"/);
-  assert.match(shell, /aria-label=\{chrome\.t\("search"\)\}/);
+  // The localized header wording is resolved from headerWords[chrome.locale].
+  assert.match(shell, /const hw = headerWords\[chrome\.locale\]/);
+  assert.match(shell, /aria-label=\{hw\.search\}/);
+  assert.match(shell, /<span>\{hw\.search\}<\/span>/);
 });
 
 test("toda tabela da migration está na prova de 2FN e 3FN", async () => {

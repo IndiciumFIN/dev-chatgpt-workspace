@@ -32,5 +32,5 @@ A base desta branch é `integration/structural-overlay-20261101` em `621f73b`: 2
 
 `0001` a `0003` são iguais aos de `grook_10_26`. `0004` a `0035` foram copiados dessa branch e aplicados num banco local. `0036` e `0037` acrescentam `review_item`. `0038` grava as divergências em `canonical_divergence`.
 
-`0043` coloca no banco os 865 arquivos de `src/families`, os 5 de experiência e os seis contratos JSONC. Os 870 primeiros entram só com caminho e hash, porque o TAR não estava no disco. Os seis contratos entram com o texto. `revisado` não aceita `true`.
+`0042` atende S01 a S05 só neste banco. S06 fica em `revisao_fila`. `0043` registra 870 arquivos sem corpo e seis contratos com texto; `revisado` não aceita `true`. `0044` grava as 146 colisões do artefato de CI `13073497996`, com 466 origens. Todas ficam `NOT_APPROVED`, sem vencedor. Esse artefato é o snapshot de 146, não a lista itemizada dos 92 do Wave 10.
 

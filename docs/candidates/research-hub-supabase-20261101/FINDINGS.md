@@ -1,0 +1,12 @@
+# Checklist de lacunas identificado
+- P0: Kernel sem WO admitida; não criar/alterar o Supabase produtivo.
+- P0: projeto Supabase independente precisa de escolha de organização, custo e autorização.
+- P0: auth, RBAC, políticas RLS com testes positivos e negativos; schema atual é privado e inacessível à API.
+- P0: LGPD/ética, consentimento e retenção, inclusive textos livres e JSONB; não coletar dados reais.
+- P0: verificação e vinculação de IDs canônicos pelo Kernel, sem inventar IDs oficiais.
+- P1: módulos PGLite não reconciliados executavelmente com PostgreSQL; CI no mesmo SHA e browser E2E.
+- P1: módulos de análise estatística, representação/viés, publicação e acompanhamento ainda exigem backend.
+- P1: fontes e licenças, citação, direitos de reprodução e jurisdição são CKO existentes, não uma segunda fonte.
+- P1: evidência de encaminhamento e autoridade oficial não pode ser fabricada.
+- P1: performance, Storage, backups, incidentes, migrações e rollback.
+- Resultado: 36/36 experiências **modeladas**, 0/36 homologadas, 0 tabelas novas implantadas no Supabase.

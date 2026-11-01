@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const root=resolve(import.meta.dirname,'..');
 const routeDir=resolve(root,'src/routes');
 const files=readdirSync(routeDir,{recursive:true,withFileTypes:true}).filter(x=>x.isFile()&&/\.(tsx|ts)$/.test(x.name)).map(x=>resolve(x.parentPath,x.name)).sort();
-const kinds=[...readFileSync(resolve(root,'src/lib/template-contract.ts'),'utf8').matchAll(/^\s{2}([a-z]+): \{ frame:/gm)].map(m=>m[1]);
+const kinds=[...readFileSync(resolve(root,'src/lib/template-contract.ts'),'utf8').matchAll(/^\s{2}([a-z]+): \{ hero:/gm)].map(m=>m[1]);
 const contracts=JSON.parse(readFileSync(resolve(root,'registers/canonical/route-contracts.v1.json'),'utf8'));
 if(contracts.scope!=='CE_PUBLIC_BACKUP_ONLY'||contracts.schemaVersion!=='1.0.0')throw Error('Invalid route contracts scope/version');
 const allowedRoles=new Set(['public','subscriber','administrator-local','account','authentication','system']);

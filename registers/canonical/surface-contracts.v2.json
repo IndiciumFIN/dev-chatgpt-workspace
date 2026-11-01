@@ -71,6 +71,31 @@
       ],
       "assertion": "static-import-presence"
     },
+    "blog.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "secao",
+      "requiredImports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/content/curiosidades/catalog",
+        "@tanstack/react-router"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "central-comando.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/central-command-tables",
+        "@/styles/command-center.css",
+        "@tanstack/react-router",
+        "../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+        "../../registers/pmo/queue.v1.json"
+      ],
+      "assertion": "static-import-presence"
+    },
     "conta.tsx": {
       "kind": "redirect",
       "role": "account",
@@ -138,6 +163,33 @@
       "role": "public",
       "templateKind": "area",
       "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "kids.$section.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/vila/vila-hub"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "kids.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/vila/vila-hub"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "kids.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": null,
+      "requiredImports": [
+        "@tanstack/react-router"
+      ],
       "assertion": "static-import-presence"
     },
     "login.tsx": {
@@ -268,6 +320,16 @@
         "@/components/templates/library-canonical",
         "@/components/site/shell",
         "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "viladocuidado.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/vila/vila-page",
+        "@tanstack/react-router"
       ],
       "assertion": "static-import-presence"
     }

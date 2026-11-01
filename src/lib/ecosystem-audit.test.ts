@@ -4,7 +4,7 @@ import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import { auditEcosystem } from "./ecosystem-audit.ts";
 
-const known = ["MID-SEM-ALT", "REG-RASCUNHO"];
+const known = ["REG-RASCUNHO"];
 
 test("a auditoria bloqueia o que não pode ir ao ar e registra o que ainda não fecha", async () => {
   const db = new PGlite();

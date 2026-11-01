@@ -1,4 +1,4 @@
-import { readdirSync } from "node:fs";
+import { copyFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { Plugin } from "vite";
 import { defineConfig } from "vite";
@@ -19,6 +19,27 @@ function hasGlobbedMigrations(root: string): boolean {
   } catch {
     return false;
   }
+}
+
+const pgliteAssets = ["pglite.data", "pglite.wasm", "initdb.wasm"] as const;
+
+/** The bundled server looks up these files beside the chunk, not in node_modules. */
+function copyPgliteRuntimeFiles(root: string) {
+  const source = join(root, "node_modules/@electric-sql/pglite/dist");
+  const functions = join(root, ".vercel/output/functions");
+  if (!existsSync(functions)) return;
+  const visit = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const path = join(dir, entry.name);
+      if (!entry.isDirectory()) continue;
+      if (entry.name === "_libs" && existsSync(join(path, "electric-sql__pglite.mjs"))) {
+        for (const name of pgliteAssets) copyFileSync(join(source, name), join(path, name));
+      } else {
+        visit(path);
+      }
+    }
+  };
+  visit(functions);
 }
 
 /**
@@ -175,6 +196,11 @@ export default defineConfig(({ command, isPreview }) => ({
             // manifest + head-tag middleware). Nitro v3 defaults serverDir to
             // false, so removing this silently unwires /?install=1 on deploys.
             serverDir: "./server",
+            hooks: {
+              compiled() {
+                copyPgliteRuntimeFiles(process.cwd());
+              },
+            },
           }),
         ]
       : []),

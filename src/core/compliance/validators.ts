@@ -15,7 +15,25 @@ export function validateRequiredEvidence(
   rule: NormativeRule,
   evidence: Record<string, unknown>,
 ): ValidationResult {
-  const missing = rule.requiredEvidence.filter((item) => !evidence[item]);
+  // Presence validation only. It never authenticates provenance or licensing.
+  // Reject empty placeholders and inherited properties rather than accepting
+  // any truthy container as proof. Numeric zero is retained as a valid value.
+  const present = (value: unknown): boolean => {
+    if (value === null || value === undefined) return false;
+    if (typeof value === "string") return value.trim().length > 0;
+    if (typeof value === "boolean") return value;
+    if (typeof value === "number") return Number.isFinite(value);
+    if (Array.isArray(value)) return value.length > 0 && value.every(present);
+    if (typeof value === "object") {
+      const items = Object.values(value);
+      return items.length > 0 && items.some(present);
+    }
+    return false;
+  };
+  const values = evidence && typeof evidence === "object" ? evidence : {};
+  const missing = rule.requiredEvidence.filter(
+    item => !Object.prototype.hasOwnProperty.call(values, item) || !present(values[item]),
+  );
 
   if (missing.length > 0) {
     return {

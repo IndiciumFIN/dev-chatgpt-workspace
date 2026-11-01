@@ -1,0 +1,197 @@
+{
+  "report_id": "CE-BASE-FIRST-WAVE1-20261101",
+  "date": "2026-11-01",
+  "repo": "IndiciumFIN/dev-chatgpt-workspace",
+  "status": "CANDIDATE_AUDIT_ONLY",
+  "git_writes": 0,
+  "database_writes": 0,
+  "merge_count": 0,
+  "scope": "GitHub API root tree for 26 branches, recursive subtree comparison of 10 unique migrations trees and 7 contracts trees, read-only metadata on Calculadoras-Smart, package test and verification",
+  "limits": [
+    "Not a complete full-tree comparison of every object across all branches.",
+    "No Git clone/Codespaces executed because container could not resolve github.com; GitHub connector reads worked.",
+    "No runtime OPA or Kernel admission evidence validated.",
+    "No CI full result for a new candidate commit because no new commit was created."
+  ],
+  "branch_population": 26,
+  "branches_without_common_ancestor": [
+    "feat/projection-unica-f0-suite-real",
+    "grook_10_26"
+  ],
+  "subtree_schemas": {
+    "branches_with_directory": 23,
+    "all_same_sha": true,
+    "sha": "cfe5d48cdd0a432dcba5f1859e7b4e0912a02408",
+    "absent_in": [
+      "audit-hardening-2026-10-24",
+      "feat/projection-unica-f0-suite-real",
+      "grook_10_26"
+    ]
+  },
+  "migration_subtree_variants": {
+    "baseline-main": {
+      "sha": "ccce4877fe21336185ec32f6149303d988c9ec1f",
+      "paths": 4
+    },
+    "research": {
+      "sha": "83bfd6af15b716942df3535e4955ee2cecc74e15",
+      "paths": 5
+    },
+    "career": {
+      "sha": "3b50de6594140d7cca0aaef6ca5e59f8c8eaadf9",
+      "paths": 8
+    },
+    "projection-unrelated": {
+      "sha": "e9d721c92fd6be532e1eb8fe5461e2f274baaa39",
+      "paths": 42
+    },
+    "i18n-consolidated": {
+      "sha": "6cffc523cddc9bb745a3543a15b4eb8fd3c0cd6f",
+      "paths": 10
+    },
+    "i18n-legacy": {
+      "sha": "6cc66f89b56dc40e01f0039f4899b048065cd391",
+      "paths": 9
+    },
+    "overlay": {
+      "sha": "a8dddb06faa4f932e011b3f71938d7b656efb434",
+      "paths": 13
+    },
+    "simulados": {
+      "sha": "d1087d1aa4ba1d2f338cba4404e6c98158ed72d9",
+      "paths": 7
+    },
+    "vila": {
+      "sha": "06babbc9ba57e9028b9e3a78d2a71de8b1086bc3",
+      "paths": 5
+    },
+    "grook-unrelated": {
+      "sha": "66759689a417619a600687f6f34b84d5108f558e",
+      "paths": 36
+    }
+  },
+  "migration_shared_path_conflict_count": 0,
+  "contracts": {
+    "subtree_variants": 7,
+    "distinct_paths": 739,
+    "shared_path_content_conflicts": 4,
+    "conflicting_paths": [
+      "entities/brand-assets.v1.json",
+      "entities/routes.v1.json",
+      "cko-governance/opa/kernel_admission.rego",
+      "cko-governance/opa/kernel_admission_test.rego"
+    ]
+  },
+  "database": {
+    "project": "Calculadoras-Smart",
+    "schemas_checked": 5,
+    "tables": 160,
+    "pk_tables": 160,
+    "foreign_key_constraints": 175,
+    "rls_tables": 3,
+    "tracked_existing_reference_tables": 12,
+    "candidate_admission_tables_missing": 8,
+    "anon_authenticated_direct_table_grants_in_checked_cko_schemas": 0,
+    "access_assessment": "Metadata only; not end-to-end API authorization audit"
+  },
+  "package": {
+    "version": "0.6.4",
+    "sha256": "5b1c83586d4241e3f0f43a32c06aebd6e9934c289556f2a7302c61e5394634f7",
+    "manifest_files": 35,
+    "hash_verification": "PASS",
+    "node_tests": 37,
+    "node_pass": 37,
+    "node_fail": 0,
+    "negative_apply": "BLOCKED_EXIT_2"
+  },
+  "source_shas": {
+    "branch_ref_main": "e9f7fe66075ebe5d7346072dc3a1b4934678c6de",
+    "branch_ref_integration": "081c61ac6c6ea674934d1cad3c310e96476fc9a1",
+    "common_schemas_tree": "cfe5d48cdd0a432dcba5f1859e7b4e0912a02408",
+    "kernel_order_migration_blob": "bd42b910fbd1a7f0ed662636baf3efc8cdc37a98",
+    "kernel_order_rules_blob": "b68cdbe52d7bbb1e36e06bd734cf8dc161047d4e",
+    "opa_overlay_blob": "a78815803898bcbc126160db85cbac161ba13469",
+    "opa_i18n_blob": "8e9434c7d21a2a71869df2fcb0b4a33ebcadfeb7",
+    "opa_projection_blob": "5b2d66a437649e40c2d303d4ad8b726442e77c65"
+  },
+  "findings": [
+    {
+      "id": "F-BASE-001",
+      "kind": "VERIFIED_EQUIVALENCE",
+      "scope": "schemas/",
+      "finding": "23 branches present the identical Git subtree; 3 branches have no schemas/ directory",
+      "treatment": "REUSE_BASELINE_NO_MERGE"
+    },
+    {
+      "id": "F-BASE-002",
+      "kind": "NO_PATH_BLOB_COLLISIONS",
+      "scope": "migrations/",
+      "finding": "10 distinct subtree versions recursively inspected, zero same-path/different-SHA collisions among those trees",
+      "treatment": "SEMANTIC_MIGRATION_REVIEW_REQUIRED"
+    },
+    {
+      "id": "F-BASE-003",
+      "kind": "LOGICAL_NAME_COLLISION",
+      "scope": "migrations/0004_*",
+      "finding": "Distinct migration files share logical ordinal 0004 across domain and unrelated branches",
+      "treatment": "SCOPE_TO_DISTINCT_RUNNERS_AND_ORDERING"
+    },
+    {
+      "id": "F-BASE-004",
+      "kind": "STRUCTURAL_POLICY_DUPLICATION",
+      "scope": "migrations/0027_kernel_admission.sql",
+      "finding": "Unrelated-history branches contain kernel_order + policy + validator + manifest, a different candidate admission model from 8 uninstalled CKO orchestration tables",
+      "treatment": "HOLD_CANONICAL_CROSSWALK_NO_AUTO_DDL"
+    },
+    {
+      "id": "F-BASE-005",
+      "kind": "BLOB_VERSION_COLLISIONS",
+      "scope": "contracts/",
+      "finding": "7 distinct contract trees, 739 distinct paths, 4 same-path content-version collisions; all trees nontruncated",
+      "treatment": "RESOLVE_FILE_LEVEL_AND_REVIEW"
+    },
+    {
+      "id": "F-BASE-006",
+      "kind": "ROUTE_COLLISION",
+      "scope": "contracts/entities/routes.v1.json",
+      "finding": "4 versions verified; main catalog 25 entries, MEM 26, i18n 26, overlay 31",
+      "treatment": "DETERMINISTIC_UNION_REGENERATE_FROM_SRC_ROUTES_AFTER_GATE"
+    },
+    {
+      "id": "F-BASE-007",
+      "kind": "OPA_COLLISION",
+      "scope": "contracts/cko-governance/opa/kernel_admission.rego",
+      "finding": "3 content variants: projection, i18n, overlay; projection variant has additional acceptance criteria and approval consistency checks; all remain candidate-only",
+      "treatment": "HOLD_SECURITY_POLICY_WO_AND_INDEPENDENT_TESTS"
+    },
+    {
+      "id": "F-BASE-008",
+      "kind": "MAIN_UNPROTECTED",
+      "scope": "main",
+      "finding": "GitHub branch protection false, rulesets previously empty; promotion must remain blocked",
+      "treatment": "HOLD_MAIN"
+    },
+    {
+      "id": "F-BASE-009",
+      "kind": "ADMISSION_NOT_VERIFIED",
+      "scope": "WO/Kernel",
+      "finding": "Existing issue #25 records request, no signed Kernel response confirmed",
+      "treatment": "HOLD_WRITES"
+    }
+  ],
+  "next_gate": {
+    "phase": "BASE-02_TO_BASE-03",
+    "required": [
+      "Authenticated Kernel admission for staging to branch and separately for DB/production",
+      "Fresh full-tree independent branch/contract audit on the target SHA",
+      "Reconcile four contracts collisions before choosing canonical content",
+      "Reconcile alternative kernel_order model with 8 CKO candidate tables, no duplication",
+      "Migration test in disposable Postgres with schema/foreign key/RLS regression",
+      "CI all jobs PASS and independent review of the exact candidate SHA",
+      "Protect main before any merge"
+    ]
+  },
+  "authority": "NONE",
+  "kernel_admission": "NOT_VERIFIED",
+  "release_gate": "HOLD_HUMAN"
+}

@@ -309,10 +309,12 @@ export function resolveOgTitle(
   host = "",
   documentTitle = "",
 ) {
-  const fromSite = String(site.title ?? "").trim();
-  if (fromSite) return fromSite;
+  // A document's own title is the canonical page-level OG title; the site
+  // title is a fallback for headless routes, not an override for every page.
   const fromDoc = String(documentTitle ?? "").trim();
   if (fromDoc) return fromDoc;
+  const fromSite = String(site.title ?? "").trim();
+  if (fromSite) return fromSite;
   const fromHost = appNameFromHost(host);
   if (fromHost && fromHost !== DEFAULT_APP_NAME) return fromHost;
   const fromArg = String(appName ?? "").trim();

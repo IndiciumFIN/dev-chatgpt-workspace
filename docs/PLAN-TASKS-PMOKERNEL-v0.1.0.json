@@ -132,9 +132,9 @@
    "title": "Medir a superfície de segurança (Dependabot, code scanning, secret scanning)",
    "wo": "WO-SEC-001",
    "deps": [],
-   "owner": "Owner",
+   "owner": "Mavis",
    "language": "CI",
-   "status": "PROPOSTO",
+   "status": "DONE",
    "covers": [
     "GAP-04"
    ],
@@ -144,9 +144,12 @@
     "scripts/check-better-auth-lock.test.mjs",
     "scripts/test-auth-secret-env.mjs",
     "scripts/check-auth-invariant.test.mjs",
-    "registers/governance/r82-pmo-security-execution-20261031.v1.json"
+    "registers/governance/r82-pmo-security-execution-20261031.v1.json",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/dependabot/alerts (HTTP 403)",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/secret-scanning/alerts (HTTP 404)",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/code-scanning/alerts (HTTP 404)"
    ],
-   "acceptance": "As três ferramentas falham com erro de conector: estado é 'não medido', nunca 'zero alertas'. Alertas lidos e registrados por severidade + SHA dos artefatos afetados."
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:15Z, via API REST do GitHub com o token do ambiente - o conector MCP continuava a falhar): dependabot -> HTTP 403 'Dependabot alerts are disabled for this repository' (feature DESLIGADA); secret-scanning -> HTTP 404 'Secret scanning is disabled on this repository' (feature DESLIGADA); code-scanning -> HTTP 404 'no analysis found' (sem execucao de analise). CONCLUSAO HONESTA: nao e 'zero alertas' - e 'nao existe superficie de alertas activa', porque as tres ferramentas estao desligadas ou sem analise. Isto e, por si so, um achado de seguranca (ver TASK-PLAN-162). Compensacao local ja existente: scripts/check-better-auth-lock.mjs (lockfile de better-auth verificado em repo), scripts/check-auth-invariant.mjs e scripts/test-auth-secret-env.mjs - que o PR #29 MODIFICA (check-auth-invariant +2/-2, test-admin-console -7). NOT_RUN: severidade por CVE (nao ha alertas para ler) e SHA dos artefactos afectados (nao aplicavel)."
   },
   {
    "id": "TASK-PLAN-016",
@@ -2869,6 +2872,88 @@
     "scripts/"
    ],
    "acceptance": "Problema medido: o gate do esqueleto corre 11/11 verde (executado pelo owner em 01/11) e mesmo assim nao detecta que 84 registos de contrato violam os enums canonicos - o gate valida estrutura, nao conformidade de vocabulario, e por isso da luz verde a um contrato invalido. Obrigatorio: validador que leia os enums de contracts/cko-skeleton/catalog/cko-data.json e reprove (fail-closed, exit != 0) qualquer item de contracts/entities/tool-*.v1.json com source_type, authority_class ou decision fora do enum ou ausente; integracao no gate oficial (scripts/**/*.test.mjs, para o runner os apanhar) e a mesma regra para o registo de capabilities e bindings do esqueleto. Criterio de aceite: introduzir um item com enum invalido tem de fazer o gate falhar (teste negativo explicito)."
+  },
+  {
+   "id": "TASK-PLAN-159",
+   "phase": "F0",
+   "title": "PR #29 (revert do #26): inventario de impacto medido e decisao do dono",
+   "wo": "WO-PMO-001",
+   "deps": [],
+   "owner": "Owner",
+   "language": "MD",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/pulls/29",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/pulls/29/files?per_page=100",
+    "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md (secao 12.8)",
+    "ce-push/pr29-inventario.json (inventario dos 128 ficheiros)"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:10Z, via API REST - o corpo do PR estava NOT_RUN por falha do conector). O PR #29 e a INVERSA EXACTA do #26: 128 ficheiros, +127/-29.195, 116 removidos e 12 modificados, base main, head revert-26-plan/pmokernel-finalization-20261031, criado 31/10 23:36:54Z. Impacto por area: scripts/** 58 ficheiros (-5.026) · docs/evidence/** 20 (-4.378) · registers/** 18 (-9.337) · tools/experience-skeleton/** 12 (-5.280) · src/** 9 · docs/** 4 (-4.013) · .github/workflows/** 2 (-463) · ci/** 2 (-87) · tests/** 1 (-197) · package.json + package-lock.json. O QUE SERIA APAGADO: os 2 workflows fail-closed (ce-main-migration-audit.yml, pmo-candidate-unit-regressions.yml), o gate staged ci/pending-coverage-gate.yml (o ficheiro de TASK-PLAN-012), o plano e o registo, TODOS os packs de evidencia (admin-area, commander, ce-comparacao, experience-platform-skeleton), 17 registos de governanca, 58 validadores, o esqueleto CE ja portado em tools/experience-skeleton/, o PmoReviewIntake (src/components/admin/pmo-review-intake.tsx) e a list-query. O QUE SERIA REVERTIDO: registers/governance/find-register.v1.json volta de as_of 2026-10-31 a 2026-10-24 e perde 96 linhas, incluindo o FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 (draft de seguranca) e os 2 FINDs R81. O PR ESTA VERMELHO: o proprio CI do PR #29 falha no passo 4 'Validar PMO canonico e historico' com AssertionError 'Prototipo deve permanecer congelado' em scripts/check-pmo-queue.mjs:32, e os passos 5-20 ficam skipped. CAUSA MEDIDA: o revert restaura a versao antiga de 46 linhas de check-pmo-queue.mjs, que exige WO-ADM-001 = PAUSED, mas a fila em main tem WO-ADM-001 = IN_PROGRESS (a versao de 82 linhas que o #26 trouxe ja nao tem essa assert). DECISAO DO DONO: fundir, fechar, ou rebasear o #29. Este agente NAO fez nenhuma accao sobre o PR #29. NOT_RUN: a razao humana do revert (o corpo so contem 'Reverts #26' + um resumo automatico do Cursor Bugbot; nao ha justificacao escrita do Kernel)."
+  },
+  {
+   "id": "TASK-PLAN-160",
+   "phase": "F2",
+   "title": "Regressao de fail-closed: o PR #29 remove 4 invariantes do check-pmo-queue.mjs e 5 validadores com os seus testes",
+   "wo": "WO-PMO-001",
+   "deps": [
+    "TASK-PLAN-159"
+   ],
+   "owner": "Mavis",
+   "language": "JS",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "scripts/check-pmo-queue.mjs",
+    "scripts/check-pmo-queue.test.mjs",
+    "scripts/verify-r84-pmo-decision-intake.mjs",
+    "scripts/verify-r85-owner-assent.mjs",
+    "scripts/verify-r86-pr-review-evidence.mjs",
+    "scripts/verify-r80-evidence-chain.mjs"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026): o diff do PR #29 em scripts/check-pmo-queue.mjs e +2/-38 - ou seja, o revert APAGA quatro invariantes e restaura a assert brittle. Invariantes perdidas: (1) 'DONE sem evidencia' - DONE deixa de exigir evidence.length>0; (2) deteccao de CICLO de dependencias (a funcao visit/DFS e removida); (3) 'evidencia duplicada' (Set de evidence.size vs length); (4) a assert de prototipo PAUSED e trocada pela versao antiga que hoje falha. Validadores apagados com os seus testes: verify-r84-pmo-decision-intake (+.test), verify-r85-owner-assent (+.test), verify-r86-pr-review-evidence (+.test), verify-r80-evidence-chain (+.test), check-pmo-queue.test.mjs - 5 validadores e 5 suites de teste. OBRIGATORIO: se o revert for descartado, confirmar que os 5 validadores e os 4 invariantes permanecem no main; se o revert for fundido, restaurar os invariantes como tarefa separada e nao como 'detalhe'. REGRA: um gate que valida menos do que antes e uma regressao, mesmo que o PR 'restaure o estado anterior'. NOT_RUN: quantas linhas de teste e quantos casos de teste se perdem exactamente (exige execucao do suite no ramo do revert)."
+  },
+  {
+   "id": "TASK-PLAN-161",
+   "phase": "F2",
+   "title": "better-auth: o PR #29 faz downgrade de 1.7.14 para ~1.6.30 e mexe em 4 ficheiros de auth - medir a divergencia",
+   "wo": "WO-SEC-001",
+   "deps": [
+    "TASK-PLAN-159"
+   ],
+   "owner": "Mavis",
+   "language": "JS+JSON",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "package.json",
+    "package-lock.json",
+    "src/lib/auth/client.ts",
+    "src/lib/auth/preview.ts",
+    "src/lib/auth/providers.ts",
+    "src/lib/auth/server.ts",
+    "scripts/check-better-auth-lock.mjs",
+    "scripts/check-auth-invariant.mjs"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026): o PR #29 muda package.json de 'better-auth': '1.7.14' para '~1.6.30' e package-lock.json (+99/-76), e adapta 4 ficheiros de src/lib/auth/ (client +5/-3, preview +9/-9, providers +1/-1, server +1/-1). O Cursor Bugbot classificou o PR como Medium Risk por o downgrade poder divergir do lockfile e dos testes escritos para 1.7.14. O PR tambem MODIFICA os guardios locais de auth: scripts/check-auth-invariant.mjs (+2/-2) e scripts/test-admin-console.mjs (-7). OBRIGATORIO: medir a divergencia antes de qualquer merge - (a) correr o suite de auth com 1.6.30 contra os testes existentes; (b) confirmar que o lockfile regenerado e coerente com o package.json; (c) confirmar que os guardios locais de auth nao ficam enfraquecidos pela versao revertida. O '~' permite que o lockfile flutue dentro da serie 1.6 - para um repo com gate de lock (scripts/check-better-auth-lock.mjs) isso e uma decisao de politica, nao um detalhe de package.json. NOT_RUN: a suite de auth nao foi executada neste repo pelo agente (sem ambiente de execucao do repo canonico com as suas dependencias)."
+  },
+  {
+   "id": "TASK-PLAN-162",
+   "phase": "F0",
+   "title": "Seguranca: o repo nao tem superficie de alertas automaticos activa (Dependabot OFF, secret scanning OFF, code scanning sem analise)",
+   "wo": "WO-SEC-001",
+   "deps": [],
+   "owner": "Owner",
+   "language": "CI",
+   "status": "PROPOSTO",
+   "covers": [],
+   "artifacts": [
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/dependabot/alerts",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/secret-scanning/alerts",
+    "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/code-scanning/alerts",
+    "scripts/check-better-auth-lock.mjs"
+   ],
+   "acceptance": "MEDIDO (owner, 01/11/2026 03:15Z): as tres superficies automaticas estao inactivas - Dependabot alerts DESLIGADO (HTTP 403), secret scanning DESLIGADO (HTTP 404), code scanning sem analise (HTTP 404 'no analysis found'). Isto NAO e 'zero alertas': e 'alertas nao existem porque a ferramenta esta desligada'. O repo compensa localmente com scripts/check-better-auth-lock.mjs, scripts/check-auth-invariant.mjs e scripts/test-auth-secret-env.mjs. OBRIGATORIO: decisao do dono - activar Dependabot e secret scanning no repo (settings, nao codigo) ou assumir o risco explicitamente no registo; e confirmar que os guardios locais cobrem o mesmo. NOT_RUN: o conteudo das settings de seguranca do repo (exige acesso de escrita as settings - nao tentado, e fora do mandato)."
   }
  ],
  "candidateVerification": {
@@ -3718,6 +3803,6 @@
   "notes": "FIVE historical candidate description/status amendments and twenty subsequent intake tasks; no approved source replay, WO transition, or clinical release."
  },
  "meta": {
-  "ultima_revisao_owner": "01/11/2026 02:40Z - 3 tasks novas da verificacao final da sintese (contratos fora dos enums canonicos + gate de conformidade). Total 137."
+  "ultima_revisao_owner": "01/11/2026 03:20Z - 4 tasks novas do PR #29 (impacto medido, regressao de fail-closed, downgrade better-auth, superficie de alertas) + TASK-PLAN-015 fechado como DONE (medicao definitiva: as 3 ferramentas de alertas estao desligadas ou sem analise). Total 141."
  }
 }

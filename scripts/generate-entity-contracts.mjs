@@ -23,7 +23,10 @@ const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : "");
 /* ------------------------------------------------------------------ rotas */
 const routes = readdirSync("src/routes")
   .filter((f) => f.endsWith(".tsx") && !f.startsWith("__"))
-  .map((f) => f.replace(/\.tsx$/, ""));
+  .map((f) => f.replace(/\.tsx$/, ""))
+  // Git/filesystem enumeration order is not stable across runners.
+  // Stable output must not depend on checkout order or inode layout.
+  .sort();
 
 /* ------------------------------------------------------- ferramentas CLI */
 // Fonte unica: avaliacao real do catalogo. Se nao importar, HOLD bloqueante;

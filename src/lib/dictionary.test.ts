@@ -30,10 +30,18 @@ test("o dicionário nomeia cada tabela e a coluna estrutural", async () => {
   assert.deepEqual(objectColumns.rows.map((row) => row.name), ["kind", "origin_path", "slug", "tool_slug"]);
   const term = await db.query("select code from schema_term where domain = 'content_status' and code = 'publicado'");
   assert.equal(term.rows.length, 1);
-  const spec = await db.query("select status from data_specification where entity = 'content_text' and characteristic = 'status'");
-  // O rascunho virou aprovado na rodada do DERBY: a entrada do dicionário
-  // deixou de ser rascunho. A afirmação tem que ser a do schema de hoje.
-  assert.equal((spec.rows[0] as { status: string }).status, "aprovado");
+  const spec = await db.query<{status:string;approved_by:string|null;approved_at:string|null}>(
+    "select status, approved_by, approved_at from data_specification where entity = 'content_text' and characteristic = 'status'"
+  );
+  assert.equal(spec.rows.length, 1, "Data specification must exist");
+  // Technical migration actors do not grant clinical or governance approval.
+  if (spec.rows[0].status === "aprovado") {
+    assert.ok(spec.rows[0].approved_by && spec.rows[0].approved_by !== "derby-normalizacao");
+    assert.ok(spec.rows[0].approved_at);
+  } else {
+    assert.ok(["rascunho", "candidato"].includes(spec.rows[0].status));
+    assert.equal(spec.rows[0].approved_by, null);
+  }
   const orderColumns = await db.query<{ name: string }>("select name from schema_column where entity = 'kernel_order' order by name");
   // O pedido de admissão ganhou dono, origem e hash na 0038; o critério de
   // aceite saiu para a tabela filha na 0043. A lista é a do schema de hoje.
@@ -51,6 +59,15 @@ test("o dicionário nomeia cada tabela e a coluna estrutural", async () => {
     "select cardinality from schema_relation where from_entity = 'kernel_order' and to_entity = 'kernel_order_policy'",
   );
   assert.equal(link.rows[0]?.cardinality, "1:N");
-  const rule = await db.query("select status from business_rule where id = 'br-politica-obrigatoria'");
-  assert.equal((rule.rows[0] as { status: string }).status, "aprovado");
+  const rule = await db.query<{status:string;approved_by:string|null;approved_at:string|null}>(
+    "select status, approved_by, approved_at from business_rule where id = 'br-politica-obrigatoria'"
+  );
+  assert.equal(rule.rows.length, 1, "Policy rule must exist");
+  if (rule.rows[0].status === "aprovado") {
+    assert.ok(rule.rows[0].approved_by && rule.rows[0].approved_by !== "derby-normalizacao");
+    assert.ok(rule.rows[0].approved_at);
+  } else {
+    assert.ok(["rascunho", "candidato"].includes(rule.rows[0].status));
+    assert.equal(rule.rows[0].approved_by, null);
+  }
 });

@@ -45,6 +45,8 @@ function localHeads(dir) {
  for(const row of s.split('\n')) {
   if(!row) continue;
   const m=/^origin\/(.+)\t([0-9a-f]{40,64})$/.exec(row);
+  // Git may enumerate the symbolic origin/HEAD as a shortened 'origin' ref.
+  if(row.startsWith('origin\t'))continue;
   if(!m)throw Error('BAD_LOCAL_REF:'+row);
   if(m[1]!=='HEAD')map.set(m[1],m[2]);
  }

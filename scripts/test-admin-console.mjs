@@ -9,15 +9,22 @@ const store = read('src/lib/local-publication-register.ts');
 const style = read('src/styles/admin-console.css');
 const commander = read('src/components/admin/commander-panel.tsx');
 const pmo = read('src/components/admin/pmo-panel.tsx');
+const overview = read('src/components/admin/modules/admin-overview-module.tsx');
+const boundary = read('src/components/admin/admin-error-boundary.tsx');
+const contentSchema = read('src/lib/admin-content-schema.ts');
+const workbench = read('src/lib/local-workbench-store.ts');
 const pmoReview = read('src/components/admin/pmo-review-intake.tsx');
 const assertions = [
+  ['overview moved into isolated module', /<AdminOverviewModule/.test(ui) && /export function AdminOverviewModule/.test(overview)],
+  ['PMO and Commander rendering isolated', /<AdminErrorBoundary moduleName="PMO">/.test(ui) && /<AdminErrorBoundary moduleName="Commander">/.test(ui) && /getDerivedStateFromError/.test(boundary)],
+  ['Zod checks draft and imported content', /adminContentSchema=z.object/.test(contentSchema) && /parseAdminContent\(value\)/.test(workbench)],
   ['admin and oficina reuse a single component', /export \{ AdminConsole as LocalWorkbenchPage \}/.test(shared)],
   ['canonical tool data not copied into admin', /import \{ tools \} from '@\/lib\/tools\/catalog'/.test(ui) && !/const tools\s*=\s*\[/.test(ui)],
   ['templates derive from canonical registry', /templateCatalogo/.test(ui) && /templateContracts/.test(ui)],
   ['all administrative tabs reachable', ['overview','pmo','commander','content','templates','sources','publication'].every(tab => ui.includes(`id: '${tab}'`))],
   ['draft and published shown distinctly', /setPreviewVersion\('published'\)/.test(ui) && /previewVersion === 'draft' \? model : published/.test(ui)],
   ['save and publish remain explicit independent actions', /saveLocalDraft\(model, revision\)/.test(ui) && /publishLocalDraft\(revision\)/.test(ui)],
-  ['publish requires saved draft', /if \(dirty\) throw/.test(ui) && /disabled=\{dirty\}/.test(ui)],
+  ['publish requires saved draft', /if \(dirty\) throw/.test(ui) && /disabled=\{dirty \|\| !confirmation \|\| !dataIsValid \|\| externalChange \|\| loadingFailed\}/.test(ui)],
   ['publication requires explicit acknowledgement', /if \(!confirmation\) throw/.test(ui) && /setConfirmation\(e.target.checked\)/.test(ui)],
   ['optimistic revision check still blocks conflicts', /current.revision !== expectedRevision/.test(store)],
   ['local browser storage is the only editor persistence', !/\b(fetch|axios|supabase|getSql|getPglite)\s*\(/.test(ui)],

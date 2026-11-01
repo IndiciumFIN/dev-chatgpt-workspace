@@ -51,3 +51,13 @@ O arquivo histórico `sandbox-completo (4).tar(2).gz` foi recuperado da Bibliote
 ## Handoff mais antigo recuperado — 18/10/2026
 
 Fonte: `CE_MASTER_CONTINUITY_20261018.zip` na Biblioteca privada, SHA-256 `d306c356ff8e670ee64ef29c28b85f6d226994b982e9cca9e06314897d193b53`, 350 entradas (347 artefatos anteriores + três arquivos de continuidade). Seu `STATE.json` indica 14 branches em **outro repositório**, `IndiciumFIN/calculadorasdeenfermagem` (18/10), que **não** devem ser somadas às 29 de `IndiciumFIN/dev-chatgpt-workspace` (01/11). Preservar o handoff anterior e reconciliar entidades, blobs, WOs e decisões entre esses repositórios sem equiparar históricos por nome. Históricos ainda sem revalidação: 22 conflitos, 65 hashes CE04, 1.020 rastreabilidades estruturais, 303 outbox e 61 proveniências. O pacote original está preservado na Biblioteca; suas cópias não autorizam release.
+
+## Aplicação efetiva na candidata — 01/11/2026 (read-back do GitHub)
+
+- **865/865** arquivos de famílias históricos foram materializados em `upload/ce-skeleton/ce-skeleton/src/families/` pelo workflow **41297675735**, concluído com sucesso, e conferidos contra o hash consolidado `6b1eee9e8500caddf4cb6661c4fb84c56817e1ac5d2f152077b27a414c39fe13`. O catálogo de 45 famílias/410 serviços permaneceu a única entrada estruturada do gerador. Arquivos não fazem parte do runtime.
+- **5/5** módulos `src/core/experience` históricos também foram recuperados **sob a raiz isolada `upload/ce-skeleton/ce-skeleton/`**, SHA Git exato por arquivo conferido com a origem, commit `88b784d`. Estado `CANDIDATE_HOLD`.
+- O script `scripts/audit-historical-recovery.mjs` e a etapa específica de `portoes.yml` verificam os 870 candidatos sem tratar o resultado como aprovação de release.
+- **Auditoria 29 branches:** workflow read-only **41297971388** concluiu: 29 branches, **406 pares**, **16.938 caminhos distintos**, **256 caminhos conflitantes** (19 Kernel/schema/políticas; 20 contratos/registros; 84 serviços/dados; 47 UI/CI; 60 i18n; 26 outros). HASH SHA-256 do índice JSON integral: `87ac29154acaa21b4cd30696011a36136bd16fa72786e15251df19f924c5012b`, arquivado no GitHub Actions sob artefato **13079409670**.
+- Triagem por caminho, variantes Git, branches de origem e veto de eleição automática: `audit/ce-continuity/BRANCH_29_TRIAGE_256_CONFLICTS_20261101.csv` (256 linhas, todas `HOLD_HUMAN`).
+- **Observação:** essa comparação é de blobs Git e caminhos compartilhados; não prova equivalência semântica entre caminhos diferentes, admissão Kernel ou aplicação no banco. A candidata continua em DRAFT/NO_MERGE; nenhuma alteração em `main`.
+

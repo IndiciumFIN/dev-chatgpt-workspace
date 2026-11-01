@@ -358,59 +358,63 @@ test("o portão sai com erro quando o banco está violado", async () => {
 });
 
 /* ------------------------------------------------------------------ *
- * A política OPA. O binário `opa` não está instalado neste ambiente,
- * então a prova vem do fixture: a forma do input, o default
- * deny-by-default e a paridade entre o motivo esperado e a regra escrita.
+ * OPA policy tests use the existing Rego fixture and native OPA tests.
+ * No parallel, stale JSON fixture can impersonate governance evidence.
+ * The separate CI job executes `opa test --fail-on-empty` with the actual engine.
  * ------------------------------------------------------------------ */
 
 const arquivoRego = new URL("../contracts/cko-governance/opa/kernel_admission.rego", import.meta.url);
-const arquivoTesteRego = new URL("../contracts/cko-governance/opa/kernel_admission.test.rego", import.meta.url);
-const arquivoFixture = new URL(
-  "../contracts/cko-governance/opa/kernel_admission.fixture.json",
-  import.meta.url,
-);
+const arquivoTesteRego = new URL("../contracts/cko-governance/opa/kernel_admission_test.rego", import.meta.url);
 
 test("a política OPA é deny-by-default", async () => {
   const rego = await readFile(arquivoRego, "utf8");
-  assert.match(rego, /default\s+allow\s*:=\s*false/, "a política precisa negar por padrão");
-  assert.doesNotMatch(rego, /default\s+allow\s*:=\s*true/, "a política não pode admitir por padrão");
-  assert.doesNotMatch(rego, /allow\s*:=\s*true/, "não pode existir permissão incondicional");
+  assert.match(rego, /default\s+allow\s*:=\s*false/);
+  assert.doesNotMatch(rego, /default\s+allow\s*:=\s*true|allow\s*:=\s*true/);
 });
 
-test("o fixture da política tem a forma que o input do Rego exige", async () => {
-  const fixture = JSON.parse(await readFile(arquivoFixture, "utf8"));
-  assert.equal(fixture.package, "cko.kernel_admission");
-  for (const bloco of ["work_order", "manifest", "policy", "validator_results", "approval", "execution"]) {
-    assert.ok(fixture.base[bloco], `o fixture não tem o bloco ${bloco}`);
-  }
-  assert.equal(fixture.base.execution.requested, false);
-  assert.equal(fixture.base.work_order.owner !== fixture.base.work_order.approver, true);
-  assert.match(fixture.base.manifest.hash, /^[a-f0-9]{64}$/);
-  for (const caso of fixture.casos) {
-    assert.ok(caso.nome, "todo caso tem nome");
-    assert.equal(typeof caso.esperado.allow, "boolean");
-    assert.ok(Array.isArray(caso.esperado.deny_reason));
-  }
-});
-
-test("todo motivo esperado no fixture existe como regra no .rego", async () => {
-  const fixture = JSON.parse(await readFile(arquivoFixture, "utf8"));
-  const rego = await readFile(arquivoRego, "utf8");
-  const motivos = new Set(fixture.casos.flatMap((caso) => caso.esperado.deny_reason));
-  assert.ok(motivos.size > 0, "o fixture precisa de motivos de negação");
-  for (const motivo of motivos) {
-    assert.ok(
-      rego.includes(`deny_reason contains "${motivo}"`),
-      `o motivo "${motivo}" não está escrito no .rego`,
-    );
-  }
-});
-
-test("o teste do Rego cobre os mesmos casos do fixture", async () => {
-  const fixture = JSON.parse(await readFile(arquivoFixture, "utf8"));
+test("o fixture Rego vigente exige todos os blocos e o vínculo independente", async () => {
   const rego = await readFile(arquivoTesteRego, "utf8");
-  const casosDoRego = [...rego.matchAll(/^test_([a-z0-9_]+)/gm)].map((achado) => achado[1]);
-  assert.ok(casosDoRego.length >= fixture.casos.length, "o .rego de teste tem menos casos que o fixture");
-  assert.match(rego, /test_sem_fatos_a_politica_nega/, "falta o caso do input vazio");
-  assert.match(rego, /test_execucao_pedida_nega/, "falta o caso de execução pedida");
+  assert.match(rego, /fixture\s*:=\s*\{/);
+  for (const bloco of ["work_order", "manifest", "policy", "validator_results", "approval", "execution"]) {
+    assert.ok(rego.includes('"' + bloco + '":'), "Missing actual Rego fixture block: " + bloco);
+  }
+  assert.match(rego, /"requested":\s*false/);
+  assert.match(rego, /"owner":\s*"maker"/);
+  assert.match(rego, /"approver":\s*"reviewer"/);
+  assert.match(rego, /"bundle_signature_verified":\s*true/);
+  assert.match(rego, /"evidence_ref":\s*"evidence:\/\//);
+});
+
+test("todos os motivos de negação obrigatórios existem na política OPA", async () => {
+  const rego = await readFile(arquivoRego, "utf8");
+  const expected = [
+    "no_valid_policy_or_evidence",
+    "missing_independent_approval",
+    "unsigned_policy_bundle",
+    "no_validators",
+    "execution_not_authorized_here",
+  ];
+  const reasons = [...rego.matchAll(/deny_reason contains "([^"]+)"/g)].map(m => m[1]);
+  assert.deepEqual(reasons.slice().sort(), expected.slice().sort());
+});
+
+test("a suíte Rego real cobre admissão, negação, separação e evidências", async () => {
+  const rego = await readFile(arquivoTesteRego, "utf8");
+  const tests = [...rego.matchAll(/^test_([a-z0-9_]+)\s+if\s*\{/gm)].map(m => m[1]);
+  for (const required of [
+    "admits_complete_scoped_candidate",
+    "defaults_to_deny_without_input",
+    "fails_without_source",
+    "fails_when_self_approved",
+    "fails_without_independent_approval",
+    "fails_for_unsigned_bundle",
+    "fails_for_missing_validators",
+    "fails_for_duplicate_validator_results",
+    "fails_for_failed_validator",
+    "fails_for_execution_request",
+    "fails_when_human_approval_timestamp_differs_from_manifest",
+    "fails_when_approval_timestamp_is_absent",
+  ]) {
+    assert.ok(tests.includes(required), "Missing real OPA test: "+required);
+  }
 });

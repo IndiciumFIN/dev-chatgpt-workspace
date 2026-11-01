@@ -285,7 +285,7 @@ export function AdminConsole() {
           <Panel title="Histórico de revisões" subtitle="Até 500 eventos validados por sequência e ID no navegador. Não é auditoria imutável de servidor.">
             {events.length ? <ol className="ce-admin-history">{[...events].reverse().slice(0,20).map(event => <li key={event.id}><ClipboardCheck size={18}/><div><strong>{event.action === 'PUBLISHED' ? 'Publicação local' : 'Rascunho salvo'}</strong><small>{event.at} · Revisão {event.revision} · anterior {event.previousRevision}</small></div></li>)}</ol> : <p>Nenhuma alteração registrada nesta instalação.</p>}
           </Panel>
-        </>}</AdminErrorBoundary>}
+        </></AdminErrorBoundary>}
       </div>
     </div>
   </main>;

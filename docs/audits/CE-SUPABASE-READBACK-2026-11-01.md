@@ -105,3 +105,18 @@ Estes códigos são rótulos **desta auditoria candidata**, NÃO novos FINDs/WO 
 **Pendências de aceitação:** executar os dois SQLs pelo runner real (com role PostgreSQL somente leitura), confrontar integridade dos JSONs e as versões das migrations, repetir testes em CI, ampliar as 33 branches pré-existentes a reconciliação recursiva (mais a branch desta PR), auditar conexão Drive e arbitrar WOs/aliases. Nenhum critério de release foi relaxado.
 
 **Estado de encerramento desta rodada:** inventário observado, baseline candidata versionável; `HOLD_HUMAN`, sem merge, sem deploy, sem schema write.
+
+## 7. Crosswalk documental reservado — NORM-KERNEL (Drive)
+
+Em leitura autorizada, foram localizados o blueprint `blueprint-norm-kernel.md`, `POL-NK-001.md`, `POL-NK-002.md`, `POL-NK-003.md` e `source_playbook.md`. Este relatório registra somente a avaliação operacional, **sem copiar conteúdo nem URLs privadas para o repositório público**.
+
+- A `WO` exigida em `docs/governance/04-work-order-model.md` nasce no planejamento, representa o ciclo de vida completo e deve vincular tarefas, fontes, validadores, políticas e evidências.
+- A `ServiceOrder / NK-OS` de `POL-NK-002` é um ato específico do NORM-KERNEL exigido para modificar registros normativos. É **subordinada e vinculada à WO**, não um substituto nem uma cadeia independente.
+- `POL-NK-001` determina norma granular por campo e pin hash do anexo; `POL-NK-003` exige capacidades explícitas, default deny, Kernel guardião, segregação de validação/aprovação e ato humano para emendas estruturais.
+- O `source_playbook.md` obriga fonte registrada, estado de licença, job com OS, hash no download, parser/atomização com evidências, retries justificados e bloqueio de publicação sem gates.
+- Há **versões/pins históricos aparentes** nos textos consultados (cabeçalhos, emendas e anexos podem apontar a revisões distintas). Não presumir qual é o documento atual ou declarar DRIFT sem comparar os anexos reais, hashes e política ativa admitida no runtime.
+
+**GAP documental prioritário:** mapear `WO` ↔ `ServiceOrder` ↔ `SourceRegistry` ↔ `NormDocument` ↔ `ExtractionRun` ↔ `NormAtom` ↔ `field_norms` ↔ `EvidenceRegistry` aos objetos reais do Supabase, seus contratos Git e evidências de execução. Qualquer lacuna permanece `NOT_VERIFIED`.
+
+**Conferência independente de SQL agregado:** o corpo `SELECT` de `scripts/sql/ce-supabase-governance-readonly.sql` foi executado pelo conector Supabase sem mutações e retornou os mesmos totais do item 2. O shell `psql` permanece sem comprovação de execução remota, pois requer acesso PostgreSQL próprio e role de leitura.
+

@@ -22,7 +22,7 @@ import { loadToolContracts } from "./load-tool-contracts.mjs";
  *   sai com 1 se qualquer violação existir
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, isAbsolute } from "node:path";
 
 const root = process.cwd();
 const read = (p) => (existsSync(join(root, p)) ? readFileSync(join(root, p), "utf8") : "");
@@ -282,13 +282,49 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
   const bindingPorCampo = new Map(bindings.filter((b) => b.field_path).map((b) => [b.field_path, b]));
 
   // ── CKO-POL-R-002: fonte sem jurisdiction/rights/integridade nao e autoridade
+  // Integridade = hash real (64 hex, nao zeros) + artefacto preservado, como o
+  // contrato `source` exige (sha256: ^[a-f0-9]{64}$). Nao existe estado para
+  // "documento nao preservado" no contrato: uma fonte nessa situacao e
+  // EVIDENCIA PENDENTE, e so conta como tal se estiver registada como tal
+  // (registers/governance/r86-source-evidence-pending-20261101.v1.json, com
+  // releaseGate HOLD_HUMAN e decisoes propostas). Pendencia registada nao e
+  // integridade declarada — e nao e aprovacao: e reported, com nome.
+  // 64 zeros deixa de passar (a regra anterior aceitava qualquer string truthy).
+  const shaReal = (f) => {
+    const sha = f?.integrity?.sha256;
+    if (typeof sha !== "string") return false;
+    if (!/^[0-9a-f]{64}$/.test(sha) || sha === "0".repeat(64)) return false;
+    const ref = f.integrity?.snapshot_ref;
+    if (typeof ref !== "string" || ref.trim() === "") return false;
+    return existsSync(isAbsolute(ref) ? ref : join(root, ref));
+  };
+  // fontes com evidencia pendente REGISTADA
+  const pendentesRegistadas = new Set();
+  try {
+    const r86 = JSON.parse(readFileSync(join(root, "registers/governance/r86-source-evidence-pending-20261101.v1.json"), "utf8"));
+    if (r86?.releaseGate === "HOLD_HUMAN" && Array.isArray(r86.rows)) {
+      for (const row of r86.rows) if (row?.sourceId) pendentesRegistadas.add(row.sourceId);
+    }
+  } catch { /* registo ausente: nada fica declarado como pendente registada */ }
+  const semIntegridade = fontes.filter((f) => !shaReal(f));
+  const pendentesNaoRegistadas = semIntegridade.filter((f) => !pendentesRegistadas.has(f.canonical_id));
   const fonteIncompleta = fontes.filter(
-    (f) => !f.jurisdiction || !f.rights || !f.integrity?.sha256 || !f.locator?.pinpoint,
+    (f) => !f.jurisdiction || !f.rights || !f.locator?.pinpoint
+        || (!shaReal(f) && !pendentesRegistadas.has(f.canonical_id)),
   );
   check("CE-TOOLS:fonte-com-jurisdicao-rights-integridade", fonteIncompleta.length === 0,
     fonteIncompleta.length
-      ? `fonte sem jurisdiction/rights/integridade/pinpoint: ${fonteIncompleta.map((f) => f.canonical_id).join(", ")}`
+      ? `fonte sem jurisdiction/rights/integridade/pinpoint (ou com evidencia pendente NAO registada): ${fonteIncompleta.map((f) => f.canonical_id).join(", ")}`
       : `${fontes.length} fontes com jurisdiction, rights, integridade e pinpoint`);
+  // A pendencia registada e DICIPLINA VISIVEL: um verde que nao a nomeia e um
+  // accept silencioso. A linha e impressa mesmo quando o portao passa.
+  if (semIntegridade.length) {
+    console.log(
+      `  EVIDENCIA PENDENTE registada (r86, releaseGate HOLD_HUMAN): ${semIntegridade.length} fonte(s) sem artefacto preservado — ` +
+      `${semIntegridade.map((f) => f.canonical_id).join(", ")}. Pendencia registada NAO e integridade declarada e NAO e aprovacao; ` +
+      `decisoes propostas em r86 (R86-CKO-SRC-EVIDENCE-STATE, R86-CKO-SRC-CITATION-SLOT).`
+    );
+  }
 
   // ── UTC-002: binding por campo, nao por ferramenta
   const semBinding = [];
@@ -325,8 +361,12 @@ check("CE-CONTRACTS:sem-orfao", orphans.length === 0,
 
   // ── UTC-016: contexto assistencial opcional, mascarado e sem captura LGPD
   const contexto = bindings.filter((b) => (b.canonical_id ?? "").startsWith("AB-CTX-"));
+  // Vocabulário canónico: `authority_class` do contrato `authority_binding`
+  // (INTERNAL_NONCLINICAL) e `decision` do mesmo contrato (ALLOW | HOLD_HUMAN |
+  // REJECT | NOT_APPLICABLE_JUSTIFIED). Os valores legados INTERNAL_CONFIG/BOUND
+  // nao pertencem a nenhum enum do catalogo CKO (medido em 01/11/2026).
   const contextoRuim = contexto.filter(
-    (b) => b.authority_class !== "INTERNAL_CONFIG" || b.decision !== "BOUND",
+    (b) => b.authority_class !== "INTERNAL_NONCLINICAL" || !["HOLD_HUMAN", "ALLOW", "NOT_APPLICABLE_JUSTIFIED"].includes(b.decision),
   );
   check("CE-TOOLS:contexto-como-config-interna-governada", contextoRuim.length === 0,
     contextoRuim.length ? contextoRuim.map((b) => b.canonical_id).join(", ") : `${contexto.length} campos de contexto como configuracao interna governada`);

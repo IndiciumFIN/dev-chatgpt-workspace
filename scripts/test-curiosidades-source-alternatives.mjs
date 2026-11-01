@@ -53,9 +53,15 @@ const view=readFileSync("src/components/templates/curiosity-view.tsx","utf8");
 const adapter=readFileSync("src/components/article/curiosity-page.tsx","utf8");
 assert(view.includes("Alternativas bibliográficas para revisão"));
 assert(view.includes("Sem fonte defensável; HOLD_HUMAN"));
-assert(adapter.includes("mem-source-alternatives.v1.json"));
+// O adaptador consolidado não pode empacotar fontes candidatas no cliente.
+// Só a etapa editorial protegida poderá carregar essas alternativas em uma revisão futura.
+assert(adapter.includes("alternativesDeferred"), "CANDIDATE_SOURCES_MUST_STAY_DEFERRED");
+assert(!adapter.includes("mem-source-alternatives.v1.json"), "UNREVIEWED_CANDIDATE_SOURCES_BUNDLED");
+assert(view.includes("Alternativas bibliográficas candidatas aguardam a etapa de dados; nenhuma fonte foi substituída."), "DEFERRED_SOURCE_NOTICE_MISSING");
+const route=readFileSync("src/routes/blog.$slug.tsx","utf8");
+assert(route.includes("import.meta.env.DEV") && route.includes("VITE_CURIOSIDADES_MEM_PREVIEW"), "DEV_PREVIEW_GATE_MISSING");
 console.log(JSON.stringify({
  verdict:"PASS_CANDIDATE_MAPPING_ONLY",unresolvedUses:unresolved.size,
  alternatives:register.counts.withCandidates,hold:register.counts.stillWithoutDefensibleCandidate,
- pendingSectionOnly:register.counts.sectionOnly,claimReview:"HOLD",rightsReview:"HOLD"
+ pendingSectionOnly:register.counts.sectionOnly,claimReview:"HOLD",rightsReview:"HOLD",adapterSourceRendering:"DEFERRED_NOT_APPROVED"
 }));

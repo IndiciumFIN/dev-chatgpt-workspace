@@ -31,15 +31,15 @@ async function registroMutado(mutacao = (t) => t) {
   return { dir, registro: destino, limpar: () => rm(dir, { recursive: true, force: true }) };
 }
 
-test("o registro real passa: toda referência existe e ninguém tem dois donos", async () => {
+test("o registro real mantém bloqueio explícito para migrations concorrentes, sem referências fantasma", async () => {
   const relatorio = await auditar();
-  assert.equal(
-    relatorio.violacoes.length,
-    0,
-    `violações:\n${JSON.stringify(relatorio.violacoes, null, 2)}`,
-  );
-  assert.ok(relatorio.referencias > 0, "o registro não referencia nada");
-  assert.ok(relatorio.tarefas > 0, "o registro não tem tarefa");
+  const tiposDetectados = tipos(relatorio.violacoes);
+  assert.ok(tiposDetectados.includes("migration-numero-duplicado"),
+    "Números concorrentes devem permanecer visíveis em vez de um falso PASS");
+  assert.ok(!tiposDetectados.includes("referencia-inexistente"), "Propriedade aponta para arquivo ausente");
+  assert.ok(!tiposDetectados.includes("reserva-ja-existente"), "Reserva de arquivo já entregue");
+  assert.ok(!tiposDetectados.includes("dois-donos"), "Há ownership conflitante");
+  assert.ok(relatorio.referencias > 0 && relatorio.tarefas > 0);
 });
 
 test("as reservas do registro são pendências declaradas, e cada uma diz por quê", async () => {

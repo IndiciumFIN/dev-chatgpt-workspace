@@ -48,3 +48,15 @@
 5. Reexecutar federated audit no HEAD antes de qualquer proposta de promoção, juntamente com QA/CI. Um CI verde de auditoria comprova árvores Git; não comprova licença, estado do Supabase, homologação clínica ou deployment.
 
 **Não alterar arquivos históricos e não submeter merge a `main` nesta etapa.** O relatório completo por caminho/branch encontra-se no artefato GitHub do run citado. As origens permanecem preservadas.
+
+## R4 — Correção da classificação, aproveitamento seletivo e gates P0 (01/11/2026)
+
+**Correção de prioridade, sem reescrever o relatório original:** na primeira medição, 60 arquivos `registers/i18n/incoming/de/*` foram classificados como P1 apenas porque começaram com `registers/`. O novo classificador de `scripts/audit-federated-fulltree.mjs` coloca-os em `P2_LOCALIZATION`. O grupo P0 permanece com **24 caminhos**, e o P1 estrutural real cai de 68 para **8 caminhos**: `migrations/0004_revisao_conteudo.sql`, quatro `registers/canonical/*`, `registers/governance/find-register.v1.json`, `registers/governance/main-migration-scope.v1.json` e `registers/pmo/queue.v1.json`. Nenhum dos 60 arquivos de idioma foi apagado ou considerado equivalente. Novos números dependem de read-back do próximo workflow.
+
+**Reutilização P0 aplicada, sem importação de Kernel Python:** a política OPA já existente em `contracts/cko-governance/opa/kernel_admission.rego` exige `find_ref`, `task_ref`, bundle verificado, `decision_evidence_ref`, vínculo com WO/hash e identificadores de execução dos validadores. O gate local TypeScript `src/core/governance/kernel.ts` foi alinhado para retornar `HOLD` quando esses elementos faltam; testes negativos em `kernel.test.ts` cobrem os casos. O teste independente OPA + TypeScript passou no Actions #41300325676. **Não é verificador de assinatura autenticada nem permissão de execução remota.**
+
+**Reutilização histórica sem duplicar autoridade:** `IndiciumFIN/calculadorasdeenfermagem@fix/ce05-kernel-ci-security-20261017` já corrige retorno truncado e lote vazio do Kernel Python; conserva-se como candidato original para uma WO do repositório de origem. A semântica de revisão humana ainda exige correção e testes na origem. Não importar o executor Python como Kernel alternativo do workspace.
+
+**Evidência de crosswalk de 92 conflitos originalmente estruturais/P0:** o artifact federado passou a gerar `p0-p1-crosswalk.jsonl.gz`, contendo variantes, refs e hashes por caminho, origem de candidata e decisão `HOLD_HUMAN`. A classificação revisada deve gerar 24 P0 e 8 P1; os 60 registros de idioma continuam no relatório geral de conflitos. Não escolher "último SHA" como vencedor.
+
+**Ordem preservada:** P0 (24) → P1 (8) → serviços/banco → aplicativo/admin → traduções (60 e demais) → homologação. Findings e WOs existentes permanecem a fonte dos controles; esta atualização não cria tasks duplicadas nem admite qualquer migração.

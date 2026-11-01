@@ -1,9 +1,9 @@
+(function(global){
 /** @typedef {{block_id:string, type:string, semantic_role?:string}} CEUniversalRendererBlock
  * @typedef {{text?:string, resource_id?:string, caption?:string}} CEUniversalRendererResource
  * @typedef {{block_plan:CEUniversalRendererBlock[]}} CEUniversalRendererProjection
  * @typedef {{renderProjection:(request:CEUniversalRendererProjection,resolved?:Record<string,CEUniversalRendererResource>)=>string}} CEUniversalRendererAPI
  */
-(function(global){
   /** @param {unknown} value */
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => {
     /** @type {Record<string,string>} */

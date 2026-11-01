@@ -1,0 +1,45 @@
+name: CE — Full multilateral branch trees (read-only)
+on:
+  push:
+    branches: [canonical/local-20261101]
+    paths:
+      - 'scripts/audit-multilateral-trees.mjs'
+      - '.github/workflows/ce-multilateral-fulltree.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ce-multilateral-fulltree
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh all remote branch trees
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+      - name: Reconcile all branches together, by exact blob SHA and path
+        run: node scripts/audit-multilateral-trees.mjs
+      - name: Check population and no implicit release
+        run: |
+          node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            const x=JSON.parse(readFileSync("audit-evidence/main-migration/multilateral-tree-index.v1.json","utf8"));
+            if(x.branchCount<29 || x.pairCount!==x.branchCount*(x.branchCount-1)/2 || x.authorizedForMerge!==false || x.gate!=="HOLD_HUMAN" || x.failures.length) process.exit(1);
+            console.log(JSON.stringify({branches:x.branchCount,pairs:x.pairCount,uniquePaths:x.uniquePaths,conflicting:x.counts.conflictingVersions,gate:x.gate}));
+          '
+      - name: Preserve full evidence without modifying application or main
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-multilateral-trees-evidence
+          path: audit-evidence/main-migration/multilateral-tree-index.v1.json
+          if-no-files-found: warn
+          retention-days: 30

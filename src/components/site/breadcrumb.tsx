@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 export type Crumb = {
   label: ReactNode;
-  to?: "/" | "/assinante" | "/modelos" | "/blog/mary-eliza-mahoney" | "/pacote" | "/sistema" | "/secao/$slug" | "/institucional" | "/institucional/$hub";
+  to?: "/" | "/admin" | "/assinante" | "/modelos" | "/blog/mary-eliza-mahoney" | "/pacote" | "/sistema" | "/secao/$slug" | "/institucional" | "/institucional/$hub";
   params?: { slug?: string; hub?: string };
   hash?: string;
 };

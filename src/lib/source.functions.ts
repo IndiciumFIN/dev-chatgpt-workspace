@@ -39,7 +39,7 @@ export const readCatalog = createServerFn({ method: "GET" }).handler(async () =>
   const sql = await sqlClient();
   await seed(sql);
   const rows = await sql<{ slug: string; kind: string; title: string; lead: string; published: unknown }>`
-    select slug, kind, title, lead, published from source_tool order by title
+    select slug, kind, title, lead, published from source_tool where published = true order by title
   `;
   return rows.map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[];
 });

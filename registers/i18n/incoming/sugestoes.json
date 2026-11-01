@@ -3,18 +3,13 @@
   "branch": "idioma/consolidado-19",
   "aprovado": false,
   "banco": {
-    "migracao": "migrations/0004_revisao_conteudo.sql",
+    "migracao": ["migrations/0004_revisao_conteudo.sql", "migrations/0005_revisao_idiomas.sql"],
     "tabela": "review_item",
-    "itens": 2345,
+    "itens": 24881,
+    "locales": 20,
     "status": "REVIEW_REQUIRED",
     "translation_status": "DRAFT",
     "aprovado": false,
-    "nota": "A coluna aprovado nao aceita true. Classificacao completa, pronta para um revisor ler. Nao e aprovacao."
-  },
-  "implantado": [
-    "As 47 chaves da interface dos 15 idiomas entram em src/lib/chrome.tsx.",
-    "O registro marca esses 15 como interface_ready e o seletor passa a lista-los.",
-    "O idioma do documento desses 15 continua pt-BR.",
-    "Alemao: Startseite, Optionale Cookies ablehnen, Institutionell, Suchen."
-  ]
+    "nota": "Os 19 locales e o pt-PT estao na tabela. Onde nao ha traducao, texto fica vazio e source_text guarda o portugues. Pendencia cobre as 15 vitrines em cada idioma, o locale pt-PT e o SEO dele. Aprovar continua impossivel."
+  }
 }

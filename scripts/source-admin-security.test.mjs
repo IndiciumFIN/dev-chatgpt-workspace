@@ -25,6 +25,11 @@ test('GET catalog and GET admin view perform no implicit database inserts',()=>{
  }
 });
 
+test('public catalog cannot disclose unpublished or unreviewed drafts',()=>{
+ const catalog=between('export const readCatalog =','export const ensureRole =');
+ assert.match(catalog,/from source_tool where published = true order by title/);
+});
+
 test('editorial save rejects publish=true until Kernel evidence exists',()=>{
  const save=between('export const saveTool =','export const setMemberRole =');
  assert.match(save,/if \(input\.published === true\) throw new Error/);

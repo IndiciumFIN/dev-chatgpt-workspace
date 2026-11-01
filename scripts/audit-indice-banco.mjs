@@ -172,6 +172,14 @@ export async function auditar(db, nomesIndice) {
   };
 }
 
+/** Fail-closed release gate; findings remain as evidence and are never auto-labeled. */
+export function indexAuditReleaseAllowed(relatorio) {
+  return relatorio.violacoes.length === 0 &&
+    relatorio.contagens.tabelasForaDoDicionario === 0 &&
+    relatorio.contagens.tabelasDoBanco === relatorio.contagens.tabelasNoDicionario &&
+    relatorio.contagens.linhasNoIndice === relatorio.contagens.tabelasNoDicionario;
+}
+
 export function formatar(relatorio) {
   const linhas = [];
   linhas.push(`[índice] tabelas no banco:        ${relatorio.contagens.tabelasDoBanco}`);
@@ -233,7 +241,7 @@ async function principal() {
   if (lacksDictionaryCoverage) {
     console.error(`HOLD_HUMAN: ${relatorio.contagens.tabelasForaDoDicionario} tables lack schema_entity and index coverage; no automatic labels generated.`);
   }
-  process.exit(relatorio.violacoes.length === 0 && !lacksDictionaryCoverage ? 0 : 1);
+  process.exit(indexAuditReleaseAllowed(relatorio) ? 0 : 1);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

@@ -714,3 +714,45 @@ O PDF do parecer do CFM foi **subido como texto**: o `push_files` gravou a strin
 | `universos-git` | canone-integridade: **FAIL** (G1–G5) | **reprovado** → retry: marcadores com origem, destino concreto, auto-consistência (41 no texto vs 39 no CSV) |
 
 **Nenhum veredicto foi atribuído a quem não o deu:** a `espelho-estatico` está marcada como arbitragem do owner porque o verificador dessa frente não reportou.
+
+### 13.7 Rev.2 — o portão era mais permissivo que o contrato (correcção do registo, 01/11/2026 06:50Z)
+
+**A primeira versão do portão S2 estava errada, e a auditoria independente apanhou isso.** O verificador da frente `gate-fail-closed` devolveu uma lista de defeitos do meu próprio código (D0–D11). O D0 é o importante e foi medido antes de ser acreditado:
+
+> O contrato canónico `source` declara `integrity.sha256.pattern = ^[a-f0-9]{64}$` e `integrity.additionalProperties: false`.
+> Portanto `NOT_AVAILABLE`, `integrity.reason` e `integrity.artifact_ref` são **inválidos pelo contrato** — e o meu portão aceitava-os.
+
+**Confirmado por três fontes independentes:**
+1. **Os dois schemas são idênticos** — o do catálogo (`cko-data.json`) e o de `contracts/cko-schemas/source.schema.json` (18 propriedades, mesmo conjunto, mesmo `integrity`).
+2. **As 43 instâncias canónicas** (`registers/governance/transversal-source-instances/`) têm **todas** `integrity = {sha256, snapshot_ref}` com hash real e snapshot preservado, e nenhuma tem `reason` nem `artifact_ref`.
+3. **O materializador** (`scripts/materialize-transversal-public.py:100`) escreve exactamente `"integrity":{"sha256":…,"snapshot_ref":…}`.
+
+⇒ O contrato `source` **não tem — e não pode ter sem WORK ORDER — um estado para "documento não preservado"**. A minha S1 tinha inventado esse estado.
+
+#### 13.7.1 O que mudou
+| | Antes | Rev.2 |
+|---|---|---|
+| Enums/forma | escritos à mão | **derivados do contrato** (`required`, `pattern`, `additionalProperties` lidos do catálogo) |
+| Hash | declarado era aceite | **recalculado** do artefacto: hash declarado ≠ hash do ficheiro ⇒ reprova (`R9.HASH_MISMATCH`) |
+| Dados que eu inventei | `source_type_rationale`, `integrity.method`, `integrity.artifact_ref`, `integrity.reason` | **removidos** (não existem no contrato); a justificação passou para o registo e o plano |
+| Violações derivadas | contadas N vezes | contadas **à parte** (1 defeito no binding = 1 defeito) |
+| Localizador da mensagem | `#items[i]` (índice instável) | **linha real** do registo |
+| Testes | assinavam **prosa** (`/\[R6\].*contraditório/`) | assinam **códigos estáveis** `[RULE.SUB]` — **23/23**, com fixtures sintéticos independentes do repo |
+| Saída | texto | `--json` (contagens para o agregador), código 2 para argumento desconhecido, sem stack trace |
+
+#### 13.7.2 A medição que substitui a afirmação anterior
+| | Antes da S1 | Rev.2 |
+|---|---|---|
+| Violações | **30** (6 `source_type` fora do enum, 6 SHA a 64 zeros, 6 `citacao` fora do contrato, 6 snapshot placeholder, 6 contadas duas vezes) | **16** |
+| Erros de dado | 12 | **0** |
+| Lacunas de contrato | — | 16, em **3 classes**: 6× `citacao` fora do contrato · 5× `sha256` sem representação · 5× `snapshot_ref` placeholder |
+
+⇒ **A afirmação "PASS" que ficou escrita em §13.5 na rev.1 está superada.** O portão hoje está **vermelho**, e está vermelho porque o repo tem 16 casos que o contrato não representa — não porque os dados estejam errados.
+
+#### 13.7.3 O que ficou registado para o dono (nada disto é meu para decidir)
+- **`registers/governance/r85-source-evidence-pending-20261101.v1.json`** — intake de evidência das 5 fontes sem documento preservado (`EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate `HOLD_HUMAN`, 0 admitidas).
+- **`R84-CKO-SRC-EVIDENCE-STATE`** em r84 — emendar o contrato `source` para ter um estado de evidência ausente, ou preservar os documentos. **A segunda via é impossível para `SRC-GOTEJAMENTO-FORMULA-CLASSICA`**: é uma fórmula sem documento, e o enum do contrato inclui `INTERNAL_GOVERNED`, que descreve precisamente esse caso ⇒ **inconsistência interna do contrato**, medida.
+- **`R84-CKO-SRC-CITATION-SLOT`** em r84 — o contrato não tem campo `citacao`, embora tenha `language`, `effective_from` e `license_ref`; a prática carrega `citacao` em todas as 6 fontes.
+- **`TASK-PLAN-171..174`** no registo canónico.
+
+**Nota de correcção de forma:** o portão de cobertura (`check-contract-coverage.mjs`) foi **revertido** para a regra fiel ao contrato (integridade = hash real + artefacto preservado). A variante "NOT_AVAILABLE com motivo" que eu tinha introduzido na rev.1 era a mesma invenção que o parecer V6ews — e é exactamente o que o contrato não admite. Os dois portões agora reprovam **as mesmas 5 fontes, pela mesma causa nomeada**.

@@ -1,0 +1,220 @@
+{
+ "schemaVersion": "1.0.0",
+ "recordId": "CE-R85-SOURCE-EVIDENCE-PENDING-20261101",
+ "date": "2026-11-01",
+ "type": "EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION",
+ "repo": "IndiciumFIN/dev-chatgpt-workspace",
+ "source": {
+  "origin": "auditoria de integridade dos contratos (owner, 01/11/2026)",
+  "gate": "scripts/check-contract-integrity.mjs",
+  "gateReport": "16 violacoes: 6 x propriedade fora do contrato + 5 x sha256 sem representacao + 5 x snapshot placeholder",
+  "decisionIntake": "registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json",
+  "proposedDecisionIds": [
+   "R84-CKO-SRC-EVIDENCE-STATE",
+   "R84-CKO-SRC-CITATION-SLOT"
+  ]
+ },
+ "counts": {
+  "sourcesRegistered": 6,
+  "sourcesWithPreservedArtifact": 1,
+  "sourcesEvidencePending": 5,
+  "kernelAdmitted": 0,
+  "independentValidatorsExecuted": 0
+ },
+ "rows": [
+  {
+   "sourceId": "SRC-REV-ENF-USP-BRADEN-1999",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-REV-ENF-USP-BRADEN-1999",
+    "title": "Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa",
+    "sourceType": "PRIMARY_STUDY",
+    "authority": "Revista de Enfermagem da USP",
+    "locatorUri": "https://www.revistas.usp.br/revenf",
+    "locatorPinpoint": "Paranhos WY, Santos VLCG. Rev Esc Enferm USP. 1999;33(esp):191-206",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R85",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA",
+    "title": "Manual de Consulta Rápida em Enfermagem — Escala de Morse",
+    "sourceType": "GUIDELINE",
+    "authority": "CAPES/MEC",
+    "locatorUri": "https://educapes.capes.gov.br/bitstream/capes/1180808/2/Manual%20de%20consulta%20r%C3%A1pida-%20monitoria.pdf",
+    "locatorPinpoint": "Escala de Morse — Fonte: Urbanetto et al., 2013",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R85",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-OMS-OBESIDADE-2000",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-OMS-OBESIDADE-2000",
+    "title": "Obesity: preventing and managing the global epidemic — cortes de IMC",
+    "sourceType": "GUIDELINE",
+    "authority": "Organização Mundial da Saúde (OMS/WHO)",
+    "locatorUri": "https://www.who.int/publications/i/item/9789240015128",
+    "locatorPinpoint": "Cortes de IMC para adultos (WHO 2000, tabela de référence)",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R85",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-APGAR-1953",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-APGAR-1953",
+    "title": "A proposal for a new method of evaluation of the newborn infant",
+    "sourceType": "PRIMARY_STUDY",
+    "authority": "Current Researches in Anesthesia & Analgesia",
+    "locatorUri": "https://pubmed.ncbi.nlm.nih.gov/",
+    "locatorPinpoint": "Apgar V. Curr Res Anesth Analg. 1953;32(4):260-267",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R85",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
+    "title": "Fórmula clássica de gotejamento",
+    "sourceType": "INTERNAL_GOVERNED",
+    "authority": "Prática assistencial de gotejamento",
+    "locatorUri": "",
+    "locatorPinpoint": "gts/min = (volume em mL × fator do equipo) / tempo em minutos",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R85",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  }
+ ],
+ "releaseGate": "HOLD_HUMAN",
+ "mainModified": false,
+ "sourceModified": false,
+ "notes": [
+  "Intake de evidencia, nao admissao: listar a linha nao e prova de que a fonte qualifies.",
+  "O contrato `source` (contracts/cko-skeleton/catalog/cko-data.json, id `source`) declara integrity.sha256 com pattern ^[a-f0-9]{64}$ e integrity.additionalProperties false: nao existe estado para 'documento nao preservado'.",
+  "SRC-GOTEJAMENTO-FORMULA-CLASSICA e INTERNAL_GOVERNED e descreve uma formula sem documento-fonte: nenhum documento pode existir para satisfazer o contrato actual - a emenda do contrato e a unica via para essa fonte.",
+  "As outras quatro tem documento localizavel (Rev Esc Enferm USP 1999; manual de consulta CAPES; WHO 2000; Apgar 1953) mas a captura nao esta no pacote e o hash nao pode ser inventado."
+ ],
+ "verification": {
+  "measuredBy": "owner",
+  "method": "execucao do portao + leitura do contrato canonico + leitura das 43 instancias canonicas em registers/governance/transversal-source-instances/",
+  "result": "GAP_CONFIRMED_PENDING_OWNER_DECISION"
+ }
+}

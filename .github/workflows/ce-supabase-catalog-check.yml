@@ -9,6 +9,7 @@ on:
       - scripts/ce-reconcile-supabase-catalog.mjs
       - scripts/ce-supabase-inventory-readonly.sh
       - scripts/sql/ce-supabase-catalog-readonly.sql
+      - scripts/sql/ce-supabase-governance-readonly.sql
       - tests/ce-reconcile-supabase-catalog.test.mjs
       - .github/workflows/ce-supabase-catalog-check.yml
 
@@ -33,5 +34,6 @@ jobs:
       - name: Guarda de transacao somente leitura
         run: |
           grep -q 'BEGIN TRANSACTION READ ONLY;' scripts/sql/ce-supabase-catalog-readonly.sql
+          grep -q 'BEGIN TRANSACTION READ ONLY;' scripts/sql/ce-supabase-governance-readonly.sql
           grep -q 'default_transaction_read_only=on' scripts/ce-supabase-inventory-readonly.sh
           echo 'PASS: static read-only intent (not a runtime authorization)'

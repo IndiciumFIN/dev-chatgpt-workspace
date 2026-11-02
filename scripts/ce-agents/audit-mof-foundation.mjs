@@ -37,6 +37,9 @@ const mof=cross.rows.find(x=>x.reference==='OMG MOF 2.5.1');
 if(!mof||mof.claim_level!=='REFERENCE_ONLY')gaps.push('MOF_UNSUPPORTED_CONFORMANCE_CLAIM');
 const regIds=new Set(reg.map(s=>s.source_id));
 for(const id of ['SRC-OMG-MOF-2.5.1','SRC-ISO-11179-3-2023','SRC-ISO-11179-35-2023'])if(!regIds.has(id))gaps.push('MISSING_SOURCE_REGISTRY:'+id);
+const defs=JSON.parse(readFileSync(join(evidence,'DEFINITION_FAMILY_REGISTRY_CANDIDATE_V2.json'),'utf8'));
+if(defs.status!=='SCHOOL_QUARANTINE_CANDIDATE'||defs.denominator.definition_kinds!==defs.definition_kinds.length)gaps.push('DEFINITION_FAMILY_EVIDENCE_UNRECONCILED');
+if(!defs.admission_rules.some(x=>x.includes('descriptor-shaped objects MUST NOT bind')))gaps.push('M3_DESCRIPTOR_SCHEMA_GUARD_MISSING');
 const n=docs.reduce((s,d)=>s+d.tables.length,0),cols=docs.reduce((s,d)=>s+d.tables.reduce((a,t)=>a+t.columns.length,0),0);
 if(n!==606||cols!==6486)gaps.push('DATABASE_SNAPSHOT_COUNT_DRIFT');
 const record={
@@ -46,7 +49,7 @@ const record={
   basis:'source metadata only; no licensed texts; no claims of clause compliance',
   snapshot:{schemas:docs.length,tables:n,columns:cols},existing:coverage,
   mappings:{M3:'meta-metamodel grammar / validation',M2:'governed metamodel and vocabulary',M1:'declarative or executable model',M0:'instances and audit evidence'},
-  sourceRegistryCount:reg.length,crosswalkCount:cross.rows.length,findings:gaps,
+  sourceRegistryCount:reg.length,crosswalkCount:cross.rows.length,definitionFamilyKinds:defs.definition_kinds.length,definitionFamilyStatus:defs.status,findings:gaps,
   note:'No new MOF table created: semantic equivalence with existing structural entities must be validated first.',
   release:'HOLD_HUMAN',productionWrite:false,fullDdlParity:false
 };

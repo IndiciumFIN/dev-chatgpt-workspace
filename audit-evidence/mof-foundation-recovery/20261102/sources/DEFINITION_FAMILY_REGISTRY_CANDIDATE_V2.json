@@ -1,0 +1,172 @@
+{
+  "registry_id": "CKO-DEFINITION-FAMILY-REGISTRY-CANDIDATE-V2",
+  "status": "SCHOOL_QUARANTINE_CANDIDATE",
+  "denominator": {
+    "definition_kinds": 13,
+    "lexical_exclusions": 5
+  },
+  "rule": "Definition is an overloaded lexical term, not a universal canonical payload. A type is minted only when project evidence proves distinct semantics and applicability.",
+  "definition_kinds": [
+    {
+      "definition_kind": "ARTIFACT_DEFINITION_DESCRIPTOR",
+      "category": "OBJECT_DESCRIPTOR",
+      "standalone": "CONDITIONAL",
+      "physical_state": "PROVEN",
+      "source": "bootstrap content/m3/definition.json; M3 rc3/v0.3 *.definition.json",
+      "meaning": "Describes artifact/model identity, version, status, role, model chain and non-claims. It is not the full metamodel payload.",
+      "contract_state": "MISSING_EXPLICIT_DEDICATED_SCHEMA",
+      "next": "Create/recover Artifact Definition Descriptor profile/schema; fix bootstrap wrong schema binding."
+    },
+    {
+      "definition_kind": "METAMODEL_DEFINITION",
+      "category": "MODEL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "PROVEN_SCHEMA",
+      "source": "cko.m3.metamodel-definition.schema.json",
+      "meaning": "Full metamodel definition with metamodel identity/version/root_class/classes/relationships/constraints/bindings.",
+      "contract_state": "PHYSICAL_SCHEMA_PROVEN",
+      "next": "Reconcile with current M3 schema family; do not confuse with descriptor."
+    },
+    {
+      "definition_kind": "JOB_DEFINITION",
+      "category": "EXECUTION_CONTROL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "PROVEN_CANDIDATE",
+      "source": "Foundation Master Spec §5.1 + job_definition.m2.json in prior lab package",
+      "meaning": "Reusable job definition, distinct from execution_run/execution_step.",
+      "contract_state": "PRE_CANONICAL_CANDIDATE",
+      "next": "Recover/profile/validate before promotion."
+    },
+    {
+      "definition_kind": "GATE_DEFINITION",
+      "category": "VALIDATION_CONTROL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "NOT_PROVEN_IN_CURRENT_CORPUS",
+      "source": "Foundation Master Spec §5.4",
+      "meaning": "Reusable gate/control criterion, distinct from gate_run.",
+      "contract_state": "HOLD_RECOVERY_REQUIRED",
+      "next": "Recover existing schema/profile or prove it never materialized."
+    },
+    {
+      "definition_kind": "MONITOR_DEFINITION",
+      "category": "MONITORING_CONTROL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "NOT_PROVEN_IN_CURRENT_CORPUS",
+      "source": "Foundation Master Spec §24",
+      "meaning": "Normative/source monitoring configuration, distinct from monitor_run/monitor_observation.",
+      "contract_state": "HOLD_RECOVERY_REQUIRED",
+      "next": "Recover existing schema/profile or prove it never materialized."
+    },
+    {
+      "definition_kind": "CONTENT_DEFINITION",
+      "category": "CONTENT_ENTITY_TYPE",
+      "standalone": "YES",
+      "physical_state": "NOT_PROVEN_IN_CURRENT_CORPUS",
+      "source": "Foundation Master Spec §21 Content Library type Definition",
+      "meaning": "Reusable content entity whose content type is Definition.",
+      "contract_state": "HOLD_RECOVERY_REQUIRED",
+      "next": "Recover ContentEntity profile for type Definition and its fields/applicability."
+    },
+    {
+      "definition_kind": "REGISTRY_ITEM_DEFINITION_SECTION",
+      "category": "METADATA_SECTION",
+      "standalone": "NO_UNLESS_PROFILE_SAYS_SO",
+      "physical_state": "CONCEPT_PROVEN",
+      "source": "Foundation Master Spec §31 RegistryItem → Definition",
+      "meaning": "Definition metadata section of a registry item.",
+      "contract_state": "SECTION_CONTRACT_NOT_PHYSICALLY_PROVEN",
+      "next": "Recover RegistryItem contract; do not create standalone artifact automatically."
+    },
+    {
+      "definition_kind": "CONCEPT_DEFINITION",
+      "category": "SEMANTIC_ASSERTION_OBJECT",
+      "standalone": "YES_OR_EMBEDDED_BY_PROFILE",
+      "physical_state": "CONCEPT_PROVEN",
+      "source": "Foundation Master Spec §31 ConceptDefinition",
+      "meaning": "Definition attached to a semantic Concept within a ConceptSystem.",
+      "contract_state": "PHYSICAL_SCHEMA_NOT_PROVEN",
+      "next": "Recover ConceptSystem/ConceptDefinition profile and provenance rules."
+    },
+    {
+      "definition_kind": "WORKFLOW_DEFINITION",
+      "category": "M2_PROCESS_MODEL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "M2_CLASS_STUB_PROVEN",
+      "source": "M2 Core Catalog rc3 class CLS-WORKFLOWDEFINITION",
+      "meaning": "Definition of workflow structure/version lineage, distinct from WorkflowInstance and NodeExecution.",
+      "contract_state": "ADEQUACY_NOT_PROVEN_NAME_ONLY_RISK",
+      "next": "Resolve under M2 semantic adequacy remediation; require attributes/relations/lifecycle/invariants/fixtures."
+    },
+    {
+      "definition_kind": "INFORMATION_FLOW_DEFINITION",
+      "category": "M2_INFORMATION_MODEL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "M2_CLASS_STUB_PROVEN",
+      "source": "M2 Core Catalog rc3 class CLS-INFORMATIONFLOWDEFINITION",
+      "meaning": "Definition of information-flow semantics, distinct from InformationTransfer.",
+      "contract_state": "ADEQUACY_NOT_PROVEN_NAME_ONLY_RISK",
+      "next": "Resolve under M2 semantic adequacy remediation."
+    },
+    {
+      "definition_kind": "COMMUNICATION_DEFINITION",
+      "category": "M2_COMMUNICATION_MODEL_OBJECT",
+      "standalone": "YES",
+      "physical_state": "M2_CLASS_STUB_PROVEN",
+      "source": "M2 Core Catalog rc3 class CLS-COMMUNICATIONDEFINITION",
+      "meaning": "Definition of communication model/configuration, distinct from CommunicationOccurrence.",
+      "contract_state": "ADEQUACY_NOT_PROVEN_NAME_ONLY_RISK",
+      "next": "Resolve under M2 semantic adequacy remediation."
+    },
+    {
+      "definition_kind": "BINDING_DEFINITION",
+      "category": "M3_INTERNAL_STRUCTURAL_TYPE",
+      "standalone": "NO",
+      "physical_state": "PROVEN",
+      "source": "M3 schema $defs.bindingDefinition + top-level binding_definitions",
+      "meaning": "Internal M3 structural definition for typed source/target binding records.",
+      "contract_state": "PROVEN_AS_SCHEMA_SUBTYPE",
+      "next": "Do not promote to standalone Artifact Definition unless explicit profile requires."
+    },
+    {
+      "definition_kind": "DEFINITION_OF_DONE",
+      "category": "GOVERNANCE_CRITERIA",
+      "standalone": "NO_BY_DEFAULT",
+      "physical_state": "CONCEPT_PROVEN",
+      "source": "Foundation Master Spec §36",
+      "meaning": "Exit criteria/gate semantics. Contains the word Definition but is governance criteria, not automatically a Definition-family object.",
+      "contract_state": "GOVERNANCE_CRITERIA",
+      "next": "May bind to GateDefinition later; do not conflate by name."
+    }
+  ],
+  "lexical_exclusions": [
+    {
+      "term": "MISSING_REQUIRED_INPUT_DEFINITION",
+      "reason": "failure/error code, not data-object type"
+    },
+    {
+      "term": "policy definition",
+      "reason": "natural-language description in README; canonical type remains Policy unless a typed PolicyDefinition contract is proven"
+    },
+    {
+      "term": "capability definitions",
+      "reason": "natural-language plural description; canonical type remains Capability unless separate type is proven"
+    },
+    {
+      "term": "attribute definition",
+      "reason": "generic descriptive phrase for M3 attribute schema, not a standalone Artifact Definition"
+    },
+    {
+      "term": "M2 definitions",
+      "reason": "collective phrase for objects authored using M3 grammar, not one Definition type"
+    }
+  ],
+  "admission_rules": [
+    "definition_kind MUST resolve to the Definition Family Registry when the object is a Definition-family standalone object",
+    "standalone kinds MUST resolve Artifact/Profile/Schema/Applicability contracts before admission",
+    "embedded section kinds MUST NOT be promoted to standalone artifacts without an explicit profile",
+    "M3 internal schema subtypes MUST NOT be promoted merely because their name contains Definition",
+    "descriptor-shaped objects MUST NOT bind to full metamodel-definition schemas",
+    "Definition-suffix M2 class presence does not prove semantic adequacy",
+    "lexical occurrence of the word definition MUST NOT mint a canonical type"
+  ]
+}

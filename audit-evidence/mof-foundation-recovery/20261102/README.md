@@ -28,6 +28,11 @@ Do **not** create another Kernel, normative registry, agent registry or field di
 - W3C PROV-O: https://www.w3.org/TR/prov-o/ (reference)
 No proprietary ISO text included. The extracted M3 source and crosswalk explicitly disallow a claim of full compliance.
 
+## Recovered definition-family collision
+The recovered Definition Family Audit reported 22 checks (14 PASS, 8 FAIL/HOLD); the v2 candidate distinguishes 13 definition kinds and 5 lexical exclusions. M3 descriptor is not a complete metamodel definition. The bootstrap descriptor/schema binding mismatch is a **HOLD**, not automatically repaired or promoted. See \`sources/DEFINITION_FAMILY_AUDIT_REPORT.md\`, \`sources/DEFINITION_FAMILY_REGISTRY_CANDIDATE_V2.json\`, and original \`sources/CKO_M3_META_METAMODEL_v0.3.0.definition.json\`.
+
+One official ISO amendment source was missing from the historical SOURCE_REGISTRY; its official public metadata is recorded separately in \`OFFICIAL_SOURCE_SUPPLEMENTS.json\` without mutating the original source archive.
+
 ## Executable controls
 `node scripts/ce-agents/audit-mof-foundation.mjs` checks recovered source and required structural tables against pinned read-only snapshots. `scripts/ce-agents/seed-mof-reference-local.mjs` is guarded against any non-loopback URL; it adds official **metadata only** to the isolated local reconstruction and verifies all six reference IDs.
 

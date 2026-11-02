@@ -1,0 +1,29 @@
+{
+  "artifact": "CKO M3 Meta-Metamodel",
+  "version": "0.3.0",
+  "status": {
+    "canonical_status": "PRE_CANONICAL",
+    "environment": "TEST",
+    "production_admission": "DENY",
+    "hosting_binding": "UNBOUND",
+    "note": "Storage/deployment implementation is intentionally not embedded in the metamodel."
+  },
+  "role": "Defines the grammar used to author and validate CKO M2 metamodels.",
+  "model_chain": {
+    "M3": "Meta-metamodel / grammar.",
+    "M2": "Metamodels defining governed resource kinds and semantics.",
+    "M1": "Executable projections such as JSON Schema, SHACL, OPA/Rego, SQL DDL and contracts.",
+    "M0": "Concrete governed resource instances and artifact metadata."
+  },
+  "non_goals": [
+    "Does not prescribe local filesystem, cloud provider, Supabase, Vercel or any host.",
+    "Does not make the Kernel cognitive.",
+    "Does not claim full ISO/IEC 11179 conformity without clause-level licensed-source validation."
+  ],
+  "hosting_future_profile": {
+    "candidate_frontend": "React / Next.js / Vercel",
+    "candidate_operational_database": "PostgreSQL / Supabase",
+    "status": "OPEN_DEPLOYMENT_DECISION",
+    "rule": "Hosting is a deployment profile and must not alter canonical object semantics."
+  }
+}

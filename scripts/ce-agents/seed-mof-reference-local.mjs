@@ -10,6 +10,7 @@ if(process.env.CE_LOCAL_ONLY!=='YES'||!url)throw Error('LOCAL_ONLY_GUARD_REQUIRE
 const u=new URL(url);
 if(!['127.0.0.1','localhost','[::1]'].includes(u.hostname)||!['postgres:','postgresql:'].includes(u.protocol)||u.pathname!=='/postgres')throw Error('REMOTE_DATABASE_PROHIBITED');
 const reg=JSON.parse(readFileSync(join(root,'audit-evidence/mof-foundation-recovery/20261102/sources/SOURCE_REGISTRY.json'),'utf8'));
+const supplemental=JSON.parse(readFileSync(join(root,'audit-evidence/mof-foundation-recovery/20261102/OFFICIAL_SOURCE_SUPPLEMENTS.json'),'utf8'));
 const official={
  'SRC-OMG-MOF-2.5.1':['https://www.omg.org/spec/MOF/2.5.1','REFERENCE_ONLY'],
  'SRC-ISO-11179-3-2023':['https://www.iso.org/standard/78915.html','PARTIAL'],
@@ -24,7 +25,7 @@ const imported=[],missing=[],conflicts=[];
 try{
  await db.query('BEGIN');
  for(const [sourceId,[uri,level]] of Object.entries(official)){
-  const source=reg.find(x=>x.source_id===sourceId);
+  const source=reg.find(x=>x.source_id===sourceId)||supplemental.find(x=>x.source_id===sourceId);
   if(!source){missing.push(sourceId);continue;}
   const got=await db.query('SELECT title, official_uri FROM cko_governance.normative_reference_catalog WHERE normative_ref=$1 FOR UPDATE',[sourceId]);
   if(got.rows.length){

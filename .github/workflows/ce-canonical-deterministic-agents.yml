@@ -61,11 +61,16 @@ jobs:
         shell: bash
         run: |
           test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
-          git add audit-evidence/supabase-canonical/20261101/schemas/
+          test -f artifacts/ce-agents/skeleton/index.json
+          mkdir -p registers/canonical/supabase-skeleton/20261101
+          mkdir -p audit-evidence/supabase-canonical/20261101/validation
+          cp -R artifacts/ce-agents/skeleton/. registers/canonical/supabase-skeleton/20261101/
+          cp artifacts/ce-agents/checker.json artifacts/ce-agents/audit.json artifacts/ce-agents/run-summary.json audit-evidence/supabase-canonical/20261101/validation/
+          git add audit-evidence/supabase-canonical/20261101/schemas/ audit-evidence/supabase-canonical/20261101/validation/ registers/canonical/supabase-skeleton/20261101/
           if ! git diff --cached --quiet; then
             git config user.name 'CE Deterministic Catalog Agent'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'chore(db): deterministic read-only schema metadata snapshot [WO-CE-DB-SKELETON-001]'
+            git commit -m 'chore(db): materialize 45-schema canonical skeleton candidate [WO-CE-DB-SKELETON-001]'
             git push origin HEAD:canonical/supabase-skeleton-20261101
           fi
       - name: Fail closed until full baseline is validated

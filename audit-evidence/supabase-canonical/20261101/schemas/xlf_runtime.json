@@ -1,0 +1,721 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_runtime",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 6,
+    "columns": 54,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "activity_event",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "activity_event_pkey",
+          "definition": "CREATE UNIQUE INDEX activity_event_pkey ON xlf_runtime.activity_event USING btree (session_id, event_id)"
+        },
+        {
+          "name": "activity_event_session_id_sequence_key",
+          "definition": "CREATE UNIQUE INDEX activity_event_session_id_sequence_key ON xlf_runtime.activity_event USING btree (session_id, sequence)"
+        },
+        {
+          "name": "ix_xlf_event_session_sequence",
+          "definition": "CREATE INDEX ix_xlf_event_session_sequence ON xlf_runtime.activity_event USING btree (session_id, sequence)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "activity_event_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (session_id, event_id)"
+        },
+        {
+          "name": "activity_event_sequence_check",
+          "type": "c",
+          "definition": "CHECK ((sequence >= 1))"
+        },
+        {
+          "name": "activity_event_session_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (session_id) REFERENCES xlf_runtime.activity_session(session_id)"
+        },
+        {
+          "name": "activity_event_session_id_sequence_key",
+          "type": "u",
+          "definition": "UNIQUE (session_id, sequence)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "activity_evidence",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "activity_evidence_pkey",
+          "definition": "CREATE UNIQUE INDEX activity_evidence_pkey ON xlf_runtime.activity_evidence USING btree (session_id, assertion_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "activity_evidence_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (session_id, assertion_id)"
+        },
+        {
+          "name": "activity_evidence_session_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (session_id) REFERENCES xlf_runtime.activity_session(session_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "activity_session",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "activity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "activity_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "machine_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "next_sequence",
+          "type": "bigint",
+          "default": "1",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "privacy_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "activity_session_pkey",
+          "definition": "CREATE UNIQUE INDEX activity_session_pkey ON xlf_runtime.activity_session USING btree (session_id)"
+        },
+        {
+          "name": "ix_xlf_activity_session_definition",
+          "definition": "CREATE INDEX ix_xlf_activity_session_definition ON xlf_runtime.activity_session USING btree (activity_id, activity_version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "activity_session_activity_id_activity_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (activity_id, activity_version) REFERENCES xlf_sim.activity_definition(activity_id, version)"
+        },
+        {
+          "name": "activity_session_next_sequence_check",
+          "type": "c",
+          "definition": "CHECK ((next_sequence >= 1))"
+        },
+        {
+          "name": "activity_session_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (session_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "competency_observation",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assessment_rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "learning_resource_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "context",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "privacy_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revalidation_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "competency_observation_pkey",
+          "definition": "CREATE UNIQUE INDEX competency_observation_pkey ON xlf_runtime.competency_observation USING btree (observation_id)"
+        },
+        {
+          "name": "ix_xlf_observation_assessment",
+          "definition": "CREATE INDEX ix_xlf_observation_assessment ON xlf_runtime.competency_observation USING btree (assessment_rule_id)"
+        },
+        {
+          "name": "ix_xlf_observation_competency",
+          "definition": "CREATE INDEX ix_xlf_observation_competency ON xlf_runtime.competency_observation USING btree (competency_id)"
+        },
+        {
+          "name": "ix_xlf_observation_resource",
+          "definition": "CREATE INDEX ix_xlf_observation_resource ON xlf_runtime.competency_observation USING btree (learning_resource_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "competency_observation_assessment_rule_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (assessment_rule_id) REFERENCES xlf_learning.assessment_rule(assessment_rule_id)"
+        },
+        {
+          "name": "competency_observation_competency_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (competency_id) REFERENCES xlf_learning.competency_definition(competency_id)"
+        },
+        {
+          "name": "competency_observation_learning_resource_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (learning_resource_id) REFERENCES xlf_learning.learning_resource(learning_resource_id)"
+        },
+        {
+          "name": "competency_observation_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (observation_id)"
+        },
+        {
+          "name": "competency_observation_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = ANY (ARRAY['NOT_OBSERVED'::text, 'PRACTICING'::text, 'DEMONSTRATED_IN_SIMULATION'::text, 'DEMONSTRATED_IN_CONTEXT'::text, 'REVALIDATION_DUE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "human_context_session",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "intent_type_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "profession_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "task_context",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "preferred_learning_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "accessibility_preferences",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "privacy_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "consent_flags",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "human_context_session_pkey",
+          "definition": "CREATE UNIQUE INDEX human_context_session_pkey ON xlf_runtime.human_context_session USING btree (session_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "human_context_session_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (session_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "learning_event",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "learning_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_learning_event_object",
+          "definition": "CREATE INDEX ix_xlf_learning_event_object ON xlf_runtime.learning_event USING btree (learning_object_id)"
+        },
+        {
+          "name": "learning_event_pkey",
+          "definition": "CREATE UNIQUE INDEX learning_event_pkey ON xlf_runtime.learning_event USING btree (event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "learning_event_learning_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (learning_object_id) REFERENCES xlf_reg.learning_object(learning_object_id)"
+        },
+        {
+          "name": "learning_event_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (event_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

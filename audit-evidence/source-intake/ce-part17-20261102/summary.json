@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_ARCHIVE_TRIAGE_CANDIDATE_NOT_SOURCE_REPLAY",
+  "workOrder": "WO-CE-DB-SKELETON-001",
+  "source": {
+    "filename": "ce-part-17.zip",
+    "sha256": "454709e87b27f72ac395c0ca0f0452266a31677882a0764ea7d810f8c2e1380a",
+    "innerParts": 25,
+    "rejoinedZipSha256": "236fc60034d88213c353b8b41ac43f7ec6a00ea8542761206a6a797973b1f071",
+    "zipIntegrity": "PASS",
+    "sourceFileCount": 6720,
+    "uncompressedBytes": 171070176,
+    "sqlFiles": 19,
+    "sourceDate": "2026-11-02"
+  },
+  "sourceMainBuckets": {
+    "src": 3864,
+    "_archive": 1445,
+    "upload": 939,
+    "public": 301,
+    "scripts": 139
+  },
+  "suppliedAudit": {
+    "reference": "audit-report.json inside user archive",
+    "statedScenarios": 21,
+    "statedPass": 20,
+    "statedFail": 1,
+    "verifiedFail": "KER-01 missing authority_binding: sbar and nanda-nic-noc",
+    "falseGreenReview": "MST-04 marked PASS despite its diagnostic reporting 3 generated file freshness divergences",
+    "acceptAsIndependentApproval": false
+  },
+  "gitCrosswalk": {
+    "comparison": "12 selected file blobs compared by exact Git SHA-1 across 6 refs; NOT full ZIP coverage",
+    "mainSha": "152f8b1eac55f78d68375c79fceedc5805398663",
+    "matchesByRef": {
+      "main": [],
+      "canonical/foundation-20261101@236bd810": [
+        "src/data/registers/governance/entity-contracts-release.v1.json",
+        "scripts/migrate.mjs"
+      ],
+      "grook_10_26@2eacacaf": [],
+      "canonical/local-20261101@8c0c4b6f": [
+        "src/data/registers/governance/entity-contracts-release.v1.json",
+        "scripts/migrate.mjs"
+      ],
+      "integration/structural-overlay-20261101@621f73b5": [
+        "scripts/migrate.mjs"
+      ],
+      "canonical/supabase-skeleton-20261101@65ee59bc": []
+    }
+  },
+  "fullBranchAudit": {
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "workflowRun": 41381915865,
+    "observedRefs": 37,
+    "sourceBranches": 36,
+    "distinctMissingOrChangedPaths": 14845,
+    "conflictPaths": 174,
+    "totalSourceDiffOccurrences": 66804
+  },
+  "limits": [
+    "Archive consists of an application workspace, not a 606-table PostgreSQL dump.",
+    "Selected-file SHA comparison is not a complete crosswalk of archive bytes.",
+    "GitHub is public: do not commit the entire unreviewed ZIP, secrets, personal records or proprietary norm texts.",
+    "Do not use _archive as active code without policies and source evidence.",
+    "Supabase managed schemas are not candidates for blind replay.",
+    "No release/clinical approval, merge, or production DB writes."
+  ]
+}

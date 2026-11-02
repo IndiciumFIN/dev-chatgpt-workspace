@@ -1,0 +1,901 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_curiosidades_v1",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-01",
+  "integrity": {
+    "tables": 9,
+    "columns": 68,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_findings",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rule_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detail",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_findings_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_findings_pkey ON ce_curiosidades_v1.audit_findings USING btree (id)"
+        },
+        {
+          "name": "audit_findings_slug_rule_code_detail_key",
+          "definition": "CREATE UNIQUE INDEX audit_findings_slug_rule_code_detail_key ON ce_curiosidades_v1.audit_findings USING btree (slug, rule_code, detail)"
+        },
+        {
+          "name": "ce_curi_findings_status_ix",
+          "definition": "CREATE INDEX ce_curi_findings_status_ix ON ce_curiosidades_v1.audit_findings USING btree (status, severity)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_findings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "audit_findings_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['INFO'::text, 'WARN'::text, 'ERROR'::text, 'BLOCKER'::text])))"
+        },
+        {
+          "name": "audit_findings_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug) ON DELETE CASCADE"
+        },
+        {
+          "name": "audit_findings_slug_rule_code_detail_key",
+          "type": "u",
+          "definition": "UNIQUE (slug, rule_code, detail)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_runs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "batch",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "pages_examined",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confirmed_references",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_runs_pkey ON ce_curiosidades_v1.audit_runs USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "citation_remediation",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "old_source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "new_source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": "'TOPICAL_MATCH_REVIEW_REQUIRED'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revision",
+          "type": "text",
+          "default": "'v1.2.0'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "citation_remediation_pkey",
+          "definition": "CREATE UNIQUE INDEX citation_remediation_pkey ON ce_curiosidades_v1.citation_remediation USING btree (slug, old_source_id, revision)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "citation_remediation_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug, old_source_id, revision)"
+        },
+        {
+          "name": "citation_remediation_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "media_registry",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "media_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "media_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attribution",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "license_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "default": "'UNVERIFIED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "production_status",
+          "type": "text",
+          "default": "'PROPOSED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "media_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX media_registry_pkey ON ce_curiosidades_v1.media_registry USING btree (slug, media_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "media_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug, media_key)"
+        },
+        {
+          "name": "media_registry_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "page_revision_snapshots",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revision",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prior_content",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "corrected_content",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_scope",
+          "type": "text",
+          "default": "'PARTIAL'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editorial_state",
+          "type": "text",
+          "default": "'STAGED_NOT_APPROVED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "page_revision_snapshots_pkey",
+          "definition": "CREATE UNIQUE INDEX page_revision_snapshots_pkey ON ce_curiosidades_v1.page_revision_snapshots USING btree (id)"
+        },
+        {
+          "name": "page_revision_snapshots_slug_revision_key",
+          "definition": "CREATE UNIQUE INDEX page_revision_snapshots_slug_revision_key ON ce_curiosidades_v1.page_revision_snapshots USING btree (slug, revision)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "page_revision_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "page_revision_snapshots_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug)"
+        },
+        {
+          "name": "page_revision_snapshots_slug_revision_key",
+          "type": "u",
+          "definition": "UNIQUE (slug, revision)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "page_sources",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_in",
+          "type": "text",
+          "default": "'content'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "page_sources_pkey",
+          "definition": "CREATE UNIQUE INDEX page_sources_pkey ON ce_curiosidades_v1.page_sources USING btree (slug, source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "page_sources_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug, source_id)"
+        },
+        {
+          "name": "page_sources_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "pages",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_package",
+          "type": "text",
+          "default": "'curiosidades_v0.2.0-final'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_json",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "html_source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "section_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_status",
+          "type": "text",
+          "default": "'IMPORTED_UNVERIFIED'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ce_curi_pages_status_ix",
+          "definition": "CREATE INDEX ce_curi_pages_status_ix ON ce_curiosidades_v1.pages USING btree (content_status, category)"
+        },
+        {
+          "name": "pages_pkey",
+          "definition": "CREATE UNIQUE INDEX pages_pkey ON ce_curiosidades_v1.pages USING btree (slug)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pages_content_status_check",
+          "type": "c",
+          "definition": "CHECK ((content_status = ANY (ARRAY['IMPORTED_UNVERIFIED'::text, 'BLOCKED_SOURCE'::text, 'NEEDS_REVIEW'::text, 'VALIDATED'::text, 'APPROVED'::text, 'PUBLISHED'::text])))"
+        },
+        {
+          "name": "pages_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "pmo_page_gates",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_page_gates_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_page_gates_pkey ON ce_curiosidades_v1.pmo_page_gates USING btree (slug, gate_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_page_gates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug, gate_code)"
+        },
+        {
+          "name": "pmo_page_gates_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_curiosidades_v1.pages(slug)"
+        },
+        {
+          "name": "pmo_page_gates_status_ck",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['PENDING'::text, 'BLOCKED'::text, 'PASSED'::text, 'HOLD_HUMAN'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "organization",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_year",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "doi",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "default": "'NOT_ASSESSED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "web_status",
+          "type": "text",
+          "default": "'NOT_CHECKED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validated_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sources_pkey",
+          "definition": "CREATE UNIQUE INDEX sources_pkey ON ce_curiosidades_v1.sources USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "sources_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

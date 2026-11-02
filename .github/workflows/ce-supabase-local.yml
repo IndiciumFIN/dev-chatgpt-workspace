@@ -6,6 +6,7 @@ on:
       - canonical/supabase-skeleton-20261101
     paths:
       - 'scripts/ce-agents/branch-crosswalk.mjs'
+      - 'scripts/ce-agents/replay-local-catalog.mjs'
       - '.github/workflows/ce-supabase-local.yml'
 permissions:
   contents: write
@@ -53,12 +54,26 @@ jobs:
           if [ -d supabase/migrations ]; then
             echo 'Existing migration directory detected; no auto-migration, reset, or linked push authorized'
           fi
+      - name: Install locked dependencies for local catalog agent
+        run: npm ci --ignore-scripts
       - name: Launch isolated local Supabase stack
         run: |
           supabase start > /tmp/ce-supabase-start.log 2>&1 || { echo 'Local stack bootstrap failed; details withheld to avoid leaking service keys'; exit 1; }
           supabase status > /dev/null
           supabase gen types typescript --local > /tmp/ce-local-types.ts
           test -s /tmp/ce-local-types.ts
+      - name: Replay 45 schema snapshots to LOCAL catalog and verify 606 tables by readback
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          if [ -z "$CE_DB_LOCAL_URL" ]; then
+            echo 'LOCAL_CATALOG_HOLD: missing local database URL'
+            exit 2
+          fi
+          export CE_DB_LOCAL_URL
+          node scripts/ce-agents/replay-local-catalog.mjs
       - name: Stage generated non-secret config in candidate branch only
         run: |
           test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
@@ -67,6 +82,9 @@ jobs:
             git config user.name 'CE Supabase Local Bootstrap'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git commit -m 'chore(supabase): version CLI-generated local configuration [WO-CE-DB-SKELETON-001]'
+            # Do not force-push; reconcile concurrent snapshot commits deterministically.
+            git fetch origin canonical/supabase-skeleton-20261101
+            git rebase origin/canonical/supabase-skeleton-20261101
             git push origin HEAD:canonical/supabase-skeleton-20261101
           fi
       - name: Store local TypeScript schema verification
@@ -77,6 +95,7 @@ jobs:
           path: |
             supabase/config.toml
             /tmp/ce-local-types.ts
+            artifacts/ce-agents/local-catalog-replay.json
           if-no-files-found: warn
       - name: Clean up ephemeral stack
         if: always()

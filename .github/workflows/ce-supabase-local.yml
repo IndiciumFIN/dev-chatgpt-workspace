@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/ce-agents/branch-crosswalk.mjs'
       - 'scripts/ce-agents/replay-local-catalog.mjs'
+      - 'scripts/ce-agents/replay-local-skeleton.mjs'
       - '.github/workflows/ce-supabase-local.yml'
 permissions:
   contents: write
@@ -90,6 +91,16 @@ jobs:
           fi
           export CE_DB_LOCAL_URL
           node scripts/ce-agents/replay-local-catalog.mjs
+      - name: Build 562 isolated LOCAL application skeleton tables from catalog
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          if [ -z "$CE_DB_LOCAL_URL" ]; then exit 2; fi
+          export CE_DB_LOCAL_URL
+          node scripts/ce-agents/replay-local-skeleton.mjs
+          node scripts/ce-agents/verify-full-ddl-local.mjs
       - name: Stage generated non-secret config in candidate branch only
         run: |
           test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
@@ -112,6 +123,8 @@ jobs:
             supabase/config.toml
             /tmp/ce-local-types.ts
             artifacts/ce-agents/local-catalog-replay.json
+            artifacts/ce-agents/local-app-skeleton.json
+            artifacts/ce-agents/full-ddl-parity-summary.json
           if-no-files-found: warn
       - name: Clean up ephemeral stack
         if: always()

@@ -1,0 +1,811 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_md",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 9,
+    "columns": 52,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "category",
+      "columns": [
+        {
+          "name": "category_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "category_name_pt_br_key",
+          "definition": "CREATE UNIQUE INDEX category_name_pt_br_key ON xlf_md.category USING btree (name_pt_br)"
+        },
+        {
+          "name": "category_pkey",
+          "definition": "CREATE UNIQUE INDEX category_pkey ON xlf_md.category USING btree (category_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "category_name_pt_br_key",
+          "type": "u",
+          "definition": "UNIQUE (name_pt_br)"
+        },
+        {
+          "name": "category_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (category_id)"
+        },
+        {
+          "name": "category_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "client",
+      "columns": [
+        {
+          "name": "client_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "surface",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "os",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "client_pkey",
+          "definition": "CREATE UNIQUE INDEX client_pkey ON xlf_md.client USING btree (client_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "client_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (client_id)"
+        },
+        {
+          "name": "client_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'PLANNED'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "code_list_item",
+      "columns": [
+        {
+          "name": "list_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "label_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "code_list_item_pkey",
+          "definition": "CREATE UNIQUE INDEX code_list_item_pkey ON xlf_md.code_list_item USING btree (list_name, item_id)"
+        },
+        {
+          "name": "ix_xlf_code_list_name_code",
+          "definition": "CREATE INDEX ix_xlf_code_list_name_code ON xlf_md.code_list_item USING btree (list_name, code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "code_list_item_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (list_name, item_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "command",
+      "columns": [
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "legacy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "canonical_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "category_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "level_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "runtime_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "runtime_target",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "command_canonical_key_key",
+          "definition": "CREATE UNIQUE INDEX command_canonical_key_key ON xlf_md.command USING btree (canonical_key)"
+        },
+        {
+          "name": "command_canonical_uri_key",
+          "definition": "CREATE UNIQUE INDEX command_canonical_uri_key ON xlf_md.command USING btree (canonical_uri)"
+        },
+        {
+          "name": "command_legacy_id_key",
+          "definition": "CREATE UNIQUE INDEX command_legacy_id_key ON xlf_md.command USING btree (legacy_id)"
+        },
+        {
+          "name": "command_pkey",
+          "definition": "CREATE UNIQUE INDEX command_pkey ON xlf_md.command USING btree (command_id)"
+        },
+        {
+          "name": "ix_xlf_command_category",
+          "definition": "CREATE INDEX ix_xlf_command_category ON xlf_md.command USING btree (category_id)"
+        },
+        {
+          "name": "ix_xlf_command_level",
+          "definition": "CREATE INDEX ix_xlf_command_level ON xlf_md.command USING btree (level_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "command_canonical_key_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_key)"
+        },
+        {
+          "name": "command_canonical_uri_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_uri)"
+        },
+        {
+          "name": "command_category_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (category_id) REFERENCES xlf_md.category(category_id)"
+        },
+        {
+          "name": "command_legacy_id_key",
+          "type": "u",
+          "definition": "UNIQUE (legacy_id)"
+        },
+        {
+          "name": "command_level_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (level_id) REFERENCES xlf_md.proficiency_level(level_id)"
+        },
+        {
+          "name": "command_lifecycle_status_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_status = ANY (ARRAY['IMPORTED_CANDIDATE'::text, 'EVIDENCE_PENDING'::text, 'VALIDATED'::text, 'APPROVED'::text, 'PUBLISHED'::text, 'HOLD'::text, 'DEPRECATED'::text, 'SUPERSEDED'::text])))"
+        },
+        {
+          "name": "command_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (command_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "keyboard_layout",
+      "columns": [
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale_hint",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verification_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "keyboard_layout_pkey",
+          "definition": "CREATE UNIQUE INDEX keyboard_layout_pkey ON xlf_md.keyboard_layout USING btree (keyboard_layout_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "keyboard_layout_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (keyboard_layout_id)"
+        },
+        {
+          "name": "keyboard_layout_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'INACTIVE'::text, 'VERIFY_PENDING'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "locale",
+      "columns": [
+        {
+          "name": "locale_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "bcp47",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "language",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "region",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "locale_bcp47_key",
+          "definition": "CREATE UNIQUE INDEX locale_bcp47_key ON xlf_md.locale USING btree (bcp47)"
+        },
+        {
+          "name": "locale_pkey",
+          "definition": "CREATE UNIQUE INDEX locale_pkey ON xlf_md.locale USING btree (locale_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "locale_bcp47_key",
+          "type": "u",
+          "definition": "UNIQUE (bcp47)"
+        },
+        {
+          "name": "locale_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (locale_id)"
+        },
+        {
+          "name": "locale_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "platform",
+      "columns": [
+        {
+          "name": "platform_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "client",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "os",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "platform_pkey",
+          "definition": "CREATE UNIQUE INDEX platform_pkey ON xlf_md.platform USING btree (platform_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "platform_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (platform_id)"
+        },
+        {
+          "name": "platform_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'PLANNED'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "profession",
+      "columns": [
+        {
+          "name": "profession_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "profession_code_key",
+          "definition": "CREATE UNIQUE INDEX profession_code_key ON xlf_md.profession USING btree (code)"
+        },
+        {
+          "name": "profession_pkey",
+          "definition": "CREATE UNIQUE INDEX profession_pkey ON xlf_md.profession USING btree (profession_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "profession_code_key",
+          "type": "u",
+          "definition": "UNIQUE (code)"
+        },
+        {
+          "name": "profession_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (profession_id)"
+        },
+        {
+          "name": "profession_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "proficiency_level",
+      "columns": [
+        {
+          "name": "level_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "proficiency_level_code_key",
+          "definition": "CREATE UNIQUE INDEX proficiency_level_code_key ON xlf_md.proficiency_level USING btree (code)"
+        },
+        {
+          "name": "proficiency_level_pkey",
+          "definition": "CREATE UNIQUE INDEX proficiency_level_pkey ON xlf_md.proficiency_level USING btree (level_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "proficiency_level_code_key",
+          "type": "u",
+          "definition": "UNIQUE (code)"
+        },
+        {
+          "name": "proficiency_level_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (level_id)"
+        },
+        {
+          "name": "proficiency_level_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'INACTIVE'::text, 'DEPRECATED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cron",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": true,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 2,
+    "columns": 19,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "job",
+      "columns": [
+        {
+          "name": "jobid",
+          "type": "bigint",
+          "default": "nextval('cron.jobid_seq'::regclass)",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schedule",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "nodename",
+          "type": "text",
+          "default": "'localhost'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "nodeport",
+          "type": "integer",
+          "default": "inet_server_port()",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "database",
+          "type": "text",
+          "default": "current_database()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "username",
+          "type": "text",
+          "default": "CURRENT_USER",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jobname",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "job_pkey",
+          "definition": "CREATE UNIQUE INDEX job_pkey ON cron.job USING btree (jobid)"
+        },
+        {
+          "name": "jobname_username_uniq",
+          "definition": "CREATE UNIQUE INDEX jobname_username_uniq ON cron.job USING btree (jobname, username)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "job_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (jobid)"
+        },
+        {
+          "name": "jobname_username_uniq",
+          "type": "u",
+          "definition": "UNIQUE (jobname, username)"
+        }
+      ],
+      "policy_names": [
+        "cron_job_policy"
+      ]
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "job_run_details",
+      "columns": [
+        {
+          "name": "jobid",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "runid",
+          "type": "bigint",
+          "default": "nextval('cron.runid_seq'::regclass)",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "job_pid",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "database",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "username",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "command",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "return_message",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "start_time",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "end_time",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "job_run_details_pkey",
+          "definition": "CREATE UNIQUE INDEX job_run_details_pkey ON cron.job_run_details USING btree (runid)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "job_run_details_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (runid)"
+        }
+      ],
+      "policy_names": [
+        "cron_job_run_details_policy"
+      ]
+    }
+  ]
+}

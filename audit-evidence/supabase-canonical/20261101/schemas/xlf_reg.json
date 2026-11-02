@@ -1,0 +1,1491 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_reg",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 11,
+    "columns": 115,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "documentation_anomaly",
+      "columns": [
+        {
+          "name": "anomaly_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_a",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_b",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "topic",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observation_a",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observation_b",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "triangulation_source",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "triangulation_observed",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "documentation_anomaly_pkey",
+          "definition": "CREATE UNIQUE INDEX documentation_anomaly_pkey ON xlf_reg.documentation_anomaly USING btree (anomaly_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "documentation_anomaly_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (anomaly_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "evidence_assertion",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "review_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_assertion_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_assertion_pkey ON xlf_reg.evidence_assertion USING btree (assertion_id)"
+        },
+        {
+          "name": "ix_xlf_evidence_source",
+          "definition": "CREATE INDEX ix_xlf_evidence_source ON xlf_reg.evidence_assertion USING btree (source_id)"
+        },
+        {
+          "name": "ix_xlf_evidence_subject",
+          "definition": "CREATE INDEX ix_xlf_evidence_subject ON xlf_reg.evidence_assertion USING btree (subject_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_assertion_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assertion_id)"
+        },
+        {
+          "name": "evidence_assertion_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "evidence_atomic",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_legacy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "client_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "claim",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_locator",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_atomic_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_atomic_pkey ON xlf_reg.evidence_atomic USING btree (assertion_id)"
+        },
+        {
+          "name": "ix_xlf_evidence_atomic_command",
+          "definition": "CREATE INDEX ix_xlf_evidence_atomic_command ON xlf_reg.evidence_atomic USING btree (command_id)"
+        },
+        {
+          "name": "ix_xlf_evidence_atomic_source",
+          "definition": "CREATE INDEX ix_xlf_evidence_atomic_source ON xlf_reg.evidence_atomic USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_atomic_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "evidence_atomic_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assertion_id)"
+        },
+        {
+          "name": "evidence_atomic_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "learning_object",
+      "columns": [
+        {
+          "name": "learning_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "learning_goal_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mission_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "runtime_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "risk_note_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "learning_mode_supported",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assessment_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_status_model",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_learning_object_command",
+          "definition": "CREATE INDEX ix_xlf_learning_object_command ON xlf_reg.learning_object USING btree (command_id)"
+        },
+        {
+          "name": "learning_object_pkey",
+          "definition": "CREATE UNIQUE INDEX learning_object_pkey ON xlf_reg.learning_object USING btree (learning_object_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "learning_object_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "learning_object_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (learning_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "professional_use_case",
+      "columns": [
+        {
+          "name": "use_case_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "profession_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_use_case_profession",
+          "definition": "CREATE INDEX ix_xlf_use_case_profession ON xlf_reg.professional_use_case USING btree (profession_id)"
+        },
+        {
+          "name": "ix_xlf_usecase_command",
+          "definition": "CREATE INDEX ix_xlf_usecase_command ON xlf_reg.professional_use_case USING btree (command_id)"
+        },
+        {
+          "name": "professional_use_case_pkey",
+          "definition": "CREATE UNIQUE INDEX professional_use_case_pkey ON xlf_reg.professional_use_case USING btree (use_case_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "professional_use_case_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "professional_use_case_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (use_case_id)"
+        },
+        {
+          "name": "professional_use_case_profession_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (profession_id) REFERENCES xlf_md.profession(profession_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "registry_item",
+      "columns": [
+        {
+          "name": "registry_item_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identifier",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_designation_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "registration_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "administrative_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "registration_authority",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "steward_role_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_from",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "date",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "registry_item_identifier_key",
+          "definition": "CREATE UNIQUE INDEX registry_item_identifier_key ON xlf_reg.registry_item USING btree (identifier)"
+        },
+        {
+          "name": "registry_item_pkey",
+          "definition": "CREATE UNIQUE INDEX registry_item_pkey ON xlf_reg.registry_item USING btree (registry_item_id)"
+        },
+        {
+          "name": "registry_item_subject_id_key",
+          "definition": "CREATE UNIQUE INDEX registry_item_subject_id_key ON xlf_reg.registry_item USING btree (subject_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "registry_item_identifier_key",
+          "type": "u",
+          "definition": "UNIQUE (identifier)"
+        },
+        {
+          "name": "registry_item_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (registry_item_id)"
+        },
+        {
+          "name": "registry_item_subject_id_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "relationship",
+      "columns": [
+        {
+          "name": "relation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_relation_subject",
+          "definition": "CREATE INDEX ix_xlf_relation_subject ON xlf_reg.relationship USING btree (subject_id)"
+        },
+        {
+          "name": "relationship_pkey",
+          "definition": "CREATE UNIQUE INDEX relationship_pkey ON xlf_reg.relationship USING btree (relation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "relationship_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (relation_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "risk_control",
+      "columns": [
+        {
+          "name": "control_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_statement_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "control_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_risk_command",
+          "definition": "CREATE INDEX ix_xlf_risk_command ON xlf_reg.risk_control USING btree (command_id)"
+        },
+        {
+          "name": "risk_control_pkey",
+          "definition": "CREATE UNIQUE INDEX risk_control_pkey ON xlf_reg.risk_control USING btree (control_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "risk_control_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "risk_control_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (control_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "shortcut_binding",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "platform_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "keyboard_layout",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "alternative_rank",
+          "type": "integer",
+          "default": "1",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "context",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "valid_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "valid_to",
+          "type": "date",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_binding",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_binding_client",
+          "definition": "CREATE INDEX ix_xlf_binding_client ON xlf_reg.shortcut_binding USING btree (client_id)"
+        },
+        {
+          "name": "ix_xlf_binding_command",
+          "definition": "CREATE INDEX ix_xlf_binding_command ON xlf_reg.shortcut_binding USING btree (command_id)"
+        },
+        {
+          "name": "ix_xlf_binding_evidence_source",
+          "definition": "CREATE INDEX ix_xlf_binding_evidence_source ON xlf_reg.shortcut_binding USING btree (evidence_source_id)"
+        },
+        {
+          "name": "ix_xlf_binding_keyboard",
+          "definition": "CREATE INDEX ix_xlf_binding_keyboard ON xlf_reg.shortcut_binding USING btree (keyboard_layout_id)"
+        },
+        {
+          "name": "ix_xlf_binding_platform",
+          "definition": "CREATE INDEX ix_xlf_binding_platform ON xlf_reg.shortcut_binding USING btree (platform_id)"
+        },
+        {
+          "name": "shortcut_binding_pkey",
+          "definition": "CREATE UNIQUE INDEX shortcut_binding_pkey ON xlf_reg.shortcut_binding USING btree (binding_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "shortcut_binding_alternative_rank_check",
+          "type": "c",
+          "definition": "CHECK ((alternative_rank >= 1))"
+        },
+        {
+          "name": "shortcut_binding_check",
+          "type": "c",
+          "definition": "CHECK (((valid_to IS NULL) OR (valid_from IS NULL) OR (valid_to >= valid_from)))"
+        },
+        {
+          "name": "shortcut_binding_client_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (client_id) REFERENCES xlf_md.client(client_id)"
+        },
+        {
+          "name": "shortcut_binding_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "shortcut_binding_evidence_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (evidence_source_id) REFERENCES xlf_reg.source(source_id)"
+        },
+        {
+          "name": "shortcut_binding_keyboard_layout_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (keyboard_layout_id) REFERENCES xlf_md.keyboard_layout(keyboard_layout_id)"
+        },
+        {
+          "name": "shortcut_binding_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (binding_id)"
+        },
+        {
+          "name": "shortcut_binding_platform_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (platform_id) REFERENCES xlf_md.platform(platform_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "source",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publisher",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "authority_tier",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "license_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "source_pkey",
+          "definition": "CREATE UNIQUE INDEX source_pkey ON xlf_reg.source USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "verified_shortcut_binding",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "valid_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "valid_to",
+          "type": "date",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "supersedes_binding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_vbinding_client",
+          "definition": "CREATE INDEX ix_xlf_vbinding_client ON xlf_reg.verified_shortcut_binding USING btree (client_id)"
+        },
+        {
+          "name": "ix_xlf_vbinding_command",
+          "definition": "CREATE INDEX ix_xlf_vbinding_command ON xlf_reg.verified_shortcut_binding USING btree (command_id)"
+        },
+        {
+          "name": "ix_xlf_vbinding_evidence",
+          "definition": "CREATE INDEX ix_xlf_vbinding_evidence ON xlf_reg.verified_shortcut_binding USING btree (evidence_assertion_id)"
+        },
+        {
+          "name": "ix_xlf_vbinding_keyboard",
+          "definition": "CREATE INDEX ix_xlf_vbinding_keyboard ON xlf_reg.verified_shortcut_binding USING btree (keyboard_layout_id)"
+        },
+        {
+          "name": "ix_xlf_vbinding_supersedes",
+          "definition": "CREATE INDEX ix_xlf_vbinding_supersedes ON xlf_reg.verified_shortcut_binding USING btree (supersedes_binding_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_pkey",
+          "definition": "CREATE UNIQUE INDEX verified_shortcut_binding_pkey ON xlf_reg.verified_shortcut_binding USING btree (binding_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "verified_shortcut_binding_check",
+          "type": "c",
+          "definition": "CHECK (((valid_to IS NULL) OR (valid_from IS NULL) OR (valid_to >= valid_from)))"
+        },
+        {
+          "name": "verified_shortcut_binding_client_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (client_id) REFERENCES xlf_md.client(client_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_command_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (command_id) REFERENCES xlf_md.command(command_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_evidence_atomic_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (evidence_assertion_id) REFERENCES xlf_reg.evidence_atomic(assertion_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_keyboard_layout_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (keyboard_layout_id) REFERENCES xlf_md.keyboard_layout(keyboard_layout_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (binding_id)"
+        },
+        {
+          "name": "verified_shortcut_binding_supersedes_binding_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (supersedes_binding_id) REFERENCES xlf_reg.verified_shortcut_binding(binding_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

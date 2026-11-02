@@ -14,6 +14,8 @@ on:
       - 'audit-evidence/mof-foundation-recovery/20261102/**'
       - 'scripts/ce-agents/audit-mof-foundation.mjs'
       - 'scripts/ce-agents/seed-mof-reference-local.mjs'
+      - 'scripts/ce-agents/restore-normative-reference-local.mjs'
+      - 'audit-evidence/mof-foundation-recovery/20261102/read-only-live-registers/**'
       - '.github/workflows/ce-supabase-local.yml'
 permissions:
   contents: write
@@ -119,6 +121,15 @@ jobs:
           node scripts/ce-agents/verify-full-ddl-local.mjs
       - name: Audit recovered MOF M3 source and existing structural tables
         run: node scripts/ce-agents/audit-mof-foundation.mjs
+      - name: Restore 362 read-only normative reference metadata rows into LOCAL catalog
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          test -n "$CE_DB_LOCAL_URL"
+          export CE_DB_LOCAL_URL
+          node scripts/ce-agents/restore-normative-reference-local.mjs
       - name: Seed six official normative references in LOCAL canonical registry
         shell: bash
         env:
@@ -161,6 +172,7 @@ jobs:
             artifacts/ce-agents/full-ddl-parity-summary.json
             artifacts/ce-agents/mof-foundation-parity.json
             artifacts/ce-agents/mof-normative-local-seed.json
+            artifacts/ce-agents/local-normative-metadata-replay.json
           if-no-files-found: warn
       - name: Clean up ephemeral stack
         if: always()

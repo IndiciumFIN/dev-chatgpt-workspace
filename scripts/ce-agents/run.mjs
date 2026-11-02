@@ -83,7 +83,7 @@ async function capture() {
     const ns = await db.query("SELECT n.nspname AS name, COUNT(c.oid) FILTER (WHERE c.relkind IN ('r','p')) AS tables, COUNT(c.oid) FILTER (WHERE c.relkind IN ('v','m')) AS views FROM pg_namespace n LEFT JOIN pg_class c ON c.relnamespace=n.oid AND c.relkind IN ('r','p','v','m') WHERE n.nspname NOT LIKE 'pg_%' AND n.nspname <> 'information_schema' GROUP BY 1 ORDER BY 1");
     const snapshots = [];
     for (const schema of ns.rows) {
-      const sql = \`SELECT COALESCE(jsonb_agg(jsonb_build_object(
+      const sql = `SELECT COALESCE(jsonb_agg(jsonb_build_object(
          'name', c.relname, 'kind', c.relkind, 'rls', c.relrowsecurity,
          'force_rls', c.relforcerowsecurity,
          'columns', (SELECT COALESCE(jsonb_agg(jsonb_build_object('ordinal',a.attnum,
@@ -102,7 +102,7 @@ async function capture() {
            FROM pg_policy p WHERE p.polrelid=c.oid)
        ) ORDER BY c.relname),'[]'::jsonb) AS inventory
        FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
-       WHERE c.relkind IN ('r','p') AND n.nspname=$1\`;
+       WHERE c.relkind IN ('r','p') AND n.nspname=$1`;
       const result = await db.query(sql, [schema.name]);
       const tables = result.rows[0].inventory;
       snapshots.push({

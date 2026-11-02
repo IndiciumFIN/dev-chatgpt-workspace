@@ -9,6 +9,9 @@ on:
       - 'scripts/ce-agents/replay-local-catalog.mjs'
       - 'scripts/ce-agents/replay-local-skeleton.mjs'
       - 'scripts/ce-agents/verify-full-ddl-local.mjs'
+      - 'audit-evidence/mof-foundation-recovery/20261102/**'
+      - 'scripts/ce-agents/audit-mof-foundation.mjs'
+      - 'scripts/ce-agents/seed-mof-reference-local.mjs'
       - '.github/workflows/ce-supabase-local.yml'
 permissions:
   contents: write
@@ -110,6 +113,17 @@ jobs:
           export CE_DB_LOCAL_URL
           node scripts/ce-agents/replay-local-skeleton.mjs
           node scripts/ce-agents/verify-full-ddl-local.mjs
+      - name: Audit recovered MOF M3 source and existing structural tables
+        run: node scripts/ce-agents/audit-mof-foundation.mjs
+      - name: Seed six official normative references in LOCAL canonical registry
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          test -n "$CE_DB_LOCAL_URL"
+          export CE_DB_LOCAL_URL
+          node scripts/ce-agents/seed-mof-reference-local.mjs
       - name: Stage generated non-secret config in candidate branch only
         run: |
           test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
@@ -139,6 +153,8 @@ jobs:
             artifacts/ce-agents/local-catalog-replay.json
             artifacts/ce-agents/local-app-skeleton.json
             artifacts/ce-agents/full-ddl-parity-summary.json
+            artifacts/ce-agents/mof-foundation-parity.json
+            artifacts/ce-agents/mof-normative-local-seed.json
           if-no-files-found: warn
       - name: Clean up ephemeral stack
         if: always()

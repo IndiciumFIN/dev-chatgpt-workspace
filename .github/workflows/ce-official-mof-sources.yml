@@ -1,0 +1,57 @@
+name: CE | Verify Official MOF Source Integrity (No Copyright Upload)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - scripts/ce-agents/probe-official-mof.py
+      - .github/workflows/ce-official-mof-sources.yml
+permissions:
+  contents: write
+concurrency:
+  group: ce-candidate-serialized-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  official-source-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify source URLs, exact original bytes and hashes from OMG publisher
+        id: probe
+        continue-on-error: true
+        run: python3 scripts/ce-agents/probe-official-mof.py
+      - name: Publish only metadata integrity manifest on candidate branch
+        if: steps.probe.outcome == 'success'
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
+          mkdir -p audit-evidence/mof-foundation-recovery/20261102/source-integrity
+          cp artifacts/ce-agents/official-mof-source-integrity.json audit-evidence/mof-foundation-recovery/20261102/source-integrity/manifest.json
+          git add audit-evidence/mof-foundation-recovery/20261102/source-integrity/manifest.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'CE Normative Source Auditor'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'audit(normative): pin official OMG PDF, XMI and OCL SHA256 evidence (no source binaries)'
+            for attempt in 1 2 3; do
+              git fetch origin canonical/supabase-skeleton-20261101
+              git rebase origin/canonical/supabase-skeleton-20261101
+              if git push origin HEAD:canonical/supabase-skeleton-20261101; then break; fi
+              if [ "$attempt" -eq 3 ]; then echo 'HOLD_HUMAN: concurrent branch change'; exit 2; fi
+            done
+          fi
+      - name: Upload evidence without copyrighted source files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-official-mof-source-integrity
+          path: artifacts/ce-agents/official-mof-source-integrity.json
+          if-no-files-found: warn
+      - name: Fail closed on incomplete publisher acquisition
+        if: steps.probe.outcome != 'success'
+        run: |
+          echo 'HOLD_HUMAN: official-source acquisition incomplete. Do not infer full MOF compliance.'
+          exit 2

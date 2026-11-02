@@ -1,0 +1,6573 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "vdc_ai",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 49,
+    "columns": 537,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "adapter_registry",
+      "columns": [
+        {
+          "name": "adapter_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "adapter_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "base_model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "base_model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dataset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dataset_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "training_manifest_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evaluation_metrics",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "default": "'PLANNED'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_state",
+          "type": "text",
+          "default": "'HOLD'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "adapter_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX adapter_registry_pkey ON vdc_ai.adapter_registry USING btree (adapter_id, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "adapter_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (adapter_id, version)"
+        },
+        {
+          "name": "adapter_registry_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        },
+        {
+          "name": "adapter_registry_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "ai_jobs",
+      "columns": [
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "element_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "job_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "engine_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reproduction_mode",
+          "type": "text",
+          "default": "'GENERATIVE_SLOT'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "seed",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "request",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "response",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'QUEUED'::text",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 19,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ai_jobs_pkey",
+          "definition": "CREATE UNIQUE INDEX ai_jobs_pkey ON vdc_ai.ai_jobs USING btree (job_id)"
+        },
+        {
+          "name": "vdc_ai_jobs_instance_created_idx",
+          "definition": "CREATE INDEX vdc_ai_jobs_instance_created_idx ON vdc_ai.ai_jobs USING btree (instance_id, created_at DESC)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ai_jobs_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id)"
+        },
+        {
+          "name": "ai_jobs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (job_id)"
+        },
+        {
+          "name": "ai_jobs_reproduction_mode_check",
+          "type": "c",
+          "definition": "CHECK ((reproduction_mode = ANY (ARRAY['EXACT_ASSET_REPLAY'::text, 'LOCKED_COMPOSITE'::text, 'GENERATIVE_SLOT'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "assets",
+      "columns": [
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "asset_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "character_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "tags",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "assets_pkey",
+          "definition": "CREATE UNIQUE INDEX assets_pkey ON vdc_ai.assets USING btree (asset_id)"
+        },
+        {
+          "name": "vdc_assets_character_idx",
+          "definition": "CREATE INDEX vdc_assets_character_idx ON vdc_ai.assets USING btree (character_id, status)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "assets_character_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (character_id) REFERENCES vdc_ai.characters(id)"
+        },
+        {
+          "name": "assets_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (asset_id)"
+        },
+        {
+          "name": "assets_source_mode_check",
+          "type": "c",
+          "definition": "CHECK ((source_mode = ANY (ARRAY['LIBRARY'::text, 'UPLOAD'::text, 'AI'::text, 'REPLAY'::text, 'EXTERNAL'::text])))"
+        },
+        {
+          "name": "assets_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "backup_snapshots",
+      "columns": [
+        {
+          "name": "backup_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "backup_snapshots_pkey",
+          "definition": "CREATE UNIQUE INDEX backup_snapshots_pkey ON vdc_ai.backup_snapshots USING btree (backup_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "backup_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (backup_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "benchmark_cases",
+      "columns": [
+        {
+          "name": "case_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suite_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "case_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_contract",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_contract",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "benchmark_cases_pkey",
+          "definition": "CREATE UNIQUE INDEX benchmark_cases_pkey ON vdc_ai.benchmark_cases USING btree (case_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "benchmark_cases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (case_id)"
+        },
+        {
+          "name": "benchmark_cases_suite_id_suite_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (suite_id, suite_version) REFERENCES vdc_ai.benchmark_suites(suite_id, version)"
+        },
+        {
+          "name": "benchmark_cases_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "benchmark_results",
+      "columns": [
+        {
+          "name": "result_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "case_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "benchmark_results_pkey",
+          "definition": "CREATE UNIQUE INDEX benchmark_results_pkey ON vdc_ai.benchmark_results USING btree (result_id)"
+        },
+        {
+          "name": "benchmark_results_run_idx",
+          "definition": "CREATE INDEX benchmark_results_run_idx ON vdc_ai.benchmark_results USING btree (run_id, case_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "benchmark_results_case_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (case_id) REFERENCES vdc_ai.benchmark_cases(case_id)"
+        },
+        {
+          "name": "benchmark_results_metric_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (metric_id) REFERENCES vdc_ai.metric_definitions(metric_id)"
+        },
+        {
+          "name": "benchmark_results_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (result_id)"
+        },
+        {
+          "name": "benchmark_results_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (run_id) REFERENCES vdc_ai.benchmark_runs(run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "benchmark_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suite_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "seed_policy",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'RUNNING'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "benchmark_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX benchmark_runs_pkey ON vdc_ai.benchmark_runs USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "benchmark_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        },
+        {
+          "name": "benchmark_runs_suite_id_suite_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (suite_id, suite_version) REFERENCES vdc_ai.benchmark_suites(suite_id, version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "benchmark_suites",
+      "columns": [
+        {
+          "name": "suite_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_profile_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "benchmark_suites_pkey",
+          "definition": "CREATE UNIQUE INDEX benchmark_suites_pkey ON vdc_ai.benchmark_suites USING btree (suite_id, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "benchmark_suites_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (suite_id, version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "bits32_dimensions",
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_group",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "min_value",
+          "type": "numeric",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "max_value",
+          "type": "numeric",
+          "default": "1",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "bits32_dimensions_pkey",
+          "definition": "CREATE UNIQUE INDEX bits32_dimensions_pkey ON vdc_ai.bits32_dimensions USING btree (schema_version, dimension_no)"
+        },
+        {
+          "name": "bits32_dimensions_schema_version_dimension_key_key",
+          "definition": "CREATE UNIQUE INDEX bits32_dimensions_schema_version_dimension_key_key ON vdc_ai.bits32_dimensions USING btree (schema_version, dimension_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "bits32_dimensions_dimension_no_check",
+          "type": "c",
+          "definition": "CHECK (((dimension_no >= 1) AND (dimension_no <= 32)))"
+        },
+        {
+          "name": "bits32_dimensions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (schema_version, dimension_no)"
+        },
+        {
+          "name": "bits32_dimensions_schema_version_dimension_key_key",
+          "type": "u",
+          "definition": "UNIQUE (schema_version, dimension_key)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "bits32_measurement_queue",
+      "columns": [
+        {
+          "name": "queue_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "default": "'1.0.0'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "default": "100",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_methods",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING_BINARY_INGEST'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "bits32_measurement_queue_pkey",
+          "definition": "CREATE UNIQUE INDEX bits32_measurement_queue_pkey ON vdc_ai.bits32_measurement_queue USING btree (queue_id)"
+        },
+        {
+          "name": "bits32_measurement_queue_world_object_id_schema_version_key",
+          "definition": "CREATE UNIQUE INDEX bits32_measurement_queue_world_object_id_schema_version_key ON vdc_ai.bits32_measurement_queue USING btree (world_object_id, schema_version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "bits32_measurement_queue_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (queue_id)"
+        },
+        {
+          "name": "bits32_measurement_queue_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        },
+        {
+          "name": "bits32_measurement_queue_world_object_id_schema_version_key",
+          "type": "u",
+          "definition": "UNIQUE (world_object_id, schema_version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "bits32_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_unit",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "calibration_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "default": "'REVIEW'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "bits32_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX bits32_observations_pkey ON vdc_ai.bits32_observations USING btree (observation_id)"
+        },
+        {
+          "name": "bits32_observations_unique",
+          "definition": "CREATE UNIQUE INDEX bits32_observations_unique ON vdc_ai.bits32_observations USING btree (asset_id, schema_version, dimension_no)"
+        },
+        {
+          "name": "idx_bits32_observations_world",
+          "definition": "CREATE INDEX idx_bits32_observations_world ON vdc_ai.bits32_observations USING btree (world_object_id, schema_version, dimension_no)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "bits32_observations_approval_check",
+          "type": "c",
+          "definition": "CHECK ((approval_state = ANY (ARRAY['DRAFT'::text, 'REVIEW'::text, 'APPROVED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "bits32_observations_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "bits32_observations_dimension_fk",
+          "type": "f",
+          "definition": "FOREIGN KEY (schema_version, dimension_no) REFERENCES vdc_ai.bits32_dimensions(schema_version, dimension_no)"
+        },
+        {
+          "name": "bits32_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (observation_id)"
+        },
+        {
+          "name": "bits32_observations_unique",
+          "type": "u",
+          "definition": "UNIQUE (asset_id, schema_version, dimension_no)"
+        },
+        {
+          "name": "bits32_observations_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "bits32_signatures",
+      "columns": [
+        {
+          "name": "signature_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "values_json",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "signature_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "default": "'PENDING_VALIDATION'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "measured_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "approved_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "bits32_signatures_pkey",
+          "definition": "CREATE UNIQUE INDEX bits32_signatures_pkey ON vdc_ai.bits32_signatures USING btree (signature_id)"
+        },
+        {
+          "name": "bits32_signatures_world_idx",
+          "definition": "CREATE INDEX bits32_signatures_world_idx ON vdc_ai.bits32_signatures USING btree (world_object_id, world_object_version)"
+        },
+        {
+          "name": "bits32_signatures_world_object_id_world_object_version_sche_key",
+          "definition": "CREATE UNIQUE INDEX bits32_signatures_world_object_id_world_object_version_sche_key ON vdc_ai.bits32_signatures USING btree (world_object_id, world_object_version, schema_version, signature_hash)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "bits32_signatures_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (signature_id)"
+        },
+        {
+          "name": "bits32_signatures_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        },
+        {
+          "name": "bits32_signatures_world_object_id_world_object_version_sche_key",
+          "type": "u",
+          "definition": "UNIQUE (world_object_id, world_object_version, schema_version, signature_hash)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "characters",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "forbidden_mutations",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_refs",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "characters_pkey",
+          "definition": "CREATE UNIQUE INDEX characters_pkey ON vdc_ai.characters USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "characters_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "characters_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "content_objects",
+      "columns": [
+        {
+          "name": "content_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": "'pt-BR'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requires_regulatory",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_state",
+          "type": "text",
+          "default": "'NOT_REQUIRED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "content_objects_pkey",
+          "definition": "CREATE UNIQUE INDEX content_objects_pkey ON vdc_ai.content_objects USING btree (content_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "content_objects_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (content_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dataset_manifests",
+      "columns": [
+        {
+          "name": "dataset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "item_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "items",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manifest_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dataset_manifests_pkey",
+          "definition": "CREATE UNIQUE INDEX dataset_manifests_pkey ON vdc_ai.dataset_manifests USING btree (dataset_id, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dataset_manifests_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (dataset_id, version)"
+        },
+        {
+          "name": "dataset_manifests_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "elements",
+      "columns": [
+        {
+          "name": "element_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_element_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "element_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "layout",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "responsive",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "styles",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ai_config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clickable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "visible",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "z_index",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "elements_pkey",
+          "definition": "CREATE UNIQUE INDEX elements_pkey ON vdc_ai.elements USING btree (instance_id, element_id)"
+        },
+        {
+          "name": "vdc_elements_instance_z_idx",
+          "definition": "CREATE INDEX vdc_elements_instance_z_idx ON vdc_ai.elements USING btree (instance_id, z_index)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "elements_element_type_check",
+          "type": "c",
+          "definition": "CHECK ((element_type = ANY (ARRAY['TEXT'::text, 'IMAGE'::text, 'SHAPE'::text, 'CONTAINER'::text, 'BUTTON'::text, 'REPEATER'::text, 'ICON'::text, 'BADGE'::text])))"
+        },
+        {
+          "name": "elements_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "elements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (instance_id, element_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "embedding_models",
+      "columns": [
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "modality",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimensions",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalization",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "default": "'DECLARED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "embedding_models_pkey",
+          "definition": "CREATE UNIQUE INDEX embedding_models_pkey ON vdc_ai.embedding_models USING btree (model_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "embedding_models_dimensions_check",
+          "type": "c",
+          "definition": "CHECK ((dimensions > 0))"
+        },
+        {
+          "name": "embedding_models_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (model_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "generation_runs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "character_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "seed",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "generation_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX generation_runs_pkey ON vdc_ai.generation_runs USING btree (id)"
+        },
+        {
+          "name": "generation_runs_run_key_key",
+          "definition": "CREATE UNIQUE INDEX generation_runs_run_key_key ON vdc_ai.generation_runs USING btree (run_key)"
+        },
+        {
+          "name": "generation_runs_status_idx",
+          "definition": "CREATE INDEX generation_runs_status_idx ON vdc_ai.generation_runs USING btree (status)"
+        },
+        {
+          "name": "generation_runs_template_created_idx",
+          "definition": "CREATE INDEX generation_runs_template_created_idx ON vdc_ai.generation_runs USING btree (template_id, created_at DESC)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "generation_runs_character_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (character_id) REFERENCES vdc_ai.characters(id)"
+        },
+        {
+          "name": "generation_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "generation_runs_run_key_key",
+          "type": "u",
+          "definition": "UNIQUE (run_key)"
+        },
+        {
+          "name": "generation_runs_template_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (template_id) REFERENCES vdc_ai.templates(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "generation_strategies",
+      "columns": [
+        {
+          "name": "strategy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exactness_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requires_generation",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_requirements",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "generation_strategies_pkey",
+          "definition": "CREATE UNIQUE INDEX generation_strategies_pkey ON vdc_ai.generation_strategies USING btree (strategy_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "generation_strategies_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (strategy_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "golden_masters",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "variant_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_targets",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'APPROVED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "golden_masters_pkey",
+          "definition": "CREATE UNIQUE INDEX golden_masters_pkey ON vdc_ai.golden_masters USING btree (id)"
+        },
+        {
+          "name": "golden_masters_template_id_variant_key_key",
+          "definition": "CREATE UNIQUE INDEX golden_masters_template_id_variant_key_key ON vdc_ai.golden_masters USING btree (template_id, variant_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "golden_masters_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "golden_masters_template_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (template_id) REFERENCES vdc_ai.templates(id)"
+        },
+        {
+          "name": "golden_masters_template_id_variant_key_key",
+          "type": "u",
+          "definition": "UNIQUE (template_id, variant_key)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "identity_variants",
+      "columns": [
+        {
+          "name": "variant_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "variant_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "variant_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked_traits_delta",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "identity_variants_pkey",
+          "definition": "CREATE UNIQUE INDEX identity_variants_pkey ON vdc_ai.identity_variants USING btree (variant_id)"
+        },
+        {
+          "name": "identity_variants_world_object_id_variant_type_variant_key_key",
+          "definition": "CREATE UNIQUE INDEX identity_variants_world_object_id_variant_type_variant_key_key ON vdc_ai.identity_variants USING btree (world_object_id, variant_type, variant_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "identity_variants_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (variant_id)"
+        },
+        {
+          "name": "identity_variants_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        },
+        {
+          "name": "identity_variants_world_object_id_variant_type_variant_key_key",
+          "type": "u",
+          "definition": "UNIQUE (world_object_id, variant_type, variant_key)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "instances",
+      "columns": [
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "template_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": "'pt-BR'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "breakpoint",
+          "type": "text",
+          "default": "'desktop'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "settings",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_revision",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "instances_pkey",
+          "definition": "CREATE UNIQUE INDEX instances_pkey ON vdc_ai.instances USING btree (instance_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "instances_content_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (content_id) REFERENCES vdc_ai.content_objects(content_id)"
+        },
+        {
+          "name": "instances_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (instance_id)"
+        },
+        {
+          "name": "instances_template_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (template_id) REFERENCES vdc_ai.templates(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "intake_batches",
+      "columns": [
+        {
+          "name": "batch_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_type",
+          "type": "text",
+          "default": "'USER_UPLOAD'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "intake_batches_pkey",
+          "definition": "CREATE UNIQUE INDEX intake_batches_pkey ON vdc_ai.intake_batches USING btree (batch_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "intake_batches_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (batch_id)"
+        },
+        {
+          "name": "intake_batches_product_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (product_version) REFERENCES vdc_ai.product_versions(version)"
+        },
+        {
+          "name": "intake_batches_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'ANALYZING'::text, 'REVIEW'::text, 'CLOSED'::text, 'CANCELLED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "intake_items",
+      "columns": [
+        {
+          "name": "intake_item_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "batch_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposed_class_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposed_world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "identity_state",
+          "type": "text",
+          "default": "'UNASSESSED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "numeric(5,4)",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_state",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "intake_items_batch_review_idx",
+          "definition": "CREATE INDEX intake_items_batch_review_idx ON vdc_ai.intake_items USING btree (batch_id, review_state)"
+        },
+        {
+          "name": "intake_items_pkey",
+          "definition": "CREATE UNIQUE INDEX intake_items_pkey ON vdc_ai.intake_items USING btree (intake_item_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "intake_items_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "intake_items_batch_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (batch_id) REFERENCES vdc_ai.intake_batches(batch_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "intake_items_confidence_check",
+          "type": "c",
+          "definition": "CHECK (((confidence IS NULL) OR ((confidence >= (0)::numeric) AND (confidence <= (1)::numeric))))"
+        },
+        {
+          "name": "intake_items_identity_state_check",
+          "type": "c",
+          "definition": "CHECK ((identity_state = ANY (ARRAY['UNASSESSED'::text, 'NEW_OBJECT'::text, 'MATCHED'::text, 'IDENTITY_PENDING'::text, 'DUPLICATE'::text, 'VARIANT'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "intake_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (intake_item_id)"
+        },
+        {
+          "name": "intake_items_proposed_class_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (proposed_class_id) REFERENCES vdc_ai.world_class_catalog(class_id)"
+        },
+        {
+          "name": "intake_items_proposed_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (proposed_world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        },
+        {
+          "name": "intake_items_review_state_check",
+          "type": "c",
+          "definition": "CHECK ((review_state = ANY (ARRAY['PENDING'::text, 'HUMAN_REVIEW'::text, 'APPROVED'::text, 'REJECTED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "metric_definitions",
+      "columns": [
+        {
+          "name": "metric_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "direction",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "min_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "max_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "default": "'ratio'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "default": "'DECLARED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_capable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "metric_definitions_pkey",
+          "definition": "CREATE UNIQUE INDEX metric_definitions_pkey ON vdc_ai.metric_definitions USING btree (metric_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "metric_definitions_direction_check",
+          "type": "c",
+          "definition": "CHECK ((direction = ANY (ARRAY['HIGHER_BETTER'::text, 'LOWER_BETTER'::text, 'EXACT'::text])))"
+        },
+        {
+          "name": "metric_definitions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (metric_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "product_versions",
+      "columns": [
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "frozen_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "product_versions_pkey",
+          "definition": "CREATE UNIQUE INDEX product_versions_pkey ON vdc_ai.product_versions USING btree (version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "product_versions_channel_check",
+          "type": "c",
+          "definition": "CHECK ((channel = ANY (ARRAY['STABLE'::text, 'ALPHA'::text, 'BETA'::text, 'RC'::text])))"
+        },
+        {
+          "name": "product_versions_parent_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_version) REFERENCES vdc_ai.product_versions(version)"
+        },
+        {
+          "name": "product_versions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (version)"
+        },
+        {
+          "name": "product_versions_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'FROZEN'::text, 'SUPERSEDED'::text, 'PLANNED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "provider_bindings",
+      "columns": [
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "seed_supported",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_image_supported",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model_pin_supported",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'DECLARED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "provider_bindings_pkey",
+          "definition": "CREATE UNIQUE INDEX provider_bindings_pkey ON vdc_ai.provider_bindings USING btree (provider_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "provider_bindings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (provider_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "reference_pack_members",
+      "columns": [
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "member_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "view_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "default": "100",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reference_pack_members_pkey",
+          "definition": "CREATE UNIQUE INDEX reference_pack_members_pkey ON vdc_ai.reference_pack_members USING btree (reference_pack_id, member_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reference_pack_members_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "reference_pack_members_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (reference_pack_id, member_id)"
+        },
+        {
+          "name": "reference_pack_members_reference_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (reference_pack_id) REFERENCES vdc_ai.reference_packs(reference_pack_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "reference_packs",
+      "columns": [
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "pack_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manifest",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manifest_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reference_packs_pkey",
+          "definition": "CREATE UNIQUE INDEX reference_packs_pkey ON vdc_ai.reference_packs USING btree (reference_pack_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reference_packs_approval_state_check",
+          "type": "c",
+          "definition": "CHECK ((approval_state = ANY (ARRAY['DRAFT'::text, 'REVIEW'::text, 'APPROVED'::text, 'REJECTED'::text, 'SUPERSEDED'::text])))"
+        },
+        {
+          "name": "reference_packs_golden_master_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (golden_master_id) REFERENCES vdc_ai.golden_masters(id)"
+        },
+        {
+          "name": "reference_packs_pack_type_check",
+          "type": "c",
+          "definition": "CHECK ((pack_type = ANY (ARRAY['CHARACTER'::text, 'LOCATION'::text, 'PROP'::text, 'STYLE'::text, 'SCENE'::text, 'OUTFIT'::text, 'POSE'::text, 'EXPRESSION'::text])))"
+        },
+        {
+          "name": "reference_packs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (reference_pack_id)"
+        },
+        {
+          "name": "reference_packs_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "release_baselines",
+      "columns": [
+        {
+          "name": "baseline_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'FROZEN'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "release_baselines_pkey",
+          "definition": "CREATE UNIQUE INDEX release_baselines_pkey ON vdc_ai.release_baselines USING btree (baseline_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "release_baselines_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (baseline_id)"
+        },
+        {
+          "name": "release_baselines_product_version_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (product_version) REFERENCES vdc_ai.product_versions(version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "render_artifacts",
+      "columns": [
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revision_number",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderer_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "breakpoint",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "render_spec",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CREATED'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "render_artifacts_pkey",
+          "definition": "CREATE UNIQUE INDEX render_artifacts_pkey ON vdc_ai.render_artifacts USING btree (artifact_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "render_artifacts_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id)"
+        },
+        {
+          "name": "render_artifacts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (artifact_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "reproducibility_decisions",
+      "columns": [
+        {
+          "name": "decision_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "requested_change",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selected_strategy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decided_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reproducibility_decisions_pkey",
+          "definition": "CREATE UNIQUE INDEX reproducibility_decisions_pkey ON vdc_ai.reproducibility_decisions USING btree (decision_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reproducibility_decisions_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id)"
+        },
+        {
+          "name": "reproducibility_decisions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (decision_id)"
+        },
+        {
+          "name": "reproducibility_decisions_selected_strategy_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (selected_strategy_id) REFERENCES vdc_ai.generation_strategies(strategy_id)"
+        },
+        {
+          "name": "reproducibility_decisions_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "revisions",
+      "columns": [
+        {
+          "name": "revision_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revision_number",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "change_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "actor_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "revisions_instance_id_revision_number_key",
+          "definition": "CREATE UNIQUE INDEX revisions_instance_id_revision_number_key ON vdc_ai.revisions USING btree (instance_id, revision_number)"
+        },
+        {
+          "name": "revisions_pkey",
+          "definition": "CREATE UNIQUE INDEX revisions_pkey ON vdc_ai.revisions USING btree (revision_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "revisions_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "revisions_instance_id_revision_number_key",
+          "type": "u",
+          "definition": "UNIQUE (instance_id, revision_number)"
+        },
+        {
+          "name": "revisions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (revision_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "scene_edges",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "edge_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_node_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_node_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "scene_edges_pkey",
+          "definition": "CREATE UNIQUE INDEX scene_edges_pkey ON vdc_ai.scene_edges USING btree (scene_id, edge_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "scene_edges_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (scene_id, edge_id)"
+        },
+        {
+          "name": "scene_edges_scene_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (scene_id) REFERENCES vdc_ai.scenes(scene_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "scene_edges_scene_id_source_node_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (scene_id, source_node_id) REFERENCES vdc_ai.scene_nodes(scene_id, node_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "scene_edges_scene_id_target_node_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (scene_id, target_node_id) REFERENCES vdc_ai.scene_nodes(scene_id, node_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "scene_nodes",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "node_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "node_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "transform",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "props",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "scene_nodes_pkey",
+          "definition": "CREATE UNIQUE INDEX scene_nodes_pkey ON vdc_ai.scene_nodes USING btree (scene_id, node_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "scene_nodes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (scene_id, node_id)"
+        },
+        {
+          "name": "scene_nodes_scene_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (scene_id) REFERENCES vdc_ai.scenes(scene_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "scene_nodes_segment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (segment_id) REFERENCES vdc_ai.segments(segment_id)"
+        },
+        {
+          "name": "scene_nodes_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "scenes",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_registration_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scene_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": "'0.1.0'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "graph_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "scenes_pkey",
+          "definition": "CREATE UNIQUE INDEX scenes_pkey ON vdc_ai.scenes USING btree (scene_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "scenes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (scene_id)"
+        },
+        {
+          "name": "scenes_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        },
+        {
+          "name": "scenes_template_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (template_id) REFERENCES vdc_ai.templates(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "segment_edit_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "output_asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "master_seed",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_seed",
+          "type": "integer",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "edit_contract",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'READY'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "segment_edit_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX segment_edit_runs_pkey ON vdc_ai.segment_edit_runs USING btree (run_id)"
+        },
+        {
+          "name": "segment_edit_runs_segment_idx",
+          "definition": "CREATE INDEX segment_edit_runs_segment_idx ON vdc_ai.segment_edit_runs USING btree (segment_id, created_at DESC)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "segment_edit_runs_input_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (input_asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "segment_edit_runs_output_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (output_asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "segment_edit_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        },
+        {
+          "name": "segment_edit_runs_segment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (segment_id) REFERENCES vdc_ai.segments(segment_id)"
+        },
+        {
+          "name": "segment_edit_runs_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['READY'::text, 'RUNNING'::text, 'HOLD'::text, 'PASS'::text, 'FAIL'::text, 'CANCELLED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "segment_masks",
+      "columns": [
+        {
+          "name": "mask_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "mask_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "mask_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "method",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "quality_metrics",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "segment_masks_pkey",
+          "definition": "CREATE UNIQUE INDEX segment_masks_pkey ON vdc_ai.segment_masks USING btree (mask_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "segment_masks_approval_state_check",
+          "type": "c",
+          "definition": "CHECK ((approval_state = ANY (ARRAY['DRAFT'::text, 'REVIEW'::text, 'APPROVED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "segment_masks_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "segment_masks_method_check",
+          "type": "c",
+          "definition": "CHECK ((method = ANY (ARRAY['MANUAL'::text, 'MODEL_ASSISTED'::text, 'MODEL_AUTO'::text, 'VECTOR'::text, 'BBOX'::text, 'SOURCE_ALPHA'::text, 'RULE_BASED_COLOR_SPATIAL'::text, 'ALGORITHM_REFINED'::text])))"
+        },
+        {
+          "name": "segment_masks_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (mask_id)"
+        },
+        {
+          "name": "segment_masks_segment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (segment_id) REFERENCES vdc_ai.segments(segment_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "segment_validation_runs",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "edit_run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inside_mask_change",
+          "type": "numeric(8,6)",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "outside_mask_change",
+          "type": "numeric(8,6)",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "character_similarity",
+          "type": "numeric(8,6)",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "style_similarity",
+          "type": "numeric(8,6)",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "golden_similarity",
+          "type": "numeric(8,6)",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "thresholds",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "segment_validation_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX segment_validation_runs_pkey ON vdc_ai.segment_validation_runs USING btree (validation_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "segment_validation_runs_edit_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (edit_run_id) REFERENCES vdc_ai.segment_edit_runs(run_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "segment_validation_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validation_run_id)"
+        },
+        {
+          "name": "segment_validation_runs_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'HOLD'::text, 'NOT_APPLICABLE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "segments",
+      "columns": [
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "parent_segment_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "segment_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "bbox",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_path",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editable_traits",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "seed_policy",
+          "type": "text",
+          "default": "'DERIVED_SEGMENT_SEED'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "segments_asset_id_segment_key_key",
+          "definition": "CREATE UNIQUE INDEX segments_asset_id_segment_key_key ON vdc_ai.segments USING btree (asset_id, segment_key)"
+        },
+        {
+          "name": "segments_asset_idx",
+          "definition": "CREATE INDEX segments_asset_idx ON vdc_ai.segments USING btree (asset_id)"
+        },
+        {
+          "name": "segments_pkey",
+          "definition": "CREATE UNIQUE INDEX segments_pkey ON vdc_ai.segments USING btree (segment_id)"
+        },
+        {
+          "name": "segments_world_object_idx",
+          "definition": "CREATE INDEX segments_world_object_idx ON vdc_ai.segments USING btree (world_object_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "segments_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "segments_asset_id_segment_key_key",
+          "type": "u",
+          "definition": "UNIQUE (asset_id, segment_key)"
+        },
+        {
+          "name": "segments_golden_master_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (golden_master_id) REFERENCES vdc_ai.golden_masters(id)"
+        },
+        {
+          "name": "segments_parent_segment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_segment_id) REFERENCES vdc_ai.segments(segment_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "segments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (segment_id)"
+        },
+        {
+          "name": "segments_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "style_profiles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "color_tokens",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "positive_rules",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "negative_rules",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "style_profiles_pkey",
+          "definition": "CREATE UNIQUE INDEX style_profiles_pkey ON vdc_ai.style_profiles USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "style_profiles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "templates",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canvas",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "safe_zones",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slots",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_contract",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "templates_pkey",
+          "definition": "CREATE UNIQUE INDEX templates_pkey ON vdc_ai.templates USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "templates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "templates_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "validation_profiles_vrf",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "thresholds",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_metrics",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "applicability",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "validation_profiles_vrf_pkey",
+          "definition": "CREATE UNIQUE INDEX validation_profiles_vrf_pkey ON vdc_ai.validation_profiles_vrf USING btree (profile_id, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "validation_profiles_vrf_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (profile_id, version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "validation_results",
+      "columns": [
+        {
+          "name": "validation_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "score",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "threshold",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "validation_results_pkey",
+          "definition": "CREATE UNIQUE INDEX validation_results_pkey ON vdc_ai.validation_results USING btree (validation_id)"
+        },
+        {
+          "name": "vdc_validation_instance_idx",
+          "definition": "CREATE INDEX vdc_validation_instance_idx ON vdc_ai.validation_results USING btree (instance_id, created_at DESC)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "validation_results_instance_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instance_id) REFERENCES vdc_ai.instances(instance_id)"
+        },
+        {
+          "name": "validation_results_job_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (job_id) REFERENCES vdc_ai.ai_jobs(job_id)"
+        },
+        {
+          "name": "validation_results_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validation_id)"
+        },
+        {
+          "name": "validation_results_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'HOLD'::text, 'NOT_APPLICABLE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "visual_embeddings",
+      "columns": [
+        {
+          "name": "embedding_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimensions",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "vector_values",
+          "type": "double precision[]",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "vector_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "default": "'PENDING_COMPUTATION'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "visual_embeddings_pkey",
+          "definition": "CREATE UNIQUE INDEX visual_embeddings_pkey ON vdc_ai.visual_embeddings USING btree (embedding_id)"
+        },
+        {
+          "name": "visual_embeddings_world_model_idx",
+          "definition": "CREATE INDEX visual_embeddings_world_model_idx ON vdc_ai.visual_embeddings USING btree (world_object_id, model_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "visual_embeddings_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (asset_id) REFERENCES vdc_ai.assets(asset_id)"
+        },
+        {
+          "name": "visual_embeddings_check",
+          "type": "c",
+          "definition": "CHECK (((world_object_id IS NOT NULL) OR (asset_id IS NOT NULL) OR (segment_id IS NOT NULL)))"
+        },
+        {
+          "name": "visual_embeddings_model_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (model_id) REFERENCES vdc_ai.embedding_models(model_id)"
+        },
+        {
+          "name": "visual_embeddings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (embedding_id)"
+        },
+        {
+          "name": "visual_embeddings_segment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (segment_id) REFERENCES vdc_ai.segments(segment_id)"
+        },
+        {
+          "name": "visual_embeddings_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "vrf_framework_versions",
+      "columns": [
+        {
+          "name": "framework_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "principles",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exactness_contracts",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_contract",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "vrf_framework_versions_pkey",
+          "definition": "CREATE UNIQUE INDEX vrf_framework_versions_pkey ON vdc_ai.vrf_framework_versions USING btree (framework_id, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "vrf_framework_versions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (framework_id, version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "world_class_catalog",
+      "columns": [
+        {
+          "name": "class_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_class_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "segmentable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "character_bound",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "location_bound",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "props",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "world_class_catalog_pkey",
+          "definition": "CREATE UNIQUE INDEX world_class_catalog_pkey ON vdc_ai.world_class_catalog USING btree (class_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "world_class_catalog_parent_class_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_class_id) REFERENCES vdc_ai.world_class_catalog(class_id)"
+        },
+        {
+          "name": "world_class_catalog_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (class_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "world_objects",
+      "columns": [
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_registration_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "class_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identity_confidence",
+          "type": "numeric(5,4)",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "forbidden_mutations",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "current_reference_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": "'0.1.0'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "world_objects_canonical_key_key",
+          "definition": "CREATE UNIQUE INDEX world_objects_canonical_key_key ON vdc_ai.world_objects USING btree (canonical_key)"
+        },
+        {
+          "name": "world_objects_class_state_idx",
+          "definition": "CREATE INDEX world_objects_class_state_idx ON vdc_ai.world_objects USING btree (class_id, lifecycle_state)"
+        },
+        {
+          "name": "world_objects_pkey",
+          "definition": "CREATE UNIQUE INDEX world_objects_pkey ON vdc_ai.world_objects USING btree (world_object_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "world_objects_canonical_key_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_key)"
+        },
+        {
+          "name": "world_objects_class_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (class_id) REFERENCES vdc_ai.world_class_catalog(class_id)"
+        },
+        {
+          "name": "world_objects_current_reference_pack_fk",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_reference_pack_id) REFERENCES vdc_ai.reference_packs(reference_pack_id) DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "world_objects_identity_confidence_check",
+          "type": "c",
+          "definition": "CHECK (((identity_confidence IS NULL) OR ((identity_confidence >= (0)::numeric) AND (identity_confidence <= (1)::numeric))))"
+        },
+        {
+          "name": "world_objects_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['DISCOVERED'::text, 'CANDIDATE'::text, 'REFERENCE_COLLECTED'::text, 'MASTER_PENDING'::text, 'MASTER_APPROVED'::text, 'PRODUCTION_READY'::text, 'GOLDEN_MASTERED'::text, 'ARCHIVED'::text])))"
+        },
+        {
+          "name": "world_objects_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (world_object_id)"
+        },
+        {
+          "name": "world_objects_style_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (style_profile_id) REFERENCES vdc_ai.style_profiles(id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "world_relationships",
+      "columns": [
+        {
+          "name": "relationship_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relationship_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_world_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "world_relationships_pkey",
+          "definition": "CREATE UNIQUE INDEX world_relationships_pkey ON vdc_ai.world_relationships USING btree (relationship_id)"
+        },
+        {
+          "name": "world_relationships_source_idx",
+          "definition": "CREATE INDEX world_relationships_source_idx ON vdc_ai.world_relationships USING btree (source_world_object_id, relationship_type)"
+        },
+        {
+          "name": "world_relationships_source_world_object_id_relationship_typ_key",
+          "definition": "CREATE UNIQUE INDEX world_relationships_source_world_object_id_relationship_typ_key ON vdc_ai.world_relationships USING btree (source_world_object_id, relationship_type, target_world_object_id)"
+        },
+        {
+          "name": "world_relationships_target_idx",
+          "definition": "CREATE INDEX world_relationships_target_idx ON vdc_ai.world_relationships USING btree (target_world_object_id, relationship_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "world_relationships_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (relationship_id)"
+        },
+        {
+          "name": "world_relationships_source_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        },
+        {
+          "name": "world_relationships_source_world_object_id_relationship_typ_key",
+          "type": "u",
+          "definition": "UNIQUE (source_world_object_id, relationship_type, target_world_object_id)"
+        },
+        {
+          "name": "world_relationships_target_world_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (target_world_object_id) REFERENCES vdc_ai.world_objects(world_object_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

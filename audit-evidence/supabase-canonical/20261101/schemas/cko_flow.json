@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_flow",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 3,
+    "columns": 26,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "events",
+      "columns": [
+        {
+          "name": "flow_event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "process_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "output_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "transformation_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "events_pkey",
+          "definition": "CREATE UNIQUE INDEX events_pkey ON cko_flow.events USING btree (flow_event_id)"
+        },
+        {
+          "name": "events_process_id_idx",
+          "definition": "CREATE INDEX events_process_id_idx ON cko_flow.events USING btree (process_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (flow_event_id)"
+        },
+        {
+          "name": "events_process_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (process_id) REFERENCES cko_flow.processes(process_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "lineage_edges",
+      "columns": [
+        {
+          "name": "lineage_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reversible",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "lineage_edges_pkey",
+          "definition": "CREATE UNIQUE INDEX lineage_edges_pkey ON cko_flow.lineage_edges USING btree (lineage_id)"
+        },
+        {
+          "name": "lineage_edges_source_ref_relation_type_target_ref_key",
+          "definition": "CREATE UNIQUE INDEX lineage_edges_source_ref_relation_type_target_ref_key ON cko_flow.lineage_edges USING btree (source_ref, relation_type, target_ref)"
+        },
+        {
+          "name": "lineage_edges_target_ref_relation_type_idx",
+          "definition": "CREATE INDEX lineage_edges_target_ref_relation_type_idx ON cko_flow.lineage_edges USING btree (target_ref, relation_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "lineage_edges_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (lineage_id)"
+        },
+        {
+          "name": "lineage_edges_source_ref_relation_type_target_ref_key",
+          "type": "u",
+          "definition": "UNIQUE (source_ref, relation_type, target_ref)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "processes",
+      "columns": [
+        {
+          "name": "process_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sequence_no",
+          "type": "integer",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "control_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "processes_pkey",
+          "definition": "CREATE UNIQUE INDEX processes_pkey ON cko_flow.processes USING btree (process_id)"
+        },
+        {
+          "name": "processes_sequence_no_key",
+          "definition": "CREATE UNIQUE INDEX processes_sequence_no_key ON cko_flow.processes USING btree (sequence_no)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "processes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (process_id)"
+        },
+        {
+          "name": "processes_sequence_no_key",
+          "type": "u",
+          "definition": "UNIQUE (sequence_no)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

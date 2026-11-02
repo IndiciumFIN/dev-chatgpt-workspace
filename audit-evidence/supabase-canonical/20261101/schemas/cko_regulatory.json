@@ -1,0 +1,1312 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_regulatory",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 9,
+    "columns": 99,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "acquisition_queue",
+      "columns": [
+        {
+          "name": "acquisition_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "acquisition_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requested_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "routing_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": "'P1'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'QUEUED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attempt_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "last_error",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "next_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "acquisition_queue_pkey",
+          "definition": "CREATE UNIQUE INDEX acquisition_queue_pkey ON cko_regulatory.acquisition_queue USING btree (acquisition_id)"
+        },
+        {
+          "name": "acquisition_queue_resolved_canonical_id_idx",
+          "definition": "CREATE INDEX acquisition_queue_resolved_canonical_id_idx ON cko_regulatory.acquisition_queue USING btree (resolved_canonical_id)"
+        },
+        {
+          "name": "acquisition_queue_routing_ref_idx",
+          "definition": "CREATE INDEX acquisition_queue_routing_ref_idx ON cko_regulatory.acquisition_queue USING btree (routing_ref)"
+        },
+        {
+          "name": "acquisition_queue_subject_ref_acquisition_type_key",
+          "definition": "CREATE UNIQUE INDEX acquisition_queue_subject_ref_acquisition_type_key ON cko_regulatory.acquisition_queue USING btree (subject_ref, acquisition_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "acquisition_queue_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (acquisition_id)"
+        },
+        {
+          "name": "acquisition_queue_resolved_canonical_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (resolved_canonical_id) REFERENCES cko_master.entities(canonical_id)"
+        },
+        {
+          "name": "acquisition_queue_routing_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (routing_ref) REFERENCES cko_regulatory.source_routing(route_id)"
+        },
+        {
+          "name": "acquisition_queue_subject_ref_acquisition_type_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, acquisition_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "applicability",
+      "columns": [
+        {
+          "name": "applicability_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provision_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "applicability_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "applicability_instrument_id_idx",
+          "definition": "CREATE INDEX applicability_instrument_id_idx ON cko_regulatory.applicability USING btree (instrument_id)"
+        },
+        {
+          "name": "applicability_pkey",
+          "definition": "CREATE UNIQUE INDEX applicability_pkey ON cko_regulatory.applicability USING btree (applicability_id)"
+        },
+        {
+          "name": "applicability_provision_id_idx",
+          "definition": "CREATE INDEX applicability_provision_id_idx ON cko_regulatory.applicability USING btree (provision_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "applicability_instrument_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instrument_id) REFERENCES cko_regulatory.instruments(instrument_id)"
+        },
+        {
+          "name": "applicability_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (applicability_id)"
+        },
+        {
+          "name": "applicability_provision_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (provision_id) REFERENCES cko_regulatory.provisions(provision_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "change_events",
+      "columns": [
+        {
+          "name": "change_event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "old_snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "new_snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_diff",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "impact_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'DETECTED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "change_events_instrument_id_idx",
+          "definition": "CREATE INDEX change_events_instrument_id_idx ON cko_regulatory.change_events USING btree (instrument_id)"
+        },
+        {
+          "name": "change_events_new_snapshot_id_idx",
+          "definition": "CREATE INDEX change_events_new_snapshot_id_idx ON cko_regulatory.change_events USING btree (new_snapshot_id)"
+        },
+        {
+          "name": "change_events_old_snapshot_id_idx",
+          "definition": "CREATE INDEX change_events_old_snapshot_id_idx ON cko_regulatory.change_events USING btree (old_snapshot_id)"
+        },
+        {
+          "name": "change_events_pkey",
+          "definition": "CREATE UNIQUE INDEX change_events_pkey ON cko_regulatory.change_events USING btree (change_event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "change_events_instrument_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instrument_id) REFERENCES cko_regulatory.instruments(instrument_id)"
+        },
+        {
+          "name": "change_events_new_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (new_snapshot_id) REFERENCES cko_evidence.snapshots(snapshot_id)"
+        },
+        {
+          "name": "change_events_old_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (old_snapshot_id) REFERENCES cko_evidence.snapshots(snapshot_id)"
+        },
+        {
+          "name": "change_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (change_event_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "discovery_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "record_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "legal_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "number",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "official_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "has_full_text",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "imported_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "promoted_canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "resolved_canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "discovery_candidates_candidate_status_record_class_idx",
+          "definition": "CREATE INDEX discovery_candidates_candidate_status_record_class_idx ON cko_regulatory.discovery_candidates USING btree (candidate_status, record_class)"
+        },
+        {
+          "name": "discovery_candidates_pkey",
+          "definition": "CREATE UNIQUE INDEX discovery_candidates_pkey ON cko_regulatory.discovery_candidates USING btree (candidate_id)"
+        },
+        {
+          "name": "discovery_candidates_promoted_canonical_id_idx",
+          "definition": "CREATE INDEX discovery_candidates_promoted_canonical_id_idx ON cko_regulatory.discovery_candidates USING btree (promoted_canonical_id)"
+        },
+        {
+          "name": "discovery_candidates_resolved_canonical_id_idx",
+          "definition": "CREATE INDEX discovery_candidates_resolved_canonical_id_idx ON cko_regulatory.discovery_candidates USING btree (resolved_canonical_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "discovery_candidates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (candidate_id)"
+        },
+        {
+          "name": "discovery_candidates_promoted_canonical_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (promoted_canonical_id) REFERENCES cko_master.entities(canonical_id)"
+        },
+        {
+          "name": "discovery_candidates_resolved_canonical_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (resolved_canonical_id) REFERENCES cko_master.entities(canonical_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "instruments",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "issuer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "legal_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "normative_force",
+          "type": "text",
+          "default": "'NOT_QUALIFIED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "number",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "effective_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "effective_to",
+          "type": "date",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "legal_status",
+          "type": "text",
+          "default": "'PENDING_VERIFICATION'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "official_source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "current_snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "constitutional_anchor_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "instruments_canonical_id_key",
+          "definition": "CREATE UNIQUE INDEX instruments_canonical_id_key ON cko_regulatory.instruments USING btree (canonical_id)"
+        },
+        {
+          "name": "instruments_current_snapshot_id_idx",
+          "definition": "CREATE INDEX instruments_current_snapshot_id_idx ON cko_regulatory.instruments USING btree (current_snapshot_id)"
+        },
+        {
+          "name": "instruments_issuer_id_idx",
+          "definition": "CREATE INDEX instruments_issuer_id_idx ON cko_regulatory.instruments USING btree (issuer_id)"
+        },
+        {
+          "name": "instruments_legal_type_year_number_idx",
+          "definition": "CREATE INDEX instruments_legal_type_year_number_idx ON cko_regulatory.instruments USING btree (legal_type, year, number)"
+        },
+        {
+          "name": "instruments_official_source_id_idx",
+          "definition": "CREATE INDEX instruments_official_source_id_idx ON cko_regulatory.instruments USING btree (official_source_id)"
+        },
+        {
+          "name": "instruments_pkey",
+          "definition": "CREATE UNIQUE INDEX instruments_pkey ON cko_regulatory.instruments USING btree (instrument_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "instruments_canonical_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (canonical_id) REFERENCES cko_master.entities(canonical_id)"
+        },
+        {
+          "name": "instruments_canonical_id_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_id)"
+        },
+        {
+          "name": "instruments_current_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_snapshot_id) REFERENCES cko_evidence.snapshots(snapshot_id)"
+        },
+        {
+          "name": "instruments_issuer_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (issuer_id) REFERENCES cko_regulatory.issuers(issuer_id)"
+        },
+        {
+          "name": "instruments_official_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (official_source_id) REFERENCES cko_evidence.sources(source_id)"
+        },
+        {
+          "name": "instruments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (instrument_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "issuers",
+      "columns": [
+        {
+          "name": "issuer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "issuer_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "parent_issuer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "statutory_basis_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "issuers_parent_issuer_id_idx",
+          "definition": "CREATE INDEX issuers_parent_issuer_id_idx ON cko_regulatory.issuers USING btree (parent_issuer_id)"
+        },
+        {
+          "name": "issuers_pkey",
+          "definition": "CREATE UNIQUE INDEX issuers_pkey ON cko_regulatory.issuers USING btree (issuer_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "issuers_parent_issuer_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_issuer_id) REFERENCES cko_regulatory.issuers(issuer_id)"
+        },
+        {
+          "name": "issuers_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (issuer_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "provisions",
+      "columns": [
+        {
+          "name": "provision_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_provision_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "provision_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "citation_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "text_current",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "legal_status",
+          "type": "text",
+          "default": "'PENDING_VERIFICATION'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_fragment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "provisions_instrument_id_idx",
+          "definition": "CREATE INDEX provisions_instrument_id_idx ON cko_regulatory.provisions USING btree (instrument_id)"
+        },
+        {
+          "name": "provisions_parent_provision_id_idx",
+          "definition": "CREATE INDEX provisions_parent_provision_id_idx ON cko_regulatory.provisions USING btree (parent_provision_id)"
+        },
+        {
+          "name": "provisions_pkey",
+          "definition": "CREATE UNIQUE INDEX provisions_pkey ON cko_regulatory.provisions USING btree (provision_id)"
+        },
+        {
+          "name": "provisions_source_fragment_id_idx",
+          "definition": "CREATE INDEX provisions_source_fragment_id_idx ON cko_regulatory.provisions USING btree (source_fragment_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "provisions_instrument_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instrument_id) REFERENCES cko_regulatory.instruments(instrument_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "provisions_parent_provision_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_provision_id) REFERENCES cko_regulatory.provisions(provision_id)"
+        },
+        {
+          "name": "provisions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (provision_id)"
+        },
+        {
+          "name": "provisions_source_fragment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_fragment_id) REFERENCES cko_evidence.fragments(fragment_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "source_routing",
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_hosts",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "fallback_hosts",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "forbidden_promotions",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "source_routing_pkey",
+          "definition": "CREATE UNIQUE INDEX source_routing_pkey ON cko_regulatory.source_routing USING btree (route_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_routing_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (route_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "vdc_subject_registrations",
+      "columns": [
+        {
+          "name": "registration_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evaluation_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "applicability_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "vdc_subject_registrations_class_idx",
+          "definition": "CREATE INDEX vdc_subject_registrations_class_idx ON cko_regulatory.vdc_subject_registrations USING btree (subject_class, applicability_status)"
+        },
+        {
+          "name": "vdc_subject_registrations_pkey",
+          "definition": "CREATE UNIQUE INDEX vdc_subject_registrations_pkey ON cko_regulatory.vdc_subject_registrations USING btree (registration_id)"
+        },
+        {
+          "name": "vdc_subject_registrations_subject_id_key",
+          "definition": "CREATE UNIQUE INDEX vdc_subject_registrations_subject_id_key ON cko_regulatory.vdc_subject_registrations USING btree (subject_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "vdc_subject_registrations_applicability_status_check",
+          "type": "c",
+          "definition": "CHECK ((applicability_status = ANY (ARRAY['NOT_APPLICABLE'::text, 'APPLICABLE'::text, 'CONDITIONAL'::text, 'UNKNOWN'::text])))"
+        },
+        {
+          "name": "vdc_subject_registrations_evaluation_state_check",
+          "type": "c",
+          "definition": "CHECK ((evaluation_state = ANY (ARRAY['PENDING'::text, 'ASSESSED'::text])))"
+        },
+        {
+          "name": "vdc_subject_registrations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (registration_id)"
+        },
+        {
+          "name": "vdc_subject_registrations_subject_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_id) REFERENCES cko_master.entities(canonical_id)"
+        },
+        {
+          "name": "vdc_subject_registrations_subject_id_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

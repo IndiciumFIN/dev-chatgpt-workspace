@@ -1,0 +1,661 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_master",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 6,
+    "columns": 47,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "aliases",
+      "columns": [
+        {
+          "name": "alias_id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "alias",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "alias_type",
+          "type": "text",
+          "default": "'LEGACY'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "aliases_canonical_id_alias_alias_type_key",
+          "definition": "CREATE UNIQUE INDEX aliases_canonical_id_alias_alias_type_key ON cko_master.aliases USING btree (canonical_id, alias, alias_type)"
+        },
+        {
+          "name": "aliases_pkey",
+          "definition": "CREATE UNIQUE INDEX aliases_pkey ON cko_master.aliases USING btree (alias_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "aliases_canonical_id_alias_alias_type_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_id, alias, alias_type)"
+        },
+        {
+          "name": "aliases_canonical_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (canonical_id) REFERENCES cko_master.entities(canonical_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "aliases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (alias_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "entities",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "business_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": "'1.0.0'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": "'pt-BR'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_of_truth",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "object_uuid",
+          "type": "uuid",
+          "default": "cko_master.uuid_v7()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "entities_current_version_ref_idx",
+          "definition": "CREATE INDEX entities_current_version_ref_idx ON cko_master.entities USING btree (current_version_ref)"
+        },
+        {
+          "name": "entities_entity_type_id_business_key_key",
+          "definition": "CREATE UNIQUE INDEX entities_entity_type_id_business_key_key ON cko_master.entities USING btree (entity_type_id, business_key)"
+        },
+        {
+          "name": "entities_pkey",
+          "definition": "CREATE UNIQUE INDEX entities_pkey ON cko_master.entities USING btree (canonical_id)"
+        },
+        {
+          "name": "ux_cko_master_entities_object_uuid",
+          "definition": "CREATE UNIQUE INDEX ux_cko_master_entities_object_uuid ON cko_master.entities USING btree (object_uuid)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "entities_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "entities_entity_type_id_business_key_key",
+          "type": "u",
+          "definition": "UNIQUE (entity_type_id, business_key)"
+        },
+        {
+          "name": "entities_entity_type_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (entity_type_id) REFERENCES cko_master.entity_types(entity_type_id)"
+        },
+        {
+          "name": "entities_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (canonical_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "entity_types",
+      "columns": [
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "id_pattern",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "entity_types_pkey",
+          "definition": "CREATE UNIQUE INDEX entity_types_pkey ON cko_master.entity_types USING btree (entity_type_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "entity_types_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (entity_type_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "id_policies",
+      "columns": [
+        {
+          "name": "id_policy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "namespace",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic_rule",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "legacy_preservation_rule",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reuse_forbidden",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "strategy_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "strategy_config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "id_policies_entity_type_id_idx",
+          "definition": "CREATE INDEX id_policies_entity_type_id_idx ON cko_master.id_policies USING btree (entity_type_id)"
+        },
+        {
+          "name": "id_policies_pkey",
+          "definition": "CREATE UNIQUE INDEX id_policies_pkey ON cko_master.id_policies USING btree (id_policy_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "id_policies_entity_type_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (entity_type_id) REFERENCES cko_master.entity_types(entity_type_id)"
+        },
+        {
+          "name": "id_policies_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id_policy_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "relation_types",
+      "columns": [
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inverse_relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "relation_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provenance_required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "relation_types_pkey",
+          "definition": "CREATE UNIQUE INDEX relation_types_pkey ON cko_master.relation_types USING btree (relation_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "relation_types_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (relation_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "relationships",
+      "columns": [
+        {
+          "name": "relationship_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "relationships_pkey",
+          "definition": "CREATE UNIQUE INDEX relationships_pkey ON cko_master.relationships USING btree (relationship_id)"
+        },
+        {
+          "name": "relationships_relation_type_idx",
+          "definition": "CREATE INDEX relationships_relation_type_idx ON cko_master.relationships USING btree (relation_type)"
+        },
+        {
+          "name": "relationships_source_id_relation_type_idx",
+          "definition": "CREATE INDEX relationships_source_id_relation_type_idx ON cko_master.relationships USING btree (source_id, relation_type)"
+        },
+        {
+          "name": "relationships_source_id_relation_type_target_id_key",
+          "definition": "CREATE UNIQUE INDEX relationships_source_id_relation_type_target_id_key ON cko_master.relationships USING btree (source_id, relation_type, target_id)"
+        },
+        {
+          "name": "relationships_target_id_idx",
+          "definition": "CREATE INDEX relationships_target_id_idx ON cko_master.relationships USING btree (target_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "relationships_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (relationship_id)"
+        },
+        {
+          "name": "relationships_relation_type_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (relation_type) REFERENCES cko_master.relation_types(relation_type)"
+        },
+        {
+          "name": "relationships_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES cko_master.entities(canonical_id)"
+        },
+        {
+          "name": "relationships_source_id_relation_type_target_id_key",
+          "type": "u",
+          "definition": "UNIQUE (source_id, relation_type, target_id)"
+        },
+        {
+          "name": "relationships_target_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (target_id) REFERENCES cko_master.entities(canonical_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

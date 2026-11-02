@@ -1,0 +1,1643 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "contabilidade_cfc",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 11,
+    "columns": 139,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_normative_change_events_v1",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "impacted_instrument_ids",
+          "type": "text[]",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposed_instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "published_on",
+          "type": "date",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "effective_on",
+          "type": "date",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "applicable_period_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "default": "'EVIDENCE_PENDING'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "hold_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_normative_change_events_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_normative_change_events_v1_pkey ON contabilidade_cfc.audit_normative_change_events_v1 USING btree (event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_nce_nonempty_target",
+          "type": "c",
+          "definition": "CHECK ((cardinality(impacted_instrument_ids) > 0))"
+        },
+        {
+          "name": "audit_normative_change_events_v1_event_type_check",
+          "type": "c",
+          "definition": "CHECK ((event_type = ANY (ARRAY['NEW_REVISION'::text, 'AMENDMENT'::text, 'ERRATA'::text, 'REPEAL'::text, 'OTHER'::text])))"
+        },
+        {
+          "name": "audit_normative_change_events_v1_family_check",
+          "type": "c",
+          "definition": "CHECK ((family = ANY (ARRAY['NBC_TA'::text, 'NBC_PA'::text])))"
+        },
+        {
+          "name": "audit_normative_change_events_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (event_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_normative_pmo_v1",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_description",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "hold_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_normative_pmo_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_normative_pmo_v1_pkey ON contabilidade_cfc.audit_normative_pmo_v1 USING btree (task_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_normative_pmo_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (task_id)"
+        },
+        {
+          "name": "audit_normative_pmo_v1_priority_check",
+          "type": "c",
+          "definition": "CHECK ((priority = ANY (ARRAY['P0'::text, 'P1'::text, 'P2'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_normative_scope_v1",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_structure_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_review_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unit_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "high_risk_fragments",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sampled_review_pending",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_eligible",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_normative_scope_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_normative_scope_v1_pkey ON contabilidade_cfc.audit_normative_scope_v1 USING btree (instrument_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_normative_scope_v1_candidate_count_check",
+          "type": "c",
+          "definition": "CHECK ((candidate_count >= 0))"
+        },
+        {
+          "name": "audit_normative_scope_v1_family_check",
+          "type": "c",
+          "definition": "CHECK ((family = ANY (ARRAY['NBC_TA'::text, 'NBC_PA'::text])))"
+        },
+        {
+          "name": "audit_normative_scope_v1_high_risk_fragments_check",
+          "type": "c",
+          "definition": "CHECK ((high_risk_fragments >= 0))"
+        },
+        {
+          "name": "audit_normative_scope_v1_instrument_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instrument_id) REFERENCES regulatory_instruments(instrument_id)"
+        },
+        {
+          "name": "audit_normative_scope_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (instrument_id)"
+        },
+        {
+          "name": "audit_normative_scope_v1_sampled_review_pending_check",
+          "type": "c",
+          "definition": "CHECK ((sampled_review_pending >= 0))"
+        },
+        {
+          "name": "audit_normative_scope_v1_unit_count_check",
+          "type": "c",
+          "definition": "CHECK ((unit_count >= 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_normative_segment_drafts_v1",
+      "columns": [
+        {
+          "name": "segment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_ordinal",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "start_char",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "end_char",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "segment_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "boundary_strategy",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "technical_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editorial_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_eligible",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_normative_segment_draft_run_id_parent_unit_id_segment_key",
+          "definition": "CREATE UNIQUE INDEX audit_normative_segment_draft_run_id_parent_unit_id_segment_key ON contabilidade_cfc.audit_normative_segment_drafts_v1 USING btree (run_id, parent_unit_id, segment_ordinal)"
+        },
+        {
+          "name": "audit_normative_segment_draft_run_id_parent_unit_id_start_c_key",
+          "definition": "CREATE UNIQUE INDEX audit_normative_segment_draft_run_id_parent_unit_id_start_c_key ON contabilidade_cfc.audit_normative_segment_drafts_v1 USING btree (run_id, parent_unit_id, start_char)"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_normative_segment_drafts_v1_pkey ON contabilidade_cfc.audit_normative_segment_drafts_v1 USING btree (segment_id)"
+        },
+        {
+          "name": "idx_ae_segment_drafts_instrument_parent_ord",
+          "definition": "CREATE INDEX idx_ae_segment_drafts_instrument_parent_ord ON contabilidade_cfc.audit_normative_segment_drafts_v1 USING btree (instrument_id, parent_unit_id, segment_ordinal)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_normative_segment_draft_run_id_parent_unit_id_segment_key",
+          "type": "u",
+          "definition": "UNIQUE (run_id, parent_unit_id, segment_ordinal)"
+        },
+        {
+          "name": "audit_normative_segment_draft_run_id_parent_unit_id_start_c_key",
+          "type": "u",
+          "definition": "UNIQUE (run_id, parent_unit_id, start_char)"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_check",
+          "type": "c",
+          "definition": "CHECK ((end_char >= start_char))"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_instrument_id_check",
+          "type": "c",
+          "definition": "CHECK (((instrument_id ~~ 'CFC-NBC-PA-%'::text) OR (instrument_id ~~ 'CFC-NBC-TA-%'::text)))"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_parent_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (segment_id)"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_segment_ordinal_check",
+          "type": "c",
+          "definition": "CHECK ((segment_ordinal > 0))"
+        },
+        {
+          "name": "audit_normative_segment_drafts_v1_start_char_check",
+          "type": "c",
+          "definition": "CHECK ((start_char > 0))"
+        },
+        {
+          "name": "audit_seg_sha256_format",
+          "type": "c",
+          "definition": "CHECK ((segment_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        },
+        {
+          "name": "audit_seg_text_length_matches_range",
+          "type": "c",
+          "definition": "CHECK ((char_length(segment_text) = ((end_char - start_char) + 1)))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "audit_normative_segment_parent_qa_v1",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "parent_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_length",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "derived_segment_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reconstructed_length",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reconstructed_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "no_overlap_no_gaps",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exact_text_reconstruction",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "digest_matches_source",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "max_segment_length",
+          "type": "integer",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "technical_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "original_preserved",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_normative_segment_parent_qa_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_normative_segment_parent_qa_v1_pkey ON contabilidade_cfc.audit_normative_segment_parent_qa_v1 USING btree (run_id, parent_unit_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_normative_segment_parent_qa_v1_parent_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "audit_normative_segment_parent_qa_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id, parent_unit_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "pmo_findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_findings_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_findings_pkey ON contabilidade_cfc.pmo_findings USING btree (finding_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_findings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (finding_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "pmo_source_register",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "edition",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "document_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "original_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_source_register_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_source_register_pkey ON contabilidade_cfc.pmo_source_register USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_source_register_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "pmo_sync_runs",
+      "columns": [
+        {
+          "name": "sync_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "origin",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_sync_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_sync_runs_pkey ON contabilidade_cfc.pmo_sync_runs USING btree (sync_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_sync_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (sync_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "pmo_workstreams",
+      "columns": [
+        {
+          "name": "pmo_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": "'P0'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'NAO_INICIADO'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dependency",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_register_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_workstreams_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_workstreams_pkey ON contabilidade_cfc.pmo_workstreams USING btree (pmo_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_workstreams_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (pmo_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "questions",
+      "columns": [
+        {
+          "name": "question_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "question_number",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "options",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "classification",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "answer_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "answer_status",
+          "type": "text",
+          "default": "'PENDING_OFFICIAL_KEY'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "default": "'RAW_ATOM_REVIEW_REQUIRED'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_cfc_questions_source",
+          "definition": "CREATE INDEX idx_cfc_questions_source ON contabilidade_cfc.questions USING btree (source_id)"
+        },
+        {
+          "name": "questions_pkey",
+          "definition": "CREATE UNIQUE INDEX questions_pkey ON contabilidade_cfc.questions USING btree (question_id)"
+        },
+        {
+          "name": "questions_source_id_question_number_key",
+          "definition": "CREATE UNIQUE INDEX questions_source_id_question_number_key ON contabilidade_cfc.questions USING btree (source_id, question_number)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "questions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (question_id)"
+        },
+        {
+          "name": "questions_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES contabilidade_cfc.sources(source_id)"
+        },
+        {
+          "name": "questions_source_id_question_number_key",
+          "type": "u",
+          "definition": "UNIQUE (source_id, question_number)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "edition",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "exam_year",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "exam_board",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "question_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sources_pkey",
+          "definition": "CREATE UNIQUE INDEX sources_pkey ON contabilidade_cfc.sources USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "sources_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

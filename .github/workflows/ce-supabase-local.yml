@@ -1,0 +1,83 @@
+name: CE | Full Branch Audit + Supabase Local Bootstrap
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - 'scripts/ce-agents/branch-crosswalk.mjs'
+      - '.github/workflows/ce-supabase-local.yml'
+permissions:
+  contents: write
+jobs:
+  branch-crosswalk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch every remote branch ref
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+      - name: Full Git blob crosswalk with drift detection
+        run: node scripts/ce-agents/branch-crosswalk.mjs
+      - name: Archive full 37-branch audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-all-branch-crosswalk
+          path: artifacts/ce-agents/branch-crosswalk.json
+          if-no-files-found: error
+  local-stack:
+    needs: branch-crosswalk
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 2.84.2
+      - name: Confirm CLI available and initialize project deterministically
+        run: |
+          supabase --version
+          if [ ! -f supabase/config.toml ]; then
+            supabase init
+          fi
+          test -f supabase/config.toml
+          if [ -d supabase/migrations ]; then
+            echo 'Existing migration directory detected; no auto-migration, reset, or linked push authorized'
+          fi
+      - name: Launch isolated local Supabase stack
+        run: |
+          supabase start > /tmp/ce-supabase-start.log 2>&1 || { echo 'Local stack bootstrap failed; details withheld to avoid leaking service keys'; exit 1; }
+          supabase status > /dev/null
+          supabase gen types typescript --local > /tmp/ce-local-types.ts
+          test -s /tmp/ce-local-types.ts
+      - name: Stage generated non-secret config in candidate branch only
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
+          git add supabase/config.toml
+          if ! git diff --cached --quiet; then
+            git config user.name 'CE Supabase Local Bootstrap'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore(supabase): version CLI-generated local configuration [WO-CE-DB-SKELETON-001]'
+            git push origin HEAD:canonical/supabase-skeleton-20261101
+          fi
+      - name: Store local TypeScript schema verification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-supabase-local-bootstrap
+          path: |
+            supabase/config.toml
+            /tmp/ce-local-types.ts
+          if-no-files-found: warn
+      - name: Clean up ephemeral stack
+        if: always()
+        run: supabase stop || true

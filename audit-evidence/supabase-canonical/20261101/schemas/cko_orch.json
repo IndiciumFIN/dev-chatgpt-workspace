@@ -1,0 +1,3338 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_orch",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 27,
+    "columns": 256,
+    "viewsObserved": 3
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "adversarial_cases",
+      "columns": [
+        {
+          "name": "case_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "case_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "control_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_decision",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "adversarial_cases_pkey",
+          "definition": "CREATE UNIQUE INDEX adversarial_cases_pkey ON cko_orch.adversarial_cases USING btree (case_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "adversarial_cases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (case_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "adversarial_results",
+      "columns": [
+        {
+          "name": "result_id",
+          "type": "uuid",
+          "default": "extensions.gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "case_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_decision",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "adversarial_results_pkey",
+          "definition": "CREATE UNIQUE INDEX adversarial_results_pkey ON cko_orch.adversarial_results USING btree (result_id)"
+        },
+        {
+          "name": "ix_cko_orch_adversarial_results_run",
+          "definition": "CREATE INDEX ix_cko_orch_adversarial_results_run ON cko_orch.adversarial_results USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "adversarial_results_case_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (case_id) REFERENCES cko_orch.adversarial_cases(case_id)"
+        },
+        {
+          "name": "adversarial_results_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (result_id)"
+        },
+        {
+          "name": "adversarial_results_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text])))"
+        },
+        {
+          "name": "adversarial_results_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (run_id) REFERENCES cko_orch.adversarial_runs(run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "adversarial_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": "extensions.gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'RUNNING'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "adversarial_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX adversarial_runs_pkey ON cko_orch.adversarial_runs USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "adversarial_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        },
+        {
+          "name": "adversarial_runs_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['RUNNING'::text, 'PASS'::text, 'FAIL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "b1_agent_inbox_v1_candidate",
+      "columns": [
+        {
+          "name": "message_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_event_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_event_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sender_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "recipient_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "message_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "transport_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "transport_ack_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "action_ack_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action_ack_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "external_publish_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "b1_agent_inbox_recipient_idx",
+          "definition": "CREATE INDEX b1_agent_inbox_recipient_idx ON cko_orch.b1_agent_inbox_v1_candidate USING btree (recipient_agent_id, action_ack_state, created_at)"
+        },
+        {
+          "name": "b1_agent_inbox_transport_idx",
+          "definition": "CREATE INDEX b1_agent_inbox_transport_idx ON cko_orch.b1_agent_inbox_v1_candidate USING btree (transport_state, external_publish_state)"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_pkey",
+          "definition": "CREATE UNIQUE INDEX b1_agent_inbox_v1_candidate_pkey ON cko_orch.b1_agent_inbox_v1_candidate USING btree (message_id)"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_source_event_id_key",
+          "definition": "CREATE UNIQUE INDEX b1_agent_inbox_v1_candidate_source_event_id_key ON cko_orch.b1_agent_inbox_v1_candidate USING btree (source_event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "b1_agent_inbox_v1_candidate_action_ack_state_check",
+          "type": "c",
+          "definition": "CHECK ((action_ack_state = ANY (ARRAY['NOT_ACKNOWLEDGED'::text, 'ACKNOWLEDGED_ACTION'::text, 'ACKNOWLEDGED_READ'::text])))"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (message_id)"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_recipient_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (recipient_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_sender_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (sender_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_source_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_event_id) REFERENCES cko_orch.outbox_events(event_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_source_event_id_key",
+          "type": "u",
+          "definition": "UNIQUE (source_event_id)"
+        },
+        {
+          "name": "b1_agent_inbox_v1_candidate_transport_state_check",
+          "type": "c",
+          "definition": "CHECK ((transport_state = ANY (ARRAY['ROUTED_INTERNAL'::text, 'ROUTING_FAILED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "camera_contracts",
+      "columns": [
+        {
+          "name": "camera_contract_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "view_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "projection",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "contract_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": "'1.0.0'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "camera_contracts_pkey",
+          "definition": "CREATE UNIQUE INDEX camera_contracts_pkey ON cko_orch.camera_contracts USING btree (camera_contract_id)"
+        },
+        {
+          "name": "camera_contracts_view_role_version_key",
+          "definition": "CREATE UNIQUE INDEX camera_contracts_view_role_version_key ON cko_orch.camera_contracts USING btree (view_role, version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "camera_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (camera_contract_id)"
+        },
+        {
+          "name": "camera_contracts_view_role_version_key",
+          "type": "u",
+          "definition": "UNIQUE (view_role, version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "circuit_breakers",
+      "columns": [
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'CLOSED'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "critical_failures",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "window_started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "opened_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "circuit_breakers_pkey",
+          "definition": "CREATE UNIQUE INDEX circuit_breakers_pkey ON cko_orch.circuit_breakers USING btree (agent_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "circuit_breakers_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "circuit_breakers_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (agent_id)"
+        },
+        {
+          "name": "circuit_breakers_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = ANY (ARRAY['CLOSED'::text, 'OPEN'::text, 'HALF_OPEN'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "divergences",
+      "columns": [
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "divergence_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected_by",
+          "type": "text",
+          "default": "'CKO-ORCH'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "resolution",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "divergences_pkey",
+          "definition": "CREATE UNIQUE INDEX divergences_pkey ON cko_orch.divergences USING btree (divergence_id)"
+        },
+        {
+          "name": "ix_cko_orch_divergence_open",
+          "definition": "CREATE INDEX ix_cko_orch_divergence_open ON cko_orch.divergences USING btree (workflow_id, severity, status)"
+        },
+        {
+          "name": "ix_cko_orch_divergences_proposal",
+          "definition": "CREATE INDEX ix_cko_orch_divergences_proposal ON cko_orch.divergences USING btree (proposal_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "divergences_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (divergence_id)"
+        },
+        {
+          "name": "divergences_proposal_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (proposal_id) REFERENCES cko_orch.proposals(proposal_id)"
+        },
+        {
+          "name": "divergences_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        },
+        {
+          "name": "divergences_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'RESOLVED'::text, 'WAIVED'::text, 'SUPERSEDED'::text])))"
+        },
+        {
+          "name": "divergences_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "evidence_authority_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": "'ANY'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed_source_types",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publisher_patterns",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed_authority_levels",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "accepted_for_any",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity_on_mismatch",
+          "type": "text",
+          "default": "'D4'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action_on_mismatch",
+          "type": "text",
+          "default": "'QUARANTINE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_authority_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_authority_rules_pkey ON cko_orch.evidence_authority_rules USING btree (rule_id)"
+        },
+        {
+          "name": "ix_cko_orch_evidence_authority_claim",
+          "definition": "CREATE INDEX ix_cko_orch_evidence_authority_claim ON cko_orch.evidence_authority_rules USING btree (claim_type, jurisdiction) WHERE active"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_authority_rules_action_on_mismatch_check",
+          "type": "c",
+          "definition": "CHECK ((action_on_mismatch = ANY (ARRAY['LOG'::text, 'FINDING'::text, 'BLOCK'::text, 'QUARANTINE'::text])))"
+        },
+        {
+          "name": "evidence_authority_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (rule_id)"
+        },
+        {
+          "name": "evidence_authority_rules_severity_on_mismatch_check",
+          "type": "c",
+          "definition": "CHECK ((severity_on_mismatch = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "geometry_registry",
+      "columns": [
+        {
+          "name": "geometry_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_evidence_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "geometry_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX geometry_registry_pkey ON cko_orch.geometry_registry USING btree (geometry_id)"
+        },
+        {
+          "name": "ix_cko_orch_geometry_workflow",
+          "definition": "CREATE INDEX ix_cko_orch_geometry_workflow ON cko_orch.geometry_registry USING btree (workflow_id, state)"
+        },
+        {
+          "name": "ux_cko_orch_geometry_active_hash",
+          "definition": "CREATE UNIQUE INDEX ux_cko_orch_geometry_active_hash ON cko_orch.geometry_registry USING btree (workflow_id, geometry_hash) WHERE (state = ANY (ARRAY['CANDIDATE'::text, 'LOCKED'::text]))"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "geometry_registry_created_by_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (created_by) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "geometry_registry_geometry_evidence_level_check",
+          "type": "c",
+          "definition": "CHECK ((geometry_evidence_level = ANY (ARRAY['G0'::text, 'G1'::text, 'G2'::text, 'G3'::text, 'G4'::text])))"
+        },
+        {
+          "name": "geometry_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (geometry_id)"
+        },
+        {
+          "name": "geometry_registry_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = ANY (ARRAY['CANDIDATE'::text, 'LOCKED'::text, 'STALE'::text, 'SUPERSEDED'::text])))"
+        },
+        {
+          "name": "geometry_registry_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "idempotency_keys",
+      "columns": [
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "operation",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "request_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'IN_PROGRESS'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idempotency_keys_pkey",
+          "definition": "CREATE UNIQUE INDEX idempotency_keys_pkey ON cko_orch.idempotency_keys USING btree (idempotency_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "idempotency_keys_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (idempotency_key)"
+        },
+        {
+          "name": "idempotency_keys_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['IN_PROGRESS'::text, 'COMPLETED'::text, 'FAILED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "lock_dependency_rules",
+      "columns": [
+        {
+          "name": "source_lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dependent_lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": "'D3'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "lock_dependency_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX lock_dependency_rules_pkey ON cko_orch.lock_dependency_rules USING btree (source_lock_type, dependent_lock_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "lock_dependency_rules_dependent_lock_type_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (dependent_lock_type) REFERENCES cko_orch.lock_rules(lock_type)"
+        },
+        {
+          "name": "lock_dependency_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_lock_type, dependent_lock_type)"
+        },
+        {
+          "name": "lock_dependency_rules_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        },
+        {
+          "name": "lock_dependency_rules_source_lock_type_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_lock_type) REFERENCES cko_orch.lock_rules(lock_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "lock_reperformance_runs",
+      "columns": [
+        {
+          "name": "reperformance_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "old_lock_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "new_lock_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "old_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "new_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposal_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "maker_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checker_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "orchestrator_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "lock_reperformance_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX lock_reperformance_runs_pkey ON cko_orch.lock_reperformance_runs USING btree (reperformance_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "lock_reperformance_runs_checker_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (checker_agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "lock_reperformance_runs_maker_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (maker_agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "lock_reperformance_runs_orchestrator_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (orchestrator_agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "lock_reperformance_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (reperformance_id)"
+        },
+        {
+          "name": "lock_reperformance_runs_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "lock_rules",
+      "columns": [
+        {
+          "name": "lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed_states",
+          "type": "text[]",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "lock_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX lock_rules_pkey ON cko_orch.lock_rules USING btree (lock_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "lock_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (lock_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "lock_schemas",
+      "columns": [
+        {
+          "name": "lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_keys",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed_keys",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "array_keys",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requires_evidence",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "default": "'1.0.0'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "lock_schemas_pkey",
+          "definition": "CREATE UNIQUE INDEX lock_schemas_pkey ON cko_orch.lock_schemas USING btree (lock_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "lock_schemas_lock_type_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (lock_type) REFERENCES cko_orch.lock_rules(lock_type)"
+        },
+        {
+          "name": "lock_schemas_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (lock_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "locks",
+      "columns": [
+        {
+          "name": "lock_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lock_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lock_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "superseded_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_locks_created_by",
+          "definition": "CREATE INDEX ix_cko_orch_locks_created_by ON cko_orch.locks USING btree (created_by)"
+        },
+        {
+          "name": "locks_pkey",
+          "definition": "CREATE UNIQUE INDEX locks_pkey ON cko_orch.locks USING btree (lock_id)"
+        },
+        {
+          "name": "uq_cko_orch_active_lock",
+          "definition": "CREATE UNIQUE INDEX uq_cko_orch_active_lock ON cko_orch.locks USING btree (workflow_id, lock_type) WHERE (state = 'ACTIVE'::text)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "locks_created_by_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (created_by) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "locks_lock_type_check",
+          "type": "c",
+          "definition": "CHECK ((lock_type = ANY (ARRAY['IDENTITY'::text, 'TOPOLOGY'::text, 'FACT'::text, 'GEOMETRY'::text, 'EVIDENCE_SET'::text, 'REGULATORY'::text, 'RENDERER_CONTRACT'::text, 'PUBLICATION'::text])))"
+        },
+        {
+          "name": "locks_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (lock_id)"
+        },
+        {
+          "name": "locks_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = ANY (ARRAY['ACTIVE'::text, 'SUPERSEDED'::text, 'RELEASED'::text, 'STALE'::text])))"
+        },
+        {
+          "name": "locks_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "outbox_events",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "default": "extensions.gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "aggregate_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "aggregate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attempts",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "next_attempt_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_outbox_aggregate",
+          "definition": "CREATE INDEX ix_cko_orch_outbox_aggregate ON cko_orch.outbox_events USING btree (aggregate_type, aggregate_id, created_at DESC)"
+        },
+        {
+          "name": "ix_cko_orch_outbox_pending",
+          "definition": "CREATE INDEX ix_cko_orch_outbox_pending ON cko_orch.outbox_events USING btree (status, created_at) WHERE (status = 'PENDING'::text)"
+        },
+        {
+          "name": "outbox_events_pkey",
+          "definition": "CREATE UNIQUE INDEX outbox_events_pkey ON cko_orch.outbox_events USING btree (event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "outbox_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (event_id)"
+        },
+        {
+          "name": "outbox_events_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['PENDING'::text, 'PUBLISHED'::text, 'FAILED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "override_records",
+      "columns": [
+        {
+          "name": "override_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "override_scope",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revalidation_required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "consumed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_override_divergence",
+          "definition": "CREATE INDEX ix_cko_orch_override_divergence ON cko_orch.override_records USING btree (divergence_id, status)"
+        },
+        {
+          "name": "override_records_pkey",
+          "definition": "CREATE UNIQUE INDEX override_records_pkey ON cko_orch.override_records USING btree (override_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "override_records_approved_by_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (approved_by) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "override_records_divergence_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (divergence_id) REFERENCES cko_orch.divergences(divergence_id)"
+        },
+        {
+          "name": "override_records_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (override_id)"
+        },
+        {
+          "name": "override_records_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'EXPIRED'::text, 'REVOKED'::text, 'CONSUMED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "policy_registry",
+      "columns": [
+        {
+          "name": "policy_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity_on_violation",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action_on_violation",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_json",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "policy_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX policy_registry_pkey ON cko_orch.policy_registry USING btree (policy_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "policy_registry_action_on_violation_check",
+          "type": "c",
+          "definition": "CHECK ((action_on_violation = ANY (ARRAY['LOG'::text, 'FINDING'::text, 'BLOCK'::text, 'QUARANTINE'::text])))"
+        },
+        {
+          "name": "policy_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (policy_id)"
+        },
+        {
+          "name": "policy_registry_severity_on_violation_check",
+          "type": "c",
+          "definition": "CHECK ((severity_on_violation = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "proposals",
+      "columns": [
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_hashes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'RECEIVED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_proposal_workflow",
+          "definition": "CREATE INDEX ix_cko_orch_proposal_workflow ON cko_orch.proposals USING btree (workflow_id, created_at DESC)"
+        },
+        {
+          "name": "ix_cko_orch_proposals_agent",
+          "definition": "CREATE INDEX ix_cko_orch_proposals_agent ON cko_orch.proposals USING btree (agent_id)"
+        },
+        {
+          "name": "proposals_pkey",
+          "definition": "CREATE UNIQUE INDEX proposals_pkey ON cko_orch.proposals USING btree (proposal_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "proposals_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "proposals_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (proposal_id)"
+        },
+        {
+          "name": "proposals_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['RECEIVED'::text, 'PREPARED'::text, 'BLOCKED'::text, 'QUARANTINED'::text, 'COMMITTED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "proposals_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "quarantine",
+      "columns": [
+        {
+          "name": "quarantine_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "released_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_quarantine_divergence",
+          "definition": "CREATE INDEX ix_cko_orch_quarantine_divergence ON cko_orch.quarantine USING btree (divergence_id)"
+        },
+        {
+          "name": "ix_cko_orch_quarantine_proposal",
+          "definition": "CREATE INDEX ix_cko_orch_quarantine_proposal ON cko_orch.quarantine USING btree (proposal_id)"
+        },
+        {
+          "name": "ix_cko_orch_quarantine_workflow",
+          "definition": "CREATE INDEX ix_cko_orch_quarantine_workflow ON cko_orch.quarantine USING btree (workflow_id)"
+        },
+        {
+          "name": "quarantine_pkey",
+          "definition": "CREATE UNIQUE INDEX quarantine_pkey ON cko_orch.quarantine USING btree (quarantine_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "quarantine_divergence_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (divergence_id) REFERENCES cko_orch.divergences(divergence_id)"
+        },
+        {
+          "name": "quarantine_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (quarantine_id)"
+        },
+        {
+          "name": "quarantine_proposal_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (proposal_id) REFERENCES cko_orch.proposals(proposal_id)"
+        },
+        {
+          "name": "quarantine_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'RELEASED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "quarantine_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "render_plans",
+      "columns": [
+        {
+          "name": "render_plan_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderer_contract_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "views",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "output_contract",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "plan_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'COMPILED'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_render_plan_workflow",
+          "definition": "CREATE INDEX ix_cko_orch_render_plan_workflow ON cko_orch.render_plans USING btree (workflow_id, status)"
+        },
+        {
+          "name": "render_plans_pkey",
+          "definition": "CREATE UNIQUE INDEX render_plans_pkey ON cko_orch.render_plans USING btree (render_plan_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "render_plans_geometry_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (geometry_id) REFERENCES cko_orch.geometry_registry(geometry_id)"
+        },
+        {
+          "name": "render_plans_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (render_plan_id)"
+        },
+        {
+          "name": "render_plans_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['COMPILED'::text, 'VALIDATED'::text, 'RENDERED'::text, 'STALE'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "render_plans_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "stale_events",
+      "columns": [
+        {
+          "name": "stale_event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_lock_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "old_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "new_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dependent_locks",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "stale_events_pkey",
+          "definition": "CREATE UNIQUE INDEX stale_events_pkey ON cko_orch.stale_events USING btree (stale_event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "stale_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (stale_event_id)"
+        },
+        {
+          "name": "stale_events_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "transition_log",
+      "columns": [
+        {
+          "name": "transition_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requested_by",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "from_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requested_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_reasons",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "policy_version",
+          "type": "text",
+          "default": "'1.0.0'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_transition_requested_by",
+          "definition": "CREATE INDEX ix_cko_orch_transition_requested_by ON cko_orch.transition_log USING btree (requested_by)"
+        },
+        {
+          "name": "ix_cko_orch_transition_workflow",
+          "definition": "CREATE INDEX ix_cko_orch_transition_workflow ON cko_orch.transition_log USING btree (workflow_id, created_at DESC)"
+        },
+        {
+          "name": "transition_log_pkey",
+          "definition": "CREATE UNIQUE INDEX transition_log_pkey ON cko_orch.transition_log USING btree (transition_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "transition_log_decision_check",
+          "type": "c",
+          "definition": "CHECK ((decision = ANY (ARRAY['ALLOW'::text, 'DENY'::text])))"
+        },
+        {
+          "name": "transition_log_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (transition_id)"
+        },
+        {
+          "name": "transition_log_requested_by_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (requested_by) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "transition_log_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "transition_rules",
+      "columns": [
+        {
+          "name": "from_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "to_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_class",
+          "type": "text",
+          "default": "'SEQUENTIAL'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "critical_gate",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_locks",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "transition_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX transition_rules_pkey ON cko_orch.transition_rules USING btree (from_state, to_state)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "transition_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (from_state, to_state)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "vdc_bridge_runs",
+      "columns": [
+        {
+          "name": "bridge_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "adapter_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "vdc_bridge_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX vdc_bridge_runs_pkey ON cko_orch.vdc_bridge_runs USING btree (bridge_run_id)"
+        },
+        {
+          "name": "vdc_bridge_runs_workflow_id_validation_id_key",
+          "definition": "CREATE UNIQUE INDEX vdc_bridge_runs_workflow_id_validation_id_key ON cko_orch.vdc_bridge_runs USING btree (workflow_id, validation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "vdc_bridge_runs_adapter_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (adapter_agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "vdc_bridge_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (bridge_run_id)"
+        },
+        {
+          "name": "vdc_bridge_runs_proposal_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (proposal_id) REFERENCES cko_orch.proposals(proposal_id)"
+        },
+        {
+          "name": "vdc_bridge_runs_workflow_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (workflow_id) REFERENCES cko_orch.workflow_instances(workflow_id)"
+        },
+        {
+          "name": "vdc_bridge_runs_workflow_id_validation_id_key",
+          "type": "u",
+          "definition": "UNIQUE (workflow_id, validation_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "vdc_finding_policy_map",
+      "columns": [
+        {
+          "name": "finding_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "zone",
+          "type": "text",
+          "default": "'ANY'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "divergence_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "policy_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "vdc_finding_policy_map_pkey",
+          "definition": "CREATE UNIQUE INDEX vdc_finding_policy_map_pkey ON cko_orch.vdc_finding_policy_map USING btree (finding_code, zone)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "vdc_finding_policy_map_action_check",
+          "type": "c",
+          "definition": "CHECK ((action = ANY (ARRAY['LOG'::text, 'FINDING'::text, 'BLOCK'::text, 'QUARANTINE'::text])))"
+        },
+        {
+          "name": "vdc_finding_policy_map_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (finding_code, zone)"
+        },
+        {
+          "name": "vdc_finding_policy_map_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "workflow_instances",
+      "columns": [
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "orchestrator_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_tier",
+          "type": "text",
+          "default": "'HIGH'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_state",
+          "type": "text",
+          "default": "'DISCOVERED'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "canonical_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "identity_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_set_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "renderer_contract_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_cko_orch_workflow_orchestrator",
+          "definition": "CREATE INDEX ix_cko_orch_workflow_orchestrator ON cko_orch.workflow_instances USING btree (orchestrator_agent_id)"
+        },
+        {
+          "name": "workflow_instances_pkey",
+          "definition": "CREATE UNIQUE INDEX workflow_instances_pkey ON cko_orch.workflow_instances USING btree (workflow_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "workflow_instances_orchestrator_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (orchestrator_agent_id) REFERENCES cko_governance.agent_registry(agent_id)"
+        },
+        {
+          "name": "workflow_instances_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (workflow_id)"
+        },
+        {
+          "name": "workflow_instances_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['ACTIVE'::text, 'BLOCKED'::text, 'QUARANTINED'::text, 'STALE'::text, 'CLOSED'::text])))"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

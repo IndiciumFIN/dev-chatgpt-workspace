@@ -1,0 +1,3416 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "account_palm",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-01",
+  "integrity": {
+    "tables": 18,
+    "columns": 306,
+    "viewsObserved": 26
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "atomization_eval_sample_v1",
+      "columns": [
+        {
+          "name": "sample_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "set_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "primary_stratum",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unit_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lexical_signal_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "multi_signal",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_len",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sample_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "annotation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_count_gold",
+          "type": "integer",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "gold_annotation",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "hidden_from_atomizer",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sample_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "annotation_source",
+          "type": "text",
+          "default": null,
+          "ordinal": 20,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "annotator_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 21,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "maintainer_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 22,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blind_reveal_status",
+          "type": "text",
+          "default": "'SEALED'::text",
+          "ordinal": 23,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "revealed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 24,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atomization_eval_sample_v1_assertion_candidate_id_key",
+          "definition": "CREATE UNIQUE INDEX atomization_eval_sample_v1_assertion_candidate_id_key ON account_palm.atomization_eval_sample_v1 USING btree (assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_eval_sample_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX atomization_eval_sample_v1_pkey ON account_palm.atomization_eval_sample_v1 USING btree (sample_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atomization_eval_sample_v1_annotation_status_ck",
+          "type": "c",
+          "definition": "CHECK ((annotation_status = ANY (ARRAY['PENDING'::text, 'DRAFTED'::text, 'VALIDATED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "atomization_eval_sample_v1_assertion_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (assertion_candidate_id) REFERENCES account_palm.normative_assertion_candidates_v1(assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_eval_sample_v1_assertion_candidate_id_key",
+          "type": "u",
+          "definition": "UNIQUE (assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_eval_sample_v1_blind_reveal_ck",
+          "type": "c",
+          "definition": "CHECK ((blind_reveal_status = ANY (ARRAY['SEALED'::text, 'REVEALED'::text])))"
+        },
+        {
+          "name": "atomization_eval_sample_v1_maintainer_validation_ck",
+          "type": "c",
+          "definition": "CHECK ((maintainer_validation_status = ANY (ARRAY['PENDING'::text, 'PASS'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "atomization_eval_sample_v1_normalized_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (normalized_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "atomization_eval_sample_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (sample_id)"
+        },
+        {
+          "name": "atomization_eval_sample_v1_set_type_ck",
+          "type": "c",
+          "definition": "CHECK ((set_type = ANY (ARRAY['GOLD'::text, 'BLIND'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "atomization_fragment_quality_v1",
+      "columns": [
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_len",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "page_span",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "size_risk",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_candidate",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_segmentation_anomaly",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gold_sample",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blind_sample",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "default": "'USABLE_PENDING_SEMANTIC_REVIEW'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atomization_fragment_quality_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX atomization_fragment_quality_v1_pkey ON account_palm.atomization_fragment_quality_v1 USING btree (normalized_unit_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atomization_fragment_quality_v1_normalized_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (normalized_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "atomization_fragment_quality_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (normalized_unit_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "atomization_gold_draft_proposals_v1",
+      "columns": [
+        {
+          "name": "sample_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "primary_stratum",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposed_annotation",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "structural_validation",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "review_priority",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atomization_gold_draft_proposals_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_draft_proposals_v1_pkey ON account_palm.atomization_gold_draft_proposals_v1 USING btree (sample_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atomization_gold_draft_proposals_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (sample_id)"
+        },
+        {
+          "name": "atomization_gold_draft_proposals_v1_sample_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (sample_id) REFERENCES account_palm.atomization_eval_sample_v1(sample_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "atomization_gold_replacements_v1",
+      "columns": [
+        {
+          "name": "replacement_sample_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "replaced_sample_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "primary_stratum",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unit_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_len",
+          "type": "integer",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lexical_signal_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "multi_signal",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sample_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "replacement_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "annotation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "maintainer_validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gold_annotation",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atomization_gold_replacements_v1_assertion_candidate_id_key",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_replacements_v1_assertion_candidate_id_key ON account_palm.atomization_gold_replacements_v1 USING btree (assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_replacements_v1_pkey ON account_palm.atomization_gold_replacements_v1 USING btree (replacement_sample_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_replaced_sample_id_key",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_replacements_v1_replaced_sample_id_key ON account_palm.atomization_gold_replacements_v1 USING btree (replaced_sample_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atomization_gold_replacements_v1_assertion_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (assertion_candidate_id) REFERENCES account_palm.normative_assertion_candidates_v1(assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_assertion_candidate_id_key",
+          "type": "u",
+          "definition": "UNIQUE (assertion_candidate_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_normalized_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (normalized_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (replacement_sample_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_replaced_sample_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (replaced_sample_id) REFERENCES account_palm.atomization_eval_sample_v1(sample_id)"
+        },
+        {
+          "name": "atomization_gold_replacements_v1_replaced_sample_id_key",
+          "type": "u",
+          "definition": "UNIQUE (replaced_sample_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "atomization_gold_review_batch_v1",
+      "columns": [
+        {
+          "name": "batch_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "batch_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sample_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "primary_stratum",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_priority",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposal_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewer_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "decision",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atomization_gold_review_batch_v1_batch_id_batch_order_key",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_review_batch_v1_batch_id_batch_order_key ON account_palm.atomization_gold_review_batch_v1 USING btree (batch_id, batch_order)"
+        },
+        {
+          "name": "atomization_gold_review_batch_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX atomization_gold_review_batch_v1_pkey ON account_palm.atomization_gold_review_batch_v1 USING btree (batch_id, sample_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atomization_gold_review_batch_v1_batch_id_batch_order_key",
+          "type": "u",
+          "definition": "UNIQUE (batch_id, batch_order)"
+        },
+        {
+          "name": "atomization_gold_review_batch_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (batch_id, sample_id)"
+        },
+        {
+          "name": "atomization_gold_review_batch_v1_sample_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (sample_id) REFERENCES account_palm.atomization_eval_sample_v1(sample_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "claim_semantic_class_registry_v1",
+      "columns": [
+        {
+          "name": "semantic_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "class_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "materiality_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_truth_effect",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "claim_semantic_class_registry_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX claim_semantic_class_registry_v1_pkey ON account_palm.claim_semantic_class_registry_v1 USING btree (semantic_class)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "claim_semantic_class_registry_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (semantic_class)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dou_binding_reconciliation_v1",
+      "columns": [
+        {
+          "name": "reconciliation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "catalog_reported_dou_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_primary_dou_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_event_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "primary_publication_validation_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "event_validation_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "discrepancy_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reconciliation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_mutation",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dou_binding_reconciliation_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX dou_binding_reconciliation_v1_pkey ON account_palm.dou_binding_reconciliation_v1 USING btree (reconciliation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dou_binding_reconciliation_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (reconciliation_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dou_content_validation_v1",
+      "columns": [
+        {
+          "name": "validation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dou_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dou_section",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dou_page",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "storage_bucket",
+          "type": "text",
+          "default": "'ingest-private'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_storage_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "raw_bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "raw_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "raw_hash_verified",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "text_storage_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "text_chars",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "identity_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 18,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "expected_checks",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "comparison",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 20,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 21,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_effect",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 22,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 23,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 24,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 25,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 26,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dou_content_validation_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX dou_content_validation_v1_pkey ON account_palm.dou_content_validation_v1 USING btree (validation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dou_content_validation_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validation_id)"
+        },
+        {
+          "name": "dou_content_validation_v1_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (run_id) REFERENCES account_palm.dou_validation_runs_v1(run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dou_discovery_candidates_v1",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "request_id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result_ordinal",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "pub_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "url_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "number_page",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "pub_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "edition_number",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "art_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "hierarchy",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "class_pk",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "pub_order",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "article_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "certified_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "exact_date",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "cfc_hierarchy",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title_match",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 20,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "discovery_status",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 21,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 22,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 23,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 24,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selected_for_validation",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 25,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 26,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "number_page_raw",
+          "type": "text",
+          "default": null,
+          "ordinal": 27,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "label_identity_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 28,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "title_identity_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 29,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "identity_key_match",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 30,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dou_discovery_candidates_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX dou_discovery_candidates_v1_pkey ON account_palm.dou_discovery_candidates_v1 USING btree (candidate_id)"
+        },
+        {
+          "name": "dou_discovery_candidates_v1_request_id_result_ordinal_key",
+          "definition": "CREATE UNIQUE INDEX dou_discovery_candidates_v1_request_id_result_ordinal_key ON account_palm.dou_discovery_candidates_v1 USING btree (request_id, result_ordinal)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dou_discovery_candidates_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (candidate_id)"
+        },
+        {
+          "name": "dou_discovery_candidates_v1_request_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (request_id) REFERENCES account_palm.dou_discovery_requests_v1(request_id)"
+        },
+        {
+          "name": "dou_discovery_candidates_v1_request_id_result_ordinal_key",
+          "type": "u",
+          "definition": "UNIQUE (request_id, result_ordinal)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dou_discovery_requests_v1",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "official_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dou_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "query_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "params",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "request_status",
+          "type": "text",
+          "default": "'QUEUED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "response_error",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "response_created_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "parsed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dou_discovery_requests_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX dou_discovery_requests_v1_pkey ON account_palm.dou_discovery_requests_v1 USING btree (request_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dou_discovery_requests_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (request_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "dou_validation_runs_v1",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_policy",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_hosts",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "security_change",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dou_validation_runs_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX dou_validation_runs_v1_pkey ON account_palm.dou_validation_runs_v1 USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dou_validation_runs_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normalization_runs_v1",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "corpus_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalization_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_instruments",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_units",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "processed_instruments",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "materialized_units",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_mask_schema",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_mask_schema_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "algorithm_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'RUNNING'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "normalization_runs_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normalization_runs_v1_pkey ON account_palm.normalization_runs_v1 USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normalization_runs_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normalized_units_v1",
+      "columns": [
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_graph_entity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "normative_work_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "unit_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "page_start",
+          "type": "integer",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "page_end",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mask_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalization_level",
+          "type": "text",
+          "default": "'STRUCTURAL_TEXTUAL'::text",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "structural_status",
+          "type": "text",
+          "default": "'PASS'::text",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_claim_status",
+          "type": "text",
+          "default": "'NOT_STARTED'::text",
+          "ordinal": 20,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_mode",
+          "type": "text",
+          "default": "'INTERNAL_ONLY'::text",
+          "ordinal": 21,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 22,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 23,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 24,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 25,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 26,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unit_ordinal",
+          "type": "integer",
+          "default": null,
+          "ordinal": 27,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "account_palm_normalized_units_instrument_idx",
+          "definition": "CREATE INDEX account_palm_normalized_units_instrument_idx ON account_palm.normalized_units_v1 USING btree (instrument_id)"
+        },
+        {
+          "name": "account_palm_normalized_units_type_idx",
+          "definition": "CREATE INDEX account_palm_normalized_units_type_idx ON account_palm.normalized_units_v1 USING btree (unit_type)"
+        },
+        {
+          "name": "account_palm_normalized_units_work_idx",
+          "definition": "CREATE INDEX account_palm_normalized_units_work_idx ON account_palm.normalized_units_v1 USING btree (normative_work_id)"
+        },
+        {
+          "name": "normalized_units_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normalized_units_v1_pkey ON account_palm.normalized_units_v1 USING btree (normalized_unit_id)"
+        },
+        {
+          "name": "normalized_units_v1_run_instrument_ordinal_mask_key",
+          "definition": "CREATE UNIQUE INDEX normalized_units_v1_run_instrument_ordinal_mask_key ON account_palm.normalized_units_v1 USING btree (run_id, instrument_id, unit_ordinal, mask_sha256)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normalized_units_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (normalized_unit_id)"
+        },
+        {
+          "name": "normalized_units_v1_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (run_id) REFERENCES account_palm.normalization_runs_v1(run_id)"
+        },
+        {
+          "name": "normalized_units_v1_run_instrument_ordinal_mask_key",
+          "type": "u",
+          "definition": "UNIQUE (run_id, instrument_id, unit_ordinal, mask_sha256)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normative_assertion_candidates_v1",
+      "columns": [
+        {
+          "name": "assertion_candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_work_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_scope",
+          "type": "text",
+          "default": "'UNIT_CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_status",
+          "type": "text",
+          "default": "'SOURCE_FRAGMENT_BOUND'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_status",
+          "type": "text",
+          "default": "'FEATURES_EXTRACTED_NOT_CLASSIFIED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lexical_signal_count",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "material_candidate",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "signals",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "account_palm_assertions_instrument_idx",
+          "definition": "CREATE INDEX account_palm_assertions_instrument_idx ON account_palm.normative_assertion_candidates_v1 USING btree (instrument_id)"
+        },
+        {
+          "name": "account_palm_assertions_material_idx",
+          "definition": "CREATE INDEX account_palm_assertions_material_idx ON account_palm.normative_assertion_candidates_v1 USING btree (material_candidate)"
+        },
+        {
+          "name": "normative_assertion_candidates_v1_normalized_unit_id_key",
+          "definition": "CREATE UNIQUE INDEX normative_assertion_candidates_v1_normalized_unit_id_key ON account_palm.normative_assertion_candidates_v1 USING btree (normalized_unit_id)"
+        },
+        {
+          "name": "normative_assertion_candidates_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normative_assertion_candidates_v1_pkey ON account_palm.normative_assertion_candidates_v1 USING btree (assertion_candidate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normative_assertion_candidates_v1_normalized_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (normalized_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "normative_assertion_candidates_v1_normalized_unit_id_key",
+          "type": "u",
+          "definition": "UNIQUE (normalized_unit_id)"
+        },
+        {
+          "name": "normative_assertion_candidates_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assertion_candidate_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normative_claim_candidates_v1",
+      "columns": [
+        {
+          "name": "claim_candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normalized_unit_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "atom_ordinal",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "claim_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "claim_type_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "modality_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "subject_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "action_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "object_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "condition_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "exception_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "temporal_scope_candidate",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_status",
+          "type": "text",
+          "default": "'PENDING_ATOMIZATION'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checker_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_permission",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 20,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 21,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "span_start",
+          "type": "integer",
+          "default": null,
+          "ordinal": 22,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "span_end",
+          "type": "integer",
+          "default": null,
+          "ordinal": 23,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_fragment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 24,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 25,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "normalized_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 26,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "boundary_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 27,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 28,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_confidence",
+          "type": "numeric(6,5)",
+          "default": null,
+          "ordinal": 29,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "checker_confidence",
+          "type": "numeric(6,5)",
+          "default": null,
+          "ordinal": 30,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "canonical_status",
+          "type": "text",
+          "default": "'CANDIDATE_ONLY'::text",
+          "ordinal": 31,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "account_palm_claims_status_idx",
+          "definition": "CREATE INDEX account_palm_claims_status_idx ON account_palm.normative_claim_candidates_v1 USING btree (semantic_status, checker_status)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_assertion_candidate_id_atom_o_key",
+          "definition": "CREATE UNIQUE INDEX normative_claim_candidates_v1_assertion_candidate_id_atom_o_key ON account_palm.normative_claim_candidates_v1 USING btree (assertion_candidate_id, atom_ordinal)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normative_claim_candidates_v1_pkey ON account_palm.normative_claim_candidates_v1 USING btree (claim_candidate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normative_claim_candidates_v1_assertion_candidate_id_atom_o_key",
+          "type": "u",
+          "definition": "UNIQUE (assertion_candidate_id, atom_ordinal)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_assertion_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (assertion_candidate_id) REFERENCES account_palm.normative_assertion_candidates_v1(assertion_candidate_id)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_atom_ordinal_ck",
+          "type": "c",
+          "definition": "CHECK ((atom_ordinal >= 1))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_canonical_status_ck",
+          "type": "c",
+          "definition": "CHECK ((canonical_status = ANY (ARRAY['CANDIDATE_ONLY'::text, 'ELIGIBLE_AFTER_CHECKER'::text])))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_checker_status_ck",
+          "type": "c",
+          "definition": "CHECK ((checker_status = ANY (ARRAY['PENDING'::text, 'PASS'::text, 'N/A'::text, 'HOLD'::text, 'FAIL'::text])))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_chk_conf_ck",
+          "type": "c",
+          "definition": "CHECK (((checker_confidence IS NULL) OR ((checker_confidence >= (0)::numeric) AND (checker_confidence <= (1)::numeric))))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_hash_ck",
+          "type": "c",
+          "definition": "CHECK (((claim_text_sha256 IS NULL) OR (claim_text_sha256 ~ '^[0-9a-f]{64}$'::text)))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_norm_hash_ck",
+          "type": "c",
+          "definition": "CHECK (((normalized_text_sha256 IS NULL) OR (normalized_text_sha256 ~ '^[0-9a-f]{64}$'::text)))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_normalized_unit_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (normalized_unit_id) REFERENCES account_palm.normalized_units_v1(normalized_unit_id)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (claim_candidate_id)"
+        },
+        {
+          "name": "normative_claim_candidates_v1_render_ck",
+          "type": "c",
+          "definition": "CHECK ((render_permission = false))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_sem_conf_ck",
+          "type": "c",
+          "definition": "CHECK (((semantic_confidence IS NULL) OR ((semantic_confidence >= (0)::numeric) AND (semantic_confidence <= (1)::numeric))))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_semantic_status_ck",
+          "type": "c",
+          "definition": "CHECK ((semantic_status = ANY (ARRAY['PENDING_ATOMIZATION'::text, 'BOUNDARY_PROPOSED'::text, 'SEMANTIC_PROPOSED'::text, 'CHECKER_PASS'::text, 'N/A_NON_CLAIM'::text, 'HOLD_SEMANTIC'::text, 'FAIL_VALIDATION'::text])))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_source_hash_ck",
+          "type": "c",
+          "definition": "CHECK (((source_text_sha256 IS NULL) OR (source_text_sha256 ~ '^[0-9a-f]{64}$'::text)))"
+        },
+        {
+          "name": "normative_claim_candidates_v1_span_ck",
+          "type": "c",
+          "definition": "CHECK ((((span_start IS NULL) AND (span_end IS NULL) AND (claim_text IS NULL)) OR ((span_start IS NOT NULL) AND (span_end IS NOT NULL) AND (span_start >= 0) AND (span_end > span_start) AND (claim_text IS NOT NULL))))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normative_temporal_evidence_v1",
+      "columns": [
+        {
+          "name": "temporal_evidence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "temporal_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposition_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "effective_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "applies_from",
+          "type": "date",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "applies_to",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "precedence_status",
+          "type": "text",
+          "default": "'SOURCE_BOUND_PENDING_INTERPRETATION'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "canonical_effect",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "normative_temporal_evidence_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normative_temporal_evidence_v1_pkey ON account_palm.normative_temporal_evidence_v1 USING btree (temporal_evidence_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normative_temporal_evidence_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (temporal_evidence_id)"
+        },
+        {
+          "name": "normative_temporal_evidence_v1_temporal_type_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (temporal_type) REFERENCES account_palm.normative_temporal_type_registry_v1(temporal_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "normative_temporal_type_registry_v1",
+      "columns": [
+        {
+          "name": "temporal_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "temporal_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "precedence_semantics",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_effect",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "normative_temporal_type_registry_v1_pkey",
+          "definition": "CREATE UNIQUE INDEX normative_temporal_type_registry_v1_pkey ON account_palm.normative_temporal_type_registry_v1 USING btree (temporal_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "normative_temporal_type_registry_v1_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (temporal_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "source_object_registry",
+      "columns": [
+        {
+          "name": "source_schema",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_object",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_kind",
+          "type": "text",
+          "default": "'TABLE'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inclusion_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "account_palm_object",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "source_object_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX source_object_registry_pkey ON account_palm.source_object_registry USING btree (source_schema, source_object)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_object_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_schema, source_object)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

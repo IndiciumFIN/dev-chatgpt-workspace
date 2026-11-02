@@ -1,0 +1,2956 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_research_candidate",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 23,
+    "columns": 204,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "analysis_runs",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "method_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "parameters",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "analysis_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX analysis_runs_pkey ON ce_research_candidate.analysis_runs USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_analysis_runs_project",
+          "definition": "CREATE INDEX idx_rh_analysis_runs_project ON ce_research_candidate.analysis_runs USING btree (project_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "analysis_runs_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "analysis_runs_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "analysis_runs_parameters_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(parameters) = 'object'::text))"
+        },
+        {
+          "name": "analysis_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "analysis_runs_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "budget_lines",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "budget_category",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "period_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "budgeted_amount",
+          "type": "numeric(18,2)",
+          "default": "0",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "currency_code",
+          "type": "text",
+          "default": "'BRL'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "budget_lines_pkey",
+          "definition": "CREATE UNIQUE INDEX budget_lines_pkey ON ce_research_candidate.budget_lines USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_budget_lines_project",
+          "definition": "CREATE INDEX idx_rh_budget_lines_project ON ce_research_candidate.budget_lines USING btree (project_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "budget_lines_budgeted_amount_check",
+          "type": "c",
+          "definition": "CHECK ((budgeted_amount >= (0)::numeric))"
+        },
+        {
+          "name": "budget_lines_currency_code_check",
+          "type": "c",
+          "definition": "CHECK ((currency_code ~ '^[A-Z]{3}$'::text))"
+        },
+        {
+          "name": "budget_lines_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "budget_lines_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "budget_lines_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "budget_lines_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "calls_for_proposals",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "organization_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": "''::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "opens_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "closes_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "calls_for_proposals_pkey",
+          "definition": "CREATE UNIQUE INDEX calls_for_proposals_pkey ON ce_research_candidate.calls_for_proposals USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_calls_for_proposals_organization_ref",
+          "definition": "CREATE INDEX idx_rh_calls_for_proposals_organization_ref ON ce_research_candidate.calls_for_proposals USING btree (organization_ref)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "calls_for_proposals_check",
+          "type": "c",
+          "definition": "CHECK (((closes_at IS NULL) OR (opens_at IS NULL) OR (closes_at >= opens_at)))"
+        },
+        {
+          "name": "calls_for_proposals_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "calls_for_proposals_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "calls_for_proposals_organization_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (organization_ref) REFERENCES ce_platform.organizations(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "calls_for_proposals_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "consensus_votes",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "statement_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "participant_token_digest",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "position",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "consensus_votes_pkey",
+          "definition": "CREATE UNIQUE INDEX consensus_votes_pkey ON ce_research_candidate.consensus_votes USING btree (record_id)"
+        },
+        {
+          "name": "consensus_votes_statement_id_participant_token_digest_key",
+          "definition": "CREATE UNIQUE INDEX consensus_votes_statement_id_participant_token_digest_key ON ce_research_candidate.consensus_votes USING btree (statement_id, participant_token_digest)"
+        },
+        {
+          "name": "idx_rh_consensus_votes_statement_id",
+          "definition": "CREATE INDEX idx_rh_consensus_votes_statement_id ON ce_research_candidate.consensus_votes USING btree (statement_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "consensus_votes_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "consensus_votes_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "consensus_votes_participant_token_digest_check",
+          "type": "c",
+          "definition": "CHECK ((participant_token_digest ~ '^[0-9a-f]{64}$'::text))"
+        },
+        {
+          "name": "consensus_votes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "consensus_votes_position_check",
+          "type": "c",
+          "definition": "CHECK ((\"position\" = ANY (ARRAY['AGREE'::text, 'DISAGREE'::text, 'UNSURE'::text])))"
+        },
+        {
+          "name": "consensus_votes_statement_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (statement_id) REFERENCES ce_research_candidate.participation_statements(record_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "consensus_votes_statement_id_participant_token_digest_key",
+          "type": "u",
+          "definition": "UNIQUE (statement_id, participant_token_digest)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "data_quality_findings",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "response_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rule_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "data_quality_findings_pkey",
+          "definition": "CREATE UNIQUE INDEX data_quality_findings_pkey ON ce_research_candidate.data_quality_findings USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_data_quality_findings_project",
+          "definition": "CREATE INDEX idx_rh_data_quality_findings_project ON ce_research_candidate.data_quality_findings USING btree (project_id)"
+        },
+        {
+          "name": "idx_rh_data_quality_findings_response_id",
+          "definition": "CREATE INDEX idx_rh_data_quality_findings_response_id ON ce_research_candidate.data_quality_findings USING btree (response_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "data_quality_findings_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "data_quality_findings_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "data_quality_findings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "data_quality_findings_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "data_quality_findings_response_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (response_id) REFERENCES ce_research_candidate.instrument_responses(record_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "data_quality_findings_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['LOW'::text, 'MEDIUM'::text, 'HIGH'::text, 'CRITICAL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "editorial_reviews",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "output_canonical_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "review_kind",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewer_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "editorial_reviews_pkey",
+          "definition": "CREATE UNIQUE INDEX editorial_reviews_pkey ON ce_research_candidate.editorial_reviews USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_editorial_reviews_output_canonical_ref",
+          "definition": "CREATE INDEX idx_rh_editorial_reviews_output_canonical_ref ON ce_research_candidate.editorial_reviews USING btree (output_canonical_ref)"
+        },
+        {
+          "name": "idx_rh_editorial_reviews_project",
+          "definition": "CREATE INDEX idx_rh_editorial_reviews_project ON ce_research_candidate.editorial_reviews USING btree (project_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "editorial_reviews_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "editorial_reviews_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "editorial_reviews_output_canonical_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (output_canonical_ref) REFERENCES ce_platform.canonical_objects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "editorial_reviews_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "editorial_reviews_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "funding_transactions",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "budget_line_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "amount",
+          "type": "numeric(18,2)",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "currency_code",
+          "type": "text",
+          "default": "'BRL'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "transaction_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "funding_transactions_pkey",
+          "definition": "CREATE UNIQUE INDEX funding_transactions_pkey ON ce_research_candidate.funding_transactions USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_funding_transactions_budget_line_id",
+          "definition": "CREATE INDEX idx_rh_funding_transactions_budget_line_id ON ce_research_candidate.funding_transactions USING btree (budget_line_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "funding_transactions_budget_line_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (budget_line_id) REFERENCES ce_research_candidate.budget_lines(record_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "funding_transactions_currency_code_check",
+          "type": "c",
+          "definition": "CHECK ((currency_code ~ '^[A-Z]{3}$'::text))"
+        },
+        {
+          "name": "funding_transactions_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "funding_transactions_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "funding_transactions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "hypotheses",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "hypothesis_kind",
+          "type": "text",
+          "default": "'DESCRIPTIVE'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "null_hypothesis",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "hypotheses_pkey",
+          "definition": "CREATE UNIQUE INDEX hypotheses_pkey ON ce_research_candidate.hypotheses USING btree (record_id)"
+        },
+        {
+          "name": "idx_rh_hypotheses_project",
+          "definition": "CREATE INDEX idx_rh_hypotheses_project ON ce_research_candidate.hypotheses USING btree (project_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "hypotheses_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "hypotheses_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "hypotheses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "hypotheses_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "hypotheses_statement_check",
+          "type": "c",
+          "definition": "CHECK ((length(TRIM(BOTH FROM statement)) > 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "impact_observations",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "impact_category",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "indicator_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_on",
+          "type": "date",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_impact_observations_project",
+          "definition": "CREATE INDEX idx_rh_impact_observations_project ON ce_research_candidate.impact_observations USING btree (project_id)"
+        },
+        {
+          "name": "impact_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX impact_observations_pkey ON ce_research_candidate.impact_observations USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "impact_observations_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "impact_observations_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "impact_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "impact_observations_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "instrument_responses",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anonymous_token_digest",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "form_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "response_payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_instrument_responses_instrument_id",
+          "definition": "CREATE INDEX idx_rh_instrument_responses_instrument_id ON ce_research_candidate.instrument_responses USING btree (instrument_id)"
+        },
+        {
+          "name": "idx_rh_instrument_responses_project",
+          "definition": "CREATE INDEX idx_rh_instrument_responses_project ON ce_research_candidate.instrument_responses USING btree (project_id)"
+        },
+        {
+          "name": "instrument_responses_pkey",
+          "definition": "CREATE UNIQUE INDEX instrument_responses_pkey ON ce_research_candidate.instrument_responses USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "instrument_responses_anonymous_token_digest_check",
+          "type": "c",
+          "definition": "CHECK (((anonymous_token_digest IS NULL) OR (anonymous_token_digest ~ '^[0-9a-f]{64}$'::text)))"
+        },
+        {
+          "name": "instrument_responses_instrument_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (instrument_id) REFERENCES ce_platform.research_instruments(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "instrument_responses_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "instrument_responses_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "instrument_responses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "instrument_responses_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "instrument_responses_response_payload_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(response_payload) = 'object'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "metric_observations",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observation_payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_metric_observations_metric_id",
+          "definition": "CREATE INDEX idx_rh_metric_observations_metric_id ON ce_research_candidate.metric_observations USING btree (metric_id)"
+        },
+        {
+          "name": "metric_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX metric_observations_pkey ON ce_research_candidate.metric_observations USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "metric_observations_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "metric_observations_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "metric_observations_metric_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (metric_id) REFERENCES ce_research_candidate.research_metrics(record_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "metric_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "participation_outcomes",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "process_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "outcome_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "is_official",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_participation_outcomes_project",
+          "definition": "CREATE INDEX idx_rh_participation_outcomes_project ON ce_research_candidate.participation_outcomes USING btree (project_id)"
+        },
+        {
+          "name": "participation_outcomes_pkey",
+          "definition": "CREATE UNIQUE INDEX participation_outcomes_pkey ON ce_research_candidate.participation_outcomes USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "participation_outcomes_is_official_check",
+          "type": "c",
+          "definition": "CHECK ((is_official = false))"
+        },
+        {
+          "name": "participation_outcomes_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "participation_outcomes_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "participation_outcomes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "participation_outcomes_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "participation_statements",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "process_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "display_order",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_participation_statements_project",
+          "definition": "CREATE INDEX idx_rh_participation_statements_project ON ce_research_candidate.participation_statements USING btree (project_id)"
+        },
+        {
+          "name": "participation_statements_pkey",
+          "definition": "CREATE UNIQUE INDEX participation_statements_pkey ON ce_research_candidate.participation_statements USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "participation_statements_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "participation_statements_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "participation_statements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "participation_statements_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "participation_statements_statement_check",
+          "type": "c",
+          "definition": "CHECK ((length(TRIM(BOTH FROM statement)) > 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "proposal_applications",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "call_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "application_summary",
+          "type": "text",
+          "default": "''::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_proposal_applications_call_id",
+          "definition": "CREATE INDEX idx_rh_proposal_applications_call_id ON ce_research_candidate.proposal_applications USING btree (call_id)"
+        },
+        {
+          "name": "idx_rh_proposal_applications_project",
+          "definition": "CREATE INDEX idx_rh_proposal_applications_project ON ce_research_candidate.proposal_applications USING btree (project_id)"
+        },
+        {
+          "name": "proposal_applications_pkey",
+          "definition": "CREATE UNIQUE INDEX proposal_applications_pkey ON ce_research_candidate.proposal_applications USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "proposal_applications_call_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (call_id) REFERENCES ce_research_candidate.calls_for_proposals(record_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "proposal_applications_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "proposal_applications_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "proposal_applications_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "proposal_applications_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "recruitment_campaigns",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "eligibility_criteria",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "opens_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "closes_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_recruitment_campaigns_project",
+          "definition": "CREATE INDEX idx_rh_recruitment_campaigns_project ON ce_research_candidate.recruitment_campaigns USING btree (project_id)"
+        },
+        {
+          "name": "recruitment_campaigns_pkey",
+          "definition": "CREATE UNIQUE INDEX recruitment_campaigns_pkey ON ce_research_candidate.recruitment_campaigns USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "recruitment_campaigns_check",
+          "type": "c",
+          "definition": "CHECK (((closes_at IS NULL) OR (opens_at IS NULL) OR (closes_at >= opens_at)))"
+        },
+        {
+          "name": "recruitment_campaigns_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "recruitment_campaigns_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "recruitment_campaigns_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "recruitment_campaigns_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "research_metrics",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metric_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "definition",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_research_metrics_project",
+          "definition": "CREATE INDEX idx_rh_research_metrics_project ON ce_research_candidate.research_metrics USING btree (project_id)"
+        },
+        {
+          "name": "research_metrics_pkey",
+          "definition": "CREATE UNIQUE INDEX research_metrics_pkey ON ce_research_candidate.research_metrics USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "research_metrics_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "research_metrics_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "research_metrics_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "research_metrics_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "research_portfolio_items",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "portfolio_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_research_portfolio_items_project",
+          "definition": "CREATE INDEX idx_rh_research_portfolio_items_project ON ce_research_candidate.research_portfolio_items USING btree (project_id)"
+        },
+        {
+          "name": "research_portfolio_items_pkey",
+          "definition": "CREATE UNIQUE INDEX research_portfolio_items_pkey ON ce_research_candidate.research_portfolio_items USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "research_portfolio_items_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "research_portfolio_items_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "research_portfolio_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "research_portfolio_items_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "research_training_assignments",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "skill_canonical_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "assignee_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "training_resource_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "due_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_research_training_assignments_project",
+          "definition": "CREATE INDEX idx_rh_research_training_assignments_project ON ce_research_candidate.research_training_assignments USING btree (project_id)"
+        },
+        {
+          "name": "idx_rh_research_training_assignments_skill_canonical_ref",
+          "definition": "CREATE INDEX idx_rh_research_training_assignments_skill_canonical_ref ON ce_research_candidate.research_training_assignments USING btree (skill_canonical_ref)"
+        },
+        {
+          "name": "research_training_assignments_pkey",
+          "definition": "CREATE UNIQUE INDEX research_training_assignments_pkey ON ce_research_candidate.research_training_assignments USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "research_training_assignments_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "research_training_assignments_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "research_training_assignments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "research_training_assignments_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "research_training_assignments_skill_canonical_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (skill_canonical_ref) REFERENCES ce_platform.skills(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "response_items",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "response_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "field_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "response_value",
+          "type": "jsonb",
+          "default": "'null'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_response_items_response_id",
+          "definition": "CREATE INDEX idx_rh_response_items_response_id ON ce_research_candidate.response_items USING btree (response_id)"
+        },
+        {
+          "name": "response_items_pkey",
+          "definition": "CREATE UNIQUE INDEX response_items_pkey ON ce_research_candidate.response_items USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "response_items_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "response_items_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "response_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "response_items_response_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (response_id) REFERENCES ce_research_candidate.instrument_responses(record_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "retention_rules",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "data_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retention_days",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "disposal_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_retention_rules_project",
+          "definition": "CREATE INDEX idx_rh_retention_rules_project ON ce_research_candidate.retention_rules USING btree (project_id)"
+        },
+        {
+          "name": "retention_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX retention_rules_pkey ON ce_research_candidate.retention_rules USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "retention_rules_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "retention_rules_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "retention_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "retention_rules_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "retention_rules_retention_days_check",
+          "type": "c",
+          "definition": "CHECK ((retention_days >= 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "risk_scenarios",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "scenario_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assumptions",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposed_response",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_risk_scenarios_project",
+          "definition": "CREATE INDEX idx_rh_risk_scenarios_project ON ce_research_candidate.risk_scenarios USING btree (project_id)"
+        },
+        {
+          "name": "idx_rh_risk_scenarios_risk_ref",
+          "definition": "CREATE INDEX idx_rh_risk_scenarios_risk_ref ON ce_research_candidate.risk_scenarios USING btree (risk_ref)"
+        },
+        {
+          "name": "risk_scenarios_pkey",
+          "definition": "CREATE UNIQUE INDEX risk_scenarios_pkey ON ce_research_candidate.risk_scenarios USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "risk_scenarios_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "risk_scenarios_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "risk_scenarios_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "risk_scenarios_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "risk_scenarios_risk_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (risk_ref) REFERENCES cko_risk.risks(risk_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "sampling_plans",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_definition",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sampling_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_size",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "inclusion_criteria",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exclusion_criteria",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_sampling_plans_project",
+          "definition": "CREATE INDEX idx_rh_sampling_plans_project ON ce_research_candidate.sampling_plans USING btree (project_id)"
+        },
+        {
+          "name": "sampling_plans_pkey",
+          "definition": "CREATE UNIQUE INDEX sampling_plans_pkey ON ce_research_candidate.sampling_plans USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "sampling_plans_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "sampling_plans_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "sampling_plans_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "sampling_plans_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "sampling_plans_target_size_check",
+          "type": "c",
+          "definition": "CHECK ((target_size > 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "source_search_hits",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "search_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result_rank",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "retrieved_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_rh_source_search_hits_project",
+          "definition": "CREATE INDEX idx_rh_source_search_hits_project ON ce_research_candidate.source_search_hits USING btree (project_id)"
+        },
+        {
+          "name": "idx_rh_source_search_hits_search_id",
+          "definition": "CREATE INDEX idx_rh_source_search_hits_search_id ON ce_research_candidate.source_search_hits USING btree (search_id)"
+        },
+        {
+          "name": "source_search_hits_pkey",
+          "definition": "CREATE UNIQUE INDEX source_search_hits_pkey ON ce_research_candidate.source_search_hits USING btree (record_id)"
+        }
+      ],
+      "force_rls": true,
+      "constraints": [
+        {
+          "name": "source_search_hits_lifecycle_state_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_state = ANY (ARRAY['CANDIDATE'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "source_search_hits_metadata_check",
+          "type": "c",
+          "definition": "CHECK ((jsonb_typeof(metadata) = 'object'::text))"
+        },
+        {
+          "name": "source_search_hits_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (record_id)"
+        },
+        {
+          "name": "source_search_hits_project_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (project_id) REFERENCES ce_platform.research_projects(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "source_search_hits_result_rank_check",
+          "type": "c",
+          "definition": "CHECK ((result_rank >= 1))"
+        },
+        {
+          "name": "source_search_hits_search_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (search_id) REFERENCES ce_platform.saved_searches(saved_search_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

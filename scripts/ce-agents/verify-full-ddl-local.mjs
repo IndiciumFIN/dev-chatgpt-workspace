@@ -32,7 +32,7 @@ try{
    "COALESCE((SELECT jsonb_agg(jsonb_build_object('name',a.attname,'type',format_type(a.atttypid,a.atttypmod),'nullable',NOT a.attnotnull) ORDER BY a.attnum) FROM pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped),'[]'::jsonb) AS columns "+
    "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace "+
    "WHERE n.nspname=ANY($1::text[]) AND c.relkind IN ('r','p') ORDER BY 1,2";
-  const rows=(await db.query(query,[...expected.keys()])).rows;
+  const rows=(await db.query(query,[[...expected.keys()]])).rows;
   const found=new Map();
   const differences=[];
   for(const local of rows){

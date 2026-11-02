@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_graph",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 3,
+    "columns": 22,
+    "viewsObserved": 1
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "edge",
+      "columns": [
+        {
+          "name": "edge_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "predicate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "edge_pkey",
+          "definition": "CREATE UNIQUE INDEX edge_pkey ON xlf_graph.edge USING btree (edge_id)"
+        },
+        {
+          "name": "edge_subject_id_predicate_id_object_id_key",
+          "definition": "CREATE UNIQUE INDEX edge_subject_id_predicate_id_object_id_key ON xlf_graph.edge USING btree (subject_id, predicate_id, object_id)"
+        },
+        {
+          "name": "ix_xlf_graph_edge_object",
+          "definition": "CREATE INDEX ix_xlf_graph_edge_object ON xlf_graph.edge USING btree (object_id)"
+        },
+        {
+          "name": "ix_xlf_graph_edge_predicate",
+          "definition": "CREATE INDEX ix_xlf_graph_edge_predicate ON xlf_graph.edge USING btree (predicate_id)"
+        },
+        {
+          "name": "ix_xlf_graph_edge_subject",
+          "definition": "CREATE INDEX ix_xlf_graph_edge_subject ON xlf_graph.edge USING btree (subject_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "edge_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (object_id) REFERENCES xlf_graph.node(node_id)"
+        },
+        {
+          "name": "edge_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (edge_id)"
+        },
+        {
+          "name": "edge_predicate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (predicate_id) REFERENCES xlf_graph.predicate(predicate_id)"
+        },
+        {
+          "name": "edge_subject_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_id) REFERENCES xlf_graph.node(node_id)"
+        },
+        {
+          "name": "edge_subject_id_predicate_id_object_id_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_id, predicate_id, object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "node",
+      "columns": [
+        {
+          "name": "node_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "node_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_graph_node_source_uri",
+          "definition": "CREATE INDEX ix_xlf_graph_node_source_uri ON xlf_graph.node USING btree (canonical_uri) WHERE (node_type = 'SOURCE'::text)"
+        },
+        {
+          "name": "node_pkey",
+          "definition": "CREATE UNIQUE INDEX node_pkey ON xlf_graph.node USING btree (node_id)"
+        },
+        {
+          "name": "ux_xlf_graph_node_non_source_uri",
+          "definition": "CREATE UNIQUE INDEX ux_xlf_graph_node_non_source_uri ON xlf_graph.node USING btree (canonical_uri) WHERE (node_type <> 'SOURCE'::text)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "node_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (node_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "predicate",
+      "columns": [
+        {
+          "name": "predicate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "curie",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "label_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "domain_types",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "range_types",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "cardinality",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "inverse_predicate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "characteristics",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_predicate_inverse",
+          "definition": "CREATE INDEX ix_xlf_predicate_inverse ON xlf_graph.predicate USING btree (inverse_predicate_id)"
+        },
+        {
+          "name": "predicate_curie_key",
+          "definition": "CREATE UNIQUE INDEX predicate_curie_key ON xlf_graph.predicate USING btree (curie)"
+        },
+        {
+          "name": "predicate_pkey",
+          "definition": "CREATE UNIQUE INDEX predicate_pkey ON xlf_graph.predicate USING btree (predicate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "predicate_curie_key",
+          "type": "u",
+          "definition": "UNIQUE (curie)"
+        },
+        {
+          "name": "predicate_inverse_predicate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (inverse_predicate_id) REFERENCES xlf_graph.predicate(predicate_id)"
+        },
+        {
+          "name": "predicate_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (predicate_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_sim",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 1,
+    "columns": 6,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "activity_definition",
+      "columns": [
+        {
+          "name": "activity_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "activity_definition_pkey",
+          "definition": "CREATE UNIQUE INDEX activity_definition_pkey ON xlf_sim.activity_definition USING btree (activity_id, version)"
+        },
+        {
+          "name": "ix_xlf_activity_competency",
+          "definition": "CREATE INDEX ix_xlf_activity_competency ON xlf_sim.activity_definition USING btree (competency_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "activity_definition_competency_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (competency_ref) REFERENCES xlf_learning.competency_definition(competency_id)"
+        },
+        {
+          "name": "activity_definition_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (activity_id, version)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

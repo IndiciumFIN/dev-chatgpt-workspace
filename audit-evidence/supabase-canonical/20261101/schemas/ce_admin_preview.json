@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_admin_preview",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-01",
+  "integrity": {
+    "tables": 2,
+    "columns": 12,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "demo_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "happened_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "demo_events_pkey",
+          "definition": "CREATE UNIQUE INDEX demo_events_pkey ON ce_admin_preview.demo_events USING btree (id)"
+        },
+        {
+          "name": "idx_ce_preview_events_record",
+          "definition": "CREATE INDEX idx_ce_preview_events_record ON ce_admin_preview.demo_events USING btree (record_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "demo_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "demo_events_record_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (record_id) REFERENCES ce_admin_preview.demo_records(id) ON DELETE SET NULL"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "demo_records",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "module_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_status",
+          "type": "text",
+          "default": "'draft'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "demo_records_pkey",
+          "definition": "CREATE UNIQUE INDEX demo_records_pkey ON ce_admin_preview.demo_records USING btree (id)"
+        },
+        {
+          "name": "idx_ce_preview_records_module",
+          "definition": "CREATE INDEX idx_ce_preview_records_module ON ce_admin_preview.demo_records USING btree (module_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ce_preview_status_valid",
+          "type": "c",
+          "definition": "CHECK ((lifecycle_status = ANY (ARRAY['draft'::text, 'in_review'::text, 'hold_human'::text, 'approved'::text, 'published'::text, 'archived'::text])))"
+        },
+        {
+          "name": "demo_records_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

@@ -46,6 +46,20 @@ const descriptor=JSON.parse(readFileSync(join(evidence,'CKO_M3_META_METAMODEL_v0
 if(m3v03.$id!=='urn:cko:m3:meta-metamodel:0.3.0'||m3rc.$id!=='urn:cko:m3:meta-metamodel:1.0.0-rc3')gaps.push('M3_SCHEMA_VERSION_ID_MISMATCH');
 if(!Array.isArray(m3rc.required)||!m3rc.required.includes('invariants')||!m3rc.required.includes('binding_definitions'))gaps.push('M3_RC_REQUIRED_INVARIANTS_MISSING');
 if(descriptor.role?.includes('grammar')!==true||descriptor.classes!==undefined||descriptor.status?.production_admission!=='DENY')gaps.push('M3_DESCRIPTOR_ROLE_NOT_DISTINCT');
+const rdir=join(root,'audit-evidence/mof-foundation-recovery/20261102/read-only-live-registers');
+const getRegister=(name)=>JSON.parse(readFileSync(join(rdir,name+'.json'),'utf8')).rows;
+const agentRows=getRegister('agent-registry'),profileRows=getRegister('agent-job-profiles'),
+  processRows=getRegister('processes'),metadataFields=getRegister('metadata-fields'),
+  allProcessRows=JSON.parse(readFileSync(join(rdir,'processes-full.json'),'utf8')).rows;
+const regCounts={agents:agentRows.length,profiles:profileRows.length,processes:processRows.length,metadataFields:metadataFields.length};
+if(agentRows.length!==89||profileRows.length!==89||processRows.length!==12||metadataFields.length!==37||allProcessRows.length!==12)gaps.push('LIVE_GOVERNANCE_REGISTRY_SOURCE_CARDINALITY_DRIFT');
+const profiles=new Set(profileRows.map(x=>x.job_profile_id));
+if(profiles.size!==profileRows.length)gaps.push('DUPLICATE_AGENT_PROFILE_ID');
+if(new Set(agentRows.map(x=>x.agent_id)).size!==agentRows.length)gaps.push('DUPLICATE_AGENT_ID');
+for(const a of agentRows)if(!profiles.has(a.job_profile_id))gaps.push('AGENT_PROFILE_LINK_MISSING:'+a.agent_id);
+if(agentRows.some(x=>x.actor_type==='AI_AGENT'&&x.can_promote))gaps.push('AI_AGENT_PROMOTION_PRIVILEGE_DETECTED');
+if(!agentRows.some(x=>x.actor_type==='HUMAN_SUPER'&&x.can_promote))gaps.push('HUMAN_PROMOTION_AUTHORITY_UNBOUND');
+if(new Set(allProcessRows.map(x=>x.process_id)).size!==12)gaps.push('DUPLICATE_PROCESS_ID');
 const n=docs.reduce((s,d)=>s+d.tables.length,0),cols=docs.reduce((s,d)=>s+d.tables.reduce((a,t)=>a+t.columns.length,0),0);
 if(n!==606||cols!==6486)gaps.push('DATABASE_SNAPSHOT_COUNT_DRIFT');
 const record={
@@ -55,7 +69,7 @@ const record={
   basis:'source metadata only; no licensed texts; no claims of clause compliance',
   snapshot:{schemas:docs.length,tables:n,columns:cols},existing:coverage,
   mappings:{M3:'meta-metamodel grammar / validation',M2:'governed metamodel and vocabulary',M1:'declarative or executable model',M0:'instances and audit evidence'},
-  sourceRegistryCount:reg.length,crosswalkCount:cross.rows.length,definitionFamilyKinds:defs.definition_kinds.length,definitionFamilyStatus:defs.status,findings:gaps,
+  sourceRegistryCount:reg.length,liveGovernanceRegisterCounts:regCounts,crosswalkCount:cross.rows.length,definitionFamilyKinds:defs.definition_kinds.length,definitionFamilyStatus:defs.status,findings:gaps,
   note:'No new MOF table created: semantic equivalence with existing structural entities must be validated first.',
   release:'HOLD_HUMAN',productionWrite:false,fullDdlParity:false
 };

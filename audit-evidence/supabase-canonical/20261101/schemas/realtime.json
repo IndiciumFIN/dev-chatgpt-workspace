@@ -1,0 +1,297 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "realtime",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": true,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 3,
+    "columns": 21,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "p",
+      "name": "messages",
+      "columns": [
+        {
+          "name": "topic",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "extension",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "event",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "private",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp without time zone",
+          "default": "timezone('utc'::text, clock_timestamp())",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inserted_at",
+          "type": "timestamp without time zone",
+          "default": "timezone('utc'::text, clock_timestamp())",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "binary_payload",
+          "type": "bytea",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "skip_broadcast",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "messages_inserted_at_topic_index",
+          "definition": "CREATE INDEX messages_inserted_at_topic_index ON ONLY realtime.messages USING btree (inserted_at DESC, topic) WHERE ((extension = 'broadcast'::text) AND (private IS TRUE))"
+        },
+        {
+          "name": "messages_pkey",
+          "definition": "CREATE UNIQUE INDEX messages_pkey ON ONLY realtime.messages USING btree (id, inserted_at)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "messages_payload_exclusive",
+          "type": "c",
+          "definition": "CHECK (((payload IS NULL) OR (binary_payload IS NULL))) NOT VALID"
+        },
+        {
+          "name": "messages_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id, inserted_at)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "schema_migrations",
+      "columns": [
+        {
+          "name": "version",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inserted_at",
+          "type": "timestamp(0) without time zone",
+          "default": "now()",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "schema_migrations_pkey",
+          "definition": "CREATE UNIQUE INDEX schema_migrations_pkey ON realtime.schema_migrations USING btree (version)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "schema_migrations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (version)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "subscription",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subscription_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "entity",
+          "type": "regclass",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "filters",
+          "type": "realtime.user_defined_filter[]",
+          "default": "'{}'::realtime.user_defined_filter[]",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claims",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claims_role",
+          "type": "regrole",
+          "default": "realtime.to_regrole((claims ->> 'role'::text))",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": "s"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp without time zone",
+          "default": "timezone('utc'::text, now())",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action_filter",
+          "type": "text",
+          "default": "'*'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "selected_columns",
+          "type": "text[]",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_realtime_subscription_entity",
+          "definition": "CREATE INDEX ix_realtime_subscription_entity ON realtime.subscription USING btree (entity)"
+        },
+        {
+          "name": "pk_subscription",
+          "definition": "CREATE UNIQUE INDEX pk_subscription ON realtime.subscription USING btree (id)"
+        },
+        {
+          "name": "subscription_subscription_id_entity_filters_action_filter_selec",
+          "definition": "CREATE UNIQUE INDEX subscription_subscription_id_entity_filters_action_filter_selec ON realtime.subscription USING btree (subscription_id, entity, filters, action_filter, COALESCE(selected_columns, '{}'::text[]))"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pk_subscription",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "subscription_action_filter_check",
+          "type": "c",
+          "definition": "CHECK ((action_filter = ANY (ARRAY['*'::text, 'INSERT'::text, 'UPDATE'::text, 'DELETE'::text])))"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

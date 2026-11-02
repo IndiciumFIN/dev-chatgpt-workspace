@@ -40,6 +40,12 @@ for(const id of ['SRC-OMG-MOF-2.5.1','SRC-ISO-11179-3-2023','SRC-ISO-11179-35-20
 const defs=JSON.parse(readFileSync(join(evidence,'DEFINITION_FAMILY_REGISTRY_CANDIDATE_V2.json'),'utf8'));
 if(defs.status!=='SCHOOL_QUARANTINE_CANDIDATE'||defs.denominator.definition_kinds!==defs.definition_kinds.length)gaps.push('DEFINITION_FAMILY_EVIDENCE_UNRECONCILED');
 if(!defs.admission_rules.some(x=>x.includes('descriptor-shaped objects MUST NOT bind')))gaps.push('M3_DESCRIPTOR_SCHEMA_GUARD_MISSING');
+const m3v03=JSON.parse(readFileSync(join(evidence,'CKO_M3_META_METAMODEL_v0.3.0.schema.json'),'utf8'));
+const m3rc=JSON.parse(readFileSync(join(evidence,'01_CKO_M3_META_METAMODEL_v1.0.0-rc3.schema.json'),'utf8'));
+const descriptor=JSON.parse(readFileSync(join(evidence,'CKO_M3_META_METAMODEL_v0.3.0.definition.json'),'utf8'));
+if(m3v03.$id!=='urn:cko:m3:meta-metamodel:0.3.0'||m3rc.$id!=='urn:cko:m3:meta-metamodel:1.0.0-rc3')gaps.push('M3_SCHEMA_VERSION_ID_MISMATCH');
+if(!Array.isArray(m3rc.required)||!m3rc.required.includes('invariants')||!m3rc.required.includes('binding_definitions'))gaps.push('M3_RC_REQUIRED_INVARIANTS_MISSING');
+if(descriptor.role?.includes('grammar')!==true||descriptor.classes!==undefined||descriptor.status?.production_admission!=='DENY')gaps.push('M3_DESCRIPTOR_ROLE_NOT_DISTINCT');
 const n=docs.reduce((s,d)=>s+d.tables.length,0),cols=docs.reduce((s,d)=>s+d.tables.reduce((a,t)=>a+t.columns.length,0),0);
 if(n!==606||cols!==6486)gaps.push('DATABASE_SNAPSHOT_COUNT_DRIFT');
 const record={

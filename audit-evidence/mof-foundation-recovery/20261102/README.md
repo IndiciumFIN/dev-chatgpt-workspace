@@ -38,3 +38,8 @@ One official ISO amendment source was missing from the historical SOURCE_REGISTR
 
 ## Gate and next source needs
 The local 562-table skeleton does not yet recreate 2234 defaults, 1834 constraints, 1111 indexes, 94 policy name references, 49 views and database functions/triggers/grants. The existing snapshots are insufficient to reconstruct all definitions/permissions. Full schema-only read-only source acquisition remains blocked until authorized `CE_DB_READONLY_URL` or equivalent signed schema export is available. Keep Kernel, clinical, normative and production gates at `HOLD_HUMAN`.
+
+
+## Full M3 grammar recovered and versioned
+Recovered the **entire actual JSON Schema** for both CKO M3 v0.3.0 and v1.0.0-rc3, not only the M3 artifact descriptor. The schemas are pinned separately at `sources/CKO_M3_META_METAMODEL_v0.3.0.schema.json` and `sources/01_CKO_M3_META_METAMODEL_v1.0.0-rc3.schema.json`.
+Compare `M3_SCHEMA_VERSION_CROSSWALK.json` for required-field evolution. The v1.0.0-rc3 domain-neutral candidate is not automatically canonical or promoted. The v0.3 descriptor remains an artifact description and MUST NOT be evaluated as a full M3 grammar instance.

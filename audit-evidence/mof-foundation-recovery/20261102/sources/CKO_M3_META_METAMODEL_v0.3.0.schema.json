@@ -1,0 +1,1090 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:m3:meta-metamodel:0.3.0",
+  "title": "CKO M3 Meta-Metamodel",
+  "description": "Pre-canonical executable grammar for defining CKO M2 metamodels. It is storage-neutral and hosting-neutral. M2 definitions validated by this schema may later compile to JSON Schema, SHACL, OPA/Rego, SQL constraints, API contracts and other governed projections.",
+  "type": "object",
+  "required": [
+    "identity",
+    "version",
+    "model_level",
+    "purpose",
+    "imports",
+    "primitive_types",
+    "enumerations",
+    "classes",
+    "relationships",
+    "constraints",
+    "lifecycle_models",
+    "authority_models",
+    "registration_contract",
+    "bindings",
+    "generation_targets",
+    "validation_contract",
+    "provenance_contract",
+    "evidence_contract",
+    "extension_points",
+    "normative_alignment"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "#/$defs/metamodelIdentity"
+    },
+    "version": {
+      "$ref": "#/$defs/versionContract"
+    },
+    "model_level": {
+      "const": "M2"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "imports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/importRef"
+      },
+      "uniqueItems": true
+    },
+    "primitive_types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/primitiveType"
+      }
+    },
+    "enumerations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/enumeration"
+      }
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/metaClass"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/metaRelationship"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/metaConstraint"
+      }
+    },
+    "lifecycle_models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lifecycleModel"
+      }
+    },
+    "authority_models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/authorityModel"
+      }
+    },
+    "registration_contract": {
+      "$ref": "#/$defs/registrationContract"
+    },
+    "bindings": {
+      "$ref": "#/$defs/bindingContract"
+    },
+    "generation_targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/generationTarget"
+      }
+    },
+    "validation_contract": {
+      "$ref": "#/$defs/validationContract"
+    },
+    "provenance_contract": {
+      "$ref": "#/$defs/provenanceContract"
+    },
+    "evidence_contract": {
+      "$ref": "#/$defs/evidenceContract"
+    },
+    "extension_points": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/extensionPoint"
+      }
+    },
+    "normative_alignment": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/normativeAlignment"
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "metamodelIdentity": {
+      "type": "object",
+      "required": [
+        "metamodel_id",
+        "name",
+        "namespace",
+        "owner_authority_ref",
+        "status"
+      ],
+      "properties": {
+        "metamodel_id": {
+          "type": "string",
+          "pattern": "^MM-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_authority_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "PRE_CANONICAL",
+            "DRAFT",
+            "PROPOSED",
+            "APPROVED",
+            "ACTIVE",
+            "SUPERSEDED",
+            "DEPRECATED",
+            "RETIRED"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "versionContract": {
+      "type": "object",
+      "required": [
+        "semantic_version",
+        "revision_seq",
+        "schema_version",
+        "effective_from",
+        "released_immutable"
+      ],
+      "properties": {
+        "semantic_version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "revision_seq": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_from": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effective_to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "released_immutable": {
+          "const": true
+        },
+        "change_summary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "importRef": {
+      "type": "object",
+      "required": [
+        "metamodel_ref",
+        "version_constraint"
+      ],
+      "properties": {
+        "metamodel_ref": {
+          "type": "string"
+        },
+        "version_constraint": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "primitiveType": {
+      "type": "object",
+      "required": [
+        "type_id",
+        "name",
+        "json_type",
+        "semantic_role"
+      ],
+      "properties": {
+        "type_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "json_type": {
+          "enum": [
+            "string",
+            "integer",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        "format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "semantic_role": {
+          "type": "string"
+        },
+        "constraints": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "enumeration": {
+      "type": "object",
+      "required": [
+        "enum_id",
+        "name",
+        "value_source"
+      ],
+      "properties": {
+        "enum_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "value_source": {
+          "enum": [
+            "INLINE_BOOTSTRAP",
+            "MASTER_DATA"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "boolean"
+            ]
+          }
+        },
+        "master_data_domain_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value_source": {
+                "const": "MASTER_DATA"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "master_data_domain_ref"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "metaClass": {
+      "type": "object",
+      "required": [
+        "class_id",
+        "name",
+        "abstract",
+        "attributes",
+        "register_profile_required",
+        "master_data_profile_required"
+      ],
+      "properties": {
+        "class_id": {
+          "type": "string",
+          "pattern": "^CLS-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "abstract": {
+          "type": "boolean"
+        },
+        "extends": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/metaAttribute"
+          }
+        },
+        "register_profile_required": {
+          "type": "boolean"
+        },
+        "master_data_profile_required": {
+          "type": "boolean"
+        },
+        "default_lifecycle_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "default_authority_model_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stereotypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metaAttribute": {
+      "type": "object",
+      "required": [
+        "attribute_id",
+        "name",
+        "datatype_ref",
+        "required",
+        "cardinality",
+        "mutability",
+        "source_of_truth"
+      ],
+      "properties": {
+        "attribute_id": {
+          "type": "string",
+          "pattern": "^ATT-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "datatype_ref": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "cardinality": {
+          "type": "string",
+          "pattern": "^(0|1|[2-9][0-9]*)\\.\\.(1|[2-9][0-9]*|\\*)$"
+        },
+        "mutability": {
+          "enum": [
+            "IMMUTABLE",
+            "VERSIONED",
+            "MUTABLE_BY_POLICY",
+            "DERIVED"
+          ]
+        },
+        "source_of_truth": {
+          "enum": [
+            "RESOURCE",
+            "MASTER_DATA",
+            "POLICY",
+            "KERNEL_REGISTER",
+            "DERIVED"
+          ]
+        },
+        "master_data_domain_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "default": {},
+        "classification_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sensitive": {
+          "type": "boolean",
+          "default": false
+        },
+        "indexed": {
+          "type": "boolean",
+          "default": false
+        },
+        "unique": {
+          "type": "boolean",
+          "default": false
+        },
+        "generation_hints": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "metaRelationship": {
+      "type": "object",
+      "required": [
+        "relationship_id",
+        "name",
+        "from_class_ref",
+        "to_class_ref",
+        "cardinality_from",
+        "cardinality_to",
+        "directionality",
+        "inverse_required",
+        "relationship_semantics"
+      ],
+      "properties": {
+        "relationship_id": {
+          "type": "string",
+          "pattern": "^REL-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "from_class_ref": {
+          "type": "string"
+        },
+        "to_class_ref": {
+          "type": "string"
+        },
+        "cardinality_from": {
+          "type": "string"
+        },
+        "cardinality_to": {
+          "type": "string"
+        },
+        "directionality": {
+          "enum": [
+            "DIRECTED",
+            "BIDIRECTIONAL",
+            "UNDIRECTED"
+          ]
+        },
+        "inverse_required": {
+          "type": "boolean"
+        },
+        "inverse_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relationship_semantics": {
+          "enum": [
+            "COMPOSITION",
+            "AGGREGATION",
+            "REFERENCE",
+            "DEPENDENCY",
+            "PROVENANCE",
+            "GOVERNANCE",
+            "VALIDATION",
+            "CONSUMPTION",
+            "PRODUCTION",
+            "COMMUNICATION",
+            "PRESERVATION",
+            "OTHER"
+          ]
+        },
+        "edge_attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/metaAttribute"
+          }
+        },
+        "blocking_integrity": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "metaConstraint": {
+      "type": "object",
+      "required": [
+        "constraint_id",
+        "name",
+        "scope",
+        "expression_type",
+        "severity",
+        "blocking",
+        "policy_ref"
+      ],
+      "properties": {
+        "constraint_id": {
+          "type": "string",
+          "pattern": "^C-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "M3",
+            "M2",
+            "M1",
+            "M0",
+            "CROSS_RESOURCE",
+            "RUNTIME"
+          ]
+        },
+        "expression_type": {
+          "enum": [
+            "JSON_SCHEMA",
+            "SHACL",
+            "OPA_REGO",
+            "SQL",
+            "CUSTOM",
+            "HUMAN_REVIEW"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "INFO",
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ]
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "policy_ref": {
+          "type": "string"
+        },
+        "validator_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_requirement_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lifecycleModel": {
+      "type": "object",
+      "required": [
+        "lifecycle_id",
+        "name",
+        "states",
+        "transitions"
+      ],
+      "properties": {
+        "lifecycle_id": {
+          "type": "string",
+          "pattern": "^LC-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "states": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "state_ref",
+              "terminal"
+            ],
+            "properties": {
+              "state_ref": {
+                "type": "string"
+              },
+              "terminal": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "to",
+              "authority_ref",
+              "policy_ref"
+            ],
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "authority_ref": {
+                "type": "string"
+              },
+              "policy_ref": {
+                "type": "string"
+              },
+              "protocol_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "evidence_required": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorityModel": {
+      "type": "object",
+      "required": [
+        "authority_model_id",
+        "roles",
+        "segregation_rules"
+      ],
+      "properties": {
+        "authority_model_id": {
+          "type": "string",
+          "pattern": "^AUTHM-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "role_ref",
+              "allowed_actions",
+              "prohibited_actions"
+            ],
+            "properties": {
+              "role_ref": {
+                "type": "string"
+              },
+              "allowed_actions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "prohibited_actions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "segregation_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "registrationContract": {
+      "type": "object",
+      "required": [
+        "prior_os_required",
+        "prior_registration_reservation_required",
+        "kernel_authoritative_register",
+        "unregistered_artifact_severity",
+        "physical_presence_required_for_persistent_artifacts",
+        "disappearance_prohibited"
+      ],
+      "properties": {
+        "prior_os_required": {
+          "const": true
+        },
+        "prior_registration_reservation_required": {
+          "const": true
+        },
+        "kernel_authoritative_register": {
+          "const": true
+        },
+        "unregistered_artifact_severity": {
+          "const": "CRITICAL"
+        },
+        "physical_presence_required_for_persistent_artifacts": {
+          "const": true
+        },
+        "disappearance_prohibited": {
+          "const": true
+        },
+        "layer_register_profiles_required": {
+          "type": "boolean"
+        },
+        "horizontal_fabric_register_profiles_required": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bindingContract": {
+      "type": "object",
+      "required": [
+        "policy_binding_required",
+        "validator_binding_required",
+        "master_data_binding_required",
+        "register_binding_required",
+        "manifest_binding_required",
+        "preservation_binding_required",
+        "observability_binding_required"
+      ],
+      "properties": {
+        "policy_binding_required": {
+          "const": true
+        },
+        "validator_binding_required": {
+          "const": true
+        },
+        "master_data_binding_required": {
+          "const": true
+        },
+        "register_binding_required": {
+          "const": true
+        },
+        "manifest_binding_required": {
+          "const": true
+        },
+        "preservation_binding_required": {
+          "const": true
+        },
+        "observability_binding_required": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "generationTarget": {
+      "type": "object",
+      "required": [
+        "target_id",
+        "type",
+        "required"
+      ],
+      "properties": {
+        "target_id": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "JSON_SCHEMA",
+            "SHACL",
+            "OPA_REGO",
+            "SQL_DDL",
+            "OPENAPI",
+            "ASYNCAPI",
+            "UI_FORM_CONTRACT",
+            "DOC_TEMPLATE",
+            "OTHER"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "compiler_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validation_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validationContract": {
+      "type": "object",
+      "required": [
+        "m3_validates_m2",
+        "generated_m1_meta_validation_required",
+        "positive_m0_tests_required",
+        "negative_m0_tests_required",
+        "validator360_required",
+        "blocking_findings_must_be_zero"
+      ],
+      "properties": {
+        "m3_validates_m2": {
+          "const": true
+        },
+        "generated_m1_meta_validation_required": {
+          "const": true
+        },
+        "positive_m0_tests_required": {
+          "const": true
+        },
+        "negative_m0_tests_required": {
+          "const": true
+        },
+        "validator360_required": {
+          "const": true
+        },
+        "blocking_findings_must_be_zero": {
+          "const": true
+        },
+        "ops_ipe_required_when_information_is_produced": {
+          "type": "boolean"
+        },
+        "ops_caat_required_when_automatable": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenanceContract": {
+      "type": "object",
+      "required": [
+        "source_refs_required",
+        "activity_ref_required",
+        "actor_ref_required",
+        "work_order_ref_required",
+        "version_lineage_required"
+      ],
+      "properties": {
+        "source_refs_required": {
+          "const": true
+        },
+        "activity_ref_required": {
+          "const": true
+        },
+        "actor_ref_required": {
+          "const": true
+        },
+        "work_order_ref_required": {
+          "const": true
+        },
+        "version_lineage_required": {
+          "const": true
+        },
+        "generated_by_ref_required": {
+          "type": "boolean"
+        },
+        "derived_from_ref_required_when_derived": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceContract": {
+      "type": "object",
+      "required": [
+        "evidence_is_first_class_resource",
+        "evidence_class_required",
+        "digest_required",
+        "location_required",
+        "manifest_required",
+        "preservation_required",
+        "purpose_required"
+      ],
+      "properties": {
+        "evidence_is_first_class_resource": {
+          "const": true
+        },
+        "evidence_class_required": {
+          "const": true
+        },
+        "digest_required": {
+          "const": true
+        },
+        "location_required": {
+          "const": true
+        },
+        "manifest_required": {
+          "const": true
+        },
+        "preservation_required": {
+          "const": true
+        },
+        "purpose_required": {
+          "const": true
+        },
+        "audit_evidence_logically_separate": {
+          "type": "boolean"
+        },
+        "telemetry_requires_qualification_to_be_evidence": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionPoint": {
+      "type": "object",
+      "required": [
+        "extension_id",
+        "name",
+        "allowed_scope",
+        "governance_required"
+      ],
+      "properties": {
+        "extension_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "allowed_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "governance_required": {
+          "const": true
+        },
+        "extension_schema_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "normativeAlignment": {
+      "type": "object",
+      "required": [
+        "reference_id",
+        "source_authority",
+        "alignment_type",
+        "claim_level",
+        "evidence_ref"
+      ],
+      "properties": {
+        "reference_id": {
+          "type": "string"
+        },
+        "source_authority": {
+          "type": "string"
+        },
+        "alignment_type": {
+          "enum": [
+            "NORMATIVE_BASIS",
+            "REFERENCE_ARCHITECTURE",
+            "IMPLEMENTATION_STANDARD",
+            "PUBLIC_METADATA_ALIGNMENT",
+            "SUPPLEMENTARY"
+          ]
+        },
+        "claim_level": {
+          "enum": [
+            "REFERENCE_ONLY",
+            "PARTIAL",
+            "CLAUSE_VALIDATED",
+            "FULLY_VALIDATED"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

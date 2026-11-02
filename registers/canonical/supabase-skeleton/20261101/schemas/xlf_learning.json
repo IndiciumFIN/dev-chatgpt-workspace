@@ -1,0 +1,328 @@
+{
+  "schema": "xlf_learning",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_learning.assessment_rule",
+      "columns": [
+        {
+          "name": "assessment_rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assessment_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "success_policy",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_types",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "assessment_rule_competency_id_fkey",
+        "assessment_rule_pkey"
+      ],
+      "indexes": [
+        "assessment_rule_pkey",
+        "ix_xlf_assessment_competency"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_learning.assessment_rule",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_learning.competency_definition",
+      "columns": [
+        {
+          "name": "competency_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "preferred_name",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "competency_domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_policy_ref",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "competency_definition_canonical_uri_key",
+        "competency_definition_pkey"
+      ],
+      "indexes": [
+        "competency_definition_canonical_uri_key",
+        "competency_definition_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_learning.competency_definition",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_learning.learning_resource",
+      "columns": [
+        {
+          "name": "learning_resource_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "language",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "resource_type",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "competency_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "accessibility_capabilities",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata_profile",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "learning_resource_canonical_uri_key",
+        "learning_resource_pkey"
+      ],
+      "indexes": [
+        "learning_resource_canonical_uri_key",
+        "learning_resource_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_learning.learning_resource",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_learning.next_step_rule",
+      "columns": [
+        {
+          "name": "next_step_rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "when_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidates",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "must_offer_at_least_one",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "next_step_rule_competency_id_fkey",
+        "next_step_rule_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_next_step_competency",
+        "next_step_rule_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_learning.next_step_rule",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_learning.procedure",
+      "columns": [
+        {
+          "name": "procedure_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "step_command_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "competency_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "procedure_canonical_uri_key",
+        "procedure_competency_ref_fkey",
+        "procedure_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_procedure_competency",
+        "procedure_canonical_uri_key",
+        "procedure_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_learning.procedure",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

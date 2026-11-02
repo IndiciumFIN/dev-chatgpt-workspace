@@ -1,0 +1,1384 @@
+{
+  "schema": "cko_ai",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_ai.api_entitlement_profiles",
+      "columns": [
+        {
+          "name": "api_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "profile_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "seniority_tier",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "primary_provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "primary_model_selector",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "secondary_provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "secondary_model_selector",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "provider_independence_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "critical_quorum",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "autonomy_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "tool_entitlements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "data_access_classes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "budget_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "context_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "fallback_policy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "api_entitlement_profiles_critical_quorum_check",
+        "api_entitlement_profiles_pkey",
+        "api_entitlement_profiles_primary_provider_id_fkey",
+        "api_entitlement_profiles_secondary_provider_id_fkey"
+      ],
+      "indexes": [
+        "api_entitlement_profiles_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.api_entitlement_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.capability_requirements",
+      "columns": [
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requirement_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requirement_family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "criticality",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "prohibited_failure_modes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_required",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capability_requirements_criticality_check",
+        "capability_requirements_pkey"
+      ],
+      "indexes": [
+        "capability_requirements_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.capability_requirements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.engine_executors",
+      "columns": [
+        {
+          "name": "engine_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocking_gap",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "engine_executors_engine_id_fkey",
+        "engine_executors_pkey"
+      ],
+      "indexes": [
+        "engine_executors_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.engine_executors",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.engines",
+      "columns": [
+        {
+          "name": "engine_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "engine_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "engines_current_version_ref_fkey",
+        "engines_pkey"
+      ],
+      "indexes": [
+        "engines_current_version_ref_idx",
+        "engines_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.engines",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.job_candidate_requirements",
+      "columns": [
+        {
+          "name": "job_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "weight",
+          "type": "numeric(6,3)",
+          "nullable": false
+        },
+        {
+          "name": "mandatory",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "job_candidate_requirements_job_profile_id_fkey",
+        "job_candidate_requirements_pkey",
+        "job_candidate_requirements_requirement_id_fkey",
+        "job_candidate_requirements_weight_check"
+      ],
+      "indexes": [
+        "job_candidate_requirements_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.job_candidate_requirements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.job_reference_manifest",
+      "columns": [
+        {
+          "name": "ai_job_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reference_order",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "reference_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reference_value",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "resolved_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "resolution_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "job_reference_manifest_ai_job_id_fkey",
+        "job_reference_manifest_pkey"
+      ],
+      "indexes": [
+        "job_reference_manifest_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.job_reference_manifest",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.jobs",
+      "columns": [
+        {
+          "name": "ai_job_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "engine_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "prompt_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "provider",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "model",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "job_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "requested_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "response_raw",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "candidate_output",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "promoted_to_canonical",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "context_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "engine_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "jobs_engine_id_fkey",
+        "jobs_knowledge_pack_id_fkey",
+        "jobs_pkey",
+        "jobs_prompt_id_fkey"
+      ],
+      "indexes": [
+        "jobs_engine_id_idx",
+        "jobs_knowledge_pack_id_idx",
+        "jobs_pkey",
+        "jobs_prompt_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.jobs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.knowledge_pack_members",
+      "columns": [
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "knowledge_pack_members_knowledge_pack_id_fkey",
+        "knowledge_pack_members_pkey"
+      ],
+      "indexes": [
+        "knowledge_pack_members_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.knowledge_pack_members",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.knowledge_packs",
+      "columns": [
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "pack_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "manifest",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_snapshot_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "master_data_version_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_version_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "prompt_version_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "supersedes_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "knowledge_packs_pack_hash_key",
+        "knowledge_packs_pkey",
+        "knowledge_packs_supersedes_pack_id_fkey"
+      ],
+      "indexes": [
+        "knowledge_packs_pack_hash_key",
+        "knowledge_packs_pkey",
+        "knowledge_packs_supersedes_pack_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.knowledge_packs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.knowledge_refresh_runs",
+      "columns": [
+        {
+          "name": "refresh_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "trigger_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "prior_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "resulting_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "changed_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_sync_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "knowledge_refresh_runs_pkey",
+        "knowledge_refresh_runs_prior_pack_id_fkey",
+        "knowledge_refresh_runs_resulting_pack_id_fkey"
+      ],
+      "indexes": [
+        "knowledge_refresh_runs_pkey",
+        "knowledge_refresh_runs_prior_pack_id_idx",
+        "knowledge_refresh_runs_resulting_pack_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.knowledge_refresh_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.prompts",
+      "columns": [
+        {
+          "name": "prompt_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "system_prompt",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "output_schema_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "anti_hallucination_rules",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "allowed_sources",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "prompts_current_version_ref_fkey",
+        "prompts_pkey"
+      ],
+      "indexes": [
+        "prompts_current_version_ref_idx",
+        "prompts_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.prompts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.provider_registry",
+      "columns": [
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "api_family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "endpoint_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "secret_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "secret_storage_policy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_policy",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "provider_registry_pkey"
+      ],
+      "indexes": [
+        "provider_registry_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.provider_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.selection_assessments",
+      "columns": [
+        {
+          "name": "assessment_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "selection_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evaluator_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "score",
+          "type": "numeric(5,2)",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "performed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "selection_assessments_candidate_id_fkey",
+        "selection_assessments_evaluator_agent_id_fkey",
+        "selection_assessments_pkey",
+        "selection_assessments_requirement_id_fkey",
+        "selection_assessments_result_check",
+        "selection_assessments_score_check",
+        "selection_assessments_selection_id_candidate_id_evaluator_a_key",
+        "selection_assessments_selection_id_fkey"
+      ],
+      "indexes": [
+        "selection_assessments_pkey",
+        "selection_assessments_selection_id_candidate_id_evaluator_a_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.selection_assessments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.selection_campaigns",
+      "columns": [
+        {
+          "name": "selection_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "job_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_tier",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required_independent_evaluators",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "cross_provider_panel_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "minimum_total_score",
+          "type": "numeric(5,2)",
+          "nullable": false
+        },
+        {
+          "name": "minimum_critical_score",
+          "type": "numeric(5,2)",
+          "nullable": false
+        },
+        {
+          "name": "created_by_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "approved_by_agent_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "selection_campaigns_approved_by_agent_id_fkey",
+        "selection_campaigns_created_by_agent_id_fkey",
+        "selection_campaigns_job_profile_id_fkey",
+        "selection_campaigns_pkey",
+        "selection_campaigns_required_independent_evaluators_check",
+        "selection_campaigns_risk_tier_check"
+      ],
+      "indexes": [
+        "selection_campaigns_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.selection_campaigns",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.selection_candidates",
+      "columns": [
+        {
+          "name": "selection_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidacy_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "disqualification_reason",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "selection_candidates_candidate_id_fkey",
+        "selection_candidates_pkey",
+        "selection_candidates_selection_id_fkey"
+      ],
+      "indexes": [
+        "selection_candidates_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.selection_candidates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.selection_decisions",
+      "columns": [
+        {
+          "name": "decision_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "selection_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "total_score",
+          "type": "numeric(5,2)",
+          "nullable": true
+        },
+        {
+          "name": "critical_score",
+          "type": "numeric(5,2)",
+          "nullable": true
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "decided_by_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "approved_by_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decided_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "selection_decisions_approved_by_agent_id_fkey",
+        "selection_decisions_candidate_id_fkey",
+        "selection_decisions_check",
+        "selection_decisions_decided_by_agent_id_fkey",
+        "selection_decisions_decision_check",
+        "selection_decisions_pkey",
+        "selection_decisions_selection_id_fkey"
+      ],
+      "indexes": [
+        "selection_decisions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.selection_decisions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_ai.technology_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidate_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "candidate_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "vendor_or_project",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "version_selector",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "license_class",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "data_residency_notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "secret_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "known_risks",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "technology_candidates_candidate_type_check",
+        "technology_candidates_pkey"
+      ],
+      "indexes": [
+        "technology_candidates_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_ai.technology_candidates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "schema": "xlf_inspector",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_inspector.finding",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "impact",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locations",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "review_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "auto_fix_available",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "finding_auto_fix_available_check",
+        "finding_finding_class_check",
+        "finding_impact_check",
+        "finding_pkey",
+        "finding_rule_id_fkey",
+        "finding_run_id_fkey",
+        "finding_status_check"
+      ],
+      "indexes": [
+        "finding_pkey",
+        "ix_xlf_finding_rule",
+        "ix_xlf_finding_run"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_inspector.finding",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_inspector.finding_review",
+      "columns": [
+        {
+          "name": "review_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reviewer_role",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "resolution_action",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "finding_review_finding_id_fkey",
+        "finding_review_pkey",
+        "finding_review_review_status_check"
+      ],
+      "indexes": [
+        "finding_review_pkey",
+        "ix_xlf_finding_review_finding"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_inspector.finding_review",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_inspector.rule",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "impact_default",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "engine",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "condition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "why_it_matters",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "how_to_verify",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mutates_workbook",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "rule_finding_class_check",
+        "rule_impact_default_check",
+        "rule_key_key",
+        "rule_mutates_workbook_check",
+        "rule_pkey"
+      ],
+      "indexes": [
+        "rule_key_key",
+        "rule_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_inspector.rule",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_inspector.run",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "inspector_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workbook_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "original_filename",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "bytes",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "extraction_snapshot",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "run_bytes_check",
+        "run_pkey",
+        "run_workbook_sha256_check"
+      ],
+      "indexes": [
+        "run_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_inspector.run",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,541 @@
+{
+  "schema": "cko_evidence",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_evidence.assertions",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_fragment_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "assertion_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "assertions_pkey",
+        "assertions_source_fragment_id_fkey"
+      ],
+      "indexes": [
+        "assertions_pkey",
+        "assertions_source_fragment_id_idx",
+        "assertions_subject_ref_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.assertions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.claims",
+      "columns": [
+        {
+          "name": "claim_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "derivation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assertion_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "human_review_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "claims_pkey"
+      ],
+      "indexes": [
+        "claims_pkey",
+        "claims_status_idx",
+        "claims_subject_ref_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.claims",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.evidence_bundles",
+      "columns": [
+        {
+          "name": "evidence_bundle_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "validator_run_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "decision_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "bundle_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "evidence_bundles_pkey"
+      ],
+      "indexes": [
+        "evidence_bundles_pkey",
+        "evidence_bundles_subject_ref_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.evidence_bundles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.fragments",
+      "columns": [
+        {
+          "name": "fragment_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "fragment_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "fragment_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "fragments_pkey",
+        "fragments_snapshot_id_fkey"
+      ],
+      "indexes": [
+        "fragments_pkey",
+        "fragments_snapshot_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.fragments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "content_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "raw_metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "supersedes_snapshot_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "snapshots_pkey",
+        "snapshots_source_id_content_sha256_key",
+        "snapshots_source_id_fkey",
+        "snapshots_supersedes_snapshot_id_fkey"
+      ],
+      "indexes": [
+        "snapshots_pkey",
+        "snapshots_source_id_content_sha256_key",
+        "snapshots_supersedes_snapshot_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.source_accreditations",
+      "columns": [
+        {
+          "name": "accreditation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "candidate_host",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "candidate_publisher",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "proposed_authority_level",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "proposed_uses",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "methodology_assessment",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "conflicts",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "board_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decision_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "review_due",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_accreditations_decision_ref_fkey",
+        "source_accreditations_pkey",
+        "source_accreditations_source_id_fkey"
+      ],
+      "indexes": [
+        "source_accreditations_decision_ref_idx",
+        "source_accreditations_pkey",
+        "source_accreditations_source_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.source_accreditations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_evidence.sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publisher",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "official_uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "host",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "authority_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "accreditation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "accepted_for",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "review_due",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "sources_pkey"
+      ],
+      "indexes": [
+        "sources_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_evidence.sources",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

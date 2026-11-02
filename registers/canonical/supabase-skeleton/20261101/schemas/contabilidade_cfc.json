@@ -1,0 +1,992 @@
+{
+  "schema": "contabilidade_cfc",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "contabilidade_cfc.audit_normative_change_events_v1",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "event_label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "impacted_instrument_ids",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "proposed_instrument_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "published_on",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "effective_on",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "applicable_period_from",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "hold_reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_nce_nonempty_target",
+        "audit_normative_change_events_v1_event_type_check",
+        "audit_normative_change_events_v1_family_check",
+        "audit_normative_change_events_v1_pkey"
+      ],
+      "indexes": [
+        "audit_normative_change_events_v1_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.audit_normative_change_events_v1",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.audit_normative_pmo_v1",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope_description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "hold_reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_normative_pmo_v1_pkey",
+        "audit_normative_pmo_v1_priority_check"
+      ],
+      "indexes": [
+        "audit_normative_pmo_v1_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.audit_normative_pmo_v1",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.audit_normative_scope_v1",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "wave_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_structure_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "semantic_review_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "unit_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "candidate_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "high_risk_fragments",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "sampled_review_pending",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "source_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "publication_eligible",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_normative_scope_v1_candidate_count_check",
+        "audit_normative_scope_v1_family_check",
+        "audit_normative_scope_v1_high_risk_fragments_check",
+        "audit_normative_scope_v1_instrument_id_fkey",
+        "audit_normative_scope_v1_pkey",
+        "audit_normative_scope_v1_sampled_review_pending_check",
+        "audit_normative_scope_v1_unit_count_check"
+      ],
+      "indexes": [
+        "audit_normative_scope_v1_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.audit_normative_scope_v1",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.audit_normative_segment_drafts_v1",
+      "columns": [
+        {
+          "name": "segment_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_unit_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "segment_ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "start_char",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "end_char",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "segment_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "segment_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_source_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected_label",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "boundary_strategy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "technical_validation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "editorial_validation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_eligible",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_normative_segment_draft_run_id_parent_unit_id_segment_key",
+        "audit_normative_segment_draft_run_id_parent_unit_id_start_c_key",
+        "audit_normative_segment_drafts_v1_check",
+        "audit_normative_segment_drafts_v1_instrument_id_check",
+        "audit_normative_segment_drafts_v1_parent_unit_id_fkey",
+        "audit_normative_segment_drafts_v1_pkey",
+        "audit_normative_segment_drafts_v1_segment_ordinal_check",
+        "audit_normative_segment_drafts_v1_start_char_check",
+        "audit_seg_sha256_format",
+        "audit_seg_text_length_matches_range"
+      ],
+      "indexes": [
+        "audit_normative_segment_draft_run_id_parent_unit_id_segment_key",
+        "audit_normative_segment_draft_run_id_parent_unit_id_start_c_key",
+        "audit_normative_segment_drafts_v1_pkey",
+        "idx_ae_segment_drafts_instrument_parent_ord"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.audit_normative_segment_drafts_v1",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.audit_normative_segment_parent_qa_v1",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_unit_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_length",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "derived_segment_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "reconstructed_length",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "reconstructed_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "no_overlap_no_gaps",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "exact_text_reconstruction",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "digest_matches_source",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "max_segment_length",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "technical_validation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "semantic_validation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "original_preserved",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_normative_segment_parent_qa_v1_parent_unit_id_fkey",
+        "audit_normative_segment_parent_qa_v1_pkey"
+      ],
+      "indexes": [
+        "audit_normative_segment_parent_qa_v1_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.audit_normative_segment_parent_qa_v1",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.pmo_findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pmo_findings_pkey"
+      ],
+      "indexes": [
+        "pmo_findings_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.pmo_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.pmo_source_register",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "edition",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "bytes",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "document_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "original_path",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pmo_source_register_pkey"
+      ],
+      "indexes": [
+        "pmo_source_register_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.pmo_source_register",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.pmo_sync_runs",
+      "columns": [
+        {
+          "name": "sync_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "origin",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pmo_sync_runs_pkey"
+      ],
+      "indexes": [
+        "pmo_sync_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.pmo_sync_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.pmo_workstreams",
+      "columns": [
+        {
+          "name": "pmo_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dependency",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_register_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pmo_workstreams_pkey"
+      ],
+      "indexes": [
+        "pmo_workstreams_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.pmo_workstreams",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.questions",
+      "columns": [
+        {
+          "name": "question_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "question_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "raw_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "options",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "classification",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "answer_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "answer_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "questions_pkey",
+        "questions_source_id_fkey",
+        "questions_source_id_question_number_key"
+      ],
+      "indexes": [
+        "idx_cfc_questions_source",
+        "questions_pkey",
+        "questions_source_id_question_number_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.questions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "contabilidade_cfc.sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "edition",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "exam_year",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "exam_board",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "question_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "sources_pkey"
+      ],
+      "indexes": [
+        "sources_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "contabilidade_cfc.sources",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

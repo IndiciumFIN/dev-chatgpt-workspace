@@ -1,0 +1,4001 @@
+{
+  "schema": "vdc_ai",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "vdc_ai.adapter_registry",
+      "columns": [
+        {
+          "name": "adapter_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "adapter_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "base_model_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "base_model_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "dataset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "dataset_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "training_manifest_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evaluation_metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "adapter_registry_pkey",
+        "adapter_registry_style_profile_id_fkey",
+        "adapter_registry_world_object_id_fkey"
+      ],
+      "indexes": [
+        "adapter_registry_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.adapter_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.ai_jobs",
+      "columns": [
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "element_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "job_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "engine_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "reproduction_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "seed",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "request",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "response",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "ai_jobs_instance_id_fkey",
+        "ai_jobs_pkey",
+        "ai_jobs_reproduction_mode_check"
+      ],
+      "indexes": [
+        "ai_jobs_pkey",
+        "vdc_ai_jobs_instance_created_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.ai_jobs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.assets",
+      "columns": [
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "asset_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "character_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "tags",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "approved",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "assets_character_id_fkey",
+        "assets_pkey",
+        "assets_source_mode_check",
+        "assets_style_profile_id_fkey"
+      ],
+      "indexes": [
+        "assets_pkey",
+        "vdc_assets_character_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.assets",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.backup_snapshots",
+      "columns": [
+        {
+          "name": "backup_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "backup_snapshots_pkey"
+      ],
+      "indexes": [
+        "backup_snapshots_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.backup_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.benchmark_cases",
+      "columns": [
+        {
+          "name": "case_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "suite_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "case_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "expected_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "benchmark_cases_pkey",
+        "benchmark_cases_suite_id_suite_version_fkey",
+        "benchmark_cases_world_object_id_fkey"
+      ],
+      "indexes": [
+        "benchmark_cases_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.benchmark_cases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.benchmark_results",
+      "columns": [
+        {
+          "name": "result_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "case_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metric_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metric_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "benchmark_results_case_id_fkey",
+        "benchmark_results_metric_id_fkey",
+        "benchmark_results_pkey",
+        "benchmark_results_run_id_fkey"
+      ],
+      "indexes": [
+        "benchmark_results_pkey",
+        "benchmark_results_run_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.benchmark_results",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.benchmark_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "suite_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "seed_policy",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "benchmark_runs_pkey",
+        "benchmark_runs_suite_id_suite_version_fkey"
+      ],
+      "indexes": [
+        "benchmark_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.benchmark_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.benchmark_suites",
+      "columns": [
+        {
+          "name": "suite_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_profile_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "benchmark_suites_pkey"
+      ],
+      "indexes": [
+        "benchmark_suites_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.benchmark_suites",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.bits32_dimensions",
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimension_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "dimension_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimension_group",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "min_value",
+          "type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "max_value",
+          "type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "bits32_dimensions_dimension_no_check",
+        "bits32_dimensions_pkey",
+        "bits32_dimensions_schema_version_dimension_key_key"
+      ],
+      "indexes": [
+        "bits32_dimensions_pkey",
+        "bits32_dimensions_schema_version_dimension_key_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.bits32_dimensions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.bits32_measurement_queue",
+      "columns": [
+        {
+          "name": "queue_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "required_methods",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "bits32_measurement_queue_pkey",
+        "bits32_measurement_queue_world_object_id_fkey",
+        "bits32_measurement_queue_world_object_id_schema_version_key"
+      ],
+      "indexes": [
+        "bits32_measurement_queue_pkey",
+        "bits32_measurement_queue_world_object_id_schema_version_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.bits32_measurement_queue",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.bits32_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimension_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "dimension_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "raw_value",
+          "type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "raw_unit",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "calibration_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "bits32_observations_approval_check",
+        "bits32_observations_asset_id_fkey",
+        "bits32_observations_dimension_fk",
+        "bits32_observations_pkey",
+        "bits32_observations_unique",
+        "bits32_observations_world_object_id_fkey"
+      ],
+      "indexes": [
+        "bits32_observations_pkey",
+        "bits32_observations_unique",
+        "idx_bits32_observations_world"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.bits32_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.bits32_signatures",
+      "columns": [
+        {
+          "name": "signature_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "values_json",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "measurement_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "signature_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "measured_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "approved_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "bits32_signatures_pkey",
+        "bits32_signatures_world_object_id_fkey",
+        "bits32_signatures_world_object_id_world_object_version_sche_key"
+      ],
+      "indexes": [
+        "bits32_signatures_pkey",
+        "bits32_signatures_world_idx",
+        "bits32_signatures_world_object_id_world_object_version_sche_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.bits32_signatures",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.characters",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "forbidden_mutations",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "asset_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "characters_pkey",
+        "characters_style_profile_id_fkey"
+      ],
+      "indexes": [
+        "characters_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.characters",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.content_objects",
+      "columns": [
+        {
+          "name": "content_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "requires_regulatory",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "content_objects_pkey"
+      ],
+      "indexes": [
+        "content_objects_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.content_objects",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.dataset_manifests",
+      "columns": [
+        {
+          "name": "dataset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "item_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "items",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "manifest_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "dataset_manifests_pkey",
+        "dataset_manifests_world_object_id_fkey"
+      ],
+      "indexes": [
+        "dataset_manifests_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.dataset_manifests",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.elements",
+      "columns": [
+        {
+          "name": "element_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "parent_element_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "element_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "layout",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "responsive",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "styles",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "ai_config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "clickable",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "locked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "visible",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "z_index",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "elements_element_type_check",
+        "elements_instance_id_fkey",
+        "elements_pkey"
+      ],
+      "indexes": [
+        "elements_pkey",
+        "vdc_elements_instance_z_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.elements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.embedding_models",
+      "columns": [
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "model_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "modality",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimensions",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "normalization",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "embedding_models_dimensions_check",
+        "embedding_models_pkey"
+      ],
+      "indexes": [
+        "embedding_models_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.embedding_models",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.generation_runs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "run_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "character_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "seed",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "generation_runs_character_id_fkey",
+        "generation_runs_pkey",
+        "generation_runs_run_key_key",
+        "generation_runs_template_id_fkey"
+      ],
+      "indexes": [
+        "generation_runs_pkey",
+        "generation_runs_run_key_key",
+        "generation_runs_status_idx",
+        "generation_runs_template_created_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.generation_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.generation_strategies",
+      "columns": [
+        {
+          "name": "strategy_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "exactness_contract",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requires_generation",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_requirements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "generation_strategies_pkey"
+      ],
+      "indexes": [
+        "generation_strategies_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.generation_strategies",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.golden_masters",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "variant_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_targets",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "golden_masters_pkey",
+        "golden_masters_template_id_fkey",
+        "golden_masters_template_id_variant_key_key"
+      ],
+      "indexes": [
+        "golden_masters_pkey",
+        "golden_masters_template_id_variant_key_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.golden_masters",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.identity_variants",
+      "columns": [
+        {
+          "name": "variant_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "variant_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "variant_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "locked_traits_delta",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "identity_variants_pkey",
+        "identity_variants_world_object_id_fkey",
+        "identity_variants_world_object_id_variant_type_variant_key_key"
+      ],
+      "indexes": [
+        "identity_variants_pkey",
+        "identity_variants_world_object_id_variant_type_variant_key_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.identity_variants",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.instances",
+      "columns": [
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "template_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "content_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "breakpoint",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "settings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "current_revision",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "updated_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "instances_content_id_fkey",
+        "instances_pkey",
+        "instances_template_id_fkey"
+      ],
+      "indexes": [
+        "instances_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.instances",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.intake_batches",
+      "columns": [
+        {
+          "name": "batch_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "item_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "intake_batches_pkey",
+        "intake_batches_product_version_fkey",
+        "intake_batches_status_check"
+      ],
+      "indexes": [
+        "intake_batches_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.intake_batches",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.intake_items",
+      "columns": [
+        {
+          "name": "intake_item_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "batch_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observed_name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observed_class",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "proposed_class_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "proposed_world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "identity_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "numeric(5,4)",
+          "nullable": true
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "review_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "intake_items_asset_id_fkey",
+        "intake_items_batch_id_fkey",
+        "intake_items_confidence_check",
+        "intake_items_identity_state_check",
+        "intake_items_pkey",
+        "intake_items_proposed_class_id_fkey",
+        "intake_items_proposed_world_object_id_fkey",
+        "intake_items_review_state_check"
+      ],
+      "indexes": [
+        "intake_items_batch_review_idx",
+        "intake_items_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.intake_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.metric_definitions",
+      "columns": [
+        {
+          "name": "metric_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metric_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "direction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "min_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "max_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocking_capable",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "metric_definitions_direction_check",
+        "metric_definitions_pkey"
+      ],
+      "indexes": [
+        "metric_definitions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.metric_definitions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.product_versions",
+      "columns": [
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "scope",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "frozen_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "product_versions_channel_check",
+        "product_versions_parent_version_fkey",
+        "product_versions_pkey",
+        "product_versions_status_check"
+      ],
+      "indexes": [
+        "product_versions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.product_versions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.provider_bindings",
+      "columns": [
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "deterministic_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "seed_supported",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "reference_image_supported",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "model_pin_supported",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "provider_bindings_pkey"
+      ],
+      "indexes": [
+        "provider_bindings_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.provider_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.reference_pack_members",
+      "columns": [
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "member_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "view_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "reference_pack_members_asset_id_fkey",
+        "reference_pack_members_pkey",
+        "reference_pack_members_reference_pack_id_fkey"
+      ],
+      "indexes": [
+        "reference_pack_members_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.reference_pack_members",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.reference_packs",
+      "columns": [
+        {
+          "name": "reference_pack_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "pack_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "manifest",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "manifest_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "reference_packs_approval_state_check",
+        "reference_packs_golden_master_id_fkey",
+        "reference_packs_pack_type_check",
+        "reference_packs_pkey",
+        "reference_packs_world_object_id_fkey"
+      ],
+      "indexes": [
+        "reference_packs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.reference_packs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.release_baselines",
+      "columns": [
+        {
+          "name": "baseline_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "artifact_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "release_baselines_pkey",
+        "release_baselines_product_version_fkey"
+      ],
+      "indexes": [
+        "release_baselines_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.release_baselines",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.render_artifacts",
+      "columns": [
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "revision_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "renderer_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "breakpoint",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "artifact_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "render_spec",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "render_artifacts_instance_id_fkey",
+        "render_artifacts_pkey"
+      ],
+      "indexes": [
+        "render_artifacts_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.render_artifacts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.reproducibility_decisions",
+      "columns": [
+        {
+          "name": "decision_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "requested_change",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "selected_strategy_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decided_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "reproducibility_decisions_instance_id_fkey",
+        "reproducibility_decisions_pkey",
+        "reproducibility_decisions_selected_strategy_id_fkey",
+        "reproducibility_decisions_world_object_id_fkey"
+      ],
+      "indexes": [
+        "reproducibility_decisions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.reproducibility_decisions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.revisions",
+      "columns": [
+        {
+          "name": "revision_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "revision_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "change_summary",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "actor_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "revisions_instance_id_fkey",
+        "revisions_instance_id_revision_number_key",
+        "revisions_pkey"
+      ],
+      "indexes": [
+        "revisions_instance_id_revision_number_key",
+        "revisions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.revisions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.scene_edges",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "edge_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_node_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_node_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "scene_edges_pkey",
+        "scene_edges_scene_id_fkey",
+        "scene_edges_scene_id_source_node_id_fkey",
+        "scene_edges_scene_id_target_node_id_fkey"
+      ],
+      "indexes": [
+        "scene_edges_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.scene_edges",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.scene_nodes",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "node_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "node_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "transform",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "props",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "scene_nodes_pkey",
+        "scene_nodes_scene_id_fkey",
+        "scene_nodes_segment_id_fkey",
+        "scene_nodes_world_object_id_fkey"
+      ],
+      "indexes": [
+        "scene_nodes_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.scene_nodes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.scenes",
+      "columns": [
+        {
+          "name": "scene_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_registration_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scene_family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "template_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "graph_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "scenes_pkey",
+        "scenes_style_profile_id_fkey",
+        "scenes_template_id_fkey"
+      ],
+      "indexes": [
+        "scenes_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.scenes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.segment_edit_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "input_asset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "output_asset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "provider_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "model_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "master_seed",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "segment_seed",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "edit_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "segment_edit_runs_input_asset_id_fkey",
+        "segment_edit_runs_output_asset_id_fkey",
+        "segment_edit_runs_pkey",
+        "segment_edit_runs_segment_id_fkey",
+        "segment_edit_runs_status_check"
+      ],
+      "indexes": [
+        "segment_edit_runs_pkey",
+        "segment_edit_runs_segment_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.segment_edit_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.segment_masks",
+      "columns": [
+        {
+          "name": "mask_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mask_uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mask_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "quality_metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "approval_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "segment_masks_approval_state_check",
+        "segment_masks_asset_id_fkey",
+        "segment_masks_method_check",
+        "segment_masks_pkey",
+        "segment_masks_segment_id_fkey"
+      ],
+      "indexes": [
+        "segment_masks_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.segment_masks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.segment_validation_runs",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "edit_run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "inside_mask_change",
+          "type": "numeric(8,6)",
+          "nullable": true
+        },
+        {
+          "name": "outside_mask_change",
+          "type": "numeric(8,6)",
+          "nullable": true
+        },
+        {
+          "name": "character_similarity",
+          "type": "numeric(8,6)",
+          "nullable": true
+        },
+        {
+          "name": "style_similarity",
+          "type": "numeric(8,6)",
+          "nullable": true
+        },
+        {
+          "name": "golden_similarity",
+          "type": "numeric(8,6)",
+          "nullable": true
+        },
+        {
+          "name": "thresholds",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "segment_validation_runs_edit_run_id_fkey",
+        "segment_validation_runs_pkey",
+        "segment_validation_runs_result_check"
+      ],
+      "indexes": [
+        "segment_validation_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.segment_validation_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.segments",
+      "columns": [
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "parent_segment_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "segment_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "segment_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "bbox",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "semantic_path",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "locked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "editable_traits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "seed_policy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "golden_master_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "segments_asset_id_fkey",
+        "segments_asset_id_segment_key_key",
+        "segments_golden_master_id_fkey",
+        "segments_parent_segment_id_fkey",
+        "segments_pkey",
+        "segments_world_object_id_fkey"
+      ],
+      "indexes": [
+        "segments_asset_id_segment_key_key",
+        "segments_asset_idx",
+        "segments_pkey",
+        "segments_world_object_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.segments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.style_profiles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "render_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "color_tokens",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "positive_rules",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "negative_rules",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "style_profiles_pkey"
+      ],
+      "indexes": [
+        "style_profiles_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.style_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.templates",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canvas",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "safe_zones",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "slots",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "content_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "templates_pkey",
+        "templates_style_profile_id_fkey"
+      ],
+      "indexes": [
+        "templates_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.templates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.validation_profiles_vrf",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "thresholds",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "blocking_metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "applicability",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "validation_profiles_vrf_pkey"
+      ],
+      "indexes": [
+        "validation_profiles_vrf_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.validation_profiles_vrf",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.validation_results",
+      "columns": [
+        {
+          "name": "validation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "score",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "threshold",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "validation_results_instance_id_fkey",
+        "validation_results_job_id_fkey",
+        "validation_results_pkey",
+        "validation_results_result_check"
+      ],
+      "indexes": [
+        "validation_results_pkey",
+        "vdc_validation_instance_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.validation_results",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.visual_embeddings",
+      "columns": [
+        {
+          "name": "embedding_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "segment_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimensions",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "vector_values",
+          "type": "double precision[]",
+          "nullable": true
+        },
+        {
+          "name": "vector_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "visual_embeddings_asset_id_fkey",
+        "visual_embeddings_check",
+        "visual_embeddings_model_id_fkey",
+        "visual_embeddings_pkey",
+        "visual_embeddings_segment_id_fkey",
+        "visual_embeddings_world_object_id_fkey"
+      ],
+      "indexes": [
+        "visual_embeddings_pkey",
+        "visual_embeddings_world_model_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.visual_embeddings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.vrf_framework_versions",
+      "columns": [
+        {
+          "name": "framework_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "principles",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "exactness_contracts",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "validation_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "vrf_framework_versions_pkey"
+      ],
+      "indexes": [
+        "vrf_framework_versions_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.vrf_framework_versions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.world_class_catalog",
+      "columns": [
+        {
+          "name": "class_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_class_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "segmentable",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "character_bound",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "location_bound",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "props",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "world_class_catalog_parent_class_id_fkey",
+        "world_class_catalog_pkey"
+      ],
+      "indexes": [
+        "world_class_catalog_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.world_class_catalog",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.world_objects",
+      "columns": [
+        {
+          "name": "world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "master_entity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_registration_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "class_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identity_confidence",
+          "type": "numeric(5,4)",
+          "nullable": true
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "locked_traits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "forbidden_mutations",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "style_profile_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "current_reference_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "world_objects_canonical_key_key",
+        "world_objects_class_id_fkey",
+        "world_objects_current_reference_pack_fk",
+        "world_objects_identity_confidence_check",
+        "world_objects_lifecycle_state_check",
+        "world_objects_pkey",
+        "world_objects_style_profile_id_fkey"
+      ],
+      "indexes": [
+        "world_objects_canonical_key_key",
+        "world_objects_class_state_idx",
+        "world_objects_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.world_objects",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "vdc_ai.world_relationships",
+      "columns": [
+        {
+          "name": "relationship_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relationship_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_world_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "world_relationships_pkey",
+        "world_relationships_source_world_object_id_fkey",
+        "world_relationships_source_world_object_id_relationship_typ_key",
+        "world_relationships_target_world_object_id_fkey"
+      ],
+      "indexes": [
+        "world_relationships_pkey",
+        "world_relationships_source_idx",
+        "world_relationships_source_world_object_id_relationship_typ_key",
+        "world_relationships_target_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "vdc_ai.world_relationships",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

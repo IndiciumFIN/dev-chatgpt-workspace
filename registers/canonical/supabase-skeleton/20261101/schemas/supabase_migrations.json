@@ -1,0 +1,62 @@
+{
+  "schema": "supabase_migrations",
+  "managedBySupabase": true,
+  "tables": [
+    {
+      "key": "supabase_migrations.schema_migrations",
+      "columns": [
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "statements",
+          "type": "text[]",
+          "nullable": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rollback",
+          "type": "text[]",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "schema_migrations_idempotency_key_key",
+        "schema_migrations_pkey"
+      ],
+      "indexes": [
+        "schema_migrations_idempotency_key_key",
+        "schema_migrations_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "supabase_migrations.schema_migrations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

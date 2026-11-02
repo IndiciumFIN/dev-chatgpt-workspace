@@ -1,0 +1,1953 @@
+{
+  "schema": "calculadoras_de_enfermagem",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "calculadoras_de_enfermagem.agent_registry",
+      "columns": [
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "role_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schedule_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "writes_only_private_log",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "may_publish",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "may_delete",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "agent_registry_execution_mode_check",
+        "agent_registry_may_delete_check",
+        "agent_registry_may_publish_check",
+        "agent_registry_pkey",
+        "agent_registry_release_id_fkey",
+        "agent_registry_schedule_name_key",
+        "agent_registry_writes_only_private_log_check"
+      ],
+      "indexes": [
+        "agent_registry_pkey",
+        "agent_registry_schedule_name_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.agent_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.agent_run_history",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "run_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "agent_run_history_agent_id_fkey",
+        "agent_run_history_pkey",
+        "agent_run_history_result_check"
+      ],
+      "indexes": [
+        "agent_run_history_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.agent_run_history",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.atom_source_scope_screen",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "atom_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "distinct_atom_source_urls",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "atom_id_sequence_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scan_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_exposure",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "atom_source_scope_screen_atom_count_check",
+        "atom_source_scope_screen_atom_id_sequence_sha256_check",
+        "atom_source_scope_screen_data_exposure_check",
+        "atom_source_scope_screen_distinct_atom_source_urls_check",
+        "atom_source_scope_screen_pkey",
+        "atom_source_scope_screen_release_id_fkey",
+        "atom_source_scope_screen_release_id_theme_fkey",
+        "atom_source_scope_screen_scan_kind_check"
+      ],
+      "indexes": [
+        "atom_source_scope_screen_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.atom_source_scope_screen",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.clinical_score_crosswalk",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "match_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "definition_equivalence_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "score_rules_equivalence_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "clinician_homologation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "target_registry_status",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target_clinical_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target_rights_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target_quality_state",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "clinical_score_crosswalk_clinician_homologation_check",
+        "clinical_score_crosswalk_definition_equivalence_verified_check",
+        "clinical_score_crosswalk_match_type_check",
+        "clinical_score_crosswalk_pkey",
+        "clinical_score_crosswalk_release_id_fkey",
+        "clinical_score_crosswalk_score_rules_equivalence_verified_check",
+        "clinical_score_crosswalk_source_atom_sha256_check"
+      ],
+      "indexes": [
+        "clinical_score_crosswalk_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.clinical_score_crosswalk",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.cross_theme_exact_source_code_screen",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_file",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_file",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "shared_source_code_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "identical_title_and_text_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "unverified_text_conflicts",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "matching_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "cross_theme_exact_source_cod_identical_title_and_text_cou_check",
+        "cross_theme_exact_source_code_s_unverified_text_conflicts_check",
+        "cross_theme_exact_source_code_sc_shared_source_code_count_check",
+        "cross_theme_exact_source_code_screen_check",
+        "cross_theme_exact_source_code_screen_pkey",
+        "cross_theme_exact_source_code_screen_release_id_fkey"
+      ],
+      "indexes": [
+        "cross_theme_exact_source_code_screen_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.cross_theme_exact_source_code_screen",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.crosswalk_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_schema",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_table",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "human_validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "technical_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "crosswalk_candidates_pkey",
+        "crosswalk_candidates_relation_check",
+        "crosswalk_candidates_release_id_fkey"
+      ],
+      "indexes": [
+        "crosswalk_candidates_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.crosswalk_candidates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.delta_assurance_snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "plan_digest_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "plan_digest_algorithm",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "theme_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "declared_atoms",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "internal_reuse_atoms",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "external_held_atoms",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "diff_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "unsafe_flags",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "publication_permitted",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "semantic_completed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "validation_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "delta_assurance_snapshots_check",
+        "delta_assurance_snapshots_check1",
+        "delta_assurance_snapshots_pkey",
+        "delta_assurance_snapshots_plan_digest_sha256_check",
+        "delta_assurance_snapshots_publication_permitted_check",
+        "delta_assurance_snapshots_release_id_fkey",
+        "delta_assurance_snapshots_semantic_completed_check"
+      ],
+      "indexes": [
+        "delta_assurance_snapshots_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.delta_assurance_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.document_atomization",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_drive_file_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_pdf_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_pdf_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "page_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "literal_text_atoms",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "visual_reference_atoms",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "blank_text_pages",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "atomized_jsonl_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_extraction_verification",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "literal_atom_stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "image_semantic_stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "clinical_signoff",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_allowed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "local_artifact_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "artifact_location_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "document_atomization_artifact_location_status_check",
+        "document_atomization_atomized_jsonl_sha256_check",
+        "document_atomization_blank_text_pages_check",
+        "document_atomization_clinical_signoff_check",
+        "document_atomization_image_semantic_stage_check",
+        "document_atomization_literal_atom_stage_check",
+        "document_atomization_literal_text_atoms_check",
+        "document_atomization_page_count_check",
+        "document_atomization_pkey",
+        "document_atomization_publication_allowed_check",
+        "document_atomization_release_id_fkey",
+        "document_atomization_source_pdf_sha256_check",
+        "document_atomization_text_extraction_verification_check",
+        "document_atomization_visual_reference_atoms_check"
+      ],
+      "indexes": [
+        "document_atomization_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.document_atomization",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.exclusion_history",
+      "columns": [
+        {
+          "name": "exclusion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deleted_source_drive_file_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deleted_source_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deleted_source_parent",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deleted_source_created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "source_size_bytes",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retained_replacement_drive_file_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retained_replacement_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retained_replacement_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "original_source_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verified_relation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deletion_verified_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ck_not_same_file",
+        "ck_same_content",
+        "exclusion_history_pkey",
+        "exclusion_history_release_id_fkey",
+        "exclusion_history_retained_replacement_sha256_check",
+        "exclusion_history_source_sha256_check",
+        "exclusion_history_status_check",
+        "exclusion_history_verified_relation_check"
+      ],
+      "indexes": [
+        "exclusion_history_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.exclusion_history",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.file_delta_plan",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "declared_atom_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "manifest_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reuse_internal_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "external_crosswalk_pending_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "proposed_action",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_gate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "integration_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "cko_target_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "production_write_allowed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "public_release_allowed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "raw_data_loaded",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_report",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "file_delta_plan_check",
+        "file_delta_plan_check1",
+        "file_delta_plan_integration_state_check",
+        "file_delta_plan_pkey",
+        "file_delta_plan_production_write_allowed_check",
+        "file_delta_plan_proposed_action_check",
+        "file_delta_plan_public_release_allowed_check",
+        "file_delta_plan_raw_data_loaded_check",
+        "file_delta_plan_release_id_fkey",
+        "file_delta_plan_release_id_theme_file_name_fkey",
+        "file_delta_plan_risk_gate_check"
+      ],
+      "indexes": [
+        "file_delta_plan_pkey",
+        "idx_file_delta_plan_gate"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.file_delta_plan",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.file_integrity",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "atom_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "file_size_bytes",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_manifest_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "technical_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "file_integrity_atom_count_check",
+        "file_integrity_file_size_bytes_check",
+        "file_integrity_pkey",
+        "file_integrity_release_id_theme_fkey",
+        "file_integrity_sha256_check"
+      ],
+      "indexes": [
+        "file_integrity_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.file_integrity",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.internal_reuse_evidence",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_file",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "records_examined",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "canonical_ids_found",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "source_record_equal",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "canonical_enrichment",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "missing_id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "unexplained_differences",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_artifact",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "internal_reuse_evidence_canonical_enrichment_check",
+        "internal_reuse_evidence_canonical_ids_found_check",
+        "internal_reuse_evidence_check",
+        "internal_reuse_evidence_check1",
+        "internal_reuse_evidence_decision_check",
+        "internal_reuse_evidence_missing_id_check",
+        "internal_reuse_evidence_pkey",
+        "internal_reuse_evidence_records_examined_check",
+        "internal_reuse_evidence_release_id_fkey",
+        "internal_reuse_evidence_source_record_equal_check",
+        "internal_reuse_evidence_unexplained_differences_check"
+      ],
+      "indexes": [
+        "internal_reuse_evidence_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.internal_reuse_evidence",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.library_releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "origin_drive_folder_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "destination_drive_folder_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "declared_atoms",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "declared_files",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "declared_themes",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "is_published",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "is_integrated_to_runtime",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "technical_qa_reference",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "library_releases_declared_atoms_check",
+        "library_releases_declared_files_check",
+        "library_releases_declared_themes_check",
+        "library_releases_is_integrated_to_runtime_check",
+        "library_releases_is_published_check",
+        "library_releases_lifecycle_check",
+        "library_releases_pkey"
+      ],
+      "indexes": [
+        "library_releases_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.library_releases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.micro_checkpoints",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "step_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "checkpoint_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "check_label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "justification",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "records_examined",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "micro_checkpoints_pkey",
+        "micro_checkpoints_records_examined_check",
+        "micro_checkpoints_release_id_fkey",
+        "micro_checkpoints_release_id_task_no_step_no_fkey",
+        "micro_checkpoints_result_check"
+      ],
+      "indexes": [
+        "micro_checkpoints_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.micro_checkpoints",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.protocol_index_crosswalk",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target_object_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "matching_basis",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "matching_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "literal_equivalence_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "protocol_index_crosswalk_check",
+        "protocol_index_crosswalk_literal_equivalence_verified_check",
+        "protocol_index_crosswalk_matching_basis_check",
+        "protocol_index_crosswalk_matching_state_check",
+        "protocol_index_crosswalk_pkey",
+        "protocol_index_crosswalk_publication_blocked_check",
+        "protocol_index_crosswalk_release_id_fkey",
+        "protocol_index_crosswalk_source_atom_sha256_check"
+      ],
+      "indexes": [
+        "protocol_index_crosswalk_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.protocol_index_crosswalk",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.reconciliation_holds",
+      "columns": [
+        {
+          "name": "hold_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "affected_theme",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decision_needed",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "authorized_decision",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "reconciliation_holds_domain_check",
+        "reconciliation_holds_pkey",
+        "reconciliation_holds_release_id_fkey",
+        "reconciliation_holds_state_check"
+      ],
+      "indexes": [
+        "reconciliation_holds_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.reconciliation_holds",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.reconciliation_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_schema",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_table",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_row_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "direct_label_matches",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "match_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "interpretation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "reconciliation_observations_pkey",
+        "reconciliation_observations_release_id_fkey"
+      ],
+      "indexes": [
+        "reconciliation_observations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.reconciliation_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.source_lineage",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_position",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "source_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "extraction_date",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "match_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_source_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_lineage_check",
+        "source_lineage_match_status_check",
+        "source_lineage_pkey",
+        "source_lineage_release_id_fkey",
+        "source_lineage_release_id_theme_fkey"
+      ],
+      "indexes": [
+        "source_lineage_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.source_lineage",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.task_events",
+      "columns": [
+        {
+          "name": "event_no",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "event_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "event_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "task_events_pkey",
+        "task_events_release_id_fkey",
+        "task_events_release_id_task_no_fkey"
+      ],
+      "indexes": [
+        "task_events_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.task_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.task_gates",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "task_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "blocker",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "task_gates_pkey",
+        "task_gates_release_id_fkey",
+        "task_gates_release_id_task_code_key",
+        "task_gates_status_check",
+        "task_gates_task_no_check"
+      ],
+      "indexes": [
+        "task_gates_pkey",
+        "task_gates_release_id_task_code_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.task_gates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.task_substeps",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "step_no",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "step_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acceptance",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "task_substeps_pkey",
+        "task_substeps_release_id_task_no_fkey",
+        "task_substeps_status_check",
+        "task_substeps_step_no_check"
+      ],
+      "indexes": [
+        "task_substeps_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.task_substeps",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "calculadoras_de_enfermagem.theme_inventory",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "declared_atoms",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "declared_jsonl_files",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "qa_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "crosswalk_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_folder_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "manifest_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "is_clinically_approved",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "theme_inventory_crosswalk_status_check",
+        "theme_inventory_declared_atoms_check",
+        "theme_inventory_declared_jsonl_files_check",
+        "theme_inventory_pkey",
+        "theme_inventory_release_id_fkey"
+      ],
+      "indexes": [
+        "theme_inventory_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "calculadoras_de_enfermagem.theme_inventory",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

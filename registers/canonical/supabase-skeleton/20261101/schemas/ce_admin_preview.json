@@ -1,0 +1,118 @@
+{
+  "schema": "ce_admin_preview",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_admin_preview.demo_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "happened_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "demo_events_pkey",
+        "demo_events_record_id_fkey"
+      ],
+      "indexes": [
+        "demo_events_pkey",
+        "idx_ce_preview_events_record"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_admin_preview.demo_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_admin_preview.demo_records",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "module_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ce_preview_status_valid",
+        "demo_records_pkey"
+      ],
+      "indexes": [
+        "demo_records_pkey",
+        "idx_ce_preview_records_module"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_admin_preview.demo_records",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

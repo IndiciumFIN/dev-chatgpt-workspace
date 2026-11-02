@@ -1,0 +1,404 @@
+{
+  "schema": "cko_master",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_master.aliases",
+      "columns": [
+        {
+          "name": "alias_id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "alias",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "alias_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "aliases_canonical_id_alias_alias_type_key",
+        "aliases_canonical_id_fkey",
+        "aliases_pkey"
+      ],
+      "indexes": [
+        "aliases_canonical_id_alias_alias_type_key",
+        "aliases_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.aliases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_master.entities",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "business_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_of_truth",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "object_uuid",
+          "type": "uuid",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "entities_current_version_ref_fkey",
+        "entities_entity_type_id_business_key_key",
+        "entities_entity_type_id_fkey",
+        "entities_pkey"
+      ],
+      "indexes": [
+        "entities_current_version_ref_idx",
+        "entities_entity_type_id_business_key_key",
+        "entities_pkey",
+        "ux_cko_master_entities_object_uuid"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.entities",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_master.entity_types",
+      "columns": [
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "id_pattern",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "entity_types_pkey"
+      ],
+      "indexes": [
+        "entity_types_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.entity_types",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_master.id_policies",
+      "columns": [
+        {
+          "name": "id_policy_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "entity_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "namespace",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic_rule",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "legacy_preservation_rule",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reuse_forbidden",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "strategy_code",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "strategy_config",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "id_policies_entity_type_id_fkey",
+        "id_policies_pkey"
+      ],
+      "indexes": [
+        "id_policies_entity_type_id_idx",
+        "id_policies_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.id_policies",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_master.relation_types",
+      "columns": [
+        {
+          "name": "relation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "inverse_relation_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "relation_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "relation_types_pkey"
+      ],
+      "indexes": [
+        "relation_types_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.relation_types",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_master.relationships",
+      "columns": [
+        {
+          "name": "relationship_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "relationships_pkey",
+        "relationships_relation_type_fkey",
+        "relationships_source_id_fkey",
+        "relationships_source_id_relation_type_target_id_key",
+        "relationships_target_id_fkey"
+      ],
+      "indexes": [
+        "relationships_pkey",
+        "relationships_relation_type_idx",
+        "relationships_source_id_relation_type_idx",
+        "relationships_source_id_relation_type_target_id_key",
+        "relationships_target_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_master.relationships",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

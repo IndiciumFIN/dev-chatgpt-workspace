@@ -1,0 +1,1703 @@
+{
+  "schema": "ce_research_candidate",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_research_candidate.analysis_runs",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "method_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "parameters",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "analysis_runs_lifecycle_state_check",
+        "analysis_runs_metadata_check",
+        "analysis_runs_parameters_check",
+        "analysis_runs_pkey",
+        "analysis_runs_project_id_fkey"
+      ],
+      "indexes": [
+        "analysis_runs_pkey",
+        "idx_rh_analysis_runs_project"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.analysis_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.budget_lines",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "budget_category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "period_label",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "budgeted_amount",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "currency_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "budget_lines_budgeted_amount_check",
+        "budget_lines_currency_code_check",
+        "budget_lines_lifecycle_state_check",
+        "budget_lines_metadata_check",
+        "budget_lines_pkey",
+        "budget_lines_project_id_fkey"
+      ],
+      "indexes": [
+        "budget_lines_pkey",
+        "idx_rh_budget_lines_project"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.budget_lines",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.calls_for_proposals",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "organization_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "opens_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "closes_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "calls_for_proposals_check",
+        "calls_for_proposals_lifecycle_state_check",
+        "calls_for_proposals_metadata_check",
+        "calls_for_proposals_organization_ref_fkey",
+        "calls_for_proposals_pkey"
+      ],
+      "indexes": [
+        "calls_for_proposals_pkey",
+        "idx_rh_calls_for_proposals_organization_ref"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.calls_for_proposals",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.consensus_votes",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "statement_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "participant_token_digest",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "position",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "consensus_votes_lifecycle_state_check",
+        "consensus_votes_metadata_check",
+        "consensus_votes_participant_token_digest_check",
+        "consensus_votes_pkey",
+        "consensus_votes_position_check",
+        "consensus_votes_statement_id_fkey",
+        "consensus_votes_statement_id_participant_token_digest_key"
+      ],
+      "indexes": [
+        "consensus_votes_pkey",
+        "consensus_votes_statement_id_participant_token_digest_key",
+        "idx_rh_consensus_votes_statement_id"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.consensus_votes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.data_quality_findings",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "response_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "rule_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "data_quality_findings_lifecycle_state_check",
+        "data_quality_findings_metadata_check",
+        "data_quality_findings_pkey",
+        "data_quality_findings_project_id_fkey",
+        "data_quality_findings_response_id_fkey",
+        "data_quality_findings_severity_check"
+      ],
+      "indexes": [
+        "data_quality_findings_pkey",
+        "idx_rh_data_quality_findings_project",
+        "idx_rh_data_quality_findings_response_id"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.data_quality_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.editorial_reviews",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "output_canonical_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "review_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "review_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reviewer_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "editorial_reviews_lifecycle_state_check",
+        "editorial_reviews_metadata_check",
+        "editorial_reviews_output_canonical_ref_fkey",
+        "editorial_reviews_pkey",
+        "editorial_reviews_project_id_fkey"
+      ],
+      "indexes": [
+        "editorial_reviews_pkey",
+        "idx_rh_editorial_reviews_output_canonical_ref",
+        "idx_rh_editorial_reviews_project"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.editorial_reviews",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.funding_transactions",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "budget_line_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "amount",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "currency_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "transaction_date",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "source_evidence_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "funding_transactions_budget_line_id_fkey",
+        "funding_transactions_currency_code_check",
+        "funding_transactions_lifecycle_state_check",
+        "funding_transactions_metadata_check",
+        "funding_transactions_pkey"
+      ],
+      "indexes": [
+        "funding_transactions_pkey",
+        "idx_rh_funding_transactions_budget_line_id"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.funding_transactions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.hypotheses",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "hypothesis_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "null_hypothesis",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "hypotheses_lifecycle_state_check",
+        "hypotheses_metadata_check",
+        "hypotheses_pkey",
+        "hypotheses_project_id_fkey",
+        "hypotheses_statement_check"
+      ],
+      "indexes": [
+        "hypotheses_pkey",
+        "idx_rh_hypotheses_project"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.hypotheses",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.impact_observations",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "impact_category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "indicator_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observed_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observed_on",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "impact_observations_lifecycle_state_check",
+        "impact_observations_metadata_check",
+        "impact_observations_pkey",
+        "impact_observations_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_impact_observations_project",
+        "impact_observations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.impact_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.instrument_responses",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "anonymous_token_digest",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "form_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "response_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "instrument_responses_anonymous_token_digest_check",
+        "instrument_responses_instrument_id_fkey",
+        "instrument_responses_lifecycle_state_check",
+        "instrument_responses_metadata_check",
+        "instrument_responses_pkey",
+        "instrument_responses_project_id_fkey",
+        "instrument_responses_response_payload_check"
+      ],
+      "indexes": [
+        "idx_rh_instrument_responses_instrument_id",
+        "idx_rh_instrument_responses_project",
+        "instrument_responses_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.instrument_responses",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.metric_observations",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "metric_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "observed_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "observation_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "metric_observations_lifecycle_state_check",
+        "metric_observations_metadata_check",
+        "metric_observations_metric_id_fkey",
+        "metric_observations_pkey"
+      ],
+      "indexes": [
+        "idx_rh_metric_observations_metric_id",
+        "metric_observations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.metric_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.participation_outcomes",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "process_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "outcome_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "is_official",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "participation_outcomes_is_official_check",
+        "participation_outcomes_lifecycle_state_check",
+        "participation_outcomes_metadata_check",
+        "participation_outcomes_pkey",
+        "participation_outcomes_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_participation_outcomes_project",
+        "participation_outcomes_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.participation_outcomes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.participation_statements",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "process_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "display_order",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "participation_statements_lifecycle_state_check",
+        "participation_statements_metadata_check",
+        "participation_statements_pkey",
+        "participation_statements_project_id_fkey",
+        "participation_statements_statement_check"
+      ],
+      "indexes": [
+        "idx_rh_participation_statements_project",
+        "participation_statements_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.participation_statements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.proposal_applications",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "call_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "application_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "proposal_applications_call_id_fkey",
+        "proposal_applications_lifecycle_state_check",
+        "proposal_applications_metadata_check",
+        "proposal_applications_pkey",
+        "proposal_applications_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_proposal_applications_call_id",
+        "idx_rh_proposal_applications_project",
+        "proposal_applications_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.proposal_applications",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.recruitment_campaigns",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "eligibility_criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "opens_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "closes_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "recruitment_campaigns_check",
+        "recruitment_campaigns_lifecycle_state_check",
+        "recruitment_campaigns_metadata_check",
+        "recruitment_campaigns_pkey",
+        "recruitment_campaigns_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_recruitment_campaigns_project",
+        "recruitment_campaigns_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.recruitment_campaigns",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.research_metrics",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metric_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metric_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "definition",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_metrics_lifecycle_state_check",
+        "research_metrics_metadata_check",
+        "research_metrics_pkey",
+        "research_metrics_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_research_metrics_project",
+        "research_metrics_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.research_metrics",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.research_portfolio_items",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "portfolio_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_portfolio_items_lifecycle_state_check",
+        "research_portfolio_items_metadata_check",
+        "research_portfolio_items_pkey",
+        "research_portfolio_items_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_research_portfolio_items_project",
+        "research_portfolio_items_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.research_portfolio_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.research_training_assignments",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "skill_canonical_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "assignee_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "training_resource_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "due_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_training_assignments_lifecycle_state_check",
+        "research_training_assignments_metadata_check",
+        "research_training_assignments_pkey",
+        "research_training_assignments_project_id_fkey",
+        "research_training_assignments_skill_canonical_ref_fkey"
+      ],
+      "indexes": [
+        "idx_rh_research_training_assignments_project",
+        "idx_rh_research_training_assignments_skill_canonical_ref",
+        "research_training_assignments_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.research_training_assignments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.response_items",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "response_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "field_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "response_value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "response_items_lifecycle_state_check",
+        "response_items_metadata_check",
+        "response_items_pkey",
+        "response_items_response_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_response_items_response_id",
+        "response_items_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.response_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.retention_rules",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retention_days",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "disposal_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "retention_rules_lifecycle_state_check",
+        "retention_rules_metadata_check",
+        "retention_rules_pkey",
+        "retention_rules_project_id_fkey",
+        "retention_rules_retention_days_check"
+      ],
+      "indexes": [
+        "idx_rh_retention_rules_project",
+        "retention_rules_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.retention_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.risk_scenarios",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "scenario_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assumptions",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "proposed_response",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "risk_scenarios_lifecycle_state_check",
+        "risk_scenarios_metadata_check",
+        "risk_scenarios_pkey",
+        "risk_scenarios_project_id_fkey",
+        "risk_scenarios_risk_ref_fkey"
+      ],
+      "indexes": [
+        "idx_rh_risk_scenarios_project",
+        "idx_rh_risk_scenarios_risk_ref",
+        "risk_scenarios_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.risk_scenarios",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.sampling_plans",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_definition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sampling_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_size",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "inclusion_criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "exclusion_criteria",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "sampling_plans_lifecycle_state_check",
+        "sampling_plans_metadata_check",
+        "sampling_plans_pkey",
+        "sampling_plans_project_id_fkey",
+        "sampling_plans_target_size_check"
+      ],
+      "indexes": [
+        "idx_rh_sampling_plans_project",
+        "sampling_plans_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.sampling_plans",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_research_candidate.source_search_hits",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "search_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "result_rank",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "retrieved_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_search_hits_lifecycle_state_check",
+        "source_search_hits_metadata_check",
+        "source_search_hits_pkey",
+        "source_search_hits_project_id_fkey",
+        "source_search_hits_result_rank_check",
+        "source_search_hits_search_id_fkey"
+      ],
+      "indexes": [
+        "idx_rh_source_search_hits_project",
+        "idx_rh_source_search_hits_search_id",
+        "source_search_hits_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_research_candidate.source_search_hits",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

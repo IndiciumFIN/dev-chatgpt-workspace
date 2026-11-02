@@ -1,0 +1,762 @@
+{
+  "schema": "cko_regulatory",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_regulatory.acquisition_queue",
+      "columns": [
+        {
+          "name": "acquisition_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "resolved_canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "acquisition_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "routing_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempt_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "last_error",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "next_action",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "acquisition_queue_pkey",
+        "acquisition_queue_resolved_canonical_id_fkey",
+        "acquisition_queue_routing_ref_fkey",
+        "acquisition_queue_subject_ref_acquisition_type_key"
+      ],
+      "indexes": [
+        "acquisition_queue_pkey",
+        "acquisition_queue_resolved_canonical_id_idx",
+        "acquisition_queue_routing_ref_idx",
+        "acquisition_queue_subject_ref_acquisition_type_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.acquisition_queue",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.applicability",
+      "columns": [
+        {
+          "name": "applicability_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provision_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "applicability_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "applicability_instrument_id_fkey",
+        "applicability_pkey",
+        "applicability_provision_id_fkey"
+      ],
+      "indexes": [
+        "applicability_instrument_id_idx",
+        "applicability_pkey",
+        "applicability_provision_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.applicability",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.change_events",
+      "columns": [
+        {
+          "name": "change_event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "old_snapshot_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "new_snapshot_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "semantic_diff",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "impact_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "change_events_instrument_id_fkey",
+        "change_events_new_snapshot_id_fkey",
+        "change_events_old_snapshot_id_fkey",
+        "change_events_pkey"
+      ],
+      "indexes": [
+        "change_events_instrument_id_idx",
+        "change_events_new_snapshot_id_idx",
+        "change_events_old_snapshot_id_idx",
+        "change_events_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.change_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.discovery_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "record_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "legal_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "number",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "official_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_path",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "has_full_text",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "candidate_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "raw_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "imported_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "promoted_canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "resolved_canonical_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "discovery_candidates_pkey",
+        "discovery_candidates_promoted_canonical_id_fkey",
+        "discovery_candidates_resolved_canonical_id_fkey"
+      ],
+      "indexes": [
+        "discovery_candidates_candidate_status_record_class_idx",
+        "discovery_candidates_pkey",
+        "discovery_candidates_promoted_canonical_id_idx",
+        "discovery_candidates_resolved_canonical_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.discovery_candidates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.instruments",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "issuer_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "legal_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_family",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "normative_force",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "number",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_date",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "effective_from",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "effective_to",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "legal_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "official_source_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "current_snapshot_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "constitutional_anchor_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "instruments_canonical_id_fkey",
+        "instruments_canonical_id_key",
+        "instruments_current_snapshot_id_fkey",
+        "instruments_issuer_id_fkey",
+        "instruments_official_source_id_fkey",
+        "instruments_pkey"
+      ],
+      "indexes": [
+        "instruments_canonical_id_key",
+        "instruments_current_snapshot_id_idx",
+        "instruments_issuer_id_idx",
+        "instruments_legal_type_year_number_idx",
+        "instruments_official_source_id_idx",
+        "instruments_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.instruments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.issuers",
+      "columns": [
+        {
+          "name": "issuer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "issuer_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "parent_issuer_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "statutory_basis_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "issuers_parent_issuer_id_fkey",
+        "issuers_pkey"
+      ],
+      "indexes": [
+        "issuers_parent_issuer_id_idx",
+        "issuers_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.issuers",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.provisions",
+      "columns": [
+        {
+          "name": "provision_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_provision_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "provision_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "citation_label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "text_current",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "legal_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_fragment_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "provisions_instrument_id_fkey",
+        "provisions_parent_provision_id_fkey",
+        "provisions_pkey",
+        "provisions_source_fragment_id_fkey"
+      ],
+      "indexes": [
+        "provisions_instrument_id_idx",
+        "provisions_parent_provision_id_idx",
+        "provisions_pkey",
+        "provisions_source_fragment_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.provisions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.source_routing",
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "preferred_hosts",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "fallback_hosts",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "forbidden_promotions",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_routing_pkey"
+      ],
+      "indexes": [
+        "source_routing_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.source_routing",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_regulatory.vdc_subject_registrations",
+      "columns": [
+        {
+          "name": "registration_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evaluation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "applicability_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "vdc_subject_registrations_applicability_status_check",
+        "vdc_subject_registrations_evaluation_state_check",
+        "vdc_subject_registrations_pkey",
+        "vdc_subject_registrations_subject_id_fkey",
+        "vdc_subject_registrations_subject_id_key"
+      ],
+      "indexes": [
+        "vdc_subject_registrations_class_idx",
+        "vdc_subject_registrations_pkey",
+        "vdc_subject_registrations_subject_id_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_regulatory.vdc_subject_registrations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

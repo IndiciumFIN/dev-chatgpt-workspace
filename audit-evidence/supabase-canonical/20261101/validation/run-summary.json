@@ -1,0 +1,70 @@
+{
+  "wo": "WO-CE-DB-SKELETON-001",
+  "command": "pipeline",
+  "roles": [
+    {
+      "role": "skeleton-builder",
+      "outcome": "GENERATED_CANDIDATE",
+      "detail": {
+        "objects": 606,
+        "schemas": 45
+      },
+      "wo": "WO-CE-DB-SKELETON-001"
+    },
+    {
+      "role": "branch-reconciler",
+      "outcome": "INVENTORIED_READ_ONLY",
+      "detail": {
+        "sources": 36
+      },
+      "wo": "WO-CE-DB-SKELETON-001"
+    },
+    {
+      "role": "independent-structural-checker",
+      "wo": "WO-CE-DB-SKELETON-001",
+      "outcome": "STRUCTURAL_PASS_NOT_HOMOLOGATED",
+      "metrics": {
+        "schemas": 45,
+        "tables": 606,
+        "columns": 6486,
+        "views": 49
+      },
+      "errors": [],
+      "releaseEligible": false,
+      "kernelAdmitted": false
+    },
+    {
+      "role": "evidence-auditor",
+      "outcome": "EVIDENCE_RECORDED_HOLD_RELEASE",
+      "wo": "WO-CE-DB-SKELETON-001",
+      "hashes": [
+        {
+          "path": "checker.json",
+          "sha256": "894b7959bf9f057a00318f96846f605b941c039a4e4406f65d4d29f81495838c"
+        },
+        {
+          "path": "skeleton/index.json",
+          "sha256": "16a7619b033209681c4df23fb2106dc2a0db4cf227f651fc75aee8c9dd7a3c30"
+        },
+        {
+          "path": "branch-audit.json",
+          "sha256": "a8f894758e18956676e39fc007f4b2b23e75cba4c2a7fba22e7bce76c25fef9c"
+        }
+      ],
+      "structuralCheck": "STRUCTURAL_PASS_NOT_HOMOLOGATED",
+      "makerCheckerAuditorSeparation": "LOGICAL_ONLY_REQUIRES_INDEPENDENT_REVIEW",
+      "release": "HOLD_HUMAN",
+      "kernelAdmitted": false,
+      "clinicalApproval": false,
+      "limitations": [
+        "No clinical content checked",
+        "No RLS simulation",
+        "No authorized promotion",
+        "No content ingestion"
+      ]
+    }
+  ],
+  "structuralComplete": true,
+  "contentIngestion": "BLOCKED_UNTIL_SKELETON_AND_GOVERNANCE",
+  "promotion": "HOLD_HUMAN"
+}

@@ -1,0 +1,534 @@
+{
+  "schema": "xlf_assurance",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_assurance.ci_run",
+      "columns": [
+        {
+          "name": "ci_run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "tests",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "artifact_manifest_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ci_run_pkey"
+      ],
+      "indexes": [
+        "ci_run_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.ci_run",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.drift_event",
+      "columns": [
+        {
+          "name": "drift_event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "baseline_snapshot_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "current_snapshot_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "revalidation_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "impact_summary",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "drift_event_baseline_snapshot_id_fkey",
+        "drift_event_classification_check",
+        "drift_event_current_snapshot_id_fkey",
+        "drift_event_pkey",
+        "drift_event_source_id_fkey"
+      ],
+      "indexes": [
+        "drift_event_pkey",
+        "ix_xlf_drift_baseline",
+        "ix_xlf_drift_current",
+        "ix_xlf_drift_source"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.drift_event",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.release_blocker",
+      "columns": [
+        {
+          "name": "blocker_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "condition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "release_blocker_pkey",
+        "release_blocker_severity_check",
+        "release_blocker_status_check"
+      ],
+      "indexes": [
+        "ix_xlf_release_blocker_scope_status",
+        "release_blocker_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.release_blocker",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.release_gate_run",
+      "columns": [
+        {
+          "name": "gate_run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blockers",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "release_gate_run_pkey"
+      ],
+      "indexes": [
+        "release_gate_run_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.release_gate_run",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.revalidation_task",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "drift_event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "revalidation_task_drift_event_id_fkey",
+        "revalidation_task_pkey",
+        "revalidation_task_priority_check",
+        "revalidation_task_source_id_drift_event_id_target_id_key",
+        "revalidation_task_source_id_fkey",
+        "revalidation_task_status_check"
+      ],
+      "indexes": [
+        "ix_xlf_revalidation_drift",
+        "ix_xlf_revalidation_status_priority",
+        "revalidation_task_pkey",
+        "revalidation_task_source_id_drift_event_id_target_id_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.revalidation_task",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.source_snapshot",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "fetched_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "etag",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "last_modified",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "body_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "semantic_text_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "semantic_text_length",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "redirected_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "error",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "source_snapshot_http_status_check",
+        "source_snapshot_pkey",
+        "source_snapshot_semantic_text_length_check",
+        "source_snapshot_source_id_fkey"
+      ],
+      "indexes": [
+        "ix_xlf_snapshot_source_fetched",
+        "source_snapshot_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.source_snapshot",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_assurance.source_watch",
+      "columns": [
+        {
+          "name": "watch_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "watch_profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "baseline_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata_fingerprint_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "remote_etag",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "remote_last_modified",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "remote_body_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "semantic_text_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "last_checked_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "last_changed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "drift_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "monitoring_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_watch_metadata_fingerprint_sha256_check",
+        "source_watch_pkey",
+        "source_watch_source_id_fkey"
+      ],
+      "indexes": [
+        "ix_xlf_watch_source",
+        "source_watch_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_assurance.source_watch",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

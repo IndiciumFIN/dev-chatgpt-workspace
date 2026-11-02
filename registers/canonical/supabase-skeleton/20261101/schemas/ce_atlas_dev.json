@@ -1,0 +1,231 @@
+{
+  "schema": "ce_atlas_dev",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_atlas_dev.asset_candidates",
+      "columns": [
+        {
+          "name": "asset_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_repo",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "asset_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "layer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "license",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "attribution",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "anatomy_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "asset_candidates_anatomy_status_check",
+        "asset_candidates_pkey",
+        "asset_candidates_release_status_check",
+        "asset_candidates_rights_status_check",
+        "release_gate"
+      ],
+      "indexes": [
+        "asset_candidates_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_atlas_dev.asset_candidates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_atlas_dev.pmo_tasks",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "production_safe",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pmo_tasks_pkey",
+        "pmo_tasks_priority_check",
+        "pmo_tasks_status_check"
+      ],
+      "indexes": [
+        "pmo_tasks_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_atlas_dev.pmo_tasks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_atlas_dev.qa_runs",
+      "columns": [
+        {
+          "name": "run_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scenario",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "passed",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "total",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "runtime_webgl_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "report",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "qa_runs_check",
+        "qa_runs_passed_check",
+        "qa_runs_pkey"
+      ],
+      "indexes": [
+        "qa_runs_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_atlas_dev.qa_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

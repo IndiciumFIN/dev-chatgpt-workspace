@@ -1,0 +1,577 @@
+{
+  "schema": "ce_curiosidades_v1",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_curiosidades_v1.audit_findings",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rule_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detail",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_findings_pkey",
+        "audit_findings_severity_check",
+        "audit_findings_slug_fkey",
+        "audit_findings_slug_rule_code_detail_key"
+      ],
+      "indexes": [
+        "audit_findings_pkey",
+        "audit_findings_slug_rule_code_detail_key",
+        "ce_curi_findings_status_ix"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.audit_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.audit_runs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "batch",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "pages_examined",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "confirmed_references",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "audit_runs_pkey"
+      ],
+      "indexes": [
+        "audit_runs_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.audit_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.citation_remediation",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "old_source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "new_source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "revision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "citation_remediation_pkey",
+        "citation_remediation_slug_fkey"
+      ],
+      "indexes": [
+        "citation_remediation_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.citation_remediation",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.media_registry",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "media_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "media_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "attribution",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "license_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "production_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "media_registry_pkey",
+        "media_registry_slug_fkey"
+      ],
+      "indexes": [
+        "media_registry_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.media_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.page_revision_snapshots",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "revision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "prior_content",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "corrected_content",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "evidence_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "editorial_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "page_revision_snapshots_pkey",
+        "page_revision_snapshots_slug_fkey",
+        "page_revision_snapshots_slug_revision_key"
+      ],
+      "indexes": [
+        "page_revision_snapshots_pkey",
+        "page_revision_snapshots_slug_revision_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.page_revision_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.page_sources",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "declared_in",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "page_sources_pkey",
+        "page_sources_slug_fkey"
+      ],
+      "indexes": [
+        "page_sources_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.page_sources",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.pages",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_package",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_json",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "html_source_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "section_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "reference_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "content_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "review_reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pages_content_status_check",
+        "pages_pkey"
+      ],
+      "indexes": [
+        "ce_curi_pages_status_ix",
+        "pages_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.pages",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.pmo_page_gates",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate_title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "pmo_page_gates_pkey",
+        "pmo_page_gates_slug_fkey",
+        "pmo_page_gates_status_ck"
+      ],
+      "indexes": [
+        "pmo_page_gates_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.pmo_page_gates",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_curiosidades_v1.sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "organization",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_year",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "doi",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "web_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validated_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "sources_pkey"
+      ],
+      "indexes": [
+        "sources_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_curiosidades_v1.sources",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

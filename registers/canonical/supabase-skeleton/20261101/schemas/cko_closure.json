@@ -1,0 +1,132 @@
+{
+  "schema": "cko_closure",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_closure.tool_dossiers",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "human_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_uuid",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "tool_slug",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "route",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "clinical_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "authority_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "lineage",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "relationships",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "quality_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "review_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "owner_steward",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "dossier",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "tool_dossiers_human_id_unique",
+        "tool_dossiers_pkey"
+      ],
+      "indexes": [
+        "tool_dossiers_human_id_unique",
+        "tool_dossiers_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "cko_closure.tool_dossiers",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

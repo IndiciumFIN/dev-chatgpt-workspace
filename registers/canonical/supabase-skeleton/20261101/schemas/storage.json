@@ -1,0 +1,592 @@
+{
+  "schema": "storage",
+  "managedBySupabase": true,
+  "tables": [
+    {
+      "key": "storage.buckets",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "public",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "avif_autodetection",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "file_size_limit",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "allowed_mime_types",
+          "type": "text[]",
+          "nullable": true
+        },
+        {
+          "name": "owner_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "type",
+          "type": "storage.buckettype",
+          "nullable": false
+        },
+        {
+          "name": "versioning_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_configuration",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_configuration_generation",
+          "type": "uuid",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "buckets_lifecycle_configuration_pair_check",
+        "buckets_lifecycle_configuration_shape_check",
+        "buckets_lifecycle_configuration_standard_only_check",
+        "buckets_pkey",
+        "buckets_versioning_dark_check",
+        "buckets_versioning_standard_only_check",
+        "buckets_versioning_status_check"
+      ],
+      "indexes": [
+        "bname",
+        "buckets_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.buckets",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.buckets_analytics",
+      "columns": [
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "type",
+          "type": "storage.buckettype",
+          "nullable": false
+        },
+        {
+          "name": "format",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "buckets_analytics_pkey"
+      ],
+      "indexes": [
+        "buckets_analytics_pkey",
+        "buckets_analytics_unique_name_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.buckets_analytics",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.buckets_vectors",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "type",
+          "type": "storage.buckettype",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "buckets_vectors_pkey"
+      ],
+      "indexes": [
+        "buckets_vectors_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.buckets_vectors",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.migrations",
+      "columns": [
+        {
+          "name": "id",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "character varying(100)",
+          "nullable": false
+        },
+        {
+          "name": "hash",
+          "type": "character varying(40)",
+          "nullable": false
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp without time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "migrations_name_key",
+        "migrations_pkey"
+      ],
+      "indexes": [
+        "migrations_name_key",
+        "migrations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.migrations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.objects",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "bucket_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "owner",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "last_accessed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "path_tokens",
+          "type": "text[]",
+          "nullable": true
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "owner_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "user_metadata",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "archived_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "is_delete_marker",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "is_versioned",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "objects_bucketId_fkey",
+        "objects_pkey"
+      ],
+      "indexes": [
+        "idx_objects_bucket_id_name",
+        "idx_objects_bucket_id_name_lower",
+        "idx_objects_current_version",
+        "idx_objects_delete_markers",
+        "idx_objects_null_version",
+        "name_prefix_search",
+        "objects_bucket_id_name_version_key",
+        "objects_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_private_delete",
+        "ingest_private_insert",
+        "ingest_private_select",
+        "ingest_private_update"
+      ],
+      "service": {
+        "target": "storage.objects",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.s3_multipart_uploads",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "in_progress_size",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "upload_signature",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "bucket_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "user_metadata",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "s3_multipart_uploads_bucket_id_fkey",
+        "s3_multipart_uploads_pkey"
+      ],
+      "indexes": [
+        "idx_multipart_uploads_list",
+        "s3_multipart_uploads_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.s3_multipart_uploads",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.s3_multipart_uploads_parts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "upload_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "size",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "part_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "bucket_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "etag",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "s3_multipart_uploads_parts_bucket_id_fkey",
+        "s3_multipart_uploads_parts_pkey",
+        "s3_multipart_uploads_parts_upload_id_fkey"
+      ],
+      "indexes": [
+        "s3_multipart_uploads_parts_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.s3_multipart_uploads_parts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "storage.vector_indexes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "bucket_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimension",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "distance_metric",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata_configuration",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "vector_indexes_bucket_id_fkey",
+        "vector_indexes_pkey"
+      ],
+      "indexes": [
+        "vector_indexes_name_bucket_id_idx",
+        "vector_indexes_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "storage.vector_indexes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

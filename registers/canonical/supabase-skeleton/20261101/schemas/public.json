@@ -1,0 +1,4485 @@
+{
+  "schema": "public",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "public.access_attempts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "strategy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "final_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_length",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "response_prefix_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "captcha_detected",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "anti_bot_detected",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "auth_used",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "retry_after",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "access_attempts_job_id_fkey",
+        "access_attempts_owner_id_fkey",
+        "access_attempts_pkey",
+        "access_attempts_target_id_fkey"
+      ],
+      "indexes": [
+        "access_attempts_pkey",
+        "idx_access_attempts_job"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "access_attempts_owner_all"
+      ],
+      "service": {
+        "target": "public.access_attempts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.access_findings",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "requires_human",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "access_findings_job_id_fkey",
+        "access_findings_owner_id_fkey",
+        "access_findings_pkey",
+        "access_findings_severity_check",
+        "access_findings_target_id_fkey"
+      ],
+      "indexes": [
+        "access_findings_pkey",
+        "idx_findings_job"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "access_findings_owner_all"
+      ],
+      "service": {
+        "target": "public.access_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.access_profiles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "auth_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "secret_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "vault_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "non_secret_config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "access_profiles_auth_type_check",
+        "access_profiles_owner_id_fkey",
+        "access_profiles_pkey",
+        "access_profiles_secret_mode_check"
+      ],
+      "indexes": [
+        "access_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "access_profiles_owner_all"
+      ],
+      "service": {
+        "target": "public.access_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.admin_entity_registry",
+      "columns": [
+        {
+          "name": "entity_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "table_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "pk_columns",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "allow_insert",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "allow_update",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "allow_delete",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "versioned",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "realtime_enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "display_order",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "admin_entity_registry_pkey",
+        "admin_entity_registry_schema_name_table_name_key"
+      ],
+      "indexes": [
+        "admin_entity_registry_pkey",
+        "admin_entity_registry_schema_name_table_name_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "admins can read entity registry"
+      ],
+      "service": {
+        "target": "public.admin_entity_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.admin_record_versions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "schema_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "table_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "entity_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "record_pk",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "record_version",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "operation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "old_data",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "new_data",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "changed_by",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "txid",
+          "type": "bigint",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "admin_record_versions_operation_check",
+        "admin_record_versions_pkey",
+        "admin_record_versions_schema_name_table_name_record_pk_reco_key"
+      ],
+      "indexes": [
+        "admin_record_versions_changed_at_idx",
+        "admin_record_versions_lookup_idx",
+        "admin_record_versions_pkey",
+        "admin_record_versions_schema_name_table_name_record_pk_reco_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "admins can read record versions"
+      ],
+      "service": {
+        "target": "public.admin_record_versions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.admin_users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "admin_users_pkey",
+        "admin_users_role_check",
+        "admin_users_user_id_fkey"
+      ],
+      "indexes": [
+        "admin_users_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "admin user can read own assignment"
+      ],
+      "service": {
+        "target": "public.admin_users",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.brand_assets",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_drive_file_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "delivery_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "width_px",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "height_px",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "is_transparent",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "quality_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "brand_assets_height_px_check",
+        "brand_assets_pkey",
+        "brand_assets_project_key_asset_key_key",
+        "brand_assets_quality_status_check",
+        "brand_assets_width_px_check"
+      ],
+      "indexes": [
+        "brand_assets_lookup",
+        "brand_assets_pkey",
+        "brand_assets_project_key_asset_key_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.brand_assets",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.cfc_internal_normative_chunks",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "chunk_no",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "start_page",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "end_page",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "total_pages",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "raw_evidence_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "raw_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_char_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "text_content",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extractor_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "cfc_internal_normative_chunks_canonical_promotion_check",
+        "cfc_internal_normative_chunks_check",
+        "cfc_internal_normative_chunks_instrument_id_fkey",
+        "cfc_internal_normative_chunks_pkey",
+        "cfc_internal_normative_chunks_publication_mode_check"
+      ],
+      "indexes": [
+        "cfc_internal_normative_chunks_pages_idx",
+        "cfc_internal_normative_chunks_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.cfc_internal_normative_chunks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.cfc_internal_normative_extractions",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "raw_evidence_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "raw_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "raw_byte_count",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "page_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "text_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_char_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "text_storage_bucket",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_storage_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mask_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mask_storage_bucket",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mask_storage_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "numbered_unit_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "application_unit_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "heading_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "relation_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "identity_hint_match",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "warnings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "quality",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "extractor_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "policy_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_promotion",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "cfc_internal_normative_extractions_canonical_promotion_check",
+        "cfc_internal_normative_extractions_extraction_status_check",
+        "cfc_internal_normative_extractions_instrument_id_fkey",
+        "cfc_internal_normative_extractions_pkey",
+        "cfc_internal_normative_extractions_publication_mode_check"
+      ],
+      "indexes": [
+        "cfc_internal_normative_extractions_pkey",
+        "cfc_internal_normative_extractions_status_idx",
+        "cfc_internal_normative_extractions_text_sha_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.cfc_internal_normative_extractions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.discovered_url_occurrences",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "sitemap_source_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "media_hint",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "discovery_source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "discovered_url_occurrences_job_id_fkey",
+        "discovered_url_occurrences_job_id_url_key",
+        "discovered_url_occurrences_pkey",
+        "discovered_url_occurrences_sitemap_source_id_fkey"
+      ],
+      "indexes": [
+        "discovered_url_occurrences_job_id_url_key",
+        "discovered_url_occurrences_pkey",
+        "idx_discovered_url_occurrences_job",
+        "idx_discovered_url_occurrences_sitemap_source"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "discovered_url_occurrences_owner_select"
+      ],
+      "service": {
+        "target": "public.discovered_url_occurrences",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.discovered_urls",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "sitemap_source_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "media_hint",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "discovery_source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "acquisition_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "discovered_urls_acquisition_state_check",
+        "discovered_urls_job_id_fkey",
+        "discovered_urls_owner_id_fkey",
+        "discovered_urls_owner_id_url_key",
+        "discovered_urls_pkey",
+        "discovered_urls_sitemap_source_id_fkey",
+        "discovered_urls_target_id_fkey"
+      ],
+      "indexes": [
+        "discovered_urls_owner_id_url_key",
+        "discovered_urls_pkey",
+        "idx_discovered_urls_job",
+        "idx_discovered_urls_sitemap_source",
+        "idx_discovered_urls_target"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "discovered_urls_owner_all"
+      ],
+      "service": {
+        "target": "public.discovered_urls",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.discovery_jobs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "job_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_stage",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "progress",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result_summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "error_code",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "error_message",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "discovery_jobs_job_type_check",
+        "discovery_jobs_owner_id_fkey",
+        "discovery_jobs_pkey",
+        "discovery_jobs_progress_check",
+        "discovery_jobs_status_check",
+        "discovery_jobs_target_id_fkey"
+      ],
+      "indexes": [
+        "discovery_jobs_pkey",
+        "idx_discovery_jobs_owner_status",
+        "idx_discovery_jobs_target"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "discovery_jobs_owner_all"
+      ],
+      "service": {
+        "target": "public.discovery_jobs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.discovery_targets",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "discovery_targets_owner_id_fkey",
+        "discovery_targets_owner_id_url_key",
+        "discovery_targets_pkey",
+        "discovery_targets_status_check"
+      ],
+      "indexes": [
+        "discovery_targets_owner_id_url_key",
+        "discovery_targets_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "discovery_targets_owner_all"
+      ],
+      "service": {
+        "target": "public.discovery_targets",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_answer_keys",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "question_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "answer_key_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "correct_option_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_answer_keys_pkey",
+        "exam_answer_keys_question_id_answer_key_type_source_item_id_key",
+        "exam_answer_keys_question_id_fkey",
+        "exam_answer_keys_source_item_id_fkey",
+        "exam_answer_keys_status_check"
+      ],
+      "indexes": [
+        "exam_answer_keys_pkey",
+        "exam_answer_keys_question_id_answer_key_type_source_item_id_key",
+        "exam_answer_keys_source_item_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_answer_keys",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_documents",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "exam_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "document_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "is_primary",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_documents_exam_id_fkey",
+        "exam_documents_pkey",
+        "exam_documents_source_item_id_fkey"
+      ],
+      "indexes": [
+        "exam_documents_exam_id_idx",
+        "exam_documents_exam_source_type_uidx",
+        "exam_documents_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_documents",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_ingest_binary_chunks",
+      "columns": [
+        {
+          "name": "source_item_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "seq",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "chunk",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_ingest_binary_chunks_pkey"
+      ],
+      "indexes": [
+        "exam_ingest_binary_chunks_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_ingest_binary_chunks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_ingest_runs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_root_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_root_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "items_seen",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "items_documented",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "items_pending",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "exam_ingest_runs_pkey",
+        "exam_ingest_runs_status_check"
+      ],
+      "indexes": [
+        "exam_ingest_runs_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_ingest_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_processing_checkpoints",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "ingest_run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "checkpoint_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checkpoint_value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_processing_checkpoints_ingest_run_id_checkpoint_key_key",
+        "exam_processing_checkpoints_ingest_run_id_fkey",
+        "exam_processing_checkpoints_pkey"
+      ],
+      "indexes": [
+        "exam_processing_checkpoints_ingest_run_id_checkpoint_key_key",
+        "exam_processing_checkpoints_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_processing_checkpoints",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_question_options",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "question_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "option_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "option_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_question_options_pkey",
+        "exam_question_options_question_id_fkey",
+        "exam_question_options_question_id_option_key_key",
+        "exam_question_options_question_id_ordinal_key"
+      ],
+      "indexes": [
+        "exam_question_options_pkey",
+        "exam_question_options_question_id_option_key_key",
+        "exam_question_options_question_id_ordinal_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_question_options",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_questions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "exam_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "question_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_page",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "subject",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "topic",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "subtopic",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_questions_exam_id_fkey",
+        "exam_questions_exam_id_question_number_key",
+        "exam_questions_pkey",
+        "exam_questions_status_check"
+      ],
+      "indexes": [
+        "exam_questions_exam_id_question_number_key",
+        "exam_questions_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_questions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_remediation_tasks",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "ingest_run_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "finding_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "task_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "remediation_hint",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "exam_remediation_tasks_finding_id_fkey",
+        "exam_remediation_tasks_finding_id_key",
+        "exam_remediation_tasks_ingest_run_id_fkey",
+        "exam_remediation_tasks_pkey",
+        "exam_remediation_tasks_priority_check",
+        "exam_remediation_tasks_source_item_id_fkey",
+        "exam_remediation_tasks_status_check"
+      ],
+      "indexes": [
+        "exam_remediation_tasks_finding_id_key",
+        "exam_remediation_tasks_ingest_run_idx",
+        "exam_remediation_tasks_pkey",
+        "exam_remediation_tasks_queue_idx",
+        "exam_remediation_tasks_source_item_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_remediation_tasks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_source_classifications",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "classification_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "organization",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "exam_board",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state_code",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "municipality",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "role_title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "nursing_level",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "specialty",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "document_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "confidence",
+          "type": "numeric(5,4)",
+          "nullable": true
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "classified_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_source_classifications_pkey",
+        "exam_source_classifications_source_item_id_classification_v_key",
+        "exam_source_classifications_source_item_id_fkey"
+      ],
+      "indexes": [
+        "exam_source_classifications_pkey",
+        "exam_source_classifications_source_item_id_classification_v_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_source_classifications",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_source_content",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "capture_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "content_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "structured_payload",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "content_hash_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "char_count",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "page_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "is_canonical",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_source_content_pkey",
+        "exam_source_content_source_item_id_content_hash_sha256_key",
+        "exam_source_content_source_item_id_fkey"
+      ],
+      "indexes": [
+        "exam_source_content_pkey",
+        "exam_source_content_source_item_id_content_hash_sha256_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_source_content",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_source_items",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "ingest_run_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_item_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "parent_source_item_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_path",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "item_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "byte_size",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "created_at_source",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "modified_at_source",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_hash_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "read_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "content_capture_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "documented_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exam_source_items_content_capture_status_check",
+        "exam_source_items_ingest_run_id_fkey",
+        "exam_source_items_item_kind_check",
+        "exam_source_items_pkey",
+        "exam_source_items_read_status_check",
+        "exam_source_items_source_system_source_item_id_key"
+      ],
+      "indexes": [
+        "exam_source_items_ingest_run_idx",
+        "exam_source_items_name_idx",
+        "exam_source_items_parent_idx",
+        "exam_source_items_pkey",
+        "exam_source_items_source_system_source_item_id_key",
+        "exam_source_items_status_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_source_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exam_validation_findings",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_item_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "ingest_run_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "validator_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "exam_validation_findings_ingest_run_id_fkey",
+        "exam_validation_findings_pkey",
+        "exam_validation_findings_severity_check",
+        "exam_validation_findings_source_item_id_fkey",
+        "exam_validation_findings_status_check"
+      ],
+      "indexes": [
+        "exam_validation_findings_ingest_run_idx",
+        "exam_validation_findings_open_idx",
+        "exam_validation_findings_pkey",
+        "exam_validation_findings_source_item_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exam_validation_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.exams",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "organization",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "exam_board",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state_code",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "municipality",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "role_title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "nursing_level",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "specialty",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "exam_date",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "exams_canonical_key_key",
+        "exams_pkey",
+        "exams_status_check"
+      ],
+      "indexes": [
+        "exams_canonical_key_key",
+        "exams_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.exams",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_archive_entries",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "archive_artifact_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "entry_index",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "entry_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "is_directory",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "compressed_size",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "uncompressed_size",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "crc32",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mime_hint",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "extraction_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "child_artifact_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_archive_entries_archive_artifact_id_entry_index_key",
+        "ingest_archive_entries_archive_artifact_id_fkey",
+        "ingest_archive_entries_child_artifact_id_fkey",
+        "ingest_archive_entries_extraction_status_check",
+        "ingest_archive_entries_intake_id_fkey",
+        "ingest_archive_entries_owner_id_fkey",
+        "ingest_archive_entries_pkey"
+      ],
+      "indexes": [
+        "idx_ingest_archive_entries_archive",
+        "ingest_archive_entries_archive_artifact_id_entry_index_key",
+        "ingest_archive_entries_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_archive_delete",
+        "ingest_archive_insert",
+        "ingest_archive_select",
+        "ingest_archive_update"
+      ],
+      "service": {
+        "target": "public.ingest_archive_entries",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_artifacts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "parent_artifact_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "artifact_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "original_name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "storage_bucket",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "storage_path",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "extension",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "size_bytes",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "archive_depth",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_artifacts_artifact_role_check",
+        "ingest_artifacts_intake_id_fkey",
+        "ingest_artifacts_owner_id_fkey",
+        "ingest_artifacts_owner_id_storage_bucket_storage_path_key",
+        "ingest_artifacts_parent_artifact_id_fkey",
+        "ingest_artifacts_pkey",
+        "ingest_artifacts_status_check"
+      ],
+      "indexes": [
+        "idx_ingest_artifacts_owner_intake",
+        "idx_ingest_artifacts_sha",
+        "ingest_artifacts_owner_id_storage_bucket_storage_path_key",
+        "ingest_artifacts_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_artifacts_delete",
+        "ingest_artifacts_insert",
+        "ingest_artifacts_select",
+        "ingest_artifacts_update"
+      ],
+      "service": {
+        "target": "public.ingest_artifacts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_conversations",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "external_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "source_updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "message_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_conversations_artifact_id_fkey",
+        "ingest_conversations_intake_id_fkey",
+        "ingest_conversations_owner_id_fkey",
+        "ingest_conversations_owner_id_source_system_external_id_key",
+        "ingest_conversations_pkey"
+      ],
+      "indexes": [
+        "idx_ingest_conversations_intake",
+        "ingest_conversations_owner_id_source_system_external_id_key",
+        "ingest_conversations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_conversations_delete",
+        "ingest_conversations_insert",
+        "ingest_conversations_select",
+        "ingest_conversations_update"
+      ],
+      "service": {
+        "target": "public.ingest_conversations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_extractions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "extractor_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extractor_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extraction_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_content",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "structured_content",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "text_sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "char_count",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "token_estimate",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "quality",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_extractions_artifact_id_extractor_key_extractor_vers_key",
+        "ingest_extractions_artifact_id_fkey",
+        "ingest_extractions_intake_id_fkey",
+        "ingest_extractions_owner_id_fkey",
+        "ingest_extractions_pkey"
+      ],
+      "indexes": [
+        "idx_ingest_extractions_artifact",
+        "idx_ingest_extractions_owner_intake",
+        "ingest_extractions_artifact_id_extractor_key_extractor_vers_key",
+        "ingest_extractions_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_extractions_delete",
+        "ingest_extractions_insert",
+        "ingest_extractions_select",
+        "ingest_extractions_update"
+      ],
+      "service": {
+        "target": "public.ingest_extractions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_extractor_registry",
+      "columns": [
+        {
+          "name": "extractor_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extensions",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "mime_patterns",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "worker_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "produces",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_extractor_registry_implementation_status_check",
+        "ingest_extractor_registry_pkey",
+        "ingest_extractor_registry_worker_class_check"
+      ],
+      "indexes": [
+        "ingest_extractor_registry_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_extractor_registry_read"
+      ],
+      "service": {
+        "target": "public.ingest_extractor_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_intakes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "adapter_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "limit_profile_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "options",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result_summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "ingest_intakes_adapter_key_fkey",
+        "ingest_intakes_limit_profile_key_fkey",
+        "ingest_intakes_owner_id_fkey",
+        "ingest_intakes_pkey",
+        "ingest_intakes_status_check"
+      ],
+      "indexes": [
+        "idx_ingest_intakes_owner_created",
+        "ingest_intakes_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_intakes_delete",
+        "ingest_intakes_insert",
+        "ingest_intakes_select",
+        "ingest_intakes_update"
+      ],
+      "service": {
+        "target": "public.ingest_intakes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_limit_profiles",
+      "columns": [
+        {
+          "name": "profile_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "max_input_bytes",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "max_output_bytes_per_task",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "max_items_per_task",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "max_archive_depth",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "max_task_seconds",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "max_attempts",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "routing",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_limit_profiles_pkey",
+        "ingest_limit_profiles_routing_check"
+      ],
+      "indexes": [
+        "ingest_limit_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_limits_read"
+      ],
+      "service": {
+        "target": "public.ingest_limit_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_messages",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "conversation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "external_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "parent_external_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "content_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_created_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_messages_conversation_id_external_id_key",
+        "ingest_messages_conversation_id_fkey",
+        "ingest_messages_intake_id_fkey",
+        "ingest_messages_owner_id_fkey",
+        "ingest_messages_pkey"
+      ],
+      "indexes": [
+        "idx_ingest_messages_conversation",
+        "ingest_messages_conversation_id_external_id_key",
+        "ingest_messages_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_messages_delete",
+        "ingest_messages_insert",
+        "ingest_messages_select",
+        "ingest_messages_update"
+      ],
+      "service": {
+        "target": "public.ingest_messages",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_source_adapters",
+      "columns": [
+        {
+          "name": "adapter_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "requires_auth",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "supports_recursive",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "supports_direct_fetch",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "supports_upload",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_source_adapters_pkey"
+      ],
+      "indexes": [
+        "ingest_source_adapters_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_adapters_read"
+      ],
+      "service": {
+        "target": "public.ingest_source_adapters",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_task_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "task_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "progress",
+          "type": "smallint",
+          "nullable": true
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ingest_task_events_intake_id_fkey",
+        "ingest_task_events_owner_id_fkey",
+        "ingest_task_events_pkey",
+        "ingest_task_events_progress_check",
+        "ingest_task_events_task_id_fkey"
+      ],
+      "indexes": [
+        "idx_ingest_events_intake",
+        "ingest_task_events_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_events_insert",
+        "ingest_events_select"
+      ],
+      "service": {
+        "target": "public.ingest_task_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.ingest_tasks",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "intake_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "parent_task_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "task_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "progress",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "current_stage",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "max_attempts",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "run_after",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "lease_expires_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "worker_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "limits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "checkpoint",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "error_code",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "error_message",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "ingest_tasks_artifact_id_fkey",
+        "ingest_tasks_intake_id_fkey",
+        "ingest_tasks_owner_id_fkey",
+        "ingest_tasks_parent_task_id_fkey",
+        "ingest_tasks_pkey",
+        "ingest_tasks_progress_check",
+        "ingest_tasks_status_check",
+        "ingest_tasks_worker_class_check"
+      ],
+      "indexes": [
+        "idx_ingest_tasks_owner_intake",
+        "idx_ingest_tasks_queue",
+        "ingest_tasks_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "ingest_tasks_delete",
+        "ingest_tasks_insert",
+        "ingest_tasks_select",
+        "ingest_tasks_update"
+      ],
+      "service": {
+        "target": "public.ingest_tasks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.project_data_bindings",
+      "columns": [
+        {
+          "name": "project_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "table_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "binding_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "project_data_bindings_pkey"
+      ],
+      "indexes": [
+        "project_data_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.project_data_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.regulatory_acquisition_evidence",
+      "columns": [
+        {
+          "name": "evidence_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_entity_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "endpoint",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retrieved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "byte_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "identity_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "normative_text_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "provenance_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "promotion_eligible",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "gate_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "raw_payload",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "regulatory_acquisition_evidence_check",
+        "regulatory_acquisition_evidence_check1",
+        "regulatory_acquisition_evidence_gate_status_check",
+        "regulatory_acquisition_evidence_instrument_id_fkey",
+        "regulatory_acquisition_evidence_pkey",
+        "regulatory_acquisition_evidence_sha256_check"
+      ],
+      "indexes": [
+        "regulatory_acquisition_evidence_instrument_id_idx",
+        "regulatory_acquisition_evidence_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.regulatory_acquisition_evidence",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.regulatory_instruments",
+      "columns": [
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "entity_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "legal_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_number",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_year",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "issuer",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lexml_urn",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "canonical_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "regulatory_instruments_canonical_status_check",
+        "regulatory_instruments_entity_class_check",
+        "regulatory_instruments_legal_type_check",
+        "regulatory_instruments_pkey"
+      ],
+      "indexes": [
+        "regulatory_instruments_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.regulatory_instruments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.regulatory_source_bindings",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "instrument_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_entity_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "authority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "endpoint",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expected_identity",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "can_satisfy_normative_text",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "regulatory_source_bindings_check",
+        "regulatory_source_bindings_instrument_id_fkey",
+        "regulatory_source_bindings_instrument_id_source_role_endpoi_key",
+        "regulatory_source_bindings_pkey",
+        "regulatory_source_bindings_source_entity_class_check",
+        "regulatory_source_bindings_source_role_check"
+      ],
+      "indexes": [
+        "regulatory_source_bindings_instrument_id_source_role_endpoi_key",
+        "regulatory_source_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.regulatory_source_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.sitemap_discovery_queue",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "depth",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "discovered_via",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempts",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "final_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "error_message",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "sitemap_discovery_queue_job_id_fkey",
+        "sitemap_discovery_queue_job_id_url_key",
+        "sitemap_discovery_queue_pkey",
+        "sitemap_discovery_queue_status_check"
+      ],
+      "indexes": [
+        "idx_sitemap_discovery_queue_job_status",
+        "sitemap_discovery_queue_job_id_url_key",
+        "sitemap_discovery_queue_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "sitemap_discovery_queue_owner_select"
+      ],
+      "service": {
+        "target": "public.sitemap_discovery_queue",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.sitemap_sources",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "job_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "discovered_via",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "url_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "sitemap_sources_job_id_fkey",
+        "sitemap_sources_owner_id_fkey",
+        "sitemap_sources_owner_id_target_id_url_key",
+        "sitemap_sources_pkey",
+        "sitemap_sources_target_id_fkey"
+      ],
+      "indexes": [
+        "idx_sitemap_sources_job",
+        "sitemap_sources_owner_id_target_id_url_key",
+        "sitemap_sources_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "sitemap_sources_owner_all"
+      ],
+      "service": {
+        "target": "public.sitemap_sources",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.technical_claims",
+      "columns": [
+        {
+          "name": "claim_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "field_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "claim_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "authority_rank",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "checker_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "render_permission",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "technical_claims_object_id_fkey",
+        "technical_claims_pkey",
+        "technical_claims_snapshot_id_fkey"
+      ],
+      "indexes": [
+        "technical_claims_object_idx",
+        "technical_claims_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.technical_claims",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.technical_findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "requires_human",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "technical_findings_object_id_fkey",
+        "technical_findings_pkey"
+      ],
+      "indexes": [
+        "technical_findings_object_idx",
+        "technical_findings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.technical_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.technical_object_registry",
+      "columns": [
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "contract_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identity_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "topology_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "renderer_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assurance_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "render_permission",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "technical_object_registry_pkey"
+      ],
+      "indexes": [
+        "technical_object_registry_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.technical_object_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.technical_source_snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_authority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "endpoint",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "query_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "api_last_updated",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "retrieved_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "parser_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "raw_payload",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "source_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identity_binding_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "render_permission",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "technical_source_snapshots_object_id_fkey",
+        "technical_source_snapshots_pkey",
+        "technical_source_snapshots_sha256_chk"
+      ],
+      "indexes": [
+        "technical_snapshots_object_idx",
+        "technical_source_snapshots_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.technical_source_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "public.technical_workflows",
+      "columns": [
+        {
+          "name": "workflow_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identity_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "regulatory_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "topology_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "geometry_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "renderer_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "assurance_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "publication_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "maker_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checker_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stale",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "last_reperformed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "technical_workflows_object_id_fkey",
+        "technical_workflows_object_id_key",
+        "technical_workflows_pkey"
+      ],
+      "indexes": [
+        "technical_workflows_object_id_key",
+        "technical_workflows_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "public.technical_workflows",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

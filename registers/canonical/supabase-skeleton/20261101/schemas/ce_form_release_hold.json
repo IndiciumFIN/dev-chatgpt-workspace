@@ -1,0 +1,557 @@
+{
+  "schema": "ce_form_release_hold",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_form_release_hold.artifacts",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "artifact_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "zip_relative_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "byte_length",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "sha256",
+          "type": "character(64)",
+          "nullable": false
+        },
+        {
+          "name": "storage_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "storage_bucket",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "storage_object_path",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "artifacts_artifact_type_check",
+        "artifacts_byte_length_check",
+        "artifacts_pkey",
+        "artifacts_release_id_slug_fkey",
+        "artifacts_storage_state_check"
+      ],
+      "indexes": [
+        "artifacts_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.artifacts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.evidence_reviews",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "review_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verified_claim",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "contradiction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decision_rule",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "evidence_reviews_confidence_check",
+        "evidence_reviews_evidence_class_check",
+        "evidence_reviews_pkey",
+        "evidence_reviews_slug_fkey",
+        "evidence_reviews_validation_result_check"
+      ],
+      "indexes": [
+        "evidence_reviews_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.evidence_reviews",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.execution_log",
+      "columns": [
+        {
+          "name": "log_id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "work_slug",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "action_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "outcome",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "execution_log_pkey",
+        "execution_log_work_slug_fkey"
+      ],
+      "indexes": [
+        "execution_log_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.execution_log",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.instruments",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "folder",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "technical_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "governance_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "clinical_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "clinical_definition",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "config_definition",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "clinical_sha256",
+          "type": "character(64)",
+          "nullable": false
+        },
+        {
+          "name": "config_sha256",
+          "type": "character(64)",
+          "nullable": false
+        },
+        {
+          "name": "count_artifacts",
+          "type": "smallint",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "instruments_clinical_state_check",
+        "instruments_count_artifacts_check",
+        "instruments_governance_state_check",
+        "instruments_pkey",
+        "instruments_publication_blocked_check",
+        "instruments_release_id_fkey",
+        "instruments_rights_state_check",
+        "instruments_technical_state_check"
+      ],
+      "indexes": [
+        "instruments_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.instruments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.pending_work",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocker_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action_required",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "nullable": false
+        },
+        {
+          "name": "research_stage",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "pending_work_gate_check",
+        "pending_work_pkey",
+        "pending_work_publication_blocked_check"
+      ],
+      "indexes": [
+        "pending_work_pkey",
+        "pending_work_priority"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.pending_work",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "zip_sha256",
+          "type": "character(64)",
+          "nullable": false
+        },
+        {
+          "name": "zip_bytes",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "expected_instruments",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "expected_artifacts",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "shared_contract",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ux_contract",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "governance_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "release_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "storage_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ledger",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "releases_expected_artifacts_check",
+        "releases_expected_instruments_check",
+        "releases_governance_status_check",
+        "releases_pkey",
+        "releases_publication_blocked_check",
+        "releases_shared_contract_check",
+        "releases_ux_contract_check",
+        "releases_zip_bytes_check"
+      ],
+      "indexes": [
+        "releases_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.releases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_form_release_hold.sealed_releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "zip_sha256",
+          "type": "character(64)",
+          "nullable": false
+        },
+        {
+          "name": "sealed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "seal_hash_length",
+        "sealed_releases_pkey",
+        "sealed_releases_release_id_fkey"
+      ],
+      "indexes": [
+        "sealed_releases_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_form_release_hold.sealed_releases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

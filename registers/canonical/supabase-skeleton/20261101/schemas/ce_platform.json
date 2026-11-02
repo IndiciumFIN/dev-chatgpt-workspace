@@ -1,0 +1,6395 @@
+{
+  "schema": "ce_platform",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_platform.alert_rules",
+      "columns": [
+        {
+          "name": "alert_rule_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "query",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "channels",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "alert_rules_owner_user_id_fkey",
+        "alert_rules_pkey"
+      ],
+      "indexes": [
+        "alert_rules_pkey",
+        "idx_ce_fk_2e1aa95d4ca1"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "alert_rules_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.alert_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.applications",
+      "columns": [
+        {
+          "name": "application_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "opportunity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "applied_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "applications_opportunity_id_fkey",
+        "applications_owner_user_id_fkey",
+        "applications_owner_user_id_opportunity_id_key",
+        "applications_pkey"
+      ],
+      "indexes": [
+        "applications_owner_user_id_opportunity_id_key",
+        "applications_pkey",
+        "idx_ce_fk_dec6dd297504"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "applications_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.applications",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.assessments",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assessment_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "assessments_canonical_id_fkey",
+        "assessments_pkey"
+      ],
+      "indexes": [
+        "assessments_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.assessments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.attempts",
+      "columns": [
+        {
+          "name": "attempt_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "assessment_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "score",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "attempts_assessment_id_fkey",
+        "attempts_owner_user_id_fkey",
+        "attempts_pkey"
+      ],
+      "indexes": [
+        "attempts_pkey",
+        "idx_ce_fk_cc4ca5cc2697",
+        "idx_ce_fk_fddcd682ee79"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "attempts_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.attempts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.calendar_events",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "event_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "all_day",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "calendar_events_canonical_id_fkey",
+        "calendar_events_owner_user_id_fkey",
+        "calendar_events_pkey"
+      ],
+      "indexes": [
+        "calendar_events_owner_time_idx",
+        "calendar_events_pkey",
+        "idx_ce_fk_90f669089090"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "calendar_events_delete_own",
+        "calendar_events_insert_own",
+        "calendar_events_select_own",
+        "calendar_events_update_own"
+      ],
+      "service": {
+        "target": "ce_platform.calendar_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.canonical_objects",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "clinical_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "canonical_objects_object_type_id_fkey",
+        "canonical_objects_pkey"
+      ],
+      "indexes": [
+        "canonical_objects_pkey",
+        "canonical_objects_status_idx",
+        "canonical_objects_type_idx",
+        "canonical_objects_type_slug_uidx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.canonical_objects",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.capabilities",
+      "columns": [
+        {
+          "name": "capability_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "guest_support",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "authenticated_support",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "storage_scope",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "sync_support",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "privacy_class",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "accessibility_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "telemetry_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "offline_behavior",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "release_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capabilities_pkey"
+      ],
+      "indexes": [
+        "capabilities_family_idx",
+        "capabilities_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.capabilities",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.capture_items",
+      "columns": [
+        {
+          "name": "capture_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "capture_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_uri",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_asset_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "triage_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capture_items_canonical_id_fkey",
+        "capture_items_owner_user_id_fkey",
+        "capture_items_pkey"
+      ],
+      "indexes": [
+        "capture_items_pkey",
+        "idx_ce_fk_19cbff9b458f",
+        "idx_ce_fk_2939dd1e4b97"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "capture_items_own"
+      ],
+      "service": {
+        "target": "ce_platform.capture_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.career_path_steps",
+      "columns": [
+        {
+          "name": "path_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "career_path_steps_path_id_fkey",
+        "career_path_steps_pkey",
+        "career_path_steps_target_canonical_id_fkey"
+      ],
+      "indexes": [
+        "career_path_steps_pkey",
+        "idx_ce_fk_398f68e76a10"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.career_path_steps",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.career_paths",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "start_role_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target_role_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "career_paths_canonical_id_fkey",
+        "career_paths_pkey",
+        "career_paths_start_role_id_fkey",
+        "career_paths_target_role_id_fkey"
+      ],
+      "indexes": [
+        "career_paths_pkey",
+        "idx_ce_fk_549762d174fc",
+        "idx_ce_fk_67789f269a72"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.career_paths",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.career_roles",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "organization_scope",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "career_roles_canonical_id_fkey",
+        "career_roles_pkey"
+      ],
+      "indexes": [
+        "career_roles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.career_roles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.checklist_items",
+      "columns": [
+        {
+          "name": "item_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "checklist_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "item_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "checklist_items_checklist_id_fkey",
+        "checklist_items_checklist_id_item_key_key",
+        "checklist_items_pkey"
+      ],
+      "indexes": [
+        "checklist_items_checklist_id_item_key_key",
+        "checklist_items_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.checklist_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.checklists",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checklist_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "checklists_canonical_id_fkey",
+        "checklists_pkey"
+      ],
+      "indexes": [
+        "checklists_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.checklists",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.clinical_evidence_bindings",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "clinical_tool_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "authority_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "binding_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "clinical_evidence_bindings_clinical_tool_id_fkey",
+        "clinical_evidence_bindings_pkey"
+      ],
+      "indexes": [
+        "clinical_evidence_bindings_pkey",
+        "idx_ce_fk_2395cf918128"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.clinical_evidence_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.clinical_inputs",
+      "columns": [
+        {
+          "name": "input_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "clinical_tool_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "field_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "min_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "max_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "options",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "validation",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "clinical_inputs_clinical_tool_id_field_key_key",
+        "clinical_inputs_clinical_tool_id_fkey",
+        "clinical_inputs_pkey"
+      ],
+      "indexes": [
+        "clinical_inputs_clinical_tool_id_field_key_key",
+        "clinical_inputs_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.clinical_inputs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.clinical_outputs",
+      "columns": [
+        {
+          "name": "output_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "clinical_tool_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "output_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "data_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "interpretation_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "clinical_outputs_clinical_tool_id_fkey",
+        "clinical_outputs_clinical_tool_id_output_key_key",
+        "clinical_outputs_pkey"
+      ],
+      "indexes": [
+        "clinical_outputs_clinical_tool_id_output_key_key",
+        "clinical_outputs_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.clinical_outputs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.clinical_rule_versions",
+      "columns": [
+        {
+          "name": "rule_version_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "clinical_tool_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "effective_from",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "effective_to",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "clinical_rule_versions_clinical_tool_id_fkey",
+        "clinical_rule_versions_clinical_tool_id_version_rule_kind_key",
+        "clinical_rule_versions_pkey"
+      ],
+      "indexes": [
+        "clinical_rule_versions_clinical_tool_id_version_rule_kind_key",
+        "clinical_rule_versions_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.clinical_rule_versions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.clinical_tools",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "tool_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_requirement",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "calculation_mode",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "formula_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_dossier_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "clinical_tools_canonical_id_fkey",
+        "clinical_tools_pkey"
+      ],
+      "indexes": [
+        "clinical_tools_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.clinical_tools",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.collection_items",
+      "columns": [
+        {
+          "name": "collection_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "collection_items_canonical_id_fkey",
+        "collection_items_collection_id_fkey",
+        "collection_items_pkey"
+      ],
+      "indexes": [
+        "collection_items_pkey",
+        "idx_ce_fk_5af179b98a7a"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "collection_items_delete_own",
+        "collection_items_insert_own",
+        "collection_items_select_own"
+      ],
+      "service": {
+        "target": "ce_platform.collection_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.collections",
+      "columns": [
+        {
+          "name": "collection_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "visibility",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "collections_owner_user_id_fkey",
+        "collections_pkey"
+      ],
+      "indexes": [
+        "collections_pkey",
+        "idx_ce_fk_1c61476851ba"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "collections_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.collections",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.community_memberships",
+      "columns": [
+        {
+          "name": "space_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "community_memberships_pkey",
+        "community_memberships_space_id_fkey",
+        "community_memberships_user_id_fkey"
+      ],
+      "indexes": [
+        "community_memberships_pkey",
+        "idx_ce_fk_135b1a1a3a34"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "community_memberships_own"
+      ],
+      "service": {
+        "target": "ce_platform.community_memberships",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.community_posts",
+      "columns": [
+        {
+          "name": "post_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "space_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "author_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "parent_post_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "moderation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "community_posts_author_user_id_fkey",
+        "community_posts_canonical_id_fkey",
+        "community_posts_parent_post_id_fkey",
+        "community_posts_pkey",
+        "community_posts_space_id_fkey"
+      ],
+      "indexes": [
+        "community_posts_pkey",
+        "idx_ce_fk_19c1261063e7",
+        "idx_ce_fk_23c0788222bb",
+        "idx_ce_fk_8b8a7f522b80",
+        "idx_ce_fk_9de7c309ed57"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.community_posts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.community_profiles",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "public_handle",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "bio",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "visibility",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reputation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "community_profiles_pkey",
+        "community_profiles_public_handle_key",
+        "community_profiles_user_id_fkey"
+      ],
+      "indexes": [
+        "community_profiles_pkey",
+        "community_profiles_public_handle_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "community_profiles_own"
+      ],
+      "service": {
+        "target": "ce_platform.community_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.community_reactions",
+      "columns": [
+        {
+          "name": "post_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "reaction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "community_reactions_pkey",
+        "community_reactions_post_id_fkey",
+        "community_reactions_user_id_fkey"
+      ],
+      "indexes": [
+        "community_reactions_pkey",
+        "idx_ce_fk_d61756ef412d"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "community_reactions_own"
+      ],
+      "service": {
+        "target": "ce_platform.community_reactions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.community_spaces",
+      "columns": [
+        {
+          "name": "space_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "space_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "visibility",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "moderation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "community_spaces_canonical_id_fkey",
+        "community_spaces_pkey"
+      ],
+      "indexes": [
+        "community_spaces_pkey",
+        "idx_ce_fk_9a94fbb68a32"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.community_spaces",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.consent_records",
+      "columns": [
+        {
+          "name": "consent_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "anonymous_subject_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "consent_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "policy_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_channel",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "withdrawn_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "consent_records_check",
+        "consent_records_pkey",
+        "consent_records_user_id_fkey"
+      ],
+      "indexes": [
+        "consent_records_pkey",
+        "idx_ce_fk_144008116fcc"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "consent_records_insert_own",
+        "consent_records_own"
+      ],
+      "service": {
+        "target": "ce_platform.consent_records",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.content_blocks",
+      "columns": [
+        {
+          "name": "block_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "document_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "block_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "body",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "claim_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "content_blocks_document_id_fkey",
+        "content_blocks_document_id_ordinal_key",
+        "content_blocks_pkey"
+      ],
+      "indexes": [
+        "content_blocks_document_id_ordinal_key",
+        "content_blocks_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.content_blocks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.content_documents",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "document_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "audience",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "editorial_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "content_documents_canonical_id_fkey",
+        "content_documents_pkey"
+      ],
+      "indexes": [
+        "content_documents_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.content_documents",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.content_variants",
+      "columns": [
+        {
+          "name": "variant_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "variant_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "translation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "content_variants_canonical_id_fkey",
+        "content_variants_pkey"
+      ],
+      "indexes": [
+        "content_variants_identity_uidx",
+        "content_variants_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.content_variants",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.course_offerings",
+      "columns": [
+        {
+          "name": "offering_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "course_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "external_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "enrollment_open_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "enrollment_close_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "seats",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "price_amount",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "currency",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "is_free",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "course_offerings_course_id_fkey",
+        "course_offerings_pkey"
+      ],
+      "indexes": [
+        "course_offerings_course_time_idx",
+        "course_offerings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.course_offerings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.courses",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider_organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "level",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "modality",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "certificate_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "language",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "estimated_minutes",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "courses_canonical_id_fkey",
+        "courses_pkey",
+        "courses_provider_organization_id_fkey"
+      ],
+      "indexes": [
+        "courses_pkey",
+        "idx_ce_fk_a50af0c36b11"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.courses",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.coverage_findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "coverage_findings_pkey"
+      ],
+      "indexes": [
+        "coverage_findings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.coverage_findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.coverage_requirements",
+      "columns": [
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expected_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "observed_count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "coverage_requirements_finding_ref_fkey",
+        "coverage_requirements_pkey"
+      ],
+      "indexes": [
+        "coverage_requirements_pkey",
+        "idx_ce_coverage_requirements_finding_ref"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.coverage_requirements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.coverage_snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metrics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "open_findings",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "completeness_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "release_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "coverage_snapshots_pkey"
+      ],
+      "indexes": [
+        "coverage_snapshots_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.coverage_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.credentials",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "issuer_organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "credential_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validity_days",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "credentials_canonical_id_fkey",
+        "credentials_issuer_organization_id_fkey",
+        "credentials_pkey"
+      ],
+      "indexes": [
+        "credentials_pkey",
+        "idx_ce_fk_b1dad4a26db4"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.credentials",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.data_subject_requests",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "request_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "data_subject_requests_pkey",
+        "data_subject_requests_user_id_fkey"
+      ],
+      "indexes": [
+        "data_subject_requests_pkey",
+        "idx_ce_fk_42387bb1f987"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "data_subject_requests_insert_own",
+        "data_subject_requests_own"
+      ],
+      "service": {
+        "target": "ce_platform.data_subject_requests",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.domains",
+      "columns": [
+        {
+          "name": "domain_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "layer",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "domains_pkey"
+      ],
+      "indexes": [
+        "domains_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.domains",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.entitlements",
+      "columns": [
+        {
+          "name": "entitlement_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "plan_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "capability_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "feature_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "limits",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "entitlements_capability_id_fkey",
+        "entitlements_check",
+        "entitlements_check1",
+        "entitlements_pkey",
+        "entitlements_plan_id_fkey",
+        "entitlements_user_id_fkey"
+      ],
+      "indexes": [
+        "entitlements_pkey",
+        "idx_ce_fk_2fcc6f633959",
+        "idx_ce_fk_4f0b6dcf7add",
+        "idx_ce_fk_bac20cae5b41"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "entitlements_own"
+      ],
+      "service": {
+        "target": "ce_platform.entitlements",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.experience_state",
+      "columns": [
+        {
+          "name": "state_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "owner_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "capability_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sync_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "privacy_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retention_policy_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "experience_state_canonical_id_fkey",
+        "experience_state_capability_id_fkey",
+        "experience_state_owner_user_id_fkey",
+        "experience_state_pkey"
+      ],
+      "indexes": [
+        "experience_state_object_idx",
+        "experience_state_owner_idx",
+        "experience_state_pkey",
+        "idx_ce_fk_e1fa068d01f3"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "experience_state_delete_own",
+        "experience_state_insert_own",
+        "experience_state_select_own",
+        "experience_state_update_own"
+      ],
+      "service": {
+        "target": "ce_platform.experience_state",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.external_registry_bindings",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_schema",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_object",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "external_registry_bindings_pkey",
+        "external_registry_bindings_target_kind_target_id_source_sch_key"
+      ],
+      "indexes": [
+        "external_registry_bindings_pkey",
+        "external_registry_bindings_target_kind_target_id_source_sch_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.external_registry_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.feedback",
+      "columns": [
+        {
+          "name": "feedback_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "feedback_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rating",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "feedback_canonical_id_fkey",
+        "feedback_owner_user_id_fkey",
+        "feedback_pkey"
+      ],
+      "indexes": [
+        "feedback_pkey",
+        "idx_ce_fk_805e19369ad1",
+        "idx_ce_fk_a483f0e8be37"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "feedback_own_insert",
+        "feedback_own_select"
+      ],
+      "service": {
+        "target": "ce_platform.feedback",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.follows",
+      "columns": [
+        {
+          "name": "follow_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "target_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "notification_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "follows_owner_user_id_fkey",
+        "follows_owner_user_id_target_kind_target_ref_key",
+        "follows_pkey"
+      ],
+      "indexes": [
+        "follows_owner_user_id_target_kind_target_ref_key",
+        "follows_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "follows_own"
+      ],
+      "service": {
+        "target": "ce_platform.follows",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.form_fields",
+      "columns": [
+        {
+          "name": "field_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "form_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "field_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "field_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "form_fields_form_id_field_key_key",
+        "form_fields_form_id_fkey",
+        "form_fields_pkey"
+      ],
+      "indexes": [
+        "form_fields_form_id_field_key_key",
+        "form_fields_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.form_fields",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.forms",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "form_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "forms_canonical_id_fkey",
+        "forms_pkey"
+      ],
+      "indexes": [
+        "forms_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.forms",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.help_bindings",
+      "columns": [
+        {
+          "name": "help_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "renderer",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "help_bindings_help_id_fkey",
+        "help_bindings_pkey"
+      ],
+      "indexes": [
+        "help_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.help_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.help_content",
+      "columns": [
+        {
+          "name": "help_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "help_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "body",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "help_content_pkey"
+      ],
+      "indexes": [
+        "help_content_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.help_content",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.interaction_events",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "session_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "capability_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "interaction_events_canonical_id_fkey",
+        "interaction_events_capability_id_fkey",
+        "interaction_events_owner_user_id_fkey",
+        "interaction_events_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_0bf305524397",
+        "idx_ce_fk_1a14bc03e0a1",
+        "interaction_events_owner_time_idx",
+        "interaction_events_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "interaction_events_insert_own",
+        "interaction_events_select_own"
+      ],
+      "service": {
+        "target": "ce_platform.interaction_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.library_entities",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "library_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "taxonomy",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "technical_data",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "library_entities_canonical_id_fkey",
+        "library_entities_pkey"
+      ],
+      "indexes": [
+        "library_entities_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.library_entities",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.library_variants",
+      "columns": [
+        {
+          "name": "variant_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "library_entity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "variant_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "library_variants_library_entity_id_fkey",
+        "library_variants_library_entity_id_variant_key_key",
+        "library_variants_pkey"
+      ],
+      "indexes": [
+        "library_variants_library_entity_id_variant_key_key",
+        "library_variants_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.library_variants",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.lifecycle_events",
+      "columns": [
+        {
+          "name": "lifecycle_event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "workspace_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "lifecycle_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "from_state",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "to_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lifecycle_events_canonical_id_fkey",
+        "lifecycle_events_owner_user_id_fkey",
+        "lifecycle_events_pkey",
+        "lifecycle_events_workspace_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_388fbe9762d7",
+        "idx_ce_fk_7588099f44a4",
+        "idx_ce_fk_df889623694f",
+        "lifecycle_events_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "lifecycle_events_own"
+      ],
+      "service": {
+        "target": "ce_platform.lifecycle_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.market_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "observation_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "role_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "market_observations_organization_id_fkey",
+        "market_observations_pkey",
+        "market_observations_role_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_4db351d33223",
+        "idx_ce_fk_c62fc33457bd",
+        "market_observations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.market_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.media_assets",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "asset_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "storage_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "alt_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "media_assets_canonical_id_fkey",
+        "media_assets_pkey"
+      ],
+      "indexes": [
+        "media_assets_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.media_assets",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.moderation_reports",
+      "columns": [
+        {
+          "name": "report_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "reporter_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "target_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detail",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "moderation_reports_pkey",
+        "moderation_reports_reporter_user_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_067b78a800b0",
+        "moderation_reports_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "moderation_reports_insert_own",
+        "moderation_reports_own"
+      ],
+      "service": {
+        "target": "ce_platform.moderation_reports",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.notifications",
+      "columns": [
+        {
+          "name": "notification_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "notification_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "read_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "notifications_canonical_id_fkey",
+        "notifications_owner_user_id_fkey",
+        "notifications_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_2488206d72e3",
+        "idx_ce_fk_ac1202243f09",
+        "notifications_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "notifications_select_own",
+        "notifications_update_own"
+      ],
+      "service": {
+        "target": "ce_platform.notifications",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.object_aliases",
+      "columns": [
+        {
+          "name": "alias_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "alias_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "alias_value",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "object_aliases_alias_kind_alias_value_key",
+        "object_aliases_canonical_id_fkey",
+        "object_aliases_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_de3f9a8f91eb",
+        "object_aliases_alias_kind_alias_value_key",
+        "object_aliases_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.object_aliases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.object_capability_bindings",
+      "columns": [
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "capability_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "support",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "resolver",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "channels",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "guest",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "authenticated",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "object_capability_bindings_capability_id_fkey",
+        "object_capability_bindings_object_type_id_fkey",
+        "object_capability_bindings_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_7b3c51421097",
+        "object_capability_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.object_capability_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.object_relations",
+      "columns": [
+        {
+          "name": "relation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "object_relations_pkey",
+        "object_relations_source_canonical_id_fkey",
+        "object_relations_source_canonical_id_predicate_target_canon_key",
+        "object_relations_target_canonical_id_fkey"
+      ],
+      "indexes": [
+        "object_relations_pkey",
+        "object_relations_source_canonical_id_predicate_target_canon_key",
+        "object_relations_target_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.object_relations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.object_types",
+      "columns": [
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "object_types_domain_id_fkey",
+        "object_types_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_47589e2128f3",
+        "object_types_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.object_types",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.opportunities",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "opportunity_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "location",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "opens_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "closes_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "compensation",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "requirements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "opportunities_canonical_id_fkey",
+        "opportunities_organization_id_fkey",
+        "opportunities_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_d7f02d702fc7",
+        "opportunities_kind_close_idx",
+        "opportunities_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.opportunities",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.organizations",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "organization_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "legal_name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "acronym",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "website",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "organizations_canonical_id_fkey",
+        "organizations_pkey"
+      ],
+      "indexes": [
+        "organizations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.organizations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.output_artifacts",
+      "columns": [
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "storage_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "byte_size",
+          "type": "bigint",
+          "nullable": true
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "output_artifacts_pkey",
+        "output_artifacts_request_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_927a3239ef01",
+        "output_artifacts_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "output_artifacts_own"
+      ],
+      "service": {
+        "target": "ce_platform.output_artifacts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.output_format_adapters",
+      "columns": [
+        {
+          "name": "format_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validator_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "output_format_adapters_pkey"
+      ],
+      "indexes": [
+        "output_format_adapters_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.output_format_adapters",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.output_profiles",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "output_profiles_object_type_id_fkey",
+        "output_profiles_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_ceaafd87c58d",
+        "output_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.output_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.output_requests",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "format_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "options",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "output_requests_canonical_id_fkey",
+        "output_requests_format_id_fkey",
+        "output_requests_owner_user_id_fkey",
+        "output_requests_pkey",
+        "output_requests_profile_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_30671c8e08ed",
+        "idx_ce_fk_614a72f8b46d",
+        "idx_ce_fk_84ae09189307",
+        "idx_ce_fk_bc1418ecf1a9",
+        "output_requests_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "output_requests_insert_own",
+        "output_requests_own"
+      ],
+      "service": {
+        "target": "ce_platform.output_requests",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.personal_notes",
+      "columns": [
+        {
+          "name": "note_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "note_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "anchor",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "tags",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "personal_notes_canonical_id_fkey",
+        "personal_notes_owner_user_id_fkey",
+        "personal_notes_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_164e0dbbdf64",
+        "idx_ce_fk_4ebdb0320109",
+        "personal_notes_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "personal_notes_own"
+      ],
+      "service": {
+        "target": "ce_platform.personal_notes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.personal_relations",
+      "columns": [
+        {
+          "name": "relation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "personal_relations_owner_user_id_fkey",
+        "personal_relations_owner_user_id_source_canonical_id_predic_key",
+        "personal_relations_pkey",
+        "personal_relations_source_canonical_id_fkey",
+        "personal_relations_target_canonical_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_726778b0975b",
+        "idx_ce_fk_d89f52e88124",
+        "personal_relations_owner_user_id_source_canonical_id_predic_key",
+        "personal_relations_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "personal_relations_own"
+      ],
+      "service": {
+        "target": "ce_platform.personal_relations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.plans",
+      "columns": [
+        {
+          "name": "plan_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "plans_pkey"
+      ],
+      "indexes": [
+        "plans_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.plans",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.preview_profiles",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "surface",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "fields",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sections",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "actions",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "preview_profiles_object_type_id_fkey",
+        "preview_profiles_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_9607ca3beecc",
+        "preview_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.preview_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.progress",
+      "columns": [
+        {
+          "name": "progress_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "progress_value",
+          "type": "numeric",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "last_position",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "progress_canonical_id_fkey",
+        "progress_owner_user_id_canonical_id_key",
+        "progress_owner_user_id_fkey",
+        "progress_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_667d24cb51a8",
+        "progress_owner_user_id_canonical_id_key",
+        "progress_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "progress_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.progress",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.protocol_steps",
+      "columns": [
+        {
+          "name": "step_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "protocol_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "body",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "safety",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "protocol_steps_pkey",
+        "protocol_steps_protocol_id_fkey",
+        "protocol_steps_protocol_id_ordinal_key"
+      ],
+      "indexes": [
+        "protocol_steps_pkey",
+        "protocol_steps_protocol_id_ordinal_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.protocol_steps",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.question_options",
+      "columns": [
+        {
+          "name": "option_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "question_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "option_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "option_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "question_options_pkey",
+        "question_options_question_id_fkey",
+        "question_options_question_id_option_key_key"
+      ],
+      "indexes": [
+        "question_options_pkey",
+        "question_options_question_id_option_key_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.question_options",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.questions",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_exam_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "question_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "difficulty",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "subject",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "topic",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "answer_key_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provenance",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "questions_canonical_id_fkey",
+        "questions_pkey"
+      ],
+      "indexes": [
+        "questions_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.questions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.reminders",
+      "columns": [
+        {
+          "name": "reminder_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "remind_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "recurrence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "channels",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "reminders_canonical_id_fkey",
+        "reminders_owner_user_id_fkey",
+        "reminders_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_fdb611a95906",
+        "reminders_owner_time_idx",
+        "reminders_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "reminders_own"
+      ],
+      "service": {
+        "target": "ce_platform.reminders",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.research_artifacts",
+      "columns": [
+        {
+          "name": "artifact_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "artifact_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "asset_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_artifacts_canonical_id_fkey",
+        "research_artifacts_pkey",
+        "research_artifacts_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_009889c4caff",
+        "idx_ce_fk_43f71e15b332",
+        "research_artifacts_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.research_artifacts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.research_instruments",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "instrument_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_instruments_canonical_id_fkey",
+        "research_instruments_pkey"
+      ],
+      "indexes": [
+        "research_instruments_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.research_instruments",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.research_methods",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "method_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_methods_canonical_id_fkey",
+        "research_methods_pkey"
+      ],
+      "indexes": [
+        "research_methods_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.research_methods",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.research_participation",
+      "columns": [
+        {
+          "name": "participation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "project_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "participant_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_participation_pkey",
+        "research_participation_project_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_fa8511540276",
+        "research_participation_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.research_participation",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.research_projects",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "project_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "ethics_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner_organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "research_projects_canonical_id_fkey",
+        "research_projects_owner_organization_id_fkey",
+        "research_projects_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_ce1b7bba4d2c",
+        "research_projects_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.research_projects",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.role_skills",
+      "columns": [
+        {
+          "name": "role_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "skill_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requirement_level",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "role_skills_pkey",
+        "role_skills_role_id_fkey",
+        "role_skills_skill_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_defe565fd9c4",
+        "role_skills_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.role_skills",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.saved_searches",
+      "columns": [
+        {
+          "name": "saved_search_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "query_text",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "filters",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sort_spec",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "alert_enabled",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "saved_searches_owner_user_id_fkey",
+        "saved_searches_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_994c4a38ee0e",
+        "saved_searches_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "saved_searches_own"
+      ],
+      "service": {
+        "target": "ce_platform.saved_searches",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.saved_views",
+      "columns": [
+        {
+          "name": "saved_view_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "query",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "filters",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sort_spec",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "grouping",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "layout",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "visible_fields",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "pinned",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "favorite",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "saved_views_object_type_id_fkey",
+        "saved_views_owner_user_id_fkey",
+        "saved_views_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_b63024a60a2c",
+        "idx_ce_fk_c1229ffe16c0",
+        "saved_views_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "saved_views_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.saved_views",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.schema_meta",
+      "columns": [
+        {
+          "name": "key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "schema_meta_pkey"
+      ],
+      "indexes": [
+        "schema_meta_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.schema_meta",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.selection_processes",
+      "columns": [
+        {
+          "name": "opportunity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "process_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "examining_board_organization_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "notice_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "stages",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "seats",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "selection_processes_examining_board_organization_id_fkey",
+        "selection_processes_opportunity_id_fkey",
+        "selection_processes_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_1a0cbf80b4f9",
+        "selection_processes_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.selection_processes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.service_object_bindings",
+      "columns": [
+        {
+          "name": "service_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "service_object_bindings_object_type_id_fkey",
+        "service_object_bindings_pkey",
+        "service_object_bindings_service_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_914be0e3c232",
+        "service_object_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.service_object_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.services",
+      "columns": [
+        {
+          "name": "service_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "services_domain_id_fkey",
+        "services_pkey"
+      ],
+      "indexes": [
+        "services_domain_idx",
+        "services_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.services",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.settings",
+      "columns": [
+        {
+          "name": "setting_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "setting_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "setting_value",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "settings_owner_user_id_fkey",
+        "settings_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_d9689b97c5df",
+        "settings_owner_scope_key_uidx",
+        "settings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "settings_all_own"
+      ],
+      "service": {
+        "target": "ce_platform.settings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.share_records",
+      "columns": [
+        {
+          "name": "share_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "share_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "visibility",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "permission_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "token_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "share_records_canonical_id_fkey",
+        "share_records_owner_user_id_fkey",
+        "share_records_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_4dc36f4ea3c1",
+        "idx_ce_fk_94b5b2d6d2bf",
+        "share_records_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "share_records_own"
+      ],
+      "service": {
+        "target": "ce_platform.share_records",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.skills",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "skill_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "framework_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "skills_canonical_id_fkey",
+        "skills_pkey"
+      ],
+      "indexes": [
+        "skills_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.skills",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.source_mappings",
+      "columns": [
+        {
+          "name": "mapping_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_schema",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_table",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "relation_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "source_mappings_canonical_id_fkey",
+        "source_mappings_canonical_id_source_schema_source_table_sou_key",
+        "source_mappings_pkey"
+      ],
+      "indexes": [
+        "source_mappings_canonical_id_source_schema_source_table_sou_key",
+        "source_mappings_pkey",
+        "source_mappings_source_idx"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.source_mappings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.subscriptions",
+      "columns": [
+        {
+          "name": "subscription_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "plan_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "provider",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "provider_subscription_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "subscriptions_pkey",
+        "subscriptions_plan_id_fkey",
+        "subscriptions_user_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_46b4495d0113",
+        "idx_ce_fk_5d55bc4f4f35",
+        "subscriptions_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "subscriptions_own"
+      ],
+      "service": {
+        "target": "ce_platform.subscriptions",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.tool_profiles",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "tool_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "availability_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_dossier_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "tool_profiles_canonical_id_fkey",
+        "tool_profiles_domain_id_fkey",
+        "tool_profiles_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_6a629307e44e",
+        "tool_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.tool_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.trail_items",
+      "columns": [
+        {
+          "name": "trail_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "trail_items_pkey",
+        "trail_items_target_canonical_id_fkey",
+        "trail_items_trail_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_3d67543b502f",
+        "trail_items_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.trail_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.trails",
+      "columns": [
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "trail_kind",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "audience",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "trails_canonical_id_fkey",
+        "trails_pkey"
+      ],
+      "indexes": [
+        "trails_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_platform.trails",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.user_profiles",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "audience_profile",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "professional_stage",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "preferences",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "privacy_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "user_profiles_pkey",
+        "user_profiles_user_id_fkey"
+      ],
+      "indexes": [
+        "user_profiles_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "user_profiles_own"
+      ],
+      "service": {
+        "target": "ce_platform.user_profiles",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.workspace_items",
+      "columns": [
+        {
+          "name": "workspace_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "canonical_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "state_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "added_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "workspace_items_canonical_id_fkey",
+        "workspace_items_pkey",
+        "workspace_items_workspace_id_fkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_fd6893974461",
+        "workspace_items_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "workspace_items_own"
+      ],
+      "service": {
+        "target": "ce_platform.workspace_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_platform.workspaces",
+      "columns": [
+        {
+          "name": "workspace_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "workspace_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "workspaces_owner_user_id_fkey",
+        "workspaces_pkey"
+      ],
+      "indexes": [
+        "idx_ce_fk_fefaadf0905e",
+        "workspaces_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [
+        "workspaces_own"
+      ],
+      "service": {
+        "target": "ce_platform.workspaces",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

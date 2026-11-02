@@ -1,0 +1,62 @@
+{
+  "schema": "xlf_sim",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_sim.activity_definition",
+      "columns": [
+        {
+          "name": "activity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "competency_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "definition",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "activity_definition_competency_ref_fkey",
+        "activity_definition_pkey"
+      ],
+      "indexes": [
+        "activity_definition_pkey",
+        "ix_xlf_activity_competency"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_sim.activity_definition",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

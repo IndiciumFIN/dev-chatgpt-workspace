@@ -1,0 +1,202 @@
+{
+  "schema": "xlf_graph",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_graph.edge",
+      "columns": [
+        {
+          "name": "edge_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "predicate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "edge_object_id_fkey",
+        "edge_pkey",
+        "edge_predicate_id_fkey",
+        "edge_subject_id_fkey",
+        "edge_subject_id_predicate_id_object_id_key"
+      ],
+      "indexes": [
+        "edge_pkey",
+        "edge_subject_id_predicate_id_object_id_key",
+        "ix_xlf_graph_edge_object",
+        "ix_xlf_graph_edge_predicate",
+        "ix_xlf_graph_edge_subject"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_graph.edge",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_graph.node",
+      "columns": [
+        {
+          "name": "node_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "node_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "node_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_graph_node_source_uri",
+        "node_pkey",
+        "ux_xlf_graph_node_non_source_uri"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_graph.node",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_graph.predicate",
+      "columns": [
+        {
+          "name": "predicate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "curie",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "label_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain_types",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "range_types",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "cardinality",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "inverse_predicate_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "characteristics",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "predicate_curie_key",
+        "predicate_inverse_predicate_id_fkey",
+        "predicate_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_predicate_inverse",
+        "predicate_curie_key",
+        "predicate_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_graph.predicate",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

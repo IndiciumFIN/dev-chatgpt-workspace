@@ -1,0 +1,367 @@
+{
+  "schema": "ce_validation_hub",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "ce_validation_hub.evidence_bindings",
+      "columns": [
+        {
+          "name": "evidence_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_kind",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verified_claim",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "limitation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "evidence_bindings_pkey",
+        "evidence_bindings_source_kind_check"
+      ],
+      "indexes": [
+        "evidence_bindings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_validation_hub.evidence_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_validation_hub.findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "proposed_action",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "findings_pkey",
+        "findings_state_check"
+      ],
+      "indexes": [
+        "findings_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_validation_hub.findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_validation_hub.inventory",
+      "columns": [
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_location",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "frozen_46_reference",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "discovered_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "inventory_family_check",
+        "inventory_pkey",
+        "inventory_publication_blocked_check",
+        "inventory_validation_state_check"
+      ],
+      "indexes": [
+        "inventory_by_family",
+        "inventory_by_slug",
+        "inventory_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_validation_hub.inventory",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_validation_hub.reuse_links",
+      "columns": [
+        {
+          "name": "link_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_group",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identity_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "clinical_equivalence_verified",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "interpretation",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "reuse_links_clinical_equivalence_verified_check",
+        "reuse_links_identity_verified_check",
+        "reuse_links_pkey",
+        "reuse_links_relation_type_check",
+        "reuse_links_source_system_source_key_fkey"
+      ],
+      "indexes": [
+        "reuse_links_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_validation_hub.reuse_links",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "ce_validation_hub.validation_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "applies_to",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate_definition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "validation_rules_pkey"
+      ],
+      "indexes": [
+        "validation_rules_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "ce_validation_hub.validation_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

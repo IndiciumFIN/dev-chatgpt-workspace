@@ -1,0 +1,2023 @@
+{
+  "schema": "cko_orch",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_orch.adversarial_cases",
+      "columns": [
+        {
+          "name": "case_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "case_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "control_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "expected_decision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expected_severity",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "adversarial_cases_pkey"
+      ],
+      "indexes": [
+        "adversarial_cases_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.adversarial_cases",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.adversarial_results",
+      "columns": [
+        {
+          "name": "result_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "case_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "observed_decision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "observed_severity",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "adversarial_results_case_id_fkey",
+        "adversarial_results_pkey",
+        "adversarial_results_result_check",
+        "adversarial_results_run_id_fkey"
+      ],
+      "indexes": [
+        "adversarial_results_pkey",
+        "ix_cko_orch_adversarial_results_run"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.adversarial_results",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.adversarial_runs",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "suite_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "adversarial_runs_pkey",
+        "adversarial_runs_status_check"
+      ],
+      "indexes": [
+        "adversarial_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.adversarial_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.b1_agent_inbox_v1_candidate",
+      "columns": [
+        {
+          "name": "message_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "source_event_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sender_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "recipient_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "message_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "payload_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "transport_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "transport_ack_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "action_ack_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action_ack_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "external_publish_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "b1_agent_inbox_v1_candidate_action_ack_state_check",
+        "b1_agent_inbox_v1_candidate_pkey",
+        "b1_agent_inbox_v1_candidate_recipient_agent_id_fkey",
+        "b1_agent_inbox_v1_candidate_sender_agent_id_fkey",
+        "b1_agent_inbox_v1_candidate_source_event_id_fkey",
+        "b1_agent_inbox_v1_candidate_source_event_id_key",
+        "b1_agent_inbox_v1_candidate_transport_state_check"
+      ],
+      "indexes": [
+        "b1_agent_inbox_recipient_idx",
+        "b1_agent_inbox_transport_idx",
+        "b1_agent_inbox_v1_candidate_pkey",
+        "b1_agent_inbox_v1_candidate_source_event_id_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.b1_agent_inbox_v1_candidate",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.camera_contracts",
+      "columns": [
+        {
+          "name": "camera_contract_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "view_role",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "projection",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "contract_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "camera_contracts_pkey",
+        "camera_contracts_view_role_version_key"
+      ],
+      "indexes": [
+        "camera_contracts_pkey",
+        "camera_contracts_view_role_version_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.camera_contracts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.circuit_breakers",
+      "columns": [
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "critical_failures",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "window_started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "opened_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "circuit_breakers_agent_id_fkey",
+        "circuit_breakers_pkey",
+        "circuit_breakers_state_check"
+      ],
+      "indexes": [
+        "circuit_breakers_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.circuit_breakers",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.divergences",
+      "columns": [
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "divergence_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expected",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "observed",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "detected_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "resolved_by",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "resolution",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "divergences_pkey",
+        "divergences_proposal_id_fkey",
+        "divergences_severity_check",
+        "divergences_status_check",
+        "divergences_workflow_id_fkey"
+      ],
+      "indexes": [
+        "divergences_pkey",
+        "ix_cko_orch_divergence_open",
+        "ix_cko_orch_divergences_proposal"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.divergences",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.evidence_authority_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "allowed_source_types",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "publisher_patterns",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "allowed_authority_levels",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "accepted_for_any",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "severity_on_mismatch",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action_on_mismatch",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "evidence_authority_rules_action_on_mismatch_check",
+        "evidence_authority_rules_pkey",
+        "evidence_authority_rules_severity_on_mismatch_check"
+      ],
+      "indexes": [
+        "evidence_authority_rules_pkey",
+        "ix_cko_orch_evidence_authority_claim"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.evidence_authority_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.geometry_registry",
+      "columns": [
+        {
+          "name": "geometry_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_evidence_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "geometry_registry_created_by_fkey",
+        "geometry_registry_geometry_evidence_level_check",
+        "geometry_registry_pkey",
+        "geometry_registry_state_check",
+        "geometry_registry_workflow_id_fkey"
+      ],
+      "indexes": [
+        "geometry_registry_pkey",
+        "ix_cko_orch_geometry_workflow",
+        "ux_cko_orch_geometry_active_hash"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.geometry_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.idempotency_keys",
+      "columns": [
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "operation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "request_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "idempotency_keys_pkey",
+        "idempotency_keys_status_check"
+      ],
+      "indexes": [
+        "idempotency_keys_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.idempotency_keys",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.lock_dependency_rules",
+      "columns": [
+        {
+          "name": "source_lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dependent_lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lock_dependency_rules_dependent_lock_type_fkey",
+        "lock_dependency_rules_pkey",
+        "lock_dependency_rules_severity_check",
+        "lock_dependency_rules_source_lock_type_fkey"
+      ],
+      "indexes": [
+        "lock_dependency_rules_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.lock_dependency_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.lock_reperformance_runs",
+      "columns": [
+        {
+          "name": "reperformance_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "old_lock_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "new_lock_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "old_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "new_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "proposal_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "maker_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checker_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "orchestrator_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lock_reperformance_runs_checker_agent_id_fkey",
+        "lock_reperformance_runs_maker_agent_id_fkey",
+        "lock_reperformance_runs_orchestrator_agent_id_fkey",
+        "lock_reperformance_runs_pkey",
+        "lock_reperformance_runs_workflow_id_fkey"
+      ],
+      "indexes": [
+        "lock_reperformance_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.lock_reperformance_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.lock_rules",
+      "columns": [
+        {
+          "name": "lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "allowed_states",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lock_rules_pkey"
+      ],
+      "indexes": [
+        "lock_rules_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.lock_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.lock_schemas",
+      "columns": [
+        {
+          "name": "lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required_keys",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "allowed_keys",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "array_keys",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "requires_evidence",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "schema_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lock_schemas_lock_type_fkey",
+        "lock_schemas_pkey"
+      ],
+      "indexes": [
+        "lock_schemas_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.lock_schemas",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.locks",
+      "columns": [
+        {
+          "name": "lock_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lock_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lock_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "superseded_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "locks_created_by_fkey",
+        "locks_lock_type_check",
+        "locks_pkey",
+        "locks_state_check",
+        "locks_workflow_id_fkey"
+      ],
+      "indexes": [
+        "ix_cko_orch_locks_created_by",
+        "locks_pkey",
+        "uq_cko_orch_active_lock"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.locks",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.outbox_events",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "aggregate_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "aggregate_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "event_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempts",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "next_attempt_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "outbox_events_pkey",
+        "outbox_events_status_check"
+      ],
+      "indexes": [
+        "ix_cko_orch_outbox_aggregate",
+        "ix_cko_orch_outbox_pending",
+        "outbox_events_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.outbox_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.override_records",
+      "columns": [
+        {
+          "name": "override_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "approved_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "override_scope",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "revalidation_required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "consumed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "override_records_approved_by_fkey",
+        "override_records_divergence_id_fkey",
+        "override_records_pkey",
+        "override_records_status_check"
+      ],
+      "indexes": [
+        "ix_cko_orch_override_divergence",
+        "override_records_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.override_records",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.policy_registry",
+      "columns": [
+        {
+          "name": "policy_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity_on_violation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action_on_violation",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_json",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "policy_registry_action_on_violation_check",
+        "policy_registry_pkey",
+        "policy_registry_severity_on_violation_check"
+      ],
+      "indexes": [
+        "policy_registry_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.policy_registry",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.proposals",
+      "columns": [
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "proposal_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "expected_hashes",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "proposals_agent_id_fkey",
+        "proposals_pkey",
+        "proposals_status_check",
+        "proposals_workflow_id_fkey"
+      ],
+      "indexes": [
+        "ix_cko_orch_proposal_workflow",
+        "ix_cko_orch_proposals_agent",
+        "proposals_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.proposals",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.quarantine",
+      "columns": [
+        {
+          "name": "quarantine_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "divergence_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "released_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "quarantine_divergence_id_fkey",
+        "quarantine_pkey",
+        "quarantine_proposal_id_fkey",
+        "quarantine_status_check",
+        "quarantine_workflow_id_fkey"
+      ],
+      "indexes": [
+        "ix_cko_orch_quarantine_divergence",
+        "ix_cko_orch_quarantine_proposal",
+        "ix_cko_orch_quarantine_workflow",
+        "quarantine_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.quarantine",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.render_plans",
+      "columns": [
+        {
+          "name": "render_plan_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "renderer_contract_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "views",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "output_contract",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "plan_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "render_plans_geometry_id_fkey",
+        "render_plans_pkey",
+        "render_plans_status_check",
+        "render_plans_workflow_id_fkey"
+      ],
+      "indexes": [
+        "ix_cko_orch_render_plan_workflow",
+        "render_plans_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.render_plans",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.stale_events",
+      "columns": [
+        {
+          "name": "stale_event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_lock_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "old_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "new_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "dependent_locks",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "stale_events_pkey",
+        "stale_events_workflow_id_fkey"
+      ],
+      "indexes": [
+        "stale_events_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.stale_events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.transition_log",
+      "columns": [
+        {
+          "name": "transition_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "from_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocking_reasons",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "policy_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "transition_log_decision_check",
+        "transition_log_pkey",
+        "transition_log_requested_by_fkey",
+        "transition_log_workflow_id_fkey"
+      ],
+      "indexes": [
+        "ix_cko_orch_transition_requested_by",
+        "ix_cko_orch_transition_workflow",
+        "transition_log_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.transition_log",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.transition_rules",
+      "columns": [
+        {
+          "name": "from_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "to_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "critical_gate",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "required_locks",
+          "type": "text[]",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "transition_rules_pkey"
+      ],
+      "indexes": [
+        "transition_rules_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.transition_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.vdc_bridge_runs",
+      "columns": [
+        {
+          "name": "bridge_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "proposal_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "adapter_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "vdc_bridge_runs_adapter_agent_id_fkey",
+        "vdc_bridge_runs_pkey",
+        "vdc_bridge_runs_proposal_id_fkey",
+        "vdc_bridge_runs_workflow_id_fkey",
+        "vdc_bridge_runs_workflow_id_validation_id_key"
+      ],
+      "indexes": [
+        "vdc_bridge_runs_pkey",
+        "vdc_bridge_runs_workflow_id_validation_id_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.vdc_bridge_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.vdc_finding_policy_map",
+      "columns": [
+        {
+          "name": "finding_code",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "zone",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "divergence_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "policy_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "vdc_finding_policy_map_action_check",
+        "vdc_finding_policy_map_pkey",
+        "vdc_finding_policy_map_severity_check"
+      ],
+      "indexes": [
+        "vdc_finding_policy_map_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.vdc_finding_policy_map",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_orch.workflow_instances",
+      "columns": [
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "orchestrator_agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_tier",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "canonical_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "identity_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "topology_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "geometry_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_set_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "regulatory_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "renderer_contract_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "workflow_instances_orchestrator_agent_id_fkey",
+        "workflow_instances_pkey",
+        "workflow_instances_status_check"
+      ],
+      "indexes": [
+        "ix_cko_orch_workflow_orchestrator",
+        "workflow_instances_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_orch.workflow_instances",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

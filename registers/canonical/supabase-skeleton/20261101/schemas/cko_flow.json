@@ -1,0 +1,215 @@
+{
+  "schema": "cko_flow",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_flow.events",
+      "columns": [
+        {
+          "name": "flow_event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "process_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "output_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "transformation_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "result_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "events_pkey",
+        "events_process_id_fkey"
+      ],
+      "indexes": [
+        "events_pkey",
+        "events_process_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_flow.events",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_flow.lineage_edges",
+      "columns": [
+        {
+          "name": "lineage_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "target_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reversible",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "lineage_edges_pkey",
+        "lineage_edges_source_ref_relation_type_target_ref_key"
+      ],
+      "indexes": [
+        "lineage_edges_pkey",
+        "lineage_edges_source_ref_relation_type_target_ref_key",
+        "lineage_edges_target_ref_relation_type_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_flow.lineage_edges",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_flow.processes",
+      "columns": [
+        {
+          "name": "process_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sequence_no",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "control_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "processes_pkey",
+        "processes_sequence_no_key"
+      ],
+      "indexes": [
+        "processes_pkey",
+        "processes_sequence_no_key"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_flow.processes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

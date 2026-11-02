@@ -1,0 +1,342 @@
+{
+  "schema": "xlf_publication",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_publication.content_atom",
+      "columns": [
+        {
+          "name": "content_atom_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "section_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "text_content",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_object_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "generation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "editable_override",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "content_atom_pkey",
+        "content_atom_publication_id_fkey"
+      ],
+      "indexes": [
+        "content_atom_pkey",
+        "ix_xlf_content_atom_publication"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_publication.content_atom",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_publication.page",
+      "columns": [
+        {
+          "name": "publication_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_path",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "canonical_url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_object_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source_version_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_source_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "indexability",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "editorial_owner_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "date_modified",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "lineage",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "page_locale_canonical_path_key",
+        "page_pkey",
+        "page_profile_id_fkey",
+        "page_publication_state_check"
+      ],
+      "indexes": [
+        "ix_xlf_page_profile",
+        "page_locale_canonical_path_key",
+        "page_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_publication.page",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_publication.profile",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "surface_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "indexability_policy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required_sections",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "required_metadata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "structured_data",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "forbidden_structured_data",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "people_first_checks",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "profile_pkey"
+      ],
+      "indexes": [
+        "profile_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_publication.profile",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_publication.release",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "publication_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "template_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "generator_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "render_sha256",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "gate_results",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "editorial_decision",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "released_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "release_pkey",
+        "release_publication_id_fkey",
+        "release_render_sha256_check"
+      ],
+      "indexes": [
+        "ix_xlf_release_page",
+        "release_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_publication.release",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

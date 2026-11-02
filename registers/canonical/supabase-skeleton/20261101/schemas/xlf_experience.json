@@ -1,0 +1,358 @@
+{
+  "schema": "xlf_experience",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_experience.accessibility_requirement",
+      "columns": [
+        {
+          "name": "req_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "wcag",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "platform_rule",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_strategy",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "accessibility_requirement_pkey"
+      ],
+      "indexes": [
+        "accessibility_requirement_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.accessibility_requirement",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_experience.accessibility_test_run",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_matrix",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "results",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "reviewer",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "conformance_claim_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "accessibility_test_run_pkey"
+      ],
+      "indexes": [
+        "accessibility_test_run_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.accessibility_test_run",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_experience.assistive_technology_test_target",
+      "columns": [
+        {
+          "name": "matrix_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "os",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "browser",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assistive_tech",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "assistive_technology_test_target_pkey",
+        "assistive_technology_test_target_priority_check"
+      ],
+      "indexes": [
+        "assistive_technology_test_target_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.assistive_technology_test_target",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_experience.flow",
+      "columns": [
+        {
+          "name": "flow_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "intent",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "steps",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "success_definition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "no_dead_end",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "flow_pkey"
+      ],
+      "indexes": [
+        "flow_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.flow",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_experience.test_fixture",
+      "columns": [
+        {
+          "name": "test_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "component",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "procedure",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expected",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "automation",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "test_fixture_pkey"
+      ],
+      "indexes": [
+        "test_fixture_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.test_fixture",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_experience.ui_component",
+      "columns": [
+        {
+          "name": "component_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "native_base",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "semantic",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "focus_model",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "min_target",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "accessibility_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ui_component_name_key",
+        "ui_component_pkey"
+      ],
+      "indexes": [
+        "ui_component_name_key",
+        "ui_component_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_experience.ui_component",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

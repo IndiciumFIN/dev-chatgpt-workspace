@@ -1,0 +1,1729 @@
+{
+  "schema": "cko_validation",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_validation.audit_lens_runs",
+      "columns": [
+        {
+          "name": "audit_run_uuid",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "audit_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "audit_batch_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "layer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lens_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "performed_by",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "performed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_lens_runs_audit_run_id_key",
+        "audit_lens_runs_layer_id_fkey",
+        "audit_lens_runs_lens_id_fkey",
+        "audit_lens_runs_pkey"
+      ],
+      "indexes": [
+        "audit_lens_runs_audit_run_id_key",
+        "audit_lens_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.audit_lens_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.audit_lenses",
+      "columns": [
+        {
+          "name": "lens_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lens_order",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "lens_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "method_summary",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mandatory",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "audit_lenses_lens_order_key",
+        "audit_lenses_pkey"
+      ],
+      "indexes": [
+        "audit_lenses_lens_order_key",
+        "audit_lenses_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.audit_lenses",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.capetinha_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scan_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capetinha_observations_pkey",
+        "capetinha_observations_result_check",
+        "capetinha_observations_rule_id_fkey",
+        "capetinha_observations_scan_run_id_fkey"
+      ],
+      "indexes": [
+        "capetinha_observations_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.capetinha_observations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.capetinha_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "control_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "auto_finding",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "notify_super",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capetinha_rules_pkey"
+      ],
+      "indexes": [
+        "capetinha_rules_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.capetinha_rules",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.capetinha_scan_runs",
+      "columns": [
+        {
+          "name": "scan_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "checks_total",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "failed_checks",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "capetinha_scan_runs_agent_id_fkey",
+        "capetinha_scan_runs_pkey"
+      ],
+      "indexes": [
+        "capetinha_scan_runs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.capetinha_scan_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.coverage_expectations",
+      "columns": [
+        {
+          "name": "universe_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expectation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required_key",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "risk_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "basis_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "coverage_expectations_pkey",
+        "coverage_expectations_universe_id_fkey"
+      ],
+      "indexes": [
+        "coverage_expectations_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.coverage_expectations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.coverage_universes",
+      "columns": [
+        {
+          "name": "universe_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "expectation_basis",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_definition",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "coverage_universes_current_version_ref_fkey",
+        "coverage_universes_pkey"
+      ],
+      "indexes": [
+        "coverage_universes_current_version_ref_idx",
+        "coverage_universes_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.coverage_universes",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.evidence_replay_snapshots",
+      "columns": [
+        {
+          "name": "evidence_snapshot_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "original_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "live_run_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "evidence_replay_snapshots_knowledge_pack_id_fkey",
+        "evidence_replay_snapshots_pkey",
+        "evidence_replay_snapshots_validator_id_fkey"
+      ],
+      "indexes": [
+        "evidence_replay_snapshots_knowledge_pack_id_idx",
+        "evidence_replay_snapshots_pkey",
+        "evidence_replay_snapshots_validator_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.evidence_replay_snapshots",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "finding_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_record_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "findings_pkey",
+        "findings_validation_run_id_fkey"
+      ],
+      "indexes": [
+        "findings_pkey",
+        "findings_status_severity_idx",
+        "findings_validation_run_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.findings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.ipe_catalog",
+      "columns": [
+        {
+          "name": "ipe_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "producer_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "schema_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "generation_control_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "carr_dimensions",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ipe_catalog_current_version_ref_fkey",
+        "ipe_catalog_pkey"
+      ],
+      "indexes": [
+        "ipe_catalog_current_version_ref_idx",
+        "ipe_catalog_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.ipe_catalog",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.ipe_evaluations",
+      "columns": [
+        {
+          "name": "ipe_evaluation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ipe_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ipe_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "complete_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "accurate_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "relevant_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reliable_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "reproducible_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "overall_result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "dimension_evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "alternative_procedure_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evaluated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "ipe_evaluations_ipe_id_fkey",
+        "ipe_evaluations_pkey"
+      ],
+      "indexes": [
+        "ipe_evaluations_ipe_id_idx",
+        "ipe_evaluations_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.ipe_evaluations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.layer_audit_bindings",
+      "columns": [
+        {
+          "name": "layer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lens_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "audit_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "latest_run_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "test_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "ipe_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "reperformance_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "conclusion",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "layer_audit_bindings_layer_id_fkey",
+        "layer_audit_bindings_lens_id_fkey",
+        "layer_audit_bindings_pkey"
+      ],
+      "indexes": [
+        "layer_audit_bindings_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.layer_audit_bindings",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.rule_packs",
+      "columns": [
+        {
+          "name": "rule_pack_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rules",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "rule_packs_pkey"
+      ],
+      "indexes": [
+        "rule_packs_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.rule_packs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.run_contexts",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "executor_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "executor_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validator_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_pack_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "schema_version_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "context_hash",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "reperformance_ready",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "reperformance_level",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "frozen_result_basis",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "run_contexts_knowledge_pack_id_fkey",
+        "run_contexts_pkey",
+        "run_contexts_validation_run_id_fkey"
+      ],
+      "indexes": [
+        "run_contexts_knowledge_pack_id_idx",
+        "run_contexts_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.run_contexts",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.runs",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "rule_pack_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "runs_pkey",
+        "runs_rule_pack_id_fkey",
+        "runs_validator_id_fkey"
+      ],
+      "indexes": [
+        "runs_pkey",
+        "runs_rule_pack_id_idx",
+        "runs_validator_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.sample_items",
+      "columns": [
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "item_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "stratum",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "selection_order",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "inclusion_reason",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_result",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "sample_items_pkey",
+        "sample_items_sampling_plan_id_fkey"
+      ],
+      "indexes": [
+        "sample_items_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.sample_items",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.sampling_plans",
+      "columns": [
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "audit_objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_snapshot_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_size",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "selection_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_strata",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sample_size_rule",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "actual_sample_size",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "selection_seed",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "tolerable_exception_rule",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "expected_exception_rule",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "sampling_plans_actual_sample_size_check",
+        "sampling_plans_pkey",
+        "sampling_plans_population_size_check",
+        "sampling_plans_test_id_fkey"
+      ],
+      "indexes": [
+        "sampling_plans_pkey",
+        "sampling_plans_test_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.sampling_plans",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.test_catalog",
+      "columns": [
+        {
+          "name": "test_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_definition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "selection_method",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "blocking",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "risk_basis",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "governing_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "test_catalog_current_version_ref_fkey",
+        "test_catalog_pkey"
+      ],
+      "indexes": [
+        "test_catalog_current_version_ref_idx",
+        "test_catalog_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.test_catalog",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.test_runs",
+      "columns": [
+        {
+          "name": "test_run_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "test_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_snapshot_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "population_size",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "selected_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ruleset_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "exceptions",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "test_runs_pkey",
+        "test_runs_population_size_check",
+        "test_runs_sampling_plan_id_fkey",
+        "test_runs_selected_count_check",
+        "test_runs_test_id_fkey"
+      ],
+      "indexes": [
+        "test_runs_pkey",
+        "test_runs_sampling_plan_id_idx",
+        "test_runs_test_id_idx"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.test_runs",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.validator_executors",
+      "columns": [
+        {
+          "name": "validator_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocking_gap",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "covered_requirements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "uncovered_requirements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "validator_executors_pkey",
+        "validator_executors_validator_id_fkey"
+      ],
+      "indexes": [
+        "validator_executors_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.validator_executors",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "cko_validation.validators",
+      "columns": [
+        {
+          "name": "validator_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "blocking",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "input_types",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "requirements",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "severity_policy",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "validators_current_version_ref_fkey",
+        "validators_pkey"
+      ],
+      "indexes": [
+        "validators_current_version_ref_idx",
+        "validators_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_validation.validators",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

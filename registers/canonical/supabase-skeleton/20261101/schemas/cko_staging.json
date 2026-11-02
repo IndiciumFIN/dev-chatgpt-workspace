@@ -1,0 +1,70 @@
+{
+  "schema": "cko_staging",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "cko_staging.import_packages",
+      "columns": [
+        {
+          "name": "import_package_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_version",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_hash",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "import_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "imported_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "import_packages_pkey"
+      ],
+      "indexes": [
+        "import_packages_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "cko_staging.import_packages",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

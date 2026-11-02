@@ -1,0 +1,888 @@
+{
+  "schema": "xlf_reg",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_reg.documentation_anomaly",
+      "columns": [
+        {
+          "name": "anomaly_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_a",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_b",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "topic",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "observation_a",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "observation_b",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "triangulation_source",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "triangulation_observed",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "documentation_anomaly_pkey"
+      ],
+      "indexes": [
+        "documentation_anomaly_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.documentation_anomaly",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.evidence_assertion",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "review_note",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "evidence_assertion_pkey",
+        "evidence_assertion_source_id_fkey"
+      ],
+      "indexes": [
+        "evidence_assertion_pkey",
+        "ix_xlf_evidence_source",
+        "ix_xlf_evidence_subject"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.evidence_assertion",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.evidence_atomic",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_legacy_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "client_ref",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "claim",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source_locator",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "evidence_atomic_command_id_fkey",
+        "evidence_atomic_pkey",
+        "evidence_atomic_source_id_fkey"
+      ],
+      "indexes": [
+        "evidence_atomic_pkey",
+        "ix_xlf_evidence_atomic_command",
+        "ix_xlf_evidence_atomic_source"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.evidence_atomic",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.learning_object",
+      "columns": [
+        {
+          "name": "learning_object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "learning_goal_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "mission_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "runtime_action",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "risk_note_pt_br",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "learning_mode_supported",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "assessment_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "competency_status_model",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "learning_object_command_id_fkey",
+        "learning_object_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_learning_object_command",
+        "learning_object_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.learning_object",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.professional_use_case",
+      "columns": [
+        {
+          "name": "use_case_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "profession_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "professional_use_case_command_id_fkey",
+        "professional_use_case_pkey",
+        "professional_use_case_profession_id_fkey"
+      ],
+      "indexes": [
+        "ix_xlf_use_case_profession",
+        "ix_xlf_usecase_command",
+        "professional_use_case_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.professional_use_case",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.registry_item",
+      "columns": [
+        {
+          "name": "registry_item_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "item_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "identifier",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "preferred_designation_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "registration_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "administrative_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "registration_authority",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "steward_role_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_from",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "date",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "registry_item_identifier_key",
+        "registry_item_pkey",
+        "registry_item_subject_id_key"
+      ],
+      "indexes": [
+        "registry_item_identifier_key",
+        "registry_item_pkey",
+        "registry_item_subject_id_key"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.registry_item",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.relationship",
+      "columns": [
+        {
+          "name": "relation_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "object_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "relationship_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_relation_subject",
+        "relationship_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.relationship",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.risk_control",
+      "columns": [
+        {
+          "name": "control_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_statement_pt_br",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "control_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "risk_control_command_id_fkey",
+        "risk_control_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_risk_command",
+        "risk_control_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.risk_control",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.shortcut_binding",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "platform_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "locale_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "keyboard_layout",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sequence_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "alternative_rank",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "context",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_source_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "valid_from",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "valid_to",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "source_binding",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "shortcut_binding_alternative_rank_check",
+        "shortcut_binding_check",
+        "shortcut_binding_client_id_fkey",
+        "shortcut_binding_command_id_fkey",
+        "shortcut_binding_evidence_source_id_fkey",
+        "shortcut_binding_keyboard_layout_id_fkey",
+        "shortcut_binding_pkey",
+        "shortcut_binding_platform_id_fkey"
+      ],
+      "indexes": [
+        "ix_xlf_binding_client",
+        "ix_xlf_binding_command",
+        "ix_xlf_binding_evidence_source",
+        "ix_xlf_binding_keyboard",
+        "ix_xlf_binding_platform",
+        "shortcut_binding_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.shortcut_binding",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.source",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publisher",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "retrieved_at",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "authority_tier",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "license_note",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "source_pkey"
+      ],
+      "indexes": [
+        "source_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.source",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_reg.verified_shortcut_binding",
+      "columns": [
+        {
+          "name": "binding_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "command_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sequence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "sequence_text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_assertion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "verification_status",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "publication_scope",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "valid_from",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "valid_to",
+          "type": "date",
+          "nullable": true
+        },
+        {
+          "name": "supersedes_binding_id",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "verified_shortcut_binding_check",
+        "verified_shortcut_binding_client_id_fkey",
+        "verified_shortcut_binding_command_id_fkey",
+        "verified_shortcut_binding_evidence_atomic_id_fkey",
+        "verified_shortcut_binding_keyboard_layout_id_fkey",
+        "verified_shortcut_binding_pkey",
+        "verified_shortcut_binding_supersedes_binding_id_fkey"
+      ],
+      "indexes": [
+        "ix_xlf_vbinding_client",
+        "ix_xlf_vbinding_command",
+        "ix_xlf_vbinding_evidence",
+        "ix_xlf_vbinding_keyboard",
+        "ix_xlf_vbinding_supersedes",
+        "verified_shortcut_binding_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_reg.verified_shortcut_binding",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

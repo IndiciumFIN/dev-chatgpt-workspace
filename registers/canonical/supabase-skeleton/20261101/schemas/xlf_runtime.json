@@ -1,0 +1,438 @@
+{
+  "schema": "xlf_runtime",
+  "managedBySupabase": false,
+  "tables": [
+    {
+      "key": "xlf_runtime.activity_event",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "event_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "sequence",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "activity_event_pkey",
+        "activity_event_sequence_check",
+        "activity_event_session_id_fkey",
+        "activity_event_session_id_sequence_key"
+      ],
+      "indexes": [
+        "activity_event_pkey",
+        "activity_event_session_id_sequence_key",
+        "ix_xlf_event_session_sequence"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.activity_event",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_runtime.activity_evidence",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "activity_evidence_pkey",
+        "activity_evidence_session_id_fkey"
+      ],
+      "indexes": [
+        "activity_evidence_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.activity_evidence",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_runtime.activity_session",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "activity_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "activity_version",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "machine_state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "snapshot",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "next_sequence",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "privacy_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "activity_session_activity_id_activity_version_fkey",
+        "activity_session_next_sequence_check",
+        "activity_session_pkey"
+      ],
+      "indexes": [
+        "activity_session_pkey",
+        "ix_xlf_activity_session_definition"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.activity_session",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_runtime.competency_observation",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "assessment_rule_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "learning_resource_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "context",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "privacy_class",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "revalidation_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "competency_observation_assessment_rule_id_fkey",
+        "competency_observation_competency_id_fkey",
+        "competency_observation_learning_resource_id_fkey",
+        "competency_observation_pkey",
+        "competency_observation_state_check"
+      ],
+      "indexes": [
+        "competency_observation_pkey",
+        "ix_xlf_observation_assessment",
+        "ix_xlf_observation_competency",
+        "ix_xlf_observation_resource"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.competency_observation",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_runtime.human_context_session",
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "intent_type_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "profession_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "task_context",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "preferred_learning_mode",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "ui_locale",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "keyboard_layout_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "accessibility_preferences",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "privacy_mode",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "consent_flags",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "human_context_session_pkey"
+      ],
+      "indexes": [
+        "human_context_session_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.human_context_session",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "xlf_runtime.learning_event",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "anonymous_subject_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "learning_object_id",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "learning_event_learning_object_id_fkey",
+        "learning_event_pkey"
+      ],
+      "indexes": [
+        "ix_xlf_learning_event_object",
+        "learning_event_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "xlf_runtime.learning_event",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

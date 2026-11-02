@@ -1,0 +1,188 @@
+{
+  "schema": "realtime",
+  "managedBySupabase": true,
+  "tables": [
+    {
+      "key": "realtime.messages",
+      "columns": [
+        {
+          "name": "topic",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "extension",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "event",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "private",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp without time zone",
+          "nullable": false
+        },
+        {
+          "name": "inserted_at",
+          "type": "timestamp without time zone",
+          "nullable": false
+        },
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "binary_payload",
+          "type": "bytea",
+          "nullable": true
+        },
+        {
+          "name": "skip_broadcast",
+          "type": "boolean",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        "messages_payload_exclusive",
+        "messages_pkey"
+      ],
+      "indexes": [
+        "messages_inserted_at_topic_index",
+        "messages_pkey"
+      ],
+      "rlsEnabled": true,
+      "policies": [],
+      "service": {
+        "target": "realtime.messages",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "realtime.schema_migrations",
+      "columns": [
+        {
+          "name": "version",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "inserted_at",
+          "type": "timestamp(0) without time zone",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "schema_migrations_pkey"
+      ],
+      "indexes": [
+        "schema_migrations_pkey"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "realtime.schema_migrations",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    },
+    {
+      "key": "realtime.subscription",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "subscription_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "entity",
+          "type": "regclass",
+          "nullable": false
+        },
+        {
+          "name": "filters",
+          "type": "realtime.user_defined_filter[]",
+          "nullable": false
+        },
+        {
+          "name": "claims",
+          "type": "jsonb",
+          "nullable": false
+        },
+        {
+          "name": "claims_role",
+          "type": "regrole",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp without time zone",
+          "nullable": false
+        },
+        {
+          "name": "action_filter",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "selected_columns",
+          "type": "text[]",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        "pk_subscription",
+        "subscription_action_filter_check"
+      ],
+      "indexes": [
+        "ix_realtime_subscription_entity",
+        "pk_subscription",
+        "subscription_subscription_id_entity_filters_action_filter_selec"
+      ],
+      "rlsEnabled": false,
+      "policies": [],
+      "service": {
+        "target": "realtime.subscription",
+        "status": "NOT_IMPLEMENTED",
+        "read": "BLOCKED_UNTIL_CONTRACT",
+        "write": "BLOCKED_UNTIL_KERNEL"
+      },
+      "bindings": {
+        "api": "NOT_VERIFIED",
+        "frontend": "NOT_VERIFIED",
+        "content": "NOT_INGESTED"
+      }
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 name: CE | Isolated Full-DDL Local Parity Candidate
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - '.github/workflows/ce-supabase-full-ddl-local.yml'
 permissions:
   contents: read
 jobs:

@@ -1,0 +1,3436 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "calculadoras_de_enfermagem",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 22,
+    "columns": 260,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "agent_registry",
+      "columns": [
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "role_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schedule_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "writes_only_private_log",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "may_publish",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "may_delete",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "agent_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX agent_registry_pkey ON calculadoras_de_enfermagem.agent_registry USING btree (agent_id)"
+        },
+        {
+          "name": "agent_registry_schedule_name_key",
+          "definition": "CREATE UNIQUE INDEX agent_registry_schedule_name_key ON calculadoras_de_enfermagem.agent_registry USING btree (schedule_name)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "agent_registry_execution_mode_check",
+          "type": "c",
+          "definition": "CHECK ((execution_mode = 'DETERMINISTIC_SQL_CRON'::text))"
+        },
+        {
+          "name": "agent_registry_may_delete_check",
+          "type": "c",
+          "definition": "CHECK ((may_delete = false))"
+        },
+        {
+          "name": "agent_registry_may_publish_check",
+          "type": "c",
+          "definition": "CHECK ((may_publish = false))"
+        },
+        {
+          "name": "agent_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (agent_id)"
+        },
+        {
+          "name": "agent_registry_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "agent_registry_schedule_name_key",
+          "type": "u",
+          "definition": "UNIQUE (schedule_name)"
+        },
+        {
+          "name": "agent_registry_writes_only_private_log_check",
+          "type": "c",
+          "definition": "CHECK ((writes_only_private_log = true))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "agent_run_history",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metrics",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "agent_run_history_pkey",
+          "definition": "CREATE UNIQUE INDEX agent_run_history_pkey ON calculadoras_de_enfermagem.agent_run_history USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "agent_run_history_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (agent_id) REFERENCES calculadoras_de_enfermagem.agent_registry(agent_id)"
+        },
+        {
+          "name": "agent_run_history_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "agent_run_history_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS_SCREEN'::text, 'HOLD_HUMAN'::text, 'FAIL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "atom_source_scope_screen",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "atom_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "distinct_atom_source_urls",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "atom_id_sequence_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scan_kind",
+          "type": "text",
+          "default": "'ALL_RECORDS_SHA256_SEQUENCE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "data_exposure",
+          "type": "text",
+          "default": "'AGGREGATE_ONLY'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "atom_source_scope_screen_pkey",
+          "definition": "CREATE UNIQUE INDEX atom_source_scope_screen_pkey ON calculadoras_de_enfermagem.atom_source_scope_screen USING btree (release_id, theme)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "atom_source_scope_screen_atom_count_check",
+          "type": "c",
+          "definition": "CHECK ((atom_count >= 0))"
+        },
+        {
+          "name": "atom_source_scope_screen_atom_id_sequence_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((atom_id_sequence_sha256 ~ '^[a-f0-9]{64}$'::text))"
+        },
+        {
+          "name": "atom_source_scope_screen_data_exposure_check",
+          "type": "c",
+          "definition": "CHECK ((data_exposure = 'AGGREGATE_ONLY'::text))"
+        },
+        {
+          "name": "atom_source_scope_screen_distinct_atom_source_urls_check",
+          "type": "c",
+          "definition": "CHECK ((distinct_atom_source_urls >= 0))"
+        },
+        {
+          "name": "atom_source_scope_screen_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, theme)"
+        },
+        {
+          "name": "atom_source_scope_screen_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "atom_source_scope_screen_release_id_theme_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, theme) REFERENCES calculadoras_de_enfermagem.theme_inventory(release_id, theme)"
+        },
+        {
+          "name": "atom_source_scope_screen_scan_kind_check",
+          "type": "c",
+          "definition": "CHECK ((scan_kind = 'ALL_RECORDS_SHA256_SEQUENCE'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "clinical_score_crosswalk",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_canonical_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "match_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_equivalence_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "score_rules_equivalence_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clinician_homologation",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_registry_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "target_clinical_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "target_rights_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "target_quality_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "clinical_score_crosswalk_pkey",
+          "definition": "CREATE UNIQUE INDEX clinical_score_crosswalk_pkey ON calculadoras_de_enfermagem.clinical_score_crosswalk USING btree (release_id, source_atom_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "clinical_score_crosswalk_clinician_homologation_check",
+          "type": "c",
+          "definition": "CHECK ((clinician_homologation = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "clinical_score_crosswalk_definition_equivalence_verified_check",
+          "type": "c",
+          "definition": "CHECK ((definition_equivalence_verified = false))"
+        },
+        {
+          "name": "clinical_score_crosswalk_match_type_check",
+          "type": "c",
+          "definition": "CHECK ((match_type = ANY (ARRAY['SAME_SCORE_NAME'::text, 'RELATED_SCORE_FAMILY'::text])))"
+        },
+        {
+          "name": "clinical_score_crosswalk_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, source_atom_id)"
+        },
+        {
+          "name": "clinical_score_crosswalk_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "clinical_score_crosswalk_score_rules_equivalence_verified_check",
+          "type": "c",
+          "definition": "CHECK ((score_rules_equivalence_verified = false))"
+        },
+        {
+          "name": "clinical_score_crosswalk_source_atom_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((source_atom_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "cross_theme_exact_source_code_screen",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_file",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_file",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "shared_source_code_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identical_title_and_text_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unverified_text_conflicts",
+          "type": "bigint",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "matching_method",
+          "type": "text",
+          "default": "'NORMALIZED_URL_WITH_CODE_AND_TITLE_AND_LITERAL_TEXT'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "cross_theme_exact_source_code_screen_pkey",
+          "definition": "CREATE UNIQUE INDEX cross_theme_exact_source_code_screen_pkey ON calculadoras_de_enfermagem.cross_theme_exact_source_code_screen USING btree (release_id, source_file, target_file)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "cross_theme_exact_source_cod_identical_title_and_text_cou_check",
+          "type": "c",
+          "definition": "CHECK ((identical_title_and_text_count >= 0))"
+        },
+        {
+          "name": "cross_theme_exact_source_code_s_unverified_text_conflicts_check",
+          "type": "c",
+          "definition": "CHECK ((unverified_text_conflicts >= 0))"
+        },
+        {
+          "name": "cross_theme_exact_source_code_sc_shared_source_code_count_check",
+          "type": "c",
+          "definition": "CHECK ((shared_source_code_count >= 0))"
+        },
+        {
+          "name": "cross_theme_exact_source_code_screen_check",
+          "type": "c",
+          "definition": "CHECK ((shared_source_code_count = (identical_title_and_text_count + unverified_text_conflicts)))"
+        },
+        {
+          "name": "cross_theme_exact_source_code_screen_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, source_file, target_file)"
+        },
+        {
+          "name": "cross_theme_exact_source_code_screen_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "crosswalk_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_schema",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_table",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "human_validation_state",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "technical_status",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "crosswalk_candidates_pkey",
+          "definition": "CREATE UNIQUE INDEX crosswalk_candidates_pkey ON calculadoras_de_enfermagem.crosswalk_candidates USING btree (candidate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "crosswalk_candidates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (candidate_id)"
+        },
+        {
+          "name": "crosswalk_candidates_relation_check",
+          "type": "c",
+          "definition": "CHECK ((relation = ANY (ARRAY['SAME_REGULATORY_ACT'::text, 'SOURCE_SAME_URI'::text, 'SEMANTIC_CANDIDATE'::text, 'EXACT_ATOM_MATCH'::text])))"
+        },
+        {
+          "name": "crosswalk_candidates_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "delta_assurance_snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "plan_digest_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "plan_digest_algorithm",
+          "type": "text",
+          "default": "'SHA256_SORTED_CANONICAL_COLUMNS_V1'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_atoms",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "internal_reuse_atoms",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "external_held_atoms",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "diff_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unsafe_flags",
+          "type": "integer",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_permitted",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_completed",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_mode",
+          "type": "text",
+          "default": "'PLAN_ONLY_SAFE_QUARANTINE'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "delta_assurance_snapshots_pkey",
+          "definition": "CREATE UNIQUE INDEX delta_assurance_snapshots_pkey ON calculadoras_de_enfermagem.delta_assurance_snapshots USING btree (snapshot_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "delta_assurance_snapshots_check",
+          "type": "c",
+          "definition": "CHECK ((declared_atoms = (internal_reuse_atoms + external_held_atoms)))"
+        },
+        {
+          "name": "delta_assurance_snapshots_check1",
+          "type": "c",
+          "definition": "CHECK (((diff_count = 0) AND (unsafe_flags = 0)))"
+        },
+        {
+          "name": "delta_assurance_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (snapshot_id)"
+        },
+        {
+          "name": "delta_assurance_snapshots_plan_digest_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((plan_digest_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        },
+        {
+          "name": "delta_assurance_snapshots_publication_permitted_check",
+          "type": "c",
+          "definition": "CHECK ((publication_permitted = false))"
+        },
+        {
+          "name": "delta_assurance_snapshots_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "delta_assurance_snapshots_semantic_completed_check",
+          "type": "c",
+          "definition": "CHECK ((semantic_completed = false))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "document_atomization",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_drive_file_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_pdf_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_pdf_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "page_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "literal_text_atoms",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "visual_reference_atoms",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blank_text_pages",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "atomized_jsonl_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_extraction_verification",
+          "type": "text",
+          "default": "'PER_PAGE_EXACT_RECONSTRUCTION'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "literal_atom_stage",
+          "type": "text",
+          "default": "'LITERAL_ATOMIZED'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "image_semantic_stage",
+          "type": "text",
+          "default": "'HOLD_VISUAL_REVIEW'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clinical_signoff",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_allowed",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "local_artifact_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_location_status",
+          "type": "text",
+          "default": "'LOCAL_ARTIFACT_NOT_DURABLE'::text",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "document_atomization_pkey",
+          "definition": "CREATE UNIQUE INDEX document_atomization_pkey ON calculadoras_de_enfermagem.document_atomization USING btree (release_id, source_drive_file_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "document_atomization_artifact_location_status_check",
+          "type": "c",
+          "definition": "CHECK ((artifact_location_status = ANY (ARRAY['LOCAL_ARTIFACT_NOT_DURABLE'::text, 'PRIVATE_REPLICATED_VERIFIED'::text])))"
+        },
+        {
+          "name": "document_atomization_atomized_jsonl_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((atomized_jsonl_sha256 ~ '^[a-f0-9]{64}$'::text))"
+        },
+        {
+          "name": "document_atomization_blank_text_pages_check",
+          "type": "c",
+          "definition": "CHECK ((blank_text_pages >= 0))"
+        },
+        {
+          "name": "document_atomization_clinical_signoff_check",
+          "type": "c",
+          "definition": "CHECK ((clinical_signoff = 'PENDING'::text))"
+        },
+        {
+          "name": "document_atomization_image_semantic_stage_check",
+          "type": "c",
+          "definition": "CHECK ((image_semantic_stage = ANY (ARRAY['HOLD_VISUAL_REVIEW'::text, 'NO_IMAGE_CONTENT'::text])))"
+        },
+        {
+          "name": "document_atomization_literal_atom_stage_check",
+          "type": "c",
+          "definition": "CHECK ((literal_atom_stage = 'LITERAL_ATOMIZED'::text))"
+        },
+        {
+          "name": "document_atomization_literal_text_atoms_check",
+          "type": "c",
+          "definition": "CHECK ((literal_text_atoms >= 0))"
+        },
+        {
+          "name": "document_atomization_page_count_check",
+          "type": "c",
+          "definition": "CHECK ((page_count > 0))"
+        },
+        {
+          "name": "document_atomization_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, source_drive_file_id)"
+        },
+        {
+          "name": "document_atomization_publication_allowed_check",
+          "type": "c",
+          "definition": "CHECK ((publication_allowed = false))"
+        },
+        {
+          "name": "document_atomization_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "document_atomization_source_pdf_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((source_pdf_sha256 ~ '^[a-f0-9]{64}$'::text))"
+        },
+        {
+          "name": "document_atomization_text_extraction_verification_check",
+          "type": "c",
+          "definition": "CHECK ((text_extraction_verification = 'PER_PAGE_EXACT_RECONSTRUCTION'::text))"
+        },
+        {
+          "name": "document_atomization_visual_reference_atoms_check",
+          "type": "c",
+          "definition": "CHECK ((visual_reference_atoms >= 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "exclusion_history",
+      "columns": [
+        {
+          "name": "exclusion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deleted_source_drive_file_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deleted_source_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deleted_source_parent",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deleted_source_created_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_size_bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retained_replacement_drive_file_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retained_replacement_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "retained_replacement_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "original_source_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verified_relation",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'VERIFIED_READY'::text",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deletion_verified_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "exclusion_history_pkey",
+          "definition": "CREATE UNIQUE INDEX exclusion_history_pkey ON calculadoras_de_enfermagem.exclusion_history USING btree (exclusion_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ck_not_same_file",
+          "type": "c",
+          "definition": "CHECK ((deleted_source_drive_file_id <> retained_replacement_drive_file_id))"
+        },
+        {
+          "name": "ck_same_content",
+          "type": "c",
+          "definition": "CHECK ((source_sha256 = retained_replacement_sha256))"
+        },
+        {
+          "name": "exclusion_history_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (exclusion_id)"
+        },
+        {
+          "name": "exclusion_history_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "exclusion_history_retained_replacement_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((retained_replacement_sha256 ~ '^[a-f0-9]{64}$'::text))"
+        },
+        {
+          "name": "exclusion_history_source_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((source_sha256 ~ '^[a-f0-9]{64}$'::text))"
+        },
+        {
+          "name": "exclusion_history_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['VERIFIED_READY'::text, 'DELETED_VERIFIED'::text, 'DELETE_FAILED'::text])))"
+        },
+        {
+          "name": "exclusion_history_verified_relation_check",
+          "type": "c",
+          "definition": "CHECK ((verified_relation = 'BYTE_IDENTICAL_SHA256_AND_CMP'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "file_delta_plan",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_atom_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manifest_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reuse_internal_count",
+          "type": "bigint",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "external_crosswalk_pending_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposed_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_gate",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "integration_state",
+          "type": "text",
+          "default": "'PLAN_ONLY'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "cko_target_ref",
+          "type": "text",
+          "default": "'TO_BE_RECONCILED'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "production_write_allowed",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "public_release_allowed",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_data_loaded",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_report",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "file_delta_plan_pkey",
+          "definition": "CREATE UNIQUE INDEX file_delta_plan_pkey ON calculadoras_de_enfermagem.file_delta_plan USING btree (release_id, theme, file_name)"
+        },
+        {
+          "name": "idx_file_delta_plan_gate",
+          "definition": "CREATE INDEX idx_file_delta_plan_gate ON calculadoras_de_enfermagem.file_delta_plan USING btree (release_id, risk_gate, proposed_action)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "file_delta_plan_check",
+          "type": "c",
+          "definition": "CHECK ((declared_atom_count = (reuse_internal_count + external_crosswalk_pending_count)))"
+        },
+        {
+          "name": "file_delta_plan_check1",
+          "type": "c",
+          "definition": "CHECK (((reuse_internal_count >= 0) AND (external_crosswalk_pending_count >= 0)))"
+        },
+        {
+          "name": "file_delta_plan_integration_state_check",
+          "type": "c",
+          "definition": "CHECK ((integration_state = ANY (ARRAY['PLAN_ONLY'::text, 'STAGED_VERIFIED'::text, 'HOLD_HUMAN'::text])))"
+        },
+        {
+          "name": "file_delta_plan_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, theme, file_name)"
+        },
+        {
+          "name": "file_delta_plan_production_write_allowed_check",
+          "type": "c",
+          "definition": "CHECK ((production_write_allowed = false))"
+        },
+        {
+          "name": "file_delta_plan_proposed_action_check",
+          "type": "c",
+          "definition": "CHECK ((proposed_action = ANY (ARRAY['REUSE_INTERNAL_REFERENCE'::text, 'STAGE_ISOLATED_PENDING_CROSSWALK'::text])))"
+        },
+        {
+          "name": "file_delta_plan_public_release_allowed_check",
+          "type": "c",
+          "definition": "CHECK ((public_release_allowed = false))"
+        },
+        {
+          "name": "file_delta_plan_raw_data_loaded_check",
+          "type": "c",
+          "definition": "CHECK ((raw_data_loaded = false))"
+        },
+        {
+          "name": "file_delta_plan_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "file_delta_plan_release_id_theme_file_name_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, theme, file_name) REFERENCES calculadoras_de_enfermagem.file_integrity(release_id, theme, file_name)"
+        },
+        {
+          "name": "file_delta_plan_risk_gate_check",
+          "type": "c",
+          "definition": "CHECK ((risk_gate = ANY (ARRAY['HOLD_PRIVACY'::text, 'HOLD_CLINICAL'::text, 'HOLD_RIGHTS'::text, 'HOLD_JURISDICTION'::text, 'HOLD_SOURCE_SCOPE'::text, 'HOLD_EXTERNAL_RECONCILIATION'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "file_integrity",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "atom_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_size_bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_manifest_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "technical_status",
+          "type": "text",
+          "default": "'PASS_ESTRUTURAL'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "file_integrity_pkey",
+          "definition": "CREATE UNIQUE INDEX file_integrity_pkey ON calculadoras_de_enfermagem.file_integrity USING btree (release_id, theme, file_name)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "file_integrity_atom_count_check",
+          "type": "c",
+          "definition": "CHECK ((atom_count >= 0))"
+        },
+        {
+          "name": "file_integrity_file_size_bytes_check",
+          "type": "c",
+          "definition": "CHECK ((file_size_bytes >= 0))"
+        },
+        {
+          "name": "file_integrity_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, theme, file_name)"
+        },
+        {
+          "name": "file_integrity_release_id_theme_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, theme) REFERENCES calculadoras_de_enfermagem.theme_inventory(release_id, theme)"
+        },
+        {
+          "name": "file_integrity_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((sha256 ~ '^[0-9a-f]{64}$'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "internal_reuse_evidence",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_file",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "records_examined",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_ids_found",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_record_equal",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_enrichment",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "missing_id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "unexplained_differences",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "default": "'REUSE_LINK'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_artifact",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "internal_reuse_evidence_pkey",
+          "definition": "CREATE UNIQUE INDEX internal_reuse_evidence_pkey ON calculadoras_de_enfermagem.internal_reuse_evidence USING btree (release_id, source_theme, source_file, target_theme)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "internal_reuse_evidence_canonical_enrichment_check",
+          "type": "c",
+          "definition": "CHECK ((canonical_enrichment >= 0))"
+        },
+        {
+          "name": "internal_reuse_evidence_canonical_ids_found_check",
+          "type": "c",
+          "definition": "CHECK ((canonical_ids_found >= 0))"
+        },
+        {
+          "name": "internal_reuse_evidence_check",
+          "type": "c",
+          "definition": "CHECK (((canonical_ids_found + missing_id) = records_examined))"
+        },
+        {
+          "name": "internal_reuse_evidence_check1",
+          "type": "c",
+          "definition": "CHECK ((((source_record_equal + canonical_enrichment) + unexplained_differences) = canonical_ids_found))"
+        },
+        {
+          "name": "internal_reuse_evidence_decision_check",
+          "type": "c",
+          "definition": "CHECK ((decision = ANY (ARRAY['REUSE_LINK'::text, 'HOLD_REVIEW'::text])))"
+        },
+        {
+          "name": "internal_reuse_evidence_missing_id_check",
+          "type": "c",
+          "definition": "CHECK ((missing_id >= 0))"
+        },
+        {
+          "name": "internal_reuse_evidence_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, source_theme, source_file, target_theme)"
+        },
+        {
+          "name": "internal_reuse_evidence_records_examined_check",
+          "type": "c",
+          "definition": "CHECK ((records_examined >= 0))"
+        },
+        {
+          "name": "internal_reuse_evidence_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "internal_reuse_evidence_source_record_equal_check",
+          "type": "c",
+          "definition": "CHECK ((source_record_equal >= 0))"
+        },
+        {
+          "name": "internal_reuse_evidence_unexplained_differences_check",
+          "type": "c",
+          "definition": "CHECK ((unexplained_differences >= 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "library_releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "origin_drive_folder_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "destination_drive_folder_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_atoms",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_files",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_themes",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle",
+          "type": "text",
+          "default": "'EM_RECONCILIACAO'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "is_published",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "is_integrated_to_runtime",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "technical_qa_reference",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "library_releases_pkey",
+          "definition": "CREATE UNIQUE INDEX library_releases_pkey ON calculadoras_de_enfermagem.library_releases USING btree (release_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "library_releases_declared_atoms_check",
+          "type": "c",
+          "definition": "CHECK ((declared_atoms >= 0))"
+        },
+        {
+          "name": "library_releases_declared_files_check",
+          "type": "c",
+          "definition": "CHECK ((declared_files >= 0))"
+        },
+        {
+          "name": "library_releases_declared_themes_check",
+          "type": "c",
+          "definition": "CHECK ((declared_themes > 0))"
+        },
+        {
+          "name": "library_releases_is_integrated_to_runtime_check",
+          "type": "c",
+          "definition": "CHECK ((is_integrated_to_runtime = false))"
+        },
+        {
+          "name": "library_releases_is_published_check",
+          "type": "c",
+          "definition": "CHECK ((is_published = false))"
+        },
+        {
+          "name": "library_releases_lifecycle_check",
+          "type": "c",
+          "definition": "CHECK ((lifecycle = ANY (ARRAY['EM_RECONCILIACAO'::text, 'EM_HOMOLOGACAO'::text, 'FECHADA_NAO_PUBLICADA'::text])))"
+        },
+        {
+          "name": "library_releases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "micro_checkpoints",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "step_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checkpoint_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "check_label",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "justification",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "records_examined",
+          "type": "bigint",
+          "default": "0",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "micro_checkpoints_pkey",
+          "definition": "CREATE UNIQUE INDEX micro_checkpoints_pkey ON calculadoras_de_enfermagem.micro_checkpoints USING btree (release_id, task_no, step_no, checkpoint_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "micro_checkpoints_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, task_no, step_no, checkpoint_code)"
+        },
+        {
+          "name": "micro_checkpoints_records_examined_check",
+          "type": "c",
+          "definition": "CHECK ((records_examined >= 0))"
+        },
+        {
+          "name": "micro_checkpoints_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "micro_checkpoints_release_id_task_no_step_no_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, task_no, step_no) REFERENCES calculadoras_de_enfermagem.task_substeps(release_id, task_no, step_no)"
+        },
+        {
+          "name": "micro_checkpoints_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'IN_PROGRESS'::text, 'HOLD_HUMAN'::text, 'PENDING'::text, 'FAIL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "protocol_index_crosswalk",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_atom_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "target_object_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "matching_basis",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "matching_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "literal_equivalence_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_note",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "protocol_index_crosswalk_pkey",
+          "definition": "CREATE UNIQUE INDEX protocol_index_crosswalk_pkey ON calculadoras_de_enfermagem.protocol_index_crosswalk USING btree (release_id, source_atom_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "protocol_index_crosswalk_check",
+          "type": "c",
+          "definition": "CHECK (((matching_state = 'NO_PROVEN_MATCH'::text) OR ((target_object_id IS NOT NULL) AND (matching_basis = 'ISSUER_NUMBER_YEAR'::text))))"
+        },
+        {
+          "name": "protocol_index_crosswalk_literal_equivalence_verified_check",
+          "type": "c",
+          "definition": "CHECK ((literal_equivalence_verified = false))"
+        },
+        {
+          "name": "protocol_index_crosswalk_matching_basis_check",
+          "type": "c",
+          "definition": "CHECK ((matching_basis = ANY (ARRAY['ISSUER_NUMBER_YEAR'::text, 'UNVERIFIED_TITLE_ONLY'::text])))"
+        },
+        {
+          "name": "protocol_index_crosswalk_matching_state_check",
+          "type": "c",
+          "definition": "CHECK ((matching_state = ANY (ARRAY['SAME_NORMATIVE_ACT_CANDIDATE'::text, 'NO_PROVEN_MATCH'::text])))"
+        },
+        {
+          "name": "protocol_index_crosswalk_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, source_atom_id)"
+        },
+        {
+          "name": "protocol_index_crosswalk_publication_blocked_check",
+          "type": "c",
+          "definition": "CHECK ((publication_blocked = true))"
+        },
+        {
+          "name": "protocol_index_crosswalk_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "protocol_index_crosswalk_source_atom_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((source_atom_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "reconciliation_holds",
+      "columns": [
+        {
+          "name": "hold_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "affected_theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision_needed",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "authorized_decision",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reconciliation_holds_pkey",
+          "definition": "CREATE UNIQUE INDEX reconciliation_holds_pkey ON calculadoras_de_enfermagem.reconciliation_holds USING btree (hold_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reconciliation_holds_domain_check",
+          "type": "c",
+          "definition": "CHECK ((domain = ANY (ARRAY['PRIVACY'::text, 'CLINICAL'::text, 'RIGHTS'::text, 'NORMATIVE'::text, 'INTEGRATION'::text])))"
+        },
+        {
+          "name": "reconciliation_holds_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (hold_id)"
+        },
+        {
+          "name": "reconciliation_holds_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "reconciliation_holds_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = ANY (ARRAY['HOLD_HUMAN'::text, 'RESOLVED'::text, 'CANCELLED_WITH_EVIDENCE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "reconciliation_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_schema",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_table",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_row_count",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "direct_label_matches",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "match_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "interpretation",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checked_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reconciliation_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX reconciliation_observations_pkey ON calculadoras_de_enfermagem.reconciliation_observations USING btree (observation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reconciliation_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (observation_id)"
+        },
+        {
+          "name": "reconciliation_observations_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "source_lineage",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_position",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "extraction_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "match_status",
+          "type": "text",
+          "default": "'NAO_AVALIADO'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "method",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "source_lineage_pkey",
+          "definition": "CREATE UNIQUE INDEX source_lineage_pkey ON calculadoras_de_enfermagem.source_lineage USING btree (release_id, theme, source_position)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_lineage_check",
+          "type": "c",
+          "definition": "CHECK (((match_status <> 'URL_EXATA'::text) OR (target_source_id IS NOT NULL)))"
+        },
+        {
+          "name": "source_lineage_match_status_check",
+          "type": "c",
+          "definition": "CHECK ((match_status = ANY (ARRAY['NAO_AVALIADO'::text, 'URL_EXATA'::text, 'MESMO_DOCUMENTO_CANDIDATO'::text, 'MESMA_AUTORIDADE'::text, 'SEM_CORRESPONDENCIA'::text])))"
+        },
+        {
+          "name": "source_lineage_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, theme, source_position)"
+        },
+        {
+          "name": "source_lineage_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "source_lineage_release_id_theme_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, theme) REFERENCES calculadoras_de_enfermagem.theme_inventory(release_id, theme)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "task_events",
+      "columns": [
+        {
+          "name": "event_no",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_kind",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "task_events_pkey",
+          "definition": "CREATE UNIQUE INDEX task_events_pkey ON calculadoras_de_enfermagem.task_events USING btree (event_no)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "task_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (event_no)"
+        },
+        {
+          "name": "task_events_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "task_events_release_id_task_no_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, task_no) REFERENCES calculadoras_de_enfermagem.task_gates(release_id, task_no)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "task_gates",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "task_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocker",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "task_gates_pkey",
+          "definition": "CREATE UNIQUE INDEX task_gates_pkey ON calculadoras_de_enfermagem.task_gates USING btree (release_id, task_no)"
+        },
+        {
+          "name": "task_gates_release_id_task_code_key",
+          "definition": "CREATE UNIQUE INDEX task_gates_release_id_task_code_key ON calculadoras_de_enfermagem.task_gates USING btree (release_id, task_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "task_gates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, task_no)"
+        },
+        {
+          "name": "task_gates_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        },
+        {
+          "name": "task_gates_release_id_task_code_key",
+          "type": "u",
+          "definition": "UNIQUE (release_id, task_code)"
+        },
+        {
+          "name": "task_gates_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['PENDENTE'::text, 'EM_EXECUCAO'::text, 'CONCLUIDA'::text, 'HOLD_HUMAN'::text, 'FALHA'::text])))"
+        },
+        {
+          "name": "task_gates_task_no_check",
+          "type": "c",
+          "definition": "CHECK (((task_no >= 1) AND (task_no <= 5)))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "task_substeps",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "task_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "step_no",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "step_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "acceptance",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "task_substeps_pkey",
+          "definition": "CREATE UNIQUE INDEX task_substeps_pkey ON calculadoras_de_enfermagem.task_substeps USING btree (release_id, task_no, step_no)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "task_substeps_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, task_no, step_no)"
+        },
+        {
+          "name": "task_substeps_release_id_task_no_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, task_no) REFERENCES calculadoras_de_enfermagem.task_gates(release_id, task_no)"
+        },
+        {
+          "name": "task_substeps_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['PENDENTE'::text, 'EM_EXECUCAO'::text, 'CONCLUIDA'::text, 'HOLD_HUMAN'::text, 'FALHA'::text])))"
+        },
+        {
+          "name": "task_substeps_step_no_check",
+          "type": "c",
+          "definition": "CHECK (((step_no >= 1) AND (step_no <= 9)))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "theme_inventory",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "theme",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_atoms",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "declared_jsonl_files",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "qa_status",
+          "type": "text",
+          "default": "'PASS_ESTRUTURAL'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "crosswalk_status",
+          "type": "text",
+          "default": "'PENDENTE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_folder_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "manifest_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "is_clinically_approved",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "theme_inventory_pkey",
+          "definition": "CREATE UNIQUE INDEX theme_inventory_pkey ON calculadoras_de_enfermagem.theme_inventory USING btree (release_id, theme)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "theme_inventory_crosswalk_status_check",
+          "type": "c",
+          "definition": "CHECK ((crosswalk_status = ANY (ARRAY['PENDENTE'::text, 'EM_ANALISE'::text, 'CONCILIADO'::text, 'HOLD_HUMAN'::text])))"
+        },
+        {
+          "name": "theme_inventory_declared_atoms_check",
+          "type": "c",
+          "definition": "CHECK ((declared_atoms >= 0))"
+        },
+        {
+          "name": "theme_inventory_declared_jsonl_files_check",
+          "type": "c",
+          "definition": "CHECK ((declared_jsonl_files >= 1))"
+        },
+        {
+          "name": "theme_inventory_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, theme)"
+        },
+        {
+          "name": "theme_inventory_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES calculadoras_de_enfermagem.library_releases(release_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

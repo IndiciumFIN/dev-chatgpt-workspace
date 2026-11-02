@@ -1,0 +1,130 @@
+{
+  "recordType": "REDACTED_READONLY_REGISTER_SNAPSHOT",
+  "projectRef": "pgsybzggewhinaniybiy",
+  "sampledAt": "2026-11-02",
+  "workOrder": "WO-CE-DB-SKELETON-001",
+  "scope": "selected nonsecret columns; not full table replica",
+  "sourceTable": "processes",
+  "rows": [
+    {
+      "process_id": "FLOW-001",
+      "sequence_no": 1,
+      "name": "Planejamento e escopo",
+      "purpose": "Definir universo, critérios, fontes, responsabilidades e requisitos antes da execução",
+      "owner_function": "REGULATORY_GOVERNANCE/DATA_GOVERNANCE",
+      "input_contract": "BLUEPRINT",
+      "output_contract": "APPROVED_PLAN",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-002",
+      "sequence_no": 2,
+      "name": "Aquisição",
+      "purpose": "Adquirir fonte autorizada e preservar evidência",
+      "owner_function": "REGULATORY_GOVERNANCE",
+      "input_contract": "SOURCE_CANDIDATE",
+      "output_contract": "SOURCE_SNAPSHOT",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-003",
+      "sequence_no": 3,
+      "name": "Normalização e identidade",
+      "purpose": "Resolver identidade, aliases, tipo e metadata sem alteração silenciosa",
+      "owner_function": "DATA_GOVERNANCE",
+      "input_contract": "SOURCE_SNAPSHOT",
+      "output_contract": "MASTER_ENTITY_CANDIDATE",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-004",
+      "sequence_no": 4,
+      "name": "Extração regulatória",
+      "purpose": "Extrair instrumento, dispositivos e relações candidatas",
+      "owner_function": "REGULATORY_GOVERNANCE",
+      "input_contract": "SOURCE_SNAPSHOT",
+      "output_contract": "REGULATORY_CANDIDATE",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-005",
+      "sequence_no": 5,
+      "name": "Validação",
+      "purpose": "Executar validações determinísticas e semânticas segregadas",
+      "owner_function": "BOARD_OF_NURSES/ASSURANCE",
+      "input_contract": "CANDIDATE",
+      "output_contract": "VALIDATION_RESULT",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-006",
+      "sequence_no": 6,
+      "name": "Promoção canônica",
+      "purpose": "Promover somente quando requisitos e decisão material estiverem satisfeitos",
+      "owner_function": "GOVERNANCE_OWNER/BOARD_OF_NURSES",
+      "input_contract": "VALIDATED_CANDIDATE",
+      "output_contract": "CANONICAL_OBJECT",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-007",
+      "sequence_no": 7,
+      "name": "Relacionamento e lineage",
+      "purpose": "Criar relações governadas e reversíveis",
+      "owner_function": "DATA_GOVERNANCE",
+      "input_contract": "CANONICAL_OBJECT",
+      "output_contract": "GRAPH_RELATIONS",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-008",
+      "sequence_no": 8,
+      "name": "Cobertura e inventário",
+      "purpose": "Derivar inventário e gaps da base canônica/staging",
+      "owner_function": "COVERAGE_ENGINE",
+      "input_contract": "REGISTRIES",
+      "output_contract": "COVERAGE_STATE",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-009",
+      "sequence_no": 9,
+      "name": "Complementação",
+      "purpose": "Adquirir somente o que a cobertura demonstrar ausente/incompleto",
+      "owner_function": "REGULATORY_GOVERNANCE/DPP",
+      "input_contract": "GAP_QUEUE",
+      "output_contract": "NEW_CANDIDATES",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "FLOW-010",
+      "sequence_no": 10,
+      "name": "Monitoramento e mudança",
+      "purpose": "Detectar mudança de fonte/norma, avaliar impacto e acionar risco",
+      "owner_function": "REGULATORY_GOVERNANCE/RISK_MANAGEMENT",
+      "input_contract": "CURRENT_OBJECTS",
+      "output_contract": "CHANGE_EVENT/RISK",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "PROC-CKO-ORCH-001",
+      "sequence_no": 900,
+      "name": "CKO Governed Orchestration Control Plane",
+      "purpose": "Route governed proposals through deterministic state, lock, divergence, assurance and publication gates.",
+      "owner_function": "CKO_ORCH",
+      "input_contract": "GOVERNED_PROPOSAL_OR_VALIDATION",
+      "output_contract": "AUDITABLE_ORCHESTRATION_DECISION",
+      "status": "ACTIVE"
+    },
+    {
+      "process_id": "CKO-ORCH-PROPOSAL-COMMIT",
+      "sequence_no": 905,
+      "name": "CKO Orchestrator Proposal Commit",
+      "purpose": "Independent checker commit of a prepared orchestrator proposal under maker/checker segregation of duties.",
+      "owner_function": "CKO-ORCH",
+      "input_contract": "cko_orch.proposals:PREPARED",
+      "output_contract": "cko_orch.proposals:COMMITTED",
+      "status": "ACTIVE"
+    }
+  ]
+}

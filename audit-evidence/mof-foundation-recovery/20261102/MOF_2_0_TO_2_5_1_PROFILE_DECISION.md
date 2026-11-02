@@ -29,3 +29,11 @@
 5. Submeter WO/Kernel, auditoria, homologação e só então mover para produção.
 
 **Gates ausentes:** não se comprovou equivalência EMOF/CMOF, mapeamentos XMI, todas as funções/triggers/RLS, nem paridade integrada com produção. Manter `HOLD_HUMAN`.
+
+## Consolidação de registros paralelos
+Uma segunda decisão candidata de MOF foi encontrada na mesma branch após o crosswalk. O material distinto foi reconciliado neste registro canônico `registers/canonical/mof-implementation-profile.v1.json`. O registro, workflow e verificador redundantes foram retirados da árvore ativa do candidato; seu histórico permanece em commits Git e as evidências relevantes foram incorporadas.
+
+### Regra determinística de escalonamento a CMOF
+Somente habilitar CMOF após demonstração verificável de: associação/ligações avançadas, composição de pacotes, semântica reflexiva que exceda o perfil simples, e testes independentes OCL/XMI quando esses contratos forem usados. Complexidade do banco, número de agentes e JSONB por si só não acionam CMOF.
+
+**Importante:** a correspondência com OMG 2.5.1 e as quatro famílias de artefato gerado (JSON Schema, SQL, TypeScript, APIs) permanece uma **meta de compatibilidade**, não uma declaração de conformidade à norma.

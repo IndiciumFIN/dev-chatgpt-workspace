@@ -11,7 +11,7 @@
       "identifier": "OMG-MOF-2.5.1",
       "role": "PRIMARY_FORMAL_BASELINE",
       "officialUrl": "https://www.omg.org/spec/MOF/2.5.1",
-      "documentId": "formal/2019-10-01",
+      "documentId": "formal/19-10-01",
       "integrityManifest": "audit-evidence/mof-foundation-recovery/20261102/source-integrity/manifest.json",
       "sha256": "9a4442a6a1297615957a367181db0a1cf926b90daf27ca9106fe435d076a008f",
       "storagePolicy": "BIBLIOGRAPHIC_METADATA_AND_DIGEST_ONLY",
@@ -27,7 +27,8 @@
       "pageCount": 88,
       "officialLanding": "https://www.omg.org/spec/MOF/2.0",
       "gitBinaryStored": false,
-      "licensing": "No republication of the PDF in Git; use its concepts and locations for original review."
+      "licensing": "No republication of the PDF in Git; use its concepts and locations for original review.",
+      "bytes": 552674
     }
   ],
   "moaCompliancePoints": {
@@ -148,7 +149,29 @@
       "PLANNING",
       "TEST",
       "PRODUCTION"
-    ]
+    ],
+    "cmofActivationCriteria": [
+      "ADVANCED_ASSOCIATION_OR_LINK_SEMANTICS_PROVEN_BY_DOMAIN_TEST",
+      "PACKAGE_MERGE_OR_METAMODEL_COMPOSITION_PROVEN_NECESSARY",
+      "REFLECTIVE_BEHAVIOR_NOT_COVERED_BY_EMOF_INSPIRED_PROFILE",
+      "INDEPENDENT_OCL_AND_XMI_ROUNDTRIP_EVIDENCE_AVAILABLE"
+    ],
+    "optionalProjectionTargets": [
+      "JSON_SCHEMA_2020_12",
+      "POSTGRESQL_DDL",
+      "TYPESCRIPT_TYPES",
+      "API_CONTRACTS",
+      "SHACL_WHEN_JUSTIFIED",
+      "XMI_WHEN_JUSTIFIED"
+    ],
+    "implementationRule": "Existing JS/TS deterministic compilers and model bindings first; no Java or paid modeling environment requirement.",
+    "noCMOFJustBy": [
+      "DATABASE_TABLE_COUNT",
+      "GENERIC_JSONB",
+      "AGENT_COUNT",
+      "INHERITANCE_ALONE"
+    ],
+    "metamodelConformanceGate": "NOT_VERIFIED_MOF_2_5_1_OFFICIAL_OCL_AND_XMI"
   },
   "requiredIndependentEvidence": [
     "EMOF-specific metaclass and property conformance checks",
@@ -187,5 +210,14 @@
       "severity": "HIGH",
       "detail": "Physical DB and 36 branch reconciliation / release process not homologated end-to-end."
     }
-  ]
+  ],
+  "supersession": {
+    "reason": "Parallel candidate duplicate consolidated during source reconciliation; version history preserved by git",
+    "superseded": [
+      "registers/canonical/mof-profile-decision.v1.json",
+      "scripts/ce-agents/check-mof-profile-decision.mjs",
+      ".github/workflows/ce-mof-profile-gate.yml",
+      "audit-evidence/mof-foundation-recovery/20261102/EMOF_CMOF_IMPLEMENTATION_DECISION.md"
+    ]
+  }
 }

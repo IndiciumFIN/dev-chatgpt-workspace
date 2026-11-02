@@ -1,0 +1,387 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_atlas_dev",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-01",
+  "integrity": {
+    "tables": 3,
+    "columns": 29,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "asset_candidates",
+      "columns": [
+        {
+          "name": "asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_repo",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "asset_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "layer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "license",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attribution",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rights_status",
+          "type": "text",
+          "default": "'HOLD'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "anatomy_status",
+          "type": "text",
+          "default": "'HOLD'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_status",
+          "type": "text",
+          "default": "'NOT_APPROVED'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "asset_candidates_pkey",
+          "definition": "CREATE UNIQUE INDEX asset_candidates_pkey ON ce_atlas_dev.asset_candidates USING btree (asset_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "asset_candidates_anatomy_status_check",
+          "type": "c",
+          "definition": "CHECK ((anatomy_status = ANY (ARRAY['HOLD'::text, 'APPROVED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "asset_candidates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (asset_id)"
+        },
+        {
+          "name": "asset_candidates_release_status_check",
+          "type": "c",
+          "definition": "CHECK ((release_status = ANY (ARRAY['NOT_APPROVED'::text, 'APPROVED'::text])))"
+        },
+        {
+          "name": "asset_candidates_rights_status_check",
+          "type": "c",
+          "definition": "CHECK ((rights_status = ANY (ARRAY['HOLD'::text, 'APPROVED'::text, 'REJECTED'::text])))"
+        },
+        {
+          "name": "release_gate",
+          "type": "c",
+          "definition": "CHECK (((release_status <> 'APPROVED'::text) OR ((sha256 IS NOT NULL) AND (license IS NOT NULL) AND (attribution IS NOT NULL) AND (rights_status = 'APPROVED'::text) AND (anatomy_status = 'APPROVED'::text))))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "pmo_tasks",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": "'G4.3-candidate'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "production_safe",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pmo_tasks_pkey",
+          "definition": "CREATE UNIQUE INDEX pmo_tasks_pkey ON ce_atlas_dev.pmo_tasks USING btree (task_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pmo_tasks_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (task_id)"
+        },
+        {
+          "name": "pmo_tasks_priority_check",
+          "type": "c",
+          "definition": "CHECK ((priority = ANY (ARRAY['P0'::text, 'P1'::text, 'P2'::text])))"
+        },
+        {
+          "name": "pmo_tasks_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['HOLD_HUMAN'::text, 'BLOCKED'::text, 'STATIC_PASS'::text, 'CODE_READY_NOT_RUNTIME_VALIDATED'::text, 'HOLD_PUBLICATION'::text, 'RUNTIME_PASS'::text, 'CLOSED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "qa_runs",
+      "columns": [
+        {
+          "name": "run_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "stage",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scenario",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "passed",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "total",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "runtime_webgl_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "report",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "qa_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX qa_runs_pkey ON ce_atlas_dev.qa_runs USING btree (run_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "qa_runs_check",
+          "type": "c",
+          "definition": "CHECK (((total >= 0) AND (total >= passed)))"
+        },
+        {
+          "name": "qa_runs_passed_check",
+          "type": "c",
+          "definition": "CHECK ((passed >= 0))"
+        },
+        {
+          "name": "qa_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_code)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

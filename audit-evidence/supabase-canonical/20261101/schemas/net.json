@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "net",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": true,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 2,
+    "columns": 14,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "_http_response",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status_code",
+          "type": "integer",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "headers",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "timed_out",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "error_msg",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "_http_response_created_idx",
+          "definition": "CREATE INDEX _http_response_created_idx ON net._http_response USING btree (created)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "http_request_queue",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": "nextval('net.http_request_queue_id_seq'::regclass)",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "method",
+          "type": "net.http_method",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "headers",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "body",
+          "type": "bytea",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "timeout_milliseconds",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [],
+      "force_rls": false,
+      "constraints": [],
+      "policy_names": []
+    }
+  ]
+}

@@ -43,6 +43,8 @@ jobs:
           else
             echo 'HOLD_HUMAN: read-only Supabase credential not configured; using existing candidate snapshots'
           fi
+      - name: Independent 1NF→5NF candidate precheck (not compliance certificate)
+        run: node scripts/ce-agents/audit-normal-forms.mjs
       - name: Reconstruct skeleton, reconcile branches, check and audit
         id: agent_pipeline
         continue-on-error: true
@@ -65,7 +67,7 @@ jobs:
           mkdir -p registers/canonical/supabase-skeleton/20261101
           mkdir -p audit-evidence/supabase-canonical/20261101/validation
           cp -R artifacts/ce-agents/skeleton/. registers/canonical/supabase-skeleton/20261101/
-          cp artifacts/ce-agents/checker.json artifacts/ce-agents/audit.json artifacts/ce-agents/run-summary.json audit-evidence/supabase-canonical/20261101/validation/
+          cp artifacts/ce-agents/checker.json artifacts/ce-agents/audit.json artifacts/ce-agents/run-summary.json artifacts/ce-agents/relational-normal-forms-precheck.json audit-evidence/supabase-canonical/20261101/validation/
           git add audit-evidence/supabase-canonical/20261101/schemas/ audit-evidence/supabase-canonical/20261101/validation/ registers/canonical/supabase-skeleton/20261101/
           if ! git diff --cached --quiet; then
             git config user.name 'CE Deterministic Catalog Agent'

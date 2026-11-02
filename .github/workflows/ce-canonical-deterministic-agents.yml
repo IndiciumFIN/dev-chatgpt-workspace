@@ -1,0 +1,76 @@
+name: CE | Deterministic Supabase to Skeleton Agents
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - 'scripts/ce-agents/**'
+      - 'audit-evidence/supabase-canonical/**'
+      - 'registers/pmo/queue.v1.json'
+      - '.github/workflows/ce-canonical-deterministic-agents.yml'
+permissions:
+  contents: write
+concurrency:
+  group: ce-deterministic-skeleton-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deterministic-agents:
+    if: github.ref == 'refs/heads/canonical/supabase-skeleton-20261101'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Get exact candidate SHA and all source branches
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Fetch all branch refs for read-only reconciliation
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+      - name: Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Locked dependencies
+        run: npm ci --ignore-scripts
+      - name: Capture catalog metadata when secret is configured
+        env:
+          CE_DB_READONLY_URL: ${{ secrets.CE_DB_READONLY_URL }}
+        shell: bash
+        run: |
+          if [[ -n "$CE_DB_READONLY_URL" ]]; then
+            node scripts/ce-agents/run.mjs capture
+          else
+            echo 'HOLD_HUMAN: read-only Supabase credential not configured; using existing candidate snapshots'
+          fi
+      - name: Reconstruct skeleton, reconcile branches, check and audit
+        id: agent_pipeline
+        continue-on-error: true
+        env:
+          CE_DB_READONLY_URL: ''
+        run: node scripts/ce-agents/run.mjs pipeline
+      - name: Archive complete agent evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-supabase-skeleton-evidence
+          path: artifacts/ce-agents/
+          if-no-files-found: warn
+      - name: Version complete metadata on candidate branch only
+        if: steps.agent_pipeline.outcome == 'success'
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'
+          git add audit-evidence/supabase-canonical/20261101/schemas/
+          if ! git diff --cached --quiet; then
+            git config user.name 'CE Deterministic Catalog Agent'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore(db): deterministic read-only schema metadata snapshot [WO-CE-DB-SKELETON-001]'
+            git push origin HEAD:canonical/supabase-skeleton-20261101
+          fi
+      - name: Fail closed until full baseline is validated
+        if: steps.agent_pipeline.outcome != 'success'
+        run: |
+          echo 'HOLD_HUMAN: incomplete structural baseline. No promotion, merge, database writes or content ingestion.'
+          exit 2

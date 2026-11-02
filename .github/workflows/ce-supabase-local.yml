@@ -139,6 +139,26 @@ jobs:
           test -n "$CE_DB_LOCAL_URL"
           export CE_DB_LOCAL_URL
           node scripts/ce-agents/seed-mof-reference-local.mjs
+      - name: Verify combined canonical normative metadata count LOCAL ONLY (362 source + 6 recovered)
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          test -n "$CE_DB_LOCAL_URL"
+          export CE_DB_LOCAL_URL
+          node --input-type=module <<'NODE'
+          import pg from 'pg';
+          const u=new URL(process.env.CE_DB_LOCAL_URL);
+          if(process.env.CE_LOCAL_ONLY!=='YES'||!['localhost','127.0.0.1','[::1]'].includes(u.hostname)||u.pathname!=='/postgres') throw Error('LOCAL_ONLY_GUARD');
+          const db=new pg.Client({connectionString:u.href});
+          await db.connect();
+          try {
+            const r=await db.query('SELECT count(*)::int AS n FROM cko_governance.normative_reference_catalog');
+            if(r.rows[0].n!==368)throw Error('NORMATIVE_CATALOG_RECONCILIATION_NOT_368');
+            console.log(JSON.stringify({status:'LOCAL_NORMATIVE_REFERENCES_368_VALIDATED',source:362,supplement:6,total:r.rows[0].n,productionWrites:false,release:'HOLD_HUMAN'}));
+          } finally { await db.end(); }
+          NODE
       - name: Stage generated non-secret config in candidate branch only
         run: |
           test "$GITHUB_REF" = 'refs/heads/canonical/supabase-skeleton-20261101'

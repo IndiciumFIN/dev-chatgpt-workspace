@@ -1,0 +1,526 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_learning",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 5,
+    "columns": 38,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "assessment_rule",
+      "columns": [
+        {
+          "name": "assessment_rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assessment_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "criteria",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "success_policy",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_types",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "assessment_rule_pkey",
+          "definition": "CREATE UNIQUE INDEX assessment_rule_pkey ON xlf_learning.assessment_rule USING btree (assessment_rule_id)"
+        },
+        {
+          "name": "ix_xlf_assessment_competency",
+          "definition": "CREATE INDEX ix_xlf_assessment_competency ON xlf_learning.assessment_rule USING btree (competency_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "assessment_rule_competency_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (competency_id) REFERENCES xlf_learning.competency_definition(competency_id)"
+        },
+        {
+          "name": "assessment_rule_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assessment_rule_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "competency_definition",
+      "columns": [
+        {
+          "name": "competency_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_name",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_domain",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_policy_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "competency_definition_canonical_uri_key",
+          "definition": "CREATE UNIQUE INDEX competency_definition_canonical_uri_key ON xlf_learning.competency_definition USING btree (canonical_uri)"
+        },
+        {
+          "name": "competency_definition_pkey",
+          "definition": "CREATE UNIQUE INDEX competency_definition_pkey ON xlf_learning.competency_definition USING btree (competency_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "competency_definition_canonical_uri_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_uri)"
+        },
+        {
+          "name": "competency_definition_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (competency_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "learning_resource",
+      "columns": [
+        {
+          "name": "learning_resource_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "language",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resource_type",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "accessibility_capabilities",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata_profile",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "learning_resource_canonical_uri_key",
+          "definition": "CREATE UNIQUE INDEX learning_resource_canonical_uri_key ON xlf_learning.learning_resource USING btree (canonical_uri)"
+        },
+        {
+          "name": "learning_resource_pkey",
+          "definition": "CREATE UNIQUE INDEX learning_resource_pkey ON xlf_learning.learning_resource USING btree (learning_resource_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "learning_resource_canonical_uri_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_uri)"
+        },
+        {
+          "name": "learning_resource_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (learning_resource_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "next_step_rule",
+      "columns": [
+        {
+          "name": "next_step_rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "when_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidates",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "must_offer_at_least_one",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_next_step_competency",
+          "definition": "CREATE INDEX ix_xlf_next_step_competency ON xlf_learning.next_step_rule USING btree (competency_id)"
+        },
+        {
+          "name": "next_step_rule_pkey",
+          "definition": "CREATE UNIQUE INDEX next_step_rule_pkey ON xlf_learning.next_step_rule USING btree (next_step_rule_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "next_step_rule_competency_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (competency_id) REFERENCES xlf_learning.competency_definition(competency_id)"
+        },
+        {
+          "name": "next_step_rule_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (next_step_rule_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "procedure",
+      "columns": [
+        {
+          "name": "procedure_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "definition_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "step_command_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "competency_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_procedure_competency",
+          "definition": "CREATE INDEX ix_xlf_procedure_competency ON xlf_learning.procedure USING btree (competency_ref)"
+        },
+        {
+          "name": "procedure_canonical_uri_key",
+          "definition": "CREATE UNIQUE INDEX procedure_canonical_uri_key ON xlf_learning.procedure USING btree (canonical_uri)"
+        },
+        {
+          "name": "procedure_pkey",
+          "definition": "CREATE UNIQUE INDEX procedure_pkey ON xlf_learning.procedure USING btree (procedure_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "procedure_canonical_uri_key",
+          "type": "u",
+          "definition": "UNIQUE (canonical_uri)"
+        },
+        {
+          "name": "procedure_competency_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (competency_ref) REFERENCES xlf_learning.competency_definition(competency_id)"
+        },
+        {
+          "name": "procedure_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (procedure_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_publication",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 4,
+    "columns": 46,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "content_atom",
+      "columns": [
+        {
+          "name": "content_atom_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "section_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "text_content",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_object_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_source_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "generation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editable_override",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "content_atom_pkey",
+          "definition": "CREATE UNIQUE INDEX content_atom_pkey ON xlf_publication.content_atom USING btree (content_atom_id)"
+        },
+        {
+          "name": "ix_xlf_content_atom_publication",
+          "definition": "CREATE INDEX ix_xlf_content_atom_publication ON xlf_publication.content_atom USING btree (publication_id, section_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "content_atom_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (content_atom_id)"
+        },
+        {
+          "name": "content_atom_publication_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (publication_id) REFERENCES xlf_publication.page(publication_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "page",
+      "columns": [
+        {
+          "name": "publication_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_object_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_version_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_source_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "indexability",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editorial_owner_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "date_modified",
+          "type": "date",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lineage",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_page_profile",
+          "definition": "CREATE INDEX ix_xlf_page_profile ON xlf_publication.page USING btree (profile_id)"
+        },
+        {
+          "name": "page_locale_canonical_path_key",
+          "definition": "CREATE UNIQUE INDEX page_locale_canonical_path_key ON xlf_publication.page USING btree (locale, canonical_path)"
+        },
+        {
+          "name": "page_pkey",
+          "definition": "CREATE UNIQUE INDEX page_pkey ON xlf_publication.page USING btree (publication_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "page_locale_canonical_path_key",
+          "type": "u",
+          "definition": "UNIQUE (locale, canonical_path)"
+        },
+        {
+          "name": "page_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (publication_id)"
+        },
+        {
+          "name": "page_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (profile_id) REFERENCES xlf_publication.profile(profile_id)"
+        },
+        {
+          "name": "page_publication_state_check",
+          "type": "c",
+          "definition": "CHECK ((publication_state = ANY (ARRAY['DRAFT'::text, 'VALIDATED'::text, 'APPROVED'::text, 'PUBLISHED_INDEXABLE'::text, 'NOINDEX'::text, 'RETIRED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "profile",
+      "columns": [
+        {
+          "name": "profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "surface_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "indexability_policy",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_sections",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_metadata",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "structured_data",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "forbidden_structured_data",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "people_first_checks",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "profile_pkey",
+          "definition": "CREATE UNIQUE INDEX profile_pkey ON xlf_publication.profile USING btree (profile_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "profile_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (profile_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "release",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_state",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "template_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "generator_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate_results",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "editorial_decision",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "released_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_release_page",
+          "definition": "CREATE INDEX ix_xlf_release_page ON xlf_publication.release USING btree (publication_id)"
+        },
+        {
+          "name": "release_pkey",
+          "definition": "CREATE UNIQUE INDEX release_pkey ON xlf_publication.release USING btree (release_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "release_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id)"
+        },
+        {
+          "name": "release_publication_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (publication_id) REFERENCES xlf_publication.page(publication_id)"
+        },
+        {
+          "name": "release_render_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((render_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

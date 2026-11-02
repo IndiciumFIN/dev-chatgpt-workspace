@@ -1,0 +1,23 @@
+name: CE | MOF 2.0/2.5.1 Profile + Source Evidence Gate
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - 'registers/canonical/mof-implementation-profile.v1.json'
+      - 'scripts/ce-agents/check-mof-implementation-profile.mjs'
+      - 'audit-evidence/mof-foundation-recovery/20261102/MOF_2_0_TO_2_5_1_PROFILE_DECISION.md'
+      - '.github/workflows/ce-mof-profile-validation.yml'
+permissions:
+  contents: read
+jobs:
+  mof-metadata-and-decision-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check historical source, current OMG identity, EMOF choice and no false conformance
+        run: node scripts/ce-agents/check-mof-implementation-profile.mjs

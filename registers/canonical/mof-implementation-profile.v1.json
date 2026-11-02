@@ -1,0 +1,191 @@
+{
+  "registryId": "CE-MOF-IMPLEMENTATION-PROFILE-V1",
+  "revision": "1.0.0-candidate",
+  "workOrder": "WO-CE-DB-SKELETON-001",
+  "sourceEvaluationDate": "2026-11-02",
+  "canonicalStatus": "PRE_CANONICAL",
+  "releaseGate": "HOLD_HUMAN",
+  "decisionKind": "ARCHITECTURAL_CANDIDATE_NOT_IMPLEMENTATION_CERTIFICATE",
+  "officialNormativeSources": [
+    {
+      "identifier": "OMG-MOF-2.5.1",
+      "role": "PRIMARY_FORMAL_BASELINE",
+      "officialUrl": "https://www.omg.org/spec/MOF/2.5.1",
+      "documentId": "formal/2019-10-01",
+      "integrityManifest": "audit-evidence/mof-foundation-recovery/20261102/source-integrity/manifest.json",
+      "sha256": "9a4442a6a1297615957a367181db0a1cf926b90daf27ca9106fe435d076a008f",
+      "storagePolicy": "BIBLIOGRAPHIC_METADATA_AND_DIGEST_ONLY",
+      "complianceLevel": "NOT_CLAIMED"
+    },
+    {
+      "identifier": "OMG-MOF-2.0",
+      "role": "HISTORICAL_PRIMARY_REFERENCE_FROM_USER_UPLOAD",
+      "documentId": "formal/06-01-01",
+      "date": "2006-01",
+      "sourceFile": "formal-06-01-01.pdf",
+      "sha256": "8c4486b83c3d204a3a8ae93113b6f7ab7e546ecf534aea915340eaf0d8df2cdc",
+      "pageCount": 88,
+      "officialLanding": "https://www.omg.org/spec/MOF/2.0",
+      "gitBinaryStored": false,
+      "licensing": "No republication of the PDF in Git; use its concepts and locations for original review."
+    }
+  ],
+  "moaCompliancePoints": {
+    "EMOF": "SUPPORTED_BY_STANDARD_NOT_ATTESTED_IN_CE",
+    "CMOF": "SUPPORTED_BY_STANDARD_NOT_ATTESTED_IN_CE"
+  },
+  "referenceFromUserPDF": [
+    {
+      "section": "2",
+      "subject": "Conformance",
+      "originalPage": 1,
+      "pdfPage": 13,
+      "observation": "EMOF and CMOF are separate conformance points; technology mapping must also be considered."
+    },
+    {
+      "section": "7.2",
+      "subject": "Meta layers",
+      "originalPage": 8,
+      "pdfPage": 20,
+      "observation": "The MOF language supports at least two levels; project's four-level convention is optional."
+    },
+    {
+      "section": "9",
+      "subject": "Reflection",
+      "originalPage": 15,
+      "pdfPage": 27,
+      "observation": "Metaobject reflection/element class and reflective operations."
+    },
+    {
+      "section": "10",
+      "subject": "Identifiers",
+      "originalPage": 21,
+      "pdfPage": 33,
+      "observation": "Stable identities/extent and URI-based object identification."
+    },
+    {
+      "section": "12.1",
+      "subject": "Essential MOF",
+      "originalPage": 31,
+      "pdfPage": 43,
+      "observation": "Simple metamodel profile; mappings to XMI or Java supported in principle."
+    },
+    {
+      "section": "12.4",
+      "subject": "EMOF constraints",
+      "originalPage": 35,
+      "pdfPage": 47,
+      "observation": "Named type/property requirements, reflection and EMOF-specific constraints."
+    },
+    {
+      "section": "14.3",
+      "subject": "CMOF constraints",
+      "originalPage": 48,
+      "pdfPage": 60,
+      "observation": "Additional CMOF model constraints; not automatic requirements for EMOF."
+    },
+    {
+      "section": "15",
+      "subject": "CMOF abstract semantics",
+      "originalPage": 53,
+      "pdfPage": 65,
+      "observation": "CMOF-level abstract semantics; optional for EMOF according to the 2006 specification."
+    }
+  ],
+  "chosenApproach": {
+    "primaryProfile": "EMOF_INSPIRED_PROJECT_M3",
+    "secondaryProfile": "CMOF_SELECTIVE_WHEN_VERIFIED",
+    "mofConformanceClaim": "NONE",
+    "approvedProgrammingRuntime": "KEEP_EXISTING_JAVASCRIPT_TYPESCRIPT_POSTGRESQL_STACK",
+    "eclipseEMF": {
+      "status": "OPTIONAL_INTEROPERABILITY_ADAPTER_NOT_CORE_RUNTIME",
+      "qualification": "EMF Ecore is MOF-like and interoperates with EMOF serializations; not identical to EMOF."
+    },
+    "enterpriseArchitect": {
+      "status": "OPTIONAL_VISUAL_MODELING_ONLY",
+      "qualification": "No new licensing or dependency proposed."
+    },
+    "qvtAtl": {
+      "status": "OPTIONAL_LATER_TRANSFORMATION_CONTRACT",
+      "requirement": "Must have approved, version-pinned M2 input/output definitions and independent tests."
+    },
+    "xmi": {
+      "status": "OPTIONAL_INTERCHANGE_FORMAT",
+      "requirement": "Use current OMG XMI mapping and deterministic import/export equivalence tests if enabled."
+    },
+    "validationCompiler": "Existing JSON Schema and project-specific deterministic checkers first; optional SHACL/OCL/XMI only when evidence supports them.",
+    "noDuplicateGovernanceTables": true,
+    "projectMetalevelConvention": [
+      {
+        "level": "M3",
+        "meaning": "Foundational meta-metamodel grammar and constraints",
+        "sources": [
+          "audit-evidence/mof-foundation-recovery/20261102/sources/01_CKO_M3_META_METAMODEL_v1.0.0-rc3.schema.json"
+        ],
+        "status": "CANDIDATE_ONLY"
+      },
+      {
+        "level": "M2",
+        "meaning": "Governed CKO domain metamodel packages, classes, fields, relations and policy bindings",
+        "mapping": "Existing metadata framework/profile/field registries and ce_platform object types; reconcile, do not duplicate",
+        "status": "NOT_CERTIFIED"
+      },
+      {
+        "level": "M1",
+        "meaning": "Canonical source models for pages, tools, policies, agents, process and contracts",
+        "mapping": "Existing object model/registry and source models",
+        "status": "PARTIAL"
+      },
+      {
+        "level": "M0",
+        "meaning": "Business/clinical content instances, source evidence, execution records",
+        "mapping": "Existing source tables and instance rows with provenance",
+        "status": "NOT_FULLY_REPLAYED"
+      }
+    ],
+    "metalevelCaveat": "Four levels are an architecture convention of the project, NOT a rigid limit required by OMG MOF 2.0.",
+    "environmentProgression": [
+      "PLANNING",
+      "TEST",
+      "PRODUCTION"
+    ]
+  },
+  "requiredIndependentEvidence": [
+    "EMOF-specific metaclass and property conformance checks",
+    "Identifier and stable URI mapping across Git and Supabase",
+    "No cyclic containment or unsupported reflective mutation",
+    "Class/property naming constraints and cardinality checks",
+    "M3 schema validates actual M2 instance models and negative fixtures",
+    "M2-to-M1 generation and M1-to-M0 evidence lineage",
+    "If CMOF enabled, CMOF-specific constraints and extension semantics",
+    "If XMI enabled, official mapping/import-export equivalence and schema/version pinning",
+    "No unapproved copyrighted norm binaries in Git",
+    "Full source-branch reconciliation, Kernel admission and human release authority"
+  ],
+  "knownFindings": [
+    {
+      "id": "FIND-CE-MOF-001",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "detail": "Existing CKO M3 grammars are project-generated; cannot assert OMG MOF conformance."
+    },
+    {
+      "id": "FIND-CE-MOF-002",
+      "status": "OPEN",
+      "severity": "HIGH",
+      "detail": "No independent EMOF/CMOF OCL or official XMI cross-model behavior test proven."
+    },
+    {
+      "id": "FIND-CE-MOF-003",
+      "status": "OPEN",
+      "severity": "HIGH",
+      "detail": "M3/M2 bindings, IDs and actual M2 instances require canonical semantic reconciliation."
+    },
+    {
+      "id": "FIND-CE-MOF-004",
+      "status": "OPEN",
+      "severity": "HIGH",
+      "detail": "Physical DB and 36 branch reconciliation / release process not homologated end-to-end."
+    }
+  ]
+}

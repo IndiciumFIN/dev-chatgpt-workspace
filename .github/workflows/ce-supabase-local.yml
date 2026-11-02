@@ -9,6 +9,7 @@ on:
       - 'scripts/ce-agents/replay-local-catalog.mjs'
       - 'scripts/ce-agents/replay-local-skeleton.mjs'
       - 'scripts/ce-agents/replay-local-physical-ddl.mjs'
+      - 'scripts/ce-agents/verify-physical-ddl-local.mjs'
       - 'scripts/ce-agents/verify-full-ddl-local.mjs'
       - 'audit-evidence/mof-foundation-recovery/20261102/**'
       - 'scripts/ce-agents/audit-mof-foundation.mjs'
@@ -114,6 +115,7 @@ jobs:
           export CE_DB_LOCAL_URL
           node scripts/ce-agents/replay-local-skeleton.mjs
           node scripts/ce-agents/replay-local-physical-ddl.mjs
+          node scripts/ce-agents/verify-physical-ddl-local.mjs
           node scripts/ce-agents/verify-full-ddl-local.mjs
       - name: Audit recovered MOF M3 source and existing structural tables
         run: node scripts/ce-agents/audit-mof-foundation.mjs
@@ -155,6 +157,7 @@ jobs:
             artifacts/ce-agents/local-catalog-replay.json
             artifacts/ce-agents/local-app-skeleton.json
             artifacts/ce-agents/local-physical-ddl.json
+            artifacts/ce-agents/local-physical-ddl-parity.json
             artifacts/ce-agents/full-ddl-parity-summary.json
             artifacts/ce-agents/mof-foundation-parity.json
             artifacts/ce-agents/mof-normative-local-seed.json

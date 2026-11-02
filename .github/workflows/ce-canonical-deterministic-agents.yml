@@ -11,8 +11,8 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: ce-deterministic-skeleton-${{ github.ref }}
-  cancel-in-progress: true
+  group: ce-candidate-serialized-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   deterministic-agents:
     if: github.ref == 'refs/heads/canonical/supabase-skeleton-20261101'
@@ -71,9 +71,14 @@ jobs:
             git config user.name 'CE Deterministic Catalog Agent'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git commit -m 'chore(db): materialize 45-schema canonical skeleton candidate [WO-CE-DB-SKELETON-001]'
-            git fetch origin canonical/supabase-skeleton-20261101
-            git rebase origin/canonical/supabase-skeleton-20261101
-            git push origin HEAD:canonical/supabase-skeleton-20261101
+            for attempt in 1 2 3; do
+              git fetch origin canonical/supabase-skeleton-20261101
+              git rebase origin/canonical/supabase-skeleton-20261101
+              if git push origin HEAD:canonical/supabase-skeleton-20261101; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then echo 'HOLD_HUMAN: concurrent branch update'; exit 2; fi
+            done
           fi
       - name: Fail closed until full baseline is validated
         if: steps.agent_pipeline.outcome != 'success'

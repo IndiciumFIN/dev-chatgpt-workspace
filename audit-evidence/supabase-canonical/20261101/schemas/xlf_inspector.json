@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_inspector",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 4,
+    "columns": 44,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "finding",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "impact",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locations",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_required",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "auto_fix_available",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "finding_pkey",
+          "definition": "CREATE UNIQUE INDEX finding_pkey ON xlf_inspector.finding USING btree (finding_id)"
+        },
+        {
+          "name": "ix_xlf_finding_rule",
+          "definition": "CREATE INDEX ix_xlf_finding_rule ON xlf_inspector.finding USING btree (rule_id)"
+        },
+        {
+          "name": "ix_xlf_finding_run",
+          "definition": "CREATE INDEX ix_xlf_finding_run ON xlf_inspector.finding USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "finding_auto_fix_available_check",
+          "type": "c",
+          "definition": "CHECK ((auto_fix_available = false))"
+        },
+        {
+          "name": "finding_finding_class_check",
+          "type": "c",
+          "definition": "CHECK ((finding_class = ANY (ARRAY['STRUCTURAL_FACT'::text, 'VERIFIABLE_SIGNAL'::text, 'HEURISTIC_CANDIDATE'::text])))"
+        },
+        {
+          "name": "finding_impact_check",
+          "type": "c",
+          "definition": "CHECK ((impact = ANY (ARRAY['INFORMATION'::text, 'ATTENTION'::text, 'HIGH_ATTENTION'::text])))"
+        },
+        {
+          "name": "finding_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (finding_id)"
+        },
+        {
+          "name": "finding_rule_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (rule_id) REFERENCES xlf_inspector.rule(rule_id)"
+        },
+        {
+          "name": "finding_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (run_id) REFERENCES xlf_inspector.run(run_id)"
+        },
+        {
+          "name": "finding_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'CONFIRMED'::text, 'EXPECTED_BY_DESIGN'::text, 'FALSE_POSITIVE'::text, 'RESOLVED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "finding_review",
+      "columns": [
+        {
+          "name": "review_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reviewer_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolution_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "finding_review_pkey",
+          "definition": "CREATE UNIQUE INDEX finding_review_pkey ON xlf_inspector.finding_review USING btree (review_id)"
+        },
+        {
+          "name": "ix_xlf_finding_review_finding",
+          "definition": "CREATE INDEX ix_xlf_finding_review_finding ON xlf_inspector.finding_review USING btree (finding_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "finding_review_finding_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (finding_id) REFERENCES xlf_inspector.finding(finding_id)"
+        },
+        {
+          "name": "finding_review_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (review_id)"
+        },
+        {
+          "name": "finding_review_review_status_check",
+          "type": "c",
+          "definition": "CHECK ((review_status = ANY (ARRAY['CONFIRMED'::text, 'EXPECTED_BY_DESIGN'::text, 'FALSE_POSITIVE'::text, 'RESOLVED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "rule",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "key",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name_pt_br",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "impact_default",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "engine",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "condition",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "why_it_matters",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "how_to_verify",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mutates_workbook",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "rule_key_key",
+          "definition": "CREATE UNIQUE INDEX rule_key_key ON xlf_inspector.rule USING btree (key)"
+        },
+        {
+          "name": "rule_pkey",
+          "definition": "CREATE UNIQUE INDEX rule_pkey ON xlf_inspector.rule USING btree (rule_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "rule_finding_class_check",
+          "type": "c",
+          "definition": "CHECK ((finding_class = ANY (ARRAY['STRUCTURAL_FACT'::text, 'VERIFIABLE_SIGNAL'::text, 'HEURISTIC_CANDIDATE'::text])))"
+        },
+        {
+          "name": "rule_impact_default_check",
+          "type": "c",
+          "definition": "CHECK ((impact_default = ANY (ARRAY['INFORMATION'::text, 'ATTENTION'::text, 'HIGH_ATTENTION'::text])))"
+        },
+        {
+          "name": "rule_key_key",
+          "type": "u",
+          "definition": "UNIQUE (key)"
+        },
+        {
+          "name": "rule_mutates_workbook_check",
+          "type": "c",
+          "definition": "CHECK ((mutates_workbook = false))"
+        },
+        {
+          "name": "rule_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (rule_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "run",
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inspector_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workbook_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "original_filename",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "extraction_snapshot",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "run_pkey",
+          "definition": "CREATE UNIQUE INDEX run_pkey ON xlf_inspector.run USING btree (run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "run_bytes_check",
+          "type": "c",
+          "definition": "CHECK ((bytes >= 0))"
+        },
+        {
+          "name": "run_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (run_id)"
+        },
+        {
+          "name": "run_workbook_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((workbook_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

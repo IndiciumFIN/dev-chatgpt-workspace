@@ -1,0 +1,952 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_form_release_hold",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-01",
+  "integrity": {
+    "tables": 7,
+    "columns": 71,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "artifacts",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "zip_relative_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "byte_length",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sha256",
+          "type": "character(64)",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "storage_state",
+          "type": "text",
+          "default": "'MANIFEST_ONLY'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "storage_bucket",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "storage_object_path",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "artifacts_pkey",
+          "definition": "CREATE UNIQUE INDEX artifacts_pkey ON ce_form_release_hold.artifacts USING btree (release_id, slug, artifact_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "artifacts_artifact_type_check",
+          "type": "c",
+          "definition": "CHECK ((artifact_type = ANY (ARRAY['clinical_json'::text, 'config_json'::text, 'html'::text, 'print_pdf'::text, 'fillable_pdf'::text])))"
+        },
+        {
+          "name": "artifacts_byte_length_check",
+          "type": "c",
+          "definition": "CHECK ((byte_length > 0))"
+        },
+        {
+          "name": "artifacts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, slug, artifact_type)"
+        },
+        {
+          "name": "artifacts_release_id_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id, slug) REFERENCES ce_form_release_hold.instruments(release_id, slug) ON DELETE RESTRICT"
+        },
+        {
+          "name": "artifacts_storage_state_check",
+          "type": "c",
+          "definition": "CHECK ((storage_state = ANY (ARRAY['MANIFEST_ONLY'::text, 'UPLOADED_PRIVATE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "evidence_reviews",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_result",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verified_claim",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "contradiction",
+          "type": "text",
+          "default": "''::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision_rule",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_timestamp",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_reviews_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_reviews_pkey ON ce_form_release_hold.evidence_reviews USING btree (slug, review_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_reviews_confidence_check",
+          "type": "c",
+          "definition": "CHECK ((confidence = ANY (ARRAY['CONFIRMED'::text, 'PARTIAL'::text, 'NOT_ESTABLISHED'::text])))"
+        },
+        {
+          "name": "evidence_reviews_evidence_class_check",
+          "type": "c",
+          "definition": "CHECK ((evidence_class = ANY (ARRAY['NORMATIVE'::text, 'ORIGINAL_STUDY'::text, 'BRAZILIAN_VALIDATION'::text, 'RIGHTSHOLDER'::text, 'CLINICAL_REVIEW'::text, 'SYSTEMATIC_REVIEW'::text])))"
+        },
+        {
+          "name": "evidence_reviews_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug, review_code)"
+        },
+        {
+          "name": "evidence_reviews_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (slug) REFERENCES ce_form_release_hold.pending_work(slug) ON DELETE RESTRICT"
+        },
+        {
+          "name": "evidence_reviews_validation_result_check",
+          "type": "c",
+          "definition": "CHECK ((validation_result = 'HOLD_HUMAN'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "execution_log",
+      "columns": [
+        {
+          "name": "log_id",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 1,
+          "identity": "a",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "work_slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "action_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "outcome",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "execution_log_pkey",
+          "definition": "CREATE UNIQUE INDEX execution_log_pkey ON ce_form_release_hold.execution_log USING btree (log_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "execution_log_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (log_id)"
+        },
+        {
+          "name": "execution_log_work_slug_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (work_slug) REFERENCES ce_form_release_hold.pending_work(slug)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "instruments",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "folder",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "technical_state",
+          "type": "text",
+          "default": "'PASS_TECHNICAL'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "governance_state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clinical_state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rights_state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clinical_definition",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "config_definition",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "clinical_sha256",
+          "type": "character(64)",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "config_sha256",
+          "type": "character(64)",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "count_artifacts",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "instruments_pkey",
+          "definition": "CREATE UNIQUE INDEX instruments_pkey ON ce_form_release_hold.instruments USING btree (release_id, slug)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "instruments_clinical_state_check",
+          "type": "c",
+          "definition": "CHECK ((clinical_state = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "instruments_count_artifacts_check",
+          "type": "c",
+          "definition": "CHECK ((count_artifacts = 5))"
+        },
+        {
+          "name": "instruments_governance_state_check",
+          "type": "c",
+          "definition": "CHECK ((governance_state = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "instruments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id, slug)"
+        },
+        {
+          "name": "instruments_publication_blocked_check",
+          "type": "c",
+          "definition": "CHECK (publication_blocked)"
+        },
+        {
+          "name": "instruments_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES ce_form_release_hold.releases(release_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "instruments_rights_state_check",
+          "type": "c",
+          "definition": "CHECK ((rights_state = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "instruments_technical_state_check",
+          "type": "c",
+          "definition": "CHECK ((technical_state = 'PASS_TECHNICAL'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "pending_work",
+      "columns": [
+        {
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocker_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action_required",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "smallint",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "research_stage",
+          "type": "text",
+          "default": "'SOURCE_REVIEW'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_status",
+          "type": "text",
+          "default": "'NOT_VERIFIED'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pending_work_pkey",
+          "definition": "CREATE UNIQUE INDEX pending_work_pkey ON ce_form_release_hold.pending_work USING btree (slug)"
+        },
+        {
+          "name": "pending_work_priority",
+          "definition": "CREATE INDEX pending_work_priority ON ce_form_release_hold.pending_work USING btree (priority, research_stage)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "pending_work_gate_check",
+          "type": "c",
+          "definition": "CHECK ((gate = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "pending_work_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (slug)"
+        },
+        {
+          "name": "pending_work_publication_blocked_check",
+          "type": "c",
+          "definition": "CHECK (publication_blocked)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "file_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "zip_sha256",
+          "type": "character(64)",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "zip_bytes",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_instruments",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_artifacts",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "shared_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ux_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "governance_status",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "release_type",
+          "type": "text",
+          "default": "'FROZEN_EVIDENCE'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "storage_state",
+          "type": "text",
+          "default": "'NOT_UPLOADED'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ledger",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "releases_pkey",
+          "definition": "CREATE UNIQUE INDEX releases_pkey ON ce_form_release_hold.releases USING btree (release_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "releases_expected_artifacts_check",
+          "type": "c",
+          "definition": "CHECK ((expected_artifacts = 230))"
+        },
+        {
+          "name": "releases_expected_instruments_check",
+          "type": "c",
+          "definition": "CHECK ((expected_instruments = 46))"
+        },
+        {
+          "name": "releases_governance_status_check",
+          "type": "c",
+          "definition": "CHECK ((governance_status = 'HOLD_HUMAN'::text))"
+        },
+        {
+          "name": "releases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id)"
+        },
+        {
+          "name": "releases_publication_blocked_check",
+          "type": "c",
+          "definition": "CHECK (publication_blocked)"
+        },
+        {
+          "name": "releases_shared_contract_check",
+          "type": "c",
+          "definition": "CHECK ((shared_contract = 'CE-FORM-SHARED-CONTRACT@1.4.0'::text))"
+        },
+        {
+          "name": "releases_ux_contract_check",
+          "type": "c",
+          "definition": "CHECK ((ux_contract = 'CE-FORM-UX@1.5.0'::text))"
+        },
+        {
+          "name": "releases_zip_bytes_check",
+          "type": "c",
+          "definition": "CHECK ((zip_bytes > 0))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "sealed_releases",
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "zip_sha256",
+          "type": "character(64)",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sealed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sealed_releases_pkey",
+          "definition": "CREATE UNIQUE INDEX sealed_releases_pkey ON ce_form_release_hold.sealed_releases USING btree (release_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "seal_hash_length",
+          "type": "c",
+          "definition": "CHECK ((length(zip_sha256) = 64))"
+        },
+        {
+          "name": "sealed_releases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (release_id)"
+        },
+        {
+          "name": "sealed_releases_release_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (release_id) REFERENCES ce_form_release_hold.releases(release_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

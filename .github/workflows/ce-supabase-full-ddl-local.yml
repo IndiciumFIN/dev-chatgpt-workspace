@@ -1,0 +1,87 @@
+name: CE | Isolated Full-DDL Local Parity Candidate
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-ddl-local:
+    if: github.ref == 'refs/heads/canonical/supabase-skeleton-20261101'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CE_DB_READONLY_URL: ${{ secrets.CE_DB_READONLY_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 2.84.2
+      - name: Verify least-privilege remote source is configured
+        shell: bash
+        run: |
+          if [ -z "$CE_DB_READONLY_URL" ]; then
+            echo 'HOLD_HUMAN: CE_DB_READONLY_URL secret absent. No remote operation.'
+            exit 2
+          fi
+          docker run --rm --network host -e CE_DB_READONLY_URL postgres:17-alpine sh -ec '
+            x="$(psql "$CE_DB_READONLY_URL" -XAtqc "SELECT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls)::text FROM pg_roles WHERE rolname=current_user")"
+            if [ "$x" != "false" ] && [ "$x" != "f" ]; then
+              echo "HOLD_HUMAN: remote login has excessive privileges"
+              exit 2
+            fi
+          '
+      - name: Dependency lock + local stack (never connect CLI to remote)
+        run: |
+          npm ci --ignore-scripts
+          test -f supabase/config.toml
+          supabase start > /tmp/ce-full-local-start.log 2>&1 || { echo 'HOLD_HUMAN: local stack failed'; exit 2; }
+          supabase status >/dev/null
+      - name: Select only the 35 application schemas, excluding managed infrastructure
+        run: |
+          mkdir -p .ce-local
+          node --input-type=module -e '
+            import {readdirSync,readFileSync,writeFileSync} from "node:fs";
+            const base="audit-evidence/supabase-canonical/20261101/schemas";
+            const src=readdirSync(base).filter(x=>x.endsWith(".json")).sort();
+            if(src.length!==45)throw Error("SCHEMA_SOURCE_INCOMPLETE");
+            const app=src.map(x=>JSON.parse(readFileSync(base+"/"+x)))
+              .filter(x=>!x.isManagedSchema).map(x=>x.origin.schema);
+            if(app.length!==35 || app.some(x=>!/^[a-z][a-z0-9_]*$/.test(x)))throw Error("INVALID_DDL_SCOPE");
+            writeFileSync(".ce-local/app-schemas.txt",app.join("\n")+"\n");
+            console.log("Authorized application schema count:",app.length);
+          '
+      - name: Generate schema-only dump with PostgreSQL 17 client (no rows, no secrets published)
+        shell: bash
+        run: |
+          mapfile -t SCHEMAS < .ce-local/app-schemas.txt
+          ARGS=()
+          for s in "${SCHEMAS[@]}"; do ARGS+=("--schema=$s"); done
+          docker run --rm --network host -e CE_DB_READONLY_URL -v "$PWD/.ce-local:/work" postgres:17-alpine \
+            sh -ec 'pg_dump --dbname="$CE_DB_READONLY_URL" --schema-only --no-owner --no-privileges --file=/work/app-schema.sql "$@"' sh "${ARGS[@]}"
+          test -s .ce-local/app-schema.sql
+      - name: Restore application DDL to isolated LOCAL database only
+        shell: bash
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          if [ -z "$CE_DB_LOCAL_URL" ]; then echo 'HOLD_HUMAN: missing local URL'; exit 2; fi
+          export CE_DB_LOCAL_URL
+          docker run --rm --network host -e CE_DB_LOCAL_URL -v "$PWD/.ce-local:/work" postgres:17-alpine \
+            sh -ec 'psql "$CE_DB_LOCAL_URL" -X -v ON_ERROR_STOP=1 -f /work/app-schema.sql > /work/restore.log' || \
+            { echo 'HOLD_HUMAN: local schema restore failed; no promotion'; exit 2; }
+      - name: Verify 562 application tables and all column identifiers
+        shell: bash
+        env:
+          CE_LOCAL_ONLY: 'YES'
+        run: |
+          CE_DB_LOCAL_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+          export CE_DB_LOCAL_URL
+          node scripts/ce-agents/verify-full-ddl-local.mjs
+      - name: Publish only comparison evidence, never raw SQL or connection strings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-full-ddl-local-parity-evidence
+          path: artifacts/ce-agents/full-ddl-parity-summary.json
+          if-no-files-found: warn
+      - name: Stop isolated local stack
+        if: always()
+        run: supabase stop || true

@@ -1,0 +1,879 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_evidence",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 7,
+    "columns": 70,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "assertions",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "predicate",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_value",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_fragment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "assertion_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": "'SOURCE_DERIVED_CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "assertions_pkey",
+          "definition": "CREATE UNIQUE INDEX assertions_pkey ON cko_evidence.assertions USING btree (assertion_id)"
+        },
+        {
+          "name": "assertions_source_fragment_id_idx",
+          "definition": "CREATE INDEX assertions_source_fragment_id_idx ON cko_evidence.assertions USING btree (source_fragment_id)"
+        },
+        {
+          "name": "assertions_subject_ref_idx",
+          "definition": "CREATE INDEX assertions_subject_ref_idx ON cko_evidence.assertions USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "assertions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assertion_id)"
+        },
+        {
+          "name": "assertions_source_fragment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_fragment_id) REFERENCES cko_evidence.fragments(fragment_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "claims",
+      "columns": [
+        {
+          "name": "claim_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "claim_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "derivation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "confidence",
+          "type": "text",
+          "default": "'UNASSESSED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "human_review_required",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "claims_pkey",
+          "definition": "CREATE UNIQUE INDEX claims_pkey ON cko_evidence.claims USING btree (claim_id)"
+        },
+        {
+          "name": "claims_status_idx",
+          "definition": "CREATE INDEX claims_status_idx ON cko_evidence.claims USING btree (status)"
+        },
+        {
+          "name": "claims_subject_ref_idx",
+          "definition": "CREATE INDEX claims_subject_ref_idx ON cko_evidence.claims USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "claims_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (claim_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "evidence_bundles",
+      "columns": [
+        {
+          "name": "evidence_bundle_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validator_run_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "bundle_status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_bundles_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_bundles_pkey ON cko_evidence.evidence_bundles USING btree (evidence_bundle_id)"
+        },
+        {
+          "name": "evidence_bundles_subject_ref_idx",
+          "definition": "CREATE INDEX evidence_bundles_subject_ref_idx ON cko_evidence.evidence_bundles USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_bundles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (evidence_bundle_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "fragments",
+      "columns": [
+        {
+          "name": "fragment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "locator",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "fragment_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "fragment_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fragments_pkey",
+          "definition": "CREATE UNIQUE INDEX fragments_pkey ON cko_evidence.fragments USING btree (fragment_id)"
+        },
+        {
+          "name": "fragments_snapshot_id_idx",
+          "definition": "CREATE INDEX fragments_snapshot_id_idx ON cko_evidence.fragments USING btree (snapshot_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "fragments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (fragment_id)"
+        },
+        {
+          "name": "fragments_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (snapshot_id) REFERENCES cko_evidence.snapshots(snapshot_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "snapshots",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_text",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "raw_metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "supersedes_snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "snapshots_pkey",
+          "definition": "CREATE UNIQUE INDEX snapshots_pkey ON cko_evidence.snapshots USING btree (snapshot_id)"
+        },
+        {
+          "name": "snapshots_source_id_content_sha256_key",
+          "definition": "CREATE UNIQUE INDEX snapshots_source_id_content_sha256_key ON cko_evidence.snapshots USING btree (source_id, content_sha256)"
+        },
+        {
+          "name": "snapshots_supersedes_snapshot_id_idx",
+          "definition": "CREATE INDEX snapshots_supersedes_snapshot_id_idx ON cko_evidence.snapshots USING btree (supersedes_snapshot_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (snapshot_id)"
+        },
+        {
+          "name": "snapshots_source_id_content_sha256_key",
+          "type": "u",
+          "definition": "UNIQUE (source_id, content_sha256)"
+        },
+        {
+          "name": "snapshots_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES cko_evidence.sources(source_id)"
+        },
+        {
+          "name": "snapshots_supersedes_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (supersedes_snapshot_id) REFERENCES cko_evidence.snapshots(snapshot_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "source_accreditations",
+      "columns": [
+        {
+          "name": "accreditation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "candidate_host",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "candidate_publisher",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposed_authority_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "proposed_uses",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "methodology_assessment",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "conflicts",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "board_status",
+          "type": "text",
+          "default": "'PENDING_BOARD_REVIEW'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "review_due",
+          "type": "date",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "source_accreditations_decision_ref_idx",
+          "definition": "CREATE INDEX source_accreditations_decision_ref_idx ON cko_evidence.source_accreditations USING btree (decision_ref)"
+        },
+        {
+          "name": "source_accreditations_pkey",
+          "definition": "CREATE UNIQUE INDEX source_accreditations_pkey ON cko_evidence.source_accreditations USING btree (accreditation_id)"
+        },
+        {
+          "name": "source_accreditations_source_id_idx",
+          "definition": "CREATE INDEX source_accreditations_source_id_idx ON cko_evidence.source_accreditations USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_accreditations_decision_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (decision_ref) REFERENCES cko_governance.decisions(decision_id)"
+        },
+        {
+          "name": "source_accreditations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (accreditation_id)"
+        },
+        {
+          "name": "source_accreditations_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES cko_evidence.sources(source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "sources",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publisher",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "official_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "host",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "authority_level",
+          "type": "text",
+          "default": "'UNKNOWN'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "accreditation_status",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "accepted_for",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "review_due",
+          "type": "date",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sources_pkey",
+          "definition": "CREATE UNIQUE INDEX sources_pkey ON cko_evidence.sources USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "sources_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

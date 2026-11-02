@@ -1,0 +1,2816 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_validation",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 21,
+    "columns": 234,
+    "viewsObserved": 7
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "audit_lens_runs",
+      "columns": [
+        {
+          "name": "audit_run_uuid",
+          "type": "uuid",
+          "default": "cko_master.uuid_v7()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "audit_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "audit_batch_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "layer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lens_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "performed_by",
+          "type": "text",
+          "default": "'CKO_AUDIT_AUTOMATION'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "performed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_lens_runs_audit_run_id_key",
+          "definition": "CREATE UNIQUE INDEX audit_lens_runs_audit_run_id_key ON cko_validation.audit_lens_runs USING btree (audit_run_id)"
+        },
+        {
+          "name": "audit_lens_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_lens_runs_pkey ON cko_validation.audit_lens_runs USING btree (audit_run_uuid)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_lens_runs_audit_run_id_key",
+          "type": "u",
+          "definition": "UNIQUE (audit_run_id)"
+        },
+        {
+          "name": "audit_lens_runs_layer_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (layer_id) REFERENCES cko_governance.layer_catalog(layer_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "audit_lens_runs_lens_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (lens_id) REFERENCES cko_validation.audit_lenses(lens_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "audit_lens_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (audit_run_uuid)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "audit_lenses",
+      "columns": [
+        {
+          "name": "lens_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lens_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lens_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "method_summary",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mandatory",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "audit_lenses_lens_order_key",
+          "definition": "CREATE UNIQUE INDEX audit_lenses_lens_order_key ON cko_validation.audit_lenses USING btree (lens_order)"
+        },
+        {
+          "name": "audit_lenses_pkey",
+          "definition": "CREATE UNIQUE INDEX audit_lenses_pkey ON cko_validation.audit_lenses USING btree (lens_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "audit_lenses_lens_order_key",
+          "type": "u",
+          "definition": "UNIQUE (lens_order)"
+        },
+        {
+          "name": "audit_lenses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (lens_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "capetinha_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scan_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "capetinha_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX capetinha_observations_pkey ON cko_validation.capetinha_observations USING btree (observation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "capetinha_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (observation_id)"
+        },
+        {
+          "name": "capetinha_observations_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'HOLD'::text])))"
+        },
+        {
+          "name": "capetinha_observations_rule_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (rule_id) REFERENCES cko_validation.capetinha_rules(rule_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "capetinha_observations_scan_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (scan_run_id) REFERENCES cko_validation.capetinha_scan_runs(scan_run_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "capetinha_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "control_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "auto_finding",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notify_super",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "capetinha_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX capetinha_rules_pkey ON cko_validation.capetinha_rules USING btree (rule_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "capetinha_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (rule_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "capetinha_scan_runs",
+      "columns": [
+        {
+          "name": "scan_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "agent_id",
+          "type": "text",
+          "default": "'AGT-CAPETINHA-001'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": "'RUNNING'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "checks_total",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "failed_checks",
+          "type": "integer",
+          "default": "0",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "capetinha_scan_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX capetinha_scan_runs_pkey ON cko_validation.capetinha_scan_runs USING btree (scan_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "capetinha_scan_runs_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "capetinha_scan_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (scan_run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "coverage_expectations",
+      "columns": [
+        {
+          "name": "universe_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expectation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_level",
+          "type": "text",
+          "default": "'MEDIUM'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "basis_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "coverage_expectations_pkey",
+          "definition": "CREATE UNIQUE INDEX coverage_expectations_pkey ON cko_validation.coverage_expectations USING btree (universe_id, expectation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "coverage_expectations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (universe_id, expectation_id)"
+        },
+        {
+          "name": "coverage_expectations_universe_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (universe_id) REFERENCES cko_validation.coverage_universes(universe_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "coverage_universes",
+      "columns": [
+        {
+          "name": "universe_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expectation_basis",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_definition",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "coverage_universes_current_version_ref_idx",
+          "definition": "CREATE INDEX coverage_universes_current_version_ref_idx ON cko_validation.coverage_universes USING btree (current_version_ref)"
+        },
+        {
+          "name": "coverage_universes_pkey",
+          "definition": "CREATE UNIQUE INDEX coverage_universes_pkey ON cko_validation.coverage_universes USING btree (universe_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "coverage_universes_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "coverage_universes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (universe_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "evidence_replay_snapshots",
+      "columns": [
+        {
+          "name": "evidence_snapshot_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_payload",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "original_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "live_run_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_replay_snapshots_knowledge_pack_id_idx",
+          "definition": "CREATE INDEX evidence_replay_snapshots_knowledge_pack_id_idx ON cko_validation.evidence_replay_snapshots USING btree (knowledge_pack_id)"
+        },
+        {
+          "name": "evidence_replay_snapshots_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_replay_snapshots_pkey ON cko_validation.evidence_replay_snapshots USING btree (evidence_snapshot_id)"
+        },
+        {
+          "name": "evidence_replay_snapshots_validator_id_idx",
+          "definition": "CREATE INDEX evidence_replay_snapshots_validator_id_idx ON cko_validation.evidence_replay_snapshots USING btree (validator_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_replay_snapshots_knowledge_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (knowledge_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        },
+        {
+          "name": "evidence_replay_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (evidence_snapshot_id)"
+        },
+        {
+          "name": "evidence_replay_snapshots_validator_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (validator_id) REFERENCES cko_validation.validators(validator_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_record_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "findings_pkey",
+          "definition": "CREATE UNIQUE INDEX findings_pkey ON cko_validation.findings USING btree (finding_id)"
+        },
+        {
+          "name": "findings_status_severity_idx",
+          "definition": "CREATE INDEX findings_status_severity_idx ON cko_validation.findings USING btree (status, severity)"
+        },
+        {
+          "name": "findings_validation_run_id_idx",
+          "definition": "CREATE INDEX findings_validation_run_id_idx ON cko_validation.findings USING btree (validation_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "findings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (finding_id)"
+        },
+        {
+          "name": "findings_validation_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (validation_run_id) REFERENCES cko_validation.runs(validation_run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "ipe_catalog",
+      "columns": [
+        {
+          "name": "ipe_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "producer_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "schema_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "generation_control_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "carr_dimensions",
+          "type": "jsonb",
+          "default": "'[\"COMPLETE\", \"ACCURATE\", \"RELEVANT\", \"RELIABLE\", \"REPRODUCIBLE\"]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ipe_catalog_current_version_ref_idx",
+          "definition": "CREATE INDEX ipe_catalog_current_version_ref_idx ON cko_validation.ipe_catalog USING btree (current_version_ref)"
+        },
+        {
+          "name": "ipe_catalog_pkey",
+          "definition": "CREATE UNIQUE INDEX ipe_catalog_pkey ON cko_validation.ipe_catalog USING btree (ipe_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ipe_catalog_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "ipe_catalog_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ipe_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "ipe_evaluations",
+      "columns": [
+        {
+          "name": "ipe_evaluation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ipe_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ipe_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "snapshot_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "complete_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "accurate_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relevant_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reliable_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reproducible_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "overall_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "alternative_procedure_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evaluated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ipe_evaluations_ipe_id_idx",
+          "definition": "CREATE INDEX ipe_evaluations_ipe_id_idx ON cko_validation.ipe_evaluations USING btree (ipe_id)"
+        },
+        {
+          "name": "ipe_evaluations_pkey",
+          "definition": "CREATE UNIQUE INDEX ipe_evaluations_pkey ON cko_validation.ipe_evaluations USING btree (ipe_evaluation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ipe_evaluations_ipe_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (ipe_id) REFERENCES cko_validation.ipe_catalog(ipe_id)"
+        },
+        {
+          "name": "ipe_evaluations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ipe_evaluation_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "layer_audit_bindings",
+      "columns": [
+        {
+          "name": "layer_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lens_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "audit_status",
+          "type": "text",
+          "default": "'NOT_EXECUTED'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "latest_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "test_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ipe_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reperformance_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "conclusion",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "layer_audit_bindings_pkey",
+          "definition": "CREATE UNIQUE INDEX layer_audit_bindings_pkey ON cko_validation.layer_audit_bindings USING btree (layer_id, lens_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "layer_audit_bindings_layer_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (layer_id) REFERENCES cko_governance.layer_catalog(layer_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "layer_audit_bindings_lens_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (lens_id) REFERENCES cko_validation.audit_lenses(lens_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "layer_audit_bindings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (layer_id, lens_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "rule_packs",
+      "columns": [
+        {
+          "name": "rule_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rules",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "rule_packs_pkey",
+          "definition": "CREATE UNIQUE INDEX rule_packs_pkey ON cko_validation.rule_packs USING btree (rule_pack_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "rule_packs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (rule_pack_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "run_contexts",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "executor_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "executor_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validator_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_pack_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "schema_version_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "context_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reperformance_ready",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reperformance_level",
+          "type": "text",
+          "default": "'L1_LOGIC'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "frozen_result_basis",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "run_contexts_knowledge_pack_id_idx",
+          "definition": "CREATE INDEX run_contexts_knowledge_pack_id_idx ON cko_validation.run_contexts USING btree (knowledge_pack_id)"
+        },
+        {
+          "name": "run_contexts_pkey",
+          "definition": "CREATE UNIQUE INDEX run_contexts_pkey ON cko_validation.run_contexts USING btree (validation_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "run_contexts_knowledge_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (knowledge_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        },
+        {
+          "name": "run_contexts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validation_run_id)"
+        },
+        {
+          "name": "run_contexts_validation_run_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (validation_run_id) REFERENCES cko_validation.runs(validation_run_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "runs",
+      "columns": [
+        {
+          "name": "validation_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validator_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rule_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "findings",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "runs_pkey",
+          "definition": "CREATE UNIQUE INDEX runs_pkey ON cko_validation.runs USING btree (validation_run_id)"
+        },
+        {
+          "name": "runs_rule_pack_id_idx",
+          "definition": "CREATE INDEX runs_rule_pack_id_idx ON cko_validation.runs USING btree (rule_pack_id)"
+        },
+        {
+          "name": "runs_validator_id_idx",
+          "definition": "CREATE INDEX runs_validator_id_idx ON cko_validation.runs USING btree (validator_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validation_run_id)"
+        },
+        {
+          "name": "runs_rule_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (rule_pack_id) REFERENCES cko_validation.rule_packs(rule_pack_id)"
+        },
+        {
+          "name": "runs_validator_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (validator_id) REFERENCES cko_validation.validators(validator_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "sample_items",
+      "columns": [
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "stratum",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "selection_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inclusion_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "test_result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sample_items_pkey",
+          "definition": "CREATE UNIQUE INDEX sample_items_pkey ON cko_validation.sample_items USING btree (sampling_plan_id, item_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "sample_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (sampling_plan_id, item_ref)"
+        },
+        {
+          "name": "sample_items_sampling_plan_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (sampling_plan_id) REFERENCES cko_validation.sampling_plans(sampling_plan_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "sampling_plans",
+      "columns": [
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "test_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "audit_objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_snapshot_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_size",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selection_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_strata",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sample_size_rule",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "actual_sample_size",
+          "type": "integer",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "selection_seed",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "tolerable_exception_rule",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected_exception_rule",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PLANNED'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sampling_plans_pkey",
+          "definition": "CREATE UNIQUE INDEX sampling_plans_pkey ON cko_validation.sampling_plans USING btree (sampling_plan_id)"
+        },
+        {
+          "name": "sampling_plans_test_id_idx",
+          "definition": "CREATE INDEX sampling_plans_test_id_idx ON cko_validation.sampling_plans USING btree (test_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "sampling_plans_actual_sample_size_check",
+          "type": "c",
+          "definition": "CHECK (((actual_sample_size IS NULL) OR (actual_sample_size >= 0)))"
+        },
+        {
+          "name": "sampling_plans_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (sampling_plan_id)"
+        },
+        {
+          "name": "sampling_plans_population_size_check",
+          "type": "c",
+          "definition": "CHECK ((population_size >= 0))"
+        },
+        {
+          "name": "sampling_plans_test_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (test_id) REFERENCES cko_validation.test_catalog(test_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "test_catalog",
+      "columns": [
+        {
+          "name": "test_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "test_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_definition",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selection_method",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_mode",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_basis",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "normative_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "governing_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 15,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 20,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "test_catalog_current_version_ref_idx",
+          "definition": "CREATE INDEX test_catalog_current_version_ref_idx ON cko_validation.test_catalog USING btree (current_version_ref)"
+        },
+        {
+          "name": "test_catalog_pkey",
+          "definition": "CREATE UNIQUE INDEX test_catalog_pkey ON cko_validation.test_catalog USING btree (test_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "test_catalog_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "test_catalog_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (test_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "test_runs",
+      "columns": [
+        {
+          "name": "test_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "test_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "test_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_snapshot_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "population_size",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sampling_plan_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "selected_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "ruleset_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "master_data_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exceptions",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "test_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX test_runs_pkey ON cko_validation.test_runs USING btree (test_run_id)"
+        },
+        {
+          "name": "test_runs_sampling_plan_id_idx",
+          "definition": "CREATE INDEX test_runs_sampling_plan_id_idx ON cko_validation.test_runs USING btree (sampling_plan_id)"
+        },
+        {
+          "name": "test_runs_test_id_idx",
+          "definition": "CREATE INDEX test_runs_test_id_idx ON cko_validation.test_runs USING btree (test_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "test_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (test_run_id)"
+        },
+        {
+          "name": "test_runs_population_size_check",
+          "type": "c",
+          "definition": "CHECK ((population_size >= 0))"
+        },
+        {
+          "name": "test_runs_sampling_plan_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (sampling_plan_id) REFERENCES cko_validation.sampling_plans(sampling_plan_id)"
+        },
+        {
+          "name": "test_runs_selected_count_check",
+          "type": "c",
+          "definition": "CHECK ((selected_count >= 0))"
+        },
+        {
+          "name": "test_runs_test_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (test_id) REFERENCES cko_validation.test_catalog(test_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "validator_executors",
+      "columns": [
+        {
+          "name": "validator_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_gap",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "covered_requirements",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "uncovered_requirements",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "validator_executors_pkey",
+          "definition": "CREATE UNIQUE INDEX validator_executors_pkey ON cko_validation.validator_executors USING btree (validator_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "validator_executors_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validator_id)"
+        },
+        {
+          "name": "validator_executors_validator_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (validator_id) REFERENCES cko_validation.validators(validator_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "validators",
+      "columns": [
+        {
+          "name": "validator_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "domain",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_types",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirements",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity_policy",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "validators_current_version_ref_idx",
+          "definition": "CREATE INDEX validators_current_version_ref_idx ON cko_validation.validators USING btree (current_version_ref)"
+        },
+        {
+          "name": "validators_pkey",
+          "definition": "CREATE UNIQUE INDEX validators_pkey ON cko_validation.validators USING btree (validator_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "validators_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "validators_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (validator_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

@@ -218,7 +218,7 @@ function auditor(check) {
   const refs=['extractor.json','checker.json','skeleton/index.json','branch-audit.json'];
   const hashes=refs.filter(x=>existsSync(join(OUTPUT,x))).map(x=>({
     path:x, sha256:sha256(readFileSync(join(OUTPUT,x))) }));
-  const record={role:'evidence-auditor',wo:WO,hashes,structuralCheck:check.outcome,
+  const record={role:'evidence-auditor',outcome:check.outcome==='STRUCTURAL_PASS_NOT_HOMOLOGATED'?'EVIDENCE_RECORDED_HOLD_RELEASE':'HOLD_HUMAN',wo:WO,hashes,structuralCheck:check.outcome,
     makerCheckerAuditorSeparation:'LOGICAL_ONLY_REQUIRES_INDEPENDENT_REVIEW',
     release:'HOLD_HUMAN',kernelAdmitted:false, clinicalApproval:false,
     limitations:['No clinical content checked','No RLS simulation','No authorized promotion','No content ingestion']};

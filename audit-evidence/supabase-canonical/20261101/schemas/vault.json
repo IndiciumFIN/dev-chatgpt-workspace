@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "vault",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": true,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 1,
+    "columns": 8,
+    "viewsObserved": 1
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "secrets",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": "''::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "secret",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "key_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "nonce",
+          "type": "bytea",
+          "default": "vault._crypto_aead_det_noncegen()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "CURRENT_TIMESTAMP",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "CURRENT_TIMESTAMP",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "secrets_name_idx",
+          "definition": "CREATE UNIQUE INDEX secrets_name_idx ON vault.secrets USING btree (name) WHERE (name IS NOT NULL)"
+        },
+        {
+          "name": "secrets_pkey",
+          "definition": "CREATE UNIQUE INDEX secrets_pkey ON vault.secrets USING btree (id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "secrets_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

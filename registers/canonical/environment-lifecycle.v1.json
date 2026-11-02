@@ -1,0 +1,148 @@
+{
+  "registryId": "CE-ENVIRONMENT-LIFECYCLE-V1",
+  "version": "1.0.0-candidate",
+  "workOrder": "WO-CE-DB-SKELETON-001",
+  "canonicalStatus": "PRE_CANONICAL",
+  "releaseGate": "HOLD_HUMAN",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "observedOn": "2026-11-02",
+  "observations": {
+    "github": {
+      "planningBranch": "planning",
+      "planningBranchCommit": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "candidateBranch": "canonical/supabase-skeleton-20261101",
+      "mainBranch": "main",
+      "mainSha": "152f8b1eac55f78d68375c79fceedc5805398663",
+      "readAPIForEnvironments": "UNAVAILABLE_IN_CONNECTED_GITHUB_FETCH",
+      "mainProtectedField": false,
+      "branchRulesetEnforcement": "NOT_VERIFIED"
+    },
+    "supabase": {
+      "projectRef": "pgsybzggewhinaniybiy",
+      "productionAccess": "READ_ONLY_FOR_AUDIT",
+      "localTest": "EPHEMERAL_STACK_GITHUB_ACTIONS",
+      "appSkeletonTables": 562,
+      "exactColumnParity": true,
+      "completeDDLParity": false
+    },
+    "vercel": {
+      "project": "dev-chatgpt-workspace",
+      "projectId": "prj_Ku7hF7vkMsEXuMcPRSfQd89kb9sj",
+      "currentCandidatePreviewObserved": "ERROR_FOR_SEVERAL_RECENT_BUILDS",
+      "productionDeploymentObserved": "READY_ON_PRIOR_MAIN_COMMIT",
+      "observedProductionCommit": "9e1f8dc7b38a92795f470cacbb3f7b4b18e5d748",
+      "currentMainCommit": "152f8b1eac55f78d68375c79fceedc5805398663",
+      "publishedCommitParity": "NOT_PROVEN"
+    }
+  },
+  "environments": [
+    {
+      "id": "PLANNING",
+      "logicalOrder": 1,
+      "branch": "planning",
+      "database": "NO_PRODUCTION_WRITES",
+      "deployment": "NONE",
+      "readiness": "NOT_IMPLEMENTED_END_TO_END",
+      "requires": [
+        "WO_CREATED_AT_START",
+        "TASKS_LINKED_TO_WO",
+        "SOURCE_INVENTORY",
+        "NORMATIVE_APPLICABILITY",
+        "RECONCILED_ALL_BRANCHES",
+        "M3_M2_M1_M0_PROFILED",
+        "CONTRACT_VALIDATION",
+        "KERNEL_PRE_ADMISSION_GATE"
+      ],
+      "mayPromote": false
+    },
+    {
+      "id": "TEST",
+      "logicalOrder": 2,
+      "branch": "canonical/supabase-skeleton-20261101",
+      "database": "SUPABASE_LOCAL_EPHEMERAL",
+      "deployment": "VERCEL_PREVIEW_UNRELIABLE",
+      "readiness": "PARTIAL_INFRASTRUCTURE_ONLY",
+      "requires": [
+        "PLANNING_GATE_PASSED",
+        "WO_STILL_ACTIVE",
+        "LOCAL_SCHEMA_PARITY",
+        "FUNCTION_POLICY_RLS_CHECKS",
+        "SECURITY_CLINICAL_RIGHTS_TESTS",
+        "INDEPENDENT_CHECKER",
+        "ADVERSARIAL_AUDIT",
+        "HUMAN_HOMOLOGATION"
+      ],
+      "mayPromote": false
+    },
+    {
+      "id": "PRODUCTION",
+      "logicalOrder": 3,
+      "branch": "main",
+      "database": "EXISTING_LIVE_SUPABASE",
+      "deployment": "EXISTING_VERCEL_PRODUCTION",
+      "readiness": "EXISTING_DEPLOYMENT_NOT_CANDIDATE_PROMOTED",
+      "requires": [
+        "TEST_HOMOLOGATED",
+        "KERNEL_ADMISSION",
+        "SIGNED_OWNER_APPROVAL",
+        "APPROVED_EXACT_SHA",
+        "PROTECTED_BRANCH_OR_EQUIVALENT_ENFORCEMENT",
+        "STAGED_RELEASE",
+        "OBSERVABILITY_CHECK",
+        "ROLLBACK_EVIDENCE"
+      ],
+      "mayPromote": false
+    }
+  ],
+  "authority": {
+    "workOrderLifecycle": "WO_EXISTS_IN_PLANNING_BEFORE_ANY_ACTION",
+    "progression": [
+      "PLANNING",
+      "TEST",
+      "PRODUCTION"
+    ],
+    "promotionAuthority": "HUMAN_SUPER_AND_KERNEL_ONLY",
+    "noAgentSelfCertify": true,
+    "noProductionMutationBeforeGates": true,
+    "fullBranchCrosswalkBeforeChange": true,
+    "noMissingEvidenceMeansApproved": true,
+    "noParallelCanonicalDatabaseWithoutVerifiedGap": true
+  },
+  "openFindings": [
+    {
+      "id": "FIND-ENV-001",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "description": "GitHub Environment objects/reviewers/branch restrictions not independently verified via available connector",
+      "owner": "REPO_ADMIN"
+    },
+    {
+      "id": "FIND-ENV-002",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "description": "planning branch exists but audited WO admission and source-of-truth planning build pipeline absent",
+      "owner": "PMO_KERNEL"
+    },
+    {
+      "id": "FIND-ENV-003",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "description": "Candidate Vercel preview builds observed in ERROR; CI local DB checks do not constitute frontend E2E",
+      "owner": "BUILD_DEPLOY"
+    },
+    {
+      "id": "FIND-ENV-004",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "description": "Production deployed SHA does not match observed current main SHA; drift must be reconciled before any promotion",
+      "owner": "DEPLOY_GOVERNANCE"
+    },
+    {
+      "id": "FIND-ENV-005",
+      "status": "OPEN",
+      "severity": "BLOCKER",
+      "description": "Missing full DDL functions/triggers/views/policies, data and clinical evidence, independent Kernel admission",
+      "owner": "DB_ASSURANCE"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+name: CE | Environment Lifecycle Contract — Planning Test Production
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - canonical/supabase-skeleton-20261101
+    paths:
+      - 'registers/canonical/environment-lifecycle.v1.json'
+      - 'scripts/ce-agents/check-environment-lifecycle.mjs'
+      - '.github/workflows/ce-environment-lifecycle.yml'
+permissions:
+  contents: read
+jobs:
+  environment-policy-readonly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate WO-first, strict environment order, authority and blocked release
+        run: node scripts/ce-agents/check-environment-lifecycle.mjs
+      - name: Fail closed on any attempt to certify the unimplemented environments
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const r=JSON.parse(fs.readFileSync("registers/canonical/environment-lifecycle.v1.json","utf8"));
+            if(r.releaseGate!=="HOLD_HUMAN"||r.environments.some(x=>x.mayPromote)) process.exit(2);
+            console.log("CANDIDATE_ONLY_ENVIRONMENT_GATES_VALID / HOLD_HUMAN");
+          '

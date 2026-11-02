@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+/** Candidate-only environment lifecycle contract checker. It does not enact promotions. */
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+const root=resolve(import.meta.dirname,'../..');
+const r=JSON.parse(readFileSync(join(root,'registers/canonical/environment-lifecycle.v1.json'),'utf8'));
+assert.equal(r.registryId,'CE-ENVIRONMENT-LIFECYCLE-V1');
+assert.equal(r.releaseGate,'HOLD_HUMAN');
+assert.equal(r.canonicalStatus,'PRE_CANONICAL');
+assert.equal(r.authority.workOrderLifecycle,'WO_EXISTS_IN_PLANNING_BEFORE_ANY_ACTION');
+assert.equal(r.authority.promotionAuthority,'HUMAN_SUPER_AND_KERNEL_ONLY');
+for(const key of ['noAgentSelfCertify','noProductionMutationBeforeGates','fullBranchCrosswalkBeforeChange','noMissingEvidenceMeansApproved','noParallelCanonicalDatabaseWithoutVerifiedGap'])assert.equal(r.authority[key],true);
+assert.deepEqual(r.environments.map(e=>e.id),['PLANNING','TEST','PRODUCTION']);
+assert.deepEqual(r.environments.map(e=>e.logicalOrder),[1,2,3]);
+assert.deepEqual(r.authority.progression,r.environments.map(e=>e.id));
+assert.deepEqual(r.environments.map(e=>e.branch),['planning','canonical/supabase-skeleton-20261101','main']);
+assert.ok(r.environments.every(e=>e.mayPromote===false));
+assert.ok(r.environments.every(e=>e.requires.length>5));
+assert.ok(r.environments[2].requires.includes('SIGNED_OWNER_APPROVAL'));
+assert.ok(r.environments[2].requires.includes('APPROVED_EXACT_SHA'));
+assert.ok(r.environments[2].requires.includes('KERNEL_ADMISSION'));
+assert.ok(r.openFindings.length>=4&&r.openFindings.every(f=>f.status==='OPEN'));
+const pmo=JSON.parse(readFileSync(join(root,'registers/pmo/queue.v1.json'),'utf8'));
+const wo=pmo.items.find(x=>x.id===r.workOrder);
+assert.ok(wo,'Work order must already be registered in canonical PMO queue');
+assert.notEqual(wo.status,'DONE','Canonical candidate WO cannot be claimed done');
+assert.ok(existsSync(join(root,'scripts/ce-agents/verify-full-ddl-local.mjs')));
+assert.ok(existsSync(join(root,'scripts/ce-agents/branch-crosswalk.mjs')));
+const report={status:'LIFECYCLE_CONTRACT_VALID_NOT_ENVIRONMENT_DEPLOYED',workOrder:wo.id,woStatus:wo.status,phases:r.environments.map(e=>({id:e.id,readiness:e.readiness})),openFindings:r.openFindings.length,releaseGate:r.releaseGate};
+console.log(JSON.stringify(report));

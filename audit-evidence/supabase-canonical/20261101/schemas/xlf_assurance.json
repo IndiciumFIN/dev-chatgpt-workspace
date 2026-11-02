@@ -1,0 +1,893 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "xlf_assurance",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 7,
+    "columns": 67,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "ci_run",
+      "columns": [
+        {
+          "name": "ci_run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "tests",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "artifact_manifest_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ci_run_pkey",
+          "definition": "CREATE UNIQUE INDEX ci_run_pkey ON xlf_assurance.ci_run USING btree (ci_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "ci_run_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ci_run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "drift_event",
+      "columns": [
+        {
+          "name": "drift_event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "baseline_snapshot_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "current_snapshot_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "revalidation_required",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "impact_summary",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "drift_event_pkey",
+          "definition": "CREATE UNIQUE INDEX drift_event_pkey ON xlf_assurance.drift_event USING btree (drift_event_id)"
+        },
+        {
+          "name": "ix_xlf_drift_baseline",
+          "definition": "CREATE INDEX ix_xlf_drift_baseline ON xlf_assurance.drift_event USING btree (baseline_snapshot_id)"
+        },
+        {
+          "name": "ix_xlf_drift_current",
+          "definition": "CREATE INDEX ix_xlf_drift_current ON xlf_assurance.drift_event USING btree (current_snapshot_id)"
+        },
+        {
+          "name": "ix_xlf_drift_source",
+          "definition": "CREATE INDEX ix_xlf_drift_source ON xlf_assurance.drift_event USING btree (source_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "drift_event_baseline_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (baseline_snapshot_id) REFERENCES xlf_assurance.source_snapshot(snapshot_id)"
+        },
+        {
+          "name": "drift_event_classification_check",
+          "type": "c",
+          "definition": "CHECK ((classification = ANY (ARRAY['UNCHANGED'::text, 'HTTP_METADATA_CHANGED'::text, 'COSMETIC_BODY_CHANGE'::text, 'SEMANTIC_TEXT_CHANGE'::text, 'SOURCE_UNAVAILABLE'::text, 'REDIRECTED'::text, 'SOURCE_SUPERSEDED'::text])))"
+        },
+        {
+          "name": "drift_event_current_snapshot_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_snapshot_id) REFERENCES xlf_assurance.source_snapshot(snapshot_id)"
+        },
+        {
+          "name": "drift_event_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (drift_event_id)"
+        },
+        {
+          "name": "drift_event_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "release_blocker",
+      "columns": [
+        {
+          "name": "blocker_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "condition",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_release_blocker_scope_status",
+          "definition": "CREATE INDEX ix_xlf_release_blocker_scope_status ON xlf_assurance.release_blocker USING btree (scope, status)"
+        },
+        {
+          "name": "release_blocker_pkey",
+          "definition": "CREATE UNIQUE INDEX release_blocker_pkey ON xlf_assurance.release_blocker USING btree (blocker_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "release_blocker_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (blocker_id)"
+        },
+        {
+          "name": "release_blocker_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['BLOCKER'::text, 'NON_BLOCKING_HOLD'::text])))"
+        },
+        {
+          "name": "release_blocker_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'RESOLVED'::text, 'SUPERSEDED'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "release_gate_run",
+      "columns": [
+        {
+          "name": "gate_run_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "product_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blockers",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "executed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "release_gate_run_pkey",
+          "definition": "CREATE UNIQUE INDEX release_gate_run_pkey ON xlf_assurance.release_gate_run USING btree (gate_run_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "release_gate_run_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (gate_run_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "revalidation_task",
+      "columns": [
+        {
+          "name": "task_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "drift_event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "disposition",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_revalidation_drift",
+          "definition": "CREATE INDEX ix_xlf_revalidation_drift ON xlf_assurance.revalidation_task USING btree (drift_event_id)"
+        },
+        {
+          "name": "ix_xlf_revalidation_status_priority",
+          "definition": "CREATE INDEX ix_xlf_revalidation_status_priority ON xlf_assurance.revalidation_task USING btree (status, priority)"
+        },
+        {
+          "name": "revalidation_task_pkey",
+          "definition": "CREATE UNIQUE INDEX revalidation_task_pkey ON xlf_assurance.revalidation_task USING btree (task_id)"
+        },
+        {
+          "name": "revalidation_task_source_id_drift_event_id_target_id_key",
+          "definition": "CREATE UNIQUE INDEX revalidation_task_source_id_drift_event_id_target_id_key ON xlf_assurance.revalidation_task USING btree (source_id, drift_event_id, target_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "revalidation_task_drift_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (drift_event_id) REFERENCES xlf_assurance.drift_event(drift_event_id)"
+        },
+        {
+          "name": "revalidation_task_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (task_id)"
+        },
+        {
+          "name": "revalidation_task_priority_check",
+          "type": "c",
+          "definition": "CHECK ((priority = ANY (ARRAY['P0'::text, 'P1'::text, 'P2'::text, 'P3'::text])))"
+        },
+        {
+          "name": "revalidation_task_source_id_drift_event_id_target_id_key",
+          "type": "u",
+          "definition": "UNIQUE (source_id, drift_event_id, target_id)"
+        },
+        {
+          "name": "revalidation_task_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        },
+        {
+          "name": "revalidation_task_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['OPEN'::text, 'IN_REVIEW'::text, 'RESOLVED'::text, 'HOLD'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "source_snapshot",
+      "columns": [
+        {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "fetched_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "http_status",
+          "type": "integer",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "etag",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "last_modified",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "body_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_text_length",
+          "type": "bigint",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "redirected_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "error",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_snapshot_source_fetched",
+          "definition": "CREATE INDEX ix_xlf_snapshot_source_fetched ON xlf_assurance.source_snapshot USING btree (source_id, fetched_at DESC)"
+        },
+        {
+          "name": "source_snapshot_pkey",
+          "definition": "CREATE UNIQUE INDEX source_snapshot_pkey ON xlf_assurance.source_snapshot USING btree (snapshot_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_snapshot_http_status_check",
+          "type": "c",
+          "definition": "CHECK (((http_status >= 0) AND (http_status <= 599)))"
+        },
+        {
+          "name": "source_snapshot_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (snapshot_id)"
+        },
+        {
+          "name": "source_snapshot_semantic_text_length_check",
+          "type": "c",
+          "definition": "CHECK (((semantic_text_length IS NULL) OR (semantic_text_length >= 0)))"
+        },
+        {
+          "name": "source_snapshot_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "source_watch",
+      "columns": [
+        {
+          "name": "watch_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "watch_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "baseline_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata_fingerprint_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "remote_etag",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "remote_last_modified",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "remote_body_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "semantic_text_sha256",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "last_checked_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "last_changed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "drift_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "monitoring_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_xlf_watch_source",
+          "definition": "CREATE INDEX ix_xlf_watch_source ON xlf_assurance.source_watch USING btree (source_id)"
+        },
+        {
+          "name": "source_watch_pkey",
+          "definition": "CREATE UNIQUE INDEX source_watch_pkey ON xlf_assurance.source_watch USING btree (watch_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "source_watch_metadata_fingerprint_sha256_check",
+          "type": "c",
+          "definition": "CHECK ((metadata_fingerprint_sha256 ~ '^[0-9a-f]{64}$'::text))"
+        },
+        {
+          "name": "source_watch_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (watch_id)"
+        },
+        {
+          "name": "source_watch_source_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_id) REFERENCES xlf_reg.source(source_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

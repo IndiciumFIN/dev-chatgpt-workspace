@@ -1,0 +1,4036 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_device",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 28,
+    "columns": 325,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "component_relations",
+      "columns": [
+        {
+          "name": "relation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_component_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_component_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "component_relations_device_id_source_component_ref_relation_key",
+          "definition": "CREATE UNIQUE INDEX component_relations_device_id_source_component_ref_relation_key ON cko_device.component_relations USING btree (device_id, source_component_ref, relation_type, target_component_ref)"
+        },
+        {
+          "name": "component_relations_pkey",
+          "definition": "CREATE UNIQUE INDEX component_relations_pkey ON cko_device.component_relations USING btree (relation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "component_relations_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (device_id) REFERENCES cko_device.device_profiles(device_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "component_relations_device_id_source_component_ref_relation_key",
+          "type": "u",
+          "definition": "UNIQUE (device_id, source_component_ref, relation_type, target_component_ref)"
+        },
+        {
+          "name": "component_relations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (relation_id)"
+        },
+        {
+          "name": "component_relations_source_component_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_component_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "component_relations_target_component_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (target_component_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "components",
+      "columns": [
+        {
+          "name": "component_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "component_kind",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderable",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "components_pkey",
+          "definition": "CREATE UNIQUE INDEX components_pkey ON cko_device.components USING btree (component_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "components_component_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (component_id) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "components_component_kind_check",
+          "type": "c",
+          "definition": "CHECK ((component_kind = ANY (ARRAY['PHYSICAL_PART'::text, 'FEATURE'::text, 'INTERFACE'::text, 'OPTIONAL_COMPONENT'::text])))"
+        },
+        {
+          "name": "components_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (device_id) REFERENCES cko_device.device_profiles(device_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "components_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (component_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "device_profiles",
+      "columns": [
+        {
+          "name": "device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "archetype",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "presentation_geometry_level",
+          "type": "text",
+          "default": "'G0'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "device_profiles_pkey",
+          "definition": "CREATE UNIQUE INDEX device_profiles_pkey ON cko_device.device_profiles USING btree (device_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "device_profiles_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (device_id) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "device_profiles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (device_id)"
+        },
+        {
+          "name": "device_profiles_presentation_geometry_level_check",
+          "type": "c",
+          "definition": "CHECK ((presentation_geometry_level = ANY (ARRAY['G0'::text, 'G1'::text, 'G2'::text, 'G3'::text, 'G4'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "dimensions",
+      "columns": [
+        {
+          "name": "dimension_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "numeric_value",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "default": "'mm'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dimensions_pkey",
+          "definition": "CREATE UNIQUE INDEX dimensions_pkey ON cko_device.dimensions USING btree (dimension_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "dimensions_check",
+          "type": "c",
+          "definition": "CHECK ((((epistemic_status = 'UNKNOWN'::text) AND (numeric_value IS NULL)) OR (epistemic_status <> 'UNKNOWN'::text)))"
+        },
+        {
+          "name": "dimensions_epistemic_status_check",
+          "type": "c",
+          "definition": "CHECK ((epistemic_status = ANY (ARRAY['SOURCE_CONFIRMED'::text, 'SOURCE_DERIVED'::text, 'COMPUTED_FROM_CONFIRMED'::text, 'HUMAN_CONFIRMED'::text, 'UNKNOWN'::text, 'CONFLICT'::text, 'NOT_APPLICABLE'::text, 'UNAVAILABLE'::text, 'PROHIBITED_INFERENCE'::text])))"
+        },
+        {
+          "name": "dimensions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (dimension_id)"
+        },
+        {
+          "name": "dimensions_scope_class_check",
+          "type": "c",
+          "definition": "CHECK ((scope_class = ANY (ARRAY['CLASS_INVARIANT'::text, 'VARIANT_DEPENDENT'::text, 'PRODUCT_SPECIFIC'::text, 'UNRESOLVED'::text])))"
+        },
+        {
+          "name": "dimensions_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "documentation_sections",
+      "columns": [
+        {
+          "name": "documentation_section_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "section_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "section_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "section_status",
+          "type": "text",
+          "default": "'STRUCTURE_DEFINED'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_when_empty",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "documentation_sections_pkey",
+          "definition": "CREATE UNIQUE INDEX documentation_sections_pkey ON cko_device.documentation_sections USING btree (documentation_section_id)"
+        },
+        {
+          "name": "documentation_sections_subject_ref_section_key_key",
+          "definition": "CREATE UNIQUE INDEX documentation_sections_subject_ref_section_key_key ON cko_device.documentation_sections USING btree (subject_ref, section_key)"
+        },
+        {
+          "name": "idx_documentation_sections_subject",
+          "definition": "CREATE INDEX idx_documentation_sections_subject ON cko_device.documentation_sections USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "documentation_sections_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (documentation_section_id)"
+        },
+        {
+          "name": "documentation_sections_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "documentation_sections_subject_ref_section_key_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, section_key)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "epistemic_ledger",
+      "columns": [
+        {
+          "name": "ledger_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "field_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "value_json",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "render_permission",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "epistemic_ledger_pkey",
+          "definition": "CREATE UNIQUE INDEX epistemic_ledger_pkey ON cko_device.epistemic_ledger USING btree (ledger_id)"
+        },
+        {
+          "name": "epistemic_ledger_subject_ref_field_key_key",
+          "definition": "CREATE UNIQUE INDEX epistemic_ledger_subject_ref_field_key_key ON cko_device.epistemic_ledger USING btree (subject_ref, field_key)"
+        },
+        {
+          "name": "idx_epistemic_ledger_subject",
+          "definition": "CREATE INDEX idx_epistemic_ledger_subject ON cko_device.epistemic_ledger USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "epistemic_ledger_epistemic_status_check",
+          "type": "c",
+          "definition": "CHECK ((epistemic_status = ANY (ARRAY['SOURCE_CONFIRMED'::text, 'SOURCE_DERIVED'::text, 'COMPUTED_FROM_CONFIRMED'::text, 'HUMAN_CONFIRMED'::text, 'UNKNOWN'::text, 'CONFLICT'::text, 'NOT_APPLICABLE'::text, 'UNAVAILABLE'::text, 'PROHIBITED_INFERENCE'::text, 'VARIANT_DEPENDENT'::text, 'DEFINED_AXIS'::text])))"
+        },
+        {
+          "name": "epistemic_ledger_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ledger_id)"
+        },
+        {
+          "name": "epistemic_ledger_subject_ref_field_key_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, field_key)"
+        },
+        {
+          "name": "epistemic_ledger_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "geometry_acquisition_queue",
+      "columns": [
+        {
+          "name": "acquisition_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "workflow_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_target",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_source_types",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_publishers",
+          "type": "text[]",
+          "default": "'{}'::text[]",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": "'P1'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'QUEUED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_for_gate",
+          "type": "text",
+          "default": "'GEOMETRY_LOCK'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "geometry_acquisition_queue_pkey",
+          "definition": "CREATE UNIQUE INDEX geometry_acquisition_queue_pkey ON cko_device.geometry_acquisition_queue USING btree (acquisition_id)"
+        },
+        {
+          "name": "idx_geometry_acq_subject",
+          "definition": "CREATE INDEX idx_geometry_acq_subject ON cko_device.geometry_acquisition_queue USING btree (subject_ref)"
+        },
+        {
+          "name": "idx_geometry_acq_workflow_status",
+          "definition": "CREATE INDEX idx_geometry_acq_workflow_status ON cko_device.geometry_acquisition_queue USING btree (workflow_id, status, priority)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "geometry_acquisition_queue_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (acquisition_id)"
+        },
+        {
+          "name": "geometry_acquisition_queue_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['QUEUED'::text, 'IN_PROGRESS'::text, 'ACQUIRED'::text, 'REJECTED'::text, 'BLOCKED'::text, 'CANCELLED'::text])))"
+        },
+        {
+          "name": "geometry_acquisition_queue_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "geometry_evidence",
+      "columns": [
+        {
+          "name": "geometry_evidence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identity_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "view_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_use",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prohibited_use",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "geometry_evidence_pkey",
+          "definition": "CREATE UNIQUE INDEX geometry_evidence_pkey ON cko_device.geometry_evidence USING btree (geometry_evidence_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "geometry_evidence_evidence_level_check",
+          "type": "c",
+          "definition": "CHECK ((evidence_level = ANY (ARRAY['GE0'::text, 'GE1'::text, 'GE2'::text, 'GE3'::text, 'GE4'::text, 'GE5'::text])))"
+        },
+        {
+          "name": "geometry_evidence_identity_scope_check",
+          "type": "c",
+          "definition": "CHECK ((identity_scope = ANY (ARRAY['CLASS'::text, 'FAMILY'::text, 'EXACT_VARIANT'::text, 'EXACT_SKU'::text, 'NEGATIVE_CONTROL'::text])))"
+        },
+        {
+          "name": "geometry_evidence_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (geometry_evidence_id)"
+        },
+        {
+          "name": "geometry_evidence_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "identifiers",
+      "columns": [
+        {
+          "name": "identifier_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identifier_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identifier_value",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "issuing_authority",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "identifiers_pkey",
+          "definition": "CREATE UNIQUE INDEX identifiers_pkey ON cko_device.identifiers USING btree (identifier_id)"
+        },
+        {
+          "name": "identifiers_subject_ref_identifier_type_identifier_value_key",
+          "definition": "CREATE UNIQUE INDEX identifiers_subject_ref_identifier_type_identifier_value_key ON cko_device.identifiers USING btree (subject_ref, identifier_type, identifier_value)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "identifiers_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (identifier_id)"
+        },
+        {
+          "name": "identifiers_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "identifiers_subject_ref_identifier_type_identifier_value_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, identifier_type, identifier_value)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "landmark_contracts",
+      "columns": [
+        {
+          "name": "landmark_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "landmark_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "semantic_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "landmark_contracts_device_id_landmark_code_key",
+          "definition": "CREATE UNIQUE INDEX landmark_contracts_device_id_landmark_code_key ON cko_device.landmark_contracts USING btree (device_id, landmark_code)"
+        },
+        {
+          "name": "landmark_contracts_pkey",
+          "definition": "CREATE UNIQUE INDEX landmark_contracts_pkey ON cko_device.landmark_contracts USING btree (landmark_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "landmark_contracts_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (device_id) REFERENCES cko_device.device_profiles(device_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "landmark_contracts_device_id_landmark_code_key",
+          "type": "u",
+          "definition": "UNIQUE (device_id, landmark_code)"
+        },
+        {
+          "name": "landmark_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (landmark_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "landmark_observations",
+      "columns": [
+        {
+          "name": "observation_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "landmark_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_evidence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "x_norm",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "y_norm",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "z_norm",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "landmark_observations_pkey",
+          "definition": "CREATE UNIQUE INDEX landmark_observations_pkey ON cko_device.landmark_observations USING btree (observation_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "landmark_observations_geometry_evidence_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (geometry_evidence_id) REFERENCES cko_device.geometry_evidence(geometry_evidence_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "landmark_observations_landmark_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (landmark_id) REFERENCES cko_device.landmark_contracts(landmark_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "landmark_observations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (observation_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "materials",
+      "columns": [
+        {
+          "name": "material_assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "component_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "material_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "scope_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_permission",
+          "type": "text",
+          "default": "'NONE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "materials_pkey",
+          "definition": "CREATE UNIQUE INDEX materials_pkey ON cko_device.materials USING btree (material_assertion_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "materials_component_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (component_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "materials_epistemic_status_check",
+          "type": "c",
+          "definition": "CHECK ((epistemic_status = ANY (ARRAY['SOURCE_CONFIRMED'::text, 'SOURCE_DERIVED'::text, 'COMPUTED_FROM_CONFIRMED'::text, 'HUMAN_CONFIRMED'::text, 'UNKNOWN'::text, 'CONFLICT'::text, 'NOT_APPLICABLE'::text, 'UNAVAILABLE'::text, 'PROHIBITED_INFERENCE'::text])))"
+        },
+        {
+          "name": "materials_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (material_assertion_id)"
+        },
+        {
+          "name": "materials_scope_class_check",
+          "type": "c",
+          "definition": "CHECK ((scope_class = ANY (ARRAY['CLASS_INVARIANT'::text, 'VARIANT_DEPENDENT'::text, 'PRODUCT_SPECIFIC'::text, 'UNRESOLVED'::text])))"
+        },
+        {
+          "name": "materials_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "object_documentation_profiles",
+      "columns": [
+        {
+          "name": "object_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "documentation_standard_ref",
+          "type": "text",
+          "default": "'CKO-OBJ-001'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "documentation_status",
+          "type": "text",
+          "default": "'STRUCTURAL_BASELINE'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "closure_target",
+          "type": "numeric(5,2)",
+          "default": "95.00",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_progressive",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_evidence_gated",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderer_evidence_gated",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "object_documentation_profiles_pkey",
+          "definition": "CREATE UNIQUE INDEX object_documentation_profiles_pkey ON cko_device.object_documentation_profiles USING btree (object_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "object_documentation_profiles_closure_target_check",
+          "type": "c",
+          "definition": "CHECK (((closure_target >= (0)::numeric) AND (closure_target <= (100)::numeric)))"
+        },
+        {
+          "name": "object_documentation_profiles_object_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (object_id) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "object_documentation_profiles_object_scope_check",
+          "type": "c",
+          "definition": "CHECK ((object_scope = ANY (ARRAY['CLASS'::text, 'FAMILY'::text, 'EXACT_VARIANT'::text, 'EXACT_SKU'::text, 'PHYSICAL_ASSET'::text])))"
+        },
+        {
+          "name": "object_documentation_profiles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (object_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "object_readiness",
+      "columns": [
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identity_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "md_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "topology_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "materials_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimensions_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relations_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "visual_evidence_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_status",
+          "type": "text",
+          "default": "'BLOCKED'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderer_status",
+          "type": "text",
+          "default": "'BLOCKED'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_status",
+          "type": "text",
+          "default": "'BLOCKED'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "documentation_completion",
+          "type": "numeric(5,2)",
+          "default": "0",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_completion",
+          "type": "numeric(5,2)",
+          "default": "0",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_reasons",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "object_readiness_pkey",
+          "definition": "CREATE UNIQUE INDEX object_readiness_pkey ON cko_device.object_readiness USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "object_readiness_documentation_completion_check",
+          "type": "c",
+          "definition": "CHECK (((documentation_completion >= (0)::numeric) AND (documentation_completion <= (100)::numeric)))"
+        },
+        {
+          "name": "object_readiness_evidence_completion_check",
+          "type": "c",
+          "definition": "CHECK (((evidence_completion >= (0)::numeric) AND (evidence_completion <= (100)::numeric)))"
+        },
+        {
+          "name": "object_readiness_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (subject_ref)"
+        },
+        {
+          "name": "object_readiness_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "object_renderer_contracts",
+      "columns": [
+        {
+          "name": "renderer_contract_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "renderer_type",
+          "type": "text",
+          "default": "'OBJECT_PAGE'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "sections",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "suppress_unknown_fields",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "show_unresolved_regulatory_state",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "require_geometry_lock_for_technical_visual",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "generator_authored_text_prohibited",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'STRUCTURAL_BASELINE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_renderer_contracts_subject",
+          "definition": "CREATE INDEX idx_renderer_contracts_subject ON cko_device.object_renderer_contracts USING btree (subject_ref)"
+        },
+        {
+          "name": "object_renderer_contracts_pkey",
+          "definition": "CREATE UNIQUE INDEX object_renderer_contracts_pkey ON cko_device.object_renderer_contracts USING btree (renderer_contract_id)"
+        },
+        {
+          "name": "object_renderer_contracts_subject_ref_renderer_type_key",
+          "definition": "CREATE UNIQUE INDEX object_renderer_contracts_subject_ref_renderer_type_key ON cko_device.object_renderer_contracts USING btree (subject_ref, renderer_type)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "object_renderer_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (renderer_contract_id)"
+        },
+        {
+          "name": "object_renderer_contracts_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "object_renderer_contracts_subject_ref_renderer_type_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, renderer_type)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "object_standards",
+      "columns": [
+        {
+          "name": "object_standard_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "standard_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "standard_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "applicability_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "applicability_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "object_standards_pkey",
+          "definition": "CREATE UNIQUE INDEX object_standards_pkey ON cko_device.object_standards USING btree (object_standard_id)"
+        },
+        {
+          "name": "object_standards_subject_ref_idx",
+          "definition": "CREATE INDEX object_standards_subject_ref_idx ON cko_device.object_standards USING btree (subject_ref)"
+        },
+        {
+          "name": "object_standards_subject_ref_standard_ref_applicability_sco_key",
+          "definition": "CREATE UNIQUE INDEX object_standards_subject_ref_standard_ref_applicability_sco_key ON cko_device.object_standards USING btree (subject_ref, standard_ref, applicability_scope)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "object_standards_applicability_status_check",
+          "type": "c",
+          "definition": "CHECK ((applicability_status = ANY (ARRAY['APPLICABLE'::text, 'CONDITIONAL'::text, 'CANDIDATE'::text, 'NOT_APPLICABLE'::text, 'SUPERSEDED'::text, 'UNRESOLVED'::text])))"
+        },
+        {
+          "name": "object_standards_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (object_standard_id)"
+        },
+        {
+          "name": "object_standards_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "object_standards_subject_ref_standard_ref_applicability_sco_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, standard_ref, applicability_scope)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "packaging_profiles",
+      "columns": [
+        {
+          "name": "packaging_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "package_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "quantity",
+          "type": "numeric",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "dimensions",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "weight",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "packaging_profiles_pkey",
+          "definition": "CREATE UNIQUE INDEX packaging_profiles_pkey ON cko_device.packaging_profiles USING btree (packaging_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "packaging_profiles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (packaging_id)"
+        },
+        {
+          "name": "packaging_profiles_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "reference_cohort_members",
+      "columns": [
+        {
+          "name": "cohort_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "member_variant_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "member_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inclusion_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reference_cohort_members_pkey",
+          "definition": "CREATE UNIQUE INDEX reference_cohort_members_pkey ON cko_device.reference_cohort_members USING btree (cohort_id, member_variant_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reference_cohort_members_cohort_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (cohort_id) REFERENCES cko_device.reference_cohorts(cohort_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "reference_cohort_members_inclusion_status_check",
+          "type": "c",
+          "definition": "CHECK ((inclusion_status = ANY (ARRAY['INCLUDED'::text, 'EXCLUDED'::text, 'PENDING'::text])))"
+        },
+        {
+          "name": "reference_cohort_members_member_role_check",
+          "type": "c",
+          "definition": "CHECK ((member_role = ANY (ARRAY['CORE'::text, 'SECONDARY'::text, 'NEGATIVE_CONTROL'::text, 'EXCLUDED'::text])))"
+        },
+        {
+          "name": "reference_cohort_members_member_variant_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (member_variant_id) REFERENCES cko_device.variants(variant_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "reference_cohort_members_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (cohort_id, member_variant_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "reference_cohorts",
+      "columns": [
+        {
+          "name": "cohort_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "criteria",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reference_cohorts_pkey",
+          "definition": "CREATE UNIQUE INDEX reference_cohorts_pkey ON cko_device.reference_cohorts USING btree (cohort_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reference_cohorts_cohort_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (cohort_id) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "reference_cohorts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (cohort_id)"
+        },
+        {
+          "name": "reference_cohorts_target_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (target_device_id) REFERENCES cko_device.device_profiles(device_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "regulatory_events",
+      "columns": [
+        {
+          "name": "event_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "authority",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "event_identifier",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "classification",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "event_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "initiated_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "posted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_effect",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "regulatory_events_pkey",
+          "definition": "CREATE UNIQUE INDEX regulatory_events_pkey ON cko_device.regulatory_events USING btree (event_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "regulatory_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (event_id)"
+        },
+        {
+          "name": "regulatory_events_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "regulatory_projections",
+      "columns": [
+        {
+          "name": "projection_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "authority",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "record_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "record_identifier",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "regulatory_projections_pkey",
+          "definition": "CREATE UNIQUE INDEX regulatory_projections_pkey ON cko_device.regulatory_projections USING btree (projection_id)"
+        },
+        {
+          "name": "regulatory_projections_subject_jurisdiction_idx",
+          "definition": "CREATE INDEX regulatory_projections_subject_jurisdiction_idx ON cko_device.regulatory_projections USING btree (subject_ref, jurisdiction, authority)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "regulatory_projections_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (projection_id)"
+        },
+        {
+          "name": "regulatory_projections_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "scope_contracts",
+      "columns": [
+        {
+          "name": "scope_contract_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "included_scope",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "excluded_scope",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "exact_product_required",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_exact_binding_required",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_scope_contracts_subject",
+          "definition": "CREATE INDEX idx_scope_contracts_subject ON cko_device.scope_contracts USING btree (subject_ref)"
+        },
+        {
+          "name": "scope_contracts_pkey",
+          "definition": "CREATE UNIQUE INDEX scope_contracts_pkey ON cko_device.scope_contracts USING btree (scope_contract_id)"
+        },
+        {
+          "name": "scope_contracts_subject_ref_key",
+          "definition": "CREATE UNIQUE INDEX scope_contracts_subject_ref_key ON cko_device.scope_contracts USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "scope_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (scope_contract_id)"
+        },
+        {
+          "name": "scope_contracts_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "scope_contracts_subject_ref_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "technical_properties",
+      "columns": [
+        {
+          "name": "property_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "property_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "value",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "scope_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_permission",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "technical_properties_pkey",
+          "definition": "CREATE UNIQUE INDEX technical_properties_pkey ON cko_device.technical_properties USING btree (property_id)"
+        },
+        {
+          "name": "technical_properties_subject_property_idx",
+          "definition": "CREATE INDEX technical_properties_subject_property_idx ON cko_device.technical_properties USING btree (subject_ref, property_key, status)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "technical_properties_epistemic_status_check",
+          "type": "c",
+          "definition": "CHECK ((epistemic_status = ANY (ARRAY['SOURCE_CONFIRMED'::text, 'SOURCE_DERIVED'::text, 'COMPUTED_FROM_CONFIRMED'::text, 'HUMAN_CONFIRMED'::text, 'UNKNOWN'::text, 'CONFLICT'::text, 'NOT_APPLICABLE'::text, 'UNAVAILABLE'::text, 'PROHIBITED_INFERENCE'::text])))"
+        },
+        {
+          "name": "technical_properties_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (property_id)"
+        },
+        {
+          "name": "technical_properties_render_permission_check",
+          "type": "c",
+          "definition": "CHECK ((render_permission = ANY (ARRAY['NONE'::text, 'TEXT'::text, 'VISUAL'::text, 'GEOMETRY'::text, 'TEXT_AND_VISUAL'::text, 'TEXT_AND_GEOMETRY'::text, 'ALL'::text])))"
+        },
+        {
+          "name": "technical_properties_scope_class_check",
+          "type": "c",
+          "definition": "CHECK ((scope_class = ANY (ARRAY['CLASS_INVARIANT'::text, 'VARIANT_DEPENDENT'::text, 'PRODUCT_SPECIFIC'::text, 'UNRESOLVED'::text])))"
+        },
+        {
+          "name": "technical_properties_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "variant_axes",
+      "columns": [
+        {
+          "name": "variant_axis_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "axis_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "values_json",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope_class",
+          "type": "text",
+          "default": "'VARIANT_DEPENDENT'::text",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "epistemic_status",
+          "type": "text",
+          "default": "'DEFINED_AXIS'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_variant_axes_subject",
+          "definition": "CREATE INDEX idx_variant_axes_subject ON cko_device.variant_axes USING btree (subject_ref)"
+        },
+        {
+          "name": "variant_axes_pkey",
+          "definition": "CREATE UNIQUE INDEX variant_axes_pkey ON cko_device.variant_axes USING btree (variant_axis_id)"
+        },
+        {
+          "name": "variant_axes_subject_ref_axis_key_key",
+          "definition": "CREATE UNIQUE INDEX variant_axes_subject_ref_axis_key_key ON cko_device.variant_axes USING btree (subject_ref, axis_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "variant_axes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (variant_axis_id)"
+        },
+        {
+          "name": "variant_axes_subject_ref_axis_key_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, axis_key)"
+        },
+        {
+          "name": "variant_axes_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "variants",
+      "columns": [
+        {
+          "name": "variant_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "device_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manufacturer",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "sku",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "commercial_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "exact_product",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "jurisdiction",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "variants_device_id_manufacturer_sku_key",
+          "definition": "CREATE UNIQUE INDEX variants_device_id_manufacturer_sku_key ON cko_device.variants USING btree (device_id, manufacturer, sku)"
+        },
+        {
+          "name": "variants_pkey",
+          "definition": "CREATE UNIQUE INDEX variants_pkey ON cko_device.variants USING btree (variant_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "variants_device_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (device_id) REFERENCES cko_device.device_profiles(device_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "variants_device_id_manufacturer_sku_key",
+          "type": "u",
+          "definition": "UNIQUE (device_id, manufacturer, sku)"
+        },
+        {
+          "name": "variants_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (variant_id)"
+        },
+        {
+          "name": "variants_variant_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (variant_id) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "visual_assertion_contracts",
+      "columns": [
+        {
+          "name": "assertion_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "assertion_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "render_permission",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "visual_assertion_contracts_pkey",
+          "definition": "CREATE UNIQUE INDEX visual_assertion_contracts_pkey ON cko_device.visual_assertion_contracts USING btree (assertion_id)"
+        },
+        {
+          "name": "visual_assertion_contracts_subject_ref_assertion_type_asser_key",
+          "definition": "CREATE UNIQUE INDEX visual_assertion_contracts_subject_ref_assertion_type_asser_key ON cko_device.visual_assertion_contracts USING btree (subject_ref, assertion_type, assertion_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "visual_assertion_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assertion_id)"
+        },
+        {
+          "name": "visual_assertion_contracts_subject_ref_assertion_type_asser_key",
+          "type": "u",
+          "definition": "UNIQUE (subject_ref, assertion_type, assertion_key)"
+        },
+        {
+          "name": "visual_assertion_contracts_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "visual_evidence_assets",
+      "columns": [
+        {
+          "name": "visual_evidence_asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "asset_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "asset_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "claimed_identity",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "visual_identity",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identity_scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "view_role",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_authority",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_authorization",
+          "type": "text",
+          "default": "'PROHIBITED'::text",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "geometry_use",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prohibited_use",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_visual_evidence_source",
+          "definition": "CREATE INDEX idx_visual_evidence_source ON cko_device.visual_evidence_assets USING btree (source_ref)"
+        },
+        {
+          "name": "idx_visual_evidence_subject",
+          "definition": "CREATE INDEX idx_visual_evidence_subject ON cko_device.visual_evidence_assets USING btree (subject_ref, validation_status)"
+        },
+        {
+          "name": "visual_evidence_assets_pkey",
+          "definition": "CREATE UNIQUE INDEX visual_evidence_assets_pkey ON cko_device.visual_evidence_assets USING btree (visual_evidence_asset_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "visual_evidence_assets_geometry_authorization_check",
+          "type": "c",
+          "definition": "CHECK ((geometry_authorization = ANY (ARRAY['AUTHORIZED'::text, 'PROHIBITED'::text, 'PARTIAL'::text])))"
+        },
+        {
+          "name": "visual_evidence_assets_identity_scope_check",
+          "type": "c",
+          "definition": "CHECK ((identity_scope = ANY (ARRAY['CLASS'::text, 'FAMILY'::text, 'EXACT_VARIANT'::text, 'EXACT_SKU'::text, 'NEGATIVE_CONTROL'::text])))"
+        },
+        {
+          "name": "visual_evidence_assets_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (visual_evidence_asset_id)"
+        },
+        {
+          "name": "visual_evidence_assets_subject_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (subject_ref) REFERENCES cko_master.entities(canonical_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "visual_evidence_assets_validation_status_check",
+          "type": "c",
+          "definition": "CHECK ((validation_status = ANY (ARRAY['PENDING'::text, 'PASS'::text, 'FAIL'::text, 'PARTIAL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "visual_evidence_checks",
+      "columns": [
+        {
+          "name": "check_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "visual_evidence_asset_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "control_code",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "observed",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": "'D3'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_visual_checks_asset_result",
+          "definition": "CREATE INDEX idx_visual_checks_asset_result ON cko_device.visual_evidence_checks USING btree (visual_evidence_asset_id, result)"
+        },
+        {
+          "name": "visual_evidence_checks_pkey",
+          "definition": "CREATE UNIQUE INDEX visual_evidence_checks_pkey ON cko_device.visual_evidence_checks USING btree (check_id)"
+        },
+        {
+          "name": "visual_evidence_checks_visual_evidence_asset_id_control_cod_key",
+          "definition": "CREATE UNIQUE INDEX visual_evidence_checks_visual_evidence_asset_id_control_cod_key ON cko_device.visual_evidence_checks USING btree (visual_evidence_asset_id, control_code)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "visual_evidence_checks_control_code_check",
+          "type": "c",
+          "definition": "CHECK ((control_code = ANY (ARRAY['VEI-01'::text, 'VEI-02'::text, 'VEI-03'::text, 'VEI-04'::text, 'VEI-05'::text, 'VEI-06'::text, 'VEI-07'::text, 'VEI-08'::text, 'VEI-09'::text, 'VEI-10'::text])))"
+        },
+        {
+          "name": "visual_evidence_checks_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (check_id)"
+        },
+        {
+          "name": "visual_evidence_checks_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'PARTIAL'::text, 'NOT_APPLICABLE'::text, 'PENDING'::text])))"
+        },
+        {
+          "name": "visual_evidence_checks_severity_check",
+          "type": "c",
+          "definition": "CHECK ((severity = ANY (ARRAY['D1'::text, 'D2'::text, 'D3'::text, 'D4'::text])))"
+        },
+        {
+          "name": "visual_evidence_checks_visual_evidence_asset_id_control_cod_key",
+          "type": "u",
+          "definition": "UNIQUE (visual_evidence_asset_id, control_code)"
+        },
+        {
+          "name": "visual_evidence_checks_visual_evidence_asset_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (visual_evidence_asset_id) REFERENCES cko_device.visual_evidence_assets(visual_evidence_asset_id) ON DELETE CASCADE"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

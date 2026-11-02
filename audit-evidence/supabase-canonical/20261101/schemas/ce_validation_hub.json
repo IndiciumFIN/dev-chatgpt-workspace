@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "ce_validation_hub",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 5,
+    "columns": 46,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "evidence_bindings",
+      "columns": [
+        {
+          "name": "evidence_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_url",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_kind",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "verified_claim",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "limitation",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'RESEARCH_VALIDATED_HOLD'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "evidence_bindings_pkey",
+          "definition": "CREATE UNIQUE INDEX evidence_bindings_pkey ON ce_validation_hub.evidence_bindings USING btree (evidence_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "evidence_bindings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (evidence_id)"
+        },
+        {
+          "name": "evidence_bindings_source_kind_check",
+          "type": "c",
+          "definition": "CHECK ((source_kind = ANY (ARRAY['NORMATIVE'::text, 'AUTHORITATIVE_GUIDANCE'::text, 'CLINICAL_STUDY'::text, 'INTERNAL_TEMPLATE'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "findings",
+      "columns": [
+        {
+          "name": "finding_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "finding_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "severity",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_source",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "proposed_action",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "findings_pkey",
+          "definition": "CREATE UNIQUE INDEX findings_pkey ON ce_validation_hub.findings USING btree (finding_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "findings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (finding_id)"
+        },
+        {
+          "name": "findings_state_check",
+          "type": "c",
+          "definition": "CHECK ((state = 'HOLD_HUMAN'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "inventory",
+      "columns": [
+        {
+          "name": "source_system",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "canonical_slug",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "family",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_location",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_state",
+          "type": "text",
+          "default": "'DISCOVERED'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "text",
+          "default": "'DISCOVERED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "validation_state",
+          "type": "text",
+          "default": "'HOLD_HUMAN'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "publication_blocked",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "frozen_46_reference",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "discovered_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "inventory_by_family",
+          "definition": "CREATE INDEX inventory_by_family ON ce_validation_hub.inventory USING btree (family)"
+        },
+        {
+          "name": "inventory_by_slug",
+          "definition": "CREATE INDEX inventory_by_slug ON ce_validation_hub.inventory USING btree (canonical_slug)"
+        },
+        {
+          "name": "inventory_pkey",
+          "definition": "CREATE UNIQUE INDEX inventory_pkey ON ce_validation_hub.inventory USING btree (source_system, source_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "inventory_family_check",
+          "type": "c",
+          "definition": "CHECK ((family = ANY (ARRAY['CALCULATOR'::text, 'CLINICAL_SCALE'::text, 'STRUCTURED_COMMUNICATION'::text, 'OPERATIONAL_CHECKLIST'::text, 'INSTITUTIONAL_FORM'::text, 'CLINICAL_PROTOCOL'::text, 'EDUCATIONAL_CONTENT'::text, 'REFERENCE_GUIDE'::text, 'VISUAL_ASSET'::text, 'OTHER'::text, 'UNCLASSIFIED'::text])))"
+        },
+        {
+          "name": "inventory_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (source_system, source_key)"
+        },
+        {
+          "name": "inventory_publication_blocked_check",
+          "type": "c",
+          "definition": "CHECK (publication_blocked)"
+        },
+        {
+          "name": "inventory_validation_state_check",
+          "type": "c",
+          "definition": "CHECK ((validation_state = 'HOLD_HUMAN'::text))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "reuse_links",
+      "columns": [
+        {
+          "name": "link_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "target_group",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relation_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identity_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "clinical_equivalence_verified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "interpretation",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reuse_links_pkey",
+          "definition": "CREATE UNIQUE INDEX reuse_links_pkey ON ce_validation_hub.reuse_links USING btree (link_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "reuse_links_clinical_equivalence_verified_check",
+          "type": "c",
+          "definition": "CHECK ((clinical_equivalence_verified = false))"
+        },
+        {
+          "name": "reuse_links_identity_verified_check",
+          "type": "c",
+          "definition": "CHECK ((identity_verified = false))"
+        },
+        {
+          "name": "reuse_links_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (link_id)"
+        },
+        {
+          "name": "reuse_links_relation_type_check",
+          "type": "c",
+          "definition": "CHECK ((relation_type = ANY (ARRAY['SOURCE_PAGE'::text, 'CONTENT_DRAFT'::text, 'TEMPLATE_CANDIDATE_FOR'::text, 'RELATED_REGISTRY'::text, 'SUPPORTING_CHECKLIST'::text, 'RELATED_METHOD'::text])))"
+        },
+        {
+          "name": "reuse_links_source_system_source_key_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_system, source_key) REFERENCES ce_validation_hub.inventory(source_system, source_key) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": true,
+      "kind": "r",
+      "name": "validation_rules",
+      "columns": [
+        {
+          "name": "rule_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "applies_to",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gate_definition",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "validation_rules_pkey",
+          "definition": "CREATE UNIQUE INDEX validation_rules_pkey ON ce_validation_hub.validation_rules USING btree (rule_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "validation_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (rule_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

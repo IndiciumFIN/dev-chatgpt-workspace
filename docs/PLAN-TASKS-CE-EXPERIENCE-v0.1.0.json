@@ -1,0 +1,890 @@
+{
+  "schemaVersion": "1.0.0",
+  "planId": "CE-EXPERIENCE-v0.1.0",
+  "titulo": "Plano de trabalho da Carreira / Experience Platform CE (dominio separado da Governanca)",
+  "dominio": "CARREIRA_EXPERIENCE_PLATFORM",
+  "dominioGovernanca": "GOVERNANCA_PMO_KERNEL",
+  "decisaoDoDono": {
+    "data": "2026-11-01",
+    "texto": "Carreira e Governanca sao diferentes.",
+    "efeito": "As tasks da comparacao CE deixam de pertencer ao registo de Governanca e passam a ter registo proprio. O registo de Governanca volta ao estado pinned pelo R89 (112 tasks), sem tocar no gate do Kernel.",
+    "decididoPor": "Owner"
+  },
+  "meta": {
+    "estado": "CANDIDATE_NOT_ADMITTED",
+    "releaseGate": "HOLD_HUMAN",
+    "separadoDe": "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json",
+    "dataSeparacao": "2026-11-01",
+    "ultima_revisao_owner": "Mavis",
+    "mainModified": false,
+    "nota": "Este registo nao e partilha da Governanca e nao conta para o portao R78/R87/R89. Nenhuma task aqui esta admitida pelo Kernel."
+  },
+  "tarefasRecontadasAoRegistoDeGovernanca": {
+    "nota": "Amendas a tasks de Governanca (ids 124, 131, 132, 133) que foram retiradas do registo de Governanca por pertencerem a Carreira. A coluna 'versaoRetidaNoRegistoCE' preserva o texto que estava em vigor antes da separacao, para que nenhuma informacao se perca.",
+    "amendments": {
+      "TASK-PLAN-124": {
+        "registoGovernancaAposSeparacao": {
+          "id": "TASK-PLAN-124",
+          "title": "Decidir o port do esqueleto CE para o repo canonico (ou manter local ate existir WO)",
+          "wo": "WO-DS-001",
+          "status": "BLOCKED",
+          "phase": "F4",
+          "owner": "Owner / Kernel",
+          "deps": [
+            "TASK-PLAN-121",
+            "TASK-PLAN-122"
+          ],
+          "artifacts": [],
+          "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar."
+        },
+        "versaoRetidaNoRegistoCE": {
+          "id": "TASK-PLAN-124",
+          "phase": "F4",
+          "title": "Decidir o port do esqueleto CE para o repo canonico (ou manter local ate existir WO)",
+          "wo": "WO-DS-001",
+          "deps": [
+            "TASK-PLAN-121",
+            "TASK-PLAN-122"
+          ],
+          "owner": "Owner / Kernel",
+          "language": "-",
+          "status": "BLOCKED",
+          "covers": [],
+          "artifacts": [],
+          "acceptance": "Enquanto nao houver admissao (FIND -> politica -> validador -> WO -> OPA -> Kernel -> testes -> auditoria -> promocao humana), o esqueleto fica local e regeneravel a partir do catalogo. Decisao do dono/Kernel; ate la ninguem depende dele para executar. | MEDIDO (owner, 01/11/2026 03:25Z): o port JA EXISTE em main, apesar do BLOCKED - em tools/experience-skeleton/ (12 ficheiros: os 2 scripts + 8 do pilot/ com resolver, state, metamodel, module-status, profile-contracts, experience-state e os 3 schemas). MAS O PORT ESTA PEL A METADE E NAO CORRE (ver TASK-PLAN-163): os scripts resolvem ROOT como o directorio pai e procuram catalog/ e src/core/experience/ nesse root, que nao existem no repo canonico. O catalogo real esta em docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json (84.569 B) e src/core/experience/ nao existe no repo. NOT_RUN: se o kernel quer o esqueleto na raiz do repo ou dentro de tools/ - essa e a decisao que falta."
+        }
+      },
+      "TASK-PLAN-131": {
+        "registoGovernancaAposSeparacao": {
+          "id": "TASK-PLAN-131",
+          "title": "Criterios de nao-regressao, rollback e gate de CI para o esqueleto CE",
+          "wo": "WO-E2E-001",
+          "status": "BLOCKED",
+          "phase": "F4",
+          "owner": "Mavis",
+          "deps": [
+            "TASK-PLAN-127"
+          ],
+          "artifacts": [],
+          "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada."
+        },
+        "versaoRetidaNoRegistoCE": {
+          "id": "TASK-PLAN-131",
+          "phase": "F4",
+          "title": "Criterios de nao-regressao, rollback e gate de CI para o esqueleto CE",
+          "wo": "WO-E2E-001",
+          "deps": [
+            "TASK-PLAN-127"
+          ],
+          "owner": "Mavis",
+          "language": "CI",
+          "status": "BLOCKED",
+          "covers": [],
+          "artifacts": [],
+          "acceptance": "O roadmap define criterios de nao-regressao e rollback; o gate local valida estrutura, nao paridade com a branch nem a UI. Activar o gate em CI depende de TASK-PLAN-012 (escrita em .github/workflows/ bloqueada pela API do plugin, exige copia pelo owner). Ate la, a prova e local e datada. | MEDIDO (owner, 01/11/2026 03:25Z): o gate em CI continua a depender de TASK-PLAN-012 (a escrita em .github/workflows/ esta bloqueada ao agente, a copia e do owner). ACRESCENTADO: o gate que existe no repo canonico (tools/experience-skeleton/check-skeleton.mjs) NAO EXECUTA - por isso, ate a correccao do port, a unica prova de gate e a local e datada (11/11 verde em /workspace/ce-skeleton, 73 declaracoes de teste). Um gate que nao corre no sitio onde esta nao pode contar como gate de nao-regressao."
+        }
+      },
+      "TASK-PLAN-132": {
+        "registoGovernancaAposSeparacao": {
+          "id": "TASK-PLAN-132",
+          "title": "Comparacao do esqueleto CE com producao, repo publico, normativos e plataformas de referencia",
+          "wo": "WO-DS-001",
+          "status": "BLOCKED",
+          "phase": "F4",
+          "owner": "Mavis + equipa especializada",
+          "deps": [
+            "TASK-PLAN-121"
+          ],
+          "artifacts": [
+            "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E2-repo-branches.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E3-normativos.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E4-benchmarks.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E5-esqueleto.md",
+            "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
+            "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml"
+          ],
+          "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido."
+        },
+        "versaoRetidaNoRegistoCE": {
+          "id": "TASK-PLAN-132",
+          "phase": "F4",
+          "title": "Comparacao do esqueleto CE com producao, repo publico, normativos e plataformas de referencia",
+          "wo": "WO-DS-001",
+          "deps": [
+            "TASK-PLAN-121"
+          ],
+          "owner": "Mavis",
+          "language": "MD",
+          "status": "DONE",
+          "covers": [],
+          "artifacts": [
+            "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E2-repo-branches.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E3-normativos.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E4-benchmarks.md",
+            "docs/evidence/ce-comparacao-2026-10-31/E5-esqueleto.md",
+            "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
+            "docs/evidence/ce-comparacao-2026-10-31/PLANO-EQUIPA-CE-COMPARACAO.yaml"
+          ],
+          "acceptance": "Seis frentes paralelas com especialistas (conta/funil, superficie/busca, repo+branches, normativos de enfermagem, camada federal na API do Senado, plataformas de referencia) + sintese em matriz com dois verificadores adversariais. Evidencia do owner ja persistida: producao (texto real das paginas indexadas; fetch directo em timeout = NOT_RUN), repo publico com 182 branches (correccao: a listagem anterior de 30 era pagination errada), 201 capabilities, 45 familias, 410 servicos. Veredito e deltas acionaveis a entregar no relatorio final. | PAUSADO A PEDIDO DO DONO em 31/10 22:11Z: a equipa de comparacao foi cancelada a meio (nenhum dos 6 entregaveis foi concluido). Estado preservado em backup-ce-estado-2026-10-31.zip (esqueleto, evidence pack, plano PMO, evidencia bruta da API do Senado e plano YAML da equipa). Retomar: relancar o plano YAML (team run) ou refazer frente a frente com o evidence pack ja corrigido. Nada foi mergeado, publicado ou promovido. | MEDIDO E ENTREGUE (01/11/2026): as 6 frentes + sintese estao persistidas em docs/evidence/ce-comparacao-2026-10-31/ (6 relatorios de frente + RELATORIO-COMPARACAO.md com 136 KB, 31 linhas de TABELA-MESTRE, 56 deltas accionaveis, cadeia de evidencia por linha critica, glossario §0.3 e 3 anexos de inventario). A verificacao adversarial reprovou a sintese em duas rondas; as 5 observacoes sobreviventes foram medidas pelo owner e corrigidas (fonte dos contratos re-verificada, 46/78 -> 78/78, 70/72 -> 73 declaracoes de teste, gate 8/8 -> 11/11 executado, marcadores [V] -> [P-RP]). Plano de equipa plan_2973fb1f = completed; ZIP comparacao-ce-2026-11-01.zip verificado por re-extraccao (esqueleto sem drift, capturas 36/36). FIND registados: contratos fora dos enums canonicos (TASK-PLAN-156/157), as tres camadas do esqueleto nao se tocam (236/410 servicos sem capability mapeavel), e o port ao repo canonico nao corre (TASK-PLAN-163). NOT_RUN: a medicao em browser do dono (timeout), e o conteudo do DOCX original da matriz."
+        }
+      },
+      "TASK-PLAN-133": {
+        "registoGovernancaAposSeparacao": {
+          "id": "TASK-PLAN-133",
+          "title": "Registar as 3 correccoes de medicao do owner (182 branches, tokens/idiomas fora do main, packaging da API)",
+          "wo": "WO-PMO-001",
+          "status": "PROPOSTO",
+          "phase": "F1",
+          "owner": "Mavis",
+          "deps": [],
+          "artifacts": [],
+          "acceptance": "Tres erros meus, medidos e corrigidos: (1) list_branches com 'per_page' em vez de 'perPage' devolvia 30 em vez de 182 branches (repo publico) - a lista completa esta em docs/evidence/ce-comparacao-2026-10-31/branches-todas.json; (2) src/lib/locale-registry.ts e src/lib/site-data.ts nao estao no main do repo publico nem do repo privado - onde vivem fica NOT_RUN; (3) o parametro correcto da API do Senado e tipo+numero+ano ('palavras' e ignorado). Regista em FIND para que a medicao errada nao volte a alastrar."
+        },
+        "versaoRetidaNoRegistoCE": {
+          "id": "TASK-PLAN-133",
+          "phase": "F1",
+          "title": "Registar as 3 correccoes de medicao do owner (181 branches + main = 182 refs, tokens/idiomas fora do main, packaging da API)",
+          "wo": "WO-PMO-001",
+          "deps": [],
+          "owner": "Mavis",
+          "language": "DOC",
+          "status": "PROPOSTO",
+          "covers": [],
+          "artifacts": [],
+          "acceptance": "Tres erros meus, medidos e corrigidos: (1) list_branches com 'per_page' em vez de 'perPage' devolvia 30 em vez das 182 refs do repo publico - a lista completa esta em docs/evidence/ce-comparacao-2026-10-31/branches-todas.json; ATENCAO: as 182 refs sao 181 branches + main (o 'main' estava a ser contado como branch - medido por git for-each-ref contra o clone, 0 divergencias de sha); (2) src/lib/locale-registry.ts e src/lib/site-data.ts nao estao no main do repo publico nem do repo privado - onde vivem fica NOT_RUN; (3) o parametro correcto da API do Senado e tipo+numero+ano ('palavras' e ignorado). Regista em FIND para que a medicao errada nao volte a alastrar."
+        }
+      }
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-PLAN-134",
+      "phase": "F1",
+      "title": "Ligar a camada de servico a camada de capability: campo service_ref + validacao fail-closed",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-124"
+      ],
+      "owner": "Mavis + equipa especializada",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md",
+        "docs/evidence/ce-comparacao-2026-10-31/producao-superficie-busca/deliverable.md"
+      ],
+      "acceptance": "Medido: o registo de 201 capabilities tem 14 campos e NENHUM aponta para um servico; o ficheiro de 16 bindings tambem nao. Cruzamento por sobreposicao de tokens entre service-catalog.v1.json (45 familias / 410 servicos) e o registo: 236 servicos (57%) sem capability mapeavel e 49 capabilities (24%) sem servico mapeavel. Obrigatorio: (1) campo service_ref (e object_type) por capability; (2) validador fail-closed que reprova qualquer capability que aponte para um servico cujo tipo de objeto nao tenha schema no object-capability-binding; (3) gate que reprova servico orfao nao declarado. Testes no glob oficial scripts/**/*.test.mjs."
+    },
+    {
+      "id": "TASK-PLAN-135",
+      "phase": "F4",
+      "title": "Expor a familia evidence-claims: authority-binding, applicability, contradiction-detection e lineage",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-134"
+      ],
+      "owner": "Donos de conteudo e risco",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/deliverable.md",
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/"
+      ],
+      "acceptance": "A familia evidence-claims tem 9 servicos (atomic-fact, claim, evidence-bundle, authority-binding, applicability, confidence-quality, contradiction-detection, supersession, lineage) e NENHUMA capability os expoe - e sao exactamente os que respondem ao FIND-CTR-010 (Aldrete com corte de 8 pontos, fonte CFM, contra os 9 pontos publicados). Sem esta ligacao, o motor de autoridade existe mas nao e alcancavel: capability -> capability de autoridade -> authorityBinding por campo (fonte, pinpoint, edicao, direitos), com CANDIDATE_HOLD enquanto o tipo de objeto nao tiver schema."
+    },
+    {
+      "id": "TASK-PLAN-136",
+      "phase": "F4",
+      "title": "Expor a familia community: moderation, abuse-report e identity-aware-profile",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-134"
+      ],
+      "owner": "Responsavel autorizado pelo broker + revisor de seguranca",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md",
+        "docs/evidence/ce-comparacao-2026-10-31/producao-superficie-busca/deliverable.md"
+      ],
+      "acceptance": "A producao tem forum UGC vivo (nome, pais, profissao, local de trabalho, sem moderacao, denuncia ou aprovacao) contra uma politica que promete nao coletar dado identificavel - divergencia real. O esqueleto tem 12 servicos em community (incluindo moderation, abuse-report, identity-aware-profile) e nenhuma capability os expoe. Obrigatorio: capabilities de publicacao, moderacao, denuncia e estado de moderacao, e regra de que identificacao real exige consentimento; sem backend, os servicos ficam declarados e CANDIDATE_HOLD."
+    },
+    {
+      "id": "TASK-PLAN-137",
+      "phase": "F4",
+      "title": "Tipos de objeto da Composition de simulados: 8 de 12 sem tipo de objeto nem schema",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-134"
+      ],
+      "owner": "Mavis",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-superficie-busca/deliverable.md"
+      ],
+      "acceptance": "Medido elemento a elemento: Selection Process, Edital, Cargo, Calendar, Exam, Answer Key, Appeal, Result e Convocation tem SERVICO (selection-process-service, edital-service, position-cargo-service, exam-service, answer-key-service, appeal-service, result-ranking-service, convocation-service) mas NENHUM tipo de objeto e nenhum schema. So Question Bank, Alert e Simulados tem cobertura completa. A producao tem 12+ simulados por banca e tema. Obrigatorio: os 8 tipos de objeto e os schemas correspondentes, com authorityBinding nos que citam norma."
+    },
+    {
+      "id": "TASK-PLAN-138",
+      "phase": "F4",
+      "title": "Completar os 13 tipos de objeto sem schema (3 de 16 com schema)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-124"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-superficie-busca/deliverable.md"
+      ],
+      "acceptance": "Medido: existem 16 tipos de objeto (Article, CareerRole, ClinicalTool, Competition, Course, Guide, JobOpportunity, LibraryEntity, MediaAsset, Norm, Organization, Question, ResearchProject, Residency, Simulation, Trail) e apenas 3 tem schema (article, clinical-tool, library-entity). Faltam 13, incluindo Question, Simulation, Competition, Norm, Course, MediaAsset e Guide. Sem schema, um servico pode devolver qualquer coisa e o gate nao apanha."
+    },
+    {
+      "id": "TASK-PLAN-139",
+      "phase": "F4",
+      "title": "Declarar as 4 familias transversais ausentes: Identity/Account, Billing, Entitlement, Telemetry/Consent",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-134"
+      ],
+      "owner": "Mavis",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md",
+        "docs/evidence/ce-comparacao-2026-10-31/repo-publico-branches/deliverable.md"
+      ],
+      "acceptance": "Medido: 114 das 181 branches do repo publico (63%, por nome) sao do nucleo conta->cobranca->ads, e 137 (76%) sao churn de agente - a superficie mais trabalhada do produto e a que o esqueleto nao modela. O registo tem owner_scope ACCOUNT como campo, mas nenhuma familia de objecto para conta, plano, assinatura, pagamento, entitlement ou anuncio. Obrigatorio: 4 familias transversais (nao capabilities de dominio) e os tipos de objeto correspondentes. Regra dura: entitlement so existe com owner_scope = ACCOUNT; SESSION e LOCAL_DEVICE nunca sao fonte de autorizacao."
+    },
+    {
+      "id": "TASK-PLAN-140",
+      "phase": "F4",
+      "title": "Regra dura de entitlement: so owner_scope ACCOUNT autoriza, e desambiguar 'sync'",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-139"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "Duas medidas: (1) 6+ branches premium-access-root-cause e billing-access-empty-entitlement provam que o problema de acesso ja foi pago em producao - a entitlement tem de ser estado resolvido com reason codes (guest, sem_plano, pagamento_pendente, verificando, ativo, expirado) e nunca booleano; (2) 'sync' significa duas coisas: sync_entitlement (producao: reconciliacao de webhook) e sync_user_data (blueprint). A mesma palavra, dois objectos - precisa de glossario no registo antes de alguem modelar a coisa errada."
+    },
+    {
+      "id": "TASK-PLAN-141",
+      "phase": "F4",
+      "title": "Reescrever telemetry_contract como contrato e subir o Event Backbone de P1 a P0",
+      "wo": "WO-DS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/benchmarks-plataformas/deliverable.md",
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "Medido: telemetry_contract e uma STRING, nao um contrato; nao ha log append-only; a producao ja publica uma taxonomia de eventos nomeados (/metricas.html: page_view, session_start, first_visit, user_engagement, scroll, click_menu_*, click_calcular_*, tempo_permanencia, subscription_checkout_*, subscription_payment_*) e o esqueleto nao conhece nenhum. O plano da frente de benchmark recomenda subir o Event Backbone de P1 para P0: sem telemetria nenhuma, nenhuma escolha de capacidade (Colecao? Alerta? Preview?) e defensavel por dado. Desvio de roadmap justificado e registado."
+    },
+    {
+      "id": "TASK-PLAN-142",
+      "phase": "F4",
+      "title": "Preencher os 11 campos em falta no registo de capabilities (supported_channels, permission_policy, audiences, policy_refs...)",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-124"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-superficie-busca/deliverable.md"
+      ],
+      "acceptance": "O plano exige 20 campos por capability e 10+ por binding; o registo traz 14 e 7. Faltam 11 + 5, incluindo supported_channels e permission_policy - sem os quais o canal de extensao de navegador (que a producao tem: index-extensoes-chrome, package-extension-030..032, extensao-gasometria-premium com PKCE) nao e expressavel, e sem os quais consentimento e audiencia nao tem onde vivir."
+    },
+    {
+      "id": "TASK-PLAN-143",
+      "phase": "F1",
+      "title": "Divergence register producao-esqueleto: cada divergencia da comparacao vira FIND com dono",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "registers/governance/find-register.v1.json",
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
+      ],
+      "acceptance": "Os 16 FINDs da PR #21 ainda nao estao no find-register.v1.json (11 FINDs registados, nenhum MOD) e nao ha baseline de nao-regressao. A comparacao mediu dezenas de divergencias com evidencia (favorito = visita, 0 de 87 slots, 236 servicos sem capability, 3 de 16 schemas, 13 de 16 tipos sem schema, 8 de 12 elementos da Composition sem objecto, tensoes de politica). Cada uma vira FIND com dono, evidencia e decisao - nada fica so na conversa."
+    },
+    {
+      "id": "TASK-PLAN-144",
+      "phase": "F1",
+      "title": "Reverificar o corte de Aldrete: 8 pontos (fonte CFM) contra 9 pontos publicados",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-135"
+      ],
+      "owner": "Donos de conteudo e risco",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/cfm_parecer28_2020.pdf",
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/prod_aldrete.html"
+      ],
+      "acceptance": "FIND-CTR-010: a escala de Aldrete foi implementada com o corte de 8 pontos (Parecer CFM 28/2020) enquanto o site publica corte de 9 pontos. A captura do parecer e do produto esta preservada com SHA-256 (36/36 verificados). Obrigatorio: ou o valor passa a ser o da fonte, ou a ferramenta fica HOLD_HUMAN com o motivo visivel ao utilizador. Divergencia gera FIND, nunca substituicao silenciosa."
+    },
+    {
+      "id": "TASK-PLAN-145",
+      "phase": "F1",
+      "title": "Registo das alteracoes vetadas: art. 15-D (Lei 14.434/2022) e 15-E (Lei 14.602/2023) na Lei 7.498/1986",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-federais/deliverable.md"
+      ],
+      "acceptance": "Medido na API de Dados Abertos do Senado: a Lei 7.498/1986 tem 4 vides (Decreto 94.406/1987, Lei 8.967/1994, Lei 14.434/2022, Lei 14.602/2023) e os acrescimos dos art. 15-A a 15-D (14.434/2022) e 15-E (14.602/2023) estao marcados Acrescimo Vetado. Nada no repo reflecte isto, e a producao cita artigos da 7.498. Obrigatorio: registar a vigencia real (o que esta em vigor e o que foi vetado) no authorityBinding, com pinpoint por dispositivo."
+    },
+    {
+      "id": "TASK-PLAN-146",
+      "phase": "F1",
+      "title": "Res. Cofen 736/2024 e Portaria GM/MS 6.734/2025: prova de ausencia no dataset do Senado e sustentacao pelo DOU",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [],
+      "owner": "Donos de conteudo e risco",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-federais/deliverable.md",
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/cofen736.pdf",
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/port6734_2025.pdf"
+      ],
+      "acceptance": "Provado por 11 estrategias de busca e por prova de escopo (o tipo PRT so tem 2 documentos de 1821; REG-n tem 38 de 1838-1842) que as duas normas nao estao no dataset de dados abertos do Senado. A Res. 736/2024 foi capturada no site do Cofen e a Portaria 6.734/2025 tambem (texto integral preservado, SHA-256 verificado). Obrigatorio: registar que a fonte sustentadora e o DOU/in.gov.br e nao a API do Senado - para que ninguem volte a procurar a norma no lugar errado."
+    },
+    {
+      "id": "TASK-PLAN-147",
+      "phase": "F1",
+      "title": "Divergencia de vigencia da lista de notificacao compulsoria: 73 entradas contra a Portaria 10.175/2026",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-146"
+      ],
+      "owner": "Donos de conteudo e risco",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/normativos-enfermagem/capturas-2026-11-01/prod_lista-de-doencas-de-notificacao-compulsoria.html"
+      ],
+      "acceptance": "A producao publica 'conforme Portaria GM/MS No 10.175/2026' com 73 entradas, e o simulado de notificacaounu cita a Portaria 6.734/2025. Medido: ha que modelar vigencia e effective_until na fonte, senao o produto serve uma lista que pode estar fora de vigor. Divergencia gera FIND; a lista tem de ter data de aplicacao por item."
+    },
+    {
+      "id": "TASK-PLAN-148",
+      "phase": "F1",
+      "title": "Divergencia medida no simulado de notificacao: 30q (E1) contra 50 questoes (meta description ao vivo)",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/E1-producao.md",
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "Medido: o E1 (extracao indexada) diz 30 questoes para o simulado de notificacao compulsoria; a meta description da pagina ao vivo diz 50 questoes. As duas fontes estao registadas. Obrigatorio: fixar o numero verdadeiro e corrigir a fonte que estiver errada, com FIND - divergencia nao se resolve escolhendo a que parece melhor."
+    },
+    {
+      "id": "TASK-PLAN-149",
+      "phase": "F0",
+      "title": "Decisao do dono sobre as 3 tensoes entre promessa publicada e comportamento (politica, termos, oferta)",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "Medido com texto citado: T1 - a politica nega coleta e nega login ('sem cadastro, login, e sem fornecer nome, e-mail') e o mesmo dominio tem login Google/E-mail e checkout; T2 - os termos descrevem as ferramentas como gratuitamente e ha assinatura cobrada com reembolso em 7 dias; T3 - a home anuncia '+60 escalas assistenciais em branco para imprimir' e o download exige Premium, e o forum exige identificacao real sem moderacao contra a promessa de nao coletar dado identificavel. A politica do app foi separada (escopo diferente: nao e contradicao provada). Decisao do dono: manter a promessa ou mudar a oferta. Nao e parecer juridico."
+    },
+    {
+      "id": "TASK-PLAN-150",
+      "phase": "F0",
+      "title": "Decisao do dono: o CE local tera backend, e o que acontece a ACCOUNT e WORKSPACE",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-139"
+      ],
+      "owner": "Owner",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "Da frente de conta/login: se o CE local nunca tiver backend, ACCOUNT e WORKSPACE ficam permanentemente reservados (e a producao nao pode ser espelhada localmente); se tiver, entao as familias transversais de billing e entitlement passam a ter destino. A resposta decide se 114 das 181 branches (63%) do repo publico tem onde aterrar. Enquanto nao houver resposta, os 410 servicos continuam CANDIDATE_HOLD e nada simula entitlement local."
+    },
+    {
+      "id": "TASK-PLAN-151",
+      "phase": "F1",
+      "title": "Registar as 10 branches backup como baseline com dono, e nao as arquivar",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/repo-publico-branches/deliverable.md"
+      ],
+      "acceptance": "Medido: 10 branches sao baseline (prefixo backup ou nome com 'antes'/'before'/'pre-'), incluindo acessibilidade-antes-revisao, menu-global-antes-icone-rodape2, 4 baselines menus-19-antes-*, page-comments e pre-clinical-audit. Sao a unica prova do estado anterior de ecrans que ja mudaram. Nao arquivar sem registo; registar com dono e com a decisao do dono sobre os 4 baselines paralelos de menu (qual e o bom - nao medido)."
+    },
+    {
+      "id": "TASK-PLAN-152",
+      "phase": "F1",
+      "title": "Preservar o conteudo orfao das branches de billing/ads: 1,5 MB que so existem la",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [
+        "TASK-PLAN-151"
+      ],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/repo-publico-branches/deliverable.md"
+      ],
+      "acceptance": "Medido em 30 branches (13 fundidas, 17 nao fundidas): 7 tem conteudo genuinamente orfao, 1.524.448 bytes, concentrados em audit/billing-ads-final, audit/billing-ads-hardening, audit/billing-ads-hardening-fix, audit/billing-concurrency-fix, base44/setup-33f0e67e, base44/setup-ea01a537 e chatgpt/simulados-etapa-02-piloto-execucao. As 151 branches restantes NAO foram testadas a este nivel - o risco la esta nao medido e nao se afirma zero. Obrigatorio: decidir se se preserva (tag ou bundle) antes de qualquer limpeza de branches."
+    },
+    {
+      "id": "TASK-PLAN-153",
+      "phase": "F1",
+      "title": "Corrigir o registo de medicao: 181 branches + main (182 refs), nao 182 branches",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "DOC",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/branches-todas.json",
+        "docs/evidence/ce-comparacao-2026-10-31/repo-publico-branches/deliverable.md"
+      ],
+      "acceptance": "Corrige TASK-PLAN-133: a lista oficial tem 182 entradas porque inclui 'main'. Sao 181 branches + main. Medido por git for-each-ref sobre o clone do repo publico, com 0 divergencias de sha contra branches-todas.json. A distribuicao real: fix 61, codex 52, copilot 14, chatgpt 12, refactor 10, backup 8, feat 8, audit 6, raiz 4, base44 2, chore/docs/rebuild/test 1 cada. Churn fix+codex+copilot+refactor = 137/181 = 75,7%."
+    },
+    {
+      "id": "TASK-PLAN-154",
+      "phase": "F4",
+      "title": "Reconciliar o contrato de saida (print/pdf/docx) com o template-contract de producao antes de escrever output.ts",
+      "wo": "WO-DS-001",
+      "deps": [
+        "TASK-PLAN-138"
+      ],
+      "owner": "Mavis",
+      "language": "TS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/producao-conta-funil/deliverable.md"
+      ],
+      "acceptance": "FIND da PR #21: o template-contract de producao mistura favorite, print, pdf, docx, listen e readingTime num so campo - risco de duas verdades para a mesma saida. A producao tem 'Salvar PDF' e 'Imprimir' com paywall, e a calculadora NEWS tem campos de nome de paciente (risco clinico e de privacidade num PDF de prontuario). Obrigatorio: reconciliar antes de output.ts (P0), com disclaimer e sem dado identificavel por omissao."
+    },
+    {
+      "id": "TASK-PLAN-155",
+      "phase": "F4",
+      "title": "i18n: onde vivem os 19 idiomas - locale-registry.ts e site-data.ts nao estao no main de nenhum repo",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "TS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/E2-repo-branches.md"
+      ],
+      "acceptance": "Medido: src/lib/locale-registry.ts e src/lib/site-data.ts nao existem no main do repo publico nem do repo privado, apesar de o registo do repo e o E1 falarem em 19 idiomas e o E2 listar 4 baselines de menu. Os 7 servicos de localization do esqueleto estao sem capability. NOT_RUN: onde os tokens vivem. Obrigatorio: localizar a fonte real dos 19 idiomas ou declarar que nao ha implementacao - e ligar localization a uma capability."
+    },
+    {
+      "id": "TASK-PLAN-156",
+      "phase": "F2",
+      "title": "Contratos: tool-sources.v1.json viola os enums canonicos e tem sha256 placeholder em 6/6",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "JSON+JSONSchema",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md",
+        "contracts/entities/tool-sources.v1.json",
+        "contracts/cko-skeleton/catalog/cko-data.json"
+      ],
+      "acceptance": "Medido (owner, 01/11) por leitura directa do repo canonico: tool-sources.v1.json tem 6 itens e 6/6 com source_type fora do enum canonico - os valores no ficheiro sao NORMATIVA, VALIDACAO e GUIA, enquanto o enum canonico (contracts/cko-skeleton/catalog/cko-data.json) admite 11 valores (OFFICIAL_LAW, REGULATOR, STANDARD, TERMINOLOGY, PRIMARY_STUDY, GUIDELINE, TEXTBOOK, DATASET_API, SOFTWARE, IMAGE, INTERNAL_GOVERNED). Os mesmos 6/6 itens tem integrity.sha256 igual a 64 zeros, ou seja o hash atesta zero bytes de conteudo. Obrigatorio: (a) publicar o mapeamento dos 3 valores em uso para os 11 canonicos e reescrever os 6 source_type; (b) substituir os sha256 placeholder pelo hash real do artefacto de origem, ou declarar explicitamente NOT_AVAILABLE com a razao (nunca zero); (c) cada alteracao entra por FIND -> revisao canonica, nao por edicao directa. NOT_RUN: onde vive o texto original das 6 fontes (Direitos preservados -> nao redistribuidos)."
+    },
+    {
+      "id": "TASK-PLAN-157",
+      "phase": "F2",
+      "title": "Contratos: tool-bindings.v1.json tem 78/78 authority_class e decision fora do enum canonico ou ausentes",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "JSON+JSONSchema",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md",
+        "contracts/entities/tool-bindings.v1.json",
+        "contracts/cko-skeleton/catalog/cko-data.json"
+      ],
+      "acceptance": "Medido (owner, 01/11) por leitura directa do repo canonico: tool-bindings.v1.json tem 78 itens e 78/78 com authority_class e decision fora do enum canonico OU AUSENTES. Detalhe: authority_class usa CLINICAL (36), TECHNICAL (6), INTERNAL_CONFIG (4) e esta ausente em 32; decision usa BOUND (46) e esta ausente em 32. Os enums canonicos sao authority_class = REGULATORY, TECHNICAL_STANDARD, AUTHORITATIVE_TERMINOLOGY, CLINICAL_EVIDENCE, INTERNAL_NONCLINICAL (5) e decision = HOLD, REJECTED, APPROVED (3) - BOUND nao pertence a nenhum dos dois. Consequencia de governanca: 32 bindings nao tem decisao registada, 46 tem uma decisao que nao e uma decisao do CKO (ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED). Obrigatorio: reclassificar os 78 com o enum canonico, tornar a decisao obrigatoria (campo ausente = HOLD), e registar o reclassificador como FIND. NOT_RUN: se o mapeamento CLINICAL -> CLINICAL_EVIDENCE e BOUND -> HOLD sao semanticamente correctos - decisao do Kernel. | CORRECIDO (owner, 01/11/2026 04:05Z): o enum de `decision` que rege os bindings NAO e o do `release_gate` (HOLD/REJECTED/APPROVED) mas o do contrato `authority_binding` = **ALLOW / HOLD_HUMAN / REJECT / NOT_APPLICABLE_JUSTIFIED**. Medido em contracts/cko-skeleton/catalog/cko-data.json: `decision` aparece em TRES contratos com valores diferentes (applicability, authority_binding, release_gate) - resolver o enum pelo nome da chave, sem escopo, mistura vocabularios. Consequencia para o sandbox: a conversao 'BOUND -> HOLD' introduziu um valor que tambem nao pertence ao enum do contrato que governa o binding; e o `HOLD` do release_gate nao e a mesma coisa que o `HOLD_HUMAN` do authority_binding. VALOR CORRECTO para um binding sem validator_ids e sem evidence_bundle_ids: HOLD_HUMAN (nao ALLOW, porque nao ha evidencia)."
+    },
+    {
+      "id": "TASK-PLAN-158",
+      "phase": "F2",
+      "title": "Gate: validador fail-closed de conformidade dos contratos com os enums canonicos",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-156",
+        "TASK-PLAN-157"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md",
+        "scripts/"
+      ],
+      "acceptance": "Problema medido: o gate do esqueleto corre 11/11 verde (executado pelo owner em 01/11) e mesmo assim nao detecta que 84 registos de contrato violam os enums canonicos - o gate valida estrutura, nao conformidade de vocabulario, e por isso da luz verde a um contrato invalido. Obrigatorio: validador que leia os enums de contracts/cko-skeleton/catalog/cko-data.json e reprove (fail-closed, exit != 0) qualquer item de contracts/entities/tool-*.v1.json com source_type, authority_class ou decision fora do enum ou ausente; integracao no gate oficial (scripts/**/*.test.mjs, para o runner os apanhar) e a mesma regra para o registo de capabilities e bindings do esqueleto. Criterio de aceite: introduzir um item com enum invalido tem de fazer o gate falhar (teste negativo explicito)."
+    },
+    {
+      "id": "TASK-PLAN-159",
+      "phase": "F0",
+      "title": "PR #29 (revert do #26): inventario de impacto medido e decisao do dono",
+      "wo": "WO-PMO-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "MD",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/pulls/29",
+        "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/pulls/29/files?per_page=100",
+        "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md (secao 12.8)",
+        "ce-push/pr29-inventario.json (inventario dos 128 ficheiros)"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 03:10Z, via API REST - o corpo do PR estava NOT_RUN por falha do conector). O PR #29 e a INVERSA EXACTA do #26: 128 ficheiros, +127/-29.195, 116 removidos e 12 modificados, base main, head revert-26-plan/pmokernel-finalization-20261031, criado 31/10 23:36:54Z. Impacto por area: scripts/** 58 ficheiros (-5.026) · docs/evidence/** 20 (-4.378) · registers/** 18 (-9.337) · tools/experience-skeleton/** 12 (-5.280) · src/** 9 · docs/** 4 (-4.013) · .github/workflows/** 2 (-463) · ci/** 2 (-87) · tests/** 1 (-197) · package.json + package-lock.json. O QUE SERIA APAGADO: os 2 workflows fail-closed (ce-main-migration-audit.yml, pmo-candidate-unit-regressions.yml), o gate staged ci/pending-coverage-gate.yml (o ficheiro de TASK-PLAN-012), o plano e o registo, TODOS os packs de evidencia (admin-area, commander, ce-comparacao, experience-platform-skeleton), 17 registos de governanca, 58 validadores, o esqueleto CE ja portado em tools/experience-skeleton/, o PmoReviewIntake (src/components/admin/pmo-review-intake.tsx) e a list-query. O QUE SERIA REVERTIDO: registers/governance/find-register.v1.json volta de as_of 2026-10-31 a 2026-10-24 e perde 96 linhas, incluindo o FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 (draft de seguranca) e os 2 FINDs R81. O PR ESTA VERMELHO: o proprio CI do PR #29 falha no passo 4 'Validar PMO canonico e historico' com AssertionError 'Prototipo deve permanecer congelado' em scripts/check-pmo-queue.mjs:32, e os passos 5-20 ficam skipped. CAUSA MEDIDA: o revert restaura a versao antiga de 46 linhas de check-pmo-queue.mjs, que exige WO-ADM-001 = PAUSED, mas a fila em main tem WO-ADM-001 = IN_PROGRESS (a versao de 82 linhas que o #26 trouxe ja nao tem essa assert). DECISAO DO DONO: fundir, fechar, ou rebasear o #29. Este agente NAO fez nenhuma accao sobre o PR #29. NOT_RUN: a razao humana do revert (o corpo so contem 'Reverts #26' + um resumo automatico do Cursor Bugbot; nao ha justificacao escrita do Kernel)."
+    },
+    {
+      "id": "TASK-PLAN-160",
+      "phase": "F2",
+      "title": "Regressao de fail-closed: o PR #29 remove 4 invariantes do check-pmo-queue.mjs e 5 validadores com os seus testes",
+      "wo": "WO-PMO-001",
+      "deps": [
+        "TASK-PLAN-159"
+      ],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "scripts/check-pmo-queue.mjs",
+        "scripts/check-pmo-queue.test.mjs",
+        "scripts/verify-r84-pmo-decision-intake.mjs",
+        "scripts/verify-r85-owner-assent.mjs",
+        "scripts/verify-r86-pr-review-evidence.mjs",
+        "scripts/verify-r80-evidence-chain.mjs"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026): o diff do PR #29 em scripts/check-pmo-queue.mjs e +2/-38 - ou seja, o revert APAGA quatro invariantes e restaura a assert brittle. Invariantes perdidas: (1) 'DONE sem evidencia' - DONE deixa de exigir evidence.length>0; (2) deteccao de CICLO de dependencias (a funcao visit/DFS e removida); (3) 'evidencia duplicada' (Set de evidence.size vs length); (4) a assert de prototipo PAUSED e trocada pela versao antiga que hoje falha. Validadores apagados com os seus testes: verify-r84-pmo-decision-intake (+.test), verify-r85-owner-assent (+.test), verify-r86-pr-review-evidence (+.test), verify-r80-evidence-chain (+.test), check-pmo-queue.test.mjs - 5 validadores e 5 suites de teste. OBRIGATORIO: se o revert for descartado, confirmar que os 5 validadores e os 4 invariantes permanecem no main; se o revert for fundido, restaurar os invariantes como tarefa separada e nao como 'detalhe'. REGRA: um gate que valida menos do que antes e uma regressao, mesmo que o PR 'restaure o estado anterior'. NOT_RUN: quantas linhas de teste e quantos casos de teste se perdem exactamente (exige execucao do suite no ramo do revert)."
+    },
+    {
+      "id": "TASK-PLAN-161",
+      "phase": "F2",
+      "title": "better-auth: o PR #29 faz downgrade de 1.7.14 para ~1.6.30 e mexe em 4 ficheiros de auth - medir a divergencia",
+      "wo": "WO-SEC-001",
+      "deps": [
+        "TASK-PLAN-159"
+      ],
+      "owner": "Mavis",
+      "language": "JS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "package.json",
+        "package-lock.json",
+        "src/lib/auth/client.ts",
+        "src/lib/auth/preview.ts",
+        "src/lib/auth/providers.ts",
+        "src/lib/auth/server.ts",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-auth-invariant.mjs"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026): o PR #29 muda package.json de 'better-auth': '1.7.14' para '~1.6.30' e package-lock.json (+99/-76), e adapta 4 ficheiros de src/lib/auth/ (client +5/-3, preview +9/-9, providers +1/-1, server +1/-1). O Cursor Bugbot classificou o PR como Medium Risk por o downgrade poder divergir do lockfile e dos testes escritos para 1.7.14. O PR tambem MODIFICA os guardios locais de auth: scripts/check-auth-invariant.mjs (+2/-2) e scripts/test-admin-console.mjs (-7). OBRIGATORIO: medir a divergencia antes de qualquer merge - (a) correr o suite de auth com 1.6.30 contra os testes existentes; (b) confirmar que o lockfile regenerado e coerente com o package.json; (c) confirmar que os guardios locais de auth nao ficam enfraquecidos pela versao revertida. O '~' permite que o lockfile flutue dentro da serie 1.6 - para um repo com gate de lock (scripts/check-better-auth-lock.mjs) isso e uma decisao de politica, nao um detalhe de package.json. NOT_RUN: a suite de auth nao foi executada neste repo pelo agente (sem ambiente de execucao do repo canonico com as suas dependencias)."
+    },
+    {
+      "id": "TASK-PLAN-162",
+      "phase": "F0",
+      "title": "Seguranca: o repo nao tem superficie de alertas automaticos activa (Dependabot OFF, secret scanning OFF, code scanning sem analise)",
+      "wo": "WO-SEC-001",
+      "deps": [],
+      "owner": "Owner",
+      "language": "CI",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/dependabot/alerts",
+        "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/secret-scanning/alerts",
+        "https://api.github.com/repos/IndiciumFIN/dev-chatgpt-workspace/code-scanning/alerts",
+        "scripts/check-better-auth-lock.mjs"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 03:15Z): as tres superficies automaticas estao inactivas - Dependabot alerts DESLIGADO (HTTP 403), secret scanning DESLIGADO (HTTP 404), code scanning sem analise (HTTP 404 'no analysis found'). Isto NAO e 'zero alertas': e 'alertas nao existem porque a ferramenta esta desligada'. O repo compensa localmente com scripts/check-better-auth-lock.mjs, scripts/check-auth-invariant.mjs e scripts/test-auth-secret-env.mjs. OBRIGATORIO: decisao do dono - activar Dependabot e secret scanning no repo (settings, nao codigo) ou assumir o risco explicitamente no registo; e confirmar que os guardios locais cobrem o mesmo. NOT_RUN: o conteudo das settings de seguranca do repo (exige acesso de escrita as settings - nao tentado, e fora do mandato)."
+    },
+    {
+      "id": "TASK-PLAN-163",
+      "phase": "F2",
+      "title": "O port do esqueleto CE ao repo canonico esta pela metade e NAO EXECUTA (ENOENT) - corrigir antes de qualquer admissao",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-124"
+      ],
+      "owner": "Mavis",
+      "language": "JS+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "tools/experience-skeleton/generate-skeleton.mjs",
+        "tools/experience-skeleton/check-skeleton.mjs",
+        "docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json",
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
+      ],
+      "acceptance": "MEDIDO POR EXECUCAO (owner, 01/11/2026 03:25Z): no repo canonico (main, e9f7fe66) o port existe em tools/experience-skeleton/ com 12 ficheiros, mas node tools/experience-skeleton/check-skeleton.mjs e node tools/experience-skeleton/generate-skeleton.mjs falham ambos com Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'. CAUSA: os dois scripts fazem ROOT = resolve(dirname(import.meta.url), '..') - ou seja, esperando a raiz do esqueleto no diretorio PAI - e leem catalog/service-catalog.v1.json, catalog/capability-registry.candidate.v0.1.json, catalog/object-capability-binding.candidate.v0.1.json, src/core/experience/{resolver,state,metamodel,module-status}.ts e schemas/*.json. Nada disso existe nesse caminho no repo: o catalogo real esta em docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json (84.569 B) e src/core/experience/ nao existe no repo. O pilot/ foi copiado para tools/experience-skeleton/pilot/ mas os scripts continuam a esperar src/core/experience/ - ou seja, nem o catalogo nem o nucleo estao onde o codigo os procura. CONSEQUENCIA DE GOVERNANCA: um artefacto do esqueleto esta no repo canonico e aparenta estar portado, mas nao corre - e o PR #29 apagaria essa copia (semelhante ao resto do pacote). OBRIGATORIO: (a) decidir a localizacao canonica (raiz do repo vs tools/experience-skeleton/) e tornar o ROOT explicito e configuravel; (b) portar o catalogo e o nucleo para o caminho que o codigo le, ou corrigir os caminhos; (c) PROVA: correr o gate no repo canonico e mostrar 11/11 verde a partir do commit, e o --check do gerador sem drift; (d) o port passa a ser 'entregue e verificado', nao 'portado'. NOT_RUN: a suite completa de testes do esqueleto no repo canonico (o port nao tem os 65 ficheiros de teste nem o package.json do esqueleto)."
+    },
+    {
+      "id": "TASK-PLAN-164",
+      "phase": "F2",
+      "title": "S1 Contratos: reclassificar as 6 fontes e os 78 bindings pela natureza e pelo enum escopado ao contrato",
+      "wo": "WO-CKO-001",
+      "deps": [
+        "TASK-PLAN-156",
+        "TASK-PLAN-157"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "contracts/entities/tool-sources.v1.json",
+        "contracts/entities/tool-bindings.v1.json",
+        "contracts/cko-skeleton/catalog/cko-data.json",
+        "docs/evidence/ce-comparacao-2026-10-31/RELATORIO-COMPARACAO.md"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 04:05Z) com o portao novo scripts/check-contract-integrity.mjs: **172 violacoes** no estado actual (6x R1 source_type fora do enum do contrato `source`; 6x R3 sha256 = 64 zeros; 78x R4 authority_class fora do enum; 78x R5 decision fora do enum do `authority_binding`; 4x R8 autoridade nao-INTERNAL sem source_ids). VALORES A APLICAR (determinados pela natureza do documento, nao por traducao de rotulo): SRC-CFM-PARECER-28-2020 (parecer do CFM) -> REGULATOR (nao OFFICIAL_LAW: um parecer de conselho profissional nao e lei); SRC-REV-ENF-USP-BRADEN-1999 (artigo cientifico de validacao) -> PRIMARY_STUDY; SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA (manual de consulta) -> GUIDELINE; SRC-OMS-OBESIDADE-2000 (relatorio da OMS) -> GUIDELINE (nao OFFICIAL_LAW: a OMS nao legisla no Brasil); SRC-APGAR-1953 (artigo original) -> PRIMARY_STUDY; SRC-GOTEJAMENTO-FORMULA-CLASSICA (formula tecnica de enfermagem) -> STANDARD. PENDENTE DE CONFIRMACAO pela frente de doutrina (TASK-PLAN-156/157 dependem desta frente) antes de escrever. INTEGRIDADE: **5 das 6 fontes nao tem artefacto preservado** (medido no pacote de capturas, 36 artefactos, 36/36 com hash): so SRC-CFM-PARECER-28-2020 tem documento (cfm_parecer28_2020.pdf = 089dba1488ac8ee0a3ca943c1131b193e4ee593bbd5c9a3289718320afd68c2d). As 5 restantes passam a integrity.sha256 = NOT_AVAILABLE COM integrity.reason e integrity.artifact_ref declarados - ausencia declarada e honesta, ausencia NAO e integridade. BINDINGS: authority_class CLINICAL -> CLINICAL_EVIDENCE, TECHNICAL -> TECHNICAL_STANDARD, INTERNAL_CONFIG -> INTERNAL_NONCLINICAL; os 32 sem authority_class ficam com o valor ausente declarado (nao imputavel) e decisao HOLD_HUMAN; os 46 com decision BOUND -> HOLD_HUMAN (nao ha validator_ids nem evidence_bundle_ids, logo nao ha ALLOW). PROVA: node scripts/check-contract-integrity.mjs passa a 0 violacoes e node --test scripts/check-contract-integrity.test.mjs da 12/12. | EXECUTADO E VERIFICADO (owner, 01/11/2026 04:25Z): a correccao foi feita **na fonte verdadeira** (src/lib/tools/governance.ts + src/lib/tools/contracts.ts) e os derivados foram **regenerados pelo gerador do repo** (node scripts/generate-entity-contracts.mjs), nunca a mao. Alteracoes: 6/6 fontes reclassificadas pela natureza do documento; 1/6 com sha256 real (089dba1488ac8ee0a3ca943c1131b193e4ee593bbd5c9a3289718320afd68c2d) e artifact_ref que aponta para o PDF preservado agora no repo (docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/cfm_parecer28_2020.pdf, 235.582 B, verificado byte a byte); 5/6 com NOT_AVAILABLE + integrity.reason + artifact_ref nulo; 46 authority bindings com authority_class no enum do contrato authority_binding e decision BOUND -> HOLD_HUMAN (ALLOW exigiria validator_ids e evidence_bundle_ids, que nao existem) e status EVIDENCE_BOUND -> HOLD_HUMAN; 32 field definitions SEM autoridade imputada (a autoridade vem do binding referenciado: 32/32 refs resolvem). PROVA: node scripts/check-contract-integrity.mjs = PASS; node scripts/check-contract-coverage.mjs = exit 0; node scripts/check-generated-fresh.mjs = tudo fresco; node --test scripts/check-contract-integrity.test.mjs = 17/17; npx tsc --noEmit = apenas os 2 erros pre-existentes de @types/pg (devDependency declarada no package.json, ausente no clone local). | ARBITRAGEM (01/11 04:45Z): a frente de classificacao de fontes coincidiu em 5 das 6 fontes com a implementacao do owner e CORRIGIU a 6a: SRC-GOTEJAMENTO-FORMULA-CLASSICA passou de STANDARD a INTERNAL_GOVERNED, porque a entrada nao tem documento-fonte (authority = 'Pratica assistencial de gotejamento', locator sem URI) e STANDARD implicaria um standard publicado inexistente. Alteracao aceite pelo owner, aplicada na fonte verdadeira, derivados regenerados e portoes re-verificados (PASS / exit 0 / fresco / 17-17). Fonte canonica: src/lib/tools/governance.ts."
+    },
+    {
+      "id": "TASK-PLAN-165",
+      "phase": "F2",
+      "title": "S2 Portao de integridade e referencia dos contratos (entregue - falha em 172 violacoes ate a S1)",
+      "wo": "WO-CKO-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "JS",
+      "status": "DONE",
+      "covers": [],
+      "artifacts": [
+        "scripts/check-contract-integrity.mjs",
+        "scripts/check-contract-integrity.test.mjs"
+      ],
+      "acceptance": "ENTREGUE E MEDIDO (owner, 01/11/2026 04:05Z): scripts/check-contract-integrity.mjs (10.989 B) + teste (12/12 verde). Distingue-se do portao do sandbox (`check-enum-conformity.mjs`) em 4 pontos: (1) resolve os enums **escopados ao contrato** (source_type do contrato `source`; authority_class e decision do `authority_binding`), porque `decision` tem TRES enums no catalogo CKO; (2) exige integridade (hash real com artefacto no disco, OU NOT_AVAILABLE com reason E artifact_ref declarados) - o portao do sandbox aceita NOT_AVAILABLE sem motivo; (3) exige integridade REFERENCIAL (todo source_id existe no contrato de fontes) e coerencia decisao/estado; (4) reprova authority_class ausente - ausencia nao e imputavel. MEDIDO contra o estado real do repo: **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8), com o item e a linha nomeados. O portao fica VERMELHO de proposito ate a S1 - e o que o torna uma prova, nao decoracao. FALTA: integrar no agregador de portoes (scripts/audit-execution-gates.mjs) e correr em CI - a integracao em .github/workflows/ exige copia pelo owner (TASK-PLAN-012). | EXECUTADO E VERIFICADO (owner, 01/11/2026 04:25Z): o portao esta no repo (scripts/check-contract-integrity.mjs, 14.076 B) com **17 testes** (17/17 verdes) e **12 regras**, incluindo as duas que o Parecer V6 apontava e que o portao do sandbox nao tinha: resolucao do enum **escopada ao contrato** (o `decision` tem tres enums no catalogo CKO) e reprova de authority_class ausente numa authority_binding. Acrescentou-se ainda o **escopo por tipo de objecto** (o ficheiro de bindings mistura 46 authority_bindings e 32 field_definitions: imputar autoridade a uma definicao de campo rotularia campos clinicos de Aldrete, Braden e Morse como nao-clinicos - o proprio Parecer V6 caiu nesta armadilha). O consumidor foi corrigido em conjunto: scripts/check-contract-coverage.mjs exigia INTERNAL_CONFIG/BOUND (valores fora de qualquer enum do catalogo) - passou a exigir o vocabulario canonico; e a verificacao de integridade das fontes passou a aceitar NOT_AVAILABLE com motivo e artifact_ref em vez de apenas 'truthy'. MEDIDO contra o estado anterior: o portao accusou **172 violacoes** (6 R1, 6 R3, 78 R4, 78 R5, 4 R8) - e o estado ja corrigido da S1 da PASS. AINDA POR FAZER: integrar no agregador scripts/audit-execution-gates.mjs e correr em CI (a escrita em .github/workflows/ exige copia pelo owner - TASK-PLAN-012). | REV.2 (01/11 06:50Z — CORRECCAO DO REGISTO): a primeira versao do portao era **mais permissiva que o contrato**. A auditoria independente (frente `gate-fail-closed`) apanhou o defeito D0 e foi medido: o contrato canonico `source` declara `integrity.sha256.pattern = ^[a-f0-9]{64}$` e `integrity.additionalProperties: false` ⇒ `NOT_AVAILABLE`, `integrity.reason` e `integrity.artifact_ref` sao **invalidos pelo contrato**, e o portao acceptava-os. Confirmado por tres fontes independentes: o schema (catalogo e `contracts/cko-schemas/` sao identicos), as **43 instancias canonicas** em `registers/governance/transversal-source-instances/` (todas com hash real + snapshot preservado, sem `reason` nem `artifact_ref`) e o materializador `scripts/materialize-transversal-public.py:100` (que escreve exactamente `{sha256, snapshot_ref}`). REV.2: o portao passa a ser **derivado do contrato** (lê os enums, `required`, `pattern` e `additionalProperties` do catalogo), a **recalcula o SHA-256 do artefacto** (hash declarado != hash verificado deixa de passar), conta as violacoes derivadas a parte, aponta a **linha real** do registo, usa **codigos estaveis** nos testes, e separa **erro de dado** de **lacuna de contrato**. Os dados que eu tinha inventado (`source_type_rationale`, `integrity.method`, `integrity.artifact_ref`, `integrity.reason`) foram REMOVIDOS: nao existem no contrato. **MEDICAO:** o portao acusava 30 violacoes no estado anterior (6 `source_type` fora do enum, 6 SHA a 64 zeros, 6 `citacao` fora do contrato, 6 snapshot placeholder, 6 duplicadas) e agora acusa **16, todas de 3 classes de lacuna de contrato e ZERO erros de dado**."
+    },
+    {
+      "id": "TASK-PLAN-167",
+      "phase": "F1",
+      "title": "S4 FIND-CTR-010: registar com canonical_id (nao id) no registo activo de findings",
+      "wo": "WO-CKO-COFEN-001",
+      "deps": [
+        "TASK-PLAN-164"
+      ],
+      "owner": "Mavis",
+      "language": "JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "registers/governance/find-register.v1.json",
+        "docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/prod_aldrete.html"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 03:40Z): o Parecer V6 item 5 regista que o FIND-CTR-010 foi adicionado com a chave `id` enquanto os 8 findings existentes usam `canonical_id`, e que tres caminhos de evidencia nao resolvem na arvore actual. SERA: registar o finding no registo ACTIVO do repo de governanca (registers/governance/find-register.v1.json) com `canonical_id`, severity HIGH, status DRAFT_FOR_GOVERNED_REVIEW, decision HOLD_HUMAN, e os tres caminhos de evidencia a resolver para ficheiros verificaveis (o HTML de producao `prod_aldrete.html` preservado em docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/ com SHA-256 conferido; o texto do parecer do CFM `cfm28.txt`; a formula da calculadora no repo). CONTEUDO DA DIVERGENCIA (medido): a fonte CFM (parecer 28/2020) define o corte em 8 pontos e o site publica 9 (prod_aldrete.html contem literalmente `if (calcScore >= 9)`). A divergencia NAO esta homologada - por isso HOLD_HUMAN, nao DONE. NOT_RUN: onde esta o registo activo no sandbox (ha dois caminhos possiveis: registers/governance/ no git vs src/data/registers/governance/ no sandbox) - o registo canonico e o do git; o do sandbox e copia e nao pode criar cadastro paralelo."
+    },
+    {
+      "id": "TASK-PLAN-168",
+      "phase": "F4",
+      "title": "S5 Espelho estatico: os 5.520 destinos nao resolvidos nas 251 paginas de catalogo",
+      "wo": "WO-E2E-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "HTML",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/04-capturas-normativas/capturas-2026-11-01/",
+        "ce-bibliotecas-dev (repo das bibliotecas)"
+      ],
+      "acceptance": "MEDIDO pelo parecer V5 (seccao 5) e a re-derivar: 5.520 ocorrencias de destinos locais nao resolvidos em 251 paginas de public/bibliotecas/catalog/ (1.920 imagens, 3.600 links, 250 caminhos distintos): 2.640 resolvem retirando o prefixo extra `catalog/`; 2.880 concentram-se em 10 caminhos de navegacao relativos a pasta errada. REGRA DURA: e um achado ESTATICO DE CAMINHOS DO PACOTE - nao e teste HTTP nem afirma��ao sobre o site live (o Parecer V5 repete isto duas vezes); as paginas mantem `noindex`, logo o espelho nao e para publicacao, e para reconciliacao. PROVA DE EXECUCAO: correr o auditor estatico sobre a copia e mostrar 5.520 -> 0, comparando antes/depois; e antes de tocar em nada, decidir se o espelho e CANONICO (sobe e substitui) ou DERIVADO (corrige-se ou descarta-se). NOT_RUN: a comparacao byte a byte com ce-bibliotecas-dev (repo git da bibliotecas) para promover a fonte - a fazer."
+    },
+    {
+      "id": "TASK-PLAN-169",
+      "phase": "F1",
+      "title": "S6 Evidencia: os 318 recuperados, os 24 tool-results removidos, os 5 symlinks de raiz e o .env do backup",
+      "wo": "WO-GOV-TRANS-001",
+      "deps": [],
+      "owner": "Mavis",
+      "language": "MD+JSON",
+      "status": "PROPOSTO",
+      "covers": [],
+      "artifacts": [
+        "docs/evidence/ce-comparacao-2026-10-31/",
+        "docs/evidence/experience-platform-skeleton-2026-10-31/"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 03:40Z, pelo Parecer V5 e V6): (1) os 318 ficheiros anteriormente classificados como ausentes estao recuperados com o MESMO SHA-256, e mais 615 caminhos deslocados voltaram as posicoes - a recuperacao fisica esta resolvida e nao deve voltar a ser contada como pendencia; (2) **24 ficheiros removidos** sob tool-results/ sem copia identica - nao concluir que nao houve perda de evidencia: tem de ficar recuperavel na cadeia de auditoria original; (3) os **5 aliases de raiz** (schemas, contracts, registers, audit-run, audit-evidence) eram symlinks no TAR anterior e NAO foram serializados - a exportacao nao e uma reproducao fiel; (4) o `.env` do backup tem valores nao vazios - **nao incluir em ZIPs de auditoria, relatorios ou GitHub**; (5) os 11 ficheiros com bytes diferentes do backup v3 (10 registos de auditoria + 1 registo de bindings de superficies) tem os hashes anteriores fora do pacote novo - o v3 deve ser preservado como versao. OBRIGATORIO: registar cada um dos 4 riscos com destino declarado (recuperar de onde / registar como perdido) e publicar o indice sem o .env."
+    },
+    {
+      "id": "TASK-PLAN-170",
+      "phase": "F0",
+      "title": "S7 Reconciliar o sandbox com o git: 5.746 ficheiros que nunca foram publicados",
+      "wo": "WO-E2E-001",
+      "deps": [
+        "TASK-PLAN-164",
+        "TASK-PLAN-165",
+        "TASK-PLAN-167",
+        "TASK-PLAN-168",
+        "TASK-PLAN-169"
+      ],
+      "owner": "Owner",
+      "language": "MD",
+      "status": "BLOCKED",
+      "covers": [],
+      "artifacts": [
+        "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md (seccao 13)"
+      ],
+      "acceptance": "MEDIDO (owner, 01/11/2026 03:35Z): o sandbox tem 5.746 ficheiros (src/ 2.366, _archive/ 1.445, upload/ 927, public/ 614, scripts/ 150, e2e/ 8, tests/ 9, migrations/ 11) e **nao esta em git em nenhum repositorio**: medido nas 17 branches de IndiciumFIN/calculadorasdeenfermagem e nas 27 de IndiciumFIN/dev-chatgpt-workspace - nenhum dos artefactos do sandbox la esta. O trabalho (17 contratos, 62 schemas, 83 ferramentas com conteudo editorial completo, 19 idiomas + 1.149 tradicoes, 251 paginas de catalogo, 385 testes, 17 portoes) esta apenas na maquina. DECISAO DO DONO (bloqueia a promocao, nao a analise): (a) o sandbox sobe? (b) para que repo e que branch? (c) com que correccoes - a classificacao das 22 fontes (TASK-PLAN-164), o portao de integridade (TASK-PLAN-165), a coerencia dos 1.031 bindings, e sem o `.env`; (d) os 5 modulos src/core/experience/ que so existem no ZIP - sobem para src/core/experience/ e o port partido de tools/experience-skeleton/ e corrigido (TASK-PLAN-163)? O PR #30 (candidato estrutural, 485 ficheiros, CI 12/12 verde) e o veiculo natural para (d) - e o PR #29 (revert) apaga-lo-ia."
+    },
+    {
+      "id": "TASK-PLAN-171",
+      "title": "5 fontes de ferramenta sem documento preservado — intake de evidencia pendente (r85)",
+      "status": "PROPOSTO",
+      "phase": "F1",
+      "acceptance": "Registado em `registers/governance/r86-source-evidence-pending-20261101.v1.json` (5 linhas, `EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate HOLD_HUMAN, 0 admitidas). Cada linha declara a fonte, o locator, o facto de o artefacto nao estar preservado e a lacuna de contrato. **Pendente de decisao do dono** (R84-CKO-SRC-EVIDENCE-STATE): preservar os documentos (impossivel para o gotejamento) ou emendar o contrato.",
+      "owner": "dono/Kernel",
+      "blocked_by": [
+        "TASK-PLAN-172"
+      ],
+      "created_at": "2026-11-01T07:00:00Z",
+      "updated_at": "2026-11-01T07:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-172",
+      "title": "Decisao do dono: emendar o contrato `source` para ter estado de evidencia ausente",
+      "status": "BLOCKED",
+      "phase": "F0",
+      "acceptance": "Decisao registada em `registers/governance/r84-pmo-owner-decision-intake-20261031.v1.json` (id `R86-CKO-SRC-EVIDENCE-STATE`, `selection: null`, `statusEffectsAllowed: false`, `reviewState: PENDING_OWNER_SPECIFIC_DECISION`). Medido: o contrato `source` exige hash de um artefacto preservado e nao tem estado para 'documento nao preservado'; o enum inclui `INTERNAL_GOVERNED`, que descreve uma formula sem documento — **inconsistencia interna do contrato**. Opcoes: emendar o contrato / preservar os 5 documentos (impossivel para 1) / adiar.",
+      "owner": "dono/Kernel",
+      "blocked_by": [],
+      "created_at": "2026-11-01T07:00:00Z",
+      "updated_at": "2026-11-01T07:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-173",
+      "title": "Decisao do dono: campo `citacao` no contrato `source`",
+      "status": "BLOCKED",
+      "phase": "F0",
+      "acceptance": "Decisao registada no r86 (id `R86-CKO-SRC-CITATION-SLOT`, `selection: null`). Medido: as 6 fontes carregam `citacao`, que o contrato nao declara (`additionalProperties: false`), embora declare `language`, `effective_from` e `license_ref`. Opcoes: declarar `citacao` no contrato / mover para `locator.pinpoint` e remover / adiar.",
+      "owner": "dono/Kernel",
+      "blocked_by": [],
+      "created_at": "2026-11-01T07:00:00Z",
+      "updated_at": "2026-11-01T07:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-174",
+      "title": "Portao de integridade rev.2 — derivado do contrato, com hash recalculado",
+      "status": "DONE",
+      "phase": "F1",
+      "acceptance": "EXECUTADO E VERIFICADO (owner, 01/11 06:50Z). `scripts/check-contract-integrity.mjs` reescrito para ser **derivado do contrato**: enums, `required`, `pattern` e `additionalProperties` sao lidos do catalogo CKO. Acrescentou: recalculo do SHA-256 do artefacto (R9.HASH_MISMATCH), forma contra o schema (R13), matriz estado x evidencia (R6), violacoes derivadas contadas a parte, **linha real** em vez de indice, **codigos estaveis** `[RULE.SUB]` nos testes, codigo de saida 2 para argumento desconhecido, sem stack trace, e `--json` para o agregador. Testes reescritos: **23/23**, com fixtures sinteticos independentes do estado do repo. Medido: 30 violacoes no estado anterior -> 16 agora, **0 erros de dado** e 16 lacunas de contrato em 3 classes.",
+      "owner": "owner",
+      "blocked_by": [],
+      "created_at": "2026-11-01T07:00:00Z",
+      "updated_at": "2026-11-01T07:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-175",
+      "title": "O gate R78/R79/R86/R87/R89 fixa a contagem de tasks do registo em 112 — e o crescimento do registo pelas tasks da comparacao CE foi o que o quebrou (CORRIGIDO)",
+      "status": "PROPOSTO",
+      "phase": "F1",
+      "owner": "dono/Kernel",
+      "blocked_by": [],
+      "acceptance": "MEDIDO E **CORRIGIDO** (owner, 01/11 08:10Z). A primeira redaccao desta task estava ERRADA e dizia que o drift era pre-existente em `main`. Medicao correcta: em `main` o gate **PASSA** (`node --test \"scripts/**/*.test.mjs\"` => 313 testes, 312 PASS, 0 FAIL). O gate nao fixa 68: `scripts/check-r78-gap-register.mjs:12-17` computa `expected = baseline.taskPlanCount (37) + r79CandidateMapping.candidateTasksAdded (31)` = 68 e compara com `expected + additional`, onde `additional` vem da expansao **R89** (24 R87 + 20 R89 = 44) => **112**. `main` tem 112 tasks => bate. A **carrier** tem 153 (e 155 com TASK-PLAN-176/177) => **TASK_PLAN_DRIFT** => **22 testes falham** (R78: 5, R86: 3, R87: 6, R89: 8) e o CI `pmo-candidate-unit-regressions` fica vermelho. **A causa e' MINHA**: a comparacao CE ajoutou 84 tasks (TASK-PLAN-092 e 133..177) ao mesmo registo, e o gate modela o registo como tendo exactamente 112 tasks. O `main` nunca apanhou a falha porque o workflow so corre em branches candidatas — mas a carrier e' uma branch candidata, por isso apanha. **Nao mexi no gate nem no bloco R89** para o fazer passar (isso seria a admicao silenciosa que o gate existe para impedir). Decisao do dono/Kernel: (i) admitir as tasks CE na expansao R89, com source commits; (ii) mover as tasks da comparacao CE para um registo proprio e deixar o plano canonico nos 112; ou (iii) emendar o gate para aceitar tasks adicionais **declaradas** no proprio plano.",
+      "created_at": "2026-11-01T07:30:00Z",
+      "updated_at": "2026-11-01T08:10:00Z"
+    },
+    {
+      "id": "TASK-PLAN-176",
+      "title": "Os 5.520 links do espelho: corrector executavel e plano de rewrite validado contra o acervo canonico",
+      "status": "DONE",
+      "phase": "F2",
+      "owner": "owner",
+      "blocked_by": [],
+      "acceptance": "MEDIDO E VERIFICADO (owner, 01/11 08:00Z). O plano de rewrite foi **validado por execucao**, nao por inferencia: `scripts/verify-espelho-link-plan.mjs` aplica as mesmas 3 regras do corrector ao inventario E4 (9.063 ocorrencias, 268 paginas) e re-resolve cada destino contra o acervo canonico (`public/bibliotecas/assets/`, 262 ficheiros) e contra as paginas do proprio espelho ⇒ **5.520/5.520 resolvem, 0 por resolver** (R-NAV 2.880, R-AVIF-ITEM 2.390, R-ASSET-HUB 250). Entregues: `scripts/fix-espelho-links.mjs` (3 regras, dry-run por omissao, `--apply` escreve, **re-verifica tudo depois de reescrever e reprova se sobrar 1 destino**), `scripts/fix-espelho-links.test.mjs` (**5/5 testes**, fixtures sinteticos independentes do repo; inclui o teste fail-closed) e o verificador do plano. **NAO APLICADO**: os 251 HTML do espelho nao existem neste ambiente (medido: 0 ocorrencias de `acervo-a-classificar.html` e de `*cko-image-library*`); o destino do espelho corrigido (descartar a copia ou promovê-la) e' decisao do dono ⇒ TASK-PLAN-177.",
+      "created_at": "2026-11-01T08:00:00Z",
+      "updated_at": "2026-11-01T08:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-177",
+      "title": "Decisao do dono: destino do espelho estatico (descartar a copia divergente ou promover a canonico)",
+      "status": "PROPOSTO",
+      "phase": "F2",
+      "owner": "dono/Kernel",
+      "blocked_by": [
+        "TASK-PLAN-176"
+      ],
+      "acceptance": "DECISAO DO DONO. O espelho `public/bibliotecas/catalog/` (251 paginas, 240 de item + 11 de hub) **nao esta em git** (medido em nenhum dos 182 refs do repo de governanca; `ce-bibliotecas-dev@main` tem zero `public/`), tem `noindex`, e o `releaseGate` do pacote estava BLOCKED. A pergunta e' de destino, nao de codigo: (a) **DESCARTAR** a copia (o acervo canonico ja' existe em `public/bibliotecas/assets/` com 262 AVIF e as 11 paginas de hub sao derivaveis), (b) **CORRIGIR** com o `fix-espelho-links.mjs` e promover, ou (c) **PROMOVER sem correcao** (mantendo 5.520 links quebrados, o que nao se recomenda). Medido que sustenta a opcao (a)/(b): as 5.520 quebras sao **100% mecanicas** (3 regras, destinos todos existentes no acervo). O que a decisao precisa de dizer: **para que repo/branch sobe o espelho**, se fica no repo da app (`IndiciumFIN/calculadorasdeenfermagem`) ou no de governanca, e se o `noindex` se mantém. Nada foi promovido nem apagado por mim.",
+      "created_at": "2026-11-01T08:00:00Z",
+      "updated_at": "2026-11-01T08:00:00Z"
+    },
+    {
+      "id": "TASK-PLAN-178",
+      "title": "Mapa real dos repositorios e o delta real: 4 repos, 228 branches, e 15 ficheiros que avancam",
+      "status": "PROPOSTO",
+      "phase": "F0",
+      "owner": "dono",
+      "blocked_by": [],
+      "acceptance": "MEDIDO (owner, 01/11 14:10Z, por git blob-sha em TODOS os repos e TODAS as branches). **A CORRECCAO ANTERIOR DESTA MESMA TASK ESTAVA ERRADA** — o owner inventou o path `IndiciumFIN/calculadoras-de-enfermagem` a partir da chave do inventario (que e' so o NOME do repo, sem owner) e conclui que o repo tinha desaparecido. **O repo das 182 branches esta' VIVO: e' `kauesp0007/calculadoras-de-enfermagem`** (publico, 182 branches, main = 14.458 ficheiros, ultimo push 27/10 06:29Z). Verificado nome a nome **182/182 nomes E 182/182 SHAs** coincidem com o inventario. MAPA REAL (4 repos): A = `IndiciumFIN/dev-chatgpt-workspace` (29 branches; main 1.877 ficheiros) = governanca PMO x Kernel + CE Experience Platform; P = `kauesp0007/calculadoras-de-enfermagem` (182 branches; main 14.458) = **o produto**; B = `IndiciumFIN/calculadorasdeenfermagem` (17 branches; main 176; PUBLICO — o inventario dizia privado) = app/migracoes da organizacao; D = `IndiciumFIN/ce-bibliotecas-dev` (existe). **ACHADO ESTRATEGICO: A e P partilham apenas 6 caminhos** (`.gitignore`, `.prettierrc`, `AGENTS.md`, `README.md`, `package-lock.json`, `package.json`) ⇒ **a plataforma de governanca e o produto sao bases de codigo quase disjuntas: a Experience Platform nunca tocou as 14.458 ficheiras do produto.** O motor de impacto, o list-query e o pmo-panel existem **so em A** (nunca em P nem em B). DELTA (comparado contra A+B+P, byte a byte): 1.834 ficheiros locais => **1.805 ja identicos**, 26 divergentes (**15 = trabalho local por commitar**; 11 = o repo ja esta' mais a frente) e 3 novos. CORRECCAO 3 (nova): `src/lib/locale-registry.ts` e `src/lib/site-data.ts` **existem no `main` de A** — o registo anterior dizia que nao existiam em nenhum repo (o E2 medira o `main` do repo do produto, onde de facto nao existem). Entregue em `avancar-ce-2026-11-01.zip` (15 ficheiros + patch + manifesto + comparacao), verificado: 23/23 testes, tsc so' com os 2 erros pre-existentes de @types/pg, `git apply --check` limpo sobre a carrier, sha256 do manifesto a bater. **Decisao do dono:** (i) os 6 ficheiros funcionais sobem para a carrier ou para o repo do produto (que hoje nao tem nenhum deles)? (ii) os 9 registos de auditoria sobem so' quando a auditoria voltar a correr no CI? (iii) a plataforma de governanca e o produto，打算 unir em algum momento — ou sao bases de codigo deliberadamente separadas?",
+      "created_at": "2026-11-01T13:45:00Z",
+      "updated_at": "2026-11-01T14:10:00Z"
+    }
+  ],
+  "notas": [
+    "As 44 tasks aqui listadas (TASK-PLAN-134..178) sao as da comparacao CE, da reconciliacao v6 (S1 contratos canonicos, S2 portao de integridade), do port do esqueleto CE e das ligacoes do espelho estatico.",
+    "Decisoes pendentes do dono e o que falta medir estao em docs/evidence/ce-comparacao-2026-10-31/ e na seccao 13 do plano PMO.",
+    "A separacao nao altera o conteudo tecnico: e uma separacao de dominios, nao um cancelamento."
+  ]
+}

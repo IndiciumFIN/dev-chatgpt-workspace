@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CKO Universal Editorial Template System — Demo</title>
+<style>
+:root{--navy:#1A3E74;--navy2:#1E4D8C;--ink:#1F2937;--muted:#5C6B7A;--line:#E5E7EB;--bg:#F8FAFC;--soft:#EEF5FF;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:"Nunito Sans",Inter,Arial,sans-serif;color:var(--navy)}
+.top{position:sticky;top:0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);z-index:5}.topin{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:900;color:var(--navy)}.status{font-size:12px;background:var(--soft);padding:6px 9px;border-radius:999px;color:var(--navy);font-weight:800}
+.shell{max-width:1180px;margin:24px auto;padding:0 20px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px}.side,.page{background:var(--white);border:1px solid var(--line);border-radius:18px}.side{padding:16px;height:max-content;position:sticky;top:82px}.side button{width:100%;text-align:left;border:0;background:transparent;padding:9px;border-radius:9px;font:inherit;font-weight:800;color:#52657c;cursor:pointer}.side button.active,.side button:hover{background:var(--soft);color:var(--navy)}
+.page{padding:28px;box-shadow:0 12px 35px rgba(15,36,73,.06)}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#54749b;font-weight:900}.lead{font-size:18px;color:#40556d}.asset-placeholder{height:260px;border:1px dashed #8DA9C8;border-radius:16px;background:linear-gradient(135deg,#F8FBFF,#EAF2FC);display:grid;place-items:center;color:var(--navy);font-weight:900}figcaption{font-size:12px;color:var(--muted);margin-top:8px}.actionbar{display:flex;gap:8px;padding:10px 0 16px;border-bottom:1px solid var(--line);margin-bottom:18px}.actionbar button{border:1px solid #CAD7E6;background:#fff;color:var(--navy);border-radius:10px;padding:8px 12px;font-weight:800}.notice{background:#F7FAFE;border:1px solid #DCE8F5;padding:12px;border-radius:12px;font-size:13px;color:#41566f}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.meta div{background:#FAFBFD;border:1px solid var(--line);padding:9px;border-radius:10px;font-size:12px}
+@media(max-width:780px){.shell{grid-template-columns:1fr}.side{position:static}.page{padding:20px}.meta{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="brand">Calculadoras de Enfermagem · DesignOS</div><div class="status">UE-LTS v0.2.0</div></div></header>
+<div class="shell">
+<aside class="side"><div class="eyebrow">Perfis</div><button class="active">Article</button><button>Case</button><button>Flashcard</button><button>Quiz</button><button>Infographic</button><button>Pocket Guide</button><button>PDF</button><button>Slides</button></aside>
+<main class="page"><div class="eyebrow">Renderer de referência</div><nav class="actionbar" aria-label="Ações de conteúdo"><button>Salvar</button><button>Imprimir</button><button>Compartilhar</button></nav><div id="app"></div><div class="notice"><strong>Regra:</strong> este preview não contém fatos clínicos próprios. Os textos abaixo representam valores já resolvidos de objetos/claims/evidências canônicos.</div><div class="meta"><div>Facts: canonical only</div><div>Visuals: registry only</div><div>Rights/A11y/Evidence: blocking gates</div></div></main>
+</div>
+<script src="universal_renderer.js"></script>
+<script>
+const req={block_plan:[
+ {block_id:'title',type:'title',semantic_role:'title'},
+ {block_id:'lead',type:'lead',semantic_role:'lead'},
+ {block_id:'figure',type:'figure',semantic_role:'anatomy_illustration'},
+ {block_id:'refs',type:'references',semantic_role:'references'}
+]};
+const resolved={title:{text:'Exemplo de projeção editorial governada'},lead:{text:'O template recebe conteúdo resolvido por ID e versão; não mantém uma cópia independente da verdade canônica.'},figure:{resource_id:'CAND-BIOART-HEART-228',caption:'Placeholder de binding para recurso governado; bytes externos não são alegados neste pacote.'},refs:{text:'[evidence IDs e citações são resolvidos em runtime]'}};
+document.getElementById('app').innerHTML=CKOUniversalRenderer.renderProjection(req,resolved);
+</script>
+</body></html>

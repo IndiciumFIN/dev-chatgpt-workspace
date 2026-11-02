@@ -1,0 +1,50 @@
+{
+  "agents": [
+    {
+      "slug": "sae-copilot",
+      "name": "SAE Copilot",
+      "version": "0.3.0",
+      "agent_type": "clinical_reasoning",
+      "autonomy_level": "L1_draft_review",
+      "status": "pilot",
+      "risk_class": "II",
+      "nursebench_score": 0.84,
+      "model_card_ref": "model-cards/sae-copilot-0.3.0.md",
+      "guardrail_policy_ids": [
+        "POL-001",
+        "POL-004",
+        "POL-005"
+      ],
+      "requires_human_approval_for": [
+        "publicação da SAE no prontuário"
+      ],
+      "handoff_targets": [
+        "nurse-on-duty"
+      ],
+      "owner": "Leivis Lima",
+      "clinical_champion": "Enfermeira-chefe (a designar)"
+    },
+    {
+      "slug": "pews-sentinel",
+      "name": "PEWS Sentinel",
+      "version": "0.2.1",
+      "agent_type": "safety_monitor",
+      "autonomy_level": "L0_suggest",
+      "status": "sandbox",
+      "risk_class": "I",
+      "nursebench_score": 0.78,
+      "model_card_ref": "model-cards/pews-sentinel-0.2.1.md",
+      "guardrail_policy_ids": [
+        "POL-004",
+        "POL-005"
+      ],
+      "requires_human_approval_for": [],
+      "handoff_targets": [
+        "nurse-on-duty",
+        "rapid-response-team"
+      ],
+      "owner": "Leivis Lima",
+      "clinical_champion": "Enfermeira-chefe (a designar)"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "audit_id": "CKO-DB-ARITHMETIC-AND-BRIDGE-EXECUTION-20261026",
+  "execution_engine": "V8 JavaScript tool isolate",
+  "note": "Independent checks on exact GitHub-fetched DB readback JSON; not Node CI and not clinical scoring",
+  "test_source": [
+    "audit-evidence/cko/db-first/20261026/apgar-field-domains-from-db.json",
+    "audit-evidence/cko/db-first/20261026/apgar-requirement-bridge-replay.json",
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json"
+  ],
+  "tests": [
+    {
+      "name": "SOURCE_READ_ONLY_CANDIDATE",
+      "pass": true
+    },
+    {
+      "name": "FIVE_DISTINCT_SCORING_FIELDS",
+      "pass": true
+    },
+    {
+      "name": "ALL_CHOICES_ARE_0_1_2_REQUIRED",
+      "pass": true
+    },
+    {
+      "name": "EVALUATION_MINUTE_NOT_SCORED",
+      "pass": true
+    },
+    {
+      "name": "ENUMERATES_243_COMBINATIONS",
+      "pass": true
+    },
+    {
+      "name": "INDEPENDENT_RANGE_MATCHES_DB",
+      "pass": true
+    },
+    {
+      "name": "INVALID_CHOICE_REJECTED",
+      "pass": true
+    },
+    {
+      "name": "MISSING_AND_EXTRA_REJECTED",
+      "pass": true
+    },
+    {
+      "name": "SIX_REQUIREMENTS_RECOVERED_NOT_APPROVED",
+      "pass": true
+    },
+    {
+      "name": "APGAR_MUST_HOLD",
+      "pass": true
+    },
+    {
+      "name": "FORGED_PUBLISHED_STILL_BLOCKED_BY_EXTRACT_CHECKER",
+      "pass": true
+    },
+    {
+      "name": "FUGULIN_NO_SCORING_DOMAIN",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "pass": 12,
+    "total": 12,
+    "arithmetic_cases": 243,
+    "clinical_authorization": false
+  },
+  "release": "HOLD"
+}

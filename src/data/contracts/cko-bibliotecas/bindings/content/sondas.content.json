@@ -1,0 +1,753 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "sondas",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Sondas",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre sondas enterais, vesicais, gastrointestinais e outras. Indicações, calibres, cuidados de inserção, manutenção, complicações e segurança do paciente.",
+  "template_family": "device-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Clínico",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Atualizado",
+      "tone": "green",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Baseado em evidências",
+      "tone": "neutral",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Sondas"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "tube_types",
+          "nursing_care",
+          "checking_and_maintenance",
+          "videos",
+          "articles_and_evidence",
+          "clinical_attention",
+          "complication_signs",
+          "assessment_frequency",
+          "compatibilities_and_uses",
+          "support_materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tipos",
+        "label": "Tipos",
+        "status": "mapped",
+        "module_refs": [
+          "tube_types"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "tube_types",
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "insercao",
+        "label": "Inserção",
+        "status": "mapped",
+        "module_refs": [
+          "nursing_care"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "manutencao",
+        "label": "Manutenção",
+        "status": "mapped",
+        "module_refs": [
+          "checking_and_maintenance",
+          "assessment_frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "complicacoes",
+        "label": "Complicações",
+        "status": "mapped",
+        "module_refs": [
+          "complication_signs",
+          "compatibilities_and_uses"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "nursing_care",
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "articles_and_evidence",
+          "videos",
+          "support_materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/sondas/hero_sondas.png",
+          "alt": "Sondas",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Sondas são dispositivos de uso temporário inseridos em cavidades ou orifícios do corpo para fins terapêuticos ou diagnósticos.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Objetivo do cuidado",
+                "text": "Garantir a função indicada da sonda, prevenindo complicações e promovendo o conforto e a segurança do paciente.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Importância",
+                "text": "Utilização adequada previne complicações como infecções, lesões, obstruções e aspiração.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Abrangência",
+                "text": "Envolve sondas enterais, vesicais, gastrointestinais e outras sondas.",
+                "icon": "system:info"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Material",
+                "text": "PVC, silicone, poliuretano ou látex.",
+                "icon": "system:document"
+              },
+              {
+                "title": "Calibres",
+                "text": "Variam conforme o tipo de sonda e a necessidade clínica.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Marcas",
+                "text": "Marcas de comprimento auxiliam na correta posição e verificação.",
+                "icon": "system:info"
+              },
+              {
+                "title": "Fixação",
+                "text": "Deve ser segura e confortável, evitando traumas e deslocamentos.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Registro",
+                "text": "Documentar data, calibre, posicionamento e cuidados realizados.",
+                "icon": "system:document"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "tube_types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TIPOS DE SONDAS",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Enterais",
+            "description": "Nasogástrica (SNG), nasoentérica, gastrostomia (GTT), jejunostomia (JT).",
+            "asset": "../assets/sondas/tipo_enterais.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Vesicais",
+            "description": "De demora, intermitente (alívio), de 2 e 3 vias.",
+            "asset": "../assets/sondas/tipo_vesicais.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Gastrointestinais",
+            "description": "Sonda orogástrica (SOG), nasojejunal, retal.",
+            "asset": "../assets/sondas/tipo_gastrointestinais.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Drenagem",
+            "description": "Dreno de tórax, Penrose, dreno de sucção.",
+            "asset": "../assets/sondas/tipo_drenagem.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Outras sondas",
+            "description": "Sonda de traqueostomia, nasal, uretral e outras.",
+            "asset": "../assets/sondas/tipo_outras_sondas.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/tube_types"
+    },
+    {
+      "module_id": "nursing_care",
+      "module_type": "card_grid",
+      "semantic_role": "intervention",
+      "title": "CUIDADOS DE ENFERMAGEM",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "title": "Avaliação inicial",
+            "description": "Confirmar indicação, tipo e calibre. Avaliar condição do paciente.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Preparação",
+            "description": "Higienização das mãos, reunir materiais e explicar o procedimento.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Inserção segura",
+            "description": "Manter técnica asséptica e posicionamento adequado do paciente.",
+            "icon": "system:shield",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Fixação adequada",
+            "description": "Fixar sem tensão excessiva, garantindo conforto e segurança.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Conferência",
+            "description": "Verificar posicionamento antes do uso conforme tipo de sonda.",
+            "icon": "system:checklist",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Educação do paciente",
+            "description": "Orientar sobre cuidados, sinais de alerta e quando comunicar a equipe.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/nursing_care"
+    },
+    {
+      "module_id": "checking_and_maintenance",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "CHECAGEM E MANUTENÇÃO",
+      "priority": 25,
+      "payload": {
+        "items": [
+          {
+            "title": "Antes do uso",
+            "description": "Confirmar posicionamento, integridade da sonda e permeabilidade.",
+            "icon": "system:checklist",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Irrigação",
+            "description": "Realizar irrigação conforme protocolo (geralmente SF 0,9%).",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Permeabilidade",
+            "description": "Avaliar fluxo livre e obstruções. Não forçar a passagem de soluções.",
+            "icon": "system:checklist",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Higienização",
+            "description": "Higienizar conexões e sítio de inserção diariamente ou conforme orientação.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Troca",
+            "description": "Realizar troca conforme protocolo e tipo de sonda utilizada.",
+            "icon": "system:checklist",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Registro",
+            "description": "Registrar data, calibre, posição e cuidados realizados.",
+            "icon": "system:document",
+            "action": {
+              "label": "Ver checagens",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/checking_and_maintenance"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TÉCNICAS",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "title": "Inserção de SNG",
+            "subtitle": "Passo a passo",
+            "duration": "01:58",
+            "asset": "../assets/sondas/video_insercao_sng.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Verificação de posicionamento",
+            "subtitle": "Métodos e testes",
+            "duration": "02:34",
+            "asset": "../assets/sondas/video_verificacao_posicionamento.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Cuidados com sonda vesical",
+            "subtitle": "Higienização e fixação",
+            "duration": "02:07",
+            "asset": "../assets/sondas/video_cuidados_sonda_vesical.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Irrigação de sonda enteral",
+            "subtitle": "Técnica correta",
+            "duration": "01:44",
+            "asset": "../assets/sondas/video_irrigacao_sonda_enteral.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Troca de sonda de gastrostomia",
+            "subtitle": "Cuidados e segurança",
+            "duration": "04:19",
+            "asset": "../assets/sondas/video_troca_sonda_gastrostomia.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:info"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e técnicas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "title": "Diretrizes brasileiras para sondas enterais e gástricas",
+            "source_label": "SOBENFe, 2022"
+          },
+          {
+            "title": "Bundle de prevenção de infecções relacionadas a sondas",
+            "source_label": "ANVISA, 2021"
+          },
+          {
+            "title": "Cuidados com cateter vesical de demora",
+            "source_label": "CDC, 2023"
+          },
+          {
+            "title": "Prevenção de lesões por pressão relacionadas a dispositivos",
+            "source_label": "EPUAP, 2019"
+          }
+        ],
+        "verification_note": "Títulos, fontes e anos são transcrição da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "clinical_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO CLÍNICA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Cuidados prioritários",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Confirmar indicação e tipo de sonda correta",
+              "Verificar posicionamento antes do uso",
+              "Manter técnica asséptica na inserção e cuidados",
+              "Observar sinais de complicação diariamente",
+              "Registrar e comunicar alterações pertinentes"
+            ],
+            "action": null
+          },
+          {
+            "title": "Evitar / Monitorar",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Forçar inserção ou uso de calibre inadequado",
+              "Fixação inadequada ou muito justa",
+              "Irrigação com volume ou solução inadequada",
+              "Uso da via errada para medicamentos",
+              "Não checar posicionamento antes do uso"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos relacionados",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/clinical_attention"
+    },
+    {
+      "module_id": "complication_signs",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "SINAIS DE COMPLICAÇÃO",
+      "priority": 68,
+      "payload": {
+        "items": [
+          "Dor, desconforto ou resistência à infusão",
+          "Náuseas, vômitos ou distensão abdominal",
+          "Resíduos gástricos elevados",
+          "Sangramento ou secreção no sítio de inserção",
+          "Febre, calafrios ou sinais de infecção",
+          "Urina turva, com odor forte ou dor",
+          "Deslocamento ou saída acidental da sonda"
+        ],
+        "tone": "danger",
+        "section_icon": "system:alert"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os sinais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/complication_signs"
+    },
+    {
+      "module_id": "assessment_frequency",
+      "module_type": "table",
+      "semantic_role": "assessment",
+      "title": "FREQUÊNCIA DE AVALIAÇÃO",
+      "priority": 72,
+      "payload": {
+        "columns": [
+          "tube_type",
+          "frequency"
+        ],
+        "rows": [
+          {
+            "tube_type": "Sondas enterais",
+            "frequency": "Antes de cada uso e 2x/dia"
+          },
+          {
+            "tube_type": "Sondas vesicais",
+            "frequency": "Diariamente e conforme necessidade"
+          },
+          {
+            "tube_type": "Sondas gastrointestinais",
+            "frequency": "Conforme prescrição e condição"
+          },
+          {
+            "tube_type": "Outras sondas",
+            "frequency": "Conforme protocolo institucional"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/assessment_frequency"
+    },
+    {
+      "module_id": "compatibilities_and_uses",
+      "module_type": "compatibility",
+      "semantic_role": "safety",
+      "title": "COMPATIBILIDADES / USOS",
+      "priority": 76,
+      "payload": {
+        "positive": {
+          "title": null,
+          "icon": null,
+          "items": [
+            "Soluções enterais e água",
+            "Irrigação com SF 0,9%",
+            "Medicamentos via sonda (quando indicado)",
+            "Coleta de urina estéril (sonda vesical)",
+            "Aspiração gástrica (SNG/SOG)"
+          ],
+          "tone": "success"
+        },
+        "negative": {
+          "title": null,
+          "icon": null,
+          "items": [
+            "Medicamentos com liberação entérica (via enteral)",
+            "Dietas pastosas em sondas de pequeno calibre",
+            "Pressão excessiva na irrigação"
+          ],
+          "tone": "danger"
+        }
+      },
+      "actions": [
+        {
+          "label": "Ver tabela de compatibilidades",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/compatibilities_and_uses"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 80,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia de sondas enterais (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Guia de sondas vesicais (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Cuidados com sondas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Prevenção de complicações (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Checklist de verificação (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:info",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:info",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:info",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:info",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sondas.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/sondas.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/sondas.provenance.json"
+}

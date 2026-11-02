@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Capability Governance Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "capability_ref",
+    "identity_required",
+    "consent_required",
+    "moderation_required",
+    "report_required",
+    "block_required",
+    "audit_log_required",
+    "retention_policy_required",
+    "age_policy_required",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "capability_ref": {
+      "type": "string"
+    },
+    "identity_required": {
+      "type": "boolean"
+    },
+    "consent_required": {
+      "type": "boolean"
+    },
+    "moderation_required": {
+      "type": "boolean"
+    },
+    "report_required": {
+      "type": "boolean"
+    },
+    "block_required": {
+      "type": "boolean"
+    },
+    "audit_log_required": {
+      "type": "boolean"
+    },
+    "retention_policy_required": {
+      "type": "boolean"
+    },
+    "age_policy_required": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN",
+        "ASSURED"
+      ]
+    }
+  }
+}

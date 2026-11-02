@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Opportunity Type Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "description",
+    "audience",
+    "official_source_required",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "official_source_required": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

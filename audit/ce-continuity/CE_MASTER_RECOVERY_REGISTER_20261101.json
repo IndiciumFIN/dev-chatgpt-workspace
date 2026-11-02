@@ -1,0 +1,131 @@
+{
+  "schema": "CE-HISTORICAL-RECOVERY-1.1-SANITIZED",
+  "authority": "AUDIT_ONLY_HOLD",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "package": "CE_RECUPERACAO_HISTORICA_CUMULATIVA_20261101.zip",
+  "package_sha256": "601aac72a8859d37762cb0a5984a8d01d30e811c3d883942569bf6e7de936888",
+  "original_master_sha256": "c7716e8cb971edae24c30dd107994ba7e37172d4541c04ef3bf1e4bdfaac1f97",
+  "tar_hash_status": "FROM_PREVIOUS_AUDIT_NOT_RECOMPUTED_THIS_TURN",
+  "library_ids": "OMITTED_FROM_PUBLIC_REPO",
+  "sources": [
+    {
+      "name": "ce-backup-completo-2026-11-01.tar.gz",
+      "files": 5509,
+      "sha256": "69e68a41021cf6683519a68f6cde768d6e65b150c1dbc537f12d6de4d756ee89"
+    },
+    {
+      "name": "itens-alterados.tar.gz",
+      "files": 11,
+      "sha256": "34d08ccc0aa8d2f76a1ff911f65fc7df70402dff4589d44c65689c03bea3c77d"
+    },
+    {
+      "name": "sandbox-backup-completo (1).tar.gz",
+      "files": 5203,
+      "sha256": "146353b81ea68f52cbec25468b8c235c62fd203d5824058737895329e1829edd"
+    },
+    {
+      "name": "sandbox-backup-completo (2).tar.gz",
+      "files": 5221,
+      "sha256": "bc2e60fa2e820dc90bc12aab383ea0275d1381dfc054fef0142e2b47a0e50564"
+    },
+    {
+      "name": "sandbox-backup-completo.tar.gz",
+      "files": 6632,
+      "sha256": "e642be5765089f47e060e69765bdc889637d5ec824f5d1f44a3b8f34f00fe935"
+    },
+    {
+      "name": "sandbox-canonico-completo.tar.gz",
+      "files": 16433,
+      "sha256": "3f8dc1170401dde7ccff07f72faa628ac29cd7db57692c03a173dd0cecdc7e42"
+    },
+    {
+      "name": "sandbox-completo (1).tar.gz",
+      "files": 5768,
+      "sha256": "99680ecac588d152fb7e50130182cacdd02b5b563845f820a8cc09cd2041eda1"
+    },
+    {
+      "name": "sandbox-completo (2).tar.gz",
+      "files": 5746,
+      "sha256": "cc4989ac56e2e0d2911ac45d440c01d01f52d11e321e8e712fdb01821eb97100"
+    },
+    {
+      "name": "sandbox-completo.tar.gz",
+      "files": 4518,
+      "sha256": "644345d8c029a1accd33fa7a487e8c56d28863f05e674e1be22089841c307274"
+    }
+  ],
+  "binary_alias": {
+    "name": "sandbox-completo (4).tar(2).gz",
+    "equals": "sandbox-canonico-completo.tar.gz",
+    "sha256": "3f8dc1170401dde7ccff07f72faa628ac29cd7db57692c03a173dd0cecdc7e42"
+  },
+  "lineage": [
+    {
+      "previous": "sandbox-backup-completo.tar.gz",
+      "next": "sandbox-backup-completo (1).tar.gz",
+      "identical": 4133,
+      "modified": 64,
+      "removed": 2434,
+      "added": 1005
+    },
+    {
+      "previous": "sandbox-backup-completo (1).tar.gz",
+      "next": "sandbox-backup-completo (2).tar.gz",
+      "identical": 5180,
+      "modified": 22,
+      "removed": 0,
+      "added": 18
+    },
+    {
+      "previous": "sandbox-completo.tar.gz",
+      "next": "sandbox-completo (1).tar.gz",
+      "identical": 4517,
+      "modified": 0,
+      "removed": 0,
+      "added": 1250
+    },
+    {
+      "previous": "sandbox-completo (1).tar.gz",
+      "next": "sandbox-completo (2).tar.gz",
+      "identical": 5728,
+      "modified": 15,
+      "removed": 24,
+      "added": 2
+    },
+    {
+      "previous": "sandbox-completo (2).tar.gz",
+      "next": "sandbox-canonico-completo.tar.gz",
+      "identical": 5655,
+      "modified": 90,
+      "removed": 0,
+      "added": 10687
+    },
+    {
+      "previous": "sandbox-canonico-completo.tar.gz",
+      "next": "ce-backup-completo-2026-11-01.tar.gz",
+      "identical": 5383,
+      "modified": 116,
+      "removed": 10933,
+      "added": 9
+    }
+  ],
+  "private_full_file_indices": [
+    {
+      "filename": "REGISTRO_ARQUIVOS_HISTORICOS.csv",
+      "rows": 55033,
+      "sha256": "c70dd1e13c0e75e0b0660b3d11efa27b6b278ca0f4a2985f7c5097f870c50ab3"
+    },
+    {
+      "filename": "RECUPERACAO_EXCLUSIVOS_ANTIGOS.csv",
+      "rows": 2307,
+      "sha256": "54059441559632544b478a78a307bf32e6d1084fead5994e3ec101ab72859588"
+    }
+  ],
+  "gates": [
+    "CANDIDATE_HOLD",
+    "NO_MERGE",
+    "NO_DEPLOY",
+    "NO_DB_WRITE",
+    "NO_CLINICAL_RELEASE"
+  ]
+}

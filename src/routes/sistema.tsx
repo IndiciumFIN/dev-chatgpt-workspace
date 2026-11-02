@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { ArticlePage } from "@/components/article/article-page";
 import { contractReport } from "@/lib/contract";
-import { useStored } from "@/lib/stored";
+import { held, phases, rejected, tokens } from "@/lib/site-data";
 
 export const Route = createFileRoute("/sistema")({
   component: Sistema,
@@ -15,7 +15,6 @@ export const Route = createFileRoute("/sistema")({
 });
 
 function Sistema() {
-  const { held, phases, pages, rejected, tokens } = useStored();
   return (
     <Shell>
       <ArticlePage
@@ -129,7 +128,7 @@ function Sistema() {
 
         <h2>Contrato desta versão</h2>
         <ul className="contract-list">
-          {contractReport(pages).map((check) => (
+          {contractReport().map((check) => (
             <li key={check.id} className={check.ok ? "is-ok" : "is-bad"}>
               <b>{check.ok ? "Conferido" : "Pendente"}</b>
               <span>{check.detail}</span>

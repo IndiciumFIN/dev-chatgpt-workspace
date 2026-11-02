@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Profile Candidate",
+  "type": "object",
+  "required": [
+    "participant_key",
+    "stage",
+    "goal"
+  ],
+  "properties": {
+    "participant_key": {
+      "type": "string",
+      "pattern": "^anon-[a-f0-9-]{36}$"
+    },
+    "target_role_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "EXPLORING",
+        "STUDENT",
+        "FIRST_JOB",
+        "PROFESSIONAL",
+        "SPECIALIST",
+        "LEADERSHIP",
+        "RESEARCH",
+        "INTERNATIONAL"
+      ]
+    },
+    "goal": {
+      "type": "string",
+      "maxLength": 600
+    }
+  }
+}

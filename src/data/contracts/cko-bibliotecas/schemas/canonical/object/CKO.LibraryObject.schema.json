@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:library-object:v1.0.0",
+  "title": "CKO Library Object v1.0",
+  "description": "Individual semantic object belonging to a CKO Library. Page rendering is referenced, not embedded.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "identity",
+    "library_ref",
+    "object_type",
+    "title",
+    "subtitle",
+    "classification",
+    "typed_attributes",
+    "content_page_ref",
+    "composition_ref",
+    "asset_manifest_ref",
+    "provenance_manifest_ref",
+    "related_object_refs",
+    "governance",
+    "extension_ref",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "library_object"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "object_id",
+        "slug",
+        "state"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "pattern": "^cko\\.object\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "assigned",
+            "verified",
+            "decision_required"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "library_ref": {
+      "type": "string",
+      "pattern": "^cko\\.library\\.[a-z0-9-]+$"
+    },
+    "object_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "classification": {
+      "type": "object",
+      "required": [
+        "labels"
+      ],
+      "properties": {
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "typed_attributes": {
+      "type": "object"
+    },
+    "content_page_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "composition_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "asset_manifest_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provenance_manifest_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_object_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^cko\\.object\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+      },
+      "uniqueItems": true
+    },
+    "governance": {
+      "type": "object"
+    },
+    "extension_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "class",
+        "source_ref",
+        "derivation"
+      ],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "source_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "derivation": {
+          "type": "string"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

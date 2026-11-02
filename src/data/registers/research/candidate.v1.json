@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "0.1.0",
+  "registryId": "CE-RESEARCH-PARTICIPATION-CANDIDATE-001",
+  "status": "CANDIDATE_HOLD",
+  "branch": "feat/research-participation-layer-20261026",
+  "publicationAuthorized": false,
+  "kernelAdmission": "NOT_SUBMITTED",
+  "database": {
+    "engine": "PGLite",
+    "scope": "local_ephemeral_candidate",
+    "remoteConnections": false,
+    "migration": "migrations/0004_research_participation_candidate.sql"
+  },
+  "sourceRefs": [
+    "DEC-COFEN-303-2026",
+    "LEI-14.874-2024",
+    "LEI-13.709-2018",
+    "contracts/cko-schemas/research_method.schema.json"
+  ],
+  "modules": [
+    "studio",
+    "instrumentos",
+    "etica",
+    "evidencias",
+    "equipe",
+    "riscos-impacto",
+    "analise",
+    "participacao",
+    "propostas",
+    "consenso",
+    "devolutiva",
+    "relatorio",
+    "governanca"
+  ],
+  "safeguards": [
+    "no_name_field",
+    "no_email_field",
+    "no_cpf_field",
+    "no_phone_field",
+    "official_status_requires_verified_evidence",
+    "no_remote_database",
+    "no_destructive_sql"
+  ],
+  "schemas": [
+    "schemas/research-project.schema.json",
+    "schemas/research-instrument.schema.json",
+    "schemas/research-risk.schema.json",
+    "schemas/research-skill-need.schema.json",
+    "schemas/participation-process.schema.json",
+    "schemas/participation-contribution.schema.json",
+    "schemas/participation-proposal.schema.json",
+    "schemas/participation-consensus-vote.schema.json",
+    "schemas/participation-outcome.schema.json"
+  ],
+  "canonicalObjects": [
+    "ResearchProject",
+    "ResearchInstrument",
+    "ResearchRisk",
+    "ResearchSkillNeed",
+    "ParticipationProcess",
+    "ParticipationContribution",
+    "ParticipationProposal",
+    "ParticipationConsensusVote",
+    "ParticipationOutcome"
+  ]
+}

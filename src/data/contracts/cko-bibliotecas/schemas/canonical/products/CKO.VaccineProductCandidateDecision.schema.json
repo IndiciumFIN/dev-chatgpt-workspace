@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-product-candidate-decision:v1.0.0",
+  "title": "CKO Vaccine Product Candidate Decision",
+  "type": "object",
+  "required": [
+    "decision_id",
+    "candidate_id",
+    "vaccine_ref",
+    "formulation_ref",
+    "decision",
+    "candidate_state_after",
+    "promoted_product_refs",
+    "source_refs",
+    "rationale",
+    "freeze_impact",
+    "reviewed_on",
+    "next_review_due"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "pattern": "^cko\\.candidate-decision\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^cko\\.product-candidate\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "formulation_ref": {
+      "type": "string",
+      "pattern": "^cko\\.formulation\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PROMOTE_PRODUCTS",
+        "PROMOTE_PRODUCT_AND_KEEP_SEASONAL_SET_OPEN",
+        "DEFER_NO_ANVISA_PRODUCT_SOURCE_LOCATED",
+        "DEFER_CURRENT_REGULATORY_STATUS_NOT_REQUERIED",
+        "DEFER_SEASONAL_PRODUCT_SET"
+      ]
+    },
+    "candidate_state_after": {
+      "type": "string",
+      "enum": [
+        "CLOSED",
+        "OPEN_NON_BLOCKING"
+      ]
+    },
+    "promoted_product_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^cko\\.product\\.vaccine\\.[a-z0-9-]+$"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freeze_impact": {
+      "const": "NONE_ADDITIVE_LAYER"
+    },
+    "reviewed_on": {
+      "const": "2026-08-09"
+    },
+    "next_review_due": {
+      "const": "2027-01-31"
+    }
+  },
+  "additionalProperties": false
+}

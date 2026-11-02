@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:vaccine:v1.0.0",
+  "title": "CKO Vaccine Object Extension v1.0",
+  "description": "SBIm-oriented vaccine object extension. Every value is epistemic and provenance-aware.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "vaccine"
+    },
+    "attributes": {
+      "type": "object",
+      "required": [
+        "sbim_entry_title",
+        "sbim_section_last_updated",
+        "source_locator",
+        "granularity",
+        "decomposition_state",
+        "variants",
+        "prevents",
+        "composition_summary",
+        "vaccine_nature",
+        "indications_summary",
+        "contraindications_summary",
+        "dose_schedule_summary",
+        "administration_route",
+        "care_summary",
+        "adverse_events_summary",
+        "availability_summary",
+        "calendar_context_refs",
+        "campaign_refs"
+      ],
+      "properties": {
+        "sbim_entry_title": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "sbim_section_last_updated": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "source_locator": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "granularity": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "decomposition_state": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "variants": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "prevents": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "composition_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "vaccine_nature": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "indications_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "contraindications_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "dose_schedule_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "administration_route": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "care_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "adverse_events_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "availability_summary": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "calendar_context_refs": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "campaign_refs": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

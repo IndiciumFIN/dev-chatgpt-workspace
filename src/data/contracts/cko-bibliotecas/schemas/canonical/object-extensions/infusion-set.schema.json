@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:infusion-set:v1.0.0",
+  "title": "CKO Equipos e Infusão Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "infusion-set"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "dropFactor": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "filter": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "photosensitive": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "pumpCompatibility": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "connectors": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "material": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "primingVolume": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

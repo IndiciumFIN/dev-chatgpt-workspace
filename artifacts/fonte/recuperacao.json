@@ -1,0 +1,302 @@
+{
+  "medidoEm": "2026-10-26T16:41:27.118Z",
+  "fonte": {
+    "repositorio": "github.com/kauesp0007/calculadoras-de-enfermagem",
+    "commit": "fc608936deb2fee96e6deaad5f3ea6e1c7e0d6da",
+    "catalogo": "artifacts/fonte/catalogo.json",
+    "paginas": "/workspace/fase1/catalogo-fonte/paginas"
+  },
+  "pendentesAntes": 41,
+  "pendentesDepois": 18,
+  "recuperadasDaFonte": 16,
+  "normalizadas": 10,
+  "secoesComTexto": 124,
+  "achados": 18,
+  "migration": "migrations/0042_recuperar_fonte.sql",
+  "tabela": {
+    "versao": "1.0.0",
+    "medidoEm": "2026-10-26",
+    "fonte": {
+      "repositorio": "github.com/kauesp0007/calculadoras-de-enfermagem",
+      "commit": "fc608936deb2fee96e6deaad5f3ea6e1c7e0d6da",
+      "catalogo": "artifacts/fonte/catalogo.json",
+      "paginas": "/workspace/fase1/catalogo-fonte/paginas"
+    },
+    "regra": "Uma seção pendente só é recuperada quando existe na fonte UMA seção com o mesmo assunto, cujo texto o site já publica. O texto vai LITERAL, com a proveniência (arquivo + sha256 + o título da seção de origem) no comentário do comando. Onde não há essa correspondência, a pendência vira ACHADO NOMEADO: o marcador fica, e a escrita é do autor.",
+    "correspondencias": [
+      {
+        "path": "assinante/termos-de-uso",
+        "position": 1,
+        "tituloBanco": "1. Definições",
+        "arquivo": "termos.html",
+        "secoesFonte": [
+          "1. Definições"
+        ],
+        "motivo": "mesmo título e mesmo assunto: a definição de Site, Usuário e Ferramentas que os Termos regulam"
+      },
+      {
+        "path": "assinante/termos-de-uso",
+        "position": 4,
+        "tituloBanco": "4. Compromissos do usuário",
+        "arquivo": "termos.html",
+        "secoesFonte": [
+          "4. Direitos e Obrigações do Usuário"
+        ],
+        "motivo": "mesmo assunto: o conjunto de compromissos que o usuário assume ao usar a plataforma"
+      },
+      {
+        "path": "assinante/cancelamento-e-reembolso",
+        "position": 2,
+        "tituloBanco": "2. Reembolso em renovações",
+        "arquivo": "reembolso.html",
+        "secoesFonte": [
+          "3. Condições para Reembolso"
+        ],
+        "motivo": "mesmo assunto: a condição de reembolso aplicável à renovação da assinatura"
+      },
+      {
+        "path": "assinante/cancelamento-e-reembolso",
+        "position": 4,
+        "tituloBanco": "4. Cancelamento da assinatura",
+        "arquivo": "reembolso.html",
+        "secoesFonte": [
+          "5. Cancelamento de Assinatura"
+        ],
+        "motivo": "mesmo assunto: como cancelar a assinatura e o que o cancelamento impede"
+      },
+      {
+        "path": "assinante/cancelamento-e-reembolso",
+        "position": 5,
+        "tituloBanco": "5. Prazos de devolução",
+        "arquivo": "reembolso.html",
+        "secoesFonte": [
+          "4. Processamento do Reembolso"
+        ],
+        "motivo": "mesmo assunto: o prazo de processamento e a forma do crédito do valor"
+      },
+      {
+        "path": "assinante/condicoes-da-assinatura",
+        "position": 6,
+        "tituloBanco": "6. Cancelamento e reembolso",
+        "arquivo": "reembolso.html",
+        "secoesFonte": [
+          "5. Cancelamento de Assinatura"
+        ],
+        "motivo": "mesmo assunto: a política de cancelamento. O mesmo parágrafo serve às duas páginas irmãs — a política é uma só, e a procedência está declarada no comentário"
+      },
+      {
+        "path": "acessibilidade/declaracao-de-acessibilidade",
+        "position": 3,
+        "tituloBanco": "3. Navegação pelo teclado",
+        "arquivo": "politica.html",
+        "secoesFonte": [
+          "3. Atalhos de Teclado e Navegação Sistêmica"
+        ],
+        "motivo": "mesmo assunto: atalhos de teclado e navegação sistêmica, com o mesmo padrão WCAG citado"
+      },
+      {
+        "path": "editorial/uso-responsavel-de-ia",
+        "position": 5,
+        "tituloBanco": "5. O que esses controles significam e o que não significam",
+        "arquivo": "responsbilidade_inteligencia_artificial.html",
+        "secoesFonte": [
+          "O que esses controles significam — e o que não significam"
+        ],
+        "motivo": "a fonte traz a seção com o mesmo título (com a travessão); é a mesma控制了 o que a automação não substitui"
+      },
+      {
+        "path": "editorial/uso-responsavel-de-ia",
+        "position": 6,
+        "tituloBanco": "Referências e fontes",
+        "arquivo": "responsbilidade_inteligencia_artificial.html",
+        "secoesFonte": [
+          "Referências Bibliográficas"
+        ],
+        "motivo": "mesma seção de referências, na mesma página de origem"
+      },
+      {
+        "path": "editorial/fontes-e-evidencias",
+        "position": 2,
+        "tituloBanco": "2. O que não usamos como fonte",
+        "arquivo": "auditoria_governanca_regulatoria.html",
+        "secoesFonte": [
+          "O que deve ser evitado"
+        ],
+        "motivo": "mesmo assunto: o que a governança proíbe atribuir a uma fonte"
+      },
+      {
+        "path": "editorial/politica-editorial",
+        "position": 4,
+        "tituloBanco": "4. Classificação por risco",
+        "arquivo": "auditoria_governanca_regulatoria.html",
+        "secoesFonte": [
+          "HIGH · Alto",
+          "MEDIUM · Médio",
+          "LOW · Baixo"
+        ],
+        "motivo": "a classificação por risco na fonte está nos três níveis (o h2 da classificação é um cabeçalho sem corpo); as três seções são o corpo dela"
+      },
+      {
+        "path": "privacidade/politica-de-privacidade",
+        "position": 3,
+        "tituloBanco": "3. Conceitos usados nesta política",
+        "arquivo": "politica.html",
+        "secoesFonte": [
+          "1. Quadro Informativo"
+        ],
+        "motivo": "mesmo assunto: o enquadramento e o alcance do documento, que é onde a política define os conceitos"
+      },
+      {
+        "path": "privacidade/politica-de-privacidade",
+        "position": 4,
+        "tituloBanco": "4. Que dados tratamos, para quê e com que base legal",
+        "arquivo": "politica.html",
+        "secoesFonte": [
+          "4. Finalidade do tratamento dos dados",
+          "5.1. Matriz de Tratamento de Dados"
+        ],
+        "motivo": "mesmo assunto: a finalidade do tratamento e a base legal de cada dado — a matriz é a base legal, e as duas seções juntas formam a resposta"
+      },
+      {
+        "path": "privacidade/cookies-e-consentimento",
+        "position": 2,
+        "tituloBanco": "2. O que usamos, categoria por categoria",
+        "arquivo": "politica.html",
+        "secoesFonte": [
+          "6. Publicidade e Google AdSense"
+        ],
+        "motivo": "mesmo assunto: as categorias de publicidade e rastreamento que o site usa"
+      },
+      {
+        "path": "privacidade/cookies-e-consentimento",
+        "position": 3,
+        "tituloBanco": "3. Como você controla",
+        "arquivo": "politicaapp.html",
+        "secoesFonte": [
+          "c. Consentimento"
+        ],
+        "motivo": "mesmo assunto: o consentimento e o controle do titular sobre cookies e rastreamento"
+      },
+      {
+        "path": "sustentabilidade/metodologia-de-medicao",
+        "position": 1,
+        "tituloBanco": "1. O que medimos",
+        "arquivo": "tecnologiaverde.html",
+        "secoesFonte": [
+          "Redução da Pegada de Carbono"
+        ],
+        "motivo": "mesmo assunto: as métricas de pegada do próprio serviço, que é o que a página declara medir"
+      }
+    ],
+    "pendenciasSemCorrespondencia": [
+      {
+        "path": "acessibilidade/declaracao-de-acessibilidade",
+        "position": 5,
+        "titulo": "5. Limitações conhecidas",
+        "motivo": "a fonte não lista limitações de acessibilidade do site; a enumeração é do autor"
+      },
+      {
+        "path": "assinante/condicoes-da-assinatura",
+        "position": 3,
+        "titulo": "3. Renovação e reajuste",
+        "motivo": "a fonte não descreve a renovação nem o reajuste da assinatura; são condições comerciais do autor"
+      },
+      {
+        "path": "assinante/condicoes-da-assinatura",
+        "position": 5,
+        "titulo": "5. Recibos e nota fiscal",
+        "motivo": "a fonte não descreve emissão fiscal; é do autor"
+      },
+      {
+        "path": "assinante/conta-e-exclusao-de-dados",
+        "position": 1,
+        "titulo": "1. O que fica na sua conta",
+        "motivo": "a política do aplicativo na fonte afirma que o app não coleta dados; a conta do site é do autor e a fonte não a descreve"
+      },
+      {
+        "path": "assinante/perguntas-frequentes",
+        "position": 1,
+        "titulo": "1. Uso da plataforma",
+        "motivo": "pergunta e resposta são do autor; a fonte traz a política, não a resposta"
+      },
+      {
+        "path": "assinante/perguntas-frequentes",
+        "position": 2,
+        "titulo": "2. Assinatura Premium",
+        "motivo": "pergunta e resposta são do autor"
+      },
+      {
+        "path": "assinante/perguntas-frequentes",
+        "position": 3,
+        "titulo": "3. Cancelamento e reembolso",
+        "motivo": "pergunta e resposta são do autor"
+      },
+      {
+        "path": "assinante/perguntas-frequentes",
+        "position": 4,
+        "titulo": "4. Privacidade",
+        "motivo": "pergunta e resposta são do autor"
+      },
+      {
+        "path": "assinante/planos",
+        "position": 1,
+        "titulo": "1. Gratuito e Premium",
+        "motivo": "a oferta comercial não existe na fonte: é do autor"
+      },
+      {
+        "path": "assinante/planos",
+        "position": 2,
+        "titulo": "2. Recurso por recurso",
+        "motivo": "a oferta comercial não existe na fonte: é do autor"
+      },
+      {
+        "path": "assinante/planos",
+        "position": 3,
+        "titulo": "3. Preço e condições",
+        "motivo": "preço e condições não existem na fonte: é do autor"
+      },
+      {
+        "path": "editorial/fontes-e-evidencias",
+        "position": 1,
+        "titulo": "1. Ordem de prioridade",
+        "motivo": "a hierarquia de fontes é do autor; a fonte descreve o método, não a ordem"
+      },
+      {
+        "path": "editorial/fontes-e-evidencias",
+        "position": 4,
+        "titulo": "4. Quando as fontes divergem",
+        "motivo": "a fonte não tem seção de divergência entre fontes; é do autor"
+      },
+      {
+        "path": "privacidade/cookies-e-consentimento",
+        "position": 5,
+        "titulo": "Referências e fontes",
+        "motivo": "a fonte da política não traz bibliografia; só a página de IA tem, e é de outro assunto"
+      },
+      {
+        "path": "sobre/equipe-e-autores",
+        "position": 3,
+        "titulo": "3. Conflitos de interesse",
+        "motivo": "a fonte não declara conflitos de interesse; é do autor"
+      },
+      {
+        "path": "sustentabilidade/metodologia-de-medicao",
+        "position": 3,
+        "titulo": "3. Limites das estimativas",
+        "motivo": "a fonte descreve as práticas sustentáveis, não os limites das estimativas; é do autor"
+      },
+      {
+        "path": "sustentabilidade/metodologia-de-medicao",
+        "position": 5,
+        "titulo": "Referências e fontes",
+        "motivo": "a fonte da sustentabilidade não traz bibliografia; é do autor"
+      },
+      {
+        "path": "sustentabilidade/relatorios-de-sustentabilidade",
+        "position": 1,
+        "titulo": "1. Relatórios publicados",
+        "motivo": "os relatórios são unpublished até existirem; é do autor"
+      }
+    ]
+  }
+}

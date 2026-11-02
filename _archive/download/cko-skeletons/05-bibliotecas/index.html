@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Catálogo · 66 bibliotecas · Esqueleto CKO</title>
+<meta name="description" content="Catálogo · 66 bibliotecas">
+<style>
+/* === TOKENS OFICIAIS (espelho de src/styles.css) === */
+:root{
+  --font-sans:Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;
+  --color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;
+  --color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;
+  --color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;
+  --color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:var(--color-canvas);
+  font-family:var(--font-sans);color:var(--color-body);line-height:1.5;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;
+  z-index:9999;padding:10px;border-radius:4px}
+.skip-link:focus{top:3px}
+
+/* Cabeçalho canônico (master data) */
+.cko-masterhead{
+  background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));
+  color:#fff;padding:22px 24px;border-radius:12px;margin:18px auto;
+  width:min(1380px,calc(100% - 40px));
+}
+.cko-masterhead .eyebrow{
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:#bbd8ff;font-weight:800;
+}
+.cko-masterhead h1{
+  font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);
+  margin:6px 0 4px;letter-spacing:-.03em;line-height:1.15;
+}
+.cko-masterhead .meta{
+  font-size:12px;color:#cfdff5;display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;
+}
+.cko-masterhead .meta span b{color:#fff;font-weight:700}
+
+/* Container principal */
+.cko-wrap{width:min(1380px,calc(100% - 40px));margin:0 auto;padding-bottom:48px}
+
+/* Painel padrão */
+.cko-panel{
+  background:var(--color-paper);border:1px solid var(--color-line);
+  border-radius:11px;box-shadow:0 8px 22px #1433600d;padding:18px;margin:14px 0;
+}
+.cko-panel h2{
+  font-size:18px;color:var(--color-navy-deep);margin:0 0 10px;
+  letter-spacing:-.02em;font-weight:850;
+}
+.cko-panel h3{
+  font-size:14px;color:var(--color-navy);margin:14px 0 6px;font-weight:800;
+}
+.cko-muted{color:var(--color-muted);font-size:12px}
+
+/* Bloco TODO — marca o que ainda precisa ser preenchido */
+.todo{
+  background:#fff8e9;border:1px solid #e5ae29;border-left:4px solid #d49a13;
+  color:#79530d;padding:10px 14px;border-radius:8px;font-size:12px;margin:8px 0;
+}
+.todo strong{color:#5a3f06}
+.todo code{
+  background:#fff;border-radius:3px;padding:1px 5px;font-family:ui-monospace,monospace;
+}
+
+/* Tabela canônica */
+.cko-table{border-collapse:collapse;width:100%;font-size:12px;background:var(--color-paper)}
+.cko-table th{
+  background:var(--color-ice);font-weight:800;color:var(--color-navy);
+  text-align:left;padding:10px 12px;white-space:nowrap;border:1px solid var(--color-line);
+}
+.cko-table td{
+  padding:9px 12px;border:1px solid var(--color-line);vertical-align:top;
+}
+.cko-table .mono{font-family:ui-monospace,monospace;font-size:11px}
+
+/* Status badges */
+.status{
+  display:inline-block;padding:3px 9px;border-radius:14px;
+  font-size:11px;font-weight:750;border:1px solid var(--color-line);
+  background:var(--color-ice);color:var(--color-navy);
+}
+.status.hold{background:#fff2d9;border-color:#ecd49f;color:#825400}
+.status.candidate{background:var(--color-stage);color:var(--color-muted)}
+.status.released{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+
+/* Grid para preview */
+.preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin-top:14px;
+}
+.preview-card{
+  background:var(--color-pane);border:1px dashed var(--color-line);
+  border-radius:8px;padding:14px;min-height:120px;
+}
+.preview-card .label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-muted);margin-bottom:6px;
+}
+
+/* Rodapé */
+.cko-footer{
+  text-align:center;padding:18px;border-top:1px solid var(--color-line);
+  color:var(--color-muted);font-size:11px;margin-top:24px;
+}
+
+@media(max-width:770px){
+  .cko-masterhead{padding:16px}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .cko-masterhead{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="cko-masterhead">
+  <div class="eyebrow">CKO · Esqueleto canônico · Bibliotecas</div>
+  <h1>Catálogo · 66 bibliotecas</h1>
+  <div class="meta">
+    <span><b>canonical_id:</b> <code>CKO-LIB-CATALOG</code></span>
+    <span><b>schema_version:</b> 0.1.0</span>
+    <span><b>status:</b> <span class="status candidate">CANDIDATE</span></span>
+    <span><b>updated_at:</b> 2026-10-23</span>
+  </div>
+</header>
+
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<section class="cko-panel">
+  <h2>Panorama das 66 bibliotecas</h2>
+  <p class="cko-muted">Cada biblioteca é uma instância de <a href="../03-contratos-canonicos/bibliotecas-e-conteudo/library.html">library.schema.json</a>. Dados transcritos do catálogo original v0.6.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin-top:14px">
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">66</strong><span style="color:var(--color-muted);font-size:11px">bibliotecas totais</span></div>
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">23</strong><span style="color:var(--color-muted);font-size:11px">com acervo visual</span></div>
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">43</strong><span style="color:var(--color-muted);font-size:11px">planejadas</span></div>
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">273</strong><span style="color:var(--color-muted);font-size:11px">visual_assets total</span></div>
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">0</strong><span style="color:var(--color-muted);font-size:11px">clinical_claims_approved</span></div>
+    <div style="padding:13px;background:var(--color-pane);border:1px solid var(--color-line);border-radius:9px"><strong style="display:block;color:var(--color-navy);font-size:26px;font-weight:850">9</strong><span style="color:var(--color-muted);font-size:11px">grupos</span></div>
+  </div>
+  <p class="todo" style="margin-top:14px"><strong>Regra de integridade:</strong> nenhuma biblioteca está pronta para publicação. Todas permanecem em <code>HOLD_HUMAN</code> até preencher os 13 critérios de prontidão.</p>
+</section>
+<section class="cko-panel">
+  <h2>Terapia e medicamentos <span class="status candidate" style="margin-left:8px">5 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="terapia-e-medicamentos/administracao-segura.html"><div class="label">administracao-segura</div><strong>Administração Segura de Medicamentos</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="terapia-e-medicamentos/diluicoes-e-compatibilidade.html"><div class="label">diluicoes-e-compatibilidade</div><strong>Diluições e Compatibilidade</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="terapia-e-medicamentos/farmacologia.html"><div class="label">farmacologia</div><strong>Farmacologia</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="terapia-e-medicamentos/medicamentos.html"><div class="label">medicamentos</div><strong>Medicamentos</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="terapia-e-medicamentos/vacinas.html"><div class="label">vacinas</div><strong>Vacinas</strong><p class="cko-muted">0 visuais · 9 slots</p></a></div>
+  <p style="margin-top:14px"><a href="terapia-e-medicamentos/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Materiais e dispositivos <span class="status candidate" style="margin-left:8px">13 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="materiais-e-dispositivos/agulhas.html"><div class="label">agulhas</div><strong>Agulhas</strong><p class="cko-muted">5 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/cateteres.html"><div class="label">cateteres</div><strong>Cateteres</strong><p class="cko-muted">2 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/coberturas-e-adesivos.html"><div class="label">coberturas-e-adesivos</div><strong>Coberturas e Adesivos</strong><p class="cko-muted">11 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/dispositivos-medicos.html"><div class="label">dispositivos-medicos</div><strong>Dispositivos Médicos</strong><p class="cko-muted">21 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/equipamentos-de-emergencia.html"><div class="label">equipamentos-de-emergencia</div><strong>Equipamentos de Emergência</strong><p class="cko-muted">4 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/equipamentos-hospitalares.html"><div class="label">equipamentos-hospitalares</div><strong>Equipamentos Hospitalares</strong><p class="cko-muted">7 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/gazes-e-compressas.html"><div class="label">gazes-e-compressas</div><strong>Gazes e Compressas</strong><p class="cko-muted">5 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/instrumentais-cirurgicos.html"><div class="label">instrumentais-cirurgicos</div><strong>Instrumentais Cirúrgicos</strong><p class="cko-muted">4 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/luvas-e-epi.html"><div class="label">luvas-e-epi</div><strong>Luvas e EPI</strong><p class="cko-muted">14 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/materiais-de-infusao.html"><div class="label">materiais-de-infusao</div><strong>Materiais de Infusão</strong><p class="cko-muted">4 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/seringas.html"><div class="label">seringas</div><strong>Seringas</strong><p class="cko-muted">26 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/seringas-e-agulhas.html"><div class="label">seringas-e-agulhas</div><strong>Seringas e Agulhas</strong><p class="cko-muted">31 visuais · 8 slots</p></a><a class="preview-card" href="materiais-e-dispositivos/sondas-e-drenos.html"><div class="label">sondas-e-drenos</div><strong>Sondas e Drenos</strong><p class="cko-muted">3 visuais · 8 slots</p></a></div>
+  <p style="margin-top:14px"><a href="materiais-e-dispositivos/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Conhecimento <span class="status candidate" style="margin-left:8px">6 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="conhecimento/anatomia.html"><div class="label">anatomia</div><strong>Anatomia</strong><p class="cko-muted">14 visuais · 6 slots</p></a><a class="preview-card" href="conhecimento/doencas-e-condicoes.html"><div class="label">doencas-e-condicoes</div><strong>Doenças e Condições Clínicas</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="conhecimento/exames-de-imagem.html"><div class="label">exames-de-imagem</div><strong>Exames de Imagem</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="conhecimento/exames-laboratoriais.html"><div class="label">exames-laboratoriais</div><strong>Exames Laboratoriais</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="conhecimento/imagens-clinicas.html"><div class="label">imagens-clinicas</div><strong>Imagens Clínicas</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="conhecimento/microrganismos.html"><div class="label">microrganismos</div><strong>Microrganismos</strong><p class="cko-muted">0 visuais · 6 slots</p></a></div>
+  <p style="margin-top:14px"><a href="conhecimento/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Segurança e prevenção <span class="status candidate" style="margin-left:8px">6 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="seguranca-e-prevencao/antissepsia.html"><div class="label">antissepsia</div><strong>Antissepsia</strong><p class="cko-muted">7 visuais · 7 slots</p></a><a class="preview-card" href="seguranca-e-prevencao/biosseguranca.html"><div class="label">biosseguranca</div><strong>Biossegurança</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="seguranca-e-prevencao/cme-e-esterilizacao.html"><div class="label">cme-e-esterilizacao</div><strong>CME e Esterilização</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="seguranca-e-prevencao/controle-de-infeccoes.html"><div class="label">controle-de-infeccoes</div><strong>Controle de Infecções</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="seguranca-e-prevencao/seguranca-do-paciente.html"><div class="label">seguranca-do-paciente</div><strong>Segurança do Paciente</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="seguranca-e-prevencao/solucoes-antissepticas.html"><div class="label">solucoes-antissepticas</div><strong>Soluções Antissépticas</strong><p class="cko-muted">6 visuais · 7 slots</p></a></div>
+  <p style="margin-top:14px"><a href="seguranca-e-prevencao/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Ferramentas educacionais <span class="status candidate" style="margin-left:8px">9 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="ferramentas-educacionais/aulas-e-videos.html"><div class="label">aulas-e-videos</div><strong>Aulas e Vídeos</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/calculadoras.html"><div class="label">calculadoras</div><strong>Calculadoras Clínicas</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/checklists.html"><div class="label">checklists</div><strong>Checklists</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/escalas-clinicas.html"><div class="label">escalas-clinicas</div><strong>Escalas Clínicas</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/flashcards.html"><div class="label">flashcards</div><strong>Flashcards</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/guias.html"><div class="label">guias</div><strong>Guias</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/mapas-mentais.html"><div class="label">mapas-mentais</div><strong>Mapas Mentais</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/quizzes.html"><div class="label">quizzes</div><strong>Quizzes</strong><p class="cko-muted">0 visuais · 7 slots</p></a><a class="preview-card" href="ferramentas-educacionais/simulados.html"><div class="label">simulados</div><strong>Simulados de Enfermagem</strong><p class="cko-muted">0 visuais · 7 slots</p></a></div>
+  <p style="margin-top:14px"><a href="ferramentas-educacionais/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Prática assistencial <span class="status candidate" style="margin-left:8px">13 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="pratica-assistencial/avaliacao-de-feridas.html"><div class="label">avaliacao-de-feridas</div><strong>Avaliação de Feridas</strong><p class="cko-muted">12 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/casos-clinicos.html"><div class="label">casos-clinicos</div><strong>Casos Clínicos</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/diretrizes.html"><div class="label">diretrizes</div><strong>Diretrizes</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/feridas-e-curativos.html"><div class="label">feridas-e-curativos</div><strong>Feridas e Curativos</strong><p class="cko-muted">49 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/nutricao.html"><div class="label">nutricao</div><strong>Nutrição</strong><p class="cko-muted">28 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/nutricao-enteral.html"><div class="label">nutricao-enteral</div><strong>Nutrição Enteral</strong><p class="cko-muted">5 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/ostomias.html"><div class="label">ostomias</div><strong>Ostomias</strong><p class="cko-muted">3 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/oxigenoterapia.html"><div class="label">oxigenoterapia</div><strong>Oxigenoterapia</strong><p class="cko-muted">4 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/planos-de-cuidados.html"><div class="label">planos-de-cuidados</div><strong>Planos de Cuidados</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/pops.html"><div class="label">pops</div><strong>Procedimentos Operacionais Padrão</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/procedimentos.html"><div class="label">procedimentos</div><strong>Procedimentos</strong><p class="cko-muted">0 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/processo-de-enfermagem.html"><div class="label">processo-de-enfermagem</div><strong>Biblioteca do Processo de Enfermagem</strong><p class="cko-muted">8 visuais · 9 slots</p></a><a class="preview-card" href="pratica-assistencial/protocolos.html"><div class="label">protocolos</div><strong>Protocolos Clínicos</strong><p class="cko-muted">0 visuais · 9 slots</p></a></div>
+  <p style="margin-top:14px"><a href="pratica-assistencial/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Desenvolvimento profissional <span class="status candidate" style="margin-left:8px">4 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="desenvolvimento-profissional/carreira.html"><div class="label">carreira</div><strong>Carreira e Desenvolvimento Profissional</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="desenvolvimento-profissional/especialidades.html"><div class="label">especialidades</div><strong>Especialidades</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="desenvolvimento-profissional/gestao.html"><div class="label">gestao</div><strong>Gestão</strong><p class="cko-muted">0 visuais · 6 slots</p></a><a class="preview-card" href="desenvolvimento-profissional/nursingtech.html"><div class="label">nursingtech</div><strong>NursingTech</strong><p class="cko-muted">0 visuais · 6 slots</p></a></div>
+  <p style="margin-top:14px"><a href="desenvolvimento-profissional/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Governança profissional <span class="status candidate" style="margin-left:8px">8 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="governanca-profissional/cipe.html"><div class="label">cipe</div><strong>CIPE</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/legislacao-profissional.html"><div class="label">legislacao-profissional</div><strong>Legislação Profissional</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/loinc.html"><div class="label">loinc</div><strong>LOINC</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/nanda.html"><div class="label">nanda</div><strong>Diagnósticos NANDA-I</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/nic.html"><div class="label">nic</div><strong>Intervenções NIC</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/noc.html"><div class="label">noc</div><strong>Resultados NOC</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/snomed.html"><div class="label">snomed</div><strong>SNOMED CT</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="governanca-profissional/terminologias.html"><div class="label">terminologias</div><strong>Terminologias</strong><p class="cko-muted">0 visuais · 8 slots</p></a></div>
+  <p style="margin-top:14px"><a href="governanca-profissional/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+<section class="cko-panel">
+  <h2>Ciência e educação <span class="status candidate" style="margin-left:8px">2 bibliotecas</span></h2>
+  <div class="preview-grid"><a class="preview-card" href="ciencia-e-educacao/educacao-continuada.html"><div class="label">educacao-continuada</div><strong>Educação Continuada</strong><p class="cko-muted">0 visuais · 8 slots</p></a><a class="preview-card" href="ciencia-e-educacao/pesquisa-academica.html"><div class="label">pesquisa-academica</div><strong>Pesquisa Acadêmica em Enfermagem</strong><p class="cko-muted">0 visuais · 8 slots</p></a></div>
+  <p style="margin-top:14px"><a href="ciencia-e-educacao/README.html" style="color:var(--color-navy-mid);font-weight:800;text-decoration:underline">Ver catálogo do grupo →</a></p>
+</section>
+</main>
+
+<footer class="cko-footer">
+  Calculadoras de Enfermagem · Esqueleto CKO · Página local para preenchimento · Não publicada
+</footer>
+</body>
+</html>

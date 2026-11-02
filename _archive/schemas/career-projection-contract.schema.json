@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Projection Contract Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "projection_kind",
+    "audience",
+    "source_object_family",
+    "cko_projection_schema_ref",
+    "allowed_channels",
+    "sources_gate",
+    "rights_gate",
+    "a11y_gate",
+    "privacy_gate",
+    "human_gate",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "projection_kind": {
+      "enum": [
+        "CV",
+        "COVER_LETTER",
+        "PORTFOLIO",
+        "PROFESSIONAL_SUMMARY",
+        "EDITORIAL",
+        "YOUTH_GUIDE"
+      ]
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "source_object_family": {
+      "type": "string"
+    },
+    "cko_projection_schema_ref": {
+      "type": "string"
+    },
+    "editorial_projection_schema_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "allowed_channels": {
+      "type": "string"
+    },
+    "sources_gate": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "rights_gate": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "a11y_gate": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "privacy_gate": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "human_gate": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN",
+        "ASSURED"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "properties": {
+    "agent_slug": {
+      "type": "string"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "approval_status": {
+      "enum": [
+        "draft",
+        "submitted",
+        "approved",
+        "rejected"
+      ],
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "argument": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "claim": {
+      "type": "string"
+    },
+    "controls": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "mitigations": {
+      "type": "string"
+    },
+    "residual_risk": {
+      "type": "string"
+    },
+    "residual_risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "unacceptable"
+      ],
+      "type": "string"
+    },
+    "tests": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "valid_until": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "SafetyCase"
+}

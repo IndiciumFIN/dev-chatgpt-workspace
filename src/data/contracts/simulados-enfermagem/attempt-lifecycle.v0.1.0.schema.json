@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SPE Attempt Lifecycle Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attempt_id",
+    "mode",
+    "state",
+    "question_ids",
+    "owner_scope",
+    "answer_visibility"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "SIMULADO",
+        "ESTUDO"
+      ]
+    },
+    "state": {
+      "enum": [
+        "CREATED",
+        "IN_PROGRESS",
+        "SUBMITTED",
+        "GRADED",
+        "CLOSED",
+        "VOID"
+      ]
+    },
+    "question_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "owner_scope": {
+      "enum": [
+        "AUTHENTICATED",
+        "GUEST_EPHEMERAL"
+      ]
+    },
+    "answer_visibility": {
+      "enum": [
+        "HIDDEN",
+        "POST_COMPLETION",
+        "STUDY_EXPLICIT"
+      ]
+    },
+    "submitted_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "graded_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "SIMULADO"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "answer_visibility": {
+            "not": {
+              "const": "STUDY_EXPLICIT"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "answer_visibility": {
+            "const": "POST_COMPLETION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "enum": [
+              "GRADED",
+              "CLOSED"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

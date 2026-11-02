@@ -1,0 +1,57 @@
+name: CE — Auditoria federada 6 repositórios / todas as branches
+on:
+  workflow_dispatch:
+  push:
+    branches: [canonical/local-20261101]
+    paths:
+      - 'scripts/audit-federated-fulltree.mjs'
+      - '.github/workflows/ce-federated-fulltree.yml'
+      - 'audit/ce-continuity/**'
+permissions:
+  contents: read
+concurrency:
+  group: ce-federated-fulltree-audit
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout of audit implementation only
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax integrity
+        run: node --check scripts/audit-federated-fulltree.mjs
+      - name: Fetch and hash every distinct branch tree from 6 public repositories
+        run: node --max-old-space-size=4096 scripts/audit-federated-fulltree.mjs
+      - name: Check population and fail-closed scope
+        run: |
+          node --input-type=module -e '
+          import {readFileSync} from "node:fs";
+          const r=JSON.parse(readFileSync("audit-evidence/federated-20261101/summary.json","utf8"));
+          if(r.physicalBranchReferences < 110 || r.independentBranchReferences < 93 ||
+             r.gitPairwise !== r.independentBranchReferences*(r.independentBranchReferences-1)/2 ||
+             r.duplicateMirroredReferences !== 17 || !r.structuralCrosswalk ||
+             r.structuralCrosswalk.total !== r.structuralCrosswalk.p0+r.structuralCrosswalk.p1 ||
+             r.structuralCrosswalk.gate !== "HOLD_HUMAN" || r.errors.length ||
+             r.authorizedForMerge !== false || r.gate !== "HOLD_HUMAN") {
+            console.error("FEDERATED_FULLTREE_HOLD",r.errors);
+            process.exit(1);
+          }
+          console.log(JSON.stringify({branches:r.independentBranchReferences,pairs:r.gitPairwise,paths:r.distinctPaths,
+            conflicts:r.classifications.conflictingVersions,gate:r.gate}));
+          '
+      - name: Archive immutable evidence; no merge or code publication
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-federated-fulltree-six-repositories
+          path: audit-evidence/federated-20261101/
+          if-no-files-found: warn
+          retention-days: 60

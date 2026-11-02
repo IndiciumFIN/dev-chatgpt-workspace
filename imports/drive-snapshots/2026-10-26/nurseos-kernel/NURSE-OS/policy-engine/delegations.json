@@ -1,0 +1,26 @@
+{
+  "delegation_requests": [
+    {
+      "request_id": "DR-2026-0001",
+      "capability_id": "CAP-001:sae-drafting",
+      "requester": "mission:MIS-2026-0001",
+      "candidates": [
+        {"agent_slug": "sae-copilot", "trust_score": 0.84, "risk_class": "II", "cost": "low", "available": true}
+      ],
+      "selected": "sae-copilot",
+      "selection_reason": "Único fornecedor elegível: trust 0.84 >= min 0.80 (POL-003/005), políticas CAP-001 satisfeitas, disponível no plantão",
+      "policies_satisfied": ["POL-001", "POL-004", "POL-006", "POL-007", "POL-008"],
+      "status": "executed"
+    },
+    {
+      "request_id": "DR-2026-0002",
+      "capability_id": "CAP-005:patient-education-multilingual",
+      "requester": "mission:MIS-2026-0002",
+      "candidates": [],
+      "selected": "",
+      "selection_reason": "Discovery no Capability Registry: zero fornecedores elegíveis (CAP-005 status=no_provider). Falha registrada como gap — nada de improvisação fora do protocolo.",
+      "policies_satisfied": [],
+      "status": "failed_no_provider"
+    }
+  ]
+}

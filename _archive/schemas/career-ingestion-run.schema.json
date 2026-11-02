@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Ingestion Run Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "source_id",
+    "object_family",
+    "input_count",
+    "accepted_count",
+    "rejected_count",
+    "deduplicated_count",
+    "state"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "object_family": {
+      "enum": [
+        "OPPORTUNITY",
+        "LEARNING_RESOURCE",
+        "MARKET_OBSERVATION",
+        "JURISDICTION_REQUIREMENT",
+        "EDITORIAL_SOURCE"
+      ]
+    },
+    "input_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "accepted_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rejected_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "deduplicated_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "state": {
+      "enum": [
+        "PLANNED",
+        "IMPORTED",
+        "VALIDATED",
+        "REJECTED",
+        "HOLD_HUMAN"
+      ]
+    },
+    "evidence_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

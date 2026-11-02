@@ -1,0 +1,89 @@
+{
+  "tarefa": "spec-mesas",
+  "chaves": [
+    {
+      "chave_canonica": "tabela:content_text",
+      "contrato_aplicado": "src/lib/content-object.functions.ts (readPublishedContent) + src/lib/locale-publish.ts (assertLocalePublish) + migrations/0020_content_object.sql",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.3 (SEO-01/SEO-02), §1.6.2, §1.6.2.b e §2.3 (IDI-14) — 3.925 linhas, 1.767 publicadas / 2.158 rascunho; content_text.title é a fonte ÚNICA de <title>/og:title/twitter:title, com limite de 70 no título SERVIDO (o campo ≤ 41, porque a rota acrescenta ' · Calculadoras de Enfermagem'); 8 das 47 rotas passam de 70 (máximo 107 em /ferramentas/gotejamento); 229 títulos distintos repetidos em 459 linhas e 0 colisão entre as 47 rotas indexáveis",
+      "dependencia_a_revalidar": "o title da rota passa a ser a fonte única do head: quem vier depois tem que responder se a mesa de conteúdo (M09) e a mesa de SEO escrevem no MESMO campo e não em duas colunas paralelas — e se o sufixo ' · Calculadoras de Enfermagem' continua no <title> ou passa a viver no campo"
+    },
+    {
+      "chave_canonica": "tabela:content_alias",
+      "contrato_aplicado": "src/lib/content-object.functions.ts + migrations/0020_content_object.sql",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.2 — 3.942 aliases, 1.768 publicados; é a fonte da rota depois do drop de site_route na migration 0029",
+      "dependencia_a_revalidar": "o canonical por idioma tem que ser derivado do alias da variante: quem vier depois tem que responder se a rota /<idioma>/... do acervo continua fora do sitemap (decisão editorial) ou entra"
+    },
+    {
+      "chave_canonica": "tabela:chrome_label",
+      "contrato_aplicado": "src/lib/chrome.tsx (o t() lê a tabela) + migrations/0030_stored_files.sql",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §2.2 e §2.3 (IDI-10/IDI-13) — 7.797 linhas em 4 grupos; cobertura chrome 4 idiomas, footer 30, home 19, menu 3; chrome=49 chaves, footer=26, home=352 (344 em pt, 355 em id/uk/vi), menu=44",
+      "dependencia_a_revalidar": "chrome_label tem chave (locale, group_id, key): quem vier depois tem que responder se a edição é da mesa de idioma ou da mesa de SEO — a especificação põe na mesa de idioma (rótulo é chrome, não SEO)"
+    },
+    {
+      "chave_canonica": "tabela:locale",
+      "contrato_aplicado": "migrations/0012_intake.sql + src/lib/locale-publish.ts + migrations/0033_cross_keys.sql (insere os 31 a partir de chrome_label/content_text/content_alias/intake_file)",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §2.1 e §2.2 — 31 linhas, 26 com label igual ao id, 27 com 0 conteúdo publicado, 19 com linhas de content_text e 12 sem nenhuma; código de publicação aceita 18 idiomas contra 31 na tabela",
+      "dependencia_a_revalidar": "locale.label é o nome do idioma em pt-BR (fato ISO 639-1): a tarefa derby (0037) tem que gravar o nome real dos 26, nunca DERBY e nunca o id; e o gate de publicação tem que passar a ler a tabela em vez da constante de 18"
+    },
+    {
+      "chave_canonica": "tabela:sitemap_url",
+      "contrato_aplicado": "public/sitemap.xml + src/lib/contract.ts (sitemapXml(), hoje sem consumidor)",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.3 (SEO-11) e §1.6.3 — 24 <loc> contra 47 endereços em publicPaths(); 23 rotas públicas fora do sitemap",
+      "dependencia_a_revalidar": "o sitemap não é materializado de sitemap_url nesta árvore: quem vier depois tem que responder se ele passa a ser gerado do banco e qual é o gerador (D4)"
+    },
+    {
+      "chave_canonica": "tabela:crawl_rule",
+      "contrato_aplicado": "public/robots.txt + migrations/0032_public_files.sql",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.3 (SEO-12) e §1.5 (G7) — 5 linhas, 2 Disallow (/sistema, /pacote); o robots.txt publicado tem 6",
+      "dependencia_a_revalidar": "crawl_rule e public/robots.txt são dois lugares que podem divergir: quem vier depois tem que responder se o build materializa um do outro (D5)"
+    },
+    {
+      "chave_canonica": "tabela:media_asset",
+      "contrato_aplicado": "migrations/0032_public_files.sql + public/og.jpg",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.3 (SEO-13) e §3.1 — 20 linhas; note é só o nome do arquivo, sem hash nem dimensão; 1 cartão 1200x630 (44.569 bytes) para 47 rotas e 31 idiomas",
+      "dependencia_a_revalidar": "a nota precisa de hash e dimensão verificados: quem vier depois tem que responder se a verificação lê o disco no build ou se o note é gravado por quem produz o cartão"
+    },
+    {
+      "chave_canonica": "tabela:seo_page",
+      "contrato_aplicado": "src/lib/policy-decision.ts (decide por policy_rule) + migrations/0026_control_plane.sql (policy_package/policy_rule) + docs/admin/especificacao-mesas-novas.md §4.1",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.3 (SEO-04, SEO-06, SEO-07, SEO-08, SEO-09, SEO-14) e §4.1 — 9 colunas, chave (path, locale); guarda canonical_path, og_image_path, og_image_alt, robots, jsonld_type, updated_by, updated_at",
+      "dependencia_a_revalidar": "a tabela NÃO existe e a migration proposta (0040_mesas_seo_idioma_jurisdicao.sql) está fora do escopo de quem implementa o admin (migrations/ é de outro worker): quem vier depois tem que responder quem cria a tabela e se ela entra antes ou depois de 0039 (D1)"
+    },
+    {
+      "chave_canonica": "tabela:locale_state",
+      "contrato_aplicado": "src/lib/policy-decision.ts + migrations/0026_control_plane.sql + docs/admin/especificacao-mesas-novas.md §4.1",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §2.3 (IDI-04, IDI-05, IDI-08, IDI-09, IDI-11, IDI-12) e §4.1 — 7 colunas, chave locale; direction, status, seo_eligibility, country_code, reviewed_by, reviewed_at",
+      "dependencia_a_revalidar": "a tabela NÃO existe (D1); e status/seo_eligibility são derivados e gravados: quem vier depois tem que responder onde fica a regra que os deriva, para não haver dois lugares com ela"
+    },
+    {
+      "chave_canonica": "tabela:jurisdiction",
+      "contrato_aplicado": "src/lib/policy-decision.ts + migrations/0026_control_plane.sql + docs/admin/especificacao-mesas-novas.md §4.1",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §3.2 (JUR-01 a JUR-08, JUR-11) e §4.1 — 10 colunas, chave id (= country_code); canonical_host, country_code, country_name, measure_system, weight_unit, length_unit, temperature_unit, currency, locale_variant",
+      "dependencia_a_revalidar": "a tabela NÃO existe (D1); e o país do idioma en fica DERBY porque o registro de referência diz Reino Unido e o material de origem fala de en-US — quem vier depois tem que responder qual dos dois entra (D9)"
+    },
+    {
+      "chave_canonica": "componente:src/lib/seo.ts",
+      "contrato_aplicado": "src/lib/contract.ts (publicPaths/sitemapXml) + docs/admin/especificacao-mesas-novas.md §1.1",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.1 e §1.4 — siteOrigin é constante; locales tem 4 idiomas contra 31 na tabela locale; languageLinks() devolve 6 links por rota (1 canonical + 4 alternate + x-default)",
+      "dependencia_a_revalidar": "o hreflang passa a ser derivado do conteúdo publicado e não da constante: quem vier depois tem que responder se src/lib/seo.ts continua sendo a fonte do hreflang ou se passa a ler locale_state (D3)"
+    },
+    {
+      "chave_canonica": "componente:scripts/grok-pwa-shared.mjs",
+      "contrato_aplicado": "scripts/grok-pwa-plugin.test.mjs (fixa twitter:card/og:title e a não-duplicação) + docs/admin/especificacao-mesas-novas.md §1.5 (G8)",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.6.1 — stripShareMetaTags() remove twitter:title/og:url/og:site_name e grokOgHeadTags() não os reinjeta: twitter:title ausente; og:description ausente porque src/lib/og/site.json não tem description; no site publicado 16/16 rotas com twitter:title, og:description, og:image, og:url e og:site_name ausentes",
+      "dependencia_a_revalidar": "o gate G8 (head renderizado com title = og:title = twitter:title) não é de escrita, é de render: quem vier depois tem que responder onde esse teste roda (build ou suíte) e se ele substitui ou complementa scripts/grok-pwa-plugin.test.mjs"
+    },
+    {
+      "chave_canonica": "componente:src/lib/og/site.json",
+      "contrato_aplicado": "scripts/grok-pwa-shared.mjs (readOgSite, snapshotOgIdentity) + docs/admin/especificacao-mesas-novas.md §1.3 (SEO-15)",
+      "evidencia_produzida": "docs/admin/especificacao-mesas-novas.md §1.1 e §1.6.1 — {title: Calculadoras de Enfermagem, card: custom}, sem description; a identidade do app é o que não pode ir no og:title de uma página; no publicado og:title = identidade do app em 16/16 rotas, diferente do <title> da rota",
+      "dependencia_a_revalidar": "o title do site.json é identidade de app (PWA/manifesto): quem vier depois tem que responder se ele passa a alimentar og:site_name e se a identidade continua fora do og:title de rota"
+    },
+    {
+      "chave_canonica": "documento:docs/admin/especificacao-mesas-novas.md",
+      "contrato_aplicado": "docs/entregas/FORMATO-DE-ENTREGA.md + docs/admin/especificacao-mesas-novas.md §0.2 (princípios 1 a 6)",
+      "evidencia_produzida": "o próprio documento — 3 mesas com campos+tabela de origem, regras, DERBY e gate (10, 8 e 8 recusas); §4 com 3 tabelas propostas e 10 policy_rule; §6 com 10 dependências; §7 com 8 NOT_RUN",
+      "dependencia_a_revalidar": "o documento descreve o ALVO: o estado real do build desta árvore só é conhecido depois que alguém rodar o build — os itens N1, N2 e N6 continuam NOT_RUN"
+    }
+  ]
+}

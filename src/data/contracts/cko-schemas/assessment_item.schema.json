@@ -2,7 +2,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/assessment_item.schema.json",
   "title": "CKO | assessment_item",
-  "description": "Item de avaliação (questão de quiz/prova) conforme padrão IMS QTI adaptado à enfermagem. Cada item vincula-se a um objetivo de aprendizagem, tem chave de resposta justificada por claims (evidence-based), evidências citadas, regra de pontuação, nível de dificuldade e políticas de shuffle/exposição de resposta.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -18,11 +17,7 @@
     "rationale_claim_refs",
     "evidence_refs",
     "scoring_rule_ref",
-    "difficulty_source_ref",
-    "item_type",
-    "prompt_options",
-    "correct_answer_index",
-    "rationale_text"
+    "difficulty_source_ref"
   ],
   "properties": {
     "schema_version": {
@@ -65,34 +60,29 @@
     },
     "learning_objective_ref": {
       "type": "string",
-      "minLength": 1,
-      "description": "ID do objetivo de aprendizagem ao qual o item se vincula."
+      "minLength": 1
     },
     "prompt_key": {
       "type": "string",
-      "minLength": 1,
-      "description": "Texto do enunciado da questão."
+      "minLength": 1
     },
     "answer_key_ref": {
       "type": "string",
-      "minLength": 1,
-      "description": "Referência à chave de resposta (índice ou texto)."
+      "minLength": 1
     },
     "rationale_claim_refs": {
       "type": "array",
       "items": {
         "type": "string",
         "minLength": 1
-      },
-      "description": "Lista de claim_ids que justificam a resposta correta."
+      }
     },
     "evidence_refs": {
       "type": "array",
       "items": {
         "type": "string",
         "minLength": 1
-      },
-      "description": "Lista de source_ids que sustentam a assertiva da questão."
+      }
     },
     "scoring_rule_ref": {
       "type": "string",
@@ -108,62 +98,11 @@
     },
     "shuffle_policy": {
       "type": "string",
-      "enum": ["SHUFFLE_ALL", "SHUFFLE_KEEP_LAST", "NO_SHUFFLE"],
-      "description": "SHUFFLE_ALL embaralha todas as opções. SHUFFLE_KEEP_LAST mantém a última (ex.: 'Todas as anteriores'). NO_SHUFFLE mantém ordem fixa."
+      "minLength": 1
     },
     "answer_exposure_policy": {
       "type": "string",
-      "enum": ["IMMEDIATE", "ON_SUBMIT", "ON_REVIEW", "NEVER"],
-      "description": "IMMEDIATE mostra a resposta ao selecionar. ON_SUBMIT após finalizar. ON_REVIEW apenas na revisão pós-prova. NEVER nunca expõe (prova oficial)."
-    },
-    "item_type": {
-      "type": "string",
-      "enum": ["MULTIPLE_CHOICE", "TRUE_FALSE", "MULTIPLE_RESPONSE", "FILL_BLANK", "ORDERING", "CASE_BASED"],
-      "description": "Tipo do item: múltipla escolha, certo/errado, resposta múltipla, preencher lacuna, ordenação, baseado em caso clínico."
-    },
-    "prompt_options": {
-      "type": "array",
-      "minItems": 2,
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "description": "Lista de opções de resposta (alternativas)."
-    },
-    "correct_answer_index": {
-      "type": "integer",
-      "minimum": 0,
-      "description": "Índice (0-based) da alternativa correta em prompt_options."
-    },
-    "rationale_text": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Justificativa em texto da resposta correta, exibida na revisão."
-    },
-    "topic": {
-      "type": "string",
-      "description": "Tópico/assunto (ex.: 'lesão por pressão', 'farmacologia')."
-    },
-    "subject": {
-      "type": "string",
-      "description": "Disciplina (ex.: 'Enfermagem em UTI', 'Saúde Pública')."
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
-    },
-    "estimated_time_seconds": {
-      "type": "integer",
-      "minimum": 10,
-      "maximum": 1800,
-      "description": "Tempo estimado para responder (em segundos)."
-    },
-    "linked_tool_slug": {
-      "type": "string",
-      "description": "Slug da ferramenta (escala/calculadora) vinculada, se aplicável."
+      "minLength": 1
     }
   }
 }

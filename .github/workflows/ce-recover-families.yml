@@ -1,0 +1,48 @@
+name: CE — Rehydrate verified family candidates
+on:
+  push:
+    branches: [canonical/local-20261101]
+    paths:
+      - 'upload/ce-skeleton/ce-skeleton/scripts/generate-skeleton.mjs'
+      - '.github/workflows/ce-recover-families.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ce-family-recovery-canonical
+  cancel-in-progress: false
+jobs:
+  recover:
+    if: github.ref == 'refs/heads/canonical/local-20261101'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Recover exactly 865 archived stubs into non-runtime staging
+        run: node upload/ce-skeleton/ce-skeleton/scripts/generate-skeleton.mjs --write
+      - name: Verify no drift, no activation
+        run: |
+          node upload/ce-skeleton/ce-skeleton/scripts/generate-skeleton.mjs --check
+          test "$(find upload/ce-skeleton/ce-skeleton/src/families -type f | wc -l)" -eq 865
+          if grep -RlE "status: '(ADMITTED|PUBLISHED)'" upload/ce-skeleton/ce-skeleton/src/families; then
+            echo 'Forbidden active status in recovered candidate' >&2
+            exit 1
+          fi
+      - name: Commit archive-only source recovery (no main, no force)
+        run: |
+          git add -- upload/ce-skeleton/ce-skeleton/src/families
+          if git diff --cached --quiet; then
+            echo 'Already rehydrated with exact content'
+            exit 0
+          fi
+          git diff --cached --name-only | grep -v '^upload/ce-skeleton/ce-skeleton/src/families/' && exit 1 || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'restore(ce): materialize 865 historical family stubs in archive-only staging'
+          git push origin HEAD:refs/heads/canonical/local-20261101

@@ -1,0 +1,137 @@
+{
+  "context_package": {
+    "package_id": "CP-2026-0005",
+    "generated_at": "2026-09-02T20:12:00-03:00",
+    "task": "Rascunhar SAE para paciente 88412",
+    "identity": {
+      "agent_slug": "sae-copilot",
+      "user_role": "RN",
+      "encounter_ref": "fhir:Encounter/98321"
+    },
+    "twin_snapshot": {
+      "patient_ref": "fhir:Patient/88412",
+      "events": [
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "score",
+          "label": "Escala de Morse",
+          "value": "65 — risco alto",
+          "valid_from": "2026-09-02T20:00:00-03:00",
+          "valid_to": null,
+          "source": "avaliação de enfermagem (FHIR Observation)",
+          "confidence": 0.95,
+          "cko_ref": "cko://procedures/fall-prevention",
+          "fhir_ref": "fhir:Observation/morse-88412-0910"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "medication",
+          "label": "Varfarina",
+          "value": "5 mg/dia — anticoagulante (INR 2.8)",
+          "valid_from": "2026-08-30T08:00:00-03:00",
+          "valid_to": null,
+          "source": "prescrição médica (FHIR MedicationRequest)",
+          "confidence": 1.0,
+          "cko_ref": "cko://medications/varfarina"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "condition",
+          "label": "Pneumonia comunitária",
+          "value": "em tratamento — melhora parcial",
+          "valid_from": "2026-08-29T14:00:00-03:00",
+          "valid_to": null,
+          "source": "diagnóstico médico (FHIR Condition)",
+          "confidence": 0.9,
+          "cko_ref": "cko://diseases/pneumonia-comunitaria"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "risk",
+          "label": "Risco de queda agravado",
+          "value": "anticoagulante em uso — queda implica risco de sangramento",
+          "valid_from": "2026-09-02T20:05:00-03:00",
+          "valid_to": null,
+          "source": "computado: sae-copilot DEC-2026-0001 (PatientTwin v3)",
+          "confidence": 0.86,
+          "cko_ref": "cko://medications/varfarina"
+        }
+      ],
+      "braden": null
+    },
+    "knowledge_refs": [],
+    "evidence_refs": [
+      "Escala de Morse",
+      "Varfarina",
+      "Pneumonia comunitária",
+      "Risco de queda agravado"
+    ],
+    "policies_resolved": [
+      "POL-001",
+      "POL-004",
+      "POL-006",
+      "POL-007",
+      "POL-008"
+    ],
+    "tools_authorized": [
+      "corpus:ckos.json"
+    ],
+    "temporal_state": {
+      "now": "2026-09-02T20:12:00-03:00",
+      "data_freshness": "15 min"
+    },
+    "risk_flags": [
+      "Risco de queda agravado"
+    ],
+    "integrity": {
+      "complete": false,
+      "current": true,
+      "authorized": true,
+      "relevant": true,
+      "uncontaminated": true,
+      "consistent": true,
+      "sufficient": false
+    },
+    "integrity_gaps": [
+      "Escala de Braden ausente do twin"
+    ],
+    "package_hash": "e266dbdd36856046…"
+  },
+  "refused_run": {
+    "run_id": "RUN-2026-0006",
+    "agent_slug": "sae-copilot",
+    "confidence": 0.0,
+    "human_review_required": true,
+    "has_medication_change": false,
+    "citations_cko": [],
+    "context_integrity": "blocked",
+    "uncertainty": {
+      "state": "missing",
+      "confidence": 0.0,
+      "why": "contexto incompleto — Braden ausente; POL-006 exige request data antes de qualquer raciocínio",
+      "based_on": [],
+      "freshness": "n/d",
+      "conflicts": [],
+      "what_would_change_conclusion": [
+        "snapshot do twin completo"
+      ]
+    },
+    "decision_id": "DEC-2026-0006",
+    "provenance": [
+      {
+        "provenance_id": "PRV-0006-a",
+        "step": "input",
+        "source": "context-package:CP-2026-0005",
+        "version": "twin v4",
+        "hash": "e266dbdd36856046…",
+        "actor": "sae-copilot",
+        "policy": "POL-006"
+      }
+    ],
+    "refused": true,
+    "policy_violations": [
+      "POL-006 context integrity: blocked"
+    ]
+  },
+  "note": "POL-006: contexto incompleto => BLOCK + REQUEST DATA. Nenhum rascunho é gerado; nada chega ao modelo."
+}

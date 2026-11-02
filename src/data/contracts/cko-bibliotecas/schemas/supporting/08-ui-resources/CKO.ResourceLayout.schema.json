@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:resource-layout:v1.0.0",
+  "title": "CKO Resource Layout",
+  "type": "object",
+  "required": [
+    "resource_type",
+    "page_format",
+    "orientation",
+    "margins_mm",
+    "zones",
+    "print_rules"
+  ],
+  "properties": {
+    "resource_type": {
+      "type": "string"
+    },
+    "page_format": {
+      "type": "string",
+      "enum": [
+        "A4",
+        "A5",
+        "A6",
+        "A3"
+      ]
+    },
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "portrait",
+        "landscape"
+      ]
+    },
+    "margins_mm": {
+      "type": "object",
+      "required": [
+        "top",
+        "right",
+        "bottom",
+        "left"
+      ],
+      "properties": {
+        "top": {
+          "type": "number"
+        },
+        "right": {
+          "type": "number"
+        },
+        "bottom": {
+          "type": "number"
+        },
+        "left": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "zone_id",
+          "purpose",
+          "required"
+        ],
+        "properties": {
+          "zone_id": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "print_rules": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

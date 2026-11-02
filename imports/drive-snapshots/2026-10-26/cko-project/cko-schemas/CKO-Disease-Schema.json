@@ -1,0 +1,1080 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cko.dev/schemas/CKO-Disease-Schema.json",
+  "title": "CKO Disease Schema",
+  "description": "Schema do Clinical Knowledge Object (CKO) para a Biblioteca de Doenças. Herda o CKO Base Object e adiciona blocos específicos do domínio de doenças: epidemiology, etiology, pathophysiology, riskFactors, clinicalPresentation, diagnosis, staging, treatment, nursingCare, complications, prognosis, prevention, populations.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "Disease"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^CKO-DIS-[0-9]{6}$",
+      "description": "ID único do CKO Disease"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "canonicalName": {
+          "type": "string"
+        },
+        "synonyms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "acronym": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "slug": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "shortDescription": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "slug",
+        "description"
+      ]
+    },
+    "identifiers": {
+      "type": "object",
+      "properties": {
+        "icd10": {
+          "type": "string",
+          "description": "Código ICD-10-CM"
+        },
+        "icd11": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "snomed": {
+          "type": "object",
+          "properties": {
+            "conceptId": {
+              "type": "string"
+            },
+            "fullySpecifiedName": {
+              "type": "string"
+            },
+            "preferredTerm": {
+              "type": "string"
+            }
+          }
+        },
+        "medgen": {
+          "type": "object"
+        },
+        "mesh": {
+          "type": "object"
+        },
+        "medlinePlus": {
+          "type": "object"
+        },
+        "loinc": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Códigos LOINC de testes laboratoriais relacionados"
+        },
+        "diseaseOntology": {
+          "type": "string"
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "icdChapter": {
+          "type": "string"
+        },
+        "icdCategory": {
+          "type": "string"
+        },
+        "clinicalCategory": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialty": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "communicability": {
+          "type": "string",
+          "enum": [
+            "communicable",
+            "non-communicable",
+            "variable"
+          ]
+        },
+        "severity": {
+          "type": "string"
+        },
+        "chronicity": {
+          "type": "string"
+        }
+      }
+    },
+    "official": {
+      "type": "object",
+      "description": "Dados oficiais sincronizados via APIs (CDC, WHO, NIH, MedlinePlus, SNOMED, DATASUS, ANVISA)",
+      "properties": {
+        "cdc": {
+          "type": "object"
+        },
+        "who": {
+          "type": "object"
+        },
+        "nih": {
+          "type": "object"
+        },
+        "medlinePlus": {
+          "type": "object"
+        },
+        "snomed": {
+          "type": "object"
+        },
+        "datasus": {
+          "type": "object"
+        },
+        "anvisa": {
+          "type": "object"
+        }
+      }
+    },
+    "epidemiology": {
+      "type": "object",
+      "properties": {
+        "globalPrevalence": {
+          "type": "object"
+        },
+        "regionalPrevalence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "incidence": {
+          "type": "object"
+        },
+        "mortality": {
+          "type": "object"
+        },
+        "trends": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "riskFactors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "determinants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "etiology": {
+      "type": "object",
+      "properties": {
+        "causes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "geneticFactors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "environmentalFactors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifestyleFactors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "triggeringFactors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pathophysiology": {
+      "type": "object",
+      "properties": {
+        "mechanism": {
+          "type": "string"
+        },
+        "affectedSystems": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "affectedOrgans": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cellularLevel": {
+          "type": "string"
+        },
+        "molecularLevel": {
+          "type": "string"
+        },
+        "pathogenicPathways": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "progression": {
+          "type": "string"
+        }
+      }
+    },
+    "riskFactors": {
+      "type": "object",
+      "properties": {
+        "modifiable": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "nonModifiable": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "composite": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "clinicalPresentation": {
+      "type": "object",
+      "properties": {
+        "signs": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "symptoms": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "asymptomaticPhase": {
+          "type": "string"
+        },
+        "typicalPresentation": {
+          "type": "string"
+        },
+        "atypicalPresentation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "redFlags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "clinicalScales": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "diagnosis": {
+      "type": "object",
+      "properties": {
+        "diagnosticCriteria": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "laboratoryTests": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Inclui códigos LOINC"
+        },
+        "imaging": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "biopsy": {
+          "type": "object"
+        },
+        "scoringSystems": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "staging": {
+      "type": "object",
+      "properties": {
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "treatment": {
+      "type": "object",
+      "properties": {
+        "pharmacological": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Referencia ckoMedicationId"
+        },
+        "nonPharmacological": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "surgical": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Referencia ckoProcedureId"
+        },
+        "emergency": {
+          "type": "object"
+        },
+        "goals": {
+          "type": "object"
+        },
+        "guidelines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "nursingCare": {
+      "type": "object",
+      "properties": {
+        "nanda": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Diagnósticos NANDA-I"
+        },
+        "nic": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Intervenções NIC"
+        },
+        "noc": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Resultados NOC"
+        },
+        "nursingProtocols": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Referencia ckoProtocolId"
+        }
+      }
+    },
+    "complications": {
+      "type": "object",
+      "properties": {
+        "acute": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "chronic": {
+          "type": [
+            "array",
+            "object"
+          ]
+        }
+      }
+    },
+    "prognosis": {
+      "type": "object",
+      "properties": {
+        "lifeExpectancy": {
+          "type": "string"
+        },
+        "qualityOfLife": {
+          "type": "string"
+        },
+        "factors": {
+          "type": [
+            "array",
+            "string"
+          ]
+        }
+      }
+    },
+    "prevention": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "secondary": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "tertiary": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "quaternary": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "vaccines": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Referencia ckoVaccineId"
+        }
+      }
+    },
+    "populations": {
+      "type": "object",
+      "properties": {
+        "pregnancy": {
+          "type": "object"
+        },
+        "lactation": {
+          "type": "object"
+        },
+        "pediatrics": {
+          "type": "object"
+        },
+        "geriatrics": {
+          "type": "object"
+        },
+        "renal": {
+          "type": "object"
+        },
+        "hepatic": {
+          "type": "object"
+        }
+      }
+    },
+    "related": {
+      "type": "object",
+      "description": "Mapeamento automático de relacionamentos para outros objetos do ecossistema CKO",
+      "properties": {
+        "medications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CKO-MED-"
+          }
+        },
+        "calculators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CALC-"
+          }
+        },
+        "clinicalScales": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SCALE-"
+          }
+        },
+        "procedures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "diseases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CKO-DIS-"
+          }
+        },
+        "vaccines": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CKO-VAC-"
+          }
+        },
+        "anatomy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ANAT-"
+          }
+        },
+        "wounds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^WOUND-"
+          }
+        },
+        "dressings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^DRESS-"
+          }
+        },
+        "needles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^NEEDLE-"
+          }
+        },
+        "syringes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SYRINGE-"
+          }
+        },
+        "videos": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^VID-"
+          }
+        },
+        "courses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CUR-"
+          }
+        },
+        "flashcards": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^FLASH-"
+          }
+        },
+        "checklists": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CHECK-"
+          }
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CASE-"
+          }
+        },
+        "algorithms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ALGO-"
+          }
+        },
+        "articles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "comorbidities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relatedDiseases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CKO-DIS-"
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object"
+        },
+        "gallery": {
+          "type": "array"
+        },
+        "technical": {
+          "type": "array"
+        },
+        "videos": {
+          "type": "array"
+        },
+        "documents": {
+          "type": "array"
+        },
+        "infographics": {
+          "type": "array"
+        },
+        "icons": {
+          "type": "array"
+        },
+        "illustrations": {
+          "type": "array"
+        },
+        "presentation": {
+          "type": "array"
+        },
+        "package": {
+          "type": "array"
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "alt": {
+          "type": "string"
+        },
+        "longDescription": {
+          "type": "string"
+        },
+        "screenReaderSummary": {
+          "type": "string"
+        },
+        "captions": {
+          "type": "array"
+        },
+        "highContrast": {
+          "type": "boolean"
+        },
+        "colorBlindSafe": {
+          "type": "boolean"
+        }
+      }
+    },
+    "sustainability": {
+      "type": "object"
+    },
+    "transparency": {
+      "type": "object",
+      "properties": {
+        "lastMedicalReview": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastScientificReview": {
+          "type": "string",
+          "format": "date"
+        },
+        "evidenceLevel": {
+          "type": "string"
+        },
+        "editorConflictOfInterest": {
+          "type": "string"
+        },
+        "sourcesVerified": {
+          "type": "boolean"
+        }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "properties": {
+        "clinicalPearls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nursingCare": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "patientEducation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "frequentlyAskedQuestions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "clinicalCases": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "references": {
+      "type": "object",
+      "properties": {
+        "guidelines": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "articles": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "official": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "search": {
+      "type": "object",
+      "properties": {
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abbreviations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "commonMisspellings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "phonetics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "semanticTags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "views": {
+          "type": "number"
+        },
+        "favorites": {
+          "type": "number"
+        },
+        "shares": {
+          "type": "number"
+        },
+        "downloads": {
+          "type": "number"
+        },
+        "searchRank": {
+          "type": "number"
+        }
+      }
+    },
+    "clinicalRules": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "computed": {
+      "type": "object",
+      "properties": {
+        "readingTime": {
+          "type": "number"
+        },
+        "complexity": {
+          "type": "string"
+        },
+        "riskLevel": {
+          "type": "string"
+        },
+        "clinicalPriority": {
+          "type": "string"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "seo": {
+          "type": "object"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "reviewDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "reviewedBy": {
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "approvalLevel": {
+          "type": "string"
+        },
+        "syncInfo": {
+          "type": "object"
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "properties": {
+        "lastUpdate": {
+          "type": "string"
+        },
+        "versionHistory": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "translations": {
+      "type": "object",
+      "description": "Traduções do nome e descrição",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "releaseNotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Notas de release adicionadas em 27/07/2026 (correção do schema)"
+    },
+    "contentRegistry": {
+      "type": "object",
+      "description": "Registro de conteúdo educacional vinculado a este CKO",
+      "properties": {
+        "articles": {
+          "type": "object"
+        },
+        "quizQuestions": {
+          "type": "object"
+        },
+        "allContentReferencesCKO": {
+          "type": "boolean"
+        }
+      }
+    },
+    "apiSyncReport": {
+      "type": "object",
+      "description": "Relatório da última sincronização com APIs oficiais",
+      "properties": {
+        "lastFullSync": {
+          "type": "string"
+        },
+        "apis": {
+          "type": "object"
+        },
+        "totalApis": {
+          "type": "number"
+        },
+        "allDataObtained": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "version",
+    "identity",
+    "identifiers",
+    "classification",
+    "epidemiology",
+    "etiology",
+    "pathophysiology",
+    "diagnosis",
+    "treatment",
+    "related",
+    "metadata",
+    "governance"
+  ],
+  "additionalProperties": true,
+  "_note": "CORREÇÃO APLICADA (27/07/2026): 'clinical' removido do required (era um bloco inexistente no modelo de doenças); 'releaseNotes' adicionado como propriedade."
+}

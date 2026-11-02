@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/library.schema.json",
+  "title": "CKO | library",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "slug",
+    "title_key",
+    "library_kind",
+    "object_ids",
+    "hub_profile_id",
+    "object_profile_id",
+    "publication_gate"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "library_kind": {
+      "type": "string",
+      "enum": [
+        "PRIMARY",
+        "SUBCOLLECTION",
+        "VIRTUAL_VIEW"
+      ]
+    },
+    "object_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "hub_profile_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "object_profile_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "publication_gate": {
+      "type": "string",
+      "enum": [
+        "HOLD",
+        "READY_FOR_REVIEW",
+        "ELIGIBLE",
+        "RELEASED"
+      ]
+    },
+    "taxonomy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "visual_assets",
+        "verified_objects",
+        "clinical_claims_approved"
+      ],
+      "properties": {
+        "visual_assets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verified_objects": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clinical_claims_approved": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "template_slots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_registry_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

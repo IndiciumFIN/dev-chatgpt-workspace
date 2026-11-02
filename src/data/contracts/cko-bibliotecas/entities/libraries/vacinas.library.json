@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "entity_type": "library",
+  "identity": {
+    "library_id": "cko.library.vacinas",
+    "slug": "vacinas",
+    "state": "assigned"
+  },
+  "title": "Vacinas",
+  "description": "Biblioteca de Enfermagem com informações sobre imunização, calendários, indicações, contraindicações, cadeia de frio, vias de administração, eventos adversos e orientações ao paciente.",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "library_family": "knowledge-library",
+  "archetype_id": "library_object",
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "in_review",
+    "evidence_verification_status": "partial",
+    "approved_by": null,
+    "last_reviewed": null,
+    "source_of_truth_policy_ref": "../../governance/vacinas/SBIM_Source_of_Truth_Homologation.json",
+    "freshness_policy_ref": "../../governance/vacinas/Vaccine_Content_Freshness_Policy.json",
+    "last_source_verified_on": "2026-08-09",
+    "next_scheduled_review_on": "2027-01-31",
+    "disclaimer_required": true,
+    "freshness_state": "CURRENT_WITH_STALENESS_WARNING"
+  },
+  "content_status": "authored",
+  "accepted_object_types": [
+    "vaccine"
+  ],
+  "object_refs": [
+    "cko.object.vaccine.bcg",
+    "cko.object.vaccine.covid-19",
+    "cko.object.vaccine.dengue",
+    "cko.object.vaccine.dt-adulto",
+    "cko.object.vaccine.dt-infantil",
+    "cko.object.vaccine.dtpa-adulto",
+    "cko.object.vaccine.dtpa-infantil",
+    "cko.object.vaccine.dtpa-vip-adulto",
+    "cko.object.vaccine.dtpa-vip-infantil",
+    "cko.object.vaccine.dtpw",
+    "cko.object.vaccine.febre-amarela",
+    "cko.object.vaccine.febre-tifoide",
+    "cko.object.vaccine.hepatite-a",
+    "cko.object.vaccine.hepatite-a-b",
+    "cko.object.vaccine.hepatite-b",
+    "cko.object.vaccine.herpes-zoster-recombinante",
+    "cko.object.vaccine.hib",
+    "cko.object.vaccine.hpv4",
+    "cko.object.vaccine.hpv9",
+    "cko.object.vaccine.influenza-high-dose",
+    "cko.object.vaccine.influenza-padrao",
+    "cko.object.vaccine.meningococica-acwy",
+    "cko.object.vaccine.meningococica-b",
+    "cko.object.vaccine.meningococica-c",
+    "cko.object.vaccine.penta-celulas-inteiras",
+    "cko.object.vaccine.penta-hexa-acelulares",
+    "cko.object.vaccine.pneumococica-vpp23",
+    "cko.object.vaccine.pneumococicas-conjugadas",
+    "cko.object.vaccine.raiva",
+    "cko.object.vaccine.rotavirus",
+    "cko.object.vaccine.tetraviral",
+    "cko.object.vaccine.triplice-viral",
+    "cko.object.vaccine.varicela",
+    "cko.object.vaccine.vip",
+    "cko.object.vaccine.vsr"
+  ],
+  "page_bindings": {
+    "content_page_ref": "../../bindings/content/vacinas.content.json",
+    "composition_ref": "../../bindings/composition/vacinas.composition.json",
+    "asset_manifest_ref": "../../bindings/assets/vacinas.assets.json",
+    "provenance_manifest_ref": "../../bindings/provenance/vacinas.provenance.json"
+  },
+  "classification_sources": {
+    "module_refs": [
+      "vaccine_types",
+      "national_schedule_by_age"
+    ],
+    "state": "derived_from_content"
+  },
+  "provenance": {
+    "class": "B",
+    "source_ref": "../../bindings/content/vacinas.content.json",
+    "derivation": "Library entity extracted from a non-clinical-object ContentPage. No clinical content was added.",
+    "note": "SBIm homologated as the project's primary technical-editorial source of truth for vaccines in Brazil, evidence A, with PNI/Ministry of Health and Anvisa precedence rules. Next scheduled review: 2027-01-31."
+  }
+}

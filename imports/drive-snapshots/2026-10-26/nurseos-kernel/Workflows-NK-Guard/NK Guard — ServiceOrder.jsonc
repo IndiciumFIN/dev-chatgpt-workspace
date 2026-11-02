@@ -1,0 +1,42 @@
+{
+  "name": "NK Guard \u2014 ServiceOrder",
+  "description": "Kernel valida toda ServiceOrder criada/atualizada (POL-NK-002): os_id, validadores, assinatura, recusa com motivos; inv\u00e1lida \u2192 quarantined",
+  "trigger": {
+    "condition": "${ .trigger.data.status != \"quarantined\" }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "ServiceOrder"
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "intake_guard": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {
+              "entity_name": "ServiceOrder",
+              "record_id": "${ .trigger.entity_id }"
+            },
+            "function_name": "normKernelIntake"
+          },
+          "x-base44": {
+            "description": "Valida a ordem do kernel (C2-C6)",
+            "title": "Intake guard da ordem de servi\u00e7o"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "nk_guard_service_order",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/projection-request.schema.json",
+  "title": "CKO Projection Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "projection_id",
+    "template_id",
+    "locale",
+    "audience",
+    "canonical_object_ids",
+    "block_plan",
+    "output"
+  ],
+  "properties": {
+    "projection_id": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string"
+    },
+    "locale": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "canonical_object_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "resource_bindings": {
+      "type": "array",
+      "items": {
+        "$ref": "resource_binding.schema.json"
+      }
+    },
+    "block_plan": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "block_instance.schema.json"
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel"
+      ],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "web",
+            "print",
+            "pdf",
+            "slides",
+            "epub",
+            "social",
+            "offline"
+          ]
+        },
+        "format": {
+          "type": "string"
+        },
+        "theme": {
+          "type": "string"
+        },
+        "viewport": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "runtime_context": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

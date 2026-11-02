@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-product-relation:v1.0.0",
+  "title": "CKO Vaccine Product Relation",
+  "type": "object",
+  "required": [
+    "relation_id",
+    "from_ref",
+    "relation_type",
+    "to_ref",
+    "state",
+    "provenance"
+  ],
+  "properties": {
+    "relation_id": {
+      "type": "string",
+      "pattern": "^cko\\.relation\\.vaccine-product\\.[a-z0-9.-]+$"
+    },
+    "from_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation_type": {
+      "type": "string",
+      "enum": [
+        "product_of",
+        "implements_formulation",
+        "regulated_by_profile",
+        "used_in_program_profile",
+        "technical_context_of"
+      ]
+    },
+    "to_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "const": "asserted"
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

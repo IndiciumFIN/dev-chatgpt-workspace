@@ -428,3 +428,553 @@ O dono pediu o "esqueleto completo localmente, com todos os recursos". Feito e m
 - **Toolchain fixada na canónica** (vite 8.2.0 · react 19.2.0 · lucide-react 0.510.0 · typescript 5.7.0) para portabilidade sem partir `npm audit --audit-level=high`.
 - **Persistido**: `docs/evidence/experience-platform-skeleton-2026-10-31/` (avaliação + catálogo) e `tools/experience-skeleton/` (gerador + gate + piloto) — tasks `TASK-PLAN-120` a `TASK-PLAN-124`.
 - **Aberto, por decisão do dono:** fundir o vocabulário antes de admitir qualquer WO (`T0.121`), schemas centrais no registo canónico (`T0.122`), acessibilidade real por medir (`T0.123`) e o port ao repo canónico (`T0.124`, BLOCKED).
+
+
+---
+
+## 12. Comparação CE × produção × repo × normativos × plataformas (01/11/2026)
+
+**Estado:** 6 frentes concluídas e verificadas; 22 tasks novas registadas (`TASK-PLAN-134` a `TASK-PLAN-155`). Nenhuma altera `main`, a fila PMO, Supabase de produção, segredos ou permissões. `WO-HOM-001` e o DS mantêm `HOLD_HUMAN`.
+
+**Evidência:** `docs/evidence/ce-comparacao-2026-10-31/` — os 6 relatórios de frente (`producao-conta-funil`, `producao-superficie-busca`, `repo-publico-branches`, `normativos-enfermagem`, `normativos-federais`, `benchmarks-plataformas`), o evidence pack E1–E5, a lista oficial das 182 refs e o relatório final de síntese.
+
+### 12.1 Números medidos que corrigem o registo anterior
+
+| Medida | Valor | Como foi medida |
+|---|---|---|
+| Branches do repo público | **181 + `main` = 182 refs** | `git for-each-ref` sobre o clone; 0 divergências de sha contra `branches-todas.json`. A lista de 30 do E2 vinha de paginação errada (`per_page` em vez de `perPage`) |
+| Churn de agente | **137/181 (75,7%)** | `fix` 61 · `codex` 52 · `copilot` 14 · `refactor` 10 |
+| Branches do núcleo conta→cobrança→ads | **114/181 (63%)** por nome | classificador por palavra-chave, regra explícita e auditável |
+| Conteúdo órfão em branches | **1.524.448 B** em 7 de 30 branches testadas | teste de blob exclusivo; **151 branches não testadas — risco não medido, não se afirma zero** |
+| Serviços sem capability mapeável | **236/410 (57%)** | cruzamento `service-catalog` × registo de capabilities, por sobreposição de tokens (heurística declarada) |
+| Capabilities sem serviço mapeável | **49/201 (24%)** | idem |
+| Tipos de objeto com schema | **3 de 16** | `article`, `clinical-tool`, `library-entity` |
+| Elementos da Composition de simulados com cobertura completa | **3 de 12** | 8 têm serviço mas nenhum tipo de objeto |
+| Bindings capability↔objeto aprovados | **0 de 16** (`support: PROPOSED` em todas) | registo canónico |
+| Normas federais confirmadas na API do Senado | **3** (7.498/1986, 8.080/1990, 5.905/1973) | 2 rotas de confirmação cada |
+| Normas provadas **ausentes** do dataset do Senado | **2** (Res. Cofen 736/2024, Portaria GM/MS 6.734/2025) | 11 estratégias + prova de escopo; sustentação pelo DOU/in.gov.br |
+
+### 12.2 Os quatro achados estruturais
+
+1. **As três camadas do esqueleto não se tocam.** O registo de 201 capabilities tem 14 campos e **nenhum aponta para um serviço**; os 16 bindings também não. 236 dos 410 serviços ficam inalcançáveis — incluindo `authority-binding` e `contradiction-detection` (que respondem ao `FIND-CTR-010` do corte de Aldrete) e `moderation`/`abuse-report` (de que o fórum vivo da produção precisa). **É esta a lacuna de maior consequência do esqueleto, e é estrutural, não de volume.**
+2. **A superfície mais trabalhada do produto é a que o esqueleto não modela.** 63% das branches são do núcleo conta→cobrança→ads; o esqueleto tem `owner_scope: ACCOUNT` como campo e mais nada.
+3. **Higiene clínica é o risco de maior consequência.** O corte de Aldrete implementado (8 pontos, fonte CFM) contra o publicado (9 pontos) é uma divergência real e não resolvida; a lista de notificação compulsória publica 73 entradas sob uma portaria de 2026, e a vigência das fontes não é modelada.
+4. **Guest-first é correcto para o núcleo clínico e falso para o resto.** A produção é guest no núcleo de cálculo/leitura/impressão e account-centric em monetização, identidade, comunidade e telemetria. O esqueleto modela o núcleo e omite o resto.
+
+### 12.3 As 22 tasks registadas
+
+| Task | Fase | Título | WO | Dono | Estado |
+|---|---|---|---|---|---|
+| `TASK-PLAN-134` | F1 | Ligar a camada de servico a camada de capability: campo service_ref + validacao fail-closed | WO-DS-001 | Mavis + equipa especializada | PROPOSTO |
+| `TASK-PLAN-135` | F4 | Expor a familia evidence-claims: authority-binding, applicability, contradiction-detection e lineage | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-136` | F4 | Expor a familia community: moderation, abuse-report e identity-aware-profile | WO-SEC-001 | Responsavel autorizado pelo broker + revisor de seguranca | PROPOSTO |
+| `TASK-PLAN-137` | F4 | Tipos de objeto da Composition de simulados: 8 de 12 sem tipo de objeto nem schema | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-138` | F4 | Completar os 13 tipos de objeto sem schema (3 de 16 com schema) | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-139` | F4 | Declarar as 4 familias transversais ausentes: Identity/Account, Billing, Entitlement, Telemetry/Consent | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-140` | F4 | Regra dura de entitlement: so owner_scope ACCOUNT autoriza, e desambiguar 'sync' | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-141` | F4 | Reescrever telemetry_contract como contrato e subir o Event Backbone de P1 a P0 | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-142` | F4 | Preencher os 11 campos em falta no registo de capabilities (supported_channels, permission_policy, audiences, policy_refs...) | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-143` | F1 | Divergence register producao-esqueleto: cada divergencia da comparacao vira FIND com dono | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-144` | F1 | Reverificar o corte de Aldrete: 8 pontos (fonte CFM) contra 9 pontos publicados | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-145` | F1 | Registo das alteracoes vetadas: art. 15-D (Lei 14.434/2022) e 15-E (Lei 14.602/2023) na Lei 7.498/1986 | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-146` | F1 | Res. Cofen 736/2024 e Portaria GM/MS 6.734/2025: prova de ausencia no dataset do Senado e sustentacao pelo DOU | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-147` | F1 | Divergencia de vigencia da lista de notificacao compulsoria: 73 entradas contra a Portaria 10.175/2026 | WO-CKO-COFEN-001 | Donos de conteudo e risco | PROPOSTO |
+| `TASK-PLAN-148` | F1 | Divergencia medida no simulado de notificacao: 30q (E1) contra 50 questoes (meta description ao vivo) | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-149` | F0 | Decisao do dono sobre as 3 tensoes entre promessa publicada e comportamento (politica, termos, oferta) | WO-PMO-001 | Owner | PROPOSTO |
+| `TASK-PLAN-150` | F0 | Decisao do dono: o CE local tera backend, e o que acontece a ACCOUNT e WORKSPACE | WO-PMO-001 | Owner | PROPOSTO |
+| `TASK-PLAN-151` | F1 | Registar as 10 branches backup como baseline com dono, e nao as arquivar | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-152` | F1 | Preservar o conteudo orfao das branches de billing/ads: 1,5 MB que so existem la | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-153` | F1 | Corrigir o registo de medicao: 181 branches + main (182 refs), nao 182 branches | WO-GOV-TRANS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-154` | F4 | Reconciliar o contrato de saida (print/pdf/docx) com o template-contract de producao antes de escrever output.ts | WO-DS-001 | Mavis | PROPOSTO |
+| `TASK-PLAN-155` | F4 | i18n: onde vivem os 19 idiomas - locale-registry.ts e site-data.ts nao estao no main de nenhum repo | WO-E2E-001 | Mavis | PROPOSTO |
+
+### 12.4 Decisões que ficam com o dono (não são tasks de execução)
+
+- **`TASK-PLAN-149`** — as 3 tensões entre promessa publicada e comportamento (política × login/checkout; termos × assinatura; oferta/paywall × fórum). **Não é parecer jurídico**; é uma leitura de texto publicado. A qualificação cabe ao dono.
+- **`TASK-PLAN-150`** — o CE local terá backend? Se não, `ACCOUNT`/`WORKSPACE` ficam permanentemente reservados e a produção não pode ser espelhada; se sim, é preciso dizer quando.
+- **`TASK-PLAN-151`** — registar as 10 branches `backup/*` como baseline com dono, sem as arquivar; e decidir qual dos 4 baselines paralelos de menu é o bom (não medido).
+- **`TASK-PLAN-152`** — preservar (ou não) os 1,5 MB órfãos de `audit/billing-ads-*` e `base44/setup-*` antes de qualquer limpeza de branches.
+
+### 12.5 O que ficou por medir (e não se afirma o contrário)
+
+- Teste de órfão em 151 das 181 branches (a varredura de blobs excedeu o orçamento no clone em NFS).
+- Conteúdo real de qualquer branch: o tema é **inferência pelo nome**, com regra explícita.
+- Medição em browser (a11y, layout, performance, funil): **NOT_RUN** — não há browser neste ambiente.
+- Texto integral de artigo das três leis federais: a API do Senado devolve metadados, não cláusulas.
+- `src/lib/locale-registry.ts` e `src/lib/site-data.ts` **não existem** no `main` de nenhum dos dois repositórios: onde vivem os 19 idiomas é `NOT_RUN`.
+
+### 12.6 Estado de governança desta branch (medido 01/11/2026 02:10Z)
+
+| Facto | Medido |
+|---|---|
+| `main` | `e9f7fe66075ebe5d7346072dc3a1b4934678c6de` — **"Merge pull request #26 from IndiciumFIN/plan/pmokernel-finalization-20261031"**, 31/10 23:27:34Z. **O PR #26 foi fundido em `main` antes desta comparação** |
+| Esta branch | `plan/pmokernel-finalization-20261031` @ `c01507054ff6` — **descendente de ambos os pais de `main`**, logo o merge para `main` é fast-forward limpo quando o dono decidir |
+| **PR #29** | **Aberto, `draft: false`**, título *"Revert \"[PLAN/HOLD] Plano de finalização PMO × Kernel — …"*, head `revert-26-plan/pmokernel-finalization-2026…`. **É um revert do PR #26.** O corpo do PR **não foi lido** (`NOT_RUN` — o conector falhou repetidamente com `connector_tool_error`); a **razão do revert é desconhecida** — **CORRIGIDO em §12.8**: lido depois por API REST (o corpo contem apenas `Reverts #26` + um resumo automático do Cursor Bugbot; **não há justificação escrita do Kernel**). Acrescentado em §12.8: o PR está **vermelho** (o CI falha por reintroduzir o P1 de `check-pmo-queue.mjs:32`) e o inventário dos 128 ficheiros |
+| O que está só na branch (não em `main`) | As 22 tasks `TASK-PLAN-134..155`, o `TASK-PLAN-133` corrigido, o `TASK-PLAN-151` corrigido, a secção 12 deste plano e os 6 relatórios + `RELATORIO-COMPARACAO.md` em `docs/evidence/ce-comparacao-2026-10-31/` |
+
+**Consequência a considerar pelo dono:** se o PR #29 for fundido, `main` perde o plano **e** o `find-register` volta ao estado anterior — e as 22 tasks desta comparação (que dependem do registo canónico) ficam órfãs. **Não setook nenhuma acção sobre o PR #29**: abrir, fechar ou fundir um revert é decisão do dono/Kernel, não do agente.
+
+### 12.7 Fecho da comparação e correções da verificação final (01/11/2026 02:45Z)
+
+**Estado:** a comparação está **fechada** — 6 relatórios de frente + a síntese (`RELATORIO-COMPARACAO.md`, 136 KB, 31 linhas de TABELA-MESTRE, 56 deltas accionáveis, cadeia de evidência por linha crítica), todos persistidos em `docs/evidence/ce-comparacao-2026-10-31/` e no ZIP `comparacao-ce-2026-11-01.zip` (verificado por re-extracção: esqueleto sem drift, capturas 36/36 com SHA-256 OK).
+
+**A verificação adversarial reprovou a síntese em duas rondas.** As cinco observações que sobreviveram à segunda ronda foram **medidas pelo owner antes de corrigir** — não aceitei a reprovação como facto nem a descartei:
+
+| # | Observação do verificador | Medição do owner (01/11) | Correção |
+|---|---|---|---|
+| 1 | "`tool-sources.v1.json` e `tool-bindings.v1.json` não existem neste sandbox" | **FALSO** — existem em `contracts/entities/`; 6/6 `source_type` fora do enum canónico, 6/6 `integrity.sha256` = 64 zeros | Afirmação corrigida em L-11, C-15 e A-21 |
+| 2 | Contagem de bindings fora do enum | **78/78** fora do enum **ou ausentes** (46 com `decision: BOUND` + 32 sem o campo) — o número que circulava (46/78) contava só os preenchidos | Corrigido em L-11 |
+| 3 | E5 diz "70/72 testes (45+20+5)" | Contagem por leitura: **73 declarações** (65 ficheiros em `src/` com 1 cada + `tests/pilot.test.ts` com 8) | Corrigido; o E5 mede 8 no piloto, não 5 |
+| 4 | README diz "gate 8/8" | **Executado:** `node scripts/check-skeleton.mjs` → **11/11 checks verdes** | Corrigido |
+| 5 | Contagens de branches marcadas `[V]` | Vêm das frentes, não da verificação própria | Reetiquetadas para `[P-RP]` ( `[V]` é o nível mais forte e só vale para o que foi medido no próprio relatório) |
+
+**Achado novo, registado (não ficou só no relatório):** os contratos do repo canónico violam os enums canónicos de `contracts/cko-skeleton/catalog/cko-data.json` — `source_type` (11 valores canónicos) e `authority_class` (5) e `decision` (`HOLD`/`REJECTED`/`APPROVED`). Registado em **`TASK-PLAN-156`** (fontes: reclassificar + hash real), **`TASK-PLAN-157`** (bindings: reclassificar + tornar a decisão obrigatória) e **`TASK-PLAN-158`** (gate fail-closed que reprove qualquer contrato fora do enum — hoje o gate dá 11/11 verde a um contrato inválido). O registo passa a **137 tasks** (111 PROPOSTO · 16 BLOCKED · 9 DONE · 1 DELIVERED_PENDING_GATE).
+
+**O que NÃO mudou com a verificação:** a TABELA-MESTRE, a cadeia de evidência, os 56 deltas e o veredito por eixo. As correções foram de **rastreabilidade e de um número**, não de estrutura.
+
+### 12.8 PR #29 — impacto medido (01/11/2026 03:20Z, via API REST do GitHub)
+
+O corpo do PR #29 esteve **NOT_RUN** por falha do conector durante a comparação. Com o token do ambiente, a leitura foi feita por `api.github.com` — o que tambémallows medir **o CI do próprio PR** e **os alertas de segurança**, que estavam bloqueados.
+
+**O PR #29 é a inversa exacta do #26:** 128 ficheiros, **+127 / −29.195**, 116 removidos e 12 modificados, base `main`, head `revert-26-plan/pmokernel-finalization-20261031`, criado 31/10 23:36:54Z.
+
+| Área | Ficheiros | −linhas | O que seria apagado |
+|---|---|---|---|
+| `scripts/**` | 58 | 5.026 | Todos os validadores e os seus testes (inclui `verify-r80..r86`, `check-pmo-queue.test.mjs`) |
+| `registers/**` | 18 | 9.337 | 17 registos de governança + rollback do `find-register.v1.json` |
+| `tools/experience-skeleton/**` | 12 | 5.280 | **O esqueleto CE já portado para o repo canónico** (o port do `TASK-PLAN-124`) |
+| `docs/evidence/**` | 20 | 4.378 | Todos os packs: admin-area, commander, ce-comparação, experience-platform |
+| `docs/**` | 4 | 4.013 | O plano e o registo de tasks |
+| `.github/workflows/**` | 2 | 463 | Os dois gates fail-closed (`ce-main-migration-audit`, `pmo-candidate-unit-regressions`) |
+| `ci/**` | 2 | 87 | `ci/pending-coverage-gate.yml` — **o ficheiro do `TASK-PLAN-012`** |
+| `src/**` | 9 | 337 | `PmoReviewIntake`, `list-query`, `admin-console.css`, 4 ficheiros de auth |
+| `tests/**` | 1 | 197 | `tests/test_audit_data_kernel.py` |
+| `package.json` + `package-lock.json` | 2 | — | `better-auth` **1.7.14 → ~1.6.30** |
+
+**O PR está vermelho — e a causa está medida.** O CI do PR #29 falha no passo 4 *"Validar PMO canónico e histórico"* com `AssertionError: Protótipo deve permanecer congelado` em `scripts/check-pmo-queue.mjs:32`; os passos 5–20 ficam `skipped`. O revert **restaura a versão antiga de 46 linhas** desse script, que exige `WO-ADM-001 = PAUSED`, mas a fila em `main` tem `WO-ADM-001 = IN_PROGRESS` (a versão de 82 linhas que o #26 trouxe já não tem essa assert — foi o conserto do P1 medido em 27/10).
+
+**Consequência:** o revert **reintroduz o defeito P1** que o #26 tinha corrigido, e o próprio CI do repo o apanha. Não é um revert "limpo".
+
+**O revert também mexe na cadeia de FINDs:** `find-register.v1.json` volta de `as_of: 2026-10-31` a `2026-10-24` e perde 96 linhas, incluindo o `FIND-SPE-RPC-ANSWER-EXPOSURE-20261031` (draft de segurança) e os 2 FINDs R81.
+
+**Alertas de segurança — medição definitiva (`TASK-PLAN-015` fechado como DONE):**
+
+| Ferramenta | Resposta | Significado |
+|---|---|---|
+| Dependabot | HTTP **403** *"Dependabot alerts are disabled for this repository"* | Feature **desligada** |
+| Secret scanning | HTTP **404** *"Secret scanning is disabled on this repository"* | Feature **desligada** |
+| Code scanning | HTTP **404** *"no analysis found"* | Sem execução de análise |
+
+Isto **não é "zero alertas"** — é "não existe superfície de alertas activa". O repo compensa com guardios locais (`check-better-auth-lock.mjs`, `check-auth-invariant.mjs`, `test-auth-secret-env.mjs`), dois dos quais o PR #29 modifica. Registado em `TASK-PLAN-162`.
+
+**Nenhuma acção foi tomada sobre o PR #29.** Abrir, fechar ou fundir um revert continua a ser decisão do dono/Kernel. Registado: `TASK-PLAN-159` (inventário e decisão), `TASK-PLAN-160` (regressão de fail-closed: os 4 invariantes removidos), `TASK-PLAN-161` (downgrade do `better-auth`).
+
+### 12.9 O port do esqueleto CE ao repo canónico está pela metade e não executa (medido por execução, 01/11/2026 03:25Z)
+
+Ao procurar a origem do esqueleto no repo canónico, encontrou-se `tools/experience-skeleton/` em `main` — com 12 ficheiros: os dois scripts (`generate-skeleton.mjs`, `check-skeleton.mjs`) e `pilot/` com o núcleo (`resolver.ts`, `state.ts`, `metamodel.ts`, `module-status.ts`, `profile-contracts.ts`, `experience-state.ts`) e os 3 schemas do piloto.
+
+**Mas não corre.** Executado no repo canónico:
+
+```
+$ node tools/experience-skeleton/check-skeleton.mjs
+Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'
+$ node tools/experience-skeleton/generate-skeleton.mjs --check
+Error: ENOENT: no such file or directory, open '<repo>/tools/catalog/service-catalog.v1.json'
+```
+
+**Causa:** os dois scripts fazem `ROOT = resolve(dirname(import.meta.url), '..')` — esperam a raiz do esqueleto no **directório pai** — e leem `catalog/service-catalog.v1.json`, `catalog/capability-registry.candidate.v0.1.json`, `catalog/object-capability-binding.candidate.v0.1.json`, `src/core/experience/{resolver,state,metamodel,module-status}.ts` e `schemas/*.json`. Nada disso existe nesse caminho no repo: o catálogo real está em `docs/evidence/experience-platform-skeleton-2026-10-31/catalog/service-catalog.v1.json` (84.569 B) e `src/core/experience/` **não existe no repo**.
+
+Ou seja: o `pilot/` foi copiado para `tools/experience-skeleton/pilot/`, mas os scripts continuam a esperar `src/core/experience/` — nem o catálogo nem o núcleo estão onde o código os procura.
+
+**Consequências de governança:**
+1. Um artefacto do esqueleto **está no repo canónico e aparenta estar portado, mas não executa** — o `TASK-PLAN-124` estava BLOCKED à espera de decisão de WO, e mesmo assim houve um port parcial em `main`.
+2. O gate canónico **não pode contar como gate de não-regressão** enquanto não correr (`TASK-PLAN-131`): a única prova de gate é a local e datada (11/11 verde, 73 declarações de teste).
+3. O PR #29 apagaria esta cópia pela mesma razão que apaga o resto — o que não é argumento a favor do revert, é facto.
+
+**Registado em `TASK-PLAN-163`**, com a prova exigida: correr o gate no repo canónico a mostrar 11/11 verde a partir do commit, e o `--check` do gerador sem drift. Só depois o port passa de "portado" a "entregue e verificado".
+
+**Nota de honestidade:** a comparação CE mediu o esqueleto a partir da cópia local (`/workspace/ce-skeleton`), que é coerente e tem o gate verde. O port canónico, esse, está partido — e é exactamente o que o `TASK-PLAN-124` ia decidir quando for desbloqueado.
+
+## 13. Reconciliação CE v6 — plano sequenciado e execução em etapas (01/11/2026 03:45Z)
+
+### 13.0 Os três universos (medido por API REST, não presumido)
+
+| Universo | Onde vive | Escala | Estado |
+|---|---|---|---|
+| **A — git, governança** | `IndiciumFIN/dev-chatgpt-workspace` (público) | `main` = 1.877 ficheiros · 27 branches | É **a app CE + o pacote PMO × Kernel**. `src/lib/tools/catalog.ts` (19.579 B), `src/routes/`, `src/core/`, `contracts/entities/`, `registers/governance/`, `tools/experience-skeleton/` (12 ficheiros), `audit/execution/`. PR #29 (revert do #26) e **PR #30** ("Integrate structural candidate and validate phase 3", 485 ficheiros, +483.797, **CI 12/12 verde**) |
+| **B — git, app CE** | `IndiciumFIN/calculadorasdeenfermagem` (público — **corrigido** em §13.10) | `main` = 176 ficheiros · 17 branches | Snapshot antigo (17/10). **Medido em 17 branches: nenhum dos artefactos do sandbox lá está.** Maiores branches: `migration/full-directory-*` (18.441), `migration/candidate-f08-*` (18.458), `cursor/fix-governance-gaps-*` (9.043) — com `migration/source_snapshots/` e `data/legado/`, não o app |
+| **C — sandbox local** | máquina do dono (TAR de 5.746 ficheiros) | `src/` 2.366 · `_archive/` 1.445 · `upload/` 927 · `public/` 614 · `scripts/` 150 · `e2e/` 8 · `tests/` 9 · `migrations/` 11 | **Não está em git em nenhum repositório.** Layout diferente do git (`src/data/contracts/`, `src/data/registers/`) |
+
+**Consequência:** o trabalho do sandbox (17 contratos, 62 schemas, 83 ferramentas com conteúdo editorial, 19 idiomas + 1.149 traduções, 251 páginas de catálogo, 385 testes, 17 gates) **nunca foi publicado**. O que existe em git é um universo diferente. Reconciliar é, antes de mais, **decidir qual dos três é canónico** — e o plano abaixo faz isso por etapas, sem bloquear.
+
+### 13.1 Etapas de execução (independentes; cada uma é uma branch + um PR)
+
+| # | Etapa | Produz | Depende de | Bloqueia |
+|---|---|---|---|---|
+| **S1** | Contratos: reclassificar as 22 fontes pela **natureza** do documento + 1.031 bindings coerentes | `contracts/entities/tool-sources.v1.json`, `tool-bindings.v1.json` + registo | frente "fontes" + "bindings" | nada |
+| **S2** | Gate fail-closed de integridade e referência dos contratos (não só de enum) | `scripts/check-contract-integrity.mjs` + `*.test.mjs` | S1 (para os valores) | nada |
+| **S3** | Corrigir o port partido do esqueleto (`TASK-PLAN-163`) e absorver os 5 módulos `src/core/experience/` | `tools/experience-skeleton/` + `src/core/experience/` | frente "universos" | nada |
+| **S4** | `FIND-CTR-010` com `canonical_id` (não `id`) e no registo activo | `registers/governance/find-register.v1.json` | S1 (para a authorityClass) | nada |
+| **S5** | Espelho estático: os 5.520 destinos não resolvidos | `public/bibliotecas/catalog/` | frente "espelho" + produção | nada |
+| **S6** | Evidência: os 318 recuperados, os 24 `tool-results/` removidos, os 5 symlinks de raiz, `.env` saneado | `docs/evidence/` + `.gitignore` | frente "universos" | nada |
+| **S7** | Registo + fecho: tasks novas, §13, ZIP final | `docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json`, plano | S1…S6 | — |
+
+**Regra de sequenciação:** cada etapa é uma branch própria, com o seu PR, e **nenhuma espera por decisão do dono** — o que precisa de decisão fica registado como `HOLD` com o nome, não trava a etapa. As etapas S2 a S6 não dependem da entrada do sandbox no git: o que já está no repositório governança é executável hoje.
+
+### 13.2 O que já está medido e é executável sem esperar pela equipa
+
+**Fontes (6 no git) vs artefactos preservados** — medido por SHA-256 sobre o pacote de capturas (36 artefactos, 36/36 com hash válido):
+
+| Fonte | Artefacto preservado | Consequência |
+|---|---|---|
+| `SRC-CFM-PARECER-28-2020` | **SIM** — `cfm_parecer28_2020.pdf` (`089dba14…`), `cfm28.txt` (`54d2c13d…`), `cofen_search_parecer.html` (`01df1d0d…`) | `integrity.sha256` pode ser o hash real |
+| `SRC-REV-ENF-USP-BRADEN-1999` | **NÃO** (só menções no dump do banco) | `NOT_AVAILABLE` + motivo; a fonte fica HOLD |
+| `SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA` | **NÃO** | idem |
+| `SRC-OMS-OBESIDADE-2000` | **NÃO** | idem |
+| `SRC-APGAR-1953` | **NÃO** | idem |
+| `SRC-GOTEJAMENTO-FORMULA-CLASSICA` | **NÃO** | idem |
+
+**5 das 6 fontes não têm documento preservado.** Uma menção num dump de banco não é o documento-fonte: não é hash, não é integridade. `NOT_AVAILABLE` é ausência honesta; ausência **não** é integridade.
+
+### 13.3 Regras da reconciliação (o que sobe e o que não)
+
+1. **Fonte canónica ≠ cópia.** Um artefacto que existe em dois universos só sobe de uma vez, e a cópia fica marcada (`DUPLICATE_EXPORT`/`EMBEDDED_ONLY`) — não se duplica conteúdo.
+2. **O que não corre, não está portado.** O port do esqueleto no repositório canónico **não executa** (`ENOENT`): os scripts esperam `catalog/` e `src/core/experience/` na raiz do repo. Um ficheiro que existe não é um port.
+3. **Ausência declarada ≠ valor inventado.** `sha256` sem artefacto é `NOT_AVAILABLE` com motivo; `authority_class` sem fonte é ausência explícita — **nunca** `INTERNAL_NONCLINICAL` por omissão (o parecer V6 mostrou que essa imputação atingiu campos clínicos de Aldrete, Braden e Morse).
+4. **Gate só é gate se falhar no caminho certo.** Um portão que aceita `NOT_AVAILABLE` sem motivo, lista vazia e `decision` em conflito com `status`, não é homologação.
+5. **O `.env` do backup não é publicado** (valores não vazios) e os 5 symlinks de raiz não são silenciosamente substituídos por cópias.
+
+### 13.4 Decisões do dono que esta reconciliação não pode tomar
+
+- **Qual universo é canónico** para o app CE (o git tem a governança; o sandbox tem o conteúdo).
+- **Se o sandbox sobe** (5.746 ficheiros, com 24 saídas de audit removidas) — e por quem.
+- **O PR #29** (revert) e o **PR #30** (candidato estrutural, verde) — a reconciliação não os fecha nem os funde.
+- **A reclassificação das 22 fontes** quando não há equivalência automática segura (CFM parecer, publicação OMS, calendário de vacinação) — o valor canónico de um parecer de conselho profissional não é "lei".
+
+### 13.5 Execução das etapas S1 e S2 — medida, não afirmada (01/11/2026 04:45Z)
+
+**PR #31 (RASCUNHO, não fundido):** `plan/ce-reconciliacao-v6-20261101` → `main`.
+
+#### 13.5.1 A medição que precedeu a correcção
+O portão novo foi corrido **contra o estado real antes de qualquer correcção**: `REPROVADO: 172 violação(ões)` — 6×R1 (`source_type` fora do enum do contrato `source`), 6×R3 (`sha256` = 64 zeros), 78×R4 (`authority_class` fora do enum), 78×R5 (`decision` fora do enum), 4×R8 (autoridade não-interna sem fonte). Cada violação nomeia o item e a linha. **Sem esta leitura, a correcção seria um palpite.**
+
+#### 13.5.2 S1 — contratos no vocabulário canónico, pela natureza do documento
+A correcção foi feita **na fonte verdadeira** (`src/lib/tools/governance.ts`, `src/lib/tools/contracts.ts`) e os derivados foram **regenerados pelo gerador do repo** (`node scripts/generate-entity-contracts.mjs` → 183 entidades em 10 contratos). Nenhum JSON/TS gerado foi editado à mão.
+
+| Fonte | Antes | Agora | Natureza do documento | SHA-256 real |
+|---|---|---|---|---|
+| `SRC-CFM-PARECER-28-2020` | `OFFICIAL_LAW` | `REGULATOR` | parecer de conselho profissional — **não é lei** | `089dba14…` ✅ (PDF no repo) |
+| `SRC-REV-ENF-USP-BRADEN-1999` | `STANDARD` | `PRIMARY_STUDY` | artigo científico original | `NOT_AVAILABLE` + motivo |
+| `SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA` | `GUIDELINE` | `GUIDELINE` | manual institucional | `NOT_AVAILABLE` + motivo |
+| `SRC-OMS-OBESIDADE-2000` | `OFFICIAL_LAW` | `GUIDELINE` | relatório de ORGANIZAÇÃO (a OMS **não é** órgão regulador) | `NOT_AVAILABLE` + motivo |
+| `SRC-APGAR-1953` | `PRIMARY_STUDY` | `PRIMARY_STUDY` | artigo científico original | `NOT_AVAILABLE` + motivo |
+| `SRC-GOTEJAMENTO-FORMULA-CLASSICA` | `STANDARD` | **`INTERNAL_GOVERNED`** | **não existe documento** — prática assistencial adotada internamente | `NOT_AVAILABLE` + motivo |
+
+Bindings: 46 `authority_binding` com `authority_class` no enum do contrato e `decision` `BOUND` → `HOLD_HUMAN` (o `ALLOW` exigiria `validator_ids` **e** `evidence_bundle_ids`, que não existem) e `status` `EVIDENCE_BOUND` → `HOLD_HUMAN`. As 32 `field_definition` **não** recebem autoridade imputada: a autoridade vem do binding referenciado (**32/32 refs resolvem**).
+
+#### 13.5.3 S2 — portão de integridade fail-closed
+`scripts/check-contract-integrity.mjs` (14.076 B, 12 regras) + **17 testes** (17/17 verdes), incluindo as duas regras que o parecer V6 apontava e que o portão do sandbox não tinha:
+- **Enum escopado ao contrato** — o `decision` tem **três** vocabulários no catálogo CKO (`applicability`, `authority_binding`, `release_gate`); a resolução é feita pelo contrato que rege o registo.
+- **Escopo por tipo de objecto** — o ficheiro de bindings mistura 46 `authority_binding` e 32 `field_definition`; imputar `INTERNAL_NONCLINICAL` a uma definição de campo rotularia campos clínicos de Aldrete, Braden e Morse como não-clínicos (o próprio parecer V6 caiu nesta armadilha: chamou a isso "412 classes imputadas").
+
+O **consumidor** foi corrigido em conjunto: `scripts/check-contract-coverage.mjs` exigia `INTERNAL_CONFIG`/`BOUND` — valores que não pertencem a nenhum enum do catálogo — e a verificação de integridade aceitava apenas "truthy" (por isso os 64 zeros passavam).
+
+#### 13.5.4 Prova
+| Verificação | Antes | Depois |
+|---|---|---|
+| `check-contract-integrity.mjs` | REPROVADO — 172 violações | **PASS** — 6 fontes, 46 AB, 32 FD |
+| `check-contract-coverage.mjs` | reprovava (exigia o vocabulário legado) | **exit 0** |
+| `check-generated-fresh.mjs` | — | **tudo fresco** (derivados regenerados pelo gerador) |
+| `node --test check-contract-integrity.test.mjs` | — | **17/17** |
+| `npx tsc --noEmit` | 2 erros (`@types/pg`) | 2 erros — **pré-existentes** (devDependency declarada no `package.json`; falta só no clone local) |
+
+#### 13.5.5 Uma correcção de processo que ficou registada
+O PDF do parecer do CFM foi **subido como texto**: o `push_files` gravou a string base64 (314.112 B) em vez do binário (235.582 B). Detectado pelo tamanho (base64 de 235.582 B = exactamente 314.112 B) e confirmado pelos primeiros bytes (`JVBER…` em vez de `%PDF-`). Corrigido pela **Git Data API** (blob → tree → commit → ref) e re-verificado byte a byte: os dois ficheiros são idênticos e o SHA-256 remoto é `089dba1488ac8ee0…`, **o mesmo declarado no contrato**. ⇒ *binários não vão por `push_files`.*
+
+### 13.6 As cinco frentes da equipa — o que deliveram e como foi arbitrado (01/11/2026 04:45Z)
+
+| Frente | Entregável | Arbitragem do owner |
+|---|---|---|
+| `fontes-classificacao` | tabela das 22 fontes com acção, veredicto, rationale e `instrument_kind` | **5/6 coincidem com a implementação do owner; 1 corrigido pelo verificador** (gotejamento → `INTERNAL_GOVERNED`, aceite e já no repo) |
+| `bindings-coerencia` | 17 regras / 6 colunas, 14 automatizáveis + 3 com decisão nomeada, cada uma com **teste negativo** | **9/17 regras já cobertas** pelo portão S2; as 8 restantes entram na S3. A regra R05 (fonte sem hash ⇒ `HOLD`) foi implementada |
+| `universos-git` | 41 grupos com veredicto (PROMOVER/RECONCILIAR/ARQUIVAR/HOLD/DESCARTAR), destino em git, dependência e bloqueio | **base do §13.1** — 3 grupos `PROMOVER`, 1 `HOLD`, 2 `DESCARTAR` (`.env`, `test-results`), 4 `ARQUIVAR` |
+| `gate-fail-closed` | especificação do portão | **convergente** com a S2 (12 regras); a diferença de vocabulário foi resolvida pelo dono |
+| `espelho-estatico` | plano do espelho estático | **rejeitado comoobjectivo**: o espelho mede caminhos do **pacote**, não do site vivo (sem browser no sandbox ⇒ medições do site são `NOT_RUN`) |
+
+**Onde o owner tinha razão e o parecer V6 não:** (1) `BOUND` → `HOLD` no vocabulário errado trocava um valor inválido por **outro** valor inválido — o enum do binding é `ALLOW/HOLD_HUMAN/REJECT/NOT_APPLICABLE_JUSTIFIED`; (2) `field_definition` não recebe `authority_class`/`decision`; (3) classificar por **natureza do documento** (a OMS não é regulador; um parecer do CFM não é lei) e não por tradução de rótulo.
+**Onde o verificador tinha razão e o owner estava errado:** o gotejamento **não tem documento-fonte nenhum** ⇒ `STANDARD` implicava um standard publicado inexistente ⇒ `INTERNAL_GOVERNED`. Corrigido no repositório antes do registo.
+
+#### 13.6.1 Arbitragem do ciclo 1 da equipa (plano `plan_09af2008`)
+| Frente | Verificador | Decisão do owner |
+|---|---|---|
+| `fontes-classificacao` | canone-integridade: **PASS** | **aceite** — e foi ela que corrigiu o owner (gotejamento) |
+| `espelho-estatico` | *não reportou* | **aceite por arbitragem do owner** (o owner re-derivou do E4: 9.063 ocorrências · 5.520 quebras · 250 destinos · top-10 de navegação = 2.880 exactos; 251 páginas de catálogo + 17 templates-piloto = 268 varridas; `ce-bibliotecas-dev@main` tem zero `public/` — a hipótese do briefing era errada) |
+| `bindings-coerencia` | canone-integridade: **FAIL** (B1–B3) | **reprovado** → retry: o CSV escreve valores fora do enum, imputa classe a `field_definition` e tem dois testes negativos insatisfazíveis |
+| `gate-fail-closed` | Verifier: **FAIL** ((i)–(v)) | **reprovado** → retry: reconciliar a especificação com o portão S2 já executado e corrigir o dedup do agregador e os números |
+| `universos-git` | canone-integridade: **FAIL** (G1–G5) | **reprovado** → retry: marcadores com origem, destino concreto, auto-consistência (41 no texto vs 39 no CSV) |
+
+**Nenhum veredicto foi atribuído a quem não o deu:** a `espelho-estatico` está marcada como arbitragem do owner porque o verificador dessa frente não reportou.
+
+### 13.7 Rev.2 — o portão era mais permissivo que o contrato (correcção do registo, 01/11/2026 06:50Z)
+
+**A primeira versão do portão S2 estava errada, e a auditoria independente apanhou isso.** O verificador da frente `gate-fail-closed` devolveu uma lista de defeitos do meu próprio código (D0–D11). O D0 é o importante e foi medido antes de ser acreditado:
+
+> O contrato canónico `source` declara `integrity.sha256.pattern = ^[a-f0-9]{64}$` e `integrity.additionalProperties: false`.
+> Portanto `NOT_AVAILABLE`, `integrity.reason` e `integrity.artifact_ref` são **inválidos pelo contrato** — e o meu portão aceitava-os.
+
+**Confirmado por três fontes independentes:**
+1. **Os dois schemas são idênticos** — o do catálogo (`cko-data.json`) e o de `contracts/cko-schemas/source.schema.json` (18 propriedades, mesmo conjunto, mesmo `integrity`).
+2. **As 43 instâncias canónicas** (`registers/governance/transversal-source-instances/`) têm **todas** `integrity = {sha256, snapshot_ref}` com hash real e snapshot preservado, e nenhuma tem `reason` nem `artifact_ref`.
+3. **O materializador** (`scripts/materialize-transversal-public.py:100`) escreve exactamente `"integrity":{"sha256":…,"snapshot_ref":…}`.
+
+⇒ O contrato `source` **não tem — e não pode ter sem WORK ORDER — um estado para "documento não preservado"**. A minha S1 tinha inventado esse estado.
+
+#### 13.7.1 O que mudou
+| | Antes | Rev.2 |
+|---|---|---|
+| Enums/forma | escritos à mão | **derivados do contrato** (`required`, `pattern`, `additionalProperties` lidos do catálogo) |
+| Hash | declarado era aceite | **recalculado** do artefacto: hash declarado ≠ hash do ficheiro ⇒ reprova (`R9.HASH_MISMATCH`) |
+| Dados que eu inventei | `source_type_rationale`, `integrity.method`, `integrity.artifact_ref`, `integrity.reason` | **removidos** (não existem no contrato); a justificação passou para o registo e o plano |
+| Violações derivadas | contadas N vezes | contadas **à parte** (1 defeito no binding = 1 defeito) |
+| Localizador da mensagem | `#items[i]` (índice instável) | **linha real** do registo |
+| Testes | assinavam **prosa** (`/\[R6\].*contraditório/`) | assinam **códigos estáveis** `[RULE.SUB]` — **23/23**, com fixtures sintéticos independentes do repo |
+| Saída | texto | `--json` (contagens para o agregador), código 2 para argumento desconhecido, sem stack trace |
+
+#### 13.7.2 A medição que substitui a afirmação anterior
+| | Antes da S1 | Rev.2 |
+|---|---|---|
+| Violações | **30** (6 `source_type` fora do enum, 6 SHA a 64 zeros, 6 `citacao` fora do contrato, 6 snapshot placeholder, 6 contadas duas vezes) | **16** |
+| Erros de dado | 12 | **0** |
+| Lacunas de contrato | — | 16, em **3 classes**: 6× `citacao` fora do contrato · 5× `sha256` sem representação · 5× `snapshot_ref` placeholder |
+
+⇒ **A afirmação "PASS" que ficou escrita em §13.5 na rev.1 está superada.** O portão hoje está **vermelho**, e está vermelho porque o repo tem 16 casos que o contrato não representa — não porque os dados estejam errados.
+
+#### 13.7.3 O que ficou registado para o dono (nada disto é meu para decidir)
+- **`registers/governance/r86-source-evidence-pending-20261101.v1.json`** — intake de evidência das 5 fontes sem documento preservado (`EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION`, releaseGate `HOLD_HUMAN`, 0 admitidas).
+- **`R84-CKO-SRC-EVIDENCE-STATE`** no r86 — emendar o contrato `source` para ter um estado de evidência ausente, ou preservar os documentos. **A segunda via é impossível para `SRC-GOTEJAMENTO-FORMULA-CLASSICA`**: é uma fórmula sem documento, e o enum do contrato inclui `INTERNAL_GOVERNED`, que descreve precisamente esse caso ⇒ **inconsistência interna do contrato**, medida.
+- **`R86-CKO-SRC-CITATION-SLOT`** no r86 — o contrato não tem campo `citacao`, embora tenha `language`, `effective_from` e `license_ref`; a prática carrega `citacao` em todas as 6 fontes.
+- **`TASK-PLAN-171..174`** no registo canónico.
+
+**Nota de correcção de forma:** o portão de cobertura (`check-contract-coverage.mjs`) foi **revertido** para a regra fiel ao contrato (integridade = hash real + artefacto preservado). A variante "NOT_AVAILABLE com motivo" que eu tinha introduzido na rev.1 era a mesma invenção que o parecer V6ews — e é exactamente o que o contrato não admite. Os dois portões agora reprovam **as mesmas 5 fontes, pela mesma causa nomeada**.
+
+#### 13.7.4 O CI apanhou outra coisa minha (01/11/2026 07:15Z)
+A primeira versão desta correcção **acrescentou as duas decisões ao `r84`** e **criou um registo `r85`**. Ambos estavam errados, e o CI do repo disse-me antes de eu publicar:
+- **`r84` é um registo fechado e validado**: `scripts/verify-r84-pmo-decision-intake.mjs:56` exige `decisions.length === 4` e indexa-as contra `r83.decisionMatrix[index]` e `r77.decisionsRequired[index]`. Acrescentar decisões quebra um validador fail-closed.
+- **Já existia um `r85`** (`r85-pmo-conversation-owner-assent-20261031.v1.json`) com o seu próprio validador (`verify-r85-owner-assent.mjs`).
+
+⇒ **Revertido**: o `r84` ficou intacto e as decisões foram para um registo **novo, `r86`**, que não colide com nada. Registado em `TASK-PLAN-172`/`173`: o intake de decisões do dono que se pode acrescentar é o `r86`, e o `r84` só muda por WORK ORDER.
+
+#### 13.7.5 O CI do repo: uma falha minha e uma pré-existente (01/11/2026 07:30Z)
+O CI do PR #31 ficou vermelho em dois sítios, e **um é meu e um não**:
+
+**(a) Meu — o portão de cobertura.** A regra anterior (`!f.integrity?.sha256`) aceitava **64 zeros** como integridade: era isso que segurava o verde do `main`. A rev.2 passou a exigir hash real + artefacto preservado ⇒ as 5 fontes sem documento reprovaram. **rev.3:** o portão passa a aceitar **evidência pendente registada** (`r86`, `HOLD_HUMAN`) e a **imprimi-la** — porque um verde que não nomeia a pendência é um *accept silencioso*. **Fail-closed verificado:** sem o registo `r86`, o portão reprova. O portão de integridade (rev.2) **continua estrito e vermelho** — é ele que mede as 16 lacunas de contrato.
+
+**(b) MEU — `TASK_PLAN_DRIFT` no gate do R78.** *(Correcção de 01/11 08:10Z: a redacção original desta alínea dizia "pré-existente" e estava **errada** — ver §13.9.)* `scripts/check-r78-gap-register.mjs:12-17` computa `expected = 37 + 31 = 68` e compara com `expected + additional`, onde `additional` vem da expansão **R89** (24 R87 + 20 R89 = 44) ⇒ o registo tem de ter **exactamente 112** tasks. `main` tem 112 ⇒ **passa** (312/313 testes). A carrier tem **153** (155 com a §13.8) ⇒ **`TASK_PLAN_DRIFT`** ⇒ **22 testes falham** (R78: 5, R86: 3, R87: 6, R89: 8) e o CI fica vermelho. **A causa é a minha**: a comparação CE somou **84** tasks (TASK-PLAN-092 e 133..177) ao mesmo registo. O `main` nunca apanhou a falha porque o workflow só corre em branches candidatas — mas a carrier **é** uma branch candidata, por isso apanha. **Não mexi no gate nem no bloco R89** (isso seria a admissão silenciosa que o gate existe para impedir) — `TASK-PLAN-175` para decisão do dono/Kernel.
+
+### 13.8 Os 5.520 links do espelho: plano validado por execução (01/11/2026 08:00Z)
+
+#### 13.8.1 O que era a pendência
+
+O espelho estático `public/bibliotecas/catalog/` (251 páginas HTML) tem **5.520 destinos locais
+não resolvidos**, medidos no inventário E4 (9.063 ocorrências em 268 páginas: 1.920 `img` +
+7.143 `a`, das quais 5.520 não resolvem; 250 caminhos de destino distintos). A causa é estrutural:
+a cópia foi assente um nível mais fundo do que o acervo canónico, por isso os caminhos relativos
+caem em `catalog/` e `catalog/assets/` onde os ficheiros não estão.
+
+#### 13.8.2 As três regras (medidas, não inferidas)
+
+| Regra | Ocorrências | De | Para |
+|---|---|---|---|
+| `R-NAV` | 2.880 | `index.html`, `<cat>.html` (de `catalog/assets/`) | `../index.html`, `../<cat>.html` |
+| `R-AVIF-ITEM` | 2.390 | `<cat>/<f>.avif` (de `catalog/assets/`) | `../../assets/<cat>/<f>.avif` |
+| `R-ASSET-HUB` | 250 | `assets/<cat>/<f>.avif` (de `catalog/`) | `../assets/<cat>/<f>.avif` |
+
+#### 13.8.3 A prova: o verificador do plano correu
+
+`scripts/verify-espelho-link-plan.mjs` aplica as mesmas regras do corrector ao inventário E4 e
+**re-resolve cada destino** contra o acervo canónico (`public/bibliotecas/assets/`, 262 ficheiros) e
+contra as páginas do próprio espelho:
+
+```
+PASS: 5520 ligações quebradas no inventário; 5520 resolvem com as regras
+      (R-ASSET-HUB=250, R-NAV=2880, R-AVIF-ITEM=2390); 0 por resolver.
+```
+
+Isto é a **medição**, não a promessa: cada um dos 5.520 destinos foi testado contra um ficheiro que
+existe. O que a medição **não** cobre: se o espelho corrigido é o ficheiro certo a promover
+(é a decisão do dono, `TASK-PLAN-177`).
+
+#### 13.8.4 Os entregáveis
+
+- `scripts/fix-espelho-links.mjs` — 3 regras, sem inferência; `dry-run` por omissão, `--apply` escreve;
+  **depois de reescrever re-resolve tudo e reprova (exit 1) se sobrar um destino**; `--json`.
+- `scripts/fix-espelho-links.test.mjs` — **5/5 testes**, fixtures sintéticos independentes do estado do
+  repo, incluindo o teste **fail-closed** (sem o activo de destino, reprova) e a idempotência.
+- `scripts/verify-espelho-link-plan.mjs` — valida o plano contra o inventário + o acervo, sem o HTML.
+
+#### 13.8.5 O que ficou por fazer, e porquê
+
+**Não foi aplicado**: os 251 HTML do espelho **não existem neste ambiente** (medido: `find` por
+`acervo-a-classificar.html` e por `*cko-image-library*` → 0 ocorrências; o ZIP não traz
+`bibliotecas/catalog/*.html`). O corrector está pronto e testado; corre onde o HTML estiver.
+O destino do espelho (descartar / corrigir e promover / promover sem correcção) é
+`TASK-PLAN-177` — decisão do dono, não minha.
+
+#### 13.8.6 Uma correcção de conta que o próprio dono fez
+
+A frente reportou **2.640 imagens + 2.880 navegação**. A medição re-derivada separa as 5.520 por
+**regra aplicável**, não por tipo de elemento: 2.390 `R-AVIF-ITEM` (das quais 1.670 são `img` e
+**720 são `<a href>` para `.avif`**), 250 `R-ASSET-HUB` e 2.880 `R-NAV`. As 2.640 "imagens" da frente
+= 1.920 `img` + 720 `<a>` para `.avif` — bate certo. O que **não** bate era a minha própria
+aritmética de caminhos na primeira passagem (a validação resolvia os `uri` contra a raiz em vez do
+directório da página); corrigi a medição, não o número.
+
+### 13.9 Correcção de um registo meu: o drift do gate R78 era meu, não pré-existente (01/11/2026 08:10Z)
+
+Em §13.7.5(b) escrevi que o `TASK_PLAN_DRIFT` no gate R78 era **pré-existente** e que `main` "tem 112
+tasks (esperado 68) e falha igual". **Medi de novo e está errado nas duas partes.** A correcção:
+
+| | o que eu escrevi | o que a medição dá |
+|---|---|---|
+| `main` | "112 tasks, esperado 68, falha igual" | **PASS**: 313 testes, 312 PASS, 0 FAIL |
+| a contagem que o gate exige | 68 | **112** = 37 (baseline) + 31 (R79) + 44 (expansão R89: 24 R87 + 20 R89) |
+| a causa do vermelho na carrier | "pré-existente" | **minha**: a comparação CE somou 84 tasks ao mesmo registo (TASK-PLAN-092 e 133..177) |
+
+O mecanismo real: `scripts/check-r78-gap-register.mjs:12-17` faz
+`expected = r.baseline.taskPlanCount + r.r79CandidateMapping.candidateTasksAdded` (= 68) e exige
+`plan.tasks.length === expected + additional`, com `additional` lido do bloco R89 (= 44) ⇒ **112**.
+`main` tem 112 ⇒ bate. A carrier tem 153 (155 com a §13.8) ⇒ `TASK_PLAN_DRIFT` ⇒ **22 testes
+falham** (R78: 5 · R86: 3 · R87: 6 · R89: 8) e o workflow `pmo-candidate-unit-regressions` fica
+vermelho. A falha do `main` nunca apareceu porque esse workflow só corre em branches candidatas —
+mas a carrier **é** uma branch candidata, por isso apanha.
+
+**O que eu não fiz, deliberadamente:** não mexi no gate nem no bloco `r89ScopedTaskReconciliation`
+para a contagem passar. Esse bloco é o registo do que o Kernel admitiu, com `sourcePlanBlobSha` e
+`sourceBranchHeadSha`; alterá-lo para admitir as minhas tasks seria exactamente a *admissão
+silenciosa* que o gate existe para impedir. A decisão fica com o dono/Kernel, em `TASK-PLAN-175`
+(corrigida): **(i)** admitir as tasks CE na expansão R89 com os seus source commits; **(ii)** mover
+as tasks da comparação CE para um registo próprio e deixar o plano canónico nos 112; ou **(iii)**
+emendar o gate para aceitar tasks adicionais **declaradas** no próprio plano.
+
+Lição registada (Lição 10 do plano): *«pré-existente» é uma afirmação que se mede, não se supõe.*
+Eu reusei a medição de uma frente anterior sem a re-derivar no estado novo, e a frente anterior
+tinha medido a **baseline R79 (68)**, não a **expansão R89 (112)** — o número estava certo em
+contexto e errado na conclusão.
+
+### 13.10 O mapa real dos repositórios e o delta real (01/11/2026 14:10Z) — **com uma correcção a uma correcção minha**
+
+O dono pediu "comparar os repositórios e branches do repositório com os arquivos que temos aqui e criar
+**só** o conteúdo em ZIP para avançar mais rápido". Feito por hash de conteúdo (`git blob-sha`), contra
+**todos** os repositórios e **todas** as branches.
+
+#### 13.10.1 O mapa (4 repos, 229 branches)
+
+| | Repo | Owner | Branches | `main` | Papel |
+|---|---|---|---|---|---|
+| **A** | `dev-chatgpt-workspace` | IndiciumFIN | **29** | 1.877 ficheiros | governança PMO × Kernel + **CE Experience Platform** |
+| **P** | `calculadoras-de-enfermagem` | **kauesp0007** | **182** | **14.458 ficheiros** | **o produto** (HTML estático na raiz, `CATALOGO_*`, `scripts/icones-fa.json`) |
+| **B** | `calculadorasdeenfermagem` | IndiciumFIN | **17** | 176 ficheiros | app/migrações da organização (**público** — o inventário dizia privado) |
+| **D** | `ce-bibliotecas-dev` | IndiciumFIN | 1 | — | desenvolvimento da biblioteca |
+
+**A e P partilham 6 caminhos**: `.gitignore`, `.prettierrc`, `AGENTS.md`, `README.md`,
+`package-lock.json`, `package.json`. ⇒ **A plataforma de governança e o produto são bases de código
+quase disjuntas: a Experience Platform nunca tocou as 14.458 ficheiras do produto.** O motor de
+impacto, o `list-query` e o `pmo-panel` existem **só em A**.
+
+#### 13.10.2 CORRECÇÃO — eu é que estava errado (a minha "correção" anterior)
+
+TASK-PLAN-178 tinha escrito que o repo das 182 branches "dá 404, foi apagado ou renomeado". **Fui eu que
+inventei o path**: a chave do inventario (`branches-todas.json`) é só o **nome** do repo, sem o owner —
+e eu assumi que o owner era `IndiciumFIN`. O repo real é **`kauesp0007/calculadoras-de-enfermagem`**:
+está **vivo**, público, com 182 branches, `main` = 14.458 ficheiros, último push 27/10 06:29Z.
+Conferido nome a nome: **182/182 nomes e 182/182 SHAs** coincidem com o inventário. ⇒ **As medições
+"181 branches, churn 137/181, 114/181 no núcleo" estavam correctas** — descrevem P.
+
+⇒ **Lição 12: um nome de repo sem owner é uma chave ambígua.** Confirmar o path completo (owner + nome)
+antes de concluir que algo desapareceu. Um 404 num path que eu próprio construí não é prova de nada.
+
+#### 13.10.3 CORRECÇÃO — `locale-registry.ts` e `site-data.ts` existem no `main` de A
+
+O registo dizia "não existem no `main` de nenhum dos dois repositórios". O E2 medira o `main` de **P**
+(onde não existem). Em **`main` de A existem ambos** (`src/lib/locale-registry.ts` e
+`src/lib/site-data.ts`). ⇒ A afirmação anterior era errada por generalização indevida.
+
+#### 13.10.4 O delta (contra A + B + P, byte a byte)
+
+| | Ficheiros |
+|---|---|
+| Árvore local (sem `.git`, `node_modules`, `.vercel`, `.env`) | 1.834 |
+| **Já idênticos** a alguma branch de A, B ou P | **1.805** |
+| Divergentes | 26 → **15** trabalho local por commitar · **11** o repo já está mais à frente |
+| Novos | 3 |
+
+Os 15: `src/lib/impact/impact-engine.ts` (novo) · `src/lib/admin/list-query.ts` ·
+`src/components/admin/pmo-panel.tsx` · `src/styles/admin-console.css` ·
+`scripts/test-impact-engine.test.mjs` (novo) · `scripts/test-list-query.test.mjs` (novo) ·
+9 registos de auditoria regenerados (local rev 92, repo rev 91).
+
+**Verificado antes de empacotar**: 23/23 testes; `tsc` só com os **2 erros pré-existentes** de
+`@types/pg`; `git apply --check` **limpo** sobre a carrier; sha256 do manifesto a bater.
+⚠️ O `pmo-panel` e o `list-query` **têm de subir juntos** (API nova `activeChips`/`queryList`/`SortDir`
+vs a do repo `queryPmo`/`ListSort`) — mas nada mais importa `list-query` e ninguém usa a API antiga.
+
+#### 13.10.5 O que fica para o dono
+(i) Os 6 ficheiros funcionais sobem para a **carrier de governança** (onde já vive tudo o resto) ou
+para o **repo do produto** (que hoje não tem nenhum deles)? (ii) Os 9 registos de auditoria sobem só
+quando a auditoria voltar a correr no CI? (iii) A plataforma e o produto vão fundir-se, ou a
+disjuncção (6 caminhos em comum) é deliberada?
+
+---
+
+## 13.11 Separação de domínios: Carreira ≠ Governança (decisão do dono, 01/11)
+
+> **Dono, 01/11:** "não, carreira e governança são diferentes."
+
+Resposta directa a (iii) de §13.10.5. E tem uma consequência que **não era óbvia**: tudo o que eu
+ acrescentei ao registo de governança era, sem distinção, trabalho de **Carreira**.
+
+### 13.11.1 O que estava misturado
+
+| Bloco | Itens | Natureza |
+|---|---|---|
+| Tasks novas no registo de governança | `TASK-PLAN-134..178` (**44**) | comparação CE, reconciliação v6 (S1/S2), port do esqueleto CE, espelho estático |
+| Amendas minhas a tasks de governança | `TASK-PLAN-124`, `131`, `132`, `133` (**4**) | todas de Carreira (port do esqueleto, gate de CI, pausa da comparação) |
+| **Total fora do domínio** | **48** | — |
+
+O portão `R89` está *pinned* a um blob (`sourcePlanBlobSha b1fadfcb…`) e valida **posição e conteúdo**
+das 112 tasks de governança: `plan.tasks.length === 112`, `plan.tasks[68+i]` = as 24 do R87,
+`plan.tasks.slice(92)` = exatamente `TASK-PLAN-114..133`, campo a campo contra o snapshot.
+As minhas 48 violavam isso em três vias (contagem, posição, conteúdo) ⇒ **`TASK_PLAN_DRIFT`** nos testes
+R78/R86/R87/R89 ⇒ as 2 jobs vermelhas do CI.
+
+### 13.11.2 A separação (executada)
+
+- **Governança** (`docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json`) → volta ao estado **pinned**: **112 tasks**,
+  byte-idênticas ao snapshot R89, com as 4 amends revertidas.
+- **Carreira / CE** (`docs/PLAN-TASKS-CE-EXPERIENCE-v0.1.0.json`, **novo**) → as **44 tasks** + as
+  **4 amendments relocalizadas** (o texto que estava em vigor antes da separação fica preservado
+  em `tarefasRecontadasAoRegistoDeGovernanca.amendments`) + a decisão do dono datada.
+
+**Nenhuma task foi cancelada** e **nenhum portão foi mexido**: a separação é de *domínio*, não de conteúdo.
+
+### 13.11.3 Prova (medida, não afirmada)
+
+| Medida | Antes | Depois |
+|---|---|---|
+| `node --test "scripts/**/*.test.mjs"` | 341 testes · **22 falhas** | 341 testes · **340 verdes · 0 falhas** |
+| `check-r78-gap-register.mjs` | `TASK_PLAN_DRIFT` | `PASS {"gaps":4,"tasks":112,"releaseGate":"HOLD_HUMAN"}` |
+| `check-pmo-queue` · `verify-r84` · `verify-r85` · `check-pending-coverage` | verdes | verdes |
+| `audit-domain-wo-candidates.mjs` | `exit 1` (ENOENT `registers/pmo/cross-source-pending-intake.v1.json`) | `exit 1` — **idêntico, pré-existente** |
+| `check-contract-integrity.mjs` | `exit 1` (5 lacunas de contrato) | `exit 1` — **idêntico, pré-existente** |
+
+Os dois `exit 1` que sobram foram medidos **antes e depois** no mesmo commit: não são da separação.
+
+### 13.11.4 Consequência estrutural (a que fica registada)
+
+O registo de **governança fica congelado em 112**. Qualquer task nova lá dentro volta a quebrar o
+`TASK_PLAN_DRIFT` — porque o crescimento do registo é **ato do Kernel** (re-pin do R89 com
+`sourcePlanBlobSha` novo), não meu. Registo de governança: **112, imutáveis até o Kernel admitir mais**.
+Registo de Carreira: **44, crescem livremente**.
+
+Isto é a mesma regra que já valia para os outros registos (`r84`, `r85` são fechados e validados):
+*decisão do Kernel entra no registo do Kernel; o meu trabalho entra no registo do meu domínio.*

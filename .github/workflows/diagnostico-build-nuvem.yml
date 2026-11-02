@@ -61,9 +61,8 @@ jobs:
         run: npm ci
       - name: Reproduzir o build Vercel
         run: npm run build:spa
-      - name: Verificar artefatos do build
+      - name: Verificar artefatos SPA
         run: |
-          test -s .vercel/output/nitro.json
-          test -d .vercel/output/functions/__server.func
+          test -s .vercel/output/static/index.html
           test -s .vercel/output/static/sitemap.xml
           test -s .vercel/output/static/robots.txt

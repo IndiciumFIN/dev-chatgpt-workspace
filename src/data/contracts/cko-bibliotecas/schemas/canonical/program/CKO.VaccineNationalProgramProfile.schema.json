@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-program-profile:v1.0.0",
+  "title": "CKO Vaccine National Program Profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "program_id",
+    "program_year",
+    "authority",
+    "vaccine_ref",
+    "official_code",
+    "official_name",
+    "variant_scope",
+    "source",
+    "source_pages",
+    "claims",
+    "governance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^cko\\.program-profile\\.cnv-2026\\.[a-z0-9-]+$"
+    },
+    "program_id": {
+      "const": "cko.program.cnv.2026"
+    },
+    "program_year": {
+      "const": 2026
+    },
+    "authority": {
+      "const": "Ministério da Saúde / Programa Nacional de Imunizações (PNI)"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "official_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "official_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "url",
+        "sha256",
+        "evidence_level"
+      ],
+      "properties": {
+        "source_id": {
+          "const": "pni.cnv.instrucao-normativa.2026"
+        },
+        "url": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "evidence_level": {
+          "const": "A"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_pages": {
+      "type": "object",
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

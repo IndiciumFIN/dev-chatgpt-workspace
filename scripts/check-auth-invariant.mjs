@@ -27,9 +27,9 @@ import { isMainModule, mergeAppEnv, projectRoot, readAppEnv } from "./with-app-e
 
 const DEFAULT_DEV_URL = "http://127.0.0.1:8080";
 
-/** The predicate `src/lib/auth/{client,server}.ts` apply to the flag. */
+/** Both client and server require an explicit opt-in; undefined, empty, and unexpected values are OFF. */
 export function authEnabledFromEnvValue(value) {
-  return value !== "false";
+  return value === "true";
 }
 
 /**

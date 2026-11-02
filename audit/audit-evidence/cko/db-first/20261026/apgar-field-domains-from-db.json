@@ -1,0 +1,113 @@
+{
+  "audit_id": "CKO-APGAR-FIELD-DOMAIN-SNAPSHOT-20261026",
+  "system": "Calculadoras-Smart",
+  "query_scope": "READ_ONLY_CANDIDATE_SCORING_FIELDS",
+  "clinical_release_authorized": false,
+  "fields": [
+    {
+      "name": "cor",
+      "field_id": "TF-CAND-APGAR-COR",
+      "enum_values": [
+        {
+          "label": "Cianose central ou palidez geral",
+          "value": 0
+        },
+        {
+          "label": "Corpo rosado, extremidades cianóticas",
+          "value": 1
+        },
+        {
+          "label": "Completamente rosado",
+          "value": 2
+        }
+      ],
+      "required_status": "REQUIRED",
+      "source_field_id": "apgar::cor",
+      "validation_status": "PASS_CONTRACT_COMPLETE"
+    },
+    {
+      "name": "fc",
+      "field_id": "TF-CAND-APGAR-FC",
+      "enum_values": [
+        {
+          "label": "Ausente",
+          "value": 0
+        },
+        {
+          "label": "< 100 bpm",
+          "value": 1
+        },
+        {
+          "label": "≥ 100 bpm",
+          "value": 2
+        }
+      ],
+      "required_status": "REQUIRED",
+      "source_field_id": "apgar::fc",
+      "validation_status": "PASS_CONTRACT_COMPLETE"
+    },
+    {
+      "name": "reflexo",
+      "field_id": "TF-CAND-APGAR-REFLEXO",
+      "enum_values": [
+        {
+          "label": "Ausente",
+          "value": 0
+        },
+        {
+          "label": "Caretas ou choro fraco",
+          "value": 1
+        },
+        {
+          "label": "Choro forte, tosse ou espirro",
+          "value": 2
+        }
+      ],
+      "required_status": "REQUIRED",
+      "source_field_id": "apgar::reflexo",
+      "validation_status": "PASS_CONTRACT_COMPLETE"
+    },
+    {
+      "name": "resp",
+      "field_id": "TF-CAND-APGAR-RESP",
+      "enum_values": [
+        {
+          "label": "Ausente",
+          "value": 0
+        },
+        {
+          "label": "Lenta ou irregular",
+          "value": 1
+        },
+        {
+          "label": "Choro vigoroso",
+          "value": 2
+        }
+      ],
+      "required_status": "REQUIRED",
+      "source_field_id": "apgar::resp",
+      "validation_status": "PASS_CONTRACT_COMPLETE"
+    },
+    {
+      "name": "tonus",
+      "field_id": "TF-CAND-APGAR-TONUS",
+      "enum_values": [
+        {
+          "label": "Flácido",
+          "value": 0
+        },
+        {
+          "label": "Alguma flexão de extremidades",
+          "value": 1
+        },
+        {
+          "label": "Movimentos ativos / Boa flexão",
+          "value": 2
+        }
+      ],
+      "required_status": "REQUIRED",
+      "source_field_id": "apgar::tonus",
+      "validation_status": "PASS_CONTRACT_COMPLETE"
+    }
+  ]
+}

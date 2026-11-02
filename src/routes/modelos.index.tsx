@@ -1,8 +1,7 @@
 import { createFileRoute, Link, retainSearchParams } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { ArticlePage } from "@/components/article/article-page";
-import { useStored } from "@/lib/stored";
-import { templateCatalog } from "@/lib/template-catalog";
+import { listTemplates, templateFamilies } from "@/lib/templates";
 import { parseLocale } from "@/lib/translate";
 
 export const Route = createFileRoute("/modelos/")({
@@ -23,7 +22,7 @@ export const Route = createFileRoute("/modelos/")({
 });
 
 function Modelos() {
-  const { templates, families } = useStored();
+  const templates = listTemplates();
   return (
     <Shell>
       <ArticlePage
@@ -31,14 +30,14 @@ function Modelos() {
         crumbs={[{ label: "Início", to: "/" }, { label: "Templates" }]}
         eyebrow="Pacote visual"
         title="Templates reutilizáveis"
-        lead="Uma galeria só. Página, ferramenta e peça abrem o mesmo tipo de cartão. O texto é amostra. O conteúdo publicado fica na seção."
+        lead="Famílias no mesmo azul-marinho do site. Formulário, laudo e página institucional entram aqui. A ferramenta publicada continua em Calculadoras e Escalas."
       >
         <ul className="related-grid">
-          {families.filter((family) => family.id !== "editorial").map((family) => (
+          {templateFamilies.map((family) => (
             <li key={family.id}>
               <Link
                 to={family.id === "ferramenta" ? "/ferramentas/$slug" : "/modelos/$id"}
-                params={family.id === "ferramenta" ? { slug: "braden" } : { id: family.id }}
+                params={family.id === "ferramenta" ? { slug: "braden" } : { id: family.id === "editorial" ? "TPL-001" : family.id }}
                 className="nav-card"
               >
                 <h3>{family.name}</h3>
@@ -46,18 +45,9 @@ function Modelos() {
               </Link>
             </li>
           ))}
-          {templateCatalog.filter((row) => {
-            const familyHref = families.some((family) => row.href === (family.id === "ferramenta" ? "/ferramentas/braden" : `/modelos/${family.id}`));
-            const pieceHref = templates.some((template) => row.href === `/modelos/${template.id}`);
-            return row.href.startsWith("/modelos/") && !familyHref && !pieceHref;
-          }).map((row) => (
-            <li key={row.id}>
-              <a href={row.href} className="nav-card">
-                <h3>{row.name}</h3>
-                <p>{row.source}</p>
-              </a>
-            </li>
-          ))}
+        </ul>
+        <h2>Peças editoriais</h2>
+        <ul className="related-grid">
           {templates.map((template) => (
             <li key={template.id}>
               <Link to="/modelos/$id" params={{ id: template.id }} className="nav-card">

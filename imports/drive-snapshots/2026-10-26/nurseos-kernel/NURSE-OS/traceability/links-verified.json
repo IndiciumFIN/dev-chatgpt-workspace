@@ -1,0 +1,676 @@
+{
+  "generated_at": "2026-09-03",
+  "chain": [
+    "MD (fonte da verdade)",
+    "Legislação integral (base legal por política)",
+    "Dados governados (runs/evidence/verticals)",
+    "Front-end gerado"
+  ],
+  "policies": {
+    "POL-001": {
+      "title": "Nenhum agente altera ou sugere alteração de medicação (detector v0.1 com consciência de negação)",
+      "severity": "blocking",
+      "version": "1.2",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "2. O que já tínhamos (fundação)",
+          "6. Fatias de implementação (priorização executora)",
+          "12. Registro de implementação — Fatia 3 CONCLUÍDA (03/09/2026)",
+          "15. Registro — NURSEBENCH v0: o teste de fogo da tese (03/09/2026)",
+          "16. Registro — NURSEBENCH v0.1 ADVERSARIAL: 10/10 (03/09/2026)",
+          "17. Registro — POL-001 v1.1 adotada em produção + Plano de Execução do",
+          "23. Registro — VERIFICATION + EVALUATION SCIENCE + DISTRIBUTED SYSTEMS"
+        ]
+      },
+      "legal_basis": [
+        "COFEN — boas práticas de administração de medicamentos (verificar)",
+        "ANVISA — vigilância sanitária de tecnologia em saúde"
+      ],
+      "runs": [
+        "RUN-2026-0001",
+        "RUN-2026-0002",
+        "RUN-2026-0005"
+      ]
+    },
+    "POL-002": {
+      "title": "Autonomia L2/L3 exige nó HITL no grafo de handoff",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "18. Registro — NURSEBENCH v0.2 EXPANDIDO: 103/103 (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "Resolução CFM 2.314/2022 — telemedicina (verificar)",
+        "COFEN — atuação do enfermeiro com tecnologias (verificar)"
+      ],
+      "runs": []
+    },
+    "POL-003": {
+      "title": "Gate de deploy: NurseBench >= 0.80 + model card + evidência",
+      "severity": "blocking",
+      "version": "1.1",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "3. O que acrescentamos agora — 30 componentes → 18 fabrics"
+        ]
+      },
+      "legal_basis": [
+        "IEC 62304 — software de saúde",
+        "ISO/IEC 42001 — sistema de gestão de IA"
+      ],
+      "runs": []
+    },
+    "POL-004": {
+      "title": "Confiança < 0.70 => handoff automático ao enfermeiro",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "6. Fatias de implementação (priorização executora)"
+        ]
+      },
+      "legal_basis": [
+        "IEC 62304 — software de saúde",
+        "ISO 14971 — gestão de risco"
+      ],
+      "runs": [
+        "RUN-2026-0002"
+      ]
+    },
+    "POL-005": {
+      "title": "Agente em pilot/production exige guardrail ativo vinculado",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "2. O que já tínhamos (fundação)"
+        ]
+      },
+      "legal_basis": [
+        "ISO 14971 — gestão de risco"
+      ],
+      "runs": []
+    },
+    "POL-006": {
+      "title": "Context Integrity: todo run executa sob Context Package validado",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "6. Fatias de implementação (priorização executora)",
+          "10. Registro de implementação — Fatia 1 CONCLUÍDA (03/09/2026)",
+          "14. Registro de implementação — NURSE-PALM v0 (Governed Clinical RAG) "
+        ]
+      },
+      "legal_basis": [
+        "ISO 14971 — gestão de risco",
+        "IEC 62304 — software de saúde"
+      ],
+      "runs": [
+        "RUN-2026-0001",
+        "RUN-2026-0002",
+        "RUN-2026-0005"
+      ]
+    },
+    "POL-007": {
+      "title": "Uncertainty obrigatória: toda saída clínica declara estado epistêmico",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "10. Registro de implementação — Fatia 1 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "ISO 14971 — decisão clínica com risco declarado"
+      ],
+      "runs": [
+        "RUN-2026-0001",
+        "RUN-2026-0002",
+        "RUN-2026-0005"
+      ]
+    },
+    "POL-008": {
+      "title": "Evidence Graph: todo run emite decision_id com cadeia fechada",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "10. Registro de implementação — Fatia 1 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "IEC 62304 — rastreabilidade de registros"
+      ],
+      "runs": [
+        "RUN-2026-0001",
+        "RUN-2026-0002",
+        "RUN-2026-0005"
+      ]
+    },
+    "POL-009": {
+      "title": "Nenhuma autoalteração silenciosa em produção",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "11. Registro de implementação — Fatia 2 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "EU AI Act — supervisão humana de IA de alto risco (verificar)"
+      ],
+      "runs": []
+    },
+    "POL-010": {
+      "title": "Outcome sempre vinculado à decisão que o produziu",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "11. Registro de implementação — Fatia 2 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "ISO/IEC 42001 — monitoramento de desempenho"
+      ],
+      "runs": []
+    },
+    "POL-011": {
+      "title": "Validade temporal dos fatos do twin (nada atemporal)",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "11. Registro de implementação — Fatia 2 CONCLUÍDA (03/09/2026)",
+          "14. Registro de implementação — NURSE-PALM v0 (Governed Clinical RAG) "
+        ]
+      },
+      "legal_basis": [
+        "HL7 FHIR R4 — períodos de validade (Period)"
+      ],
+      "runs": []
+    },
+    "POL-012": {
+      "title": "Contradições seguem protocolo; RAG nunca escolhe frase vencedora silenciosamente",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "12. Registro de implementação — Fatia 3 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "WHO ICD-11 — terminologia e codificação"
+      ],
+      "runs": []
+    },
+    "POL-013": {
+      "title": "Mudança de conhecimento em produção exige impact graph + revalidação + recertificação",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "12. Registro de implementação — Fatia 3 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "ISO/IEC 42001 — gestão de mudança"
+      ],
+      "runs": []
+    },
+    "POL-014": {
+      "title": "Norma em vigor exige impacto avaliado",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "12. Registro de implementação — Fatia 3 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "ANVISA — atualização de software de saúde (verificar)",
+        "LGPD art. 46 — segurança do tratamento"
+      ],
+      "runs": []
+    },
+    "POL-015": {
+      "title": "Safety Case: pilot exige submetido; production exige aprovado por humano com autoridade clínica",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "12. Registro de implementação — Fatia 3 CONCLUÍDA (03/09/2026)"
+        ]
+      },
+      "legal_basis": [
+        "IEC 62304 — classe de segurança",
+        "ISO 14971 — gestão de risco"
+      ],
+      "runs": []
+    },
+    "POL-016": {
+      "title": "Asserção causal exige método declarado; contrafactual é simulação, nunca fato",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "13. Registro de implementação — Fatia 4 CONCLUÍDA (03/09/2026) — MAPA "
+        ]
+      },
+      "legal_basis": [
+        "Critérios de Bradford Hill — avaliação causal"
+      ],
+      "runs": []
+    },
+    "POL-017": {
+      "title": "Todo input de run passa por triagem de ameaça; ameaça crítica exige resposta bloqueada/contida",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "13. Registro de implementação — Fatia 4 CONCLUÍDA (03/09/2026) — MAPA "
+        ]
+      },
+      "legal_basis": [
+        "OWASP Top 10 para LLM/agentes"
+      ],
+      "runs": []
+    },
+    "POL-018": {
+      "title": "Comportamento multiagente validado como combinação (colusão)",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "20. Registro — POL-018 no mapa + TRACEABILIDADE INTEGRAL: MD → legisla"
+        ]
+      },
+      "legal_basis": [
+        "OWASP Top 10 para LLM/agentes",
+        "NIST AI RMF"
+      ],
+      "runs": []
+    },
+    "POL-019": {
+      "title": "Behavioral Firewall: agente em pilot/production exige envelope; fora do envelope = bloqueado",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "13. Registro de implementação — Fatia 4 CONCLUÍDA (03/09/2026) — MAPA "
+        ]
+      },
+      "legal_basis": [
+        "NIST AI RMF — gestão de risco de IA"
+      ],
+      "runs": []
+    },
+    "POL-020": {
+      "title": "Delegação de capacidade só via Capability Registry (negociação com método e motivo)",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "13. Registro de implementação — Fatia 4 CONCLUÍDA (03/09/2026) — MAPA "
+        ]
+      },
+      "legal_basis": [
+        "NIST AI RMF",
+        "Protocolos A2A/MCP — interoperabilidade de agentes"
+      ],
+      "runs": []
+    },
+    "POL-021": {
+      "title": "Mission complete só com critérios de sucesso E segurança evidenciados",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "13. Registro de implementação — Fatia 4 CONCLUÍDA (03/09/2026) — MAPA "
+        ]
+      },
+      "legal_basis": [
+        "ISO/IEC 42001 — cláusula 8 (operação)"
+      ],
+      "runs": []
+    },
+    "POL-022": {
+      "title": "Identidade & Autorização: todo run tem principal autenticado com papel declarado",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "19. Registro — AUDITORIA DE COBERTURA: horizontais e verticais de pont"
+        ]
+      },
+      "legal_basis": [
+        "LGPD (Lei 13.709/2018) — segurança e rastreabilidade de acesso",
+        "ISO 27001 — controle de acesso"
+      ],
+      "runs": []
+    },
+    "POL-023": {
+      "title": "Consentimento: run que toca dados do paciente exige consentimento vigente para o propósito",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "19. Registro — AUDITORIA DE COBERTURA: horizontais e verticais de pont"
+        ]
+      },
+      "legal_basis": [
+        "LGPD art. 11 — consentimento para dado sensível de saúde"
+      ],
+      "runs": []
+    },
+    "POL-024": {
+      "title": "Observabilidade/Drift: agente em pilot/production exige revalidação dentro da validade",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "19. Registro — AUDITORIA DE COBERTURA: horizontais e verticais de pont"
+        ]
+      },
+      "legal_basis": [
+        "EU AI Act — vigilância pós-mercado (verificar)",
+        "ISO 14971 — reavaliação de risco"
+      ],
+      "runs": []
+    },
+    "POL-025": {
+      "title": "Completude vertical: vertical só é COVERED com missão+delegação+run+outcome evidenciados",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "19. Registro — AUDITORIA DE COBERTURA: horizontais e verticais de pont"
+        ]
+      },
+      "legal_basis": [
+        "ISO/IEC 42001 — processo operacional completo"
+      ],
+      "runs": []
+    },
+    "POL-026": {
+      "title": "Traceabilidade integral como POLÍTICA: a cadeia MD → norma granular → aderência → front-end segue da política e nela consta",
+      "severity": "blocking",
+      "version": "1.2",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "20. Registro — POL-018 no mapa + TRACEABILIDADE INTEGRAL: MD → legisla",
+          "21. Registro — POL-026 v1.1: NORMA GRANULAR POR CAMPO, ADERÊNCIA EVIDE",
+          "22. Registro — POL-026 v1.2: A CADEIA É POLÍTICA + DRILL DE DRIFT (03/",
+          "23. Registro — VERIFICATION + EVALUATION SCIENCE + DISTRIBUTED SYSTEMS"
+        ]
+      },
+      "legal_basis": [
+        "LGPD art. 46 — segurança do tratamento",
+        "ISO/IEC 42001 — rastreabilidade documental"
+      ],
+      "runs": []
+    },
+    "POL-027": {
+      "title": "Cobertura, evidência e incerteza: cada gate declara cobertura do universo conhecido, evidence coverage, test pass, incerteza residual e universo desconhecido explícito",
+      "severity": "blocking",
+      "version": "1.0",
+      "status": "active",
+      "source_md": {
+        "doc": "architecture/nursing-intelligence-os-v2.md",
+        "sections": [
+          "23. Registro — VERIFICATION + EVALUATION SCIENCE + DISTRIBUTED SYSTEMS"
+        ]
+      },
+      "legal_basis": [
+        "ISO/IEC 42001 — cláusula 9 (avaliação de desempenho, verificação)",
+        "NIST AI RMF — função 'Measure' (verificar)"
+      ],
+      "runs": []
+    }
+  },
+  "verticals": [
+    {
+      "vertical_id": "V1-SAE",
+      "name": "SAE drafting",
+      "status": "covered",
+      "mission_ref": "MIS-2026-0001",
+      "run_ref": "RUN-2026-0005",
+      "outcome_ref": "OUT-2026-0001"
+    },
+    {
+      "vertical_id": "V2-PEWS",
+      "name": "PEWS / early warning",
+      "status": "partial",
+      "mission_ref": "",
+      "run_ref": "RUN-2026-0002",
+      "outcome_ref": "OUT-2026-0002"
+    },
+    {
+      "vertical_id": "V3-EDU",
+      "name": "Educação ao paciente",
+      "status": "blocked",
+      "mission_ref": "MIS-2026-0002",
+      "run_ref": "",
+      "outcome_ref": ""
+    },
+    {
+      "vertical_id": "V4-WORKFORCE",
+      "name": "Workforce/dimensionamento",
+      "status": "data_level",
+      "mission_ref": "",
+      "run_ref": "",
+      "outcome_ref": ""
+    },
+    {
+      "vertical_id": "V5-ORG",
+      "name": "Organização/capacidade",
+      "status": "data_level",
+      "mission_ref": "",
+      "run_ref": "",
+      "outcome_ref": ""
+    },
+    {
+      "vertical_id": "V6-MEDSAFETY",
+      "name": "Segurança de medicação",
+      "status": "knowledge_level",
+      "mission_ref": "",
+      "run_ref": "",
+      "outcome_ref": ""
+    }
+  ],
+  "field_adherence": [
+    {
+      "entity": "PatientTwin",
+      "field": "consent_care",
+      "norm": "LGPD art. 11 §1º — consentimento específico e destacado para dado sensível (saúde)",
+      "evidencia": "Uso do twin para cuidado só ocorre com consentimento específico registrado; a recusa bloqueia o processamento."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "consent_research",
+      "norm": "LGPD art. 11 §1º c/ art. 7º, II — pesquisa (§ a verificar)",
+      "evidencia": "Dado de saúde em pesquisa exige finalidade consentida distinta do cuidado."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "consent_twin_simulation",
+      "norm": "LGPD art. 11 §1º — finalidade específica declarada",
+      "evidencia": "Simulação no twin é finalidade separada, consentida à parte do cuidado (caso 88412: recusada = simulação bloqueada)."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "news2_score",
+      "norm": "RCP NEWS2 — protocolo nacional/internacional de detecção de deterioração",
+      "evidencia": "Escore segue protocolo clínico documentado e versionado, não cálculo ad hoc."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "braden_score",
+      "norm": "Escala de Braden — protocolo validado de risco de lesão por pressão",
+      "evidencia": "Risco de LPP quantificado por instrumento validado, rastreável a intervenções NIC 0840."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "morse_fall_score",
+      "norm": "Escala de Morse — protocolo validado de risco de queda",
+      "evidencia": "Escore validado lastreia o diagnóstico NANDA 00047 e as intervenções NIC 6490."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "fhir_patient_ref",
+      "norm": "HL7 FHIR R4 — Patient",
+      "evidencia": "Referência de paciente interoperável com o prontuário eletrônico (REG-FHIR)."
+    },
+    {
+      "entity": "PatientTwin",
+      "field": "twin_version",
+      "norm": "ISO/IEC 42001 — rastreabilidade documental (cláusula a verificar)",
+      "evidencia": "Cada estado do twin é versionado; regressão e auditoria de estado são possíveis."
+    },
+    {
+      "entity": "NurseTwin",
+      "field": "pseudonym",
+      "norm": "LGPD art. 2º, V — pseudoanonimização",
+      "evidencia": "Profissional identificado por pseudônimo no processamento analítico; dado pessoal protegido por técnica."
+    },
+    {
+      "entity": "NurseTwin",
+      "field": "fatigue_index",
+      "norm": "NAS Nursing Activities Score — carga de trabalho (normativa COFEN a verificar)",
+      "evidencia": "Carga e fadiga medidas por instrumento validado, lastreando dimensionamento."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "human_review_status",
+      "norm": "EU AI Act — supervisão humana de IA de alto risco (art. a verificar)",
+      "evidencia": "Toda saída de nível L2/L3 carrega estado de revisão humana (POL-002)."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "policy_violations",
+      "norm": "LGPD art. 37 — registro das operações de tratamento",
+      "evidencia": "Violações registradas por run; auditoria completa de execuções."
+    },
+    {
+      "entity": "AgentRun",
+      "field": "evidence_id",
+      "norm": "IEC 62304 — rastreabilidade de software de saúde (cláusula a verificar)",
+      "evidencia": "Cada execução referencia artefato de evidência assinado (POL-008)."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "severity",
+      "norm": "ISO 14971 — análise de risco",
+      "evidencia": "Severidade classificada por framework de risco, não opinião."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "corrective_action",
+      "norm": "ISO 14971 — controle de risco implantado",
+      "evidencia": "Ação corretiva obrigatória vinculada ao evento; estado rastreável (POL-010)."
+    },
+    {
+      "entity": "SafetyEvent",
+      "field": "icps_category",
+      "norm": "WHO ICPS — Classificação Internacional para Segurança do Paciente",
+      "evidencia": "Incidente classificado em taxonomia WHO, comparável entre instituições."
+    },
+    {
+      "entity": "AgentPolicy",
+      "field": "expression",
+      "norm": "Princípio da legalidade — norma computável auditável (ISO/IEC 42001, a verificar)",
+      "evidencia": "Cada regra é executável e auditável; nenhuma decisão sem expressão verificável."
+    },
+    {
+      "entity": "AgentPolicy",
+      "field": "effective_date",
+      "norm": "LGPD art. 37 — trilha temporal",
+      "evidencia": "Vigência temporal de cada norma do sistema é auditável."
+    },
+    {
+      "entity": "PolicyEvidence",
+      "field": "checksum",
+      "norm": "LGPD art. 46 — segurança do tratamento (integridade)",
+      "evidencia": "Integridade do artefato verificável criptograficamente."
+    },
+    {
+      "entity": "KnowledgeLicense",
+      "field": "restrictions",
+      "norm": "Lei 9.610/1998 — direitos autorais; licenças de uso (NANDA-I)",
+      "evidencia": "Uso de terminologia proprietária restrito à licença vigente; sem licença, sem produção."
+    },
+    {
+      "entity": "ThreatEvent",
+      "field": "threat_type",
+      "norm": "OWASP Top 10 para aplicações LLM",
+      "evidencia": "Ameaças classificadas por taxonomia OWASP (POL-017)."
+    },
+    {
+      "entity": "BehaviorProfile",
+      "field": "envelope",
+      "norm": "NIST AI RMF — função 'Manage' (verificar)",
+      "evidencia": "Envelope comportamental define limites aceitáveis e detecta anomalia (POL-019)."
+    },
+    {
+      "entity": "DelegationRequest",
+      "field": "selection_reason",
+      "norm": "LGPD art. 37 — auditabilidade de decisão",
+      "evidencia": "Delegação só com justificativa registrada e políticas satisfeitas (POL-020)."
+    }
+  ]
+}

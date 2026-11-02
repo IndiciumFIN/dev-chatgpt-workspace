@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "FIND-SEC-REVIEW-EVIDENCE-URL-20261031",
+  "date": "2026-10-31",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "scope": "Local non-binding PMO review drafts only; no remote decisions or publication",
+  "severity": "P1",
+  "status": "CANDIDATE_VALIDATION_PENDING",
+  "observation": "The existing raw GitHub repository URL prefix check accepted traversal strings that browsers normalize outside the repository. Such URLs could be displayed as purported approval evidence.",
+  "policy": {
+    "source": "registers/governance/find-approval-ux-20261031.v1.json",
+    "rule": "FIND -> policy -> validator -> TASK -> WO -> Kernel admission -> tests -> audit -> authorized promotion",
+    "evidenceAuthority": "Only GitHub URLs resolving within the canonical repository may be suggested or included in a draft; even a valid link is not verified approval."
+  },
+  "validator": {
+    "source": "src/lib/governance/review-source-catalog.ts",
+    "function": "isCanonicalRepoEvidenceUrl",
+    "negativeTests": [
+      "src/lib/governance/review-source-catalog.test.ts",
+      "src/lib/governance/decision-draft.test.ts"
+    ],
+    "ciWorkflow": ".github/workflows/ce-admin-review-candidate.yml"
+  },
+  "task": {
+    "id": "TASK-ADM-EVIDENCE-URL-BOUNDARY-20261031",
+    "workOrder": "WO-ADM-001",
+    "status": "CANDIDATE_ONLY",
+    "acceptance": "Reject traversal/encoded traversal/deceptive hosts while preserving valid repository issue/commit links and non-authoritative draft behavior"
+  },
+  "chain": {
+    "find": "REGISTERED",
+    "policy": "REFERENCED",
+    "validator": "IMPLEMENTED_CANDIDATE",
+    "task": "REGISTERED_IN_FIND",
+    "workOrder": "WO-ADM-001_IN_PROGRESS_LOCAL_SCOPE",
+    "kernelAdmission": "NOT_VERIFIED",
+    "execution": "CANDIDATE_CODE_ONLY",
+    "tests": "CI_PENDING",
+    "independentAudit": "HOLD_HUMAN",
+    "promotion": "HOLD_HUMAN"
+  },
+  "commits": [
+    "4b5fdcb83668e62d5f321309917b3e768dfd2923",
+    "9b6f1b81f4b562c005814e10dda99eb0a9ef878e",
+    "7e1ae2e1343d8194f8696214fe0443395211fa6c",
+    "55ea5aceb8c7a05c65c2dcc6ebffd0903823bcdf",
+    "5dca44cab1025b199b146c079829b83fcc5e21e7"
+  ],
+  "prohibited": [
+    "Do not infer approval from a GitHub URL",
+    "Do not change WO-HOM-001",
+    "Do not merge main without protection, independent review and signed Kernel admission",
+    "Do not modify production database or external secrets"
+  ]
+}

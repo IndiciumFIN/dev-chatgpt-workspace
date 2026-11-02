@@ -1,0 +1,17 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await (await b.newContext({viewport:{width:1440,height:900}})).newPage();
+const errs=[],cons=[];
+p.on("pageerror",e=>errs.push("PAGEERROR: "+String(e).slice(0,400)));
+p.on("console",m=>{ if(m.type()==="error") cons.push("CONSOLE: "+m.text().slice(0,300)); });
+p.on("requestfailed",r=>cons.push("REQFAIL: "+r.url().slice(0,140)+" "+r.failure()?.errorText));
+await p.goto("http://127.0.0.1:4190/?lang=ar",{waitUntil:"networkidle",timeout:60000});
+await p.waitForTimeout(2500);
+console.log("a11y bars:", await p.evaluate(()=>document.querySelectorAll("#header-accessibility-controls").length));
+console.log("lang triggers:", await p.evaluate(()=>document.querySelectorAll(".lang-trigger").length));
+await p.click(".lang-trigger");
+await p.waitForTimeout(600);
+console.log("menu open after click:", await p.evaluate(()=>!!document.querySelector("#header-language-menu")));
+console.log("PAGE ERRORS:", JSON.stringify(errs,null,1));
+console.log("CONSOLE/NET:", JSON.stringify(cons.slice(0,10),null,1));
+await b.close();

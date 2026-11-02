@@ -1,0 +1,56 @@
+{
+  "template_id": "TPL-POCKET-GUIDE-001",
+  "name": "Pocket Guide",
+  "version": "0.2.0",
+  "profile": "pocket_guide",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "offline"
+  ],
+  "required_roles": [
+    "title",
+    "quick_navigation",
+    "core_sections",
+    "references",
+    "metadata"
+  ],
+  "optional_roles": [
+    "checklist",
+    "table",
+    "figure",
+    "callout"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "section",
+    "claim",
+    "figure",
+    "table",
+    "callout",
+    "definition",
+    "steps",
+    "comparison",
+    "references",
+    "toc",
+    "action_bar",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "web": "compact-reference",
+    "print": "small-format-paged"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "compact_but_not_fact_reduced"
+    ]
+  }
+}

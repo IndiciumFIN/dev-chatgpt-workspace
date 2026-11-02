@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/participation-contribution.candidate.v1.json",
+  "title": "CE | Participation Contribution Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "process_ref",
+    "participant_key",
+    "kind",
+    "moderation_status",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string"
+    },
+    "process_ref": {
+      "type": "string"
+    },
+    "participant_key": {
+      "type": "string",
+      "pattern": "^anon-[a-f0-9-]{36}$"
+    },
+    "kind": {
+      "enum": [
+        "PULSE",
+        "EXPERIENCE",
+        "COMMENT",
+        "EVIDENCE_NOTE"
+      ]
+    },
+    "body": {
+      "type": "string",
+      "maxLength": 1200
+    },
+    "payload": {
+      "type": "object"
+    },
+    "moderation_status": {
+      "enum": [
+        "RECEIVED",
+        "REVIEW_REQUIRED",
+        "ACCEPTED_CANDIDATE",
+        "HIDDEN_CANDIDATE"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

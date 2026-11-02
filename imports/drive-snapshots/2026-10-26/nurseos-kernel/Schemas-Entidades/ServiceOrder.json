@@ -1,0 +1,72 @@
+{
+  "properties": {
+    "decision": {
+      "enum": [
+        "accepted",
+        "refused"
+      ],
+      "type": "string"
+    },
+    "entity_name": {
+      "enum": [
+        "NormAtom",
+        "NormDocument",
+        "NormSource",
+        "DictionaryTerm",
+        "ExtractionRun"
+      ],
+      "type": "string"
+    },
+    "evidence_id": {
+      "type": "string"
+    },
+    "generated_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "order_kind": {
+      "enum": [
+        "create",
+        "transition"
+      ],
+      "type": "string"
+    },
+    "os_id": {
+      "type": "string"
+    },
+    "payload_draft": {
+      "type": "object"
+    },
+    "refusal_reasons": {
+      "type": "array"
+    },
+    "requested_id": {
+      "type": "string"
+    },
+    "requester": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "executed",
+        "refused",
+        "quarantined"
+      ],
+      "type": "string"
+    },
+    "target_id": {
+      "type": "string"
+    },
+    "validators_run": {
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "ServiceOrder"
+}

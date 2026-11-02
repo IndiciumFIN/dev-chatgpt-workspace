@@ -1,0 +1,86 @@
+{
+  "properties": {
+    "agent_slug": {
+      "type": "string"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "assertions_failed": {
+      "type": "number"
+    },
+    "assertions_passed": {
+      "type": "number"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "context_integrity": {
+      "enum": [
+        "complete",
+        "degraded",
+        "blocked"
+      ],
+      "type": "string"
+    },
+    "decision_id": {
+      "type": "string"
+    },
+    "encounter_ref": {
+      "type": "string"
+    },
+    "evidence_id": {
+      "type": "string"
+    },
+    "handoff_to": {
+      "type": "string"
+    },
+    "human_review_status": {
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "type": "string"
+    },
+    "latency_ms": {
+      "type": "number"
+    },
+    "output": {
+      "type": "object"
+    },
+    "policy_violations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "provenance": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "blocked",
+        "escalated"
+      ],
+      "type": "string"
+    },
+    "uncertainty": {
+      "type": "object"
+    },
+    "workflow_ref": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "AgentRun"
+}

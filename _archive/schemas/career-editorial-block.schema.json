@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Editorial Block Candidate",
+  "type": "object",
+  "required": [
+    "document_id",
+    "block_order",
+    "block_id",
+    "block_type",
+    "semantic_role",
+    "body",
+    "payload_json",
+    "source_mode",
+    "source_refs_json"
+  ],
+  "properties": {
+    "document_id": {
+      "type": "string"
+    },
+    "block_order": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "block_id": {
+      "type": "string"
+    },
+    "block_type": {
+      "enum": [
+        "title",
+        "lead",
+        "section",
+        "claim",
+        "callout",
+        "definition",
+        "steps",
+        "timeline",
+        "comparison",
+        "references",
+        "reflection",
+        "related_content"
+      ]
+    },
+    "semantic_role": {
+      "type": "string"
+    },
+    "heading": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "body": {
+      "type": "string"
+    },
+    "payload_json": {
+      "type": "object"
+    },
+    "source_mode": {
+      "enum": [
+        "canonical_object",
+        "claim",
+        "evidence",
+        "visual_resource",
+        "computed_projection",
+        "static_nontechnical_copy"
+      ]
+    },
+    "source_refs_json": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

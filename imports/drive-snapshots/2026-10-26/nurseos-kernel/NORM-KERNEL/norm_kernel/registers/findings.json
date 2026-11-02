@@ -1,0 +1,233 @@
+{
+ "protocol": "POL-NK-007 v1.0.0 — investigação formal (5W, causa-raiz, remediação, dupla aprovação)",
+ "findings": {
+  "NK-FIND-0001": {
+   "finding_id": "NK-FIND-0001",
+   "status": "closed",
+   "detected_by": "normKernelDeployGate v0.2.0 (POL-NK-003 C7)",
+   "detected_at": "2026-09-29T12:54:00-03:00",
+   "what": "Runs NK-RUN-0005/0006 criados FORA do protocolo (sem OS de criação) — deploy gate RECUSOU com 'registro novo SEM OS (C1)'",
+   "where_born": "Fase 0: o pipeline.py (instrumento do kernel) escrevia registros de ExtractionRun diretamente no banco; POL-NK-002 C1 declarava 'toda escrita via OS' mas o escopo não declarava QUEM escreve registros de run — lacuna entre a política e o instrumento que a opera",
+   "why_root_cause": "O instrumento (pipeline) foi criado ANTES da regra de nascimento de runs; nenhuma cláusula ligava saída de instrumento a registro via OS",
+   "facts": [
+    "deploy gate: NK-RUN-0005/0006 'registro novo SEM OS' → REFUSED",
+    "meta-audit CONFORM não detectava (não cruza baseline×OS para runs)",
+    "correção executada: delete + recriação via OS-0024/0025"
+   ],
+   "evidence_refs": [
+    "EV-NK-0008",
+    "NK-OS-0024",
+    "NK-OS-0025",
+    "EV-NK-0006 (baseline)"
+   ],
+   "remediation": {
+    "actions": [
+     "remoção dos registros fora do protocolo",
+     "recriação via OS-0024/0025 (nascimento terminal, POL-NK-002 v1.1)",
+     "POL-NK-002 v1.1: runs nascem terminais com resultado declarado na OS"
+    ],
+    "os_refs": [
+     "NK-OS-0024",
+     "NK-OS-0025"
+    ]
+   },
+   "prevention": "POL-NK-002 v1.1 (C4-exceção) + deploy gate baseline×OS cobre TODOS os registros novos",
+   "kernel_approval": "approved (deploy gate PASS pós-correção, meta-audit CONFORM 78)",
+   "human_approval": "approved leivis (2026-09-29 13:35 — 'Aprovado')",
+   "lifecycle": [
+    "open",
+    "investigating",
+    "remediated",
+    "closed"
+   ],
+   "closed_at": "2026-09-29T13:35:00-03:00"
+  },
+  "NK-FIND-0002": {
+   "finding_id": "NK-FIND-0002",
+   "status": "closed",
+   "detected_by": "investigação derivada do FIND-0001 (contradição metamodelo)",
+   "detected_at": "2026-09-29T13:15:00-03:00",
+   "what": "POL-NK-002 C4 ('criação nasce em draft') CONTRADIZIA o anexo: ExtractionRun não possui draft no universo de status (passed|blocked|partial são terminais)",
+   "where_born": "Fase 0: C4 escrita por analogia com registros normativos (átomos/docs) sem validar coerência contra os enums do anexo por entidade",
+   "why_root_cause": "Não existia gate de coerência C4×enum: G7 valida camadas por campo, mas nenhuma validação cruzava 'regra de nascimento' contra o enum de status da entidade",
+   "facts": [
+    "anexo v1.3.0 ExtractionRun.status enum não inclui draft",
+    "tentativa de OS-create de run nascia draft → transição draft→passed fora da máquina → run preso em estado inválido",
+    "contradição detectada durante a correção do FIND-0001"
+   ],
+   "evidence_refs": [
+    "EV-NK-0008",
+    "anexo v1.3.0 (pin cdef1b1a)"
+   ],
+   "remediation": {
+    "actions": [
+     "POL-NK-002 v1.1: C4-exceção — runs nascem TERMINAIS com resultado declarado na OS",
+     "kernel-order v0.3.1: nascimento de run valida contra RUN_BIRTH"
+    ],
+    "os_refs": [
+     "NK-OS-0024",
+     "NK-OS-0025"
+    ]
+   },
+   "prevention": "Débita DECLARADA: gate de coerência nascimento×enum (candidata a G12/emenda futura)",
+   "kernel_approval": "approved (order v0.3.1 valida RUN_BIRTH)",
+   "human_approval": "approved leivis (2026-09-29 13:35 — 'Aprovado')",
+   "lifecycle": [
+    "open",
+    "investigating",
+    "remediated",
+    "closed"
+   ],
+   "closed_at": "2026-09-29T13:35:00-03:00"
+  },
+  "NK-FIND-0003": {
+   "finding_id": "NK-FIND-0003",
+   "status": "closed",
+   "detected_by": "gate G9-universal-registration (POL-NK-005)",
+   "detected_at": "2026-09-29T13:15:00-03:00",
+   "what": "Artefatos (check_links.py, pipeline.py) editados SEM re-registro do artifact_register — G9 bloqueou 2× com 'checksum divergente (artefato mudou sem re-registro)'",
+   "where_born": "Fase POL-NK-005: o re-registro era um PASSO MANUAL (build_artifact_register.py executado à mão) — o processo nasceu manual, permitindo esquecimento",
+   "why_root_cause": "A atualização do registro não era parte automática do run governado; nada ligava 'OS aprovada' a 're-registro obrigatório'",
+   "facts": [
+    "G9 BLOCKED 2× (NK-ART-0006, NK-ART-0034 checksum divergente)",
+    "re-registro manual executado após",
+    "risco: esquecimento silencioso = artefato não registrado (nasce solto)"
+   ],
+   "evidence_refs": [
+    "EV-NK-0008",
+    "registers/artifact_register.json"
+   ],
+   "remediation": {
+    "actions": [
+     "POL-NK-006 C4/C5: re-registro AUTOMÁTICO no run com --os (kernel atualiza todas as camadas)",
+     "POL-NK-006 C3: diff sem OS → bloqueio + finding automático"
+    ],
+    "os_refs": [
+     "NK-OS-0027",
+     "NK-OS-0028"
+    ]
+   },
+   "prevention": "POL-NK-006 v1.0.0 — registro universal é bloqueante e atualização é ato do kernel, nunca manual",
+   "kernel_approval": "approved (pipeline v0.6.0: auto-re-register + auto-finding)",
+   "human_approval": "approved leivis (2026-09-29 13:35 — 'Aprovado')",
+   "lifecycle": [
+    "open",
+    "investigating",
+    "remediated",
+    "closed"
+   ],
+   "closed_at": "2026-09-29T13:35:00-03:00"
+  },
+  "NK-FIND-0004": {
+   "finding_id": "NK-FIND-0004",
+   "status": "closed",
+   "detected_by": "auditoria de registro universal (declared_debts)",
+   "detected_at": "2026-09-29T13:15:00-03:00",
+   "what": "Typo 'agusta' na string de notificação de emenda do kernel-order v0.3.0 (mensagem exibida ao humano)",
+   "where_born": "Deploy v0.3.0: string digitada sem revisão de conteúdo; nenhum validador cobre strings de notificação",
+   "why_root_cause": "Strings de interface do kernel fora do universo de validação (gate valida estrutura, não conteúdo textual)",
+   "facts": [
+    "resposta do kernel em OS de emenda continha 'agusta aprovação humana'",
+    "sem impacto estrutural; impacto de excelência de comunicação"
+   ],
+   "evidence_refs": [
+    "EV-NK-0008"
+   ],
+   "remediation": {
+    "actions": [
+     "corrigido no kernel-order v0.4.0 (deploy junto com ids automáticos, POL-NK-006 C1)"
+    ],
+    "os_refs": [
+     "NK-OS-0026"
+    ]
+   },
+   "prevention": "Débita DECLARADA: validação léxica de strings de notificação (candidata a emenda futura)",
+   "kernel_approval": "approved (v0.4.0 deployado)",
+   "human_approval": "approved leivis (2026-09-29 13:35 — 'Aprovado')",
+   "lifecycle": [
+    "open",
+    "investigating",
+    "remediated",
+    "closed"
+   ],
+   "closed_at": "2026-09-29T13:35:00-03:00"
+  },
+  "NK-FIND-0005": {
+   "finding_id": "NK-FIND-0005",
+   "status": "closed",
+   "detected_by": "pipeline v0.6.0 (G9 drift sem --os)",
+   "detected_at": "2026-09-29T16:18:37.029464",
+   "what": "Diff de artefatos sem OS que o cubra (POL-NK-006 C2): docs/source_playbook.md (NOVO sem registro); evidence/EV-NK-0008.json (checksum divergente); pipeline.py (checksum divergente); policies/POL-NK-006.md (NOVO sem registro); policies/POL-NK-007.md (NOVO sem registro); registers/backlog.json (NOVO sem registro); registers/extraction_jobs.json (NOVO sem registro); registers/findings.json (NOVO sem registro)",
+   "where_born": "Diretriz POL-NK-006 (2026-09-29): os artefatos das novas políticas/registros (playbook, findings, backlog, policies 006/007) foram criados ANTES da OS que os cobre — o próprio processo de nascimento desta diretiva; antes desta política não existia ligação 'OS aprovada → re-registro automático'",
+   "why_root_cause": "Re-registro era manual (NK-FIND-0003) e não havia exigência de OS prévia para criação de artefatos de sandbox; a regra nasceu junto com os artefatos que a violaram pela primeira vez",
+   "facts": [
+    "docs/source_playbook.md (NOVO sem registro)",
+    "evidence/EV-NK-0008.json (checksum divergente)",
+    "pipeline.py (checksum divergente)",
+    "policies/POL-NK-006.md (NOVO sem registro)",
+    "policies/POL-NK-007.md (NOVO sem registro)",
+    "registers/backlog.json (NOVO sem registro)",
+    "registers/extraction_jobs.json (NOVO sem registro)",
+    "registers/findings.json (NOVO sem registro)",
+    "demonstração: pipeline sem --os → BLOCKED com finding automático (NK-RUN-0007)",
+    "pipeline com --os NK-OS-0030 → re-registro automático esperado"
+   ],
+   "evidence_refs": [],
+   "remediation": {
+    "actions": [
+     "OS NK-OS-0030 cobre o run de registro (reserva determinística, POL-NK-006 C5)",
+     "pipeline v0.6.0: auto-re-registro sob --os (C4) — o kernel atualiza todas as camadas",
+     "finding deixado registrado como PROVA do novo processo (imutabilidade, POL-NK-007 C4)"
+    ],
+    "os_refs": [
+     "NK-OS-0030"
+    ]
+   },
+   "prevention": "POL-NK-006 C2/C3/C4: nenhum run altera artefatos sem --os; diff sem OS = bloqueio + finding automático; com OS, o kernel re-registra sozinho",
+   "kernel_approval": "approved (G9 auto-re-registro sob OS NK-OS-0030 → PASS)",
+   "human_approval": "approved leivis (2026-09-29 13:35 — 'Aprovado')",
+   "lifecycle": [
+    "open",
+    "investigating",
+    "remediated",
+    "closed"
+   ],
+   "closed_at": "2026-09-29T13:35:00-03:00"
+  },
+  "NK-FIND-0006": {
+   "what": "6 átomos reais do RFC 2119 (NK-ATOM-0000011..16) quarentenados AUTOMATICAMENTE pelo intake ~4s após o nascimento: 'confidence fora da faixa 0-1' (campo ausente no payload de criação)",
+   "where_born": "Fase 0 exercitou order e intake apenas com fixtures (que sempre carregam confidence); o caminho order-create de átomo REAL sem confidence nunca tinha rodado. Contradição instrumento×instrumento latente desde a Fase 0: order v0.5.0 aceitava; intake v0.3.1 exige presença+faixa sempre",
+   "remediation": {
+    "actions": [
+     "order v0.5.1: confidence 0-1 obrigatória no nascimento do NormAtom (contrato alinhado ao intake)",
+     "átomos re-criados como v2 (NK-ATOM-0000017..22, version_of -> quarentenados, confidence 0.9 declarada e justificada)",
+     "originais permanecem quarantined como registro imutável do incidente",
+     "evidência EV-NK-0012 registra o incidente completo"
+    ],
+    "os_refs": [
+     "NK-OS-0040..0066"
+    ]
+   },
+   "prevention": "NK Guard (workflows de entidade -> intake) provou-se: capturou a divergência em segundos no primeiro conteúdo real. Regra codificada: todo campo exigido pelo intake é exigido no order (contrato de nascimento único). Débita declarada: emenda futura para unificar a validação de nascimento num único contrato compartilhado",
+   "facts": [
+    "intake chamado 2x por átomo (logs 16:48:36..56)",
+    "violacao reproduzida manualmente: 'confidence fora da faixa 0-1'",
+    "meta-audit não detectava (não exige presence de confidence em draft) — só o intake exigia",
+    "fixtures sempre tiveram confidence, por isso a contradição nunca apareceu"
+   ],
+   "detected_by": "NK Guard — NormAtom (workflow de entidade) + intake-guard v0.3.1",
+   "status": "remediated",
+   "kernel_approval": "approved (v2 NK-ATOM-0000017..22 com confidence 0.9, guard NK Guard aprovou sem quarentena; order v0.5.1 ativo; run NK-RUN-0011 passed)",
+   "human_approval": "pending",
+   "opened_at": "2026-09-29T13:52:00-03:00",
+   "why_root_cause": "validateDraft do order não exigia confidence no nascimento do átomo; R8 (valid exige >= 0.85) estava codificado, mas a exigência de PRESENÇA no nascimento vivia só no intake — nenhum instrumento único declarava o contrato de nascimento completo",
+   "evidence_refs": [
+    "EV-NK-0012 (incidente completo)",
+    "logs do intake: 2 chamadas/átomo às 16:48:36..56 (logs do guard)",
+    "read NK-ATOM-0000011: status quarantined, confidence ausente",
+    "reprodução manual intake: 'confidence fora da faixa 0-1'",
+    "read NK-ATOM-0000017 (v2): draft, confidence 0.9, SEM quarentena"
+   ]
+  }
+ }
+}

@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NURSE-OS — Rastreabilidade Integral</title><style>
+:root{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8}
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);padding:32px}
+h1{font-size:22px;margin:0 0 6px} .sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+.banner{background:linear-gradient(90deg,#0ea5e9,#6366f1);padding:14px 18px;border-radius:10px;font-size:14px;font-weight:600;margin-bottom:28px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.chainstep{background:rgba(0,0,0,.25);padding:4px 10px;border-radius:6px} .arrow{opacity:.7}
+h2{font-size:15px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.card{background:var(--card);border-radius:10px;padding:14px;border:1px solid #334155}
+.card-head{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.pid{font-weight:700;font-family:monospace} .sev{font-size:10px;padding:2px 8px;border-radius:99px;color:#fff} .ver{font-size:11px;color:var(--muted)}
+.title{font-size:13px;margin:0 0 10px;line-height:1.4}
+.row{margin:6px 0;font-size:11px} .row label{display:block;color:var(--muted);text-transform:uppercase;font-size:9px;letter-spacing:.08em;margin-bottom:3px}
+.chip{display:inline-block;background:#334155;padding:2px 8px;border-radius:5px;margin:2px 4px 2px 0;font-size:10.5px}
+.chip.legal{background:#312e81} .chip.ok{background:#14532d} .field{color:var(--accent);font-family:monospace;font-size:11px}
+details{margin-top:6px} details summary{font-size:10.5px;color:var(--muted);cursor:pointer} .chip.md{background:#14532d} .chip.run{background:#7c2d12;cursor:pointer} .chip.muted{background:#334155;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;font-size:12.5px}
+th{text-align:left;padding:10px;background:#0b1220;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+td{padding:9px 10px;border-top:1px solid #334155} .vstatus{font-size:10px;padding:2px 8px;border-radius:99px;color:#fff}
+footer{margin-top:30px;padding:14px;background:var(--card);border-radius:10px;border:1px dashed #475569;font-size:12px;color:var(--muted)}
+</style></head><body>
+<h1>NURSE-OS — Rastreabilidade Integral</h1>
+<div class="sub">Todo artefato provém do MD fonte. A norma granular não é exibida — ela sustenta: cada campo carrega a evidência de aderência regulatória em registro. Front-end gerado, jamais editado — POL-026 v1.1.</div>
+<div class="banner"><span class="chainstep">MD (fonte da verdade)</span> <span class="arrow">→</span> <span class="chainstep">Legislação integral (base legal por política)</span> <span class="arrow">→</span> <span class="chainstep">Dados governados (runs/evidence/verticals)</span> <span class="arrow">→</span> <span class="chainstep">Front-end gerado</span></div>
+<h2>Legislação executável (27 políticas — cada uma com fonte MD e base legal)</h2>
+<div class="grid"><div class="card">
+  <div class="card-head"><span class="pid">POL-001</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.2</span></div>
+  <p class="title">Nenhum agente altera ou sugere alteração de medicação (detector v0.1 com consciência de negação)</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §2 · O que já tínhamos (fundação)</span><span class="chip md">MD §6 · Fatias de implementação (priorização </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><a class="chip run">RUN-2026-0001</a><a class="chip run">RUN-2026-0002</a><a class="chip run">RUN-2026-0005</a></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-002</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Autonomia L2/L3 exige nó HITL no grafo de handoff</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §18 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-003</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.1</span></div>
+  <p class="title">Gate de deploy: NurseBench &gt;= 0.80 + model card + evidência</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §3 · O que acrescentamos agora </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-004</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Confiança &lt; 0.70 =&gt; handoff automático ao enfermeiro</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §6 · Fatias de implementação (priorização </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><a class="chip run">RUN-2026-0002</a></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-005</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Agente em pilot/production exige guardrail ativo vinculado</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §2 · O que já tínhamos (fundação)</span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-006</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Context Integrity: todo run executa sob Context Package validado</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §6 · Fatias de implementação (priorização </span><span class="chip md">MD §10 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><a class="chip run">RUN-2026-0001</a><a class="chip run">RUN-2026-0002</a><a class="chip run">RUN-2026-0005</a></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-007</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Uncertainty obrigatória: toda saída clínica declara estado epistêmico</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §10 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><a class="chip run">RUN-2026-0001</a><a class="chip run">RUN-2026-0002</a><a class="chip run">RUN-2026-0005</a></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-008</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Evidence Graph: todo run emite decision_id com cadeia fechada</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §10 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><a class="chip run">RUN-2026-0001</a><a class="chip run">RUN-2026-0002</a><a class="chip run">RUN-2026-0005</a></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-009</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Nenhuma autoalteração silenciosa em produção</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §11 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-010</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Outcome sempre vinculado à decisão que o produziu</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §11 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-011</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Validade temporal dos fatos do twin (nada atemporal)</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §11 ·  Registro de implementação </span><span class="chip md">MD §14 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-012</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Contradições seguem protocolo; RAG nunca escolhe frase vencedora silenciosamente</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §12 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-013</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Mudança de conhecimento em produção exige impact graph + revalidação + recertificação</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §12 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-014</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Norma em vigor exige impacto avaliado</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §12 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-015</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Safety Case: pilot exige submetido; production exige aprovado por humano com autoridade clínica</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §12 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-016</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Asserção causal exige método declarado; contrafactual é simulação, nunca fato</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §13 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-017</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Todo input de run passa por triagem de ameaça; ameaça crítica exige resposta bloqueada/contida</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §13 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-018</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Comportamento multiagente validado como combinação (colusão)</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §20 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-019</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Behavioral Firewall: agente em pilot/production exige envelope; fora do envelope = bloqueado</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §13 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-020</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Delegação de capacidade só via Capability Registry (negociação com método e motivo)</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §13 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-021</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Mission complete só com critérios de sucesso E segurança evidenciados</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §13 ·  Registro de implementação </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-022</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Identidade &amp; Autorização: todo run tem principal autenticado com papel declarado</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §19 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-023</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Consentimento: run que toca dados do paciente exige consentimento vigente para o propósito</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §19 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-024</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Observabilidade/Drift: agente em pilot/production exige revalidação dentro da validade</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §19 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-025</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Completude vertical: vertical só é COVERED com missão+delegação+run+outcome evidenciados</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §19 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 1 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-026</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.2</span></div>
+  <p class="title">Traceabilidade integral como POLÍTICA: a cadeia MD → norma granular → aderência → front-end segue da política e nela consta</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §20 ·  Registro </span><span class="chip md">MD §21 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div><div class="card">
+  <div class="card-head"><span class="pid">POL-027</span><span class="sev" style="background:#b91c1c">blocking</span><span class="ver">v1.0</span></div>
+  <p class="title">Cobertura, evidência e incerteza: cada gate declara cobertura do universo conhecido, evidence coverage, test pass, incerteza residual e universo desconhecido explícito</p>
+  <div class="row"><label>fonte MD</label><span class="chip md">MD §23 ·  Registro </span></div>
+  <div class="row"><label>base legal</label><span class="chip ok">aderência sustentada · 2 norma(s) granular(es) em registro</span></div>
+  <div class="row"><label>runs</label><span class="chip muted">—</span></div>
+</div></div>
+<h2>Aderência regulatória por campo (norma granular sustenta — POL-026 v1.1)</h2>
+<div class="grid"><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">consent_care</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Uso do twin para cuidado só ocorre com consentimento específico registrado; a recusa bloqueia o processamento.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 11 §1º — consentimento específico e destacado para dado sensível (saúde)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">consent_research</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Dado de saúde em pesquisa exige finalidade consentida distinta do cuidado.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 11 §1º c/ art. 7º, II — pesquisa (§ a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">consent_twin_simulation</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Simulação no twin é finalidade separada, consentida à parte do cuidado (caso 88412: recusada = simulação bloqueada).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 11 §1º — finalidade específica declarada</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">news2_score</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Escore segue protocolo clínico documentado e versionado, não cálculo ad hoc.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">RCP NEWS2 — protocolo nacional/internacional de detecção de deterioração</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">braden_score</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Risco de LPP quantificado por instrumento validado, rastreável a intervenções NIC 0840.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">Escala de Braden — protocolo validado de risco de lesão por pressão</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">morse_fall_score</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Escore validado lastreia o diagnóstico NANDA 00047 e as intervenções NIC 6490.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">Escala de Morse — protocolo validado de risco de queda</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">fhir_patient_ref</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Referência de paciente interoperável com o prontuário eletrônico (REG-FHIR).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">HL7 FHIR R4 — Patient</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PatientTwin</span><span class="field">twin_version</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Cada estado do twin é versionado; regressão e auditoria de estado são possíveis.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">ISO/IEC 42001 — rastreabilidade documental (cláusula a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">NurseTwin</span><span class="field">pseudonym</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Profissional identificado por pseudônimo no processamento analítico; dado pessoal protegido por técnica.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 2º, V — pseudoanonimização</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">NurseTwin</span><span class="field">fatigue_index</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Carga e fadiga medidas por instrumento validado, lastreando dimensionamento.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">NAS Nursing Activities Score — carga de trabalho (normativa COFEN a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">AgentRun</span><span class="field">human_review_status</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Toda saída de nível L2/L3 carrega estado de revisão humana (POL-002).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">EU AI Act — supervisão humana de IA de alto risco (art. a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">AgentRun</span><span class="field">policy_violations</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Violações registradas por run; auditoria completa de execuções.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 37 — registro das operações de tratamento</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">AgentRun</span><span class="field">evidence_id</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Cada execução referencia artefato de evidência assinado (POL-008).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">IEC 62304 — rastreabilidade de software de saúde (cláusula a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">SafetyEvent</span><span class="field">severity</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Severidade classificada por framework de risco, não opinião.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">ISO 14971 — análise de risco</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">SafetyEvent</span><span class="field">corrective_action</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Ação corretiva obrigatória vinculada ao evento; estado rastreável (POL-010).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">ISO 14971 — controle de risco implantado</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">SafetyEvent</span><span class="field">icps_category</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Incidente classificado em taxonomia WHO, comparável entre instituições.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">WHO ICPS — Classificação Internacional para Segurança do Paciente</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">AgentPolicy</span><span class="field">expression</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Cada regra é executável e auditável; nenhuma decisão sem expressão verificável.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">Princípio da legalidade — norma computável auditável (ISO/IEC 42001, a verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">AgentPolicy</span><span class="field">effective_date</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Vigência temporal de cada norma do sistema é auditável.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 37 — trilha temporal</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">PolicyEvidence</span><span class="field">checksum</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Integridade do artefato verificável criptograficamente.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 46 — segurança do tratamento (integridade)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">KnowledgeLicense</span><span class="field">restrictions</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Uso de terminologia proprietária restrito à licença vigente; sem licença, sem produção.</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">Lei 9.610/1998 — direitos autorais; licenças de uso (NANDA-I)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">ThreatEvent</span><span class="field">threat_type</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Ameaças classificadas por taxonomia OWASP (POL-017).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">OWASP Top 10 para aplicações LLM</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">BehaviorProfile</span><span class="field">envelope</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Envelope comportamental define limites aceitáveis e detecta anomalia (POL-019).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">NIST AI RMF — função 'Manage' (verificar)</span></details>
+</div><div class="card">
+  <div class="card-head"><span class="pid">DelegationRequest</span><span class="field">selection_reason</span><span class="sev" style="background:#15803d">aderência evidenciada</span></div>
+  <p class="title">Delegação só com justificativa registrada e políticas satisfeitas (POL-020).</p>
+  <details><summary>norma granular que sustenta</summary><span class="chip legal">LGPD art. 37 — auditabilidade de decisão</span></details>
+</div></div>
+<h2>Verticais (estado auditado — POL-025)</h2>
+<table><tr><th>vertical</th><th>nome</th><th>estado</th><th>missão</th><th>run</th><th>outcome</th></tr><tr><td>V1-SAE</td><td>SAE drafting</td><td><span class="vstatus" style="background:#15803d">covered</span></td><td>MIS-2026-0001</td><td>RUN-2026-0005</td><td>OUT-2026-0001</td></tr><tr><td>V2-PEWS</td><td>PEWS / early warning</td><td><span class="vstatus" style="background:#a16207">partial</span></td><td>—</td><td>RUN-2026-0002</td><td>OUT-2026-0002</td></tr><tr><td>V3-EDU</td><td>Educação ao paciente</td><td><span class="vstatus" style="background:#b91c1c">blocked</span></td><td>MIS-2026-0002</td><td>—</td><td>—</td></tr><tr><td>V4-WORKFORCE</td><td>Workforce/dimensionamento</td><td><span class="vstatus" style="background:#475569">data_level</span></td><td>—</td><td>—</td><td>—</td></tr><tr><td>V5-ORG</td><td>Organização/capacidade</td><td><span class="vstatus" style="background:#475569">data_level</span></td><td>—</td><td>—</td><td>—</td></tr><tr><td>V6-MEDSAFETY</td><td>Segurança de medicação</td><td><span class="vstatus" style="background:#6d28d9">knowledge_level</span></td><td>—</td><td>—</td><td>—</td></tr></table>
+<footer><strong>Este HTML não é editado à mão.</strong> Gerado por <code>build_frontend.py</code> a partir de <code>nursing-intelligence-os-v2.md</code> + <code>policies.json</code> + <code>links.json</code> (grafo verificado). Para mudar o front-end, mude o MD e regenere. Gerado em 2026-09-03T05:43:28.</footer>
+</body></html>

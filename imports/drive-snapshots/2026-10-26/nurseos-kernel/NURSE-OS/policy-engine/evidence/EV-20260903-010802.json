@@ -1,0 +1,86 @@
+{
+  "evidence_id": "EV-20260903-010802",
+  "artifact_type": "ci_gate",
+  "generated_at": "2026-09-03T01:08:02.621462+00:00",
+  "pipeline_version": "1.0",
+  "gate_result": "blocked",
+  "policies_evaluated": [
+    "POL-001",
+    "POL-002",
+    "POL-003",
+    "POL-004",
+    "POL-005"
+  ],
+  "agents_evaluated": [
+    "sae-copilot",
+    "pews-sentinel"
+  ],
+  "results": [
+    {
+      "name": "POL-001 v1.0 válida e ativa",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "POL-002 v1.0 válida e ativa",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "POL-003 v1.1 válida e ativa",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "POL-004 v1.0 válida e ativa",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "POL-005 v1.0 válida e ativa",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "schema: sae-copilot v0.3.0",
+      "result": "failed",
+      "detail": ""
+    },
+    {
+      "name": "schema: pews-sentinel v0.2.1",
+      "result": "failed",
+      "detail": ""
+    },
+    {
+      "name": "sae-copilot: guardrail ativo vinculado (POL-005)",
+      "result": "passed",
+      "detail": "3 vinculada(s)"
+    },
+    {
+      "name": "sae-copilot: sem autoloop de handoff",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "pews-sentinel: sem autoloop de handoff",
+      "result": "passed",
+      "detail": ""
+    },
+    {
+      "name": "deploy sae-copilot v0.3.0 (POL-003)",
+      "result": "passed",
+      "detail": "nursebench=0.84"
+    },
+    {
+      "name": "RUN-2026-0001: asserções clínicas ok (POL-001/POL-004)",
+      "result": "passed",
+      "detail": "confiança=0.86"
+    },
+    {
+      "name": "RUN-2026-0002: confiança 0.55 < 0.70 -> escalada (POL-004)",
+      "result": "passed",
+      "detail": "handoff -> nurse-on-duty"
+    }
+  ],
+  "checksum": "894e0d021183c9ca5da704f811e393de41ec627db8e272db21df41efdaeb2cf7"
+}

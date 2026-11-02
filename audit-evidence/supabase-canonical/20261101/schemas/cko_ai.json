@@ -1,0 +1,2290 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_ai",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 17,
+    "columns": 184,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "api_entitlement_profiles",
+      "columns": [
+        {
+          "name": "api_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "profile_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "seniority_tier",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "primary_provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "primary_model_selector",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "secondary_provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "secondary_model_selector",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "provider_independence_required",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "critical_quorum",
+          "type": "integer",
+          "default": "1",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "autonomy_level",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "tool_entitlements",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "data_access_classes",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "budget_class",
+          "type": "text",
+          "default": "'STANDARD'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "context_class",
+          "type": "text",
+          "default": "'STANDARD'::text",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "fallback_policy",
+          "type": "text",
+          "default": "'FAIL_CLOSED_IF_PRIMARY_UNAVAILABLE'::text",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 16,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "attributes",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 17,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 18,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 19,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "api_entitlement_profiles_pkey",
+          "definition": "CREATE UNIQUE INDEX api_entitlement_profiles_pkey ON cko_ai.api_entitlement_profiles USING btree (api_profile_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "api_entitlement_profiles_critical_quorum_check",
+          "type": "c",
+          "definition": "CHECK (((critical_quorum >= 1) AND (critical_quorum <= 4)))"
+        },
+        {
+          "name": "api_entitlement_profiles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (api_profile_id)"
+        },
+        {
+          "name": "api_entitlement_profiles_primary_provider_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (primary_provider_id) REFERENCES cko_ai.provider_registry(provider_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "api_entitlement_profiles_secondary_provider_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (secondary_provider_id) REFERENCES cko_ai.provider_registry(provider_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "capability_requirements",
+      "columns": [
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirement_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirement_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "criticality",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "acceptance_criteria",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prohibited_failure_modes",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_required",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "capability_requirements_pkey",
+          "definition": "CREATE UNIQUE INDEX capability_requirements_pkey ON cko_ai.capability_requirements USING btree (requirement_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "capability_requirements_criticality_check",
+          "type": "c",
+          "definition": "CHECK ((criticality = ANY (ARRAY['LOW'::text, 'MEDIUM'::text, 'HIGH'::text, 'CRITICAL'::text])))"
+        },
+        {
+          "name": "capability_requirements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (requirement_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "engine_executors",
+      "columns": [
+        {
+          "name": "engine_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "execution_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "deterministic",
+          "type": "boolean",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "implementation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "blocking_gap",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "engine_executors_pkey",
+          "definition": "CREATE UNIQUE INDEX engine_executors_pkey ON cko_ai.engine_executors USING btree (engine_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "engine_executors_engine_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (engine_id) REFERENCES cko_ai.engines(engine_id)"
+        },
+        {
+          "name": "engine_executors_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (engine_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "engines",
+      "columns": [
+        {
+          "name": "engine_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "engine_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "output_contract",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validator_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "engines_current_version_ref_idx",
+          "definition": "CREATE INDEX engines_current_version_ref_idx ON cko_ai.engines USING btree (current_version_ref)"
+        },
+        {
+          "name": "engines_pkey",
+          "definition": "CREATE UNIQUE INDEX engines_pkey ON cko_ai.engines USING btree (engine_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "engines_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "engines_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (engine_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "job_candidate_requirements",
+      "columns": [
+        {
+          "name": "job_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "weight",
+          "type": "numeric(6,3)",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "mandatory",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "job_candidate_requirements_pkey",
+          "definition": "CREATE UNIQUE INDEX job_candidate_requirements_pkey ON cko_ai.job_candidate_requirements USING btree (job_profile_id, requirement_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "job_candidate_requirements_job_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (job_profile_id) REFERENCES cko_governance.agent_job_profiles(job_profile_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "job_candidate_requirements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (job_profile_id, requirement_id)"
+        },
+        {
+          "name": "job_candidate_requirements_requirement_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (requirement_id) REFERENCES cko_ai.capability_requirements(requirement_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "job_candidate_requirements_weight_check",
+          "type": "c",
+          "definition": "CHECK ((weight >= (0)::numeric))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "job_reference_manifest",
+      "columns": [
+        {
+          "name": "ai_job_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_order",
+          "type": "integer",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "reference_value",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "resolved_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "resolution_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "job_reference_manifest_pkey",
+          "definition": "CREATE UNIQUE INDEX job_reference_manifest_pkey ON cko_ai.job_reference_manifest USING btree (ai_job_id, reference_order)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "job_reference_manifest_ai_job_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (ai_job_id) REFERENCES cko_ai.jobs(ai_job_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "job_reference_manifest_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ai_job_id, reference_order)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "jobs",
+      "columns": [
+        {
+          "name": "ai_job_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "engine_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "prompt_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "provider",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "model",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "job_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "input_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "requested_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "response_raw",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "candidate_output",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 13,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "validation_status",
+          "type": "text",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "promoted_to_canonical",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 16,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "context_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 17,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "engine_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 18,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "default": null,
+          "ordinal": 19,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "jobs_engine_id_idx",
+          "definition": "CREATE INDEX jobs_engine_id_idx ON cko_ai.jobs USING btree (engine_id)"
+        },
+        {
+          "name": "jobs_knowledge_pack_id_idx",
+          "definition": "CREATE INDEX jobs_knowledge_pack_id_idx ON cko_ai.jobs USING btree (knowledge_pack_id)"
+        },
+        {
+          "name": "jobs_pkey",
+          "definition": "CREATE UNIQUE INDEX jobs_pkey ON cko_ai.jobs USING btree (ai_job_id)"
+        },
+        {
+          "name": "jobs_prompt_id_idx",
+          "definition": "CREATE INDEX jobs_prompt_id_idx ON cko_ai.jobs USING btree (prompt_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "jobs_engine_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (engine_id) REFERENCES cko_ai.engines(engine_id)"
+        },
+        {
+          "name": "jobs_knowledge_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (knowledge_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        },
+        {
+          "name": "jobs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (ai_job_id)"
+        },
+        {
+          "name": "jobs_prompt_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (prompt_id) REFERENCES cko_ai.prompts(prompt_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "knowledge_pack_members",
+      "columns": [
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "object_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "content_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "knowledge_pack_members_pkey",
+          "definition": "CREATE UNIQUE INDEX knowledge_pack_members_pkey ON cko_ai.knowledge_pack_members USING btree (knowledge_pack_id, object_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "knowledge_pack_members_knowledge_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (knowledge_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id) ON DELETE CASCADE"
+        },
+        {
+          "name": "knowledge_pack_members_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (knowledge_pack_id, object_ref)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "knowledge_packs",
+      "columns": [
+        {
+          "name": "knowledge_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "pack_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "manifest",
+          "type": "jsonb",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_snapshot_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "master_data_version_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_version_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prompt_version_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "supersedes_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "knowledge_packs_pack_hash_key",
+          "definition": "CREATE UNIQUE INDEX knowledge_packs_pack_hash_key ON cko_ai.knowledge_packs USING btree (pack_hash)"
+        },
+        {
+          "name": "knowledge_packs_pkey",
+          "definition": "CREATE UNIQUE INDEX knowledge_packs_pkey ON cko_ai.knowledge_packs USING btree (knowledge_pack_id)"
+        },
+        {
+          "name": "knowledge_packs_supersedes_pack_id_idx",
+          "definition": "CREATE INDEX knowledge_packs_supersedes_pack_id_idx ON cko_ai.knowledge_packs USING btree (supersedes_pack_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "knowledge_packs_pack_hash_key",
+          "type": "u",
+          "definition": "UNIQUE (pack_hash)"
+        },
+        {
+          "name": "knowledge_packs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (knowledge_pack_id)"
+        },
+        {
+          "name": "knowledge_packs_supersedes_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (supersedes_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "knowledge_refresh_runs",
+      "columns": [
+        {
+          "name": "refresh_run_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "trigger_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "prior_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "resulting_pack_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "changed_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_sync_status",
+          "type": "text",
+          "default": "'NOT_APPLICABLE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "knowledge_refresh_runs_pkey",
+          "definition": "CREATE UNIQUE INDEX knowledge_refresh_runs_pkey ON cko_ai.knowledge_refresh_runs USING btree (refresh_run_id)"
+        },
+        {
+          "name": "knowledge_refresh_runs_prior_pack_id_idx",
+          "definition": "CREATE INDEX knowledge_refresh_runs_prior_pack_id_idx ON cko_ai.knowledge_refresh_runs USING btree (prior_pack_id)"
+        },
+        {
+          "name": "knowledge_refresh_runs_resulting_pack_id_idx",
+          "definition": "CREATE INDEX knowledge_refresh_runs_resulting_pack_id_idx ON cko_ai.knowledge_refresh_runs USING btree (resulting_pack_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "knowledge_refresh_runs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (refresh_run_id)"
+        },
+        {
+          "name": "knowledge_refresh_runs_prior_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (prior_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        },
+        {
+          "name": "knowledge_refresh_runs_resulting_pack_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (resulting_pack_id) REFERENCES cko_ai.knowledge_packs(knowledge_pack_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "prompts",
+      "columns": [
+        {
+          "name": "prompt_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "system_prompt",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "output_schema_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "anti_hallucination_rules",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "allowed_sources",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CONTROLLED_CANDIDATE'::text",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "current_version_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "prompts_current_version_ref_idx",
+          "definition": "CREATE INDEX prompts_current_version_ref_idx ON cko_ai.prompts USING btree (current_version_ref)"
+        },
+        {
+          "name": "prompts_pkey",
+          "definition": "CREATE UNIQUE INDEX prompts_pkey ON cko_ai.prompts USING btree (prompt_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "prompts_current_version_ref_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (current_version_ref) REFERENCES cko_governance.object_versions(object_version_id)"
+        },
+        {
+          "name": "prompts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (prompt_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "provider_registry",
+      "columns": [
+        {
+          "name": "provider_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "provider_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "api_family",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "endpoint_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "secret_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "secret_storage_policy",
+          "type": "text",
+          "default": "'SECRET_REFERENCE_ONLY_NEVER_PLAINTEXT'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'ACTIVE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "data_policy",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "provider_registry_pkey",
+          "definition": "CREATE UNIQUE INDEX provider_registry_pkey ON cko_ai.provider_registry USING btree (provider_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "provider_registry_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (provider_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "selection_assessments",
+      "columns": [
+        {
+          "name": "assessment_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selection_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evaluator_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirement_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "score",
+          "type": "numeric(5,2)",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "result",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "performed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "selection_assessments_pkey",
+          "definition": "CREATE UNIQUE INDEX selection_assessments_pkey ON cko_ai.selection_assessments USING btree (assessment_id)"
+        },
+        {
+          "name": "selection_assessments_selection_id_candidate_id_evaluator_a_key",
+          "definition": "CREATE UNIQUE INDEX selection_assessments_selection_id_candidate_id_evaluator_a_key ON cko_ai.selection_assessments USING btree (selection_id, candidate_id, evaluator_agent_id, requirement_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "selection_assessments_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (candidate_id) REFERENCES cko_ai.technology_candidates(candidate_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_assessments_evaluator_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (evaluator_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_assessments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (assessment_id)"
+        },
+        {
+          "name": "selection_assessments_requirement_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (requirement_id) REFERENCES cko_ai.capability_requirements(requirement_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_assessments_result_check",
+          "type": "c",
+          "definition": "CHECK ((result = ANY (ARRAY['PASS'::text, 'FAIL'::text, 'HOLD'::text, 'NOT_TESTED'::text])))"
+        },
+        {
+          "name": "selection_assessments_score_check",
+          "type": "c",
+          "definition": "CHECK (((score >= (0)::numeric) AND (score <= (100)::numeric)))"
+        },
+        {
+          "name": "selection_assessments_selection_id_candidate_id_evaluator_a_key",
+          "type": "u",
+          "definition": "UNIQUE (selection_id, candidate_id, evaluator_agent_id, requirement_id)"
+        },
+        {
+          "name": "selection_assessments_selection_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (selection_id) REFERENCES cko_ai.selection_campaigns(selection_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "selection_campaigns",
+      "columns": [
+        {
+          "name": "selection_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "job_profile_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_tier",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PLANNED'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "required_independent_evaluators",
+          "type": "integer",
+          "default": "2",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "cross_provider_panel_required",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "minimum_total_score",
+          "type": "numeric(5,2)",
+          "default": "75",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "minimum_critical_score",
+          "type": "numeric(5,2)",
+          "default": "85",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_by_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 12,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "ordinal": 14,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "selection_campaigns_pkey",
+          "definition": "CREATE UNIQUE INDEX selection_campaigns_pkey ON cko_ai.selection_campaigns USING btree (selection_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "selection_campaigns_approved_by_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (approved_by_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_campaigns_created_by_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (created_by_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_campaigns_job_profile_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (job_profile_id) REFERENCES cko_governance.agent_job_profiles(job_profile_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_campaigns_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (selection_id)"
+        },
+        {
+          "name": "selection_campaigns_required_independent_evaluators_check",
+          "type": "c",
+          "definition": "CHECK (((required_independent_evaluators >= 1) AND (required_independent_evaluators <= 5)))"
+        },
+        {
+          "name": "selection_campaigns_risk_tier_check",
+          "type": "c",
+          "definition": "CHECK ((risk_tier = ANY (ARRAY['LOW'::text, 'MEDIUM'::text, 'HIGH'::text, 'CRITICAL'::text])))"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "selection_candidates",
+      "columns": [
+        {
+          "name": "selection_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidacy_status",
+          "type": "text",
+          "default": "'INVITED'::text",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "disqualification_reason",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "selection_candidates_pkey",
+          "definition": "CREATE UNIQUE INDEX selection_candidates_pkey ON cko_ai.selection_candidates USING btree (selection_id, candidate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "selection_candidates_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (candidate_id) REFERENCES cko_ai.technology_candidates(candidate_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_candidates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (selection_id, candidate_id)"
+        },
+        {
+          "name": "selection_candidates_selection_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (selection_id) REFERENCES cko_ai.selection_campaigns(selection_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "selection_decisions",
+      "columns": [
+        {
+          "name": "decision_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "selection_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decision",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "total_score",
+          "type": "numeric(5,2)",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "critical_score",
+          "type": "numeric(5,2)",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decided_by_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "approved_by_agent_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "decided_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "selection_decisions_pkey",
+          "definition": "CREATE UNIQUE INDEX selection_decisions_pkey ON cko_ai.selection_decisions USING btree (decision_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "selection_decisions_approved_by_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (approved_by_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_decisions_candidate_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (candidate_id) REFERENCES cko_ai.technology_candidates(candidate_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_decisions_check",
+          "type": "c",
+          "definition": "CHECK ((decided_by_agent_id <> approved_by_agent_id))"
+        },
+        {
+          "name": "selection_decisions_decided_by_agent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (decided_by_agent_id) REFERENCES cko_governance.agent_registry(agent_id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "selection_decisions_decision_check",
+          "type": "c",
+          "definition": "CHECK ((decision = ANY (ARRAY['SELECTED'::text, 'REJECTED'::text, 'HOLD'::text, 'PROBATION'::text])))"
+        },
+        {
+          "name": "selection_decisions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (decision_id)"
+        },
+        {
+          "name": "selection_decisions_selection_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (selection_id) REFERENCES cko_ai.selection_campaigns(selection_id) ON DELETE RESTRICT"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "technology_candidates",
+      "columns": [
+        {
+          "name": "candidate_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "candidate_name",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "vendor_or_project",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "version_selector",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "source_uri",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "license_class",
+          "type": "text",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "data_residency_notes",
+          "type": "text",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "secret_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "capabilities",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "constraints",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "known_risks",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'CANDIDATE'::text",
+          "ordinal": 13,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 14,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 15,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "technology_candidates_pkey",
+          "definition": "CREATE UNIQUE INDEX technology_candidates_pkey ON cko_ai.technology_candidates USING btree (candidate_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "technology_candidates_candidate_type_check",
+          "type": "c",
+          "definition": "CHECK ((candidate_type = ANY (ARRAY['AI_PROVIDER'::text, 'AI_MODEL_PROFILE'::text, 'TOOL'::text, 'LIBRARY'::text, 'DATABASE'::text, 'RUNTIME'::text, 'FRAMEWORK'::text, 'SERVICE'::text])))"
+        },
+        {
+          "name": "technology_candidates_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (candidate_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

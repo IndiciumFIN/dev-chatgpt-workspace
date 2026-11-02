@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_coverage",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 3,
+    "columns": 26,
+    "viewsObserved": 3
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "legacy_inventory_summary",
+      "columns": [
+        {
+          "name": "summary_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_artifact",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "dimension",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_key",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "item_count",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_hash",
+          "type": "text",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'LEGACY_EVIDENCE'::text",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "legacy_inventory_summary_pkey",
+          "definition": "CREATE UNIQUE INDEX legacy_inventory_summary_pkey ON cko_coverage.legacy_inventory_summary USING btree (summary_id)"
+        },
+        {
+          "name": "legacy_inventory_summary_source_artifact_dimension_item_key_key",
+          "definition": "CREATE UNIQUE INDEX legacy_inventory_summary_source_artifact_dimension_item_key_key ON cko_coverage.legacy_inventory_summary USING btree (source_artifact, dimension, item_key)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "legacy_inventory_summary_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (summary_id)"
+        },
+        {
+          "name": "legacy_inventory_summary_source_artifact_dimension_item_key_key",
+          "type": "u",
+          "definition": "UNIQUE (source_artifact, dimension, item_key)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "requirements",
+      "columns": [
+        {
+          "name": "coverage_requirement_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "requirement_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "authority_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "rule_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "default": "'P1'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "expected",
+          "type": "boolean",
+          "default": "true",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'EXPECTED'::text",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "requirements_pkey",
+          "definition": "CREATE UNIQUE INDEX requirements_pkey ON cko_coverage.requirements USING btree (coverage_requirement_id)"
+        },
+        {
+          "name": "requirements_subject_ref_status_idx",
+          "definition": "CREATE INDEX requirements_subject_ref_status_idx ON cko_coverage.requirements USING btree (subject_ref, status)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "requirements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (coverage_requirement_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "states",
+      "columns": [
+        {
+          "name": "subject_ref",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "identified",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_acquired",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "regulatory_mapped",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "relations_complete",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 5,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_present",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "content_validated",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "published",
+          "type": "boolean",
+          "default": "false",
+          "ordinal": 8,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "gaps",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "refreshed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "states_pkey",
+          "definition": "CREATE UNIQUE INDEX states_pkey ON cko_coverage.states USING btree (subject_ref)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "states_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (subject_ref)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

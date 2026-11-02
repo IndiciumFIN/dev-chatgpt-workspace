@@ -12,6 +12,9 @@ on:
       - '.github/workflows/ce-supabase-local.yml'
 permissions:
   contents: write
+concurrency:
+  group: ce-candidate-serialized-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   branch-crosswalk:
     runs-on: ubuntu-latest
@@ -38,9 +41,14 @@ jobs:
             git config user.name 'CE Full Git Tree Auditor'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git commit -m 'audit(git): persist 36-source tree crosswalk and SHA evidence [WO-CE-DB-SKELETON-001]'
-            git fetch origin canonical/supabase-skeleton-20261101
-            git rebase origin/canonical/supabase-skeleton-20261101
-            git push origin HEAD:canonical/supabase-skeleton-20261101
+            for attempt in 1 2 3; do
+              git fetch origin canonical/supabase-skeleton-20261101
+              git rebase origin/canonical/supabase-skeleton-20261101
+              if git push origin HEAD:canonical/supabase-skeleton-20261101; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then echo 'HOLD_HUMAN: concurrent branch update'; exit 2; fi
+            done
           fi
       - name: Archive full 37-branch audit
         if: always()
@@ -111,9 +119,14 @@ jobs:
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git commit -m 'chore(supabase): version CLI-generated local configuration [WO-CE-DB-SKELETON-001]'
             # Do not force-push; reconcile concurrent snapshot commits deterministically.
-            git fetch origin canonical/supabase-skeleton-20261101
-            git rebase origin/canonical/supabase-skeleton-20261101
-            git push origin HEAD:canonical/supabase-skeleton-20261101
+            for attempt in 1 2 3; do
+              git fetch origin canonical/supabase-skeleton-20261101
+              git rebase origin/canonical/supabase-skeleton-20261101
+              if git push origin HEAD:canonical/supabase-skeleton-20261101; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then echo 'HOLD_HUMAN: concurrent branch update'; exit 2; fi
+            done
           fi
       - name: Store local TypeScript schema verification
         if: always()

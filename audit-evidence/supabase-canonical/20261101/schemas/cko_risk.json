@@ -1,0 +1,244 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordType": "READ_ONLY_SCHEMA_SNAPSHOT_NOT_MIGRATION",
+  "origin": {
+    "provider": "Supabase",
+    "projectRef": "pgsybzggewhinaniybiy",
+    "schema": "cko_risk",
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source": "pg_catalog"
+  },
+  "isManagedSchema": false,
+  "snapshotDate": "2026-11-02",
+  "integrity": {
+    "tables": 2,
+    "columns": 19,
+    "viewsObserved": 0
+  },
+  "tables": [
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "action_plans",
+      "columns": [
+        {
+          "name": "action_plan_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 6,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "evidence_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 7,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "action_plans_pkey",
+          "definition": "CREATE UNIQUE INDEX action_plans_pkey ON cko_risk.action_plans USING btree (action_plan_id)"
+        },
+        {
+          "name": "action_plans_risk_id_idx",
+          "definition": "CREATE INDEX action_plans_risk_id_idx ON cko_risk.action_plans USING btree (risk_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "action_plans_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (action_plan_id)"
+        },
+        {
+          "name": "action_plans_risk_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (risk_id) REFERENCES cko_risk.risks(risk_id)"
+        }
+      ],
+      "policy_names": []
+    },
+    {
+      "rls": false,
+      "kind": "r",
+      "name": "risks",
+      "columns": [
+        {
+          "name": "risk_id",
+          "type": "text",
+          "default": null,
+          "ordinal": 1,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "risk_type",
+          "type": "text",
+          "default": null,
+          "ordinal": 2,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "ordinal": 3,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "ordinal": 4,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "inherent_impact",
+          "type": "integer",
+          "default": null,
+          "ordinal": 5,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "inherent_likelihood",
+          "type": "integer",
+          "default": null,
+          "ordinal": 6,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "residual_impact",
+          "type": "integer",
+          "default": null,
+          "ordinal": 7,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "residual_likelihood",
+          "type": "integer",
+          "default": null,
+          "ordinal": 8,
+          "identity": "",
+          "nullable": true,
+          "generated": ""
+        },
+        {
+          "name": "owner_function",
+          "type": "text",
+          "default": null,
+          "ordinal": 9,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "source_refs",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "ordinal": 10,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'OPEN'::text",
+          "ordinal": 11,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "ordinal": 12,
+          "identity": "",
+          "nullable": false,
+          "generated": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "risks_pkey",
+          "definition": "CREATE UNIQUE INDEX risks_pkey ON cko_risk.risks USING btree (risk_id)"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "risks_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (risk_id)"
+        }
+      ],
+      "policy_names": []
+    }
+  ]
+}

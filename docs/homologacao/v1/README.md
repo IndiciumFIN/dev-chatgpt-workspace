@@ -36,3 +36,8 @@ Preencher cada artefato com dados verificáveis e referenciar os IDs na RTM e na
 ## Extensão em revisão — validadores e metodologias
 
 [Plano diretor de validadores v0.3.0](PLANO_AUDITORIA_COM_VALIDADORES.md) e [índice do pacote especializado](validadores/README.md) têm status **DRAFT** e são associados à WO-018. O registro documental v0.2.0 vincula seis arquivos desse pacote sem transformá-los nos 50 modelos homologados. Quatro modelos adicionais D051–D054 estão **propostos e ainda não criados**. As referências normativas foram ampliadas para 37 metadados canônicos, sem afirmação de acesso licenciado integral.
+
+
+## Extensão documental — Audit Data Studio e funcionalidades fiscais
+
+A [expansão funcional v0.1.0](expansoes/README.md) reúne benchmark de soluções externas, 22 motores candidatos, join/extractor/seleção/amostragem/erros/anomalias, comparação tributária por período e 33 cenários de validação **futura**. A extensão está no registro canônico documental v0.3.0 vinculada à WO-018, sem criar funcionalidades, alterar o DS, testar aplicações, modificar bancos ou publicar releases. Os 50 templates documentais preexistentes permanecem inalterados. **DRAFT / NO-EXECUTION.**

@@ -1,0 +1,37 @@
+name: WU-TRIB | audit-only live DOM browser and WCAG scans
+on:
+  push:
+    branches:
+      - wutrib/audit-integral-20261108
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-audit:
+    if: github.ref == 'refs/heads/wutrib/audit-integral-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Pinned accessibility library (test only)
+        run: npm install --no-save --no-package-lock --ignore-scripts axe-core@4.10.3
+      - name: Pinned Playwright browser and Linux dependencies
+        run: |
+          python3 -m venv "$RUNNER_TEMP/wutrib-audit-venv"
+          source "$RUNNER_TEMP/wutrib-audit-venv/bin/activate"
+          pip install 'playwright==1.56.0'
+          python -m playwright install --with-deps chromium
+      - name: Run existing browser acceptance in managed Chromium
+        run: |
+          source "$RUNNER_TEMP/wutrib-audit-venv/bin/activate"
+          sed "s@executable_path='/usr/bin/chromium'@executable_path=p.chromium.executable_path@" tests/browser_e2e.py > tests/browser_e2e_audit_tmp.py
+          timeout 180s python tests/browser_e2e_audit_tmp.py
+      - name: Scan active desktop and mobile DOM with axe
+        run: |
+          source "$RUNNER_TEMP/wutrib-audit-venv/bin/activate"
+          timeout 90s python benchmarks/browser_accessibility_audit.py

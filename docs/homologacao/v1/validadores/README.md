@@ -11,7 +11,7 @@ Este pacote é a estratégia de verificação de domínio, risco, controle e evi
 - [Matriz COSO, COBIT, IIA e IA](MATRIZ_COSO_COBIT_IA_v03.md): vínculos propostos, dependentes de verificação por especialista.
 - [Protocolo de meta-validação](PROTOCOLO_META_VALIDACAO.md): independência do oráculo, defeitos injetados, amostragem, tolerâncias e gates.
 - [Contrato JSON de resultado](CONTRATO_RESULTADO_VALIDADOR.v0.3.schema.json): formatos de resultado e proibição explícita de aprovação fiscal por máquina.
-- [Registro normativo canônico](../referencias-normativas.v1.json): 33 referências por edição/URL/aplicabilidade pendente; textos oficiais protegidos não foram copiados.
+- [Registro normativo canônico](../referencias-normativas.v1.json): 37 referências por edição/URL/aplicabilidade pendente; textos oficiais protegidos não foram copiados.
 
 ## O que está efetivamente implementado
 

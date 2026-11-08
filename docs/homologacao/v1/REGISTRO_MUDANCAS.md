@@ -11,6 +11,8 @@
 
 | 2026-11-08 | 0.3.0 (extensão funcional EXP v0.1.0) | Benchmark de soluções e ideias; 22 motores e 33 cenários futuros; comparação tributária entre períodos com separação de variação observada, legal, de parâmetro e de mix | Branch wutrib/expansion-analytics-plan-20261108 | Exclusivamente documental, sem alteração de aplicação, regras, banco, testes ou deploy. |
 
+| 2026-11-08 | Registro documental 0.4.0 / expansão v0.2.0 | 17 peças documentais: seis especificações centrais, metamodelo, UX, RCM/RTM, dois schemas candidatos, 68 casos NOT_RUN, 13 fontes e controle de versões | Branch wutrib/expansion-spec-v02-20261108 | DRAFT; preserva v0.1.0, sem novos códigos, testes executados, banco, migrações ou publicação. |
+
 ## Regras para próximas revisões
 
 Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão, autor e revisor. Um documento aprovado não é substituído silenciosamente; criar revisão e preservar hash/commit do anterior. No processo de release, gravar manifesto por commit SHA e decisão assinada.

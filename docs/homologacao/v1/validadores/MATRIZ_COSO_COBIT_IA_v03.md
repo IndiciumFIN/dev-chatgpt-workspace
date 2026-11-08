@@ -2,7 +2,7 @@
 
 **Versão:** 0.3.0 · **Situação:** DRAFT · **WO:** WUTRIB-WO-PLAN-018 · **Escopo:** somente planejamento.
 
-Este quadro deriva do catálogo versionado JSON. **COSO P e COBIT objetivos são MAPEAMENTOS CANDIDATOS**, não certificação nem interpretação literal do texto integral das normas. Revisar a aplicabilidade e o licenciamento antes de descrever um princípio como controle adotado.
+Este quadro deriva do catálogo versionado JSON. As referências normativas são resolvidas pelo registro canônico [referencias-normativas.v1.json](../referencias-normativas.v1.json), agora com 33 entradas. A lista de fontes embutida no catálogo de validadores é uma fotografia de elaboração descontinuada, não segunda fonte de autoridade. **COSO P e COBIT objetivos são MAPEAMENTOS CANDIDATOS**, não certificação nem interpretação literal do texto integral das normas. Revisar a aplicabilidade e o licenciamento antes de descrever um princípio como controle adotado.
 
 ## Objetivos de controle e evidência, sem confundir a função dos frameworks
 
@@ -17,30 +17,30 @@ Este quadro deriva do catálogo versionado JSON. **COSO P e COBIT objetivos são
 
 | ID | Validador | Camada | COSO ICIF (princípios candidatos) | COBIT 2019 (objetivos candidatos) | Outras fontes | Gate |
 |---|---|---|---|---|---|---|
-| WUTRIB-VAL-001 | WO admission and lifecycle states | GOVERNANCE | P5, P12, P16 | BAI06, MEA02 | COSO_ICIF_2013, COBIT_2019, ISO_29119_3 | PLANEJADO / HOLD |
-| WUTRIB-VAL-002 | Normative provenance and version applicability | GOVERNANCE | P7, P13 | MEA03, APO12 | COSO_ICIF_2013, SPED_EFD, NFE_MOC | PLANEJADO / HOLD |
+| WUTRIB-VAL-001 | WO admission and lifecycle states | GOVERNANCE | P5, P12, P16 | BAI06, MEA02 | COSO_ICIF_2013, COBIT_2019, ISO29119_3_2021 | PLANEJADO / HOLD |
+| WUTRIB-VAL-002 | Normative provenance and version applicability | GOVERNANCE | P7, P13 | MEA03, APO12 | COSO_ICIF_2013, SPED_EFD_324, NFE_MOC | PLANEJADO / HOLD |
 | WUTRIB-VAL-003 | RCM risk-to-control completeness | GOVERNANCE | P6, P7, P10 | EDM03, APO12, MEA02 | COSO_ICIF_2013, COSO_ERM_2017, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-004 | Versioned document integrity | GOVERNANCE | P13, P16 | BAI10, MEA04 | ISO_29119_3, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-005 | Evidence custody and independent review | GOVERNANCE | P13, P16, P17 | MEA04, MEA02 | IIA_GIAS_2024, NBC_TA_500, COSO_ICIF_2013 | PLANEJADO / HOLD |
+| WUTRIB-VAL-004 | Versioned document integrity | GOVERNANCE | P13, P16 | BAI10, MEA04 | ISO29119_3_2021, COBIT_2019 | PLANEJADO / HOLD |
+| WUTRIB-VAL-005 | Evidence custody and independent review | GOVERNANCE | P13, P16, P17 | MEA04, MEA02 | IIA_GIAS_2025, NBC_TA_500, COSO_ICIF_2013 | PLANEJADO / HOLD |
 | WUTRIB-VAL-006 | OMG MOF metamodel compatibility | DATA | P11, P13 | APO14, BAI10 | OMG_MOF_251, COBIT_2019 | PLANEJADO / HOLD |
 | WUTRIB-VAL-007 | Protheus SX2/SX3/SIX dictionary mapping | DATA | P11, P13 | APO14, BAI10 | TOTVS_FISA170, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-008 | Master data validity and effective dates | DATA | P10, P13 | APO14, DSS06 | COBIT_2019, ISO_25010_2023 | PLANEJADO / HOLD |
+| WUTRIB-VAL-008 | Master data validity and effective dates | DATA | P10, P13 | APO14, DSS06 | COBIT_2019, ISO25010_2023 | PLANEJADO / HOLD |
 | WUTRIB-VAL-009 | Fiscal structural tables and keys | DATA | P10, P11 | APO14, BAI10 | TOTVS_FISA170, COBIT_2019 | PLANEJADO / HOLD |
 | WUTRIB-VAL-010 | End-to-end lineage provenance | DATA | P13, P16 | APO14, MEA04 | COSO_ICIF_2013, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-011 | EFD layout and COD_VER | FISCAL | P10, P13 | MEA03, DSS06 | SPED_EFD, COSO_ICIF_2013 | PLANEJADO / HOLD |
+| WUTRIB-VAL-011 | EFD layout and COD_VER | FISCAL | P10, P13 | MEA03, DSS06 | SPED_EFD_324, COSO_ICIF_2013 | PLANEJADO / HOLD |
 | WUTRIB-VAL-012 | NF-e MOC XSD and key check digit | FISCAL | P10, P13 | MEA03, DSS06 | NFE_MOC, COSO_ICIF_2013 | PLANEJADO / HOLD |
-| WUTRIB-VAL-013 | Rule validity and precedence by date | FISCAL | P7, P10 | MEA03, APO12 | SPED_EFD, TOTVS_FISA170, COSO_ERM_2017 | PLANEJADO / HOLD |
-| WUTRIB-VAL-014 | XML EFD ERP and master data reconciliation | FISCAL | P10, P13 | DSS06, MEA04 | SPED_EFD, NFE_MOC, TOTVS_FISA170 | PLANEJADO / HOLD |
-| WUTRIB-VAL-015 | Sampling design and reproducibility | AUDIT | P7, P10 | MEA04, APO12 | NBC_TA_530, IIA_GIAS_2024 | PLANEJADO / HOLD |
-| WUTRIB-VAL-016 | Audit methodology and findings | AUDIT | P13, P16 | MEA04, MEA02 | IIA_GIAS_2024, NBC_TA_500 | PLANEJADO / HOLD |
+| WUTRIB-VAL-013 | Rule validity and precedence by date | FISCAL | P7, P10 | MEA03, APO12 | SPED_EFD_324, TOTVS_FISA170, COSO_ERM_2017 | PLANEJADO / HOLD |
+| WUTRIB-VAL-014 | XML EFD ERP and master data reconciliation | FISCAL | P10, P13 | DSS06, MEA04 | SPED_EFD_324, NFE_MOC, TOTVS_FISA170 | PLANEJADO / HOLD |
+| WUTRIB-VAL-015 | Sampling design and reproducibility | AUDIT | P7, P10 | MEA04, APO12 | NBC_TA_530, IIA_GIAS_2025 | PLANEJADO / HOLD |
+| WUTRIB-VAL-016 | Audit methodology and findings | AUDIT | P13, P16 | MEA04, MEA02 | IIA_GIAS_2025, NBC_TA_500 | PLANEJADO / HOLD |
 | WUTRIB-VAL-017 | IAM RBAC tenant isolation | SECURITY | P10, P11 | APO13, DSS05 | OWASP_ASVS_5, COSO_ICIF_2013 | PLANEJADO / HOLD |
 | WUTRIB-VAL-018 | Ingestion threat and malicious inputs | SECURITY | P10, P11 | DSS05, APO13 | OWASP_ASVS_5, COBIT_2019 | PLANEJADO / HOLD |
 | WUTRIB-VAL-019 | Supply chain and safe changes | SECURITY | P11, P16 | BAI06, BAI10 | OWASP_ASVS_5, COBIT_2019 | PLANEJADO / HOLD |
 | WUTRIB-VAL-020 | Data protection and retention | SECURITY | P12, P13 | APO14, APO13 | OWASP_ASVS_5, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-021 | Capacity and resource limits | QUALITY | P10, P16 | DSS01, MEA01 | ISO_25010_2023, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-022 | Accessibility automated and manual | QUALITY | P12, P16 | MEA04, APO11 | W3C_WCAG22, ISO_25010_2023 | PLANEJADO / HOLD |
+| WUTRIB-VAL-021 | Capacity and resource limits | QUALITY | P10, P16 | DSS01, MEA01 | ISO25010_2023, COBIT_2019 | PLANEJADO / HOLD |
+| WUTRIB-VAL-022 | Accessibility automated and manual | QUALITY | P12, P16 | MEA04, APO11 | WCAG22, ISO25010_2023 | PLANEJADO / HOLD |
 | WUTRIB-VAL-023 | Software sustainability and carbon method | QUALITY | P7, P13 | EDM03, APO11 | COSO_ERM_2017, COBIT_2019 | PLANEJADO / HOLD |
-| WUTRIB-VAL-024 | Continuity backups and recoverability | QUALITY | P10, P16 | DSS04, DSS01 | COBIT_2019, ISO_25010_2023 | PLANEJADO / HOLD |
+| WUTRIB-VAL-024 | Continuity backups and recoverability | QUALITY | P10, P16 | DSS04, DSS01 | COBIT_2019, ISO25010_2023 | PLANEJADO / HOLD |
 | WUTRIB-VAL-025 | AI use-case and model inventory | AI_OPTIONAL | P7, P13 | APO12, APO14 | ISO_42001_2023, NIST_AIRMF_1, ISO_42005_2025 | CONDICIONAL / HOLD |
 | WUTRIB-VAL-026 | Grounding and factual claim validator | AI_OPTIONAL | P10, P13 | APO11, MEA04 | ISO_23894_2023, ISO_5259_2_2024, NIST_AIRMF_1 | CONDICIONAL / HOLD |
 | WUTRIB-VAL-027 | Prompt injection and model abuse | AI_OPTIONAL | P10, P11 | APO13, DSS05 | COSO_GENAI_2026, NIST_AI_600_1, OWASP_ASVS_5 | CONDICIONAL / HOLD |

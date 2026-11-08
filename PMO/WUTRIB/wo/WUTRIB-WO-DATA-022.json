@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "wutrib.pmo.wo.v1",
+  "woId": "WUTRIB-WO-DATA-022",
+  "project": "WU-TRIB",
+  "title": "Registrar universo normativo de software/web v1.1 no Supabase e reconciliar no GitHub",
+  "requestedBy": "USER_EXPLICIT_SUPABASE_FIRST_2026-11-08",
+  "state": "STAGING_IMPORTED_PARTIAL_PENDING_HUMAN_REVIEW",
+  "parent": [
+    "WUTRIB-WO-PLAN-019",
+    "WUTRIB-WO-DEV-021"
+  ],
+  "source": {
+    "originalFilename": "Universo_Normativo_Software_Web_Source_Registry_v1.1.xlsx",
+    "sha256": "3107d01b30bf9a49c797309ad4ca2d3888ee291f781986eda95c910406241300",
+    "sheets": 16,
+    "nonemptyRows": 2297,
+    "externalUniqueSourceIds": 965,
+    "newSourceOverlap": 419
+  },
+  "database": {
+    "project": "SOT-10-09-2026",
+    "projectRef": "hcqukuotfwflmebjygam",
+    "schema": "wutrib",
+    "table": "normative_universe_import_v11",
+    "rls": true,
+    "publicAccess": false,
+    "firstTableMigration": "wutrib_normative_universe_import_v11_private_20261108",
+    "secondHelperMigration": "wutrib_normative_universe_import_helper_private_v11_20261108",
+    "status": "PARTIALLY_POPULATED",
+    "recordsImportedAtCheckpoint": 236,
+    "recordsExpected": 2297
+  },
+  "tasks": [
+    {
+      "id": "DATA022-01",
+      "title": "Inspecionar 16 abas e inventariar com hash original",
+      "status": "DOCUMENTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DATA022-02",
+      "title": "Criar tabela Supabase privada + RLS",
+      "status": "IMPLEMENTED_VERIFIED"
+    },
+    {
+      "id": "DATA022-03",
+      "title": "Importar e reconciliar todos os 2.297 registros",
+      "status": "IN_PROGRESS_HOLD_REMOTE_IMPORT"
+    },
+    {
+      "id": "DATA022-04",
+      "title": "Comparar aliases, status, versões, fontes e regras",
+      "status": "DOCUMENTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DATA022-05",
+      "title": "Consolidar DDL, testes e importador versionado no GitHub",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "DATA022-06",
+      "title": "Obter revisão normativa/segurança e aprovar promoção seletiva",
+      "status": "HOLD_HUMAN"
+    }
+  ],
+  "authority": {
+    "tableStagingAuthorized": true,
+    "sourcePromotionAuthorized": false,
+    "autonomousNormativeValidation": false,
+    "kernelAdmitted": false,
+    "releaseAuthorized": false,
+    "realClientData": false,
+    "otherProjectWrites": false
+  },
+  "findings": [
+    {
+      "id": "FND-DATA022-01",
+      "description": "Aba de 419 novos fontes repete os IDs 00547..00965 já presentes no mestre; não contabilizar como fontes adicionais.",
+      "severity": "P0"
+    },
+    {
+      "id": "FND-DATA022-02",
+      "description": "Nove diferenças de rótulo de status nas fontes sobrepostas exigem tabela de equivalência sem rebaixar evidências.",
+      "severity": "P1"
+    },
+    {
+      "id": "FND-DATA022-03",
+      "description": "170 normas internas apenas propostas; 98 requisitos testáveis candidatos.",
+      "severity": "P0"
+    },
+    {
+      "id": "FND-DATA022-04",
+      "description": "URLs de catálogo/hub não validam identificação, edição ou texto integral da fonte.",
+      "severity": "P1"
+    },
+    {
+      "id": "FND-DATA022-05",
+      "description": "Fonte importada no SOT permanece STAGING_ONLY, sem promoção automática às regras fiscais ou à plataforma de enfermagem.",
+      "severity": "P0"
+    }
+  ],
+  "evidence": {
+    "dbQuery": "SELECT source_sheet, COUNT(*) FROM wutrib.normative_universe_import_v11 GROUP BY source_sheet;",
+    "sourceJsonlSha256": "6f7730aa162e3c5bf35a4939e2eb9f73569b2985289588bb9ec6e55a76aca118",
+    "humanReview": null
+  },
+  "changePolicy": "Human change review for source/title/edition/URL, no destructive overwrite or silent status promotion.",
+  "signoff": {
+    "product": null,
+    "security": null,
+    "legal": null,
+    "fiscal": null,
+    "kernel": null
+  },
+  "date": "2026-11-08"
+}

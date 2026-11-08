@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "wutrib.pmo.wo.v1",
+  "woId": "WUTRIB-WO-DEV-021",
+  "project": "WU-TRIB",
+  "title": "V1-002: ingestão segura e explicável de XML sintético NF-e modelo 55",
+  "state": "PLANNING_DEVELOPMENT_CANDIDATE_PENDING_KERNEL_ADMISSION",
+  "openedAt": "2026-11-08",
+  "requestedBy": "USER_CONTINUE_PROJECT_20261108",
+  "parents": [
+    "WUTRIB-WO-DEV-020",
+    "WUTRIB-WO-PLAN-019"
+  ],
+  "branch": "wutrib/v1-nfe-xml-ingestion-20261108",
+  "authority": {
+    "localSyntheticDevelopment": true,
+    "newBranch": true,
+    "unitTests": true,
+    "pmoTracking": true,
+    "merge": false,
+    "prod": false,
+    "supabaseWrite": false,
+    "vercelWrite": false,
+    "realFiscalData": false,
+    "kernelAdmitted": false
+  },
+  "sourceRegister": [
+    {
+      "id": "NFE_SCHEMA_OFFICIAL",
+      "url": "https://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?AspxAutoDetectCookieSupport=1&tipoConteudo=BMPFMBoln3w%3D",
+      "fact": "Official XML schema release package 010g v1.03 listed as 2026-10-26",
+      "role": "SCHEMA_DISCOVERY_NOT_XSD_VALIDATION"
+    },
+    {
+      "id": "MOC_7",
+      "url": "https://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=LrBx7WT9PuA%3D",
+      "role": "VERSIONED_XML_SCHEMA_PACKAGES"
+    },
+    {
+      "id": "SAXES",
+      "url": "https://www.npmjs.com/package/saxes",
+      "version": "6.0.0",
+      "role": "NON_VALIDATING_WELL_FORMEDNESS_ONLY"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "DEV-010",
+      "title": "Contrato de origem e matriz de releases NF-e",
+      "status": "PLANNED",
+      "ownerRole": "FISCAL_DATA_ARCHITECT"
+    },
+    {
+      "id": "DEV-011",
+      "title": "Parser XML seguro namespace-aware sintético, fail-closed",
+      "status": "PLANNED",
+      "ownerRole": "ENGINEER"
+    },
+    {
+      "id": "DEV-012",
+      "title": "Integração XML→reconciliador com rastreabilidade SHA",
+      "status": "PLANNED",
+      "ownerRole": "ENGINEER"
+    },
+    {
+      "id": "DEV-013",
+      "title": "Testes negativos/CI, revisão dependência e segurança",
+      "status": "PLANNED",
+      "ownerRole": "QA_SECURITY"
+    },
+    {
+      "id": "DEV-014",
+      "title": "Revisão fiscal, XSD oficial, UAT e autorização",
+      "status": "HOLD_HUMAN",
+      "ownerRole": "FISCAL_AND_CHANGE_AUTHORITY"
+    }
+  ],
+  "riskRegister": [
+    {
+      "id": "FIND-021-01",
+      "risk": "NON_VALIDATING_XML_PARSER",
+      "action": "Never infer XSD, digital-signature, protocol or SEFAZ validity from well-formedness",
+      "status": "OPEN"
+    },
+    {
+      "id": "FIND-021-02",
+      "risk": "DEPENDENCY_SUPPLY_CHAIN",
+      "action": "Pin dependency/lock hash; CI npm ci; audit dependency provenance before release",
+      "status": "OPEN"
+    }
+  ],
+  "evidence": {
+    "programVersion": "0.1.0-rc.0",
+    "ci": null,
+    "approvedBy": null,
+    "codeReviewBy": null
+  },
+  "signoff": {
+    "product": null,
+    "fiscal": null,
+    "security": null,
+    "kernel": null
+  },
+  "releaseDecision": "NO_GO"
+}

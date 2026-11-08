@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
+      - name: Seven deterministic domain agents
+        run: npm run verify
       - name: Existing regression tests
         run: npm test
       - name: Isolated bounded synthetic capacity benchmark

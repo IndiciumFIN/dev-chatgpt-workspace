@@ -8,9 +8,11 @@
 2. [Mapa normativo](FONTES_E_NORMAS.md): referências verificadas e aplicabilidade, sem reprodução dos textos protegidos.
 3. [Plano diretor do ciclo](PLANO_MESTRE_DO_CICLO.md): portas de admissão da WO e governança do planejamento à descontinuação.
 4. [Matriz de responsabilidade](RACI_E_SEGREGACAO.md): elaboradores, revisores, aprovadores e independência.
-5. [Registro canônico](registro-documental.v1.json): inventário de documentos exigidos para o escopo, quem é responsável, quando é requerido, o que falta e vínculos com o legado.
-6. [Modelos individuais](artefatos/): um documento independente por assunto, com objetivo, entradas, conteúdo mínimo, critérios de aceite, evidências exigidas e estado **TEMPLATE**.
-7. [Verificação documental](../../../scripts/check-wutrib-docs.mjs): contrato de integridade e cobertura do inventário, distinto dos testes da aplicação.
+5. [Mapa documental navegável](MAPA_DOCUMENTAL.md): lista de 50 artefatos por gate, responsáveis e lacunas.
+6. [Baseline documental](BASELINE_DOCUMENTAL.md) e [histórico de alterações](REGISTRO_MUDANCAS.md): origem, hashes computados e revisões.
+7. [Registro canônico](registro-documental.v1.json): inventário de documentos exigidos para o escopo, quem é responsável, quando é requerido, o que falta e vínculos com o legado.
+8. [Modelos individuais](artefatos/): um documento independente por assunto, com objetivo, entradas, conteúdo mínimo, critérios de aceite, evidências exigidas e estado **TEMPLATE**.
+9. [Verificação documental](../../../scripts/check-wutrib-docs.mjs): contrato de integridade e cobertura do inventário, distinto dos testes da aplicação.
 
 ## Fonte da verdade e limites
 

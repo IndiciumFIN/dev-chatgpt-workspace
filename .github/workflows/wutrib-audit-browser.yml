@@ -24,7 +24,7 @@ jobs:
         run: |
           python3 -m venv "$RUNNER_TEMP/wutrib-audit-venv"
           source "$RUNNER_TEMP/wutrib-audit-venv/bin/activate"
-          pip install 'playwright==1.56.0'
+          pip install 'playwright==1.61.0'
           python -m playwright install --with-deps chromium
       - name: Run existing browser acceptance in managed Chromium
         run: |

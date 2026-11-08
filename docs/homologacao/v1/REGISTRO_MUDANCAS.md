@@ -9,6 +9,8 @@
 
 | 2026-11-08 | 0.2.0 (planejamento dos validadores v0.3.0) | Replanejamento em 28 candidatos, meta-validação, 37 referências canônicas, COSO ICIF/ERM/GenAI, COBIT, IIA, OMG MOF, normas de IA, master data e amostragem; D051-D054 ainda propostos | Branch wutrib/validators-strategy-v03-20261108 | Somente documentos DRAFT, sem execução, homologação, merge ou produção. |
 
+| 2026-11-08 | 0.3.0 (extensão funcional EXP v0.1.0) | Benchmark de soluções e ideias; 22 motores e 33 cenários futuros; comparação tributária entre períodos com separação de variação observada, legal, de parâmetro e de mix | Branch wutrib/expansion-analytics-plan-20261108 | Exclusivamente documental, sem alteração de aplicação, regras, banco, testes ou deploy. |
+
 ## Regras para próximas revisões
 
 Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão, autor e revisor. Um documento aprovado não é substituído silenciosamente; criar revisão e preservar hash/commit do anterior. No processo de release, gravar manifesto por commit SHA e decisão assinada.

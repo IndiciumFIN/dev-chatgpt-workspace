@@ -1,0 +1,27 @@
+name: WU-TRIB | audit-only browser main-thread capacity
+on:
+  push:
+    branches:
+      - wutrib/audit-integral-20261108
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui-capacity:
+    if: github.ref == 'refs/heads/wutrib/audit-integral-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install audited Playwright
+        run: |
+          python3 -m venv "$RUNNER_TEMP/wutrib-browser-capacity"
+          source "$RUNNER_TEMP/wutrib-browser-capacity/bin/activate"
+          pip install 'playwright==1.61.0'
+          python -m playwright install --with-deps chromium
+      - name: Run capacity with synthetic fixtures and no real HTTP
+        run: |
+          source "$RUNNER_TEMP/wutrib-browser-capacity/bin/activate"
+          timeout 160s python -u benchmarks/browser_capacity_audit.py

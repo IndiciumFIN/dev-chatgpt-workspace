@@ -31,3 +31,8 @@ Este pacote inaugura os modelos e registra os gaps. Ele **não** afirma que 100%
 ## Próximo uso
 
 Preencher cada artefato com dados verificáveis e referenciar os IDs na RTM e na WO. Aplicar o checklist de admissão antes de mudar `TEMPLATE` para `DRAFT`, nunca por importação automática. Conforme os gates avançam, obter revisão técnica independente e sign-off.
+
+
+## Extensão em revisão — validadores e metodologias
+
+[Plano diretor de validadores v0.3.0](PLANO_AUDITORIA_COM_VALIDADORES.md) e [índice do pacote especializado](validadores/README.md) têm status **DRAFT** e são associados à WO-018. O registro documental v0.2.0 vincula seis arquivos desse pacote sem transformá-los nos 50 modelos homologados. Quatro modelos adicionais D051–D054 estão **propostos e ainda não criados**. As referências normativas foram ampliadas para 37 metadados canônicos, sem afirmação de acesso licenciado integral.

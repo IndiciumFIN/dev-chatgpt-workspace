@@ -37,9 +37,10 @@ function requireKey(key,source) {if(!validKey(key))fail(source+': chave de 44 d�
 function strictContext(metadata) {
   if(!metadata||metadata.contract!==CONTRACT||metadata.syntheticOnly!==true)fail('Contrato synthetic-only não confirmado.');
   if(typeof metadata.organization!=='string'||!/^SYNTH-[A-Z0-9-]{3,40}$/.test(metadata.organization))fail('Organização não sintética ou ausente.');
-  if(!/^\d{4}-\d\d$/.test(metadata.period||'')||!/^20\d\d-\d\d$/.test(metadata.period))fail('Competência inválida.');
+  if(!/^20\d{2}-(0[1-9]|1[0-2])$/.test(metadata.period||''))fail('Competência inválida.');
   if(!/^\d{3}$/.test(metadata.codVer||''))fail('COD_VER ausente.');
   if(!/^SYNTH-[A-Z0-9.]{3,40}$/.test(metadata.erpRelease||''))fail('Release ERP precisa ser sintético.');
+  if(metadata.sourceClassification!=='UNREAL_MOCK_DATA_NOT_AUTHORIZED_TAX_DOCUMENTS')fail('Classificação synthetic-only não confirmada.');
   if(!['SP','RJ','MG','PR','RS','SC','BA','ES','PE','CE'].includes(metadata.uf))fail('UF fora do contrato sintético piloto.');
 }
 function colsOf(line) {if(!line.startsWith('|')||!line.endsWith('|'))fail('Linha EFD sem delimitadores.');return line.split('|');}

@@ -1,0 +1,386 @@
+{
+  "schemaVersion": "wutrib.metamodel.physical-audit.v1",
+  "verifiedOn": "2026-11-08",
+  "scope": "ONLY WUTRIB PRIVATE SCHEMA IN SOT PROJECT, NOT ERP",
+  "projectRef": "hcqukuotfwflmebjygam",
+  "layer": "PHYSICAL_FOREIGN_KEY_AUDIT_SNAPSHOT",
+  "normativeSemantics": "NOT_VERIFIED",
+  "effectiveRules": "NONE_REGISTERED",
+  "ontology": "NOT_HOMOLOGATED",
+  "changeControl": "WUTRIB-WO-PLAN-017",
+  "inventory": "The full wutrib schema has 41 tables, 333 columns and 66 foreign keys; listed entities and edges are a documented subset only.",
+  "entities": [
+    {
+      "name": "audit_findings",
+      "physicalTable": "wutrib.audit_findings",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "audit_rule_sources",
+      "physicalTable": "wutrib.audit_rule_sources",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "audit_rule_versions",
+      "physicalTable": "wutrib.audit_rule_versions",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "audit_rules",
+      "physicalTable": "wutrib.audit_rules",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "audit_run_rule_versions",
+      "physicalTable": "wutrib.audit_run_rule_versions",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "audit_runs",
+      "physicalTable": "wutrib.audit_runs",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "business_entities",
+      "physicalTable": "wutrib.business_entities",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "demo_org_casefiles_v1",
+      "physicalTable": "wutrib.demo_org_casefiles_v1",
+      "domain": "SYNTHETIC_SANDBOX",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "demo_org_memberships_v1",
+      "physicalTable": "wutrib.demo_org_memberships_v1",
+      "domain": "SYNTHETIC_SANDBOX",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "finding_evidence",
+      "physicalTable": "wutrib.finding_evidence",
+      "domain": "AUDIT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "fiscal_document_items",
+      "physicalTable": "wutrib.fiscal_document_items",
+      "domain": "FISCAL_INPUT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "fiscal_documents",
+      "physicalTable": "wutrib.fiscal_documents",
+      "domain": "FISCAL_INPUT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "fiscal_tax_lines",
+      "physicalTable": "wutrib.fiscal_tax_lines",
+      "domain": "FISCAL_INPUT",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "ingest_artifacts",
+      "physicalTable": "wutrib.ingest_artifacts",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "ingest_jobs",
+      "physicalTable": "wutrib.ingest_jobs",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "normative_sources",
+      "physicalTable": "wutrib.normative_sources",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "project_registry",
+      "physicalTable": "wutrib.project_registry",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "source_contracts",
+      "physicalTable": "wutrib.source_contracts",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "source_systems",
+      "physicalTable": "wutrib.source_systems",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "trace_edges",
+      "physicalTable": "wutrib.trace_edges",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "trace_nodes",
+      "physicalTable": "wutrib.trace_nodes",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "wo_tasks",
+      "physicalTable": "wutrib.wo_tasks",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    },
+    {
+      "name": "work_orders",
+      "physicalTable": "wutrib.work_orders",
+      "domain": "STRUCTURE",
+      "semanticValidation": "NOT_HOMOLOGATED"
+    }
+  ],
+  "relationships": [
+    {
+      "constraint": "source_contracts_source_id_fkey",
+      "from": "source_contracts",
+      "to": "source_systems",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "ingest_jobs_source_id_project_code_fkey",
+      "from": "ingest_jobs",
+      "to": "source_systems",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "ingest_jobs_contract_id_source_id_fkey",
+      "from": "ingest_jobs",
+      "to": "source_contracts",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "ingest_jobs_entity_id_project_code_fkey",
+      "from": "ingest_jobs",
+      "to": "business_entities",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "ingest_jobs_project_code_fkey",
+      "from": "ingest_jobs",
+      "to": "project_registry",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "ingest_artifacts_ingest_job_id_fkey",
+      "from": "ingest_artifacts",
+      "to": "ingest_jobs",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "fiscal_documents_ingest_job_id_fkey",
+      "from": "fiscal_documents",
+      "to": "ingest_jobs",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "fiscal_documents_artifact_id_ingest_job_id_fkey",
+      "from": "fiscal_documents",
+      "to": "ingest_artifacts",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "fiscal_document_items_document_id_fkey",
+      "from": "fiscal_document_items",
+      "to": "fiscal_documents",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "fiscal_tax_lines_document_id_fkey",
+      "from": "fiscal_tax_lines",
+      "to": "fiscal_documents",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "fiscal_tax_lines_document_id_item_number_fkey",
+      "from": "fiscal_tax_lines",
+      "to": "fiscal_document_items",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "audit_rule_versions_rule_id_fkey",
+      "from": "audit_rule_versions",
+      "to": "audit_rules",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "audit_rule_sources_normative_source_id_fkey",
+      "from": "audit_rule_sources",
+      "to": "normative_sources",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "audit_rule_sources_rule_version_id_fkey",
+      "from": "audit_rule_sources",
+      "to": "audit_rule_versions",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "audit_findings_run_id_fkey",
+      "from": "audit_findings",
+      "to": "audit_runs",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "audit_findings_run_id_rule_version_id_fkey",
+      "from": "audit_findings",
+      "to": "audit_run_rule_versions",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "finding_evidence_finding_id_fkey",
+      "from": "finding_evidence",
+      "to": "audit_findings",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "finding_evidence_document_id_fkey",
+      "from": "finding_evidence",
+      "to": "fiscal_documents",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "finding_evidence_artifact_id_fkey",
+      "from": "finding_evidence",
+      "to": "ingest_artifacts",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "finding_evidence_normative_source_id_fkey",
+      "from": "finding_evidence",
+      "to": "normative_sources",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "wo_tasks_wo_code_fkey",
+      "from": "wo_tasks",
+      "to": "work_orders",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "demo_org_casefiles_v1_org_code_actor_id_fkey",
+      "from": "demo_org_casefiles_v1",
+      "to": "demo_org_memberships_v1",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "trace_edges_from_node_id_project_code_fkey",
+      "from": "trace_edges",
+      "to": "trace_nodes",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "trace_edges_to_node_id_project_code_fkey",
+      "from": "trace_edges",
+      "to": "trace_nodes",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    },
+    {
+      "constraint": "trace_edges_project_code_fkey",
+      "from": "trace_edges",
+      "to": "project_registry",
+      "direction": "FK_REFERENCE",
+      "confidence": "CONFIRMED_FROM_PG_CONSTRAINT",
+      "meaning": "REFERENTIAL_INTEGRITY_ONLY"
+    }
+  ],
+  "expectedLifecycle": [
+    {
+      "stage": "PLANNING",
+      "status": "DATABASE_ENUM_ONLY"
+    },
+    {
+      "stage": "CANDIDATE",
+      "status": "DATABASE_ENUM_ONLY"
+    },
+    {
+      "stage": "VALIDATION",
+      "status": "DATABASE_ENUM_ONLY"
+    },
+    {
+      "stage": "ADMITTED",
+      "status": "DATABASE_ENUM_ONLY"
+    },
+    {
+      "stage": "HOLD",
+      "status": "DATABASE_ENUM_ONLY"
+    },
+    {
+      "stage": "CLOSED",
+      "status": "DATABASE_ENUM_ONLY"
+    }
+  ],
+  "strictGates": {
+    "fiscalConformity": "NOT_EVALUATED",
+    "productionUse": "HOLD_HUMAN",
+    "dataIngestion": "NOT_OPERATIONAL",
+    "ruleAuthorizations": "NOT_DEMONSTRATED"
+  }
+}

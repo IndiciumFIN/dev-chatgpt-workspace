@@ -1,6 +1,7 @@
 import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';
 import {demoXMLs,demoEFD} from './fixtures.js';
 import {createTriageLedger,recordTriage,TRIAGE_LABELS,dossierWithTriage,findingsCSVWithTriage,MAX_REVIEW_NOTE} from './triage.js';
+import {paginateFindings,FINDINGS_PAGE_SIZE} from './findings-pagination.js';
 const $=id=>document.getElementById(id);
 const fmtMoney=value => Number(value??0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const labels={overview:'Visão geral',import:'Importar dados',audit:'Execução de auditoria',findings:'Achados e investigação',sources:'Fontes e contratos',governance:'Governança e WOs'};
@@ -10,6 +11,7 @@ let report=null;let selectedId=null;let currentView='overview';let toastTimer=nu
 let xmlSelectionCount=xmlInputs.length;let xmlErrors=[];let efdErrors=[];let lastAttemptInvalid=false;
 let xmlReadVersion=0;let efdReadVersion=0;
 let triageLedger=createTriageLedger();
+let findingsPage=0;
 function clearTriage(){triageLedger=createTriageLedger();}
 function showToast(message){const el=$('toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.hidden=true},4500)}
 function go(view){
@@ -20,7 +22,11 @@ function go(view){
  $('breadcrumb-current').textContent=labels[view];
  $('sidebar').classList.remove('open');
  $('menu-toggle').setAttribute('aria-expanded','false');
- if(view==='findings')renderFindings();
+ if(view==='findings'){
+  const index=report?.findings.findIndex(f=>f.id===selectedId)??-1;
+  if(index>=0)findingsPage=Math.floor(index/FINDINGS_PAGE_SIZE);
+  renderFindings();
+ }
  window.scrollTo({top:0,behavior:'instant'});
 }
 function renderWarnings(target,lines){
@@ -90,10 +96,15 @@ function renderFindings(){
  const term=$('finding-search').value.trim().toLowerCase(), severity=$('severity-filter').value,triage=$('triage-filter').value;
  const found=report.findings.filter(f=>(severity==='ALL'||f.severity===severity)&&(triage==='ALL'||(triageLedger.reviews.get(f.id)?.status||'PENDING')===triage)&&
   [f.id,f.title,f.description,f.kind,f.context?.key,f.hypothesis].some(v=>String(v||'').toLowerCase().includes(term)));
- $('result-count').textContent=`${found.length} achado(s)`;
+ const page=paginateFindings(found,findingsPage);
+ findingsPage=page.page;
+ $('result-count').textContent=`${found.length} achado(s) · exibindo ${page.total?page.from+1:0}–${page.to}`;
  $('findings-empty').hidden=Boolean(found.length);
+ $('findings-page-status').textContent=`Página ${page.page+1} de ${page.pages}`;
+ $('findings-prev').disabled=!page.hasPrevious;
+ $('findings-next').disabled=!page.hasNext;
  const table=$('findings-table');table.replaceChildren();
- found.forEach(f=>{
+ page.items.forEach(f=>{
   const row=document.createElement('tr');row.classList.toggle('selected',f.id===selectedId);
   const first=document.createElement('td');const open=document.createElement('button');
   open.type='button';open.className='table-open';open.setAttribute('aria-label',`Investigar ${f.title}`);
@@ -105,7 +116,7 @@ function renderFindings(){
   const fourth=document.createElement('td');fourth.textContent='→';row.append(first,second,third,fourth);
   open.addEventListener('click',()=>{selectedId=f.id;renderFindings()});table.append(row);
  });
- const selected=found.find(f=>f.id===selectedId)||found[0]||null;
+ const selected=page.items.find(f=>f.id===selectedId)||page.items[0]||null;
  if(selected)selectedId=selected.id;
  renderFindingDetail(selected);
 }
@@ -125,6 +136,7 @@ function doAudit(){
  }
  report.demoOnly=true;report.sourceFiles={xml:xmlInputs.map(x=>x.name),efd:efdInput?.name??null};
  selectedId=report.findings[0]?.id??null;
+ findingsPage=0;
  renderOverview();renderFindings();renderWarnings('import-warnings',report.warnings);
  $('xml-selected').textContent=xmlErrors.length?'Lote XML incompleto — consulte as advertências':`${xmlInputs.length} XML(s) selecionado(s)`;
  $('efd-selected').textContent=efdInput?.name||'Nenhuma EFD selecionada';
@@ -178,9 +190,12 @@ function init(){
  $('reset-demo').addEventListener('click',()=>{clearTriage();xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};xmlSelectionCount=xmlInputs.length;xmlErrors=[];efdErrors=[];xmlReadVersion++;efdReadVersion++;$('xml-files').value='';$('efd-file').value='';doAudit()});
  $('xml-files').addEventListener('change',e=>readXmlFiles(e.target.files));
  $('efd-file').addEventListener('change',e=>readEFD(e.target.files));
- $('finding-search').addEventListener('input',renderFindings);
- $('severity-filter').addEventListener('change',renderFindings);
- $('triage-filter').addEventListener('change',renderFindings);
+ const resetFindingPage=()=>{findingsPage=0;selectedId=null;renderFindings()};
+ $('finding-search').addEventListener('input',resetFindingPage);
+ $('severity-filter').addEventListener('change',resetFindingPage);
+ $('triage-filter').addEventListener('change',resetFindingPage);
+ $('findings-prev').addEventListener('click',()=>{findingsPage=Math.max(0,findingsPage-1);selectedId=null;renderFindings()});
+ $('findings-next').addEventListener('click',()=>{findingsPage++;selectedId=null;renderFindings()});
  $('export-csv').addEventListener('click',()=>{if(report){saveBlob('wutrib-achados-ficticios.csv',findingsCSVWithTriage(report,triageLedger),'text/csv;charset=utf-8');showToast('CSV demonstrativo exportado.')}});
  $('export-json').addEventListener('click',()=>{if(report){saveBlob('wutrib-dossie-demonstrativo.json',JSON.stringify(dossierWithTriage(report,triageLedger),null,2),'application/json;charset=utf-8');showToast('Dossiê JSON demonstrativo exportado.')}});
  doAudit();go('overview');

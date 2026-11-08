@@ -1,4 +1,4 @@
-name: WU-TRIB v0.4 candidate - private synthetic persistence
+name: WU-TRIB v0.4.1 candidate - server validation and quota
 on:
   push:
     branches: [wutrib/demo-persistence-v04-20261108]
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # pinned
         with:
           node-version: '22'
-      - name: Five deterministic agents
+      - name: Six deterministic agents
         run: npm run verify
       - name: Existing and new Node tests
         run: npm test
@@ -26,6 +26,10 @@ jobs:
           grep -q 'security invoker' db/wutrib_demo_v04.sql
           grep -q 'revoke execute' db/wutrib_demo_v04.sql
           grep -q 'DEMO_PERSISTENCE_DISABLED' api/demo-casefiles.js
+          grep -q 'demo_casefiles_strict_fixture_v041' db/wutrib_demo_v041_hardening.sql
+          grep -q 'revoke execute on function public.wutrib_demo_casefile_save_v1' db/wutrib_demo_v041_hardening.sql
+          grep -q 'wutrib_demo_casefile_save_v2' api/demo-casefiles.js
+          grep -q 'wutrib_demo_request_gate_v1' api/demo-casefiles.js
           echo 'Candidate requires separate DDL and credentials gates before API activation'
 
       - name: HTTPS smoke on isolated v0.4 candidate (no credentials)

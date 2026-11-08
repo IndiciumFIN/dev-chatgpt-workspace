@@ -1,22 +1,34 @@
 /**
- * Agente: layout-engine.mjs
- * Especialização: Engines de leiaute SPED e XML
- * Suporte: Guia Prático, XSD, MOC | COSO Control Activities
- * Premissa: Gera estrutura de validação. Não conclui conformidade.
+ * Agente corrigido: layout-engine.mjs
+ * Gera schema mínimo + stub de engine estrutural baseado em campos públicos do Guia Prático (C100) e estrutura NF-e.
+ * COSO Control Activities | COBIT APO13
+ * Não conclui conformidade. Status TEMPLATE.
  */
 import { writeFileSync } from 'fs';
 
-const layoutSpec = {
-  schemaVersion: 'wutrib.layout-engine.v1',
-  status: 'TEMPLATE',
-  approved_by: 'NONE',
-  supported: [
-    { type: 'EFD_ICMS_IPI', version: 'COD_VER_PENDENTE', validation: 'STRUCTURAL_ONLY' },
-    { type: 'NFE_XML', version: 'PACOTE_PENDENTE', validation: 'SYNTACTIC_ONLY' }
-  ],
-  residualRisk: 'Leiaute oficial não homologado'
+const schema = {
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  $id: 'wutrib.layout.c100.v1',
+  type: 'object',
+  properties: {
+    key: { type: 'string', pattern: '^\\d{44}$' },
+    number: { type: 'string' },
+    amount: { type: 'number' }
+  },
+  required: ['key', 'amount']
 };
 
-writeFileSync('artifacts/layout-engine-spec.v1.json', JSON.stringify(layoutSpec, null, 2));
-console.log(JSON.stringify({ agent: 'layout-engine', status: 'PASS', output: 'artifacts/layout-engine-spec.v1.json' }));
+const engineStub = {
+  schemaVersion: 'wutrib.layout-engine.v1.1',
+  status: 'TEMPLATE',
+  approved_by: 'NONE',
+  validationLevel: 'STRUCTURAL_ONLY',
+  captures: ['invalid_key_length', 'non_numeric_amount', 'missing_0000'],
+  residualRisk: 'Leiaute completo e XSD não implementados',
+  sourceReference: 'Guia Prático EFD (campos públicos C100) + estrutura infNFe'
+};
+
+writeFileSync('artifacts/layout-c100.schema.json', JSON.stringify(schema, null, 2));
+writeFileSync('artifacts/layout-engine-spec.v1.json', JSON.stringify(engineStub, null, 2));
+console.log(JSON.stringify({ agent: 'layout-engine', status: 'PASS', outputs: ['layout-c100.schema.json', 'layout-engine-spec.v1.json'] }));
 process.exit(0);

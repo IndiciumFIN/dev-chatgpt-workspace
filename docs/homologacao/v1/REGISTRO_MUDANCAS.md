@@ -14,3 +14,6 @@ Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão
 **Sem atualização retroativa das fontes históricas.** O histórico de versões v0.1–v0.4 do piloto permanece nos arquivos GitHub e na tabela de documentação legada do SOT; a nova estrutura adiciona controle, não reescreve o passado.
 
 **Próxima revisão planejada:** após alocação das alçadas, fechamento das decisões de aplicabilidade e conclusão da conciliação semântica das 14 entradas SOT. Sem data prometida ou aprovação automática.
+
+
+| 2026-11-08 | 0.2.0 (planejamento dos validadores v0.3.0) | Replanejamento em 28 candidatos, meta-validação, 37 referências canônicas, COSO ICIF/ERM/GenAI, COBIT, IIA, OMG MOF, normas de IA, master data e amostragem; D051-D054 ainda propostos | Branch wutrib/validators-strategy-v03-20261108 | Somente documentos DRAFT, sem execução, homologação, merge ou produção. |

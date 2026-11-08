@@ -23,6 +23,7 @@ def route_fn(route):
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
+    failures=[]
     for title,width,height in [('desktop',1440,900),('mobile',390,844)]:
         page=browser.new_page(viewport={'width':width,'height':height})
         page.route('**/*',route_fn)
@@ -46,5 +47,9 @@ with sync_playwright() as p:
             result['viewport']=title
             result['panel']=panel
             print('WUTRIB_A11Y_AUDIT='+json.dumps(result,ensure_ascii=False))
+            if result['violations']:
+                failures.append((title,panel,[v['id'] for v in result['violations']]))
         page.close()
     browser.close()
+    assert not failures, 'Axe WCAG 2.2 A/AA violations: '+repr(failures)
+    print('WUTRIB_WCAG_AUTOMATED_GATE=PASS 12 viewport/panel combinations; manual review still HOLD')

@@ -17,6 +17,8 @@
 
 | 2026-11-08 | Registro canônico 0.6.0 / WU-TRIB baseline de escopo V1.0.0-rc.0 | Avaliação de 2 pesquisas (hash real), 39 macrotemas com destino, reconstrução de 21 registros com campos deslocados em catálogo de 22 módulos, 5 ledgers, 30 testes futuros/7 gates, 27 fontes e 20 decisões; 10 arquivos novos | Branch wutrib/v1-scope-freeze-candidate-20261108 | CANDIDATE_UNAPPROVED, sem alteração de ferramenta, sem testes de runtime e sem publicação. |
 
+| 2026-11-08 | Registro documental 0.7.0 / revisão comparativa normativa V1 v0.1.0 | 8 artefatos documentais com 19 referências técnicas, benchmark de 12 grupos de plataformas, matriz de 26 lacunas (17 bloqueios propostos), qualidade em 9 características e contratos de EFD C170/TOTVS IDTRIB | wutrib/v1-normative-benchmark-assurance-20261108 | DRAFT; V1.0.0-rc.0 preservada, sem implementação, teste de software, merge ou deploy. |
+
 ## Regras para próximas revisões
 
 Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão, autor e revisor. Um documento aprovado não é substituído silenciosamente; criar revisão e preservar hash/commit do anterior. No processo de release, gravar manifesto por commit SHA e decisão assinada.

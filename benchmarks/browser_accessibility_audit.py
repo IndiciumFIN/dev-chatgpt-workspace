@@ -29,17 +29,22 @@ with sync_playwright() as p:
         page.goto(BASE+'/',wait_until='load',timeout=30000)
         page.wait_for_function("document.querySelector('#metric-xml')?.textContent === '3'",timeout=30000)
         page.add_script_tag(url=BASE+'/node_modules/axe-core/axe.min.js')
-        result=page.evaluate("""async()=>{
-          const r=await axe.run(document,{
-            runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}
-          });
-          return {violations:r.violations.map(v=>({id:v.id,impact:v.impact,
-            affected:v.nodes.length,description:v.help})),
-            incomplete:r.incomplete.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.length})),
-            passes:r.passes.length};
-        }""")
-        result['view']=title
-        print('WUTRIB_A11Y_AUDIT='+json.dumps(result,ensure_ascii=False))
-        # Report violations rather than declaring all accessibility compliance.
+        # Exercise all six navigation panels, not only the landing page.
+        for panel in ['overview','import','audit','findings','sources','governance']:
+            page.evaluate("(panel)=>document.querySelector('nav button[data-view=\"'+panel+'\"]').click()",panel)
+            result=page.evaluate("""async()=>{
+              const r=await axe.run(document,{
+                runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}
+              });
+              return {violations:r.violations.map(v=>({id:v.id,impact:v.impact,
+                affected:v.nodes.length,description:v.help,
+                selectors:v.nodes.slice(0,18).map(n=>({target:n.target,
+                    messages:(n.any||[]).slice(0,2).map(x=>x.message)}))})),
+                incomplete:r.incomplete.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.length})),
+                passes:r.passes.length};
+            }""")
+            result['viewport']=title
+            result['panel']=panel
+            print('WUTRIB_A11Y_AUDIT='+json.dumps(result,ensure_ascii=False))
         page.close()
     browser.close()

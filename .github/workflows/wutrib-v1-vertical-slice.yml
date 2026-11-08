@@ -1,0 +1,74 @@
+name: WU-TRIB | V1 synthetic vertical slice
+on:
+  push:
+    branches:
+      - wutrib/v1-vertical-slice-dev-20261108
+    paths:
+      - 'src/v1/**'
+      - 'tests/v1-vertical.test.mjs'
+      - 'tests/fixtures/v1-synthetic-case.mjs'
+      - 'scripts/demo-v1-crosscheck.mjs'
+      - 'PMO/WUTRIB/**'
+      - '.github/workflows/wutrib-v1-vertical-slice.yml'
+  pull_request:
+    branches:
+      - wutrib/pmo-v1-controller-20261108
+    paths:
+      - 'src/v1/**'
+      - 'tests/v1-vertical.test.mjs'
+      - 'tests/fixtures/v1-synthetic-case.mjs'
+      - 'scripts/demo-v1-crosscheck.mjs'
+      - 'PMO/WUTRIB/**'
+      - '.github/workflows/wutrib-v1-vertical-slice.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wutrib-v1-vertical
+  cancel-in-progress: true
+
+jobs:
+  v1-synthetic-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout without credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Validate ESM syntax
+        run: |
+          node --check src/v1/vertical-core.mjs
+          node --check tests/fixtures/v1-synthetic-case.mjs
+          node --check tests/v1-vertical.test.mjs
+          node --check scripts/demo-v1-crosscheck.mjs
+      - name: Run V1 functional and negative synthetic tests
+        run: node --test tests/v1-vertical.test.mjs
+      - name: Re-run existing core regression tests
+        run: npm test
+      - name: Test existing PMO deterministic agent
+        run: node --test PMO/WUTRIB/tests/pmo-controller.test.mjs
+      - name: Execute synthetic demo with strict non-regulatory assertion
+        run: |
+          node scripts/demo-v1-crosscheck.mjs > /tmp/wutrib-v1-result.json
+          node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            const r=JSON.parse(readFileSync("/tmp/wutrib-v1-result.json","utf8"));
+            if(r.syntheticOnly!==true || r.fiscalConformity!=="NOT_EVALUATED" || r.noAutomaticApproval!==true || r.workpaper.approvedBy!==null)
+              process.exit(1);
+            console.log(JSON.stringify({status:r.status,totals:r.totals,hash:r.provenance.inputDigest,workpaper:r.workpaper.state}));
+          '
+      - name: Publish synthetic result as traceable CI artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wutrib-v1-synthetic-result
+          path: /tmp/wutrib-v1-result.json
+          retention-days: 14
+      - name: Explicit no-production boundary
+        run: echo 'Synthetic offline checks only. No real ERP, no SEFAZ, no database migration, no Vercel deploy or fiscal approval.'

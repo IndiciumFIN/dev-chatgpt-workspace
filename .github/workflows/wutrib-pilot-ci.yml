@@ -25,12 +25,13 @@ jobs:
         run: npm test
       - name: Verify isolated Vercel HTTPS preview
         env:
-          PREVIEW_URL: https://wutrib-auditor-web-piloto-ha7rhw7ix-leivisml-7739s-projects.vercel.app
+          PREVIEW_URL: https://wutrib-auditor-web-piloto-hjcqxcqys-leivisml-7739s-projects.vercel.app
         run: |
           set -euo pipefail
           curl --fail --silent --show-error --location --retry 2 --connect-timeout 10 --max-time 30 "$PREVIEW_URL/" -o /tmp/wutrib-page.html
           grep -q 'WU-TRIB' /tmp/wutrib-page.html
           grep -q 'src/ui.js' /tmp/wutrib-page.html
+          grep -q 'v0.2.1' /tmp/wutrib-page.html
           for path in /styles.css /src/ui.js /src/audit.js /src/fixtures.js; do
             curl --fail --silent --show-error --location --retry 2 --connect-timeout 10 --max-time 30 "$PREVIEW_URL$path" -o /dev/null
           done

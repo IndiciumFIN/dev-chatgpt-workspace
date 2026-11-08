@@ -43,13 +43,24 @@ with sync_playwright() as p:
             elapsed=(monotonic()-stamp)*1000
             stats=page.evaluate("""()=>{
               return {rows:document.querySelectorAll('#findings-table tr').length,
+                total_count:document.querySelector('#result-count')?.textContent,
+                page_status:document.querySelector('#findings-page-status')?.textContent,
                 dom_nodes:document.querySelectorAll('*').length,
                 js_heap_mib:performance.memory?+(performance.memory.usedJSHeapSize/1048576).toFixed(1):null,
                 status:document.querySelector('#import-state')?.textContent
               }
             }""")
-            assert stats['rows'] >= count
+            assert stats['rows'] <= 50, 'render window must be bounded'
+            assert stats['rows'] == 50
+            assert stats['dom_nodes'] < 4000, 'DOM may not scale with all records'
+            assert stats['page_status'].startswith('Página 1 de ')
+            assert str(count) in stats['total_count']
             assert stats['status'] == 'PROCESSAMENTO LOCAL'
+            page.locator('#findings-next').click()
+            assert page.locator('#findings-page-status').inner_text().startswith('Página 2 de ')
+            assert page.locator('#findings-table tr').count() == 50
+            page.locator('#findings-prev').click()
+            assert page.locator('#findings-page-status').inner_text().startswith('Página 1 de ')
             print('WUTRIB_UI_CAPACITY='+json.dumps(dict(
                 records=count,input_bytes=len(raw),elapsed_ms=round(elapsed,2),**stats
             )))

@@ -35,6 +35,7 @@ O conjunto [v0.1.0](../README.md) continua íntegro e referenciável no commit `
 - [Contratos de dados](CONTRATO_DATASET_v02.schema.json) e [de execução](CONTRATO_EXECUCAO_v02.schema.json) — JSON Schema *de planejamento*, sem migração de banco.
 - [Registro de fontes técnicas](FONTES_OFICIAIS_v02.json) — links oficiais e limites de evidência.
 - [Manifesto de revisão](MANIFESTO_EXPANSAO_v02.json) — IDs, estados, referências, checkpoints, próximos gates.
+- [Controle de versões e gates](VERSIONAMENTO_E_GATES_v02.md) — política, preservação de v0.1.0, pré-condições e aceite.
 
 ## Fronteiras e versões
 

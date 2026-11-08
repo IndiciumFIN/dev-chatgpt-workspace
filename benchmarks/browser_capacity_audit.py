@@ -56,6 +56,7 @@ with sync_playwright() as p:
             assert stats['page_status'].startswith('Página 1 de ')
             assert str(count+3) in stats['total_count'], '3 existing XML fixtures must remain unmatched'
             assert stats['status'] == 'PROCESSAMENTO LOCAL'
+            page.locator('nav button[data-view="findings"]').click()
             page.locator('#findings-next').click()
             assert page.locator('#findings-page-status').inner_text().startswith('Página 2 de ')
             assert page.locator('#findings-table tr').count() == 50

@@ -1,5 +1,6 @@
 import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';
 import {demoXMLs,demoEFD} from './fixtures.js';
+import {createTriageLedger,recordTriage,TRIAGE_LABELS,dossierWithTriage,findingsCSVWithTriage,MAX_REVIEW_NOTE} from './triage.js';
 const $=id=>document.getElementById(id);
 const fmtMoney=value => Number(value??0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const labels={overview:'Visão geral',import:'Importar dados',audit:'Execução de auditoria',findings:'Achados e investigação',sources:'Fontes e contratos',governance:'Governança e WOs'};
@@ -8,6 +9,8 @@ let efdInput={name:'efd-ficticia.txt',content:demoEFD};
 let report=null;let selectedId=null;let currentView='overview';let toastTimer=null;
 let xmlSelectionCount=xmlInputs.length;let xmlErrors=[];let efdErrors=[];let lastAttemptInvalid=false;
 let xmlReadVersion=0;let efdReadVersion=0;
+let triageLedger=createTriageLedger();
+function clearTriage(){triageLedger=createTriageLedger();}
 function showToast(message){const el=$('toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.hidden=true},4500)}
 function go(view){
  if(!labels[view])return;
@@ -60,11 +63,32 @@ function renderFindingDetail(f){
  ['REVISÃO','ABERTA. O piloto não grava decisões nem aprovações.']
  ];
  blocks.forEach(([label,value])=>{const sec=document.createElement('section');sec.className='detail-section';const t=document.createElement('h3');t.textContent=label;const v=document.createElement('p');v.textContent=value;sec.append(t,v);root.append(sec)});
+ const current=triageLedger.reviews.get(f.id);
+ const sec=document.createElement('section');sec.className='detail-section triage-section';
+ const title=document.createElement('h3');title.textContent='ANOTAÇÃO DE REVISÃO · SOMENTE NESTA SESSÃO';
+ const note=document.createElement('p');note.className='triage-disclaimer';note.textContent='Registro de teste sem aprovação, sem validação fiscal e sem salvamento no servidor. Exporte o dossiê antes de fechar esta página.';
+ const form=document.createElement('form');form.className='triage-form';form.id='triage-form';
+ const selectLabel=document.createElement('label');selectLabel.htmlFor='triage-status';selectLabel.textContent='Situação da investigação';
+ const select=document.createElement('select');select.id='triage-status';
+ Object.entries(TRIAGE_LABELS).forEach(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option)});
+ select.value=current?.status||'PENDING';
+ const noteLabel=document.createElement('label');noteLabel.htmlFor='triage-note';noteLabel.textContent='Observação (não representa conclusão fiscal)';
+ const area=document.createElement('textarea');area.id='triage-note';area.rows=4;area.maxLength=MAX_REVIEW_NOTE;
+ area.placeholder='Descreva o que precisa ser investigado. Não insira dados empresariais reais.';area.value=current?.note||'';
+ const action=document.createElement('button');action.type='submit';action.className='button button-dark';action.textContent='Registrar anotação local';
+ const hint=document.createElement('small');hint.className='triage-hint';hint.textContent=current?`Revisão local nº ${current.sequence}. Recarregar a página elimina as notas.`:'Ainda não existe anotação para este achado.';
+ form.append(selectLabel,select,noteLabel,area,action,hint);
+ form.addEventListener('submit',event=>{
+  event.preventDefault();
+  try{recordTriage(triageLedger,report,f.id,select.value,area.value);renderFindings();showToast('Anotação registrada apenas nesta sessão. Não é aprovação fiscal.');}
+  catch(err){showToast(err.message);select.focus();}
+ });
+ sec.append(title,note,form);root.append(sec);
 }
 function renderFindings(){
  if(!report)return;
- const term=$('finding-search').value.trim().toLowerCase(), severity=$('severity-filter').value;
- const found=report.findings.filter(f=>(severity==='ALL'||f.severity===severity)&&
+ const term=$('finding-search').value.trim().toLowerCase(), severity=$('severity-filter').value,triage=$('triage-filter').value;
+ const found=report.findings.filter(f=>(severity==='ALL'||f.severity===severity)&&(triage==='ALL'||(triageLedger.reviews.get(f.id)?.status||'PENDING')===triage)&&
   [f.id,f.title,f.description,f.kind,f.context?.key,f.hypothesis].some(v=>String(v||'').toLowerCase().includes(term)));
  $('result-count').textContent=`${found.length} achado(s)`;
  $('findings-empty').hidden=Boolean(found.length);
@@ -77,7 +101,7 @@ function renderFindings(){
   const sub=document.createElement('small');sub.textContent=f.id;
   open.append(title,sub);first.append(open);
   const second=document.createElement('td');second.append(statusChip(f.severity));
-  const third=document.createElement('td');third.textContent='Investigar';
+  const third=document.createElement('td');third.textContent=TRIAGE_LABELS[triageLedger.reviews.get(f.id)?.status||'PENDING'];
   const fourth=document.createElement('td');fourth.textContent='→';row.append(first,second,third,fourth);
   open.addEventListener('click',()=>{selectedId=f.id;renderFindings()});table.append(row);
  });
@@ -115,7 +139,7 @@ async function readXmlFiles(fileList){
  if(!fileList?.length)return;
  const version=++xmlReadVersion, expected=fileList.length, nextInputs=[], nextErrors=[];
  // Preserve errors from the *other* source. One valid file must not erase a failed sibling.
- xmlSelectionCount=expected;xmlInputs=[];xmlErrors=['XMLs em leitura: cruzamento suspenso.'];
+ clearTriage();xmlSelectionCount=expected;xmlInputs=[];xmlErrors=['XMLs em leitura: cruzamento suspenso.'];
  doAudit();
  if(expected>10)nextErrors.push('Selecione até 10 XMLs por lote.');
  else for(const f of Array.from(fileList)){
@@ -132,7 +156,7 @@ async function readXmlFiles(fileList){
 async function readEFD(files){
  const f=files?.[0];if(!f)return;
  const version=++efdReadVersion;
- efdInput=null;efdErrors=['EFD em leitura: cruzamento suspenso.'];doAudit();
+ clearTriage();efdInput=null;efdErrors=['EFD em leitura: cruzamento suspenso.'];doAudit();
  const nextErrors=[];let nextInput=null;
  if(f.size>MAX_EFD_BYTES)nextErrors.push('EFD: tamanho máximo 4 MB.');
  else if(!/\.txt$/i.test(f.name))nextErrors.push('EFD: apenas arquivos .txt.');
@@ -151,13 +175,14 @@ function init(){
  $('run-demo-top').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-import').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-again').addEventListener('click',doAudit);
- $('reset-demo').addEventListener('click',()=>{xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};xmlSelectionCount=xmlInputs.length;xmlErrors=[];efdErrors=[];xmlReadVersion++;efdReadVersion++;$('xml-files').value='';$('efd-file').value='';doAudit()});
+ $('reset-demo').addEventListener('click',()=>{clearTriage();xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};xmlSelectionCount=xmlInputs.length;xmlErrors=[];efdErrors=[];xmlReadVersion++;efdReadVersion++;$('xml-files').value='';$('efd-file').value='';doAudit()});
  $('xml-files').addEventListener('change',e=>readXmlFiles(e.target.files));
  $('efd-file').addEventListener('change',e=>readEFD(e.target.files));
  $('finding-search').addEventListener('input',renderFindings);
  $('severity-filter').addEventListener('change',renderFindings);
- $('export-csv').addEventListener('click',()=>{if(report){saveBlob('wutrib-achados-ficticios.csv',findingsCSV(report),'text/csv;charset=utf-8');showToast('CSV demonstrativo exportado.')}});
- $('export-json').addEventListener('click',()=>{if(report){saveBlob('wutrib-dossie-demonstrativo.json',JSON.stringify(report,null,2),'application/json;charset=utf-8');showToast('Dossiê JSON demonstrativo exportado.')}});
+ $('triage-filter').addEventListener('change',renderFindings);
+ $('export-csv').addEventListener('click',()=>{if(report){saveBlob('wutrib-achados-ficticios.csv',findingsCSVWithTriage(report,triageLedger),'text/csv;charset=utf-8');showToast('CSV demonstrativo exportado.')}});
+ $('export-json').addEventListener('click',()=>{if(report){saveBlob('wutrib-dossie-demonstrativo.json',JSON.stringify(dossierWithTriage(report,triageLedger),null,2),'application/json;charset=utf-8');showToast('Dossiê JSON demonstrativo exportado.')}});
  doAudit();go('overview');
 }
 init();

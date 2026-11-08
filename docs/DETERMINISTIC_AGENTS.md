@@ -1,4 +1,4 @@
-# WU-TRIB — verificadores especializados determinísticos v0.2.0
+# WU-TRIB — verificadores especializados determinísticos v0.3.0
 
 Estes agentes são **scripts independentes** executados localmente ou no GitHub Actions. Não são IA generativa e não decidem conformidade fiscal. O objetivo é acelerar ciclos, evitar regressões e produzir gates reproduzíveis, sem depender de credenciais ou de dados empresariais.
 
@@ -7,6 +7,7 @@ Estes agentes são **scripts independentes** executados localmente ou no GitHub 
 | `fiscal-contract` | Contratos de lote, diferenças, evidências e ausência de conclusão fiscal | `node agents/fiscal-contract.mjs` | Regra sem evidência de comportamento ou fixture divergente |
 | `security` | CSP, sem rede, proteção DTD e ausência de segredos no frontend | `node agents/security.mjs` | Exposição de rede, scripts inline ou conteúdo não seguro |
 | `ux-accessibility` | IDs, estrutura, navegação, teclado, feedback e responsividade | `node agents/ux-accessibility.mjs` | Falta de affordance, foco, anúncios ou semântica mínima |
+| `triage` | Estado e exportações da revisão local, proibição de aprovações e reset na troca de origem | `node agents/triage.mjs` | Status homologado ou notas persistidas sem backend |
 | `release` | Árvore exclusiva, versão, branch, manifesto e limites públicos | `node agents/release.mjs` | Contaminação entre projetos, versão divergente ou arquivos sensíveis |
 
 Todos retornam JSON com IDs estáveis e processo com exit code 1 quando um controle falha. `npm run verify` executa todos em sequência e `npm run check` executa agentes e testes Node. `tests/browser_e2e.py` amplia as verificações pelo Chromium real, **em DOM injetado** porque o ambiente do ChatGPT bloqueia acesso HTTP local e externo; não equivale ao E2E HTTPS da Vercel. A validação do endpoint público permanece um gate separado.

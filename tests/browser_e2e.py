@@ -32,13 +32,13 @@ def run():
         for name,kwargs in [('desktop',{'viewport':{'width':1440,'height':900}}),
                             ('mobile',{'viewport':{'width':390,'height':844},'is_mobile':True,'has_touch':True})]:
             context=browser.new_context(accept_downloads=True,**kwargs)
-            page=context.new_page()
+            page=context.new_page();page.set_default_timeout(7000)
             errors=[]; requests=[]
             page.on('pageerror',lambda e:errors.append(str(e)))
             page.on('request',lambda req:requests.append(req.url))
             html=(ROOT/'index.html').read_text()
             css=(ROOT/'styles.css').read_text()
-            js='\n'.join([(ROOT/'src/audit.js').read_text(), (ROOT/'src/fixtures.js').read_text()]).replace('export const ', 'const ').replace('export function ', 'function ')+'\n'+(ROOT/'src/ui.js').read_text().replace("import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';",'').replace("import {demoXMLs,demoEFD} from './fixtures.js';",'')
+            js='\n'.join([(ROOT/'src/audit.js').read_text(), (ROOT/'src/fixtures.js').read_text(), (ROOT/'src/triage.js').read_text()]).replace('export const ', 'const ').replace('export function ', 'function ').replace("import {escapeCSVCell} from './audit.js';",'')+'\n'+(ROOT/'src/ui.js').read_text().replace("import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';",'').replace("import {demoXMLs,demoEFD} from './fixtures.js';",'').replace("import {createTriageLedger,recordTriage,TRIAGE_LABELS,dossierWithTriage,findingsCSVWithTriage,MAX_REVIEW_NOTE} from './triage.js';",'')
             page.set_content(html)
             page.add_style_tag(content=css)
             page.add_script_tag(content=js)
@@ -71,13 +71,29 @@ def run():
             assert page.locator('button.table-open').count()==3
             page.locator('button.table-open').first.click()
             assert 'HIPÓTESE' in page.locator('#finding-detail').inner_text()
+            # Triage is an unapproved, ephemeral annotation; new note appears in filters and exports.
+            page.locator('#triage-status').select_option('INVESTIGATING')
+            page.locator('#triage-note').fill('Verificar documento fictício e fonte do C100.')
+            page.locator('#triage-form button[type=submit]').click()
+            assert 'Em investigação' in page.locator('#findings-table').inner_text()
+            page.locator('#triage-filter').select_option('INVESTIGATING')
+            assert page.locator('#findings-table tr').count()==1
+            page.locator('#triage-filter').select_option('ALL')
+            page.screenshot(path=str(ROOT/f'preview-triage-v0.3-{name}.png'),full_page=True)
             with page.expect_download() as dl:
                 page.locator('#export-csv').click()
             assert dl.value.suggested_filename.endswith('.csv')
             with page.expect_download() as dl:
                 page.locator('#export-json').click()
             assert dl.value.suggested_filename.endswith('.json')
-            checks.append(f'{name}: filters/details/exports')
+            json_file=Path(dl.value.path())
+            exported=json.loads(json_file.read_text(encoding='utf-8'))
+            assert exported['triageMode']=='EPHEMERAL_CLIENT_ONLY'
+            assert exported['approval']=='NOT_APPROVED'
+            assert exported['audit']['taxConformity']=='NOT_EVALUATED'
+            assert len(exported['reviews'])==1
+            assert exported['reviews'][0]['status']=='INVESTIGATING'
+            checks.append(f'{name}: filters/triage/exports with no approval')
             if name=='mobile':
                 page.locator('#menu-toggle').click()
             page.locator('nav button[data-view="import"]').click()
@@ -106,6 +122,12 @@ def run():
             checks.append(f'{name}: selection error preserved after EFD reimport')
             page.locator('#reset-demo').click()
             assert page.locator('#metric-findings').inner_text()=='3'
+            page.locator('#menu-toggle').click() if name=='mobile' and page.locator('#menu-toggle').get_attribute('aria-expanded')=='false' else None
+            page.locator('nav button[data-view="findings"]').click()
+            assert 'Em investigação' not in page.locator('#findings-table').inner_text()
+            checks.append(f'{name}: new source clears stale local triage')
+            if name=='mobile': page.locator('#menu-toggle').click()
+            page.locator('nav button[data-view="import"]').click()
             assert page.locator('#export-csv').is_enabled()
             # invalid EFD cannot retain previously valid demo source
             page.locator('#efd-file').set_input_files({'name':'danificada.txt','mimeType':'text/plain','buffer':b'|C100|faltando-cabecalho|'})

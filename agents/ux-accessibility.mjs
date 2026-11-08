@@ -12,5 +12,6 @@ verifyAgent('ux-accessibility',[
  check('UX-007',css.includes(':focus-visible')&&css.includes(':focus-within'),'Visible keyboard focus'),
  check('UX-008',css.includes('prefers-reduced-motion')&&css.includes('@media(max-width:580px)'),'Reduced motion and mobile layout'),
  check('UX-009',/lang="pt-BR"/.test(html)&&/name="viewport"/.test(html),'Language and responsive viewport'),
+ check('UX-011',html.includes('id="triage-filter"')&&ui.includes('triage-status')&&ui.includes('triage-note'),'Triage keyboard inputs and filter exposed'),
  check('UX-010',ui.includes('xmlErrors=[]')&&ui.includes('efdErrors=[]')&&ui.includes('xmlSelectionCount')&&!ui.includes('selectionErrors=[]'),'Separate XML/EFD intake error states; no cross-source reset'),
 ]);

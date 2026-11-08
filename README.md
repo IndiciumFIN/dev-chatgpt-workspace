@@ -36,5 +36,8 @@ python3 -m http.server 4173
 
 `npm run check` executa os quatro agentes especializados (contratos fiscais, segurança, UX e release) e a suíte Node. `python tests/browser_e2e.py` valida as interações em Chromium com arquivos fictícios por injeção local. Consulte `docs/DETERMINISTIC_AGENTS.md` e `docs/WAVE_02_AUDIT.md`. Nenhuma regra fiscal certifica conformidade; lote incompleto não gera achados.
 
-## Integridade v0.2.1
-O estado de erros de XML e EFD é independente; falhas de seleção parcial permanecem bloqueantes mesmo depois de reenviar a outra origem. Os achados registram arquivo XML e linha C100 quando disponíveis. São referências de lote, não comprovação de causa-raiz.
+## Correções v0.2.1
+- Falhas na seleção parcial de XML continuam bloqueantes mesmo depois de reenviar a EFD (sem apagar advertências de outra fonte).
+- Leituras assíncronas de arquivos antigos não podem sobrepor seleção posterior.
+- Achados apresentam nome de arquivo XML e linha de C100 quando disponíveis; são referências de lote, não provas de causa-raiz.
+- Fixture usa períodos fictícios coerentes; nenhum arquivo foi enviado ao Supabase.

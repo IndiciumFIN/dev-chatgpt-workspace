@@ -37,9 +37,9 @@ jobs:
           grep -q 'revoke execute on function public.wutrib_demo_casefile_get_v1' db/wutrib_demo_v042_org_auth.sql
           echo 'Candidate requires separate DDL and credentials gates before API activation'
 
-      - name: HTTPS smoke on isolated v0.4.1 candidate (no credentials)
+      - name: HTTPS smoke on isolated v0.4.2 candidate (no credentials)
         env:
-          PREVIEW_URL: https://wutrib-auditor-web-piloto-6r7fz1zt7-leivisml-7739s-projects.vercel.app
+          PREVIEW_URL: https://wutrib-auditor-web-piloto-f4ei7ebx8-leivisml-7739s-projects.vercel.app
         run: |
           set -euo pipefail
           curl --fail --silent --show-error --location --retry 2 --connect-timeout 10 --max-time 30 "$PREVIEW_URL/" -o /tmp/wutrib-candidate.html
@@ -51,4 +51,4 @@ jobs:
           status="$(curl --silent --show-error --location --connect-timeout 10 --max-time 30 -o /tmp/wutrib-candidate-api.json -w '%{http_code}' "$PREVIEW_URL/api/demo-casefiles")"
           test "$status" = "503"
           grep -q 'DEMO_PERSISTENCE_DISABLED' /tmp/wutrib-candidate-api.json
-          echo "WU-TRIB v0.4.1 preview HTTPS: PASS; API fail-closed: 503"
+          echo "WU-TRIB v0.4.2 preview HTTPS: PASS; API fail-closed: 503"

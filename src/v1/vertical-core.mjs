@@ -51,6 +51,7 @@ export function parseEfdSubset(text,ctx){
   const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.length);
   if(lines.length>MAX_RECORDS)fail('Total de registros excede capacidade declarada do piloto.');
   let header=null,last=null,unsupported=0,c170=0,ignored=0,c190=0;
+  const unsupportedKeys=[];
   const documents=[];
   for(let i=0;i<lines.length;i++){
     const parts=colsOf(lines[i]);const type=parts[1];const line=i+1;
@@ -69,7 +70,11 @@ export function parseEfdSubset(text,ctx){
     if(type==='C100'){
       if(parts.length<14)fail('Registro C100 incompleto na linha '+line);
       const key=parts[9],status=parts[6],model=parts[5],direction=parts[2],issuer=parts[3];
-      if(model!=='55'){unsupported++;last={ignored:true};continue;}
+      if(model!=='55'){
+        unsupported++;
+        if(validKey(key))unsupportedKeys.push(key);
+        last={ignored:true};continue;
+      }
       requireKey(key,'EFD C100 linha '+line);
       const entry={key,amount:parts[12].replace(',','.'),line,c170:0,c190:0,direction,issuer,status,model,supported:direction==='1'&&issuer==='0'&&status==='00'};
       cents(entry.amount);
@@ -79,12 +84,12 @@ export function parseEfdSubset(text,ctx){
     if(type==='C190'){
       c190++;
       if(!last)fail('C190 sem C100 antecedente no subconjunto suportado, linha '+line);
-      last.c190++;continue;
+      if(!last.ignored)last.c190++;continue;
     }
     if(type==='C170'){
       c170++;
       if(!last)fail('C170 órfão no subconjunto, linha '+line);
-      last.c170++;continue;
+      if(!last.ignored)last.c170++;continue;
     }
     // All other EFD record families remain expressly NOT_SUPPORTED.
     ignored++;
@@ -95,7 +100,7 @@ export function parseEfdSubset(text,ctx){
     if(duplicateLineKeys.has(x.key))duplicates.push(x.key);
     duplicateLineKeys.add(x.key);
   }
-  return {header,documents,counts:{recordLines:lines.length,c100:documents.length,c190,c170,unsupported,notInterpreted:ignored,duplicateC100Keys:duplicates.length},digest:hash(Buffer.from(text,'utf8')),parseScope:'C100_AND_CHILD_COUNTS_ONLY_NOT_EFD_LAYOUT_CERTIFICATION'};
+  return {header,documents,unsupportedKeys,counts:{recordLines:lines.length,c100:documents.length,c190,c170,unsupported,notInterpreted:ignored,duplicateC100Keys:duplicates.length},digest:hash(Buffer.from(text,'utf8')),parseScope:'C100_AND_CHILD_COUNTS_ONLY_NOT_EFD_LAYOUT_CERTIFICATION'};
 }
 export function validateNFeRows(rows,ctx){
   if(!Array.isArray(rows)||rows.length>MAX_DOCUMENTS)fail('Quantidade de NF-e inválida.');
@@ -135,7 +140,7 @@ function finding(kind,key,details,sourceRefs=[]){
 export function reconcileThreeWays(nfe,efd,erp){
  const maps=[indexed(nfe),indexed(efd.documents.filter(x=>x.supported)),indexed(erp)];
  const allKeys=[...new Set([...maps[0].keys(),...maps[1].keys(),...maps[2].keys()])].sort();
- const outOfScope=new Set(efd.documents.filter(x=>!x.supported).map(x=>x.key));
+ const outOfScope=new Set([...efd.documents.filter(x=>!x.supported).map(x=>x.key),...(efd.unsupportedKeys||[])]);
  const issues=[],matched=[];
  for(const key of allKeys){
   const [a,b,c]=maps.map(m=>m.get(key)||[]);
@@ -171,7 +176,7 @@ export function executeSyntheticSlice(bundle){
  const nfe=validateNFeRows(bundle.nfe||[],ctx);
  const erp=validateERP(bundle.erp||[],ctx);
  if(!nfe.length||!erp.length)fail('Fonte NF-e ou ERP ausente; não gerar conformidade vazia.');
- const input={contract:CONTRACT,context:ctx,nfe,efdDigest:efd.digest,erp,efdSummary:{header:efd.header,counts:efd.counts,documents:efd.documents}};
+ const input={contract:CONTRACT,context:ctx,nfe,efdDigest:efd.digest,erp,efdSummary:{header:efd.header,counts:efd.counts,documents:efd.documents,unsupportedKeys:efd.unsupportedKeys}};
  const inputDigest=hash(serial(input));
  const outcome=reconcileThreeWays(nfe,efd,erp);
  const warnings=[];

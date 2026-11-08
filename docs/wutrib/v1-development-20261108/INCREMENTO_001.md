@@ -1,6 +1,6 @@
 ---
 document_id: WUTRIB-V1-DEV-INC-001
-version: 0.1.0
+version: 0.2.0
 status: DEVELOPMENT_CANDIDATE_NOT_HOMOLOGATED
 parent_scope: 1.0.0-rc.0
 work_order: WUTRIB-WO-DEV-020
@@ -19,7 +19,7 @@ Desenvolver uma parte funcional dos procedimentos PROC-V1-01/02/03 sobre **NF-e 
 - src/v1/vertical-core.mjs — motor offline Node.js 22, sem banco ou serviços externos.
 - contracts/v1-synthetic-vertical.input.schema.json — contrato formal JSON Schema 2020-12; ainda não executado com validador JSON Schema independente, sem alegação de conformidade completa ao esquema.
 - tests/fixtures/v1-synthetic-case.mjs — fontes fictícias e chaves artificiais com DV sintaticamente válido (não autorização SEFAZ).
-- tests/v1-vertical.test.mjs — 25 cenários positivos, negativos, precisão, cardinalidade, contexto EFD e origem de tributo.
+- tests/v1-vertical.test.mjs — 27 cenários positivos, negativos, precisão, cardinalidade, contexto EFD e origem de tributo.
 - scripts/demo-v1-crosscheck.mjs — comando reexecutável que imprime JSON e não grava em banco.
 - .github/workflows/wutrib-v1-vertical-slice.yml — CI read-only, testa núcleo, PMO e regressões, publica artefato sintético.
 
@@ -47,10 +47,10 @@ Desenvolver uma parte funcional dos procedimentos PROC-V1-01/02/03 sobre **NF-e 
 
 ## Resultado CI verificado
 
-Execução: https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343.
-- 25 de 25 casos novos V1 passaram.
-- 109 de 109 testes de regressão de aplicação passaram, INCLUINDO os 25 novos (não somar como diferentes).
-- 17 de 17 testes do agente PMO passaram.
+Execução: https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42525445947.
+- 27 de 27 casos novos V1 passaram.
+- 111 de 111 testes de regressão de aplicação passaram, INCLUINDO os 27 novos (não somar como diferentes).
+- 20 de 20 testes do agente PMO passaram.
 - Dataset sintético: 3 NF-e normalizadas, 3 C100, 4 snapshots ERP → 1 match técnico, 3 findings.
 - Workpaper ficou aberto, sem aceites, e a conformidade fiscal ficou NOT_EVALUATED.
 - O resultado inclui hash SHA-256 da entrada, publicado como artefato de CI.
@@ -60,6 +60,8 @@ Execução: https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42
 A execução usou dados normalizados, não XML original/XSD/assinatura; o parser EFD cobre apenas C100 e contagem de C170/C190, sem certificar outros registros ou o encerramento do arquivo. A origem FISA170/TES continua candidata, pois fontes e snapshots são fictícios.
 
 Limites de 1 MiB EFD e 1000 registros NF-e/ERP são restrições de segurança do protótipo, **não** capacidade máxima medida. Testes de carga, UX, acessibilidade, sustentabilidade, segurança autenticada, recuperação e aceites fiscais continuam pendentes.
+
+**PMO operacional:** 72 registros (26 GAPs, 30 testes de homologação ainda NOT_RUN, 7 gates HOLD_HUMAN e 9 tarefas DEV). O agente atualizou DEV-002/003/004 para IN_PROGRESS e DEV-005/006 para READY_FOR_REVIEW com evidências calculadas, sem sign-off.
 
 **FIND de processo:** o registro WO-DEV-020 foi formalizado após os primeiros commits desta sessão. Isso requer revisão de sequenciamento pelo PMO; não atribuir retroativamente admissão do Kernel ou sign-off. Nenhum merge nem deploy foi realizado.
 

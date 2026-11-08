@@ -72,3 +72,49 @@ jobs:
           retention-days: 14
       - name: Explicit no-production boundary
         run: echo 'Synthetic offline checks only. No real ERP, no SEFAZ, no database migration, no Vercel deploy or fiscal approval.'
+
+  pmo-development-sync:
+    name: Sincronizar WO020 e evidências somente na branch V1
+    needs: v1-synthetic-core
+    if: >-
+      github.repository == 'IndiciumFIN/dev-chatgpt-workspace' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/wutrib/v1-vertical-slice-dev-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout isolated development branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: true
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Preflight PMO audit-chain and source integrity
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs check
+      - name: Deterministically import WO020 tasks and reconcile source SHA
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs sync --write
+      - name: Record work in progress and review candidates, NEVER approvals
+        run: node PMO/WUTRIB/agent/update-development-evidence.mjs
+      - name: Verify no drift, audit-chain or tests/gates contamination
+        run: |
+          node PMO/WUTRIB/agent/pmo-controller.mjs check
+          node PMO/WUTRIB/agent/pmo-controller.mjs sync
+          node --test PMO/WUTRIB/tests/pmo-controller.test.mjs
+      - name: Commit only PMO board, journal and reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- PMO/WUTRIB/data/activities.v1.json PMO/WUTRIB/data/events.v1.json PMO/WUTRIB/reports/summary.v1.json PMO/WUTRIB/reports/STATUS.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(wutrib-pmo): reconcile WO020 and flag technical results for human review'
+            git push origin HEAD:refs/heads/wutrib/v1-vertical-slice-dev-20261108
+          else
+            echo 'PMO state unchanged'
+          fi
+          echo 'No merge, deployment, fiscal approval, Supabase mutation or CE modification.'

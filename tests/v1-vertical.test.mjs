@@ -83,7 +83,8 @@ test('EFD model 65 explicitly outside pilot, without false claim',()=>{
  const b=casefile();b.efdText=b.efdText.replace(c100(keys.a,'120.00'),c100(keys.a,'120.00',{model:'65'}));
  const r=executeSyntheticSlice(b);
  assert.ok(r.warnings.some(x=>x.includes('C100 fora')));
- assert.ok(r.findings.some(x=>x.kind==='MISSING_IN_SUPPLIED_POPULATION'&&x.key===keys.a));
+ assert.ok(r.findings.some(x=>x.kind==='OUT_OF_SCOPE_EFD_CONTEXT'&&x.key===keys.a));
+ assert.equal(r.findings.some(x=>x.kind==='MISSING_IN_SUPPLIED_POPULATION'&&x.key===keys.a),false);
 });
 test('A duplicate ERP row triggers cardinality blocking rather than inflated totals',()=>{
  const b=casefile(); b.erp.push(copy(b.erp[0]));

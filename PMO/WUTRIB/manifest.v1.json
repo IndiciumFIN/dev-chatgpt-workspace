@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "wutrib.pmo.manifest.v1",
+  "version": "1.0.0-rc.0",
+  "project": "WU-TRIB",
+  "branch": "wutrib/pmo-v1-controller-20261108",
+  "repo": "IndiciumFIN/dev-chatgpt-workspace",
+  "workOrder": {
+    "id": "WUTRIB-WO-PLAN-019",
+    "parent": "WUTRIB-WO-PLAN-018",
+    "state": "PLANNING_PENDING_KERNEL_ADMISSION"
+  },
+  "sources": [
+    {
+      "path": "docs/wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json",
+      "items": 26
+    },
+    {
+      "path": "docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json",
+      "tests": 30,
+      "gates": 7
+    }
+  ],
+  "paths": {
+    "board": "PMO/WUTRIB/data/activities.v1.json",
+    "journal": "PMO/WUTRIB/data/events.v1.json",
+    "agent": "PMO/WUTRIB/agent/pmo-controller.mjs",
+    "tests": "PMO/WUTRIB/tests/pmo-controller.test.mjs",
+    "workflow": ".github/workflows/wutrib-pmo-controller.yml"
+  },
+  "states": {
+    "runtimeApproved": false,
+    "productionAuthorized": false,
+    "enterpriseData": false,
+    "testsAuthorized": false,
+    "workflowScheduleActiveOnDraftBranch": false
+  },
+  "allowedOperations": [
+    "DETERMINISTIC_RECONCILE",
+    "ACTIVITY_STATUS_UPDATE_WITH_ACTOR",
+    "SOURCE_DRIFT_RECORD",
+    "CHAINED_AUDIT_LOG",
+    "GENERATE_REPORT"
+  ],
+  "prohibited": [
+    "AUTOMATIC_SIGNOFF",
+    "CLOSURE_OF_WO",
+    "FISCAL_PASS",
+    "DEPLOY",
+    "SUPABASE_WRITE",
+    "CHANGE_CE"
+  ],
+  "reviewers": [
+    "PMO",
+    "QA",
+    "Fiscal/Protheus",
+    "Security",
+    "Product Owner"
+  ],
+  "approvals": {
+    "approvedBy": null,
+    "approvedAt": null
+  }
+}

@@ -1,0 +1,617 @@
+{
+  "schemaVersion": "workspace.residual-risk-register.v0.1",
+  "version": "0.1.0",
+  "date": "2026-11-08",
+  "state": "DRAFT_PLANNING_ONLY",
+  "scope": "Cross-domain documentary evaluation; risks not necessarily actual defects in live systems",
+  "count": 30,
+  "risks": [
+    {
+      "id": "RR01",
+      "domain": "GOVERNANCE",
+      "risk": "Validador estrutural confundido com parecer de conformidade",
+      "priority": "P0",
+      "ownerRole": "QA_INDEPENDENT",
+      "treatment": "Separar classes de evidência e bloquear selo global até conteúdo e revisão humana",
+      "blockingGates": [
+        "LV6",
+        "LV7"
+      ],
+      "evidenceClass": "CODE_OBSERVED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR02",
+      "domain": "GOVERNANCE",
+      "risk": "Meta-validador se exclui e utiliza auto-checks triviais",
+      "priority": "P0",
+      "ownerRole": "QA_INDEPENDENT",
+      "treatment": "Teste do meta-validador por runner externo, mutations, caminhos e hashes reais",
+      "blockingGates": [
+        "LV0",
+        "LV6"
+      ],
+      "evidenceClass": "CODE_OBSERVED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR03",
+      "domain": "GOVERNANCE",
+      "risk": "Regex usada como prova de ausência de rede/IA e side effects",
+      "priority": "P0",
+      "ownerRole": "SECURITY",
+      "treatment": "Sandbox de execução sem acesso por capacidade, inspeção e casos adversariais",
+      "blockingGates": [
+        "LV0",
+        "LV6"
+      ],
+      "evidenceClass": "CODE_OBSERVED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR04",
+      "domain": "GOVERNANCE",
+      "risk": "Aplicabilidade normativa restrita a metadados",
+      "priority": "P0",
+      "ownerRole": "NORMATIVE_GOVERNANCE",
+      "treatment": "Corpus autorizado, efetividade, conflitos/edições e aprovação de regra",
+      "blockingGates": [
+        "LV2"
+      ],
+      "evidenceClass": "CODE_OBSERVED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR05",
+      "domain": "GOVERNANCE",
+      "risk": "Hash ou baseline inadequado dos validadores/documentos",
+      "priority": "P0",
+      "ownerRole": "DOCUMENT_CONTROL",
+      "treatment": "Hash byte-a-byte computado, versões imutáveis, proveniência do código e das fontes",
+      "blockingGates": [
+        "LV0",
+        "LV7"
+      ],
+      "evidenceClass": "HISTORICAL_GAP",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR06",
+      "domain": "GOVERNANCE",
+      "risk": "WO RTM RCM evidências e aceites não reconciliados integralmente",
+      "priority": "P0",
+      "ownerRole": "PMO",
+      "treatment": "Matriz ligações com cardinalidade, IDs estáveis, evidência e autoridade humana",
+      "blockingGates": [
+        "LV1",
+        "LV7"
+      ],
+      "evidenceClass": "HISTORICAL_GAP",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR07",
+      "domain": "CLINICAL",
+      "risk": "Aplicação de norma COFEN revogada",
+      "priority": "P0",
+      "ownerRole": "CLINICAL_REVIEWER",
+      "treatment": "Fonte 736/2024, manter 358/2009 histórica e controlar vigência",
+      "blockingGates": [
+        "LV2",
+        "LV3"
+      ],
+      "evidenceClass": "OFFICIAL_CONFIRMED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR08",
+      "domain": "CLINICAL",
+      "risk": "Cálculo de escala ou dose clinicamente inadequado apesar de aritmética correta",
+      "priority": "P0",
+      "ownerRole": "CLINICAL_REVIEWER",
+      "treatment": "Goldens independentes, unidades/limites, populações, protocolos, licenças",
+      "blockingGates": [
+        "LV3",
+        "LV6"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR09",
+      "domain": "CLINICAL",
+      "risk": "Funcionalidade classificada automaticamente como fora de SaMD",
+      "priority": "P0",
+      "ownerRole": "REGULATORY_COUNSEL",
+      "treatment": "Avaliar finalidade pretendida conforme RDC657; IEC62304/ISO14971 condicionais",
+      "blockingGates": [
+        "LV2",
+        "LV7"
+      ],
+      "evidenceClass": "OFFICIAL_CONDITIONAL",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR10",
+      "domain": "CLINICAL",
+      "risk": "Dados de saúde e pacientes expostos por finalidade/retentiva inadequada",
+      "priority": "P0",
+      "ownerRole": "PRIVACY_OFFICER",
+      "treatment": "Inventário de dados, minimização, decisão RIPD, direitos de titulares, retenção",
+      "blockingGates": [
+        "LV5",
+        "LV7"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR11",
+      "domain": "FISCAL",
+      "risk": "Parser parcial C100 e outros blocos confundidos com EFD completa",
+      "priority": "P0",
+      "ownerRole": "FISCAL_REVIEWER",
+      "treatment": "Cobertura por COD_VER/guia/ato/registros e matriz de casos negativos",
+      "blockingGates": [
+        "LV2",
+        "LV3"
+      ],
+      "evidenceClass": "HISTORICAL_REPORTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR12",
+      "domain": "FISCAL",
+      "risk": "MOC/NT/XSD NF-e inadequado ao período ou sem oráculo de DV",
+      "priority": "P0",
+      "ownerRole": "FISCAL_REVIEWER",
+      "treatment": "Corpus oficial por versão, eventos, hash/intervalos e testes independentes",
+      "blockingGates": [
+        "LV2",
+        "LV3"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR13",
+      "domain": "FISCAL",
+      "risk": "TES/FISA170 com fonte do tributo equivocada no modo híbrido",
+      "priority": "P0",
+      "ownerRole": "PROTHEUS_SPECIALIST",
+      "treatment": "SX2/SX3/SIX e snapshots de parâmetros por release, tributo e vigência",
+      "blockingGates": [
+        "LV2",
+        "LV3",
+        "LV4"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR14",
+      "domain": "FISCAL",
+      "risk": "Guias/manuais e PVA assumidos equivalentes",
+      "priority": "P0",
+      "ownerRole": "FISCAL_REVIEWER",
+      "treatment": "Distinguir especificação e programa, versões históricas e limites da comparação",
+      "blockingGates": [
+        "LV2",
+        "LV6"
+      ],
+      "evidenceClass": "OFFICIAL_CONFIRMED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR15",
+      "domain": "FISCAL",
+      "risk": "Retificação ou reforma tributária aplicada retroativamente sem vigência",
+      "priority": "P0",
+      "ownerRole": "FISCAL_REVIEWER",
+      "treatment": "Linha temporal de validade e de conhecimento, regra e documento versionados",
+      "blockingGates": [
+        "LV2",
+        "LV3"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR16",
+      "domain": "DATA",
+      "risk": "1SFN interpretado como norma, MOF confundido com manual fiscal",
+      "priority": "P1",
+      "ownerRole": "DATA_ARCHITECT",
+      "treatment": "Registro de terminologia, 1FN/2FN/3FN separadas de OMG MOF e layout",
+      "blockingGates": [
+        "LV1",
+        "LV2"
+      ],
+      "evidenceClass": "TERMINOLOGY_UNCONFIRMED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "RISK_BASED_DECISION_REQUIRED"
+    },
+    {
+      "id": "RR17",
+      "domain": "DATA",
+      "risk": "Join N:M e conversões contaminam valores/códigos",
+      "priority": "P0",
+      "ownerRole": "DATA_ARCHITECT",
+      "treatment": "Count conservation, decimal exato, anti-joins, no unapproved aggregation",
+      "blockingGates": [
+        "LV3",
+        "LV4"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR18",
+      "domain": "DATA",
+      "risk": "Origem parcial/cross-tenant ou cadastro mestre sem vigência",
+      "priority": "P0",
+      "ownerRole": "DATA_STEWARD",
+      "treatment": "Snapshot íntegro, multi-tenant deny, quality gate e proveniência",
+      "blockingGates": [
+        "LV3",
+        "LV4",
+        "LV5"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR19",
+      "domain": "ANALYTICS",
+      "risk": "Seleção por risco extrapolada estatisticamente à população",
+      "priority": "P0",
+      "ownerRole": "AUDIT_METHODS",
+      "treatment": "Método amostral aprovado, seed, frame, seleção dirigida sem projeção",
+      "blockingGates": [
+        "LV3",
+        "LV6"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR20",
+      "domain": "ANALYTICS",
+      "risk": "Anomalia/delta observados classificados como erro tributário comprovado",
+      "priority": "P0",
+      "ownerRole": "FISCAL_REVIEWER",
+      "treatment": "Separar classes de evento, explicação e evidência normativa com revisão",
+      "blockingGates": [
+        "LV3",
+        "LV4",
+        "LV7"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR21",
+      "domain": "QUALITY",
+      "risk": "Varredura axe sem violação convertida em certificado WCAG AA",
+      "priority": "P0",
+      "ownerRole": "ACCESSIBILITY",
+      "treatment": "WCAG-EM, amostra representativa, teclado/leitor, revisão manual",
+      "blockingGates": [
+        "LV5",
+        "LV7"
+      ],
+      "evidenceClass": "HISTORICAL_SCANNER_PASS",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR22",
+      "domain": "QUALITY",
+      "risk": "Metodologia de sustentabilidade genérica usada como cálculo SCI",
+      "priority": "P1",
+      "ownerRole": "SUSTAINABILITY",
+      "treatment": "ISO 21031, energia, carbono operacional/incorporado, unidade funcional, premissas",
+      "blockingGates": [
+        "LV5"
+      ],
+      "evidenceClass": "NOT_TESTED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "RISK_BASED_DECISION_REQUIRED"
+    },
+    {
+      "id": "RR23",
+      "domain": "QUALITY",
+      "risk": "Capacidade máxima não medida ou confundida com teste sintético local",
+      "priority": "P0",
+      "ownerRole": "PERFORMANCE",
+      "treatment": "SLO, concorrência, max RSS, p95/p99, falha segura, ambiente autorizado",
+      "blockingGates": [
+        "LV5"
+      ],
+      "evidenceClass": "HISTORICAL_SYNTHETIC_ONLY",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR24",
+      "domain": "SECURITY",
+      "risk": "Auth real, IAM, RLS e segregação enterprise não homologados",
+      "priority": "P0",
+      "ownerRole": "INFORMATION_SECURITY",
+      "treatment": "E2E autenticado real, BOLA, revogação, aprovações, RLS/tenant",
+      "blockingGates": [
+        "LV5",
+        "LV7"
+      ],
+      "evidenceClass": "HISTORICAL_HOLD",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR25",
+      "domain": "SECURITY",
+      "risk": "Retenção e necessidade de RIPD presumidas sem risco/classificação",
+      "priority": "P0",
+      "ownerRole": "PRIVACY_OFFICER",
+      "treatment": "ANPD decisão documentada, legal hold, responsável e ciclo de vida",
+      "blockingGates": [
+        "LV2",
+        "LV5"
+      ],
+      "evidenceClass": "OFFICIAL_CONDITIONAL",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR26",
+      "domain": "GOVERNANCE",
+      "risk": "Referências concorrentes copiadas como regra proprietária/engines prontos",
+      "priority": "P1",
+      "ownerRole": "LEGAL_PRODUCT",
+      "treatment": "Usar benchmarking de capacidades anunciadas, não código, marca ou regras fechadas",
+      "blockingGates": [
+        "LV2",
+        "LV7"
+      ],
+      "evidenceClass": "PUBLIC_MARKETING_ONLY",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "RISK_BASED_DECISION_REQUIRED"
+    },
+    {
+      "id": "RR27",
+      "domain": "GOVERNANCE",
+      "risk": "Contaminação entre CE e WUTRIB via branch, corpus, dados ou banco",
+      "priority": "P0",
+      "ownerRole": "PLATFORM_GOVERNANCE",
+      "treatment": "Boundaries de projeto, credenciais, schema, releases, WO, owners e gate independente",
+      "blockingGates": [
+        "LV0",
+        "LV5",
+        "LV7"
+      ],
+      "evidenceClass": "SEPARATE_DOMAINS",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR28",
+      "domain": "GOVERNANCE",
+      "risk": "Acesso ao repo CE não confirmado e cobertura presumida",
+      "priority": "P0",
+      "ownerRole": "CLINICAL_PM",
+      "treatment": "Obter acesso autorizado, inventário e plano próprio, sem alegar auditoria clínica",
+      "blockingGates": [
+        "LV1",
+        "LV7"
+      ],
+      "evidenceClass": "ACCESS_404_UNRESOLVED",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR29",
+      "domain": "SECURITY",
+      "risk": "IA gerativa inserida em interpretação fiscal/clínica sem governança",
+      "priority": "P0",
+      "ownerRole": "AI_GOVERNANCE",
+      "treatment": "Ativação condicional, inventário, impacto, prompt injection, veto, human review",
+      "blockingGates": [
+        "LV5",
+        "LV7"
+      ],
+      "evidenceClass": "CONDITIONAL_AI",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    },
+    {
+      "id": "RR30",
+      "domain": "GOVERNANCE",
+      "risk": "DRAFT e PASS documental apresentados como Go/No-Go positivo",
+      "priority": "P0",
+      "ownerRole": "CHANGE_AUTHORITY",
+      "treatment": "Congelar versão, assinar gates por competência, proibir deploy automático",
+      "blockingGates": [
+        "LV7"
+      ],
+      "evidenceClass": "NO_SIGNOFF",
+      "status": "HOLD_HUMAN",
+      "acceptedBy": null,
+      "decisionAt": null,
+      "mitigationEvidenceRefs": [],
+      "residualLikelihood": "TO_ASSESS",
+      "residualImpact": "TO_ASSESS",
+      "releaseImpact": "NO_GO_UNTIL_EVALUATED"
+    }
+  ],
+  "policy": {
+    "passDoesNotSignOff": true,
+    "allCriticalHeld": true,
+    "noApprovalByMachine": true,
+    "risksIdentifiedNotAccepted": true,
+    "severityNotComplianceFinding": true
+  }
+}

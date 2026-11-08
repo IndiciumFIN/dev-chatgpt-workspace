@@ -13,4 +13,5 @@ verifyAgent('fiscal-contract',[
  check('FC-004',!incomplete.ready,'Incomplete XML batch blocks cross-check'),
  check('FC-005',duplicate.findings.some(x=>x.kind==='DUPLICATE'),'Orphan duplicate C100 is explicitly reported'),
  check('FC-006',report.findings.every(f=>f.context?.key?.length===44),'Every observed finding has a complete key'),
+ check('FC-007',auditCrossCheck([{key:keys.diff,amount:250,sourceFile:'teste.xml'}],efd).findings.some(f=>f.kind==='VALUE_DIFFERENCE'&&f.context.xmlFile==='teste.xml'&&f.context.efdLine===3),'Difference finding has XML file and EFD line provenance'),
 ]);

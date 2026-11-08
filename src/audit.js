@@ -95,16 +95,16 @@ export function auditCrossCheck(xmlDocuments, efdInput, opts={}) {
   for(const [key,xmlRows] of xmlByKey){
     const efdRows=efdByKey.get(key)||[];
     if(xmlRows.length!==1){add(issue(`DUP-X-${key}`,'DUPLICATE','HIGH','NF-e XML duplicada',
-      `${xmlRows.length} documentos XML compartilham a mesma chave.`,{key,quantity:xmlRows.length},'Arquivos repetidos no lote'));continue}
+      `${xmlRows.length} documentos XML compartilham a mesma chave.`,{key,quantity:xmlRows.length,xmlFiles:xmlRows.map(r=>r.sourceFile||'Origem não informada')},'Arquivos repetidos no lote'));continue}
     if(!efdRows.length){add(issue(`MISS-EFD-${key}`,'MISSING_EFD','HIGH','NF-e sem C100 no lote EFD',
-      'A chave do XML não foi localizada nos registros C100 importados.',{key,xmlValue:xmlRows[0].amount},
+      'A chave do XML não foi localizada nos registros C100 importados.',{key,xmlValue:xmlRows[0].amount,xmlFile:xmlRows[0].sourceFile||null},
       'O arquivo EFD pode estar incompleto, abranger outro período ou não incluir a operação.'));continue}
     if(efdRows.length!==1){add(issue(`DUP-E-${key}`,'DUPLICATE','HIGH','Chave repetida em C100',
-      `${efdRows.length} registros C100 com a mesma chave.`,{key,quantity:efdRows.length},'Duplicidade ou estrutura de arquivo não interpretada.'));continue}
+      `${efdRows.length} registros C100 com a mesma chave.`,{key,quantity:efdRows.length,efdLines:efdRows.map(r=>r.line??null)},'Duplicidade ou estrutura de arquivo não interpretada.'));continue}
     const delta=Math.round((xmlRows[0].amount-efdRows[0].amount)*100)/100;
     if(Math.abs(delta)>tolerance){add(issue(`DIFF-${key}`,'VALUE_DIFFERENCE','MEDIUM','Diferença entre XML e C100',
       'Os totais vNF (XML) e VL_DOC (C100) divergem neste conjunto de teste.',
-      {key,xmlValue:xmlRows[0].amount,efdValue:efdRows[0].amount,delta},
+      {key,xmlValue:xmlRows[0].amount,efdValue:efdRows[0].amount,delta,xmlFile:xmlRows[0].sourceFile||null,efdLine:efdRows[0].line??null},
       'Diferença de origem, versão, conteúdo ou regra de escrituração; requer investigação.'));
     }else matches++;
   }
@@ -113,11 +113,11 @@ export function auditCrossCheck(xmlDocuments, efdInput, opts={}) {
     if(efdRows.length !== 1){
       add(issue(`DUP-E-${key}`,'DUPLICATE','HIGH','Chave repetida em C100',
         `${efdRows.length} registros C100 com a mesma chave, sem XML correspondente.`,
-        {key,quantity:efdRows.length},'Duplicidade e ausência de contrapartida exigem investigação.'));
+        {key,quantity:efdRows.length,efdLines:efdRows.map(r=>r.line??null)},'Duplicidade e ausência de contrapartida exigem investigação.'));
     }
     add(issue(`MISS-XML-${key}`,'MISSING_XML','MEDIUM','C100 sem XML no lote',
       'A chave C100 não foi encontrada entre os XMLs fornecidos.',
-      {key,efdValue:efdRows[0].amount},'Conjunto de XMLs pode estar incompleto.'));
+      {key,efdValue:efdRows[0].amount,efdLine:efdRows[0].line??null},'Conjunto de XMLs pode estar incompleto.'));
   }
   const warnings=Array.isArray(efdInput?.warnings)?efdInput.warnings:[];
   return {runId:`LOCAL-${Date.now()}`,generatedAt:new Date().toISOString(),

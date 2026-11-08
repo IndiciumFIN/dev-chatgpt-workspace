@@ -6,7 +6,8 @@ const labels={overview:'Visão geral',import:'Importar dados',audit:'Execução 
 let xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));
 let efdInput={name:'efd-ficticia.txt',content:demoEFD};
 let report=null;let selectedId=null;let currentView='overview';let toastTimer=null;
-let selectionErrors=[];let lastAttemptInvalid=false;
+let xmlSelectionCount=xmlInputs.length;let xmlErrors=[];let efdErrors=[];let lastAttemptInvalid=false;
+let xmlReadVersion=0;let efdReadVersion=0;
 function showToast(message){const el=$('toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.hidden=true},4500)}
 function go(view){
  if(!labels[view])return;
@@ -85,13 +86,13 @@ function renderFindings(){
  renderFindingDetail(selected);
 }
 function doAudit(){
- const xmls=[],parsingWarnings=[...selectionErrors];
- for(const item of xmlInputs){try{xmls.push(parseNFeXML(item.content))}catch(e){parsingWarnings.push(`${item.name}: ${e.message}`)}}
+ const xmls=[],parsingWarnings=[...xmlErrors,...efdErrors];
+ for(const item of xmlInputs){try{xmls.push({...parseNFeXML(item.content),sourceFile:item.name})}catch(e){parsingWarnings.push(`${item.name}: ${e.message}`)}}
  let efd=null;
  if(efdInput) try{efd=parseEFDText(efdInput.content)}catch(e){parsingWarnings.push(`EFD: ${e.message}`)}
- const readiness=assessInputReadiness({selectedXmlCount:xmlInputs.length,parsedXmls:xmls,efd,errors:parsingWarnings});
+ const readiness=assessInputReadiness({selectedXmlCount:xmlSelectionCount,parsedXmls:xmls,efd,errors:parsingWarnings});
  if(!readiness.ready){
-  report=incompleteAuditReport({selectedXmlCount:xmlInputs.length,c100Count:efd?.c100?.length||0,
+  report=incompleteAuditReport({selectedXmlCount:xmlSelectionCount,c100Count:efd?.c100?.length||0,
    warnings:[...readiness.reasons,...(efd?.warnings||[])]});
   lastAttemptInvalid=true;
  } else {
@@ -101,7 +102,7 @@ function doAudit(){
  report.demoOnly=true;report.sourceFiles={xml:xmlInputs.map(x=>x.name),efd:efdInput?.name??null};
  selectedId=report.findings[0]?.id??null;
  renderOverview();renderFindings();renderWarnings('import-warnings',report.warnings);
- $('xml-selected').textContent=`${xmlInputs.length} XML(s) selecionado(s)`;
+ $('xml-selected').textContent=xmlErrors.length?'Lote XML incompleto — consulte as advertências':`${xmlInputs.length} XML(s) selecionado(s)`;
  $('efd-selected').textContent=efdInput?.name||'Nenhuma EFD selecionada';
  $('import-state').textContent=lastAttemptInvalid?'LOTE INCOMPLETO':'PROCESSAMENTO LOCAL';
  $('export-csv').disabled=lastAttemptInvalid;
@@ -112,27 +113,33 @@ function doAudit(){
 function saveBlob(name,contents,type){const blob=new Blob([contents],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500)}
 async function readXmlFiles(fileList){
  if(!fileList?.length)return;
- // Never silently retain stale demo inputs when an attempted replacement fails.
- xmlInputs=[];selectionErrors=[];
- if(fileList.length>10){selectionErrors.push('Selecione até 10 XMLs por lote.');}
- else for(const f of fileList){
-  if(f.size>MAX_XML_BYTES){selectionErrors.push(`${f.name}: máximo 2 MB.`);continue}
-  if(!/\.xml$/i.test(f.name)){selectionErrors.push(`${f.name}: apenas arquivos .xml.`);continue}
-  try{xmlInputs.push({name:f.name,content:await f.text()})}
-  catch{selectionErrors.push(`${f.name}: falha de leitura do arquivo.`)}
+ const version=++xmlReadVersion, expected=fileList.length, nextInputs=[], nextErrors=[];
+ // Preserve errors from the *other* source. One valid file must not erase a failed sibling.
+ xmlSelectionCount=expected;xmlInputs=[];xmlErrors=['XMLs em leitura: cruzamento suspenso.'];
+ doAudit();
+ if(expected>10)nextErrors.push('Selecione até 10 XMLs por lote.');
+ else for(const f of Array.from(fileList)){
+  if(f.size>MAX_XML_BYTES){nextErrors.push(`${f.name}: máximo 2 MB.`);continue}
+  if(!/\.xml$/i.test(f.name)){nextErrors.push(`${f.name}: apenas arquivos .xml.`);continue}
+  try{nextInputs.push({name:f.name,content:await f.text()})}
+  catch{nextErrors.push(`${f.name}: falha de leitura do arquivo.`)}
  }
- $('xml-selected').textContent=selectionErrors.length?'Lote incompleto — consulte as advertências':`${xmlInputs.length} XML(s) pronto(s)`;
- showToast(selectionErrors.length?'Arquivo(s) rejeitado(s).':'XMLs carregados localmente. Execute o cruzamento.');
+ if(version!==xmlReadVersion)return; // a newer selection superseded this asynchronous read
+ xmlInputs=nextInputs;xmlErrors=nextErrors;
+ showToast(xmlErrors.length?'Lote XML incompleto: cruzamento suspenso.':'XMLs carregados localmente.');
  doAudit();
 }
 async function readEFD(files){
  const f=files?.[0];if(!f)return;
- efdInput=null;selectionErrors=[];
- if(f.size>MAX_EFD_BYTES) selectionErrors.push('EFD: tamanho máximo 4 MB.');
- else if(!/\.txt$/i.test(f.name))selectionErrors.push('EFD: apenas arquivos .txt.');
- else try{efdInput={name:f.name,content:await f.text()}}catch{selectionErrors.push('EFD: falha de leitura.');}
- $('efd-selected').textContent=efdInput?.name||'EFD inválida / não selecionada';
- showToast(selectionErrors.length?'EFD rejeitada.':'TXT carregado localmente. Execute o cruzamento.');
+ const version=++efdReadVersion;
+ efdInput=null;efdErrors=['EFD em leitura: cruzamento suspenso.'];doAudit();
+ const nextErrors=[];let nextInput=null;
+ if(f.size>MAX_EFD_BYTES)nextErrors.push('EFD: tamanho máximo 4 MB.');
+ else if(!/\.txt$/i.test(f.name))nextErrors.push('EFD: apenas arquivos .txt.');
+ else try{nextInput={name:f.name,content:await f.text()}}catch{nextErrors.push('EFD: falha de leitura.');}
+ if(version!==efdReadVersion)return;
+ efdInput=nextInput;efdErrors=nextErrors;
+ showToast(efdErrors.length?'EFD rejeitada.':'TXT carregado localmente.');
  doAudit();
 }
 function init(){
@@ -144,7 +151,7 @@ function init(){
  $('run-demo-top').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-import').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-again').addEventListener('click',doAudit);
- $('reset-demo').addEventListener('click',()=>{xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};selectionErrors=[];$('xml-files').value='';$('efd-file').value='';doAudit()});
+ $('reset-demo').addEventListener('click',()=>{xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};xmlSelectionCount=xmlInputs.length;xmlErrors=[];efdErrors=[];xmlReadVersion++;efdReadVersion++;$('xml-files').value='';$('efd-file').value='';doAudit()});
  $('xml-files').addEventListener('change',e=>readXmlFiles(e.target.files));
  $('efd-file').addEventListener('change',e=>readEFD(e.target.files));
  $('finding-search').addEventListener('input',renderFindings);

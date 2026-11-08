@@ -1,4 +1,4 @@
-# WU-TRIB | Auditor Web — piloto 0.1.0
+# WU-TRIB | Auditor Web — piloto 0.2.1
 
 Piloto de auditoria **estrutural**, inteiramente no navegador, para arquivos **fictícios**. Plataforma planejada: motor fiscal independente de ERP, integrações posteriores com TOTVS Protheus.
 
@@ -35,3 +35,6 @@ python3 -m http.server 4173
 ## Gates determinísticos v0.2.0
 
 `npm run check` executa os quatro agentes especializados (contratos fiscais, segurança, UX e release) e a suíte Node. `python tests/browser_e2e.py` valida as interações em Chromium com arquivos fictícios por injeção local. Consulte `docs/DETERMINISTIC_AGENTS.md` e `docs/WAVE_02_AUDIT.md`. Nenhuma regra fiscal certifica conformidade; lote incompleto não gera achados.
+
+## Integridade v0.2.1
+O estado de erros de XML e EFD é independente; falhas de seleção parcial permanecem bloqueantes mesmo depois de reenviar a outra origem. Os achados registram arquivo XML e linha C100 quando disponíveis. São referências de lote, não comprovação de causa-raiz.

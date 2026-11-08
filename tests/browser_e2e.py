@@ -4,7 +4,7 @@ This verifies behavior, not actual HTTP hosting or browser enforcement of Vercel
 """
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import json, hashlib
+import json, hashlib, subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=json.loads((ROOT/'vercel.json').read_text())
@@ -47,7 +47,7 @@ def run():
             assert page.locator('#metric-matches').inner_text()=='1'
             assert page.locator('#metric-findings').inner_text()=='3'
             assert not requests,requests
-            checks.append(f'{name}: fixture and browser script execution (no HTTP)')
+            checks.append(f'{name}: local DOM/script interaction (no HTTP)')
             width=page.evaluate('document.documentElement.scrollWidth')
             viewport=page.evaluate('window.innerWidth')
             assert width <= viewport+1, f'Horizontal overflow {width}>{viewport}'
@@ -88,6 +88,22 @@ def run():
             assert page.locator('#last-run-match').inner_text().startswith('NÃO EXECUTADO')
             assert page.locator('#export-csv').is_disabled()
             checks.append(f'{name}: fail-closed invalid XML')
+            # Regression: one valid + one invalid XML; subsequently reselecting a valid
+            # EFD must NEVER clear the XML error and create speculative MISSING_XML.
+            assets=json.loads(subprocess.check_output(['node','--input-type=module','-e',
+              "import {demoXMLs,demoEFD} from './src/fixtures.js'; console.log(JSON.stringify({xml:demoXMLs[0],efd:demoEFD}));"], cwd=ROOT,text=True))
+            page.locator('#xml-files').set_input_files([
+              {'name':'valida.xml','mimeType':'application/xml','buffer':assets['xml'].encode()},
+              {'name':'rejeitada.txt','mimeType':'text/plain','buffer':b'invalid'}
+            ])
+            page.wait_for_function("document.querySelector('#import-state').textContent.includes('LOTE INCOMPLETO')")
+            assert page.locator('#export-json').is_disabled()
+            page.locator('#efd-file').set_input_files({'name':'efd-valida.txt','mimeType':'text/plain','buffer':assets['efd'].encode()})
+            page.wait_for_function("document.querySelector('#import-state').textContent.includes('LOTE INCOMPLETO')")
+            assert page.locator('#export-csv').is_disabled()
+            assert page.locator('#metric-findings').inner_text()=='0'
+            assert 'rejeitada.txt' in page.locator('#import-warnings').inner_text()
+            checks.append(f'{name}: selection error preserved after EFD reimport')
             page.locator('#reset-demo').click()
             assert page.locator('#metric-findings').inner_text()=='3'
             assert page.locator('#export-csv').is_enabled()

@@ -13,6 +13,8 @@
 
 | 2026-11-08 | Registro documental 0.4.0 / expansão v0.2.0 | 17 peças documentais: seis especificações centrais, metamodelo, UX, RCM/RTM, dois schemas candidatos, 68 casos NOT_RUN, 13 fontes e controle de versões | Branch wutrib/expansion-spec-v02-20261108 | DRAFT; preserva v0.1.0, sem novos códigos, testes executados, banco, migrações ou publicação. |
 
+| 2026-11-08 | Registro 0.5.0 / revisão multidomínio 0.1.0 | 9 arquivos: 62 tópicos, 55 fontes com aplicabilidade por verificar, 20 correções do anexo, 30 riscos residuais, 13 validadores clínicos apenas propostos e protocolo de qualificação independente | governance/normative-crossdomain-evaluation-20261108 | Somente documentação DRAFT; CE não inspecionado via repo, nenhum teste executado, nenhum merge, banco ou deployment. |
+
 ## Regras para próximas revisões
 
 Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão, autor e revisor. Um documento aprovado não é substituído silenciosamente; criar revisão e preservar hash/commit do anterior. No processo de release, gravar manifesto por commit SHA e decisão assinada.

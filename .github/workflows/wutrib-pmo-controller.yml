@@ -1,0 +1,105 @@
+name: WU-TRIB | PMO deterministico e atividades V1
+on:
+  push:
+    branches:
+      - wutrib/pmo-v1-controller-20261108
+    paths:
+      - 'PMO/WUTRIB/**'
+      - 'docs/wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json'
+      - 'docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json'
+      - '.github/workflows/wutrib-pmo-controller.yml'
+  pull_request:
+    branches:
+      - wutrib/v1-normative-benchmark-assurance-20261108
+    paths:
+      - 'PMO/WUTRIB/**'
+      - '.github/workflows/wutrib-pmo-controller.yml'
+  workflow_dispatch:
+  # Schedule only activates on default branch, and never writes there.
+  schedule:
+    - cron: '15 11 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wutrib-pmo-controller
+  cancel-in-progress: false
+
+jobs:
+  pmo-verify:
+    name: Verificar PMO, integridade e testes do agente
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout read-only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Validate PMO data and chained journal
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs check
+      - name: Test PMO controller only
+        run: node --test PMO/WUTRIB/tests/pmo-controller.test.mjs
+      - name: Preview canonical source reconciliation
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs sync
+      - name: State limits
+        run: echo 'PMO planning only; no fiscal, clinical, Supabase, Vercel, E2E or production test executed.'
+
+  pmo-sync:
+    name: Atualizar somente arquivos PMO na branch isolada
+    needs: pmo-verify
+    if: >-
+      github.repository == 'IndiciumFIN/dev-chatgpt-workspace' &&
+      github.ref == 'refs/heads/wutrib/pmo-v1-controller-20261108' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout isolated PMO branch with bot credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: true
+      - name: Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Fail-closed integrity before updating
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs check
+      - name: Reconcile source changes and refresh operational report
+        run: node PMO/WUTRIB/agent/pmo-controller.mjs sync --write
+      - name: Verify idempotence
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(node PMO/WUTRIB/agent/pmo-controller.mjs sync)"
+          echo "$output"
+          printf '%s' "$output" | node -e '
+            let s="";
+            process.stdin.on("data",b=>s+=b);
+            process.stdin.on("end",()=>{
+              const r=JSON.parse(s);
+              if(r.changes!==0)process.exit(1);
+            });
+          '
+      - name: Commit ONLY PMO board, journal and reports if changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- PMO/WUTRIB/data/activities.v1.json PMO/WUTRIB/data/events.v1.json PMO/WUTRIB/reports/summary.v1.json PMO/WUTRIB/reports/STATUS.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(wutrib-pmo): reconcile activities and report without approving gates'
+            git push origin HEAD:refs/heads/wutrib/pmo-v1-controller-20261108
+          else
+            echo 'PMO unchanged; zero commits (idempotent)'
+          fi
+          echo 'No application, Supabase, Vercel or clinical project modifications.'

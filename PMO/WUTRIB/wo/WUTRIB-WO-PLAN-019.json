@@ -1,0 +1,83 @@
+{
+  "woId": "WUTRIB-WO-PLAN-019",
+  "title": "PMO V1: agente determinístico de controle, reconciliação e atualização de atividades",
+  "project": "WU-TRIB",
+  "origin": "USER_INSTRUCTION_2026-11-08",
+  "parentWoId": "WUTRIB-WO-PLAN-018",
+  "state": "PLANNING_READY_FOR_HUMAN_REVIEW_NOT_KERNEL_ADMITTED",
+  "executionScope": "VERSIONED_GITHUB_FILES_ONLY",
+  "authorization": {
+    "preparePMO": true,
+    "createAgent": true,
+    "runAgentUnitTests": true,
+    "updateActivityLedger": true,
+    "merge": false,
+    "publish": false,
+    "approve": false,
+    "homologate": false,
+    "accessEnterpriseData": false,
+    "modifySupabase": false,
+    "deployVercel": false
+  },
+  "tasks": [
+    {
+      "id": "WO019-01",
+      "name": "Inventariar atividades V1 e fontes",
+      "status": "DOCUMENTED_PENDING_REVIEW"
+    },
+    {
+      "id": "WO019-02",
+      "name": "Criar agente determinístico, journal encadeado e contratos",
+      "status": "TECHNICALLY_IMPLEMENTED_PENDING_REVIEW"
+    },
+    {
+      "id": "WO019-03",
+      "name": "Testar sincronização, autorização, idempotência e fail-closed",
+      "status": "AGENT_UNIT_TESTS_PASS_17_OF_17"
+    },
+    {
+      "id": "WO019-04",
+      "name": "Publicar workflow controlado e documentação",
+      "status": "GITHUB_ACTIONS_SYNC_VERIFIED_PENDING_ADMISSION"
+    },
+    {
+      "id": "WO019-05",
+      "name": "Revisão humana, admissão pelo Kernel e promoção autorizada",
+      "status": "HOLD_HUMAN"
+    }
+  ],
+  "provenance": [
+    "PR #48",
+    "PR #49",
+    "docs/wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json",
+    "docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json"
+  ],
+  "approvals": {
+    "approvedBy": null,
+    "approvedAt": null,
+    "kernelAdmitted": false,
+    "productionAuthorized": false
+  },
+  "note": "WO planning record created in GitHub only. Not a Supabase canonical WO or Kernel admitted execution. No release authority.",
+  "evidence": [
+    {
+      "kind": "CI_AGENT_TESTS",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42522895064",
+      "status": "SUCCESS",
+      "tests": 17,
+      "passed": 17,
+      "scope": "AGENT_ONLY_NOT_FISCAL_PRODUCT",
+      "sourceCommit": "857bb1a7a05f0e9a274da508da6a7ced914014b8"
+    },
+    {
+      "kind": "BOARD_SYNC",
+      "path": "PMO/WUTRIB/reports/summary.v1.json",
+      "activities": 63,
+      "gaps": 26,
+      "testGroups": 30,
+      "gates": 7,
+      "approval": "NOT_GRANTED"
+    }
+  ],
+  "notes": "GitHub planning record only. Results prove PMO unit tests and branch-restricted reconciliation, not fiscal/clinical homologation or effective daily schedule. Human review/KERNEL admission pending."
+}

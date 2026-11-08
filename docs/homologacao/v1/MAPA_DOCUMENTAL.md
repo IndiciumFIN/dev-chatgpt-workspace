@@ -148,3 +148,7 @@ O mapa mantém **50 templates documentais originais**, sem adicionar D051–D054
 ## Complemento de aprofundamento por versão
 
 A [expansão v0.2.0](expansoes/v02/README.md) especifica Extractor, Join Studio, Selection/Sampling, Error/Exception, Anomaly e Temporal Tax Intelligence; possui contratos, metamodelo conceitual, UX, RCM×RTM, manifesto, fontes públicas e **68 casos de teste propostos não executados**. O registro documental avançou para **0.4.0**, mantendo exatamente **50 templates**. Nenhum dos 17 arquivos da nova expansão é homologação ou evidência de um novo módulo implementado.
+
+## Revisão normativa e avaliação dos validadores — domínio fiscal e clínico
+
+O pacote [revisao-20261108](../../../governanca-multidominio/revisao-20261108/README.md) documenta avaliação do anexo do usuário e de scripts de validadores estruturais, 20 ressalvas e correções, 55 referências normativas/técnicas e matriz de 62 tópicos para todo o escopo discutido. **Não** significa que CE tenha sido inspecionado ou que WU-TRIB esteja apto a produção. A expansão v0.2 e seus **17 documentos** foram mantidos intactos; templates originais continuam **50**. Os riscos residuais e a revisão humana permanecem em HOLD.

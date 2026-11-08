@@ -1,4 +1,4 @@
-name: WU-TRIB v0.4.1 candidate - server validation and quota
+name: WU-TRIB v0.4.2 candidate - identity and tenant security
 on:
   push:
     branches: [wutrib/demo-persistence-v04-20261108]
@@ -28,8 +28,13 @@ jobs:
           grep -q 'DEMO_PERSISTENCE_DISABLED' api/demo-casefiles.js
           grep -q 'demo_casefiles_strict_fixture_v041' db/wutrib_demo_v041_hardening.sql
           grep -q 'revoke execute on function public.wutrib_demo_casefile_save_v1' db/wutrib_demo_v041_hardening.sql
-          grep -q 'wutrib_demo_casefile_save_v2' api/demo-casefiles.js
+          grep -q 'wutrib_demo_org_casefile_save_v1' api/demo-casefiles.js
           grep -q 'wutrib_demo_request_gate_v1' api/demo-casefiles.js
+          grep -q 'wutrib_demo_org_authorize_v1' api/demo-casefiles.js
+          grep -q 'WUTRIB_DEMO_AUTH_ENABLED' api/demo-casefiles.js
+          grep -q 'demo_org_memberships_v1' db/wutrib_demo_v042_org_auth.sql
+          grep -q 'demo_org_audit_events_v1' db/wutrib_demo_v042_org_auth.sql
+          grep -q 'revoke execute on function public.wutrib_demo_casefile_get_v1' db/wutrib_demo_v042_org_auth.sql
           echo 'Candidate requires separate DDL and credentials gates before API activation'
 
       - name: HTTPS smoke on isolated v0.4.1 candidate (no credentials)

@@ -6,10 +6,11 @@
 
 | Indicador | Quantidade |
 |---|---:|
-| Total de atividades | 63 |
+| Total de atividades | 72 |
 | Lacunas | 26 |
 | Grupos de testes | 30 |
 | Gates humanos | 7 |
+| Tarefas de desenvolvimento WO020 | 9 |
 | Lacunas P0 não prontas para revisão | 16 |
 | Mudanças de origem aguardando revisão | 0 |
 | Origens removidas, atividades preservadas | 0 |
@@ -19,8 +20,10 @@
 | Estado | Itens |
 |---|---:|
 | HOLD_HUMAN | 7 |
+| IN_PROGRESS | 3 |
 | NOT_RUN | 30 |
-| OPEN | 26 |
+| OPEN | 30 |
+| READY_FOR_REVIEW | 2 |
 
 ## Lacunas P0
 
@@ -46,6 +49,7 @@
 ## Limites e fontes
 
 - Fontes: docs/wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json e docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json.
+- Desenvolvimento: PMO/WUTRIB/data/development-workstream.v1.json (WO-DEV-020) com acompanhamento separado dos testes de homologação.
 - Sem acesso por este agente a dados do ERP, Supabase, Vercel ou projeto de Enfermagem.
 - Estados OPEN, IN_PROGRESS e READY_FOR_REVIEW não significam aprovação, teste PASS ou trabalho homologado.
 - O histórico encadeado registra operações, mas o nome informado em --actor não é assinatura de identidade.

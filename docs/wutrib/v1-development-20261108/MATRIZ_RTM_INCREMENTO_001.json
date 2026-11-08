@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "wutrib.v1.increment001.rtm.v1",
+  "version": "0.1.0",
+  "scope": "SYNTHETIC_VERTICAL_ONLY",
+  "branch": "wutrib/v1-vertical-slice-dev-20261108",
+  "project": "WU-TRIB",
+  "sourceBaseline": "1.0.0-rc.0",
+  "workOrder": "WUTRIB-WO-DEV-020",
+  "records": [
+    {
+      "id": "CTRL-V1-SYN-001",
+      "requirement": "REQ-V1-SOURCE-CONTEXT",
+      "gapIds": [
+        "GAP-001",
+        "GAP-003"
+      ],
+      "procedure": "PROC-V1-01",
+      "objective": "Detect EFD context mismatch and avoid universal C170 obligation",
+      "normativeUrls": [
+        "https://www.gov.br/sped/pt-br/assuntos/comunicados/efd-icms-ipi/nova-versao-do-guia-pratico-da-efd-icms-ipi-2"
+      ],
+      "testMethods": [
+        "EFD missing header",
+        "COD_VER mismatch",
+        "C170 absence",
+        "status unsupported",
+        "model 65 unsupported"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-002",
+      "requirement": "REQ-V1-TAX-SOURCE-CANDIDATE",
+      "gapIds": [
+        "GAP-002",
+        "GAP-026"
+      ],
+      "procedure": "PROC-V1-02",
+      "objective": "Do not infer TES from missing IDTRIB; label FISA170 only as candidate",
+      "normativeUrls": [
+        "https://centraldeatendimento.totvs.com/hc/pt-br/articles/35357410638231-CROSS-Segmentos-TOTVS-Backoffice-Linha-Protheus-FIS-FISA170-Como-confirmar-se-os-impostos-est%C3%A3o-sendo-gerados-pelo-Configurador-de-Tributos-ou-TES",
+        "https://centraldeatendimento.totvs.com/hc/pt-br/articles/37535417591319-Cross-Segmento-Backoffice-Linha-Protheus-SIGAEST-Como-identificar-impostos-do-Configurador-de-Tributos-nas-Notas-Fiscais"
+      ],
+      "testMethods": [
+        "wrong IDTRIB field",
+        "missing IDTRIB unknown",
+        "candidate F2D/F2B"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-003",
+      "requirement": "REQ-V1-EXACT-MONEY",
+      "gapIds": [
+        "GAP-005",
+        "GAP-017"
+      ],
+      "procedure": "PROC-V1-03",
+      "objective": "Exact decimal arithmetic, no silent rounding, no N:M inflation",
+      "normativeUrls": [
+        "https://www.iso.org/standard/78176.html"
+      ],
+      "testMethods": [
+        "decimal precision",
+        "invalid amount reject",
+        "duplicate ERP cardinality",
+        "duplicate EFD cardinality"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-004",
+      "requirement": "REQ-V1-THREE_WAY",
+      "gapIds": [
+        "GAP-004",
+        "GAP-011"
+      ],
+      "procedure": "PROC-V1-03",
+      "objective": "Three-way matching by access key with explicit missing-in-population versus out-of-scope",
+      "normativeUrls": [
+        "https://www.iso.org/standard/79429.html"
+      ],
+      "testMethods": [
+        "three sources match",
+        "value difference",
+        "missing document",
+        "out-of-scope source"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-005",
+      "requirement": "REQ-V1-SYNTHETIC_ONLY",
+      "gapIds": [
+        "GAP-009",
+        "GAP-011"
+      ],
+      "procedure": "PROC-V1-01",
+      "objective": "Reject real-data labels and any fictitious SEFAZ authorization; never approve automatically",
+      "normativeUrls": [
+        "https://asvs.owasp.org/"
+      ],
+      "testMethods": [
+        "wrong source classification",
+        "cross-organization",
+        "unauthorized NF-e label",
+        "no fiscal pass"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-006",
+      "requirement": "REQ-V1-LINEAGE",
+      "gapIds": [
+        "GAP-016",
+        "GAP-022"
+      ],
+      "procedure": "PROC-V1-03",
+      "objective": "SHA256 raw EFD and normalized inputs, stable run ID, audit workpaper open to human review",
+      "normativeUrls": [
+        "https://www.iso.org/standard/79429.html"
+      ],
+      "testMethods": [
+        "same input same digest",
+        "different input different digest",
+        "unapproved workpaper"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "src/v1/vertical-core.mjs",
+      "testFile": "tests/v1-vertical.test.mjs",
+      "status": "TECHNICAL_SYNTHETIC_CI_TEST_ONLY",
+      "businessApproval": null
+    },
+    {
+      "id": "CTRL-V1-SYN-007",
+      "requirement": "REQ-V1-PMO-ACCOUNTABILITY",
+      "gapIds": [
+        "GAP-007",
+        "GAP-012"
+      ],
+      "procedure": "PMO-WO020",
+      "objective": "PMO reconciliation must keep original 63 controls and add nine tracked development tasks",
+      "normativeUrls": [
+        "https://www.iso.org/standard/79429.html"
+      ],
+      "testMethods": [
+        "PMO idempotent sync",
+        "journal SHA chain",
+        "tasks source removal",
+        "no gate transition",
+        "DEV review with evidence"
+      ],
+      "workOrder": "WUTRIB-WO-DEV-020",
+      "codeRef": "PMO/WUTRIB/agent/pmo-controller.mjs",
+      "testFile": "PMO/WUTRIB/tests/pmo-controller.test.mjs",
+      "status": "AGENT_UNIT_CI_ONLY",
+      "businessApproval": null
+    }
+  ],
+  "coverage": {
+    "technicalControls": 7,
+    "productQualityNotFullyEvaluated": true,
+    "normativeApplicabilityApproved": false,
+    "rawXmlXsdSignatureTested": false,
+    "realERPAccess": false,
+    "productionReady": false
+  },
+  "approval": {
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "evidenceStatus": "CI_CASES_ONLY_REQUIRE_FISCAL_ORACLE_REVIEW"
+}

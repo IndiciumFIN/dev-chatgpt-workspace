@@ -17,6 +17,11 @@
       "path": "docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json",
       "role": "TESTS_AND_GATES",
       "expectedCount": 37
+    },
+    {
+      "path": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "role": "DEVELOPMENT_WO020",
+      "expectedCount": 9
     }
   ],
   "policy": {
@@ -30,6 +35,243 @@
     "testExecutionAuthorized": false
   },
   "activities": [
+    {
+      "id": "WUTRIB-PMO-DEV-001",
+      "sourceId": "DEV-001",
+      "type": "DEV",
+      "title": "Revisão e seleção de fontes oficiais EFD/NF-e/TOTVS",
+      "description": "Normative applicability per COD_VER, UF, release and source body",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "FISCAL_OWNER",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "OPEN",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-002",
+      "sourceId": "DEV-002",
+      "type": "DEV",
+      "title": "Contrato tipado synthetic-only e dicionário lógico",
+      "description": "Review data contracts and source versions, nullable/decimal/key semantics",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "DATA_ARCHITECT",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "IN_PROGRESS",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-003",
+      "sourceId": "DEV-003",
+      "type": "DEV",
+      "title": "Parser de subconjunto EFD C100/C170/C190",
+      "description": "Review exception matrix, own issue conditions and unsupported statuses",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "FISCAL_ENGINEERING",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "IN_PROGRESS",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-004",
+      "sourceId": "DEV-004",
+      "type": "DEV",
+      "title": "Identificador conservador de origem FISA170/TES",
+      "description": "Review SD1/SD2/SFT IDTRIB, F2D/F2B candidate evidence by release",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "PROTHEUS_SPECIALIST",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "IN_PROGRESS",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-005",
+      "sourceId": "DEV-005",
+      "type": "DEV",
+      "title": "Reconciliação determinística três pontas e evidência",
+      "description": "Review key cardinality, exact monetary amounts and replay digest",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "ENGINEERING_QA",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "READY_FOR_REVIEW",
+      "evidence": [
+        {
+          "path": "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+          "sha256": "84451ef482c5ae5df0af5ef45a219e067092bd765a6f7297ddda33ca59dabd02",
+          "observedAt": "2026-11-08T21:25:35.814Z"
+        }
+      ],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-006",
+      "sourceId": "DEV-006",
+      "type": "DEV",
+      "title": "Testes independentes negativos e CI read-only",
+      "description": "Assess functional assertions, mutation plan, CI artifact and residual cases",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "QA_INDEPENDENT",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "READY_FOR_REVIEW",
+      "evidence": [
+        {
+          "path": "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+          "sha256": "84451ef482c5ae5df0af5ef45a219e067092bd765a6f7297ddda33ca59dabd02",
+          "observedAt": "2026-11-08T21:25:35.818Z"
+        }
+      ],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-007",
+      "sourceId": "DEV-007",
+      "type": "DEV",
+      "title": "Console do operador, UX e WCAG 2.2",
+      "description": "Future responsive UI, keyboard, screen-reader, error messaging and UAT",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "UX_ACCESSIBILITY",
+      "priority": "P1",
+      "phase": "UX",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "OPEN",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-008",
+      "sourceId": "DEV-008",
+      "type": "DEV",
+      "title": "Segurança/tenancy, limites de carga, SCI e recuperação",
+      "description": "Future real Auth/RLS/E2E, capacity p95, DR, SCI and risk-based signoff",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "SECURITY_OPERATIONS",
+      "priority": "P0",
+      "phase": "OPERATIONS",
+      "gate": "REVIEW_CANDIDATE",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "OPEN",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
+    {
+      "id": "WUTRIB-PMO-DEV-009",
+      "sourceId": "DEV-009",
+      "type": "DEV",
+      "title": "Gate de fonte fiscal, Kernel, revisão e homologação humana",
+      "description": "No signoff or release until official corpus, reviewers, test closure and authorized promotion",
+      "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "ownerRole": "CHANGE_AUTHORITY",
+      "priority": "P0",
+      "phase": "AUTHORIZATION",
+      "gate": "GV1-06",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "origin": "IMPORT_FROM_DEV_WO020",
+      "status": "OPEN",
+      "evidence": [],
+      "manualDecision": null,
+      "dependencies": [],
+      "sourceFingerprint": "79667ca9bd1b1c857c49c1e1527bb0766354d8a7ada446f309f88401e28dfbb7",
+      "sourceRemoved": false,
+      "drift": false
+    },
     {
       "id": "WUTRIB-PMO-GAP-001",
       "sourceId": "GAP-001",

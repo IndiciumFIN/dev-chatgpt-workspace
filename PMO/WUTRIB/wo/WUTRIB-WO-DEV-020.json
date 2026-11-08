@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "wutrib.pmo.wo.v1",
+  "woId": "WUTRIB-WO-DEV-020",
+  "project": "WU-TRIB",
+  "title": "Desenvolvimento V1: incremento sintético três fontes, segurança e rastreabilidade normativa",
+  "sourceRequest": "User: alinhar projeto ao PMO, aos normativos técnicos e seguir o desenvolvimento",
+  "parents": [
+    "WUTRIB-WO-PLAN-019",
+    "WUTRIB-WO-PLAN-018"
+  ],
+  "lifecycleState": "ISOLATED_DEVELOPMENT_WITH_EVIDENCE_PENDING_KERNEL_ADMISSION",
+  "approval": {
+    "productOwner": null,
+    "fiscalSpecialist": null,
+    "qaIndependent": null,
+    "security": null,
+    "kernelAdmitted": false,
+    "productionAuthorized": false
+  },
+  "scope": [
+    "OFFLINE_SYNTHETIC_NORMALIZED_NFE",
+    "EFD_C100_C170_C190_SUBSET",
+    "SYNTHETIC_PROTHEUS_SD1_SD2_SFT",
+    "EXACT_THREE_WAY_MATCH",
+    "SHA256_TRACE",
+    "AUTOMATED_NONREGULATORY_TESTS"
+  ],
+  "forbidden": [
+    "ENTERPRISE_DATA",
+    "REAL_PROTHEUS_CONNECTOR",
+    "TAX_OPINION",
+    "SEFAZ_AUTHORIZATION_CLAIM",
+    "SCOPE_FREEZE_SIGNOFF",
+    "SUPABASE_MIGRATION",
+    "VERCEL_DEPLOY",
+    "MAIN_MERGE"
+  ],
+  "tasks": [
+    {
+      "id": "DEV-001",
+      "title": "Revisão e seleção de fontes oficiais EFD/NF-e/TOTVS",
+      "ownerRole": "FISCAL_OWNER",
+      "priority": "P0",
+      "implementationStatus": "NOT_COMPLETED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-002",
+      "title": "Contrato tipado synthetic-only e dicionário lógico",
+      "ownerRole": "DATA_ARCHITECT",
+      "priority": "P0",
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-003",
+      "title": "Parser de subconjunto EFD C100/C170/C190",
+      "ownerRole": "FISCAL_ENGINEERING",
+      "priority": "P0",
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-004",
+      "title": "Identificador conservador de origem FISA170/TES",
+      "ownerRole": "PROTHEUS_SPECIALIST",
+      "priority": "P0",
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-005",
+      "title": "Reconciliação determinística três pontas e evidência",
+      "ownerRole": "ENGINEERING_QA",
+      "priority": "P0",
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-006",
+      "title": "Testes independentes negativos e CI read-only",
+      "ownerRole": "QA_INDEPENDENT",
+      "priority": "P0",
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-007",
+      "title": "Console do operador, UX e WCAG 2.2",
+      "ownerRole": "UX_ACCESSIBILITY",
+      "priority": "P1",
+      "implementationStatus": "NOT_COMPLETED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-008",
+      "title": "Segurança/tenancy, limites de carga, SCI e recuperação",
+      "ownerRole": "SECURITY_OPERATIONS",
+      "priority": "P0",
+      "implementationStatus": "NOT_COMPLETED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-009",
+      "title": "Gate de fonte fiscal, Kernel, revisão e homologação humana",
+      "ownerRole": "CHANGE_AUTHORITY",
+      "priority": "P0",
+      "implementationStatus": "NOT_COMPLETED",
+      "approval": "NOT_GRANTED",
+      "evidenceRefs": []
+    }
+  ],
+  "processDeviation": {
+    "id": "FIND-WUTRIB-PMO-DEV-001",
+    "description": "WO registrada após os commits iniciais do código no mesmo turno; não atribuir admissão Kernel retroativa",
+    "status": "HOLD_HUMAN",
+    "mitigation": "Documentar sequência Git, revisão do PMO e prevenir repetição nas próximas ondas"
+  },
+  "testEvidence": {
+    "ciRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42525445947",
+    "scope": "synthetic only",
+    "v1NewTests": 27,
+    "v1NewPassed": 27,
+    "applicationSuiteTotalIncludingV1": 111,
+    "applicationSuitePassed": 111,
+    "pmoTests": 20,
+    "pmoPassed": 20
+  },
+  "releaseState": "NO_GO",
+  "version": "0.2.0",
+  "date": "2026-11-08",
+  "pmoActivityBoard": {
+    "path": "PMO/WUTRIB/data/activities.v1.json",
+    "total": 72,
+    "development": 9,
+    "readyForHumanReview": [
+      "DEV-005",
+      "DEV-006"
+    ],
+    "inProgress": [
+      "DEV-002",
+      "DEV-003",
+      "DEV-004"
+    ],
+    "reviewAuthority": "NOT_GRANTED"
+  }
+}

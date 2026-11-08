@@ -11,6 +11,7 @@ export const PATHS=Object.freeze({
  board:'PMO/WUTRIB/data/activities.v1.json',events:'PMO/WUTRIB/data/events.v1.json',
  gaps:'docs/wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json',
  tests:'docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json',
+ dev:'PMO/WUTRIB/data/development-workstream.v1.json',
  summary:'PMO/WUTRIB/reports/summary.v1.json',report:'PMO/WUTRIB/reports/STATUS.md'
 });
 export const sha256=buffer=>createHash('sha256').update(buffer).digest('hex');
@@ -38,7 +39,8 @@ function atomic(root,path,data){
  writeFileSync(temp,body,{mode:0o600});renameSync(temp,file);
  return true;
 }
-export function expectedItems(gaps,plan){
+export function expectedItems(gaps,plan,development={items:[]}){
+ if(!Array.isArray(development.items))throw Error('WO desenvolvimento sem lista de tarefas');
  if(!Array.isArray(gaps.items)||!Array.isArray(plan.tests)||!Array.isArray(plan.gates))throw Error('Fontes incompletas');
  const list=[
  ...gaps.items.map(x=>({id:'WUTRIB-PMO-'+x.id,sourceId:x.id,type:'GAP',title:x.finding,
@@ -54,11 +56,15 @@ export function expectedItems(gaps,plan){
   description:x.required.join('; '),sourcePath:PATHS.tests,
   ownerRole:x.id==='GV1-06'?'CHANGE_AUTHORITY':'PMO_AND_DOMAIN_OWNER',
   priority:'P0',phase:'GOVERNANCE',gate:x.id,requiredEvidence:x.required,
-  initialStatus:'HOLD_HUMAN',origin:'IMPORT_FROM_GATE_REGISTER'}))
+  initialStatus:'HOLD_HUMAN',origin:'IMPORT_FROM_GATE_REGISTER'})),
+ ...development.items.map(x=>({id:'WUTRIB-PMO-'+x.id,sourceId:x.id,type:'DEV',title:x.title,
+  description:x.description,sourcePath:PATHS.dev,ownerRole:x.ownerRole,priority:x.priority,
+  phase:x.phase,gate:x.gate,requiredEvidence:x.requiredEvidence,
+  initialStatus:'OPEN',origin:'IMPORT_FROM_DEV_WO020'}))
  ];
  const ids=new Set();
  for(const x of list){
-  if(ids.has(x.id)||!/^WUTRIB-PMO-(GAP-\d{3}|T\d{2}|GV1-\d{2})$/.test(x.id))throw Error('ID inválido ou duplicado: '+x.id);
+  if(ids.has(x.id)||!/^WUTRIB-PMO-(GAP-\d{3}|T\d{2}|GV1-\d{2}|DEV-\d{3})$/.test(x.id))throw Error('ID inválido ou duplicado: '+x.id);
   ids.add(x.id);
  }
  return list;
@@ -69,11 +75,11 @@ export function validateBoard(board,journal){
  if(!Array.isArray(board.activities))errors.push('Falta a lista de atividades');
  for(const a of (board.activities||[])){
   if(ids.has(a.id))errors.push('ID duplicado: '+a.id);ids.add(a.id);
-  const choices=a.type==='GAP'?['OPEN','IN_PROGRESS','BLOCKED','READY_FOR_REVIEW']:
+  const choices=['GAP','DEV'].includes(a.type)?['OPEN','IN_PROGRESS','BLOCKED','READY_FOR_REVIEW']:
    a.type==='TEST'?['NOT_RUN','BLOCKED','IN_PROGRESS','READY_FOR_REVIEW']:
    a.type==='GATE'?['HOLD_HUMAN']:[];
   if(!choices.includes(a.status))errors.push('Estado proibido: '+a.id+':'+a.status);
-  if(!a.id.startsWith('WUTRIB-PMO-')||![PATHS.gaps,PATHS.tests].includes(a.sourcePath))errors.push('Fonte/ID externo: '+a.id);
+  if(!a.id.startsWith('WUTRIB-PMO-')||![PATHS.gaps,PATHS.tests,PATHS.dev].includes(a.sourcePath))errors.push('Fonte/ID externo: '+a.id);
   if(a.manualDecision!==null)errors.push('Agente não pode assinar decisão: '+a.id);
   if(!Array.isArray(a.evidence)||(a.evidence||[]).some(e=>!e.path||!/^[a-f0-9]{64}$/.test(e.sha256||'')))errors.push('Evidência inválida: '+a.id);
  }
@@ -87,9 +93,9 @@ export function validateBoard(board,journal){
  }
  return {ok:errors.length===0,errors};
 }
-export function reconcile(board,gaps,plan,fingerprints){
+export function reconcile(board,gaps,plan,fingerprints,development={items:[]}){
  const next=clone(board),changes=[],byId=new Map(next.activities.map(x=>[x.id,x]));
- const expected=expectedItems(gaps,plan);
+ const expected=expectedItems(gaps,plan,development);
  for(const source of expected){
   const fingerprint=fingerprints[source.sourcePath];
   if(!/^[a-f0-9]{64}$/.test(fingerprint||''))throw Error('Falta SHA-256 real: '+source.sourcePath);
@@ -140,7 +146,7 @@ export function transition(board,journal,{id,to,actor,reason,evidence},root=ROOT
  if(!item)throw Error('Atividade não localizada');
  if(item.type==='GATE')throw Error('Gates exigem aceite humano fora deste agente');
  if(item.type==='TEST'&&['IN_PROGRESS','READY_FOR_REVIEW'].includes(to)&&!next.policy.testExecutionAuthorized)throw Error('Execução de testes não admitida pelo Kernel');
- const choices=item.type==='GAP'?['OPEN','IN_PROGRESS','BLOCKED','READY_FOR_REVIEW']:
+ const choices=['GAP','DEV'].includes(item.type)?['OPEN','IN_PROGRESS','BLOCKED','READY_FOR_REVIEW']:
   ['NOT_RUN','BLOCKED','IN_PROGRESS','READY_FOR_REVIEW'];
  if(!choices.includes(to)||to===item.status)throw Error('Transição não permitida');
  if(!actor||!reason||reason.trim().length<8||/[\r\n]/.test(actor))throw Error('Identidade declarada e motivo significativo obrigatórios');
@@ -163,9 +169,9 @@ export function acknowledgeDrift(board,journal,{id,actor,reason},at=new Date().t
  return {board:next,journal:appendEvent(journal,actor,'SOURCE_DRIFT_ACKNOWLEDGED',{id,reason},at)};
 }
 export function summarize(board,journal){
- const t={total:board.activities.length,gaps:0,tests:0,gates:0,criticalOpen:0,drift:0,sourceRemoved:0,byStatus:{}};
+ const t={total:board.activities.length,gaps:0,tests:0,gates:0,development:0,criticalOpen:0,drift:0,sourceRemoved:0,byStatus:{}};
  for(const x of board.activities){
-  if(x.type==='GAP')t.gaps++;if(x.type==='TEST')t.tests++;if(x.type==='GATE')t.gates++;
+  if(x.type==='GAP')t.gaps++;if(x.type==='TEST')t.tests++;if(x.type==='GATE')t.gates++;if(x.type==='DEV')t.development++;
   if(x.type==='GAP'&&x.priority==='P0'&&x.status!=='READY_FOR_REVIEW')t.criticalOpen++;
   if(x.drift)t.drift++;if(x.sourceRemoved)t.sourceRemoved++;
   t.byStatus[x.status]=(t.byStatus[x.status]||0)+1;
@@ -183,6 +189,7 @@ export function reportMd(summary,board){
   '| Indicador | Quantidade |','|---|---:|',
   '| Total de atividades | '+t.total+' |','| Lacunas | '+t.gaps+' |',
   '| Grupos de testes | '+t.tests+' |','| Gates humanos | '+t.gates+' |',
+  '| Tarefas de desenvolvimento WO020 | '+t.development+' |',
   '| Lacunas P0 não prontas para revisão | '+t.criticalOpen+' |',
   '| Mudanças de origem aguardando revisão | '+t.drift+' |',
   '| Origens removidas, atividades preservadas | '+t.sourceRemoved+' |','',
@@ -193,6 +200,7 @@ export function reportMd(summary,board){
   lines.push('| '+x.id+' | '+x.ownerRole+' | '+x.status+(x.drift?' (DRIFT)':'')+' |');
  }
  lines.push('','## Limites e fontes','','- Fontes: '+PATHS.gaps+' e '+PATHS.tests+'.',
+  '- Desenvolvimento: '+PATHS.dev+' (WO-DEV-020) com acompanhamento separado dos testes de homologação.',
   '- Sem acesso por este agente a dados do ERP, Supabase, Vercel ou projeto de Enfermagem.',
   '- Estados OPEN, IN_PROGRESS e READY_FOR_REVIEW não significam aprovação, teste PASS ou trabalho homologado.',
   '- O histórico encadeado registra operações, mas o nome informado em --actor não é assinatura de identidade.',
@@ -200,8 +208,8 @@ export function reportMd(summary,board){
  return lines.join('\n');
 }
 export function loadInputs(root=ROOT){
- const g=readFileSync(guardedPath(root,PATHS.gaps)),t=readFileSync(guardedPath(root,PATHS.tests));
- return {gaps:JSON.parse(g),tests:JSON.parse(t),fingerprints:{[PATHS.gaps]:sha256(g),[PATHS.tests]:sha256(t)}};
+ const g=readFileSync(guardedPath(root,PATHS.gaps)),t=readFileSync(guardedPath(root,PATHS.tests)),d=readFileSync(guardedPath(root,PATHS.dev));
+ return {gaps:JSON.parse(g),tests:JSON.parse(t),development:JSON.parse(d),fingerprints:{[PATHS.gaps]:sha256(g),[PATHS.tests]:sha256(t),[PATHS.dev]:sha256(d)}};
 }
 function flagsParse(xs){
  const f={};
@@ -221,7 +229,7 @@ export function main(argv=process.argv.slice(2),root=ROOT){
  if(!before.ok)throw Error('Integridade comprometida: '+before.errors.join('; '));
  let next=board,events=journal,changes=[],mode='READ_ONLY';
  if(cmd==='sync'){
-  const inputs=loadInputs(root),out=reconcile(board,inputs.gaps,inputs.tests,inputs.fingerprints);
+  const inputs=loadInputs(root),out=reconcile(board,inputs.gaps,inputs.tests,inputs.fingerprints,inputs.development);
   next=out.board;changes=out.changes;
   if(changes.length)events=appendEvent(journal,'PMO_DETERMINISTIC_AGENT','SOURCE_RECONCILIATION',{
    changes:changes.length,items:[...new Set(changes.map(x=>x.id))].sort(),

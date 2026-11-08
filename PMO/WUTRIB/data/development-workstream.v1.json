@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "wutrib.pmo.development-workstream.v1",
+  "version": "0.1.0",
+  "project": "WU-TRIB",
+  "woId": "WUTRIB-WO-DEV-020",
+  "sourceBranch": "wutrib/v1-vertical-slice-dev-20261108",
+  "status": "DEVELOPMENT_CANDIDATE_UNAPPROVED",
+  "createdOn": "2026-11-08",
+  "references": {
+    "normative": "docs/wutrib/v1-assurance-20261108/PARECER_NORMATIVO_APLICABILIDADE_V1.md",
+    "baseline": "docs/wutrib/v1-baseline-20261108/MANIFESTO_V1.json",
+    "increment": "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+    "previousWo": "WUTRIB-WO-PLAN-019"
+  },
+  "items": [
+    {
+      "id": "DEV-001",
+      "title": "Revisão e seleção de fontes oficiais EFD/NF-e/TOTVS",
+      "description": "Normative applicability per COD_VER, UF, release and source body",
+      "ownerRole": "FISCAL_OWNER",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "NOT_COMPLETED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-002",
+      "title": "Contrato tipado synthetic-only e dicionário lógico",
+      "description": "Review data contracts and source versions, nullable/decimal/key semantics",
+      "ownerRole": "DATA_ARCHITECT",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-003",
+      "title": "Parser de subconjunto EFD C100/C170/C190",
+      "description": "Review exception matrix, own issue conditions and unsupported statuses",
+      "ownerRole": "FISCAL_ENGINEERING",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-004",
+      "title": "Identificador conservador de origem FISA170/TES",
+      "description": "Review SD1/SD2/SFT IDTRIB, F2D/F2B candidate evidence by release",
+      "ownerRole": "PROTHEUS_SPECIALIST",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-005",
+      "title": "Reconciliação determinística três pontas e evidência",
+      "description": "Review key cardinality, exact monetary amounts and replay digest",
+      "ownerRole": "ENGINEERING_QA",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-006",
+      "title": "Testes independentes negativos e CI read-only",
+      "description": "Assess functional assertions, mutation plan, CI artifact and residual cases",
+      "ownerRole": "QA_INDEPENDENT",
+      "priority": "P0",
+      "phase": "V1_INCREMENT",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "IMPLEMENTED_CANDIDATE_NOT_HOMOLOGATED",
+      "evidenceRefs": [
+        "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+        "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42524316343"
+      ]
+    },
+    {
+      "id": "DEV-007",
+      "title": "Console do operador, UX e WCAG 2.2",
+      "description": "Future responsive UI, keyboard, screen-reader, error messaging and UAT",
+      "ownerRole": "UX_ACCESSIBILITY",
+      "priority": "P1",
+      "phase": "UX",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "NOT_COMPLETED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-008",
+      "title": "Segurança/tenancy, limites de carga, SCI e recuperação",
+      "description": "Future real Auth/RLS/E2E, capacity p95, DR, SCI and risk-based signoff",
+      "ownerRole": "SECURITY_OPERATIONS",
+      "priority": "P0",
+      "phase": "OPERATIONS",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "REVIEW_CANDIDATE",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "NOT_COMPLETED",
+      "evidenceRefs": []
+    },
+    {
+      "id": "DEV-009",
+      "title": "Gate de fonte fiscal, Kernel, revisão e homologação humana",
+      "description": "No signoff or release until official corpus, reviewers, test closure and authorized promotion",
+      "ownerRole": "CHANGE_AUTHORITY",
+      "priority": "P0",
+      "phase": "AUTHORIZATION",
+      "requiredEvidence": [
+        "SOURCE_AND_VERSION",
+        "DESIGN_OR_IMPLEMENTATION",
+        "INDEPENDENT_REVIEW"
+      ],
+      "gate": "GV1-06",
+      "initialStatus": "OPEN",
+      "approvedBy": null,
+      "implementationStatus": "NOT_COMPLETED",
+      "evidenceRefs": []
+    }
+  ],
+  "policy": {
+    "botMayMarkReadyForReviewWithBytesEvidence": true,
+    "botMayApprove": false,
+    "botMayClose": false,
+    "botMayClaimFiscalConformity": false
+  }
+}

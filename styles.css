@@ -23,3 +23,42 @@
 
 /* v0.3 · triagem demonstrativa com foco visível e controles acessíveis */
 .triage-section{margin-top:22px}.triage-form{display:grid;gap:10px;margin-top:16px}.triage-form label{font-size:12px;font-weight:650;color:#333}.triage-form select,.triage-form textarea{width:100%;border:1px solid #b8b8b8;background:#fff;color:#171717;border-radius:5px;padding:11px;font:inherit;font-size:12px}.triage-form textarea{resize:vertical;min-height:94px}.triage-form .button{width:100%;white-space:normal}.triage-hint,.triage-disclaimer{color:#626262;font-size:11px;line-height:1.65}.triage-section h3{font-size:11px}.triage-form select:focus-visible,.triage-form textarea:focus-visible{outline:3px solid #555;outline-offset:2px}
+
+
+/* WU-TRIB AUD-017-10: WCAG 2.2 AA contrast remediation.
+   Automated axe identified low-contrast grays on light surfaces; leave active dark surfaces inverted.
+   Source: W3C Understanding WCAG SC 1.4.3. Candidate only, not a certification. */
+:root{--muted:#4b4b4b;--text-secondary:#4b4b4b}
+.brand small,.workspace span,.nav-label,.version,.avatar-name small,
+.sidebar-security,.demo-pill,.eyebrow,.overline,.page-heading p,.kpi-title,
+.kpi-foot,.step-num,.step small,.step-status.muted,.severity-row,
+.summary-note,.recent-item small,.footer,.upload-panel p,.selected-files,
+.panel-detail>p,.audit-cell small,.rule-line>span:first-child,.rule-pill,
+.result-count,th,td small,.detail-section h3,.detail-description,
+.source-card p,.gov-card p,.small-tag.muted,.breadcrumb,
+.triage-hint,.triage-disclaimer,.no-findings,.empty-state{
+ color:var(--text-secondary)!important;
+}
+.nav-item:not(.active){color:#464646}
+.nav-item:not(.active):hover{color:#151515}
+.kpi-accent .kpi-title,.kpi-accent .kpi-foot,.kpi-accent .kpi-symbol{
+ color:#e0e0e0!important;
+}
+.nav-item.active,.nav-item.active .nav-icon{color:#ffffff}
+:where(.button,.nav-item,.icon-button,.table-open,.recent-item,input,select,textarea,a):focus-visible{
+ outline:3px solid #151515;outline-offset:3px;
+}
+:where(.button-dark,.nav-item.active):focus-visible{
+ outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px #151515;
+}
+.findings-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;
+ flex-wrap:wrap;padding:16px 17px;background:#fff;border-top:1px solid var(--line)}
+.findings-pagination .button{padding:10px 12px;min-height:40px;min-width:86px}
+.findings-pagination [role="status"]{font-size:12px;font-variant-numeric:tabular-nums;
+ color:var(--text-secondary);font-weight:650;text-align:center}
+.findings-pagination .button:disabled{cursor:not-allowed;color:#555;background:#f5f5f5;
+ border-color:#bdbdbd;opacity:1}
+@media(max-width:580px){
+ .findings-pagination{padding:12px;gap:8px}
+ .findings-pagination .button{min-width:72px}
+}

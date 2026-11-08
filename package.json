@@ -6,7 +6,7 @@
   "description": "Synthetic-only fiscal cross-check with ephemeral triage and fail-closed inputs",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "verify": "node agents/fiscal-contract.mjs && node agents/security.mjs && node agents/ux-accessibility.mjs && node agents/triage.mjs && node agents/release.mjs",
+    "verify": "node agents/fiscal-contract.mjs && node agents/security.mjs && node agents/ux-accessibility.mjs && node agents/triage.mjs && node agents/release.mjs && node agents/persistence.mjs",
     "check": "npm run verify && npm test",
     "dev": "python3 -m http.server 4173"
   },

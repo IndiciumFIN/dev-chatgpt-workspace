@@ -150,3 +150,20 @@ A criticidade é para a META de piloto controlado e futura prontidão fiscal, n�
 **PARECER GLOBAL: HOLD para homologação, produção fiscal e habilitação da API.**
 
 Nenhum desses achados representa evidência de falha no aplicativo Calculadoras de Enfermagem. O parecer cobre WU-TRIB na branch e no esquema indicados; não pretende representar exame exaustivo de todos os registros do SOT legado ou dos sistemas TOTVS da empresa.
+
+
+---
+
+## Adendo pós-auditoria — Wave 04.4 (08/11/2026)
+
+Este adendo NÃO altera retroativamente as constatações da auditoria original. As evidências de remediação estão em docs/WAVE_044_REMEDIATION_EVIDENCE.md, no catálogo de 30 gates e nos workflows versionados.
+
+- AUD-017-10: contraste corrigido na branch audit-only; varredura automática axe-core de 12 combinações de tela/viewport, **zero violações automatizadas**. Revisão manual WCAG, zoom e leitor de tela continuam HOLD.
+- AUD-017-11: paginação de 50 achados preservando contagem, filtros, exportação de JSON com 1.003 findings e comandos de teclado; 35.000 C100 mantêm 852 nós DOM em Chromium. Capacidade máxima e testes em hardware modesto continuam HOLD.
+- AUD-017-12: migration wutrib_demo_v043_fk_indexes_20261108 aplicada no Supabase SOT; quatro índices confirmados no catálogo; o Performance Advisor deixou de listar chaves estrangeiras sem índice. Sem benchmark de banco real.
+- AUD-017-05: foram criados subconjunto físico de metamodelo (23 entidades, 25 FK) e dicionário de campo (22 campos, incluindo numeric(20,6) e numeric(16,8)); semântica legal, normativa e Protheus continuam NÃO VERIFICADAS.
+- Catálogo TOTVS: 14 códigos vendor-only; nenhum mapa SX3 nem vínculo com TES homologado.
+- Pipeline Node e sete agentes: **84/84 testes PASS** em execução verificada; matrizes normativas mantêm todos os gates fiscais em HOLD.
+- Publicação externa dos CSS/UI corrigidos: **HOLD_VERCEL_QUOTA**, POST /v13/deployments retornou HTTP 402 api-deployments-free-per-day. Nenhum novo deployment ocorreu, e a versão pública v0.3 não mudou.
+
+**Parecer pós-correção:** houve melhorias verificáveis na engenharia e na UX; a homologação fiscal e a autorização de produção permanecem bloqueadas. Não confundir 0 violações automatizadas de axe com certificação WCAG completa.

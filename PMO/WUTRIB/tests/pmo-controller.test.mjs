@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,symlinkSync,mkdtempSync,rmSync} from 'node:fs';
 import {resolve} from 'node:path';
+import {tmpdir} from 'node:os';
 import {ROOT,PATHS,sha256,guardedPath,expectedItems,validateBoard,reconcile,appendEvent,transition,acknowledgeDrift,summarize,reportMd,loadInputs} from '../agent/pmo-controller.mjs';
 
 const read=rel=>JSON.parse(readFileSync(resolve(ROOT,rel),'utf8'));
@@ -115,4 +116,12 @@ test('Reports remain explicit about zero tests and no production permission',()=
   assert.equal(summary.productionAuthorized,false);
   assert.match(markdown,/NO-GO/);
   assert.match(markdown,/WUTRIB-PMO-GAP-001/);
+});
+
+test('Symlinks cannot escape repository when evidence is attached',()=>{
+ const dir=mkdtempSync(resolve(tmpdir(),'wutrib-pmo-'));
+ try{
+  symlinkSync('/etc/passwd',resolve(dir,'external-proof'));
+  assert.throws(()=>guardedPath(dir,'external-proof'),/Symlink fora/);
+ }finally{rmSync(dir,{recursive:true,force:true});}
 });

@@ -63,7 +63,7 @@ release_approved: false
 
 ## Decisão de versão: escopo firme, não integralidade do mercado
 
-O [catálogo corrigido V1](CATALOGO_FUNCIONAL_V1_CORRIGIDO.json) lista **12 módulos mínimos**, **6 módulos de contrato/funcionamento limitado condicionado a gate** e **4 explicitamente posteriores à V1**. A classificação é proposta e precisa de owner; não define aprovação de feature nem percentual implementado.
+O [catálogo corrigido V1](CATALOGO_FUNCIONAL_V1_CORRIGIDO.json) lista **13 módulos mínimos**, **5 módulos de contrato/funcionamento limitado condicionado a gate** e **4 explicitamente posteriores à V1**. A classificação é proposta e precisa de owner; não define aprovação de feature nem percentual implementado.
 
 **Fontes para a V1 técnica:** NF-e modelo 55 XML sintético com schema identificado e validado; EFD ICMS/IPI em subconjunto de registros suportados explicitado por COD_VER/Guia; dados sintéticos e snapshots autorizados de dicionário/ERP Protheus. Não afirmar capacidade fiscal para todos os blocos SPED, todas as UFs, NFS-e, CT-e, eSocial ou motor IBS/CBS completo apenas porque existe estrutura extensível.
 

@@ -48,6 +48,6 @@ O [aprofundamento v0.2.0](expansoes/v02/README.md) está vinculado ao registro c
 
 ## Revisão normativa multidomínio (08/11/2026)
 
-[Índice de avaliação pré-implantação](../../../governanca-multidominio/revisao-20261108/README.md) · [Parecer e correções](../../../governanca-multidominio/revisao-20261108/PARECER_PRE_IMPLANTACAO_v01.md) · [Qualificação dos validadores](../../../governanca-multidominio/revisao-20261108/PLANO_REQUALIFICACAO_VALIDADORES_v01.md).
+[Índice de avaliação pré-implantação](../../governanca-multidominio/revisao-20261108/README.md) · [Parecer e correções](../../governanca-multidominio/revisao-20261108/PARECER_PRE_IMPLANTACAO_v01.md) · [Qualificação dos validadores](../../governanca-multidominio/revisao-20261108/PLANO_REQUALIFICACAO_VALIDADORES_v01.md).
 
 O registro documental v0.5.0 referencia **9 peças de revisão**, **55 fontes catalogadas**, **62 tópicos**, **30 riscos residuais** e **13 candidatos de validação clínica** (não implementados). Preserva **50 templates**, 28 validadores WU-TRIB e expansão funcional v0.2. Sem auditoria de código clínico, sem execução dos auditores, sem alterações na aplicação e sem autorização de produção.

@@ -52,16 +52,27 @@ with sync_playwright() as p:
             }""")
             assert stats['rows'] <= 50, 'render window must be bounded'
             assert stats['rows'] == 50
-            assert stats['dom_nodes'] < 4000, 'DOM may not scale with all records'
+            assert stats['dom_nodes'] < 1200, 'DOM may not scale with all records'
             assert stats['page_status'].startswith('Página 1 de ')
             assert str(count+3) in stats['total_count'], '3 existing XML fixtures must remain unmatched'
             assert stats['status'] == 'PROCESSAMENTO LOCAL'
             page.locator('nav button[data-view="findings"]').click()
-            page.locator('#findings-next').click()
+            page.locator('#findings-next').focus()
+            page.keyboard.press('Enter')
             assert page.locator('#findings-page-status').inner_text().startswith('Página 2 de ')
             assert page.locator('#findings-table tr').count() == 50
-            page.locator('#findings-prev').click()
+            page.locator('#findings-prev').focus()
+            page.keyboard.press('Enter')
             assert page.locator('#findings-page-status').inner_text().startswith('Página 1 de ')
+            if count == 1000:
+                with page.expect_download() as exported_info:
+                    page.locator('#export-json').click()
+                full_export=json.loads(Path(exported_info.value.path()).read_text(encoding='utf-8'))
+                assert len(full_export['audit']['findings']) == count+3
+                assert full_export['audit']['input']['c100Count'] == count
+                assert full_export['audit']['taxConformity'] == 'NOT_EVALUATED'
+                assert full_export['triageMode'] == 'EPHEMERAL_CLIENT_ONLY'
+                print('WUTRIB_BROWSER_EXPORT_FULL=PASS 1003 findings while 50 rows visible')
             print('WUTRIB_UI_CAPACITY='+json.dumps(dict(
                 records=count,input_bytes=len(raw),elapsed_ms=round(elapsed,2),**stats
             )))

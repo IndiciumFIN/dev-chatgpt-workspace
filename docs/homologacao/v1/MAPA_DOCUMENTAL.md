@@ -144,3 +144,7 @@ O plano [v0.3.0](PLANO_AUDITORIA_COM_VALIDADORES.md), o [catálogo de 28 candida
 - [33 cenários a validar futuramente](expansoes/MATRIZ_CENARIOS_FUTUROS_v01.md): todos NOT_RUN.
 
 O mapa mantém **50 templates documentais originais**, sem adicionar D051–D054 ou dar-lhes status APPROVED. A expansão é um vínculo DRAFT do registro documental v0.3.0, não autorização de implementação.
+
+## Complemento de aprofundamento por versão
+
+A [expansão v0.2.0](expansoes/v02/README.md) especifica Extractor, Join Studio, Selection/Sampling, Error/Exception, Anomaly e Temporal Tax Intelligence; possui contratos, metamodelo conceitual, UX, RCM×RTM, manifesto, fontes públicas e **68 casos de teste propostos não executados**. O registro documental avançou para **0.4.0**, mantendo exatamente **50 templates**. Nenhum dos 17 arquivos da nova expansão é homologação ou evidência de um novo módulo implementado.

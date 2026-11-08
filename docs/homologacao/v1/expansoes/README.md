@@ -35,3 +35,9 @@ classification: INTERNAL
 Extensão vinculada ao catálogo canônico v0.3.0 (WO-018). Os **50 modelos documentais** previamente criados continuam intactos; os quatro D051-D054 propostos para métodos e amostragem continuam candidatos não criados. A estratégia de **28 validadores** continua em DRAFT e não deve ser confundida com os 22 módulos de aplicação.
 
 **Status de todos os documentos desta expansão: DRAFT / NÃO HOMOLOGADO.**
+
+## Aprofundamento adicional v0.2.0 — sem execução
+
+[Índice do aprofundamento e das 17 peças documentais](v02/README.md) · [Plano diretor aprofundado](v02/PLANO_DIRETOR_v02.md) · [Matriz de 68 testes futuros](v02/MATRIZ_TESTES_v02.json) · [Riscos e controles RCM/RTM](v02/RCM_E_RTM_v02.md).
+
+O conteúdo anterior v0.1.0 e as 22 capacidades propostas permanecem intactos. O novo pacote registra requisitos detalhados para seis famílias prioritárias e contratos JSON apenas planejados. **Nenhum teste foi executado, nem houve atualização de banco, aplicação, CI/CD ou Vercel.**

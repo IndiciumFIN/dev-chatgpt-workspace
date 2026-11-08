@@ -1,8 +1,0 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { redirectSection } from "@/lib/institutional-target";
-
-export const Route = createFileRoute("/institucional/")({
-  beforeLoad: () => {
-    throw redirect({ to: "/secao/$slug", params: { slug: redirectSection("") } });
-  },
-});

@@ -1,54 +1,33 @@
-# Calculadoras de Enfermagem
+# WU-TRIB | Auditor Web — piloto 0.1.0
 
-Este repositório é um workspace de publicação e auditoria para a base pública de conteúdo clínico e materiais educacionais da família "Calculadoras de Enfermagem".
+Piloto de auditoria **estrutural**, inteiramente no navegador, para arquivos **fictícios**. Plataforma planejada: motor fiscal independente de ERP, integrações posteriores com TOTVS Protheus.
 
-Ele reúne:
-- a aplicação web e roteamento principal em `src/`
-- os contratos e invariantes gerados em `contracts/`
-- os registros e evidências de decisões em `registers/`
-- as auditorias e artefatos de execução em `audit/`, `audit-run/` e `audit-evidence/`
-- os gates e validações em `scripts/`
+## Executar
 
-## Visão geral
-
-O objetivo deste projeto é manter uma base pública, auditável e governada para publicação de conteúdo e ferramentas educacionais, sem promover material clínico sem evidência e sem acionar infra de produção por padrão.
-
-Este workspace opera com política explícita:
-- autenticação desligada por padrão (`VITE_AUTH_ENABLED=false`)
-- banco desligado por política do backup público (`DB_ENABLED = false`)
-- conteúdo clínico fora do índice até ter fonte e validação humanas
-- `md_gate` fechado para publicação/"release" formal
-
-## Onde começar
-
-- `COMO-USAR.md` — guia operacional e fluxo de uso do repositório
-- `README.md` — visão geral e contexto do projeto
-- `docs/PENDENCIAS.md` — pendências e itens em aberto
-
-## Verificação e gates
-
-Os gates e auditorias locais devem ser executados antes de qualquer publicação ou promoção:
-
-```bash
-npm ci
-npm run typecheck
+```sh
 npm test
-npm run build:spa
+python3 -m http.server 4173
+# abra http://localhost:4173
 ```
 
-Os pontos relevantes incluem:
-- `check-generated-fresh` para garantir contratos gerados em sincronia com o código
-- `check-cko-packages` para verificar integridade de pacotes CKO
-- `check-contract-coverage` para garantir cobertura completa de contratos e entidades
+## O que realmente faz
+- Demonstra NF-e XML sintética e registros C100 da EFD ICMS/IPI (dados de exemplo).
+- Permite importar localmente até 10 XMLs (máx. 2 MB cada) e um TXT (máx. 4 MB).
+- Extrai chave, número, total e informações elementares; cruza chave e valor com C100, com tolerância de R$ 0,01.
+- Identifica ausências, divergências de valores e chaves duplicadas, com hipóteses de investigação.
+- Pesquisa, filtra e seleciona achados; exporta CSV com mitigação de fórmula e dossiê JSON.
 
-## Segurança e política
+## Limitações obrigatórias
+- NÃO transmite arquivos para servidor, NÃO usa Supabase, NÃO tem login nem persiste uploads.
+- NÃO valida XSD oficial, checksum da chave, semântica fiscal, situação da NF-e, retificações, natureza tributária, CFOP ou layout EFD completo.
+- NÃO comprova conformidade tributária nem causa-raiz. `fiscalConformity=NOT_EVALUATED` sempre.
+- Somente dados sintéticos são permitidos neste ambiente público. Não importar dados reais/identificáveis da Würth.
+- O parser XML rejeita DTD/ENTITY e XMLs acima de 2 MB; o browser faz parsing local via DOMParser.
+- A branch está dentro do repositório genérico compartilhado; os arquivos da branch foram gerados em árvore separada da aplicação de enfermagem.
+- Vercel é projeto novo independente. Nenhum token/URL de banco na aplicação.
 
-- O backup público não deve telegravar autenticação, banco ou infra de produção em modo padrão.
-- Qualquer reativação de autenticação ou banco precisa ser uma decisão explícita de produto e governança.
-- Conteúdo sem fonte validada fica em estado de candidato e foi removido do índice até revisão humana.
-
-## Observações importantes
-
-Este é um workspace de auditoria e publicação controlada, não um app final de produção homogênea. A intenção aqui é manter a cadeia de evidência, os contratos e a integridade do material em evolução, com a política de backup pública preservada.
-
-Para detalhes de uso e execução, consulte `COMO-USAR.md`.
+## Próximas fases
+1. Definir fluxo de login/autorizações e isolamento organizacional; dados empresariais não entram antes disso.
+2. Backend de ingestão seguro, conformidade LGPD/localização e armazenamento privado no Supabase.
+3. Validador por versão oficial XSD/EFD e regras com evidência por vigência.
+4. Rastreamento de causa-raiz até cadastros, TES e CFGTRIB, mediante snapshot TOTVS autorizado.

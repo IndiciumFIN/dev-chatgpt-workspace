@@ -156,3 +156,7 @@ O pacote [revisao-20261108](../../governanca-multidominio/revisao-20261108/READM
 ## Candidato a baseline funcional WU-TRIB V1.0.0 — avaliação R1/R2
 
 O [manifesto V1](../../wutrib/v1-baseline-20261108/MANIFESTO_V1.json) e o [índice documental](../../wutrib/v1-baseline-20261108/README.md) registram as duas pesquisas recebidas por SHA de bytes, 39 macrotemas rastreados, 22 módulos catalogados com correção de campos, decisões e fronteiras do release. **O escopo está proposto para congelamento; não foi homologado e não foi implantado.** Preservados os 50 templates documentais, 28 validadores planejados, 17 documentos da expansão v0.2 e as revisões anteriores.
+
+## Gap assessment de V1 em relação às normas e plataformas
+
+[Revisão em Draft v0.1.0](../../wutrib/v1-assurance-20261108/README.md) confronta os contratos de NF-e/EFD/TES/FISA170 da V1 com fontes oficiais TOTVS/SPED, referências ISO/IEC/IEEE 12207/15289/29119/25010/25012/25019/25040, OWASP ASVS, NIST SSDF, WCAG, SCI e plataformas ONESOURCE, Sovos, Avalara, Systax, IDEA, ACL, Power Query e outras. **Risco avaliado no desenho, não prova de falha operacional.** As propostas não alteram a distribuição funcional 13+5+4 nem autorizam merge/deploy.

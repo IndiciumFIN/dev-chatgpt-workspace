@@ -129,3 +129,8 @@ O `project_documents` existente não deve ser reescrito retroativamente nem tran
 - O resultado do controle automático, mesmo positivo, não altera esses estados.
 
 **Condição de congelamento da baseline:** registrar commit, hash real do conjunto, evidências, revisões e aceite humano. Sem isso não se promoverá artefato à produção.
+
+
+## Extensão de planejamento de validadores (não homologada)
+
+O plano [v0.3.0](PLANO_AUDITORIA_COM_VALIDADORES.md), o [catálogo de 28 candidatos](validadores/CATALOGO_VALIDADORES.v0.3.json) e a [matriz COSO/COBIT/IA](validadores/MATRIZ_COSO_COBIT_IA_v03.md) compõem uma extensão de planejamento **DRAFT**. O pacote de documentação mantém 50 modelos canônicos. D051–D054 para lógica do motor, métodos de auditoria, amostragem e matriz de procedimentos são candidatos adicionais aguardando admissão e revisão de escopo; não estão contabilizados entre os 50. Nenhum validador foi implementado ou executado pela extensão.

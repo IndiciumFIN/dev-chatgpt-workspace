@@ -41,3 +41,7 @@ Preencher cada artefato com dados verificáveis e referenciar os IDs na RTM e na
 ## Extensão documental — Audit Data Studio e funcionalidades fiscais
 
 A [expansão funcional v0.1.0](expansoes/README.md) reúne benchmark de soluções externas, 22 motores candidatos, join/extractor/seleção/amostragem/erros/anomalias, comparação tributária por período e 33 cenários de validação **futura**. A extensão está no registro canônico documental v0.3.0 vinculada à WO-018, sem criar funcionalidades, alterar o DS, testar aplicações, modificar bancos ou publicar releases. Os 50 templates documentais preexistentes permanecem inalterados. **DRAFT / NO-EXECUTION.**
+
+## Nova revisão documental de módulos analíticos
+
+O [aprofundamento v0.2.0](expansoes/v02/README.md) está vinculado ao registro canônico **0.4.0**, preservando 50 modelos originais, os 28 validadores candidatos e a expansão funcional v0.1.0. São **17 peças documentais de proposta**, 68 testes futuros ainda `NOT_RUN` e 14 riscos/controles candidatos. Nenhuma aprovação ou modificação de software está implícita.

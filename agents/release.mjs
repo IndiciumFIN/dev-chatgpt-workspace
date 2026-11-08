@@ -1,7 +1,7 @@
 import {readdirSync,statSync} from 'node:fs';
 import {join} from 'node:path';
 import {verifyAgent,check,file,root} from './_agent.mjs';
-const allowedTop=new Set(['.github','.gitignore','README.md','index.html','styles.css','src','docs','tests','agents','package.json','vercel.json','api','db','scripts']);
+const allowedTop=new Set(['.github','.gitignore','README.md','index.html','styles.css','src','docs','tests','agents','package.json','vercel.json','api','db','scripts','contracts','benchmarks']);
 const top=readdirSync(root).filter(x=>x!=='.git'&&!x.startsWith('preview-'));
 const forbidden=[];
 function scan(d=''){
@@ -22,7 +22,7 @@ verifyAgent('release',[
  check('REL-002',forbidden.length===0,'No private/clinical/source files: '+forbidden.join(', ')),
  check('REL-003',pkg.private===true&&pkg.type==='module','Private npm package, ES modules'),
  check('REL-004',pkg.version==='0.3.0','Browser remains canonical v0.3 while backend is candidate'),
- check('REL-005',!process.env.GITHUB_REF_NAME||['wutrib/web-pilot-20261108','wutrib/demo-persistence-v04-20261108','main'].includes(process.env.GITHUB_REF_NAME),'Isolated branches, standalone future main'),
+ check('REL-005',!process.env.GITHUB_REF_NAME||['wutrib/web-pilot-20261108','wutrib/demo-persistence-v04-20261108','wutrib/audit-integral-20261108','main'].includes(process.env.GITHUB_REF_NAME),'Isolated branches, standalone future main'),
  check('REL-006',file('README.md').includes('fictíc')&&file('README.md').includes('Supabase'),'Browser remains synthetic-only'),
  check('REL-007',api.includes('DEMO_PERSISTENCE_DISABLED')&&api.includes('WUTRIB_DEMO_AUTH_ENABLED')&&!file('src/ui.js').includes('WUTRIB_DEMO_AUTH_ENABLED'),'Server-only guarded API'),
  check('REL-008',sql.includes('security invoker')&&sql.includes('revoke execute')&&sql.includes('enable row level security'),'V0.4 private RLS and invoker functions'),

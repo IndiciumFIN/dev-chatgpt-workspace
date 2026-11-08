@@ -152,3 +152,7 @@ A [expansão v0.2.0](expansoes/v02/README.md) especifica Extractor, Join Studio,
 ## Revisão normativa e avaliação dos validadores — domínio fiscal e clínico
 
 O pacote [revisao-20261108](../../governanca-multidominio/revisao-20261108/README.md) documenta avaliação do anexo do usuário e de scripts de validadores estruturais, 20 ressalvas e correções, 55 referências normativas/técnicas e matriz de 62 tópicos para todo o escopo discutido. **Não** significa que CE tenha sido inspecionado ou que WU-TRIB esteja apto a produção. A expansão v0.2 e seus **17 documentos** foram mantidos intactos; templates originais continuam **50**. Os riscos residuais e a revisão humana permanecem em HOLD.
+
+## Candidato a baseline funcional WU-TRIB V1.0.0 — avaliação R1/R2
+
+O [manifesto V1](../../wutrib/v1-baseline-20261108/MANIFESTO_V1.json) e o [índice documental](../../wutrib/v1-baseline-20261108/README.md) registram as duas pesquisas recebidas por SHA de bytes, 39 macrotemas rastreados, 22 módulos catalogados com correção de campos, decisões e fronteiras do release. **O escopo está proposto para congelamento; não foi homologado e não foi implantado.** Preservados os 50 templates documentais, 28 validadores planejados, 17 documentos da expansão v0.2 e as revisões anteriores.

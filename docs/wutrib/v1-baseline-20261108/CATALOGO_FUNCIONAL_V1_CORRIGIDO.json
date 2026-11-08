@@ -1,0 +1,746 @@
+{
+  "schemaVersion": "wutrib.v1.corrected-capability-catalog.v1",
+  "title": "WU-TRIB V1 — repaired candidate capability catalog",
+  "version": "1.0.0-rc.0",
+  "state": "CORRECTED_DRAFT_AWAITING_OWNER_REVIEW",
+  "createdAt": "2026-11-08",
+  "branch": "wutrib/v1-scope-freeze-candidate-20261108",
+  "rawSource": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+  "rawSourceVersion": "0.1.0",
+  "rawSourceUnchanged": true,
+  "detectedDefect": "21 of 22 entries used positional inputs in place of priority, shifting output/behavior/risk/oracle/dependencies. Module 001 aligned.",
+  "restorationMethod": "For 002..022 map previous proposedPriority to inputs; inputs to outputs; outputs to behavior; behavior to risk; criticalRisk to acceptance; minimumFutureAcceptance to dependency IDs. Preserve original module and domain.",
+  "semanticCertainty": "HIGH_ON_POSITIONAL_RECONSTRUCTION_NOT_INDEPENDENT_DOMAIN_VALIDATION",
+  "total": 22,
+  "classification": {
+    "V1_MINIMUM": 13,
+    "V1_BOUNDED_DESIGN": 5,
+    "POST_V1": 4
+  },
+  "rules": {
+    "originalSourcePreserved": true,
+    "deliveryScopeRequiresHumanApproval": true,
+    "priorityMustBeReviewed": true,
+    "allImplementationUnverified": true
+  },
+  "modules": [
+    {
+      "id": "WUTRIB-EXP-001",
+      "title": "Source Extractor",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-001",
+      "sourceMappingStatus": "ALREADY_ALIGNED",
+      "originalPriorityFieldState": "VALID_P0",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "authorized source contract",
+        "file or read-only connector",
+        "layout version"
+      ],
+      "outputs": [
+        "immutable source artifact",
+        "ingestion manifest",
+        "capture digest",
+        "count"
+      ],
+      "behavior": "Supports synthetic XML/EFD/CSV/Excel and future authorized read-only ERP snapshots; capture file identity, schema, release, job, org, period and checksum. Distinguishes truncation and rejection from empty valid set.",
+      "risk": "Partial extraction or overwritten source silently invalidates every downstream procedure.",
+      "acceptance": "Recorded file rows/bytes/hash agree with input; truncation returns BLOCKED; no read/write outside permitted scope.",
+      "dependsOn": [],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-002",
+      "title": "Data Profiler",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-002",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "staged artifact",
+        "field dictionary"
+      ],
+      "outputs": [
+        "field statistics",
+        "completeness histogram",
+        "duplicate/null profile"
+      ],
+      "behavior": "Profiles types, distribution, missing/zero, distinct counts and invalid patterns before rule execution;  no silent type coercion.",
+      "risk": "Unknown quality or types can create false joins or trend conclusions.",
+      "acceptance": "Numeric/date/codes preserved; complete field coverage; counts and totals reconcile.",
+      "dependsOn": [],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-003",
+      "title": "Normalizer & Type Contract",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-003",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "source schema",
+        "canonical field registry",
+        "locale",
+        "currency"
+      ],
+      "outputs": [
+        "typed normalized dataset",
+        "field-level transformations",
+        "reversible map"
+      ],
+      "behavior": "Normalize CPF/CNPJ only as allowed, codes, dates, decimals, timezone and whitespace with recorded transformations;  preserve raw values.",
+      "risk": "Incorrect casting or lost leading zero corrupts tax keys and amounts.",
+      "acceptance": "Roundtrip where reversible; types precise; no float for tax amounts; originals preserved.",
+      "dependsOn": [],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-004",
+      "title": "Join & Match Studio",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-004",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "two or more typed datasets",
+        "key selection",
+        "join type",
+        "cardinality contract"
+      ],
+      "outputs": [
+        "matched/unmatched tables",
+        "coverage",
+        "duplicate key diagnostic",
+        "join lineage"
+      ],
+      "behavior": "Inner, left/right/full outer, semi, anti, composite and controlled range/temporal joins;  preview 1:1, 1:N, N:M and estimated multiplication;  fuzzy match advisory only.",
+      "risk": "Many-to-many explosion double-counts tax bases and hides missing documents.",
+      "acceptance": "Count conservation per cardinality, missing/duplicate keys flagged, totals not inflated and original sources unchanged.",
+      "dependsOn": [
+        "WUTRIB-EXP-002",
+        "WUTRIB-EXP-003"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-005",
+      "title": "Selection & Filter Builder",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-005",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "typed dataset",
+        "approved expressions",
+        "selection purpose"
+      ],
+      "outputs": [
+        "selected population",
+        "inclusion/exclusion ledger",
+        "query digest"
+      ],
+      "behavior": "Boolean conditions, date windows, ranges, regex with bounds, null logic and saveable named cohorts. Keep analytical filters separate from statistical sampling and risk selection.",
+      "risk": "Undisclosed excluded records lead to biased coverage.",
+      "acceptance": "Population, exclusions and selection reason reconcile; deterministic filters and boundary cases pass.",
+      "dependsOn": [
+        "WUTRIB-EXP-002"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-006",
+      "title": "Master Data & Entity Resolver",
+      "layer": "DATA_FOUNDATION",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-006",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "authorized SA1/SA2/SB1, SX3",
+        "catalog of NCM/CFOP",
+        "effective dates"
+      ],
+      "outputs": [
+        "entities with source IDs",
+        "crosswalk",
+        "conflicts and unmatched IDs"
+      ],
+      "behavior": "Record organization, branch, participant, product, fiscal category, UF, tax regime and changing classification with source and temporal validity;  never infer the actual customer SX3.",
+      "risk": "False entity match or expired master data yields false rule result.",
+      "acceptance": "Key/crosswalk precision, historical snapshot consistency, conflicting identities quarantined.",
+      "dependsOn": [
+        "WUTRIB-EXP-001",
+        "WUTRIB-EXP-003"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "V1 minimum restricted to canonical entity identity and master-data synthetic mapping, not live data stewardship or full national tax tables."
+    },
+    {
+      "id": "WUTRIB-EXP-007",
+      "title": "Statistical & Directed Sampling",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-007",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "population manifest",
+        "objective",
+        "risk strata",
+        "method",
+        "seed",
+        "confidence assumptions"
+      ],
+      "outputs": [
+        "sample",
+        "sampling ledger",
+        "selection probabilities",
+        "coverage"
+      ],
+      "behavior": "Separate random/systematic/stratified/MUS where suitable from judgmental targeted selections and 100% tests;  permit projection only for justified probability methods and competent review.",
+      "risk": "Convenience sampling incorrectly generalized to population.",
+      "acceptance": "Replay same seed; correct inclusion population; no extrapolation from targeted sample; sample risk recorded.",
+      "dependsOn": [
+        "WUTRIB-EXP-005"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "Architectural and limited definition; not automatically a production launch feature."
+    },
+    {
+      "id": "WUTRIB-EXP-008",
+      "title": "Duplicates Gaps & Sequence",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-008",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "typed keys",
+        "series/number range",
+        "business period"
+      ],
+      "outputs": [
+        "duplicate clusters",
+        "missing sequence",
+        "false gap explanations"
+      ],
+      "behavior": "Detect duplicate composite keys, gaps, overlap, cancelled number ranges and inconsistent sequence per branch/series;  avoid treating lawful cancellation as fraud.",
+      "risk": "Confusing authorized voided numbers with omissions.",
+      "acceptance": "Expected duplicates and gaps detected; legitimate exclusions documented; no automatic fraud conclusion.",
+      "dependsOn": [
+        "WUTRIB-EXP-003",
+        "WUTRIB-EXP-006"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-009",
+      "title": "Stratify / Summarize / Materiality",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-009",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "typed population",
+        "numeric fields",
+        "dimensions",
+        "approved tolerances"
+      ],
+      "outputs": [
+        "strata statistics",
+        "totals",
+        "outlier candidates",
+        "materiality ledger"
+      ],
+      "behavior": "Group by amount, date, product, supplier, tax code, branch, percentile;  materiality is governance input, not default R$ 0.01 for all cases.",
+      "risk": "Using universal threshold can hide material risk or trigger excessive exceptions.",
+      "acceptance": "Grouped totals reconcile to ungrouped population; rounding/threshold boundaries deterministic.",
+      "dependsOn": [
+        "WUTRIB-EXP-002"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "Architectural and limited definition; not automatically a production launch feature."
+    },
+    {
+      "id": "WUTRIB-EXP-010",
+      "title": "Error & Exception Classifier",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-010",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "rule result",
+        "input quality",
+        "source metadata",
+        "scope"
+      ],
+      "outputs": [
+        "typed issues",
+        "severity proposal",
+        "diagnostic cause status"
+      ],
+      "behavior": "Distinct classes: parse/schema, reference/master data, arithmetic, temporal/legal, reconciliation, system/transport, anomaly, expected exception, insufficient evidence. Separates confirmed technical errors from suspected fiscal issues.",
+      "risk": "Ambiguous error label becomes an unsubstantiated noncompliance assertion.",
+      "acceptance": "Every issue has category, affected records, field, rule, source, expected/observed, owner and uncertainty.",
+      "dependsOn": [
+        "WUTRIB-EXP-002",
+        "WUTRIB-EXP-004"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-011",
+      "title": "Anomaly Detection & Explainability",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-011",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "profiling metrics",
+        "peer grouping",
+        "time periods",
+        "historical baseline"
+      ],
+      "outputs": [
+        "anomaly signals",
+        "scores",
+        "explanations",
+        "human feedback"
+      ],
+      "behavior": "Deterministic first: robust z-score, IQR, peer comparisons, bursts, unusual combinations;  optional AI only after separate governance. Signals do not equal errors or fraud.",
+      "risk": "Rare but valid transaction flagged; biased cohorts; false positives or model drift.",
+      "acceptance": "Golden cases; precision/recall on synthetic labelled data; group context and thresholds exposed; reviewer override logged.",
+      "dependsOn": [
+        "WUTRIB-EXP-002",
+        "WUTRIB-EXP-009"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "Architectural and limited definition; not automatically a production launch feature."
+    },
+    {
+      "id": "WUTRIB-EXP-012",
+      "title": "Temporal Change & Period Comparison",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-012",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "comparable snapshots",
+        "calendar",
+        "entity keys",
+        "versioned rule references"
+      ],
+      "outputs": [
+        "period deltas",
+        "change candidates",
+        "impact narratives"
+      ],
+      "behavior": "Compare MoM/YoY/rolling across volume, amounts, effective rates, CST/CFOP/NCM, TES/IDTRIB, regime, bases and parameters;  decompose price/volume/mix/rule. Declared legal change distinct from observed change.",
+      "risk": "A rate difference from mix or retroactive adjustment mistaken for law change.",
+      "acceptance": "Same population comparability/coverage and denominators, restored snapshots, branch comparability, missing periods flagged.",
+      "dependsOn": [
+        "WUTRIB-EXP-006",
+        "WUTRIB-EXP-009"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "Architectural and limited definition; not automatically a production launch feature."
+    },
+    {
+      "id": "WUTRIB-EXP-013",
+      "title": "Multi-Source Reconciliation",
+      "layer": "AUDIT_ANALYTICS",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-013",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "XML",
+        "EFD",
+        "ERP",
+        "ledger/stock if authorized",
+        "mapping contracts"
+      ],
+      "outputs": [
+        "multiway reconciled items",
+        "unmatched and mismatches",
+        "tie-out"
+      ],
+      "behavior": "Two-way to four-way reconciliation as contracts dictate (XML×EFD×SFx/SFT×contabilidade ou estoque), keep counts & totals by side with drill-down and exception grouping.",
+      "risk": "Premature matches or netting hide unresolved items.",
+      "acceptance": "Side-specific coverage, all exceptions preserved, no unapproved auto-match across different organizations.",
+      "dependsOn": [
+        "WUTRIB-EXP-004",
+        "WUTRIB-EXP-006"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-014",
+      "title": "Tax Rule & Layout Validator",
+      "layer": "FISCAL_INTELLIGENCE",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-014",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "official SPED/MOC/XSD and revision",
+        "tax rule",
+        "transaction period"
+      ],
+      "outputs": [
+        "structural findings",
+        "rule exception candidates",
+        "evidence"
+      ],
+      "behavior": "Validate known layout, effective date, tax code and calculation preconditions;  unsupported/ambiguous source triggers HOLD. Fiscal conclusion remains human.",
+      "risk": "Applying incorrect vigência or legal interpretation creates incorrect tax exposure.",
+      "acceptance": "Independent official oracle/version evidence, boundary/negative cases; no APPROVED by engine.",
+      "dependsOn": [
+        "WUTRIB-EXP-001",
+        "WUTRIB-EXP-006"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-015",
+      "title": "Parameter Change Inspector",
+      "layer": "FISCAL_INTELLIGENCE",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-015",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "versioned SX6/SX3/SF4/FISA170 mapping snapshots",
+        "release",
+        "approvals"
+      ],
+      "outputs": [
+        "deltas for parameters and rules",
+        "change ownership",
+        "unapproved changes"
+      ],
+      "behavior": "Diff past/new TES, SF4, fiscal parameter, profile, IDTRIB and control values by source and validity;  separate intentional releases from silent configuration drift.",
+      "risk": "No snapshot or unclear shared-table semantics makes a change unverifiable.",
+      "acceptance": "No claim about customer config without authorized snapshot; unchanged fields correctly ignored.",
+      "dependsOn": [
+        "WUTRIB-EXP-006",
+        "WUTRIB-EXP-012"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "Architectural and limited definition; not automatically a production launch feature."
+    },
+    {
+      "id": "WUTRIB-EXP-016",
+      "title": "Fiscal Impact Scenario & What-if",
+      "layer": "FISCAL_INTELLIGENCE",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "POST_V1",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-016",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "verified rules",
+        "synthetic transactions",
+        "assumptions",
+        "historical snapshots"
+      ],
+      "outputs": [
+        "scenario outcomes",
+        "delta waterfall",
+        "uncertainty"
+      ],
+      "behavior": "Compare tax effects of parameter/rule changes without writing ERP entries, calculating refunds, or issuing fiscal/legal conclusions;  simulations explicitly counterfactual.",
+      "risk": "Hypothetical credit or tax saving mistaken for recoverable amount.",
+      "acceptance": "Isolation of synthetic scenarios; no payable/claim recommendation absent human/legal sign-off.",
+      "dependsOn": [
+        "WUTRIB-EXP-014",
+        "WUTRIB-EXP-015"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-017",
+      "title": "Tax Opportunity Candidate Finder",
+      "layer": "FISCAL_INTELLIGENCE",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "POST_V1",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-017",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "source-verified taxes and regimes",
+        "historic transactions",
+        "review evidence"
+      ],
+      "outputs": [
+        "opportunity hypothesis",
+        "supporting list",
+        "disqualification reasons"
+      ],
+      "behavior": "Identify candidates for unclaimed credits or changed classifications only where legal source and limits exist;  separate risk of overclaiming and statutory restrictions.",
+      "risk": "False tax opportunity leads to wrongful compensation or filing.",
+      "acceptance": "Always NOT_EVALUATED; estimated impacts labelled conditional; evidence & legal review required.",
+      "dependsOn": [
+        "WUTRIB-EXP-014",
+        "WUTRIB-EXP-016"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-018",
+      "title": "Accounting & Stock Tie-Out",
+      "layer": "FISCAL_INTELLIGENCE",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "POST_V1",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-018",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "GL",
+        "SD1/SD2/SF1/SF2",
+        "inventories",
+        "fiscal books"
+      ],
+      "outputs": [
+        "reconciled amounts",
+        "quantity movements",
+        "exception clusters"
+      ],
+      "behavior": "Link fiscal records to accounting and inventory with multi-leg reconciliation and transaction sign orientation;  avoid double-counted reversal entries.",
+      "risk": "Timing vs period close difference interpreted as missing transaction.",
+      "acceptance": "Balance bridge, signs and period boundaries explained; separate unresolved vs timing differences.",
+      "dependsOn": [
+        "WUTRIB-EXP-013"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-019",
+      "title": "Risk Scoring & Investigation Queue",
+      "layer": "AUDIT_WORKFLOW",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-019",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "risk register",
+        "validated findings",
+        "business impact"
+      ],
+      "outputs": [
+        "ranked investigation queue",
+        "explanations",
+        "manual disposition"
+      ],
+      "behavior": "Weighted severity/impact/exposure with explainable factors;  risk ranking does not certify tax correctness. Approval and closure need owner and evidence.",
+      "risk": "Black-box score masks severe item or drives unfair prioritization.",
+      "acceptance": "Trace factors, manual override, no redaction of critical issues; independent risk review.",
+      "dependsOn": [
+        "WUTRIB-EXP-010",
+        "WUTRIB-EXP-011"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "V1 investigation queue runs with exception feed EXP-010; anomaly scoring EXP-011 is optional and requires separate gate.",
+      "dependencyPolicy": {
+        "required": [
+          "WUTRIB-EXP-010"
+        ],
+        "optional": [
+          "WUTRIB-EXP-011"
+        ]
+      }
+    },
+    {
+      "id": "WUTRIB-EXP-020",
+      "title": "Evidence & Workpapers Builder",
+      "layer": "AUDIT_WORKFLOW",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-020",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "run lineage",
+        "source hashes",
+        "findings",
+        "review actions"
+      ],
+      "outputs": [
+        "workpapers",
+        "immutable evidence manifest",
+        "report export"
+      ],
+      "behavior": "Evidence chain WHO/WHAT/WHEN/WHY with static files, sampled/whole-pop indication, links to WO control and test;  detached from UI pagination.",
+      "risk": "Lost provenance makes work irreproducible; excessive PII exposure.",
+      "acceptance": "Reproduce exact inputs and runs; no fabricated signature; retention/classification rules.",
+      "dependsOn": [
+        "WUTRIB-EXP-010"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-021",
+      "title": "Visual Procedure Composer & Scheduling",
+      "layer": "AUDIT_WORKFLOW",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "POST_V1",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-021",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "approved module contracts",
+        "source selection",
+        "execution permissions"
+      ],
+      "outputs": [
+        "versioned procedure DAG",
+        "schedule",
+        "run manifest"
+      ],
+      "behavior": "Drag/drop or guided steps as a future UX candidate;  orchestrate Extract→Profile→Join→Select→Exception→Report with preview/dry-run and quota;  allow read-only steps first.",
+      "risk": "User-defined joins/actions access unauthorized data or consume excessive resources.",
+      "acceptance": "Validate dependency DAG/tenancy/quotas, show projected input/output, support rollback or cancel safe.",
+      "dependsOn": [
+        "WUTRIB-EXP-001",
+        "WUTRIB-EXP-004",
+        "WUTRIB-EXP-020"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    },
+    {
+      "id": "WUTRIB-EXP-022",
+      "title": "Dashboard & Recurring Audit Reports",
+      "layer": "AUDIT_WORKFLOW",
+      "version": "1.0.0-scope-candidate",
+      "deliveryScope": "V1_MINIMUM",
+      "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
+      "sourceRecordId": "WUTRIB-EXP-022",
+      "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
+      "originalPriorityFieldState": "CORRUPTED_AND_REINTERPRETED_AS_INPUT",
+      "priority": "PENDING_RISK_BASED_RCM_REVIEW",
+      "inputs": [
+        "approved evidence sets",
+        "risk/exception summaries",
+        "period metrics"
+      ],
+      "outputs": [
+        "report",
+        "trend dashboard",
+        "action list"
+      ],
+      "behavior": "Cards and time-series based on verified aggregation, explain methods and denominator, drill-down to source. No automatic issuance of fiscal opinion.",
+      "risk": "Vanity metrics or inconsistent totals mislead the auditor.",
+      "acceptance": "Dashboard totals tie-out to evidence; period and sources visible; accessible keyboard/assistive tech.",
+      "dependsOn": [
+        "WUTRIB-EXP-019",
+        "WUTRIB-EXP-020"
+      ],
+      "requiredVersionedContracts": true,
+      "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
+      "note": "No software implementation claimed."
+    }
+  ],
+  "hardDependencyReview": "All V1 minimum dependencies included in V1 minimum, except EXP-019 anomaly source EXP-011 explicitly optional. Data entity resolver EXP-006 restricted but mandatory."
+}

@@ -51,3 +51,9 @@ O [aprofundamento v0.2.0](expansoes/v02/README.md) está vinculado ao registro c
 [Índice de avaliação pré-implantação](../../governanca-multidominio/revisao-20261108/README.md) · [Parecer e correções](../../governanca-multidominio/revisao-20261108/PARECER_PRE_IMPLANTACAO_v01.md) · [Qualificação dos validadores](../../governanca-multidominio/revisao-20261108/PLANO_REQUALIFICACAO_VALIDADORES_v01.md).
 
 O registro documental v0.5.0 referencia **9 peças de revisão**, **55 fontes catalogadas**, **62 tópicos**, **30 riscos residuais** e **13 candidatos de validação clínica** (não implementados). Preserva **50 templates**, 28 validadores WU-TRIB e expansão funcional v0.2. Sem auditoria de código clínico, sem execução dos auditores, sem alterações na aplicação e sem autorização de produção.
+
+## WU-TRIB — definição congelável da V1 (candidata)
+
+[Índice do pacote V1 1.0.0-rc.0](../../wutrib/v1-baseline-20261108/README.md) · [Parecer dos dois relatórios](../../wutrib/v1-baseline-20261108/PARECER_E_DECISAO_ESCOPO_V1.md) · [Catálogo corrigido 22 módulos](../../wutrib/v1-baseline-20261108/CATALOGO_FUNCIONAL_V1_CORRIGIDO.json) · [Checklist do freeze](../../wutrib/v1-baseline-20261108/CHECKLIST_FECHAMENTO_ESCOPO_V1.md).
+
+O registro canônico documental **v0.6.0** vincula 10 documentos candidatos da V1. Foram identificados **21 registros com campos deslocados** no catálogo antigo e criada uma versão corrigida preservando a original. Distribuição proposta: 13 módulos mínimos, 5 limitados e 4 posteriores; 30 suítes de teste **NOT_RUN**, 7 gates **não aprovados**, 27 fontes selecionadas e 20 decisões de escopo em revisão. **Sem assinatura, auditoria, execução de validadores, migração, merge ou deploy.**

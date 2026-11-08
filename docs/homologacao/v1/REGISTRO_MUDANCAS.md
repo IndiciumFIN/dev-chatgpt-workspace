@@ -15,6 +15,8 @@
 
 | 2026-11-08 | Registro 0.5.0 / revisão multidomínio 0.1.0 | 9 arquivos: 62 tópicos, 55 fontes com aplicabilidade por verificar, 20 correções do anexo, 30 riscos residuais, 13 validadores clínicos apenas propostos e protocolo de qualificação independente | governance/normative-crossdomain-evaluation-20261108 | Somente documentação DRAFT; CE não inspecionado via repo, nenhum teste executado, nenhum merge, banco ou deployment. |
 
+| 2026-11-08 | Registro canônico 0.6.0 / WU-TRIB baseline de escopo V1.0.0-rc.0 | Avaliação de 2 pesquisas (hash real), 39 macrotemas com destino, reconstrução de 21 registros com campos deslocados em catálogo de 22 módulos, 5 ledgers, 30 testes futuros/7 gates, 27 fontes e 20 decisões; 10 arquivos novos | Branch wutrib/v1-scope-freeze-candidate-20261108 | CANDIDATE_UNAPPROVED, sem alteração de ferramenta, sem testes de runtime e sem publicação. |
+
 ## Regras para próximas revisões
 
 Qualquer alteração deve conter WO/tarefa, FIND/CR, diff, semântica de versão, autor e revisor. Um documento aprovado não é substituído silenciosamente; criar revisão e preservar hash/commit do anterior. No processo de release, gravar manifesto por commit SHA e decisão assinada.

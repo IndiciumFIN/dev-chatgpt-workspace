@@ -1,0 +1,477 @@
+{
+  "schemaVersion": "wutrib.v1.test-and-homologation.v1",
+  "version": "1.0.0-rc.0",
+  "state": "PLANNED_ONLY_NOT_RUN",
+  "scope": "SYNTHETIC_WUTRIB_PILOT",
+  "currentPurpose": "Define release readiness, not proof of readiness",
+  "inputBaselines": [
+    "MATRIZ_TESTES_v02.json (68 older NOT_RUN cases)",
+    "PROTOCOLO_META_VALIDACAO.md (28 planned validator candidates)",
+    "PR47 residual risk register (30 identified risks)"
+  ],
+  "acceptancePolicy": {
+    "criticalFindings": "NO_OPEN_UNACCEPTED_CRITICAL",
+    "normativeUnknown": "HOLD",
+    "securityIsolation": "ALL_NEGATIVE_TENANT_TESTS_REQUIRED",
+    "falseNegativePolicy": "Known P0 injected defects must be detected by independent oracle; thresholds for other classes approved before testing",
+    "capacity": "SLO and resource limits defined before stress run; do not invent numbers",
+    "accessible": "WCAG22 AA applicable + manual keyboard/screenreader UAT, with documented exceptions",
+    "data": "Synthetic only until explicit enterprise data permission",
+    "approvals": "Product+Fiscal+Security+QA+Operations as appropriate, with demonstrable identity and date",
+    "release": "Only human GO and approved rollback"
+  },
+  "tests": [
+    {
+      "id": "T01",
+      "group": "Fonte NF-e XSD/chave",
+      "scenario": "XML válido/inválido, namespace, versão, DV, eventos",
+      "acceptance": "XSD/NT/MOC corretos para data; falha segura",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T02",
+      "group": "SPED EFD por COD_VER",
+      "scenario": "Registros aceitos/rejeitados e blocos não implementados",
+      "acceptance": "Nenhum registro fora do escopo vira PASS integral",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T03",
+      "group": "Protheus dicionário/versão",
+      "scenario": "SX2/SX3/SIX, TES/FISA170 e configuração híbrida sintética",
+      "acceptance": "Sem interpretação fiscal quando release/precedência desconhecida",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T04",
+      "group": "Extração",
+      "scenario": "Hash, bytes, registros, encoding, truncamento, zip bomb",
+      "acceptance": "Quarentena e BLOCKED em fonte parcial/hostil",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T05",
+      "group": "Idempotência e dedup",
+      "scenario": "Mesmo documento por dois canais e reprocessado",
+      "acceptance": "Um fato quando provada identidade; duas capturas com provenance",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T06",
+      "group": "Normalização e precisão",
+      "scenario": "44 dígitos, leading zeros, decimal, timezone, nulos",
+      "acceptance": "Preservar raw e tipos exatos; nenhuma conversão silenciosa",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T07",
+      "group": "Join 1:1/1:N/N:M",
+      "scenario": "Chaves compostas, null, anti-join, duplicados",
+      "acceptance": "Detectar N:M e proibir totais inflados",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T08",
+      "group": "Reconciliação por fonte",
+      "scenario": "XML × EFD × ERP sintéticos e sinais",
+      "acceptance": "Contagens e totais por origem, unmatched em ambos os lados",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T09",
+      "group": "População e filtros",
+      "scenario": "Inclusões, exclusões, intervalos e regressão",
+      "acceptance": "Contagens e IDs reprodutíveis e exportação integral",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T10",
+      "group": "Amostragem",
+      "scenario": "Dirigida, seed e quadro de população",
+      "acceptance": "Sem projeção estatística para amostragem dirigida",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T11",
+      "group": "Gaps/duplicidades",
+      "scenario": "Série, filial, cancelados, eventos e estorno",
+      "acceptance": "Exceções legais não confundidas com erro",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T12",
+      "group": "Achados e severidade",
+      "scenario": "Erro técnico, anomalia, inconclusivo e risco fiscal",
+      "acceptance": "Nada rotulado automaticamente como infração",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T13",
+      "group": "Temporalidade",
+      "scenario": "Antes/depois da vigência, publicação e retificação",
+      "acceptance": "AS_VALID_AT ≠ AS_KNOWN_AT; não recalcular passado com regra atual",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T14",
+      "group": "IBS/CBS/IS",
+      "scenario": "Schema e aplicação de edição/competência",
+      "acceptance": "Modelo aceita tipos sem alegar cálculo substantivo completo",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T15",
+      "group": "Cadeia de evidência",
+      "scenario": "Original→campo→regra→run→caso→revisor",
+      "acceptance": "Reproduz o achado com hashes originais e versão exata",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T16",
+      "group": "Revisão e segregação",
+      "scenario": "Usuário sem alçada tenta aprovar; mudança de status",
+      "acceptance": "Nenhum sign-off de máquina; assinatura real só por papel",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T17",
+      "group": "Multiempresa/filial",
+      "scenario": "BOLA, isolamento, revogação, tokens expirados",
+      "acceptance": "Nenhum read/write cruzado; negação antes de consultar dados",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T18",
+      "group": "Segurança da aplicação",
+      "scenario": "SAST/DAST, ASVS, supply chain, XSS, XXE, injections",
+      "acceptance": "Sem vulnerabilidades críticas abertas para escopo em aprovação",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T19",
+      "group": "Controles LGPD",
+      "scenario": "Dados sintéticos, retenção, logs, PII redaction",
+      "acceptance": "Decisão RIPD por risco e ausência de dados empresariais no piloto",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T20",
+      "group": "Meta-validação dos próprios auditores",
+      "scenario": "Mutações positivas/negativas, bypass, runner falso PASS",
+      "acceptance": "Falsos negativos conhecidos detectados; escape bloqueado",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T21",
+      "group": "Acessibilidade",
+      "scenario": "Keyboard, WCAG 2.2 AA, leitor de tela, zoom, mobile",
+      "acceptance": "Tarefas críticas concluídas sem barreira bloqueante",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T22",
+      "group": "Usabilidade UAT",
+      "scenario": "Importar, join, selecionar, investigar, exportar, reabrir",
+      "acceptance": "Usuário explica cobertura e limitações; medir tarefas e erros",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T23",
+      "group": "Capacidade carga",
+      "scenario": "Volume sintético escalonado, concorrência e N:M hostil",
+      "acceptance": "SLO aprovado previamente; limites, RSS, p95/p99 e safe fail medidos",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T24",
+      "group": "Sustentabilidade",
+      "scenario": "CPU, memória, rede e função de processamento",
+      "acceptance": "SCI/unidade funcional com método e premissas; sem claim não medido",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T25",
+      "group": "Resiliência e rollback",
+      "scenario": "Rede, banco, fila, perda de worker, replay e restauração",
+      "acceptance": "RTO/RPO definidos e restauração comprovada em ambiente autorizado",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T26",
+      "group": "Compatibilidade e responsividade",
+      "scenario": "Dispositivos, navegadores, layout, export e tabela",
+      "acceptance": "Sem perda de dados ou controles ocultos em breakpoints",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T27",
+      "group": "Workflow de exceções",
+      "scenario": "Open→review→closed→reopen, volume, alçadas",
+      "acceptance": "Histórico imutável e sem autoaprovação",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T28",
+      "group": "Regressão do escopo V1",
+      "scenario": "Mudança de regra, schema, contrato, dataset, ERP release",
+      "acceptance": "Impact analysis, diff aprovado e suíte correspondente",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T29",
+      "group": "Conflitos normativos e licenças",
+      "scenario": "Fonte revogada, contradição de ato e versão sem direitos",
+      "acceptance": "HOLD_HUMAN e quarentena sem interpretação normativa",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    },
+    {
+      "id": "T30",
+      "group": "Pacote de encerramento",
+      "scenario": "RTM, RCM, casos, evidência, findings, UAT, risco residual",
+      "acceptance": "Sign-offs separados e implantação somente com GO explícito",
+      "status": "NOT_RUN",
+      "independentOracle": "TO_BE_DEFINED_AND_APPROVED",
+      "fixture": "NOT_CREATED",
+      "evidence": [],
+      "assessor": null,
+      "gate": "HOLD_HUMAN"
+    }
+  ],
+  "gates": [
+    {
+      "id": "GV1-00",
+      "name": "Scope and WO admission",
+      "state": "DRAFT",
+      "required": [
+        "owner",
+        "frozen spec version",
+        "risk register",
+        "WOs and tasks"
+      ]
+    },
+    {
+      "id": "GV1-01",
+      "name": "Official source rights and applicability",
+      "state": "HOLD_HUMAN",
+      "required": [
+        "source issuer",
+        "edition",
+        "effective dates",
+        "release ERP",
+        "rule corpus and license"
+      ]
+    },
+    {
+      "id": "GV1-02",
+      "name": "Independent validator qualification",
+      "state": "NOT_RUN",
+      "required": [
+        "negative fixtures",
+        "meta-test",
+        "hashes",
+        "coverage limits",
+        "QA sign-off"
+      ]
+    },
+    {
+      "id": "GV1-03",
+      "name": "Functional and data correctness",
+      "state": "NOT_RUN",
+      "required": [
+        "minimum modules",
+        "test 01-16 & 27-29",
+        "traceability",
+        "replay"
+      ]
+    },
+    {
+      "id": "GV1-04",
+      "name": "Security and privacy",
+      "state": "NOT_RUN",
+      "required": [
+        "auth nominal",
+        "tenancy",
+        "LGPD",
+        "ASVS",
+        "secrets"
+      ]
+    },
+    {
+      "id": "GV1-05",
+      "name": "UX, accessibility, performance, sustainability and DR",
+      "state": "NOT_RUN",
+      "required": [
+        "WCAG-EM/manual",
+        "UAT",
+        "SLO",
+        "SCI caveats",
+        "restore"
+      ]
+    },
+    {
+      "id": "GV1-06",
+      "name": "Human sign-off and controlled deploy",
+      "state": "NOT_AUTHORIZED",
+      "required": [
+        "closure report",
+        "residual risk accepted",
+        "GO/NO-GO",
+        "release hash",
+        "rollback"
+      ]
+    }
+  ],
+  "noPromotionWithoutAllGates": true,
+  "currentEvaluation": "NO_GO_IMPLEMENTATION_AND_PRODUCTION",
+  "noClaims": [
+    "NO_TEST_EXECUTED",
+    "NO_VALIDATOR_CERTIFIED",
+    "NO_REAL_DATA_USED",
+    "NO_PRODUCTION_APPROVAL"
+  ]
+}

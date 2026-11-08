@@ -1,8 +1,8 @@
 {
   "schemaVersion": "wutrib.pmo.manifest.v1",
-  "version": "1.0.0-rc.0",
+  "version": "1.1.0-rc.0",
   "project": "WU-TRIB",
-  "branch": "wutrib/pmo-v1-controller-20261108",
+  "branch": "wutrib/v1-vertical-slice-dev-20261108",
   "repo": "IndiciumFIN/dev-chatgpt-workspace",
   "workOrder": {
     "id": "WUTRIB-WO-PLAN-019",
@@ -18,6 +18,10 @@
       "path": "docs/wutrib/v1-baseline-20261108/MATRIZ_DE_TESTES_E_GATES_V1.json",
       "tests": 30,
       "gates": 7
+    },
+    {
+      "path": "PMO/WUTRIB/data/development-workstream.v1.json",
+      "items": 9
     }
   ],
   "paths": {
@@ -25,7 +29,10 @@
     "journal": "PMO/WUTRIB/data/events.v1.json",
     "agent": "PMO/WUTRIB/agent/pmo-controller.mjs",
     "tests": "PMO/WUTRIB/tests/pmo-controller.test.mjs",
-    "workflow": ".github/workflows/wutrib-pmo-controller.yml"
+    "workflow": ".github/workflows/wutrib-pmo-controller.yml",
+    "developmentWO": "PMO/WUTRIB/wo/WUTRIB-WO-DEV-020.json",
+    "developmentReport": "docs/wutrib/v1-development-20261108/INCREMENTO_001.md",
+    "developmentCI": ".github/workflows/wutrib-v1-vertical-slice.yml"
   },
   "states": {
     "runtimeApproved": false,
@@ -59,5 +66,25 @@
   "approvals": {
     "approvedBy": null,
     "approvedAt": null
-  }
+  },
+  "workOrderDevelopment": {
+    "id": "WUTRIB-WO-DEV-020",
+    "state": "ISOLATED_DEVELOPMENT_PENDING_KERNEL_ADMISSION",
+    "sourcePath": "PMO/WUTRIB/data/development-workstream.v1.json",
+    "activityCount": 9
+  },
+  "counts": {
+    "total": 72,
+    "gaps": 26,
+    "tests": 30,
+    "gates": 7,
+    "development": 9
+  },
+  "ciEvidence": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/42525123520",
+    "syntheticOnly": true,
+    "humanGateApprovals": 0,
+    "testingScope": "v1 synthetic and pmo agent only"
+  },
+  "status": "DEVELOPMENT_REVIEW_CANDIDATE_NO_GO"
 }

@@ -26,7 +26,8 @@ test('Initial state cannot claim approval, executed tests or release',()=>{
 });
 test('Sync verifies real fingerprints without closing any activity, even on a reconciled board',()=>{
   const r=reconcile(board,inputs.gaps,inputs.tests,hashes);
-  assert.ok(r.changes.length>=0);
+  const unbaselined=board.activities.filter(x=>x.sourceFingerprint===null).length;
+  assert.equal(r.changes.filter(x=>x.action==='SOURCE_BASELINED').length,unbaselined);
   assert.equal(r.board.activities.filter(x=>x.sourceFingerprint===null).length,0);
   assert.equal(r.board.activities.filter(x=>x.status==='OPEN').length,26);
   assert.equal(r.board.activities.filter(x=>x.status==='NOT_RUN').length,30);

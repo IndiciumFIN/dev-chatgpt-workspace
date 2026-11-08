@@ -2,7 +2,7 @@
  * WU-TRIB PMO — agente determinístico e auditável.
  * Atualiza atividades, mas não concede aprovação, homologação nem autorização de produção.
  */
-import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync} from 'node:fs';
+import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync,realpathSync} from 'node:fs';
 import {resolve,dirname,relative,isAbsolute,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
@@ -17,8 +17,16 @@ export const sha256=buffer=>createHash('sha256').update(buffer).digest('hex');
 const clone=x=>JSON.parse(JSON.stringify(x));
 export function guardedPath(root,path){
  if(typeof path!=='string'||!path||isAbsolute(path)||path.includes('\0'))throw Error('Caminho inválido');
- const file=resolve(root,path),rel=relative(root,file);
+ const rootReal=realpathSync(root),file=resolve(root,path),rel=relative(rootReal,file);
  if(rel==='..'||rel.startsWith('..'+sep)||isAbsolute(rel)||rel==='')throw Error('Arquivo fora do repositório');
+ let closest=file;
+ while(!existsSync(closest)){
+  const parent=dirname(closest);
+  if(parent===closest)throw Error('Caminho inválido');
+  closest=parent;
+ }
+ const real=realpathSync(closest),actual=relative(rootReal,real);
+ if(actual==='..'||actual.startsWith('..'+sep)||isAbsolute(actual))throw Error('Symlink fora do repositório');
  return file;
 }
 const readJSON=(root,path)=>JSON.parse(readFileSync(guardedPath(root,path),'utf8'));

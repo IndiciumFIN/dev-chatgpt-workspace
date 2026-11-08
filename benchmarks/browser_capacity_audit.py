@@ -54,7 +54,7 @@ with sync_playwright() as p:
             assert stats['rows'] == 50
             assert stats['dom_nodes'] < 4000, 'DOM may not scale with all records'
             assert stats['page_status'].startswith('Página 1 de ')
-            assert str(count) in stats['total_count']
+            assert str(count+3) in stats['total_count'], '3 existing XML fixtures must remain unmatched'
             assert stats['status'] == 'PROCESSAMENTO LOCAL'
             page.locator('#findings-next').click()
             assert page.locator('#findings-page-status').inner_text().startswith('Página 2 de ')

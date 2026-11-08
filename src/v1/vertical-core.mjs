@@ -69,7 +69,7 @@ export function parseEfdSubset(text,ctx){
     if(type==='C100'){
       if(parts.length<14)fail('Registro C100 incompleto na linha '+line);
       const key=parts[9],status=parts[6],model=parts[5],direction=parts[2],issuer=parts[3];
-      if(model!=='55'){unsupported++;last=null;continue;}
+      if(model!=='55'){unsupported++;last={ignored:true};continue;}
       requireKey(key,'EFD C100 linha '+line);
       const entry={key,amount:parts[12].replace(',','.'),line,c170:0,c190:0,direction,issuer,status,model,supported:direction==='1'&&issuer==='0'&&status==='00'};
       cents(entry.amount);
@@ -135,12 +135,16 @@ function finding(kind,key,details,sourceRefs=[]){
 export function reconcileThreeWays(nfe,efd,erp){
  const maps=[indexed(nfe),indexed(efd.documents.filter(x=>x.supported)),indexed(erp)];
  const allKeys=[...new Set([...maps[0].keys(),...maps[1].keys(),...maps[2].keys()])].sort();
+ const outOfScope=new Set(efd.documents.filter(x=>!x.supported).map(x=>x.key));
  const issues=[],matched=[];
  for(const key of allKeys){
   const [a,b,c]=maps.map(m=>m.get(key)||[]);
   const quantities={nfe:a.length,efd:b.length,erp:c.length};
   if(Math.max(...Object.values(quantities))>1){
    issues.push(finding('CARDINALITY_BLOCKED',key,quantities));continue;
+  }
+  if(outOfScope.has(key)){
+   issues.push(finding('OUT_OF_SCOPE_EFD_CONTEXT',key,{...quantities,reason:'C100 existe, mas está fora do recorte declarado.'}));continue;
   }
   if(!a.length||!b.length||!c.length){
    issues.push(finding('MISSING_IN_SUPPLIED_POPULATION',key,quantities));continue;
@@ -158,7 +162,7 @@ export function reconcileThreeWays(nfe,efd,erp){
   matched.push({key,amount:money(x),nfeSource:a[0].sourceId,efdLine:b[0].line,
     erpTable:c[0].table,taxSource:c[0].taxSource,technicalScope:'THREE_WAY_AMOUNT_ONLY'});
  }
- return {matched,findings:issues,coverage:{keysConsidered:allKeys.length,nfeRows:nfe.length,efdEligible:maps[1].values().reduce((n,arr)=>n+arr.length,0),erpRows:erp.length,nonEligibleEfd:efd.counts.unsupported}};
+ return {matched,findings:issues,coverage:{keysConsidered:allKeys.length,nfeRows:nfe.length,efdEligible:[...maps[1].values()].reduce((n,arr)=>n+arr.length,0),erpRows:erp.length,nonEligibleEfd:efd.counts.unsupported}};
 }
 export function executeSyntheticSlice(bundle){
  if(!bundle||typeof bundle!=='object')fail('Payload obrigatório.');

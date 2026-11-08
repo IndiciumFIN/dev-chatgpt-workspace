@@ -139,3 +139,15 @@ test('Controlled accounting scope does not turn absence into fiscal conformity',
  assert.ok(r.findings.every(x=>x.reviewStatus==='OPEN_NOT_APPROVED'));
  assert.ok(r.findings.every(x=>x.rootCause==='HYPOTHESIS'));
 });
+
+test('Source classification is strictly synthetic; missing or real data label blocks',()=>{
+ const b=casefile();
+ b.context.sourceClassification='CUSTOMER_PRODUCTION_DATA';
+ assert.throws(()=>executeSyntheticSlice(b),/Classificação synthetic-only/);
+ delete b.context.sourceClassification;
+ assert.throws(()=>executeSyntheticSlice(b),/Classificação synthetic-only/);
+});
+test('Calendar month boundaries reject impossible period',()=>{
+ const b=casefile();b.context.period='2026-13';
+ assert.throws(()=>executeSyntheticSlice(b),/Competência inválida/);
+});

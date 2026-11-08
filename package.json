@@ -1,9 +1,16 @@
 {
   "name": "wutrib-auditor-web-pilot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Demo browser-only: NF-e XML vs EFD C100 structural audit with fictional data",
-  "scripts": {"test":"node --test tests/*.test.mjs", "dev":"python3 -m http.server 4173"},
-  "engines":{"node":">=20"}
+  "description": "Deterministic synthetic-only NF-e and EFD pilot; fail-closed inputs",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node agents/fiscal-contract.mjs && node agents/security.mjs && node agents/ux-accessibility.mjs && node agents/release.mjs",
+    "check": "npm run verify && npm test",
+    "dev": "python3 -m http.server 4173"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

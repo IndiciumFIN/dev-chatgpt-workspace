@@ -1,0 +1,25 @@
+name: WU-TRIB Pilot - Deterministic Gates
+on:
+  push:
+    branches:
+      - wutrib/web-pilot-20261108
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gates:
+    if: github.ref == 'refs/heads/wutrib/web-pilot-20261108'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout isolated WU-TRIB commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Set up reviewed Node.js toolchain
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Deterministic multi-domain gates
+        run: npm run verify
+      - name: Unit regression suite
+        run: npm test

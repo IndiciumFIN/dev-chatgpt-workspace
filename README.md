@@ -31,3 +31,7 @@ python3 -m http.server 4173
 2. Backend de ingestão seguro, conformidade LGPD/localização e armazenamento privado no Supabase.
 3. Validador por versão oficial XSD/EFD e regras com evidência por vigência.
 4. Rastreamento de causa-raiz até cadastros, TES e CFGTRIB, mediante snapshot TOTVS autorizado.
+
+## Gates determinísticos v0.2.0
+
+`npm run check` executa os quatro agentes especializados (contratos fiscais, segurança, UX e release) e a suíte Node. `python tests/browser_e2e.py` valida as interações em Chromium com arquivos fictícios por injeção local. Consulte `docs/DETERMINISTIC_AGENTS.md` e `docs/WAVE_02_AUDIT.md`. Nenhuma regra fiscal certifica conformidade; lote incompleto não gera achados.

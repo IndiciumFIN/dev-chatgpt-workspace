@@ -1,4 +1,4 @@
-import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES} from './audit.js';
+import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';
 import {demoXMLs,demoEFD} from './fixtures.js';
 const $=id=>document.getElementById(id);
 const fmtMoney=value => Number(value??0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
@@ -6,14 +6,16 @@ const labels={overview:'Visão geral',import:'Importar dados',audit:'Execução 
 let xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));
 let efdInput={name:'efd-ficticia.txt',content:demoEFD};
 let report=null;let selectedId=null;let currentView='overview';let toastTimer=null;
+let selectionErrors=[];let lastAttemptInvalid=false;
 function showToast(message){const el=$('toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.hidden=true},4500)}
 function go(view){
  if(!labels[view])return;
  currentView=view;
  document.querySelectorAll('[data-panel]').forEach(el=>el.classList.toggle('active',el.dataset.panel===view));
- document.querySelectorAll('nav [data-view]').forEach(el=>el.classList.toggle('active',el.dataset.view===view));
+ document.querySelectorAll('nav [data-view]').forEach(el=>{const active=el.dataset.view===view;el.classList.toggle('active',active);if(active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});
  $('breadcrumb-current').textContent=labels[view];
  $('sidebar').classList.remove('open');
+ $('menu-toggle').setAttribute('aria-expanded','false');
  if(view==='findings')renderFindings();
  window.scrollTo({top:0,behavior:'instant'});
 }
@@ -40,7 +42,7 @@ function renderOverview(){
  if(!report.findings.length){const p=document.createElement('p');p.className='no-findings';p.textContent='Nenhuma diferença estrutural identificada neste conjunto de dados.';recent.append(p)}
  else report.findings.slice(0,3).forEach(f=>recent.append(recentFinding(f)));
  $('last-run-time').textContent=new Date(report.generatedAt).toLocaleString('pt-BR');
- $('last-run-match').textContent=`${report.matches} correspondência(s)`;
+ $('last-run-match').textContent=report.status==='INCOMPLETE'?'NÃO EXECUTADO — entradas incompletas':`${report.matches} correspondência(s)`;
  renderWarnings('audit-warnings',report.warnings);
 }
 function safeLinkText(value){return String(value??'')}
@@ -66,50 +68,83 @@ function renderFindings(){
  $('result-count').textContent=`${found.length} achado(s)`;
  $('findings-empty').hidden=Boolean(found.length);
  const table=$('findings-table');table.replaceChildren();
- found.forEach(f=>{const row=document.createElement('tr');row.classList.toggle('selected',f.id===selectedId);row.tabIndex=0;row.setAttribute('aria-label',`Abrir achado ${f.title}`);
-  const first=document.createElement('td');const title=document.createElement('strong');title.textContent=f.title;const sub=document.createElement('small');sub.textContent=f.id;first.append(title,sub);
-  const second=document.createElement('td');second.append(statusChip(f.severity));const third=document.createElement('td');third.textContent='Investigar';const fourth=document.createElement('td');fourth.textContent='→';row.append(first,second,third,fourth);
-  const select=()=>{selectedId=f.id;renderFindings()};row.addEventListener('click',select);row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select()}});table.append(row)
+ found.forEach(f=>{
+  const row=document.createElement('tr');row.classList.toggle('selected',f.id===selectedId);
+  const first=document.createElement('td');const open=document.createElement('button');
+  open.type='button';open.className='table-open';open.setAttribute('aria-label',`Investigar ${f.title}`);
+  const title=document.createElement('strong');title.textContent=f.title;
+  const sub=document.createElement('small');sub.textContent=f.id;
+  open.append(title,sub);first.append(open);
+  const second=document.createElement('td');second.append(statusChip(f.severity));
+  const third=document.createElement('td');third.textContent='Investigar';
+  const fourth=document.createElement('td');fourth.textContent='→';row.append(first,second,third,fourth);
+  open.addEventListener('click',()=>{selectedId=f.id;renderFindings()});table.append(row);
  });
  const selected=found.find(f=>f.id===selectedId)||found[0]||null;
  if(selected)selectedId=selected.id;
  renderFindingDetail(selected);
 }
 function doAudit(){
- const xmls=[],parsingWarnings=[];
+ const xmls=[],parsingWarnings=[...selectionErrors];
  for(const item of xmlInputs){try{xmls.push(parseNFeXML(item.content))}catch(e){parsingWarnings.push(`${item.name}: ${e.message}`)}}
- let efd={c100:[],warnings:['EFD não fornecida.']};
- if(efdInput)try{efd=parseEFDText(efdInput.content)}catch(e){parsingWarnings.push(`EFD: ${e.message}`)}
- report=auditCrossCheck(xmls,efd);
- report.warnings=[...parsingWarnings,...report.warnings];
+ let efd=null;
+ if(efdInput) try{efd=parseEFDText(efdInput.content)}catch(e){parsingWarnings.push(`EFD: ${e.message}`)}
+ const readiness=assessInputReadiness({selectedXmlCount:xmlInputs.length,parsedXmls:xmls,efd,errors:parsingWarnings});
+ if(!readiness.ready){
+  report=incompleteAuditReport({selectedXmlCount:xmlInputs.length,c100Count:efd?.c100?.length||0,
+   warnings:[...readiness.reasons,...(efd?.warnings||[])]});
+  lastAttemptInvalid=true;
+ } else {
+  report=auditCrossCheck(xmls,efd);
+  lastAttemptInvalid=false;
+ }
  report.demoOnly=true;report.sourceFiles={xml:xmlInputs.map(x=>x.name),efd:efdInput?.name??null};
  selectedId=report.findings[0]?.id??null;
  renderOverview();renderFindings();renderWarnings('import-warnings',report.warnings);
  $('xml-selected').textContent=`${xmlInputs.length} XML(s) selecionado(s)`;
  $('efd-selected').textContent=efdInput?.name||'Nenhuma EFD selecionada';
- $('import-state').textContent=parsingWarnings.length?'VERIFICAR ENTRADAS':'PROCESSAMENTO LOCAL';
- showToast(`Cruzamento concluído: ${report.findings.length} achado(s), ${report.matches} correspondência(s).`);
+ $('import-state').textContent=lastAttemptInvalid?'LOTE INCOMPLETO':'PROCESSAMENTO LOCAL';
+ $('export-csv').disabled=lastAttemptInvalid;
+ $('export-json').disabled=lastAttemptInvalid;
+ if(lastAttemptInvalid)showToast('Auditoria suspensa: verifique as entradas. Nenhum achado inferido.');
+ else showToast(`Cruzamento concluído: ${report.findings.length} achado(s), ${report.matches} correspondência(s).`);
 }
 function saveBlob(name,contents,type){const blob=new Blob([contents],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500)}
 async function readXmlFiles(fileList){
  if(!fileList?.length)return;
- if(fileList.length>10){showToast('Selecione até 10 XMLs por lote.');return}
- const all=[];
- for(const f of fileList){
-  if(f.size>MAX_XML_BYTES){showToast(`${f.name}: máximo 2 MB.`);return}
-  if(!/\.xml$/i.test(f.name)){showToast('Apenas arquivos .xml neste campo.');return}
-  all.push({name:f.name,content:await f.text()});
+ // Never silently retain stale demo inputs when an attempted replacement fails.
+ xmlInputs=[];selectionErrors=[];
+ if(fileList.length>10){selectionErrors.push('Selecione até 10 XMLs por lote.');}
+ else for(const f of fileList){
+  if(f.size>MAX_XML_BYTES){selectionErrors.push(`${f.name}: máximo 2 MB.`);continue}
+  if(!/\.xml$/i.test(f.name)){selectionErrors.push(`${f.name}: apenas arquivos .xml.`);continue}
+  try{xmlInputs.push({name:f.name,content:await f.text()})}
+  catch{selectionErrors.push(`${f.name}: falha de leitura do arquivo.`)}
  }
- xmlInputs=all;$('xml-selected').textContent=`${all.length} XML(s) pronto(s)`;showToast('XMLs carregados localmente. Execute o cruzamento.');
+ $('xml-selected').textContent=selectionErrors.length?'Lote incompleto — consulte as advertências':`${xmlInputs.length} XML(s) pronto(s)`;
+ showToast(selectionErrors.length?'Arquivo(s) rejeitado(s).':'XMLs carregados localmente. Execute o cruzamento.');
+ doAudit();
 }
-async function readEFD(files){const f=files?.[0];if(!f)return;if(f.size>MAX_EFD_BYTES){showToast('EFD: tamanho máximo 4 MB.');return}if(!/\.txt$/i.test(f.name)){showToast('Apenas TXT no campo EFD.');return}efdInput={name:f.name,content:await f.text()};$('efd-selected').textContent=f.name;showToast('TXT carregado localmente. Execute o cruzamento.')}
+async function readEFD(files){
+ const f=files?.[0];if(!f)return;
+ efdInput=null;selectionErrors=[];
+ if(f.size>MAX_EFD_BYTES) selectionErrors.push('EFD: tamanho máximo 4 MB.');
+ else if(!/\.txt$/i.test(f.name))selectionErrors.push('EFD: apenas arquivos .txt.');
+ else try{efdInput={name:f.name,content:await f.text()}}catch{selectionErrors.push('EFD: falha de leitura.');}
+ $('efd-selected').textContent=efdInput?.name||'EFD inválida / não selecionada';
+ showToast(selectionErrors.length?'EFD rejeitada.':'TXT carregado localmente. Execute o cruzamento.');
+ doAudit();
+}
 function init(){
  document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.view)));
- $('menu-toggle').addEventListener('click',()=>{$('sidebar').classList.toggle('open')});
+ $('menu-toggle').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menu-toggle').setAttribute('aria-expanded',String(open))});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('sidebar').classList.remove('open');$('menu-toggle').setAttribute('aria-expanded','false')}});
+ $('select-xml-button').addEventListener('click',()=>$('xml-files').click());
+ $('select-efd-button').addEventListener('click',()=>$('efd-file').click());
  $('run-demo-top').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-import').addEventListener('click',()=>{doAudit();go('audit')});
  $('run-again').addEventListener('click',doAudit);
- $('reset-demo').addEventListener('click',()=>{xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};$('xml-files').value='';$('efd-file').value='';doAudit()});
+ $('reset-demo').addEventListener('click',()=>{xmlInputs=demoXMLs.map((content,i)=>({name:`nfe-ficticia-${i+1}.xml`,content}));efdInput={name:'efd-ficticia.txt',content:demoEFD};selectionErrors=[];$('xml-files').value='';$('efd-file').value='';doAudit()});
  $('xml-files').addEventListener('change',e=>readXmlFiles(e.target.files));
  $('efd-file').addEventListener('change',e=>readEFD(e.target.files));
  $('finding-search').addEventListener('input',renderFindings);

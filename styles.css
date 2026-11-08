@@ -2,3 +2,21 @@
 @media(max-width:1150px){.sidebar{width:230px;min-width:230px}.topbar{padding:0 24px}main{padding:28px 24px 55px}.kpi{padding:20px}.kpi-number{font-size:34px}.overview-columns{grid-template-columns:1fr 1fr}.footer{padding:18px 24px}.recent-list{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:890px){.sidebar{position:fixed;transform:translateX(-100%);transition:transform .2s;box-shadow:5px 0 20px #00000010}.sidebar.open{transform:translateX(0)}.menu-toggle{display:inline}.topbar{padding:0 20px}.top-actions .avatar-name{display:none}main{padding:23px 20px 45px}.kpis{grid-template-columns:repeat(2,1fr)}.overview-columns,.findings-layout{grid-template-columns:1fr}.recent-list{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:580px){.topbar{height:62px;min-height:62px}.environment-tag{font-size:8px}.vertical-rule,.avatar{display:none}.demo-alert{align-items:start;font-size:10px}.demo-pill{display:none}.page-heading{flex-direction:column;align-items:start;margin-bottom:25px}.page-heading h1{font-size:31px}.page-heading .button{width:100%}.button-group{width:100%}.button-group button{flex:1}.kpis{gap:9px}.kpi{padding:18px 16px}.kpi-number{font-size:31px}.kpi-title{font-size:8px}.overview-columns,.import-grid,.gov-grid{grid-template-columns:1fr}.workflow-panel,.summary-panel,.recent-panel{padding:22px 18px}.recent-list{grid-template-columns:1fr}.step{gap:9px}.step strong{font-size:11px}.step-status{font-size:8px}.filter-line{flex-wrap:wrap}.filter-line select{flex:1;max-width:none}.search-box{flex-basis:100%}.result-count{margin-left:auto}.audit-grid{grid-template-columns:1fr}.source-card{flex-wrap:wrap}.source-card .small-tag{margin-left:0}.footer{display:block;font-size:9px;line-height:2}.footer span:last-child{display:block}}
+
+/* Pilot v0.2 usability: legible operational text, keyboard affordances and no horizontal overflow. */
+:where(.small-tag,.eyebrow,.overline,.nav-label,.kpi-title,.step-status,.severity-chip,.kpi-foot,.footer,.source-card p,.source-card h2,.sidebar-security,.summary-note,.audit-cell small,.detail-section h3,.selected-files,.step small,.result-count,td small,th,.rule-pill,.sidebar-small,.version,.avatar-name small,.environment-tag,.demo-pill){font-size:max(11px,1em)}
+:where(.demo-alert,.page-heading p,.button,.step strong,.step-status,.kpi-title,.kpi-foot,.summary-note,.source-card p,.warning-list,.detail-description,.detail-section p,.recent-item small,.gov-card p,.panel-detail>p){font-size:12px}
+:where(.kpi-title,.nav-label,.overline,.eyebrow,th){color:#616161}
+.search-box:focus-within{outline:3px solid #555;outline-offset:2px}
+.button:disabled{opacity:.48;cursor:not-allowed}
+.table-open{display:block;border:0;background:transparent;text-align:left;color:inherit;padding:2px;max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.table-open strong{font-size:12px}
+.table-open small{font-size:11px}
+.upload-panel input[type=file]{display:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+@media(max-width:580px){.step{align-items:flex-start}.step-status{max-width:95px;white-space:normal;text-align:right}.page-heading .button{white-space:normal}.button-group{flex-wrap:wrap}}
+
+.bar-fill{width:0}
+
+/* Readability contrast pass for secondary operational information. */
+.kpi-foot,.recent-item small,.step small,.selected-files,.summary-note,.source-card p,.panel-detail>p,.gov-card p,.detail-description,.detail-section p,.sidebar-security,.page-heading p,.result-count,.footer{color:#626262}

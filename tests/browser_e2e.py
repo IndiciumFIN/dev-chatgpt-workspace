@@ -1,0 +1,106 @@
+"""Deterministic Chromium acceptance suite using DOM/CSS/JS injection.
+Network navigation to localhost or external URLs is blocked in this execution environment.
+This verifies behavior, not actual HTTP hosting or browser enforcement of Vercel headers.
+"""
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+import json, hashlib
+
+ROOT=Path(__file__).resolve().parents[1]
+CONFIG=json.loads((ROOT/'vercel.json').read_text())
+CSP=next(x['value'] for h in CONFIG['headers'] for x in h['headers'] if x['key']=='Content-Security-Policy')
+ORIGIN='https://wutrib.example.invalid'
+
+MIME={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8'}
+
+def route_request(route):
+    from urllib.parse import urlparse
+    parsed=urlparse(route.request.url)
+    path=parsed.path.lstrip('/') or 'index.html'
+    requested=(ROOT/path).resolve()
+    if parsed.netloc != 'wutrib.example.invalid' or not requested.is_relative_to(ROOT) or not requested.is_file():
+        route.fulfill(status=404,body='Not found')
+        return
+    headers={'Content-Security-Policy':CSP,'X-Content-Type-Options':'nosniff'}
+    route.fulfill(status=200,body=requested.read_bytes(),content_type=MIME.get(requested.suffix,'application/octet-stream'),headers=headers)
+
+
+def run():
+    checks=[]
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+        for name,kwargs in [('desktop',{'viewport':{'width':1440,'height':900}}),
+                            ('mobile',{'viewport':{'width':390,'height':844},'is_mobile':True,'has_touch':True})]:
+            context=browser.new_context(accept_downloads=True,**kwargs)
+            page=context.new_page()
+            errors=[]; requests=[]
+            page.on('pageerror',lambda e:errors.append(str(e)))
+            page.on('request',lambda req:requests.append(req.url))
+            html=(ROOT/'index.html').read_text()
+            css=(ROOT/'styles.css').read_text()
+            js='\n'.join([(ROOT/'src/audit.js').read_text(), (ROOT/'src/fixtures.js').read_text()]).replace('export const ', 'const ').replace('export function ', 'function ')+'\n'+(ROOT/'src/ui.js').read_text().replace("import {parseNFeXML,parseEFDText,auditCrossCheck,findingsCSV,MAX_XML_BYTES,MAX_EFD_BYTES,assessInputReadiness,incompleteAuditReport} from './audit.js';",'').replace("import {demoXMLs,demoEFD} from './fixtures.js';",'')
+            page.set_content(html)
+            page.add_style_tag(content=css)
+            page.add_script_tag(content=js)
+            page.wait_for_function("document.querySelector('#metric-xml')?.textContent === '3'",timeout=10000)
+            assert page.locator('#metric-efd').inner_text()=='3'
+            assert page.locator('#metric-matches').inner_text()=='1'
+            assert page.locator('#metric-findings').inner_text()=='3'
+            assert not requests,requests
+            checks.append(f'{name}: fixture and browser script execution (no HTTP)')
+            width=page.evaluate('document.documentElement.scrollWidth')
+            viewport=page.evaluate('window.innerWidth')
+            assert width <= viewport+1, f'Horizontal overflow {width}>{viewport}'
+            checks.append(f'{name}: no horizontal overflow')
+            page.screenshot(path=str(ROOT/f'preview-{name}-v0.2.png'),full_page=True)
+            if name=='mobile':
+                assert page.locator('#menu-toggle').get_attribute('aria-expanded')=='false'
+                page.locator('#menu-toggle').click()
+                assert page.locator('#menu-toggle').get_attribute('aria-expanded')=='true'
+                page.keyboard.press('Escape')
+                assert page.locator('#menu-toggle').get_attribute('aria-expanded')=='false'
+                page.locator('#menu-toggle').click()
+            page.locator('nav button[data-view="findings"]').click()
+            assert page.locator('#findings-table tr').count()==3
+            page.locator('#severity-filter').select_option('HIGH')
+            assert page.locator('#findings-table tr').count()==1
+            page.locator('#severity-filter').select_option('ALL')
+            page.locator('#finding-search').fill('DIFF-')
+            assert page.locator('#findings-table tr').count()==1
+            page.locator('#finding-search').fill('')
+            assert page.locator('button.table-open').count()==3
+            page.locator('button.table-open').first.click()
+            assert 'HIPÓTESE' in page.locator('#finding-detail').inner_text()
+            with page.expect_download() as dl:
+                page.locator('#export-csv').click()
+            assert dl.value.suggested_filename.endswith('.csv')
+            with page.expect_download() as dl:
+                page.locator('#export-json').click()
+            assert dl.value.suggested_filename.endswith('.json')
+            checks.append(f'{name}: filters/details/exports')
+            if name=='mobile':
+                page.locator('#menu-toggle').click()
+            page.locator('nav button[data-view="import"]').click()
+            # Tests a user replacing demo XML with a corrupt file; must not infer missing documents.
+            page.locator('#xml-files').set_input_files({'name':'invalida.xml','mimeType':'application/xml','buffer':b'<broken>'})
+            page.wait_for_function("document.querySelector('#import-state').textContent.includes('LOTE INCOMPLETO')", timeout=5000)
+            assert page.locator('#metric-findings').inner_text()=='0'
+            assert page.locator('#last-run-match').inner_text().startswith('NÃO EXECUTADO')
+            assert page.locator('#export-csv').is_disabled()
+            checks.append(f'{name}: fail-closed invalid XML')
+            page.locator('#reset-demo').click()
+            assert page.locator('#metric-findings').inner_text()=='3'
+            assert page.locator('#export-csv').is_enabled()
+            # invalid EFD cannot retain previously valid demo source
+            page.locator('#efd-file').set_input_files({'name':'danificada.txt','mimeType':'text/plain','buffer':b'|C100|faltando-cabecalho|'})
+            assert page.locator('#metric-findings').inner_text()=='0'
+            page.wait_for_function("document.querySelector('#import-state').textContent.includes('LOTE INCOMPLETO')", timeout=5000)
+            checks.append(f'{name}: fail-closed EFD')
+            assert not errors,errors
+            checks.append(f'{name}: no uncaught JS errors')
+            context.close()
+        browser.close()
+    return checks
+
+if __name__=='__main__':
+    print(json.dumps({'result':'PASS','checks':run()},ensure_ascii=False,indent=2))

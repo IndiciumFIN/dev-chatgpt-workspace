@@ -113,7 +113,7 @@ test('IDTRIB field must match its documented TOTVS table',()=>{
 });
 test('Cross-organization, release or period contamination is rejected',()=>{
  for(const key of ['organization','period','release']){
-  const b=casefile();b.erp[0][key]='OTHER';assert.throws(()=>executeSyntheticSlice(b),/incoerente/);
+  const b=casefile();b.erp[0][key]='OTHER';assert.throws(()=>executeSyntheticSlice(b),/coerente/);
  }
 });
 test('No fake authenticated or authorized NF-e may enter synthetic casefile',()=>{

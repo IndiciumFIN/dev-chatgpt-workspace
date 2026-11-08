@@ -1,0 +1,30 @@
+name: WU-TRIB | integridade documental (sem teste da aplicacao)
+on:
+  push:
+    branches:
+      - wutrib/docs-governance-20261108
+    paths:
+      - 'docs/homologacao/**'
+      - 'scripts/check-wutrib-docs.mjs'
+      - '.github/workflows/wutrib-documentation-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  documentation-only:
+    if: github.ref == 'refs/heads/wutrib/docs-governance-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout documentation branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Node 22 for static document checks
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Validate inventory, metadata, provenance and file coverage only
+        run: node scripts/check-wutrib-docs.mjs
+      - name: Explicitly exclude runtime testing and releases
+        run: echo 'Documentation consistency only; no application tests, Supabase migration or Vercel deployment.'

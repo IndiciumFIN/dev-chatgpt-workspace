@@ -1,0 +1,389 @@
+{
+  "schemaVersion": "wutrib.functional-requirements.v1",
+  "created": "2026-11-08",
+  "reviewState": "CANDIDATE_NOT_HOMOLOGATED",
+  "meaning": "MANDATORY means required by WU-TRIB internal acceptance gate for this planned scope, not necessarily legal requirements. Official sources are references, not evidence of fiscal compliance.",
+  "categories": [
+    "DEMO",
+    "ENTERPRISE",
+    "GOVERNANCE",
+    "PERFORMANCE",
+    "FISCAL",
+    "ACCESSIBILITY"
+  ],
+  "statuses": [
+    "PASS",
+    "PASS_AUTOMATED_ONLY",
+    "PARTIAL",
+    "HOLD"
+  ],
+  "requirements": [
+    {
+      "id": "WUTRIB-REQ-001",
+      "scope": "DEMO",
+      "priority": "P0",
+      "title": "Dados sintéticos e saída sem conclusão fiscal",
+      "status": "PASS",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-002",
+      "scope": "DEMO",
+      "priority": "P0",
+      "title": "Limites explícitos: 10 XML, 2 MiB/XML, 4 MiB TXT",
+      "status": "PASS",
+      "evidenceFile": "src/ui.js",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-003",
+      "scope": "DEMO",
+      "priority": "P0",
+      "title": "Bloqueio de DTD/ENTITY e documento malformado",
+      "status": "PASS",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-004",
+      "scope": "DEMO",
+      "priority": "P0",
+      "title": "Falha de entrada suspende cruzamento e emissão de achados",
+      "status": "PASS",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-005",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Cruzamento de chave e valor com hipótese não confirmada",
+      "status": "PASS",
+      "evidenceFile": "tests/engine.test.mjs",
+      "sourceIds": [
+        "SPED_EFD_GUIDE_324"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-006",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Duplicidades e ausências detectadas sem inferir conformidade",
+      "status": "PASS",
+      "evidenceFile": "tests/regression_v02.test.mjs",
+      "sourceIds": [
+        "SPED_EFD_GUIDE_324"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-007",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Proteção contra fórmula em CSV",
+      "status": "PASS",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-008",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Triagem local com estados controlados e exportação",
+      "status": "PASS",
+      "evidenceFile": "src/triage.js",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-009",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Paginação de 50 achados sem truncar filtros e exportações",
+      "status": "PASS",
+      "evidenceFile": "src/findings-pagination.js",
+      "sourceIds": [
+        "ISO_9241_11"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-010",
+      "scope": "ACCESSIBILITY",
+      "priority": "P1",
+      "title": "Varredura automática WCAG 2.2 AA das seis telas desktop/mobile",
+      "status": "PASS_AUTOMATED_ONLY",
+      "evidenceFile": "benchmarks/browser_accessibility_audit.py",
+      "sourceIds": [
+        "WCAG22"
+      ],
+      "reason": "No automated WCAG violation in tested six pages at two viewports; manual WCAG coverage pending"
+    },
+    {
+      "id": "WUTRIB-REQ-011",
+      "scope": "ACCESSIBILITY",
+      "priority": "P1",
+      "title": "Ensaios manuais teclado, zoom 200%, leitores de tela e usuários",
+      "status": "HOLD",
+      "evidenceFile": "benchmarks/browser_accessibility_audit.py",
+      "sourceIds": [
+        "WCAG22",
+        "ISO_9241_210"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-012",
+      "scope": "DEMO",
+      "priority": "P1",
+      "title": "Regressões Node, navegador e limites com CI reproduzível",
+      "status": "PASS",
+      "evidenceFile": "tests/findings-pagination.test.mjs",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-013",
+      "scope": "ENTERPRISE",
+      "priority": "P0",
+      "title": "Autenticação individual, função de usuário e organização segregada",
+      "status": "PARTIAL",
+      "evidenceFile": "db/wutrib_demo_v042_org_auth.sql",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Implementation or documentary evidence incomplete; release gate remains open"
+    },
+    {
+      "id": "WUTRIB-REQ-014",
+      "scope": "ENTERPRISE",
+      "priority": "P0",
+      "title": "JWT real, E2E autenticado, expiração e revogação verificadas",
+      "status": "HOLD",
+      "evidenceFile": "tests/demo-persistence.test.mjs",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-015",
+      "scope": "ENTERPRISE",
+      "priority": "P0",
+      "title": "Fail-closed e nenhuma service-role no frontend",
+      "status": "PASS",
+      "evidenceFile": "api/demo-casefiles.js",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-016",
+      "scope": "ENTERPRISE",
+      "priority": "P1",
+      "title": "Proteção de borda para chamadas anônimas e negação de serviço",
+      "status": "HOLD",
+      "evidenceFile": "api/demo-casefiles.js",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-017",
+      "scope": "ENTERPRISE",
+      "priority": "P1",
+      "title": "Retenção, trilha imutável, monitoramento e gestão de segredos",
+      "status": "PARTIAL",
+      "evidenceFile": "db/wutrib_demo_v042_org_auth.sql",
+      "sourceIds": [
+        "OWASP_ASVS_500",
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Implementation or documentary evidence incomplete; release gate remains open"
+    },
+    {
+      "id": "WUTRIB-REQ-018",
+      "scope": "ENTERPRISE",
+      "priority": "P0",
+      "title": "Política LGPD, minimização e descarte autorizado",
+      "status": "HOLD",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-019",
+      "scope": "GOVERNANCE",
+      "priority": "P0",
+      "title": "WO rastreável, testes e gates documentados",
+      "status": "PASS",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-020",
+      "scope": "GOVERNANCE",
+      "priority": "P1",
+      "title": "Repositório GitHub privado verdadeiramente independente",
+      "status": "HOLD",
+      "evidenceFile": "scripts/bootstrap_wutrib_repo.sh",
+      "sourceIds": [
+        "OWASP_ASVS_500"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-021",
+      "scope": "PERFORMANCE",
+      "priority": "P1",
+      "title": "Benchmarks sintéticos medem custo de processamento e DOM",
+      "status": "PASS",
+      "evidenceFile": "benchmarks/synthetic_capacity.mjs",
+      "sourceIds": [
+        "ISO_9241_11"
+      ],
+      "reason": "Verified in bounded implementation/tests, not equivalent to enterprise/fiscal homologation"
+    },
+    {
+      "id": "WUTRIB-REQ-022",
+      "scope": "PERFORMANCE",
+      "priority": "P1",
+      "title": "Capacidade máxima concorrente do Supabase/Vercel com p95/p99",
+      "status": "HOLD",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "ISO_9241_11"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-023",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "Dicionário de layouts SPED por vigência/release com fonte e hash",
+      "status": "HOLD",
+      "evidenceFile": "contracts/official-source-registry.v1.json",
+      "sourceIds": [
+        "SPED_EFD_GUIDE_324"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-024",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "NF-e MOC XSD, DV, eventos, situação e documentos cancelados",
+      "status": "HOLD",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "NFE_MOC_7"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-025",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "Validação EFD completa ou comparação homologada com PVA vigente",
+      "status": "HOLD",
+      "evidenceFile": "src/audit.js",
+      "sourceIds": [
+        "SPED_EFD_GUIDE_324",
+        "SPED_EFD_PVA_620"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-026",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "Dicionário TES/FISA170 modo híbrido versionado por release e tabela",
+      "status": "HOLD",
+      "evidenceFile": "contracts/official-source-registry.v1.json",
+      "sourceIds": [
+        "TOTVS_FISA170",
+        "TOTVS_HYBRID"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-027",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "Linhagem norma-regra-fonte-execução-evidência-decisão com RCM",
+      "status": "HOLD",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-028",
+      "scope": "FISCAL",
+      "priority": "P0",
+      "title": "Revisão independente e aprovação humana de homologação fiscal",
+      "status": "HOLD",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "IIA_GLOBAL_STANDARDS"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    },
+    {
+      "id": "WUTRIB-REQ-029",
+      "scope": "GOVERNANCE",
+      "priority": "P1",
+      "title": "Catálogo de fontes oficiais com versões e aplicabilidade não presumida",
+      "status": "PARTIAL",
+      "evidenceFile": "contracts/official-source-registry.v1.json",
+      "sourceIds": [
+        "SPED_EFD_GUIDE_324",
+        "TOTVS_FISA170",
+        "WCAG22"
+      ],
+      "reason": "Implementation or documentary evidence incomplete; release gate remains open"
+    },
+    {
+      "id": "WUTRIB-REQ-030",
+      "scope": "ACCESSIBILITY",
+      "priority": "P1",
+      "title": "Usabilidade ISO com eficácia, eficiência, satisfação e participantes reais",
+      "status": "HOLD",
+      "evidenceFile": "docs/AUDITORIA_INTEGRAL_WUTRIB_20261108.md",
+      "sourceIds": [
+        "ISO_9241_11",
+        "ISO_9241_210"
+      ],
+      "reason": "Required capability not independently verified, so release gate stays closed"
+    }
+  ]
+}

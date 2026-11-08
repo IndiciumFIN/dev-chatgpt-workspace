@@ -13,8 +13,8 @@
   "semanticCertainty": "HIGH_ON_POSITIONAL_RECONSTRUCTION_NOT_INDEPENDENT_DOMAIN_VALIDATION",
   "total": 22,
   "classification": {
-    "V1_MINIMUM": 12,
-    "V1_BOUNDED_DESIGN": 6,
+    "V1_MINIMUM": 13,
+    "V1_BOUNDED_DESIGN": 5,
     "POST_V1": 4
   },
   "rules": {
@@ -182,7 +182,7 @@
       "title": "Master Data & Entity Resolver",
       "layer": "DATA_FOUNDATION",
       "version": "1.0.0-scope-candidate",
-      "deliveryScope": "V1_BOUNDED_DESIGN",
+      "deliveryScope": "V1_MINIMUM",
       "sourceArtifact": "docs/homologacao/v1/expansoes/CATALOGO_MOTORES_ANALITICOS.v01.json",
       "sourceRecordId": "WUTRIB-EXP-006",
       "sourceMappingStatus": "RESTORED_FROM_POSITIONAL_ARGUMENT_SHIFT",
@@ -207,7 +207,7 @@
       ],
       "requiredVersionedContracts": true,
       "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
-      "note": "Architectural and limited definition; not automatically a production launch feature."
+      "note": "V1 minimum restricted to canonical entity identity and master-data synthetic mapping, not live data stewardship or full national tax tables."
     },
     {
       "id": "WUTRIB-EXP-007",
@@ -634,7 +634,15 @@
       ],
       "requiredVersionedContracts": true,
       "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
-      "note": "No software implementation claimed."
+      "note": "V1 investigation queue runs with exception feed EXP-010; anomaly scoring EXP-011 is optional and requires separate gate.",
+      "dependencyPolicy": {
+        "required": [
+          "WUTRIB-EXP-010"
+        ],
+        "optional": [
+          "WUTRIB-EXP-011"
+        ]
+      }
     },
     {
       "id": "WUTRIB-EXP-020",
@@ -733,5 +741,6 @@
       "implementationStatus": "NOT_CONFIRMED_BY_THIS_REVIEW",
       "note": "No software implementation claimed."
     }
-  ]
+  ],
+  "hardDependencyReview": "All V1 minimum dependencies included in V1 minimum, except EXP-019 anomaly source EXP-011 explicitly optional. Data entity resolver EXP-006 restricted but mandatory."
 }

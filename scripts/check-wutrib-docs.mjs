@@ -33,6 +33,17 @@ assert.equal(registry.recordState,"DRAFT");
 assert.equal(registry.inventory.requiredTemplates,50);
 assert.equal(registry.inventory.templates.length,50);
 assert.equal(registry.inventory.governanceDocs.length,4);
+assert.equal(registry.inventory.supportingFiles.length,8);
+const supportingPaths=new Set();
+for(const support of registry.inventory.supportingFiles){
+ assert.ok(!supportingPaths.has(support.path),"Auxiliary file repeated: "+support.path);
+ supportingPaths.add(support.path);
+ assert.ok(existsSync(resolve(root,support.path)),"Missing referenced supporting file: "+support.path);
+ assert.ok(support.status==="CANDIDATE_OR_AUXILIARY");
+}
+assert.ok(supportingPaths.has(relRoot+"registro-documental.v1.json"));
+assert.ok(supportingPaths.has(relRoot+"referencias-normativas.v1.json"));
+assert.equal(registry.documentaryCoverage.legacyReconciliation,"INVENTORY_ONLY_CONTENT_NOT_RECONCILED");
 assert.equal(registry.documentaryCoverage.approvedTemplates,0);
 assert.equal(registry.documentaryCoverage.evaluatedHumanSignoffs,0);
 assert.equal(registry.documentaryCoverage.applicableDocsApproved,0);
@@ -101,6 +112,9 @@ const output={
  templates:registry.inventory.templates.length,governance:registry.inventory.governanceDocs.length,
  allFilesVerified:all.length,legacyGitSources:registry.inventory.legacyGitPaths.length,
  legacySotSnapshots:registry.inventory.legacySOT.length,normativeReferences:normative.entries.length,
+ supportingFilesVerified:supportingPaths.size,
+ registryFileSha256:createHash("sha256").update(txt(relRoot+"registro-documental.v1.json")).digest("hex"),
+ normativeCatalogSha256:createHash("sha256").update(txt(relRoot+"referencias-normativas.v1.json")).digest("hex"),
  byGate,documentBundleSha256:digest.digest("hex"),
  filledDocuments:0,approvedDocuments:0,
  note:"File/hash/schema coverage only. No functional, fiscal, UX, security, load tests, review or human homologation executed."

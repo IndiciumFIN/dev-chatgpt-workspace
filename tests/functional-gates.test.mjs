@@ -22,7 +22,7 @@ test('no false fiscal readiness or unreviewed normative authority is promoted',(
  assert.ok(fs.every(x=>x.status==='HOLD'));
  assert.ok(requirements.meaning.includes('not necessarily legal'));
  assert.equal(registry.sourceFileHashes,'NOT_CAPTURED');
- assert.ok(registry.sources.every(x=>!x.validity?.includes('CERTIFIED')));
+ assert.ok(registry.sources.every(x=>x.validity!=='CERTIFIED' && x.validity!=='COMPLIANT'));
 });
 test('each functional gate has an accessible local evidence path and known source IDs',()=>{
  for(const r of requirements.requirements){

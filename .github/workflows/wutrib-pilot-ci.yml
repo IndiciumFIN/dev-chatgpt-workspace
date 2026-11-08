@@ -23,9 +23,9 @@ jobs:
         run: npm run verify
       - name: Unit regression suite
         run: npm test
-      - name: Verify WU-TRIB v0.3.0 HTTPS preview
+      - name: Verify WU-TRIB v0.3.0 canonical HTTPS release
         env:
-          PREVIEW_URL: https://wutrib-auditor-web-piloto-glj1mtxxb-leivisml-7739s-projects.vercel.app
+          PREVIEW_URL: https://wutrib-auditor-web-piloto.vercel.app
         run: |
           set -euo pipefail
           curl --fail --silent --show-error --location --retry 2 --connect-timeout 10 --max-time 30 "$PREVIEW_URL/" -o /tmp/wutrib-page.html

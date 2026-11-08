@@ -57,3 +57,9 @@ O registro documental v0.5.0 referencia **9 peças de revisão**, **55 fontes ca
 [Índice do pacote V1 1.0.0-rc.0](../../wutrib/v1-baseline-20261108/README.md) · [Parecer dos dois relatórios](../../wutrib/v1-baseline-20261108/PARECER_E_DECISAO_ESCOPO_V1.md) · [Catálogo corrigido 22 módulos](../../wutrib/v1-baseline-20261108/CATALOGO_FUNCIONAL_V1_CORRIGIDO.json) · [Checklist do freeze](../../wutrib/v1-baseline-20261108/CHECKLIST_FECHAMENTO_ESCOPO_V1.md).
 
 O registro canônico documental **v0.6.0** vincula 10 documentos candidatos da V1. Foram identificados **21 registros com campos deslocados** no catálogo antigo e criada uma versão corrigida preservando a original. Distribuição proposta: 13 módulos mínimos, 5 limitados e 4 posteriores; 30 suítes de teste **NOT_RUN**, 7 gates **não aprovados**, 27 fontes selecionadas e 20 decisões de escopo em revisão. **Sem assinatura, auditoria, execução de validadores, migração, merge ou deploy.**
+
+## Avaliação independente da baseline WU-TRIB V1 — 08/11/2026
+
+[Índice da revisão normativa e benchmark](../../wutrib/v1-assurance-20261108/README.md) · [Normas e aplicabilidade](../../wutrib/v1-assurance-20261108/PARECER_NORMATIVO_APLICABILIDADE_V1.md) · [Plataformas e referências](../../wutrib/v1-assurance-20261108/BENCHMARK_PLATAFORMAS_E_REFERENCIAS_V1.md) · [Contratos fiscais EFD/TOTVS](../../wutrib/v1-assurance-20261108/CONTRATOS_MINIMOS_EFD_NFE_PROTHEUS_V1.md) · [26 gaps em revisão](../../wutrib/v1-assurance-20261108/MATRIZ_LACUNAS_E_CORRECOES_V1.json).
+
+O registro documental **0.7.0** acrescenta oito artefatos de revisão **sem alterar a especificação 1.0.0-rc.0**: 19 referências metodológicas/regulatórias comparadas, 12 grupos de fornecedores/produtos, 26 lacunas documentais propostas (16 P0 / 10 P1) e 17 bloqueios de freeze propostos. Todas as evidências de teste continuam NOT_RUN, nenhuma aprovação foi registrada, nenhuma aplicação ou banco mudou.

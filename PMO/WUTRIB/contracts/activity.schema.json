@@ -122,7 +122,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^WUTRIB-PMO-(GAP-[0-9]{3}|T[0-9]{2}|GV1-[0-9]{2})$"
+          "pattern": "^WUTRIB-PMO-(GAP-[0-9]{3}|T[0-9]{2}|GV1-[0-9]{2}|DEV-[0-9]{3})$"
         },
         "sourceId": {
           "type": "string"
@@ -131,7 +131,8 @@
           "enum": [
             "GAP",
             "TEST",
-            "GATE"
+            "GATE",
+            "DEV"
           ]
         },
         "title": {
@@ -226,5 +227,6 @@
         }
       }
     }
-  }
+  },
+  "description": "Planning-only PMO board including WO020 development tasks. Machine cannot approve or close fiscal activities."
 }

@@ -1,0 +1,67 @@
+{
+  "planning_key": "CAREER-PORTFOLIO",
+  "domain": "Carreira",
+  "title": "Portfólio e PDI, competências e trilhas",
+  "purpose": "Reutilizar competências, trilhas, oportunidades, portfólio, planos de desenvolvimento e perfis por usuário.",
+  "source_reference": "src/components/career/career-hub.tsx",
+  "original_source_blob_verified": "4023e2c23800397e6bbfaf4752adcbdbce016d39",
+  "source_in_current_branch": false,
+  "github_archival_path": "docs/handoffs/global-tools-vila-20261101/source-snapshots/career-hub.tsx",
+  "original_catalog_status": "GIT_CONTRACT_CANDIDATE_FUNCTION_UNVERIFIED",
+  "operations": {
+    "status": "DEFINED_ONLY",
+    "input_fields": [
+      "user_ref",
+      "skills",
+      "goals",
+      "plan_version"
+    ],
+    "output_fields": [
+      "development_plan",
+      "progress",
+      "portfolio"
+    ]
+  },
+  "canonical_contract": {
+    "do_not_create_parallel_master_data": true,
+    "reconcile_existing_platform_bindings": true,
+    "source_claim_provenance_required": true
+  },
+  "controls": {
+    "ready_for_production": false,
+    "public_writes_enabled": false,
+    "kernel_admission": "NOT_SUBMITTED",
+    "privacy_risk_review_required": true,
+    "security_test_required": true
+  },
+  "acceptance_tests": [
+    {
+      "test": "data_parity",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "identity_and_access",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "functional_workflow",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "lineage_and_licensing",
+      "status": "NOT_RUN"
+    },
+    {
+      "test": "e2e_and_release_gate",
+      "status": "NOT_RUN"
+    }
+  ],
+  "outstanding": [
+    "Conferir cardinalidade dos itens e equivalência campo-a-campo com Supabase",
+    "Implementar ou concluir frontend/backend do domínio",
+    "Validar normas e licenças aplicáveis",
+    "Habilitar persistência apenas com identidade e proteção aprovadas",
+    "Executar testes negativos e revisão independente"
+  ],
+  "content_is_candidate": true
+}

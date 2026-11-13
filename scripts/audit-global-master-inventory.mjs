@@ -1,0 +1,33 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+const root="docs/handoffs/global-tools-vila-20261101/";
+const d=JSON.parse(fs.readFileSync(root+"GLOBAL-BLOCKERS-854.json","utf8"));
+const a=JSON.parse(fs.readFileSync(root+"ADENDO-FERRAMENTAS-CME-SST-CARREIRA-OS.json","utf8"));
+const lines=fs.readFileSync(d.source_master_inventory,"utf8").trim().split(/\r?\n/);
+assert.equal(lines[0],"path,kind,size_bytes,sha256,crc32,destination_evidence,source_archive");
+assert.equal(lines.length,855);
+assert.equal(d.total_unique_source_entries,854);
+const paths=new Set(),sizes={};
+for(const [i,line] of lines.slice(1).entries()){
+ const parts=line.split(",");assert.equal(parts.length,7,"line "+(i+2));
+ const [path,kind,size,hash,crc,proof,origin]=parts;
+ assert(!paths.has(path),"repeated source path "+path);paths.add(path);
+ assert(/^[0-9a-f]{64}$/.test(hash),"sha missing "+path);
+ assert.equal(proof,"NOT_VERIFIED_IN_GIT_OR_SUPABASE");
+ assert(["SOURCE_OR_DOCUMENT","IMAGE","ARCHIVE"].includes(kind));
+ sizes[kind]=(sizes[kind]||0)+1;
+}
+assert.equal(paths.size,854);
+assert.equal(sizes.SOURCE_OR_DOCUMENT,518);
+assert.equal(sizes.IMAGE,332);
+assert.equal(sizes.ARCHIVE,4);
+assert.equal(a.career.records.length,13);
+assert.equal(a.career.compositions_missing.length,4);
+assert.equal(a.osCandidates.records.length,13);
+assert.equal(a.sst.records.length,20);
+assert.equal(d.actual_source_bytes_verified_in_git_or_supabase,false);
+assert.equal(d.entire_ecosystem_confirmed,false);
+assert.equal(d.release_authorized,false);
+console.log("PASS 854/854 master ZIP entries preserved as unique SHA metadata in Git.");
+console.log("PASS 13 career, 4 compositions, 13 OS, 20 SST named items preserved without new canonical IDs.");
+console.log("HOLD 854/854 source bytes unverified in Git/Supabase; 220/320/49/410/45/27 external readbacks pending.");

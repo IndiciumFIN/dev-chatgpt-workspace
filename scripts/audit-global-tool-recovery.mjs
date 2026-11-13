@@ -1,0 +1,36 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+const root="docs/handoffs/global-tools-vila-20261101/";
+const read = p => JSON.parse(fs.readFileSync(p,"utf8"));
+const gate=read(root+"GLOBAL-RECOVERY-GATE.json"),catalog=read(root+"CATALOG-AND-PENDENCIES.json");
+const canonical=read(gate.source_capability_registry),clinical=read("contracts/entities/clinical-tools.v1.json");
+const research=read("docs/research/universe/v1/UNIVERSE-36.json"),assets=read(root+"ASSET-MANIFEST-VILA-254.json");
+assert.equal(catalog.catalog201.length,201);assert.equal(canonical.capabilities.length,201);
+const oldIDs=new Set(catalog.catalog201.map(x=>x.capability_id));
+assert.equal(oldIDs.size,201);
+assert.deepEqual(new Set(canonical.capabilities.map(x=>x.capability_id)),oldIDs);
+assert.equal(clinical.items.length,7);assert.equal(catalog.clinical7.length,7);
+assert.equal(research.tool_contracts.length,36);assert.equal(catalog.research30.length,30);assert.equal(catalog.participation6.length,6);
+assert.equal(catalog.additionalPending.length,8);assert.equal(gate.workstream_contracts.length,8);
+assert.equal(assets.objects.length,254);
+assert.equal(gate.vila_binary_status.git_blob_bytes_verified,0);
+assert.equal(gate.vila_binary_status.remote_bytes_verified,0);
+assert.equal(gate.global_coverage_closure,"HOLD_UNVERIFIED_POPULATIONS_AND_BINARY_ASSETS");
+assert.equal(gate.release_allowed,false);assert.equal(gate.kernel_admission,"NOT_SUBMITTED");
+const keys=new Set();
+for(const r of gate.workstream_contracts){
+ const j=read(r.path);
+ assert.equal(r.key,j.planning_key);
+ assert(!keys.has(r.key));keys.add(r.key);
+ assert.equal(j.controls.ready_for_production,false);
+ assert.equal(j.controls.public_writes_enabled,false);
+ assert.equal(j.acceptance_tests.length,5);
+ assert.equal(j.original_source_blob_verified===null||/^[a-f0-9]{40}$/.test(j.original_source_blob_verified),true);
+ if(j.github_archival_path)assert(fs.existsSync(j.github_archival_path));
+}
+assert.equal(keys.size,8);
+assert.equal(gate.unresolved_cross_system_populations.length,5);
+console.log("PASS 201 general capability source + 7 clinical + 36 Research + 8 adjacent workstreams in Git.");
+console.log("PASS 254 Vila metadata entries; binary custody UNVERIFIED and not counted as uploaded.");
+console.log("HOLD global: 220/320/49/13/522 external populations pending remote reconciliation.");
+console.log("PASS no phantom release/admission, no duplicate capability IDs in source registry.");

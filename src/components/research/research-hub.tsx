@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useState,type FormEvent,type ReactNode,type Dispatch,type SetStateAction} from "react";
+import {useEffect,useState,type FormEvent,type ReactNode,type Dispatch,type SetStateAction} from "react";
 import {Breadcrumb} from "@/components/site/breadcrumb";
 import {Callout} from "@/components/site/callout";
 import {PageHero} from "@/components/site/page-hero";
@@ -44,7 +44,7 @@ function Module(p:{active:ResearchModuleId;snapshot:ResearchSnapshot|null;status
  if(active==="propostas")return <Proposals snapshot={snapshot} proposal={proposal} setProposal={setProposal} refresh={refresh}/>;
  if(active==="consenso")return <Consensus snapshot={snapshot} refresh={refresh}/>;
  if(active==="devolutiva")return <><h2>Devolutiva</h2><div className="ce-research-card"><h3>Recebido</h3><p>{snapshot?.counts.contributions??0} contribuições e {snapshot?.counts.proposals??0} propostas.</p></div><div className="ce-research-card"><h3>Sistematização</h3><p>Agregação comunitária sem converter opinião em autoridade normativa.</p></div><div className="ce-research-card"><h3>Encaminhamento oficial</h3><p>Nenhum estado oficial é inferido; exige protocolo ou evidência verificável.</p></div></>;
- if(active==="relatorio"){const text=useMemo(()=>[`Projeto: ${draft.projectTitle||"não definido"}`,`Pergunta: ${draft.question||"não definida"}`,`Método: ${draft.researchType} · ${draft.design||"pendente"}`,"",`Contribuições: ${snapshot?.counts.contributions??0}`,`Propostas: ${snapshot?.counts.proposals??0}`,`Votos: ${snapshot?.counts.votes??0}`,"","CANDIDATO · não oficial · não vinculante · HOLD_HUMAN"].join("\n"),[snapshot,draft]);return <><h2>Relatório vivo</h2><div className="ce-research-report">{text}</div></>}
+ if(active==="relatorio"){const text=[`Projeto: ${draft.projectTitle||"não definido"}`,`Pergunta: ${draft.question||"não definida"}`,`Método: ${draft.researchType} · ${draft.design||"pendente"}`,"",`Contribuições: ${snapshot?.counts.contributions??0}`,`Propostas: ${snapshot?.counts.proposals??0}`,`Votos: ${snapshot?.counts.votes??0}`,"","CANDIDATO · não oficial · não vinculante · HOLD_HUMAN"].join("\n");return <><h2>Relatório vivo</h2><div className="ce-research-report">{text}</div></>}
  if(active==="governanca") return <><h2>Governança</h2><div className="ce-research-grid"><article className="ce-research-card"><h3>Branch</h3><code>feat/research-participation-layer-20261026</code></article><article className="ce-research-card"><h3>WO</h3><code>WO-RES-PART-001 · NOT_SUBMITTED</code></article><article className="ce-research-card"><h3>Banco</h3><p>PGLite local/efêmero; sem DATABASE_URL.</p></article><article className="ce-research-card"><h3>Release</h3><p>HOLD_HUMAN · noindex.</p></article></div></>;
  return null;
 }

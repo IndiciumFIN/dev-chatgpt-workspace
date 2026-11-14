@@ -18,7 +18,8 @@ export function evaluateExternalAIPreflight(ctx) {
   if(!permission||!present(permission.id))return deny("NO_ITEM_RIGHTS_RECORD");
   if(permission.source_id!==source.id||permission.document_id!==document.id||
      permission.fragment_id!==fragment.id)return deny("RIGHTS_SCOPE_MISMATCH");
-  if(permission.origin_sha256_hex.toLowerCase()!==fragment.origin_sha256_hex.toLowerCase()||
+  if(!sha(permission.origin_sha256_hex)||!sha(permission.text_sha256_hex)||
+     permission.origin_sha256_hex.toLowerCase()!==fragment.origin_sha256_hex.toLowerCase()||
      permission.text_sha256_hex.toLowerCase()!==fragment.text_sha256_hex.toLowerCase())return deny("RIGHTS_HASH_MISMATCH");
   if(permission.operation!==operation||permission.provider!==provider||
      permission.purpose!=="clinical_education_atomization")return deny("RIGHTS_OPERATION_MISMATCH");

@@ -29,7 +29,7 @@ test("header reuses existing design classes and localized account label", () => 
 });
 
 test("login page gates real sign-in with the existing client auth switch", () => {
-  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED !== "false"/);
+  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED === "true"/);
   assert.match(login, /\{authEnabled \? \(/);
   assert.match(login, /<SignInGate fallback=\{<SignInPanel \/>\}>/);
   assert.match(login, /<AuthOffPanel \/>/);

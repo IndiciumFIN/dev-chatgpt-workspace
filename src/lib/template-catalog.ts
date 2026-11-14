@@ -1,3 +1,5 @@
+import type { TemplateKind } from "@/lib/template-contract";
+
 /**
  * Catalogo de templates do produto — um para cada formato de conteudo.
  *
@@ -20,7 +22,7 @@ export type TemplateCatalogo = {
   /** A pagina que implementa o template hoje, ou null se ainda nao existe. */
   url: string | null;
   /** O kind do contrato de template (ver template-contract.ts). */
-  kind: string;
+  kind: TemplateKind;
   situacao: TemplateSituacao;
   /** De onde vem a materia-prima. */
   materiaPrima: string;

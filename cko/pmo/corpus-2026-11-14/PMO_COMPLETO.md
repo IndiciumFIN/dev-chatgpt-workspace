@@ -44,3 +44,6 @@ Duração e datas de fim **não estimadas**: dependem de autorização, volume d
 
 ## Emenda — Cadastro fonte/rights/claim no PMO mestre (14/11/2026)
 O PMO Google Sheets recebeu 53 registros de lote M05/registry catalog, preservando linhas anteriores. Ver `REGISTRY_LOCATION_AND_WRITE_RECEIPT.md`. A condição `MASTER_ATIVO` refere-se ao cadastro lógico, não a uma homologação científica nem ao espelhamento do Supabase.
+
+
+**Emenda M05-ID (14/11/2026):** PMO contém agora 59 atividades; 55 linhas adicionadas nas abas do PMO Mestre e catalogação de registries. Supabase investigado apenas por SELECT: 0/29 IDs M05 com correspondência textual exata, hipótese de namespaces diferentes; ver `REGISTRY_LOCATION_AND_WRITE_RECEIPT.md`, B59 e o conflito `CONFLICT-M05-SUPABASE-ID-CROSSWALK`. Sem importação, merge ou publicação.

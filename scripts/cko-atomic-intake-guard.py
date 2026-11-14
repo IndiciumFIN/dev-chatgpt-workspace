@@ -144,20 +144,24 @@ def audit_intake(package: Path, canonical_schema: dict[str, Any]) -> dict[str, A
                 continue
             summary["objects_checked"] += 1
             object_id = obj.get("canonical_id")
-            if not isinstance(object_id, str) or not ID_PATTERN.fullmatch(object_id):
+            valid_id = isinstance(object_id, str) and bool(ID_PATTERN.fullmatch(object_id))
+            # Always validate the entire object even when its identity is absent:
+            # an early return here previously hid the schema's required-field
+            # failure from diagnostics.
+            for issue in schema_validator.iter_errors(obj):
+                errors.add("JSON_SCHEMA_VIOLATION")
+                location = "/".join(str(x) for x in issue.absolute_path)
+                diagnostics.append({
+                    "object_id": object_id if valid_id else "[invalid-id]",
+                    "json_path": location or "<root>",
+                    "validator": str(issue.validator),
+                })
+            if not valid_id:
                 errors.add("CANONICAL_OBJECT_ID_INVALID")
                 continue
             if object_id in unique_ids:
                 errors.add("CANONICAL_OBJECT_ID_DUPLICATED")
             unique_ids.add(object_id)
-            for issue in schema_validator.iter_errors(obj):
-                errors.add("JSON_SCHEMA_VIOLATION")
-                location = "/".join(str(x) for x in issue.absolute_path)
-                diagnostics.append({
-                    "object_id": object_id,
-                    "json_path": location or "<root>",
-                    "validator": str(issue.validator),
-                })
             if obj.get("status") != "CANDIDATE" or obj.get("human_review") != "PENDING":
                 errors.add("INTAKE_TRUST_STATE_ESCALATED")
             if obj.get("visibility") != "INTERNAL":

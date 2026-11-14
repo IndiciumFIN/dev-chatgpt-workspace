@@ -14,3 +14,8 @@ A pergunta "todas as alterações estão no Git?" foi resolvida com **aplicaçã
 **Gates ainda em aberto:** vigência normativa por artigo, direitos por operação, revisão clínica/editorial e aprovação de publicação. A `main` do CE, o Supabase e os arquivos do Drive permanecem intactos.
 
 Este recibo encerra a **sincronização de arquivos M08/M09 e snapshot operacional**. Não certifica que toda a história de outras branches/repos/projetos esteja reconciliada. O PMO segue com suas 59 atividades e os 29 claims legados em HOLD.
+
+
+## Checkpoint dos workflows do repositório CE privado
+- **PASS**: [CKO atomic artifact integrity #43579697365](https://github.com/IndiciumFIN/calculadorasdeenfermagem/actions/runs/43579697365), [CI - Validação #43579763112](https://github.com/IndiciumFIN/calculadorasdeenfermagem/actions/runs/43579763112) e [Pipeline Determinístico #43579763106](https://github.com/IndiciumFIN/calculadorasdeenfermagem/actions/runs/43579763106).
+- **FAIL/HOLD**: [Canonical repository invariants #43579763098](https://github.com/IndiciumFIN/calculadorasdeenfermagem/actions/runs/43579763098), com rejeição de dependências parsers/CLI e validação de referências de import namespace `packages/cli/kernel`. O teste de ZIPs/PMO passou, mas **não equivale a todos os gates do repositório concluídos**. Manter PR #39 draft e main intacta.

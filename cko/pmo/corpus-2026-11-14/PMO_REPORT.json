@@ -14,12 +14,12 @@
   },
   "risks": 20,
   "decisions": 19,
-  "version": "0.2.6-git-private-full-atomic-content-sync",
+  "version": "0.2.7-private-ce-git-ci-hold",
   "source": "M03 SQLite checked + live GitHub PRs 66/67/68 + official source discovery",
   "master_pmo_unchanged": false,
   "clinical_release": false,
   "rights_release": false,
-  "last_event_id": "EV-CKO-M09-PRIVATE-GIT-001",
+  "last_event_id": "EV-CKO-PRIVATE-GIT-CI-HOLD-001",
   "github_actions": {
     "claims": {
       "run_id": 43563078415,
@@ -428,6 +428,30 @@
     "integrity_ci_run": 43579697365,
     "ci_conclusion": "success",
     "approved_claims": 0,
-    "web_publications": 0
+    "web_publications": 0,
+    "ci_runs": {
+      "private_content_integrity": {
+        "id": 43579697365,
+        "conclusion": "success"
+      },
+      "general_validation": {
+        "id": 43579763112,
+        "conclusion": "success"
+      },
+      "deterministic_pipeline": {
+        "id": 43579763106,
+        "conclusion": "success"
+      },
+      "canonical_repository_invariants": {
+        "id": 43579763098,
+        "conclusion": "failure",
+        "blocked_gates": [
+          "parser_import_dependencies",
+          "cli_kernel_validator_namespace"
+        ],
+        "merging_allowed": false
+      }
+    },
+    "all_repo_ci_pass": false
   }
 }

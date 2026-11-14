@@ -6,7 +6,7 @@
 
 - **Drive PMO Mestre**: aba `PMO_EXECUTION_GATES_G0_G9`. É o plano de execução clássico: G0 baseline, G1 perfil, G2 PMO, G3 universo, G4 **arquitetura isolada Supabase**, G5 aquisição APIs, G6 extração/IA, G7 validação, G8 conteúdo, G9 auditoria final.
 - **Drive R04**: aba `R04_GATES_G0_G12_DRAFT`. Plano de preservação rigoroso: G0 baseline, G1 enumeração recursiva, G2 fixidez, G3 leitura estrutural, G4 identidade e direitos, G5 classificação, G6 canonização/atomização, G7 dedup/versões, G8 PMO/registry, G9 organização controlada, G10 **novo projeto/DeepSeek** somente com aprovação, G11 conteúdo, G12 auditoria 360.
-- **GitHub PR #67**: `GATES.md`, G0 baseline, G1 inventário, G2 governança, G3 currículo/ontologia, G4 fontes, G5 evidências, G6 editorial, G7 **integração**, G8 QA, G9 publicação e G10 handoff.
+- **GitHub PR #67**: `GATES.md`, G0 baseline, G1 inventário, G2 governança, G3 Trilha de carreira/ontologia, G4 fontes, G5 evidências, G6 editorial, G7 **integração**, G8 QA, G9 publicação e G10 handoff.
 
 Os três usam os mesmos rótulos `G0, G1, ...` para objetos diferentes. **Qualquer evento que diga apenas "G4 PASS" é ambíguo e deve ser rejeitado.** Usar identificadores completos `DRIVE_EXEC:G4`, `R04:G10`, `GIT_CKO:G7` ou fases `PPxx`.
 
@@ -18,7 +18,7 @@ Os três usam os mesmos rótulos `G0, G1, ...` para objetos diferentes. **Qualqu
 | PP01 — Inventário | G0, G1 | G0, G1 | G0, G1 | closure de pastas e 100% de objetos ou HOLD |
 | PP02 — Preservação/extração | G1 | G2, G3 | G0, G1 | hash/CRC, parsing, manifests e pages |
 | PP03 — Identidade e direitos | G1, G3, G7 | G4, G5, G7 | G1, G4 | source/document/authority, direitos |
-| PP04 — Universo curricular | G3 | G5, G6, G8 | G3 | UC, topics, specialties, ontologia |
+| PP04 — Trilha de carreira | G3 | G5, G6, G8 | G3 | etapas de carreira propostas, UC/ementa fonte preservados, topics, specialties, ontologia |
 | PP05 — Aquisição APIs | G5 | G3, G4, G10* | G4 | adapters e snapshots permitidos |
 | PP06 — Atomização | G6 | G3, G6 | G5 | source span, atom, claim, prova |
 | PP07 — Metamodelo e dicionários | G6, G7 | G6, G7, G8 | G3, G7 | schema diff, links, constraints |

@@ -5,9 +5,9 @@
 | Inventário Git, diff, PRs | GitAudit (determinístico) | PMO | Arquitectura | Revisor clínico |
 | Hash/ZIP/SQLite/CSV | DataQA (determinístico) | PMO | Security | ClinicalReview |
 | Fontes e vigência | Authority/Rights (especialista) | Revisor normativo | ClinicalReview | PMO |
-| Currículos e UCs | Curriculum (especialista) | Coordenação da instituição | Editorial | PMO |
+| Trilha de carreira (com UCs/ementas-fonte) | CareerPath / fonte curricular | Coordenação da instituição | ClinicalReview, Editorial | PMO |
 | Claims/evidence | Evidence (especialista) | ClinicalReview (humano) | Rights/Authority | PMO |
-| Ontologia e reuso | Ontology (especialista) | Knowledge Owner | Curriculum/Clinical | Editorial |
+| Ontologia e reuso | Ontology (especialista) | Knowledge Owner | CareerPath/Clinical | Editorial |
 | Conteúdo editorial | Editorial/Education (especialista) | ClinicalReview | Accessibility | PMO |
 | Segurança e privacidade | Security (determinístico) | Segurança humana | Rights | PMO |
 | CI/testes | CI/DataQA (determinístico) | Revisor independente | Developer | PMO |

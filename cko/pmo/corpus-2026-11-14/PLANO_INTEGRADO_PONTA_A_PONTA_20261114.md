@@ -61,7 +61,7 @@ Relações many-to-many sem copiar o átomo fonte; versões e traduções aponta
 | **PP01 — Inventário exaustivo** | Enumerar recursivamente TODOS os folders/subfolders do Drive primário e secundário, Library, GitHub branches/PRs, Supabase schemas/registries e anexos; contabilizar arquivos não acessíveis/truncamentos | `FILE_SOURCE_REGISTER`, folder closure, snapshot, owners, access ledger | Todos os objetos no escopo inventariados ou HOLD individual com localização/causa; sem alegar 100% a partir de amostra | B01, B02, B08, B09, B10, B13, B14 |
 | **PP02 — Preservação, extração bruta e hash** | Manter originais intactos; validar ZIP slip/decompression, CRC e SHA; extrair texto e tabelas com página/linha/célula, codificação e revisão visual, preservar PDFs e metadados em acervo controlado | manifestos, `DocumentSnapshot`, `ExtractionRun`, `SourceSpan`, checksum/versão | Reexecução determinística, zero perda silenciosa; cada falha permanece em registry HOLD | B04–B06, B10, B12 |
 | **PP03 — Identidade, direitos, vigência e universo** | Separar authority, source, document, platform; validar URLs/DOIs/PMIDs/PMCID; conciliar 15 Sheets/118 SQLite/157 Supabase; definir aliases sem fusão física; mapear direitos por operação, jurisdição e validade | registries oficiais completados, crosswalk ID, authority ledger, rights per action | `source_id`, tipo, título, URL, versão, licença e status explícitos, ou HOLD. Alias só com prova documental | B09–B12, B18, B25–B28, B58, B59 |
-| **PP04 — Taxonomia curricular e ontologia** | Consolidar tópicos, especialidades, UCs, objetivos de aprendizagem, ferramentas e bibliotecas existentes; incluir Urgência, Trabalho, Cardiologia, Centro Cirúrgico e CME; resolver colisão UC08/07/09 | grafo de IDs, alias/synonym/supersedes, matrix de cobertura e currículos | Sem equivalência presumida; UC conflitante só se resolve com origem institucional; FKs válidas | B17–B24, B35 |
+| **PP04 — Trilha de carreira e ontologia** | Consolidar tópicos, especialidades, UCs, objetivos de aprendizagem, ferramentas e bibliotecas existentes; incluir Urgência, Trabalho, Cardiologia, Centro Cirúrgico e CME; resolver colisão UC08/07/09 | grafo de IDs, alias/synonym/supersedes, matriz de Trilha de carreira com ementas-fonte preservadas | Sem equivalência presumida; UC conflitante só se resolve com origem institucional; FKs válidas | B17–B24, B35 |
 | **PP05 — Aquisição governada de fontes** | Fontes oficiais BR por prioridade (COFEN, MS/CONITEC/SNT, Anvisa, MTE, DOU etc.) e sociedades científicas/estudos; adapters de APIs oficiais, metadata-only quando necessário; dedup/retrações; rotinas de atualização | `SourceAdapterRegistry`, `AcquisitionRun`, `DocumentSnapshot`, logs e direitos por documento | Download autorizado e completo quando permitido; URL, versão, hash, erro e política; sem texto proibido no Git público | B25–B28; ampliação proposta |
 | **PP06 — Atomização e validação das provas** | Parsers tipados PDF/HTML/CSV, tabelas e passagens; normas identificadas pelo artigo/seção; proposições com localização, população, vigência e jurisdição; modelos de IA apenas sugerem, jamais são fonte | `NormativeAtom`, `EvidenceAtom`, `ClaimCandidate`, `ClaimEvidenceLink` | 100% das claims promovidas têm trecho/hash/página/versão/direitos verificáveis; sem citação inventada | B29–B34, B57 |
 | **PP07 — Engenharia do conhecimento e metamodelos** | Versionar classes, relações, dicionários e terminologias, atualizar candidatos por mudança de fonte, validar graph links, chaves, tipos, cardinalidades, aliases, supersedes, bidirecionalidade, cross-table constraints, normativo vs editorial | `CKO Schema Registry`, dicionários/ontologia versionados, validation report, proposta de migração e changelog de impacto | `schema diff` testado; nenhum objeto órfão, relação impossível, semântica contraditória ou migração automática sem admission | B17–B19, B41–B45; ampliação proposta |
@@ -74,18 +74,29 @@ Relações many-to-many sem copiar o átomo fonte; versões e traduções aponta
 
 **P0:** PP00–PP04, direitos, governança e prova da cadeia antes de ampliar clínica; **P1:** extração/evidências/knowledge/content e integração; **P2:** multiformato, internacionalização adicional e monitoramento aprofundado. Essas prioridades são de execução, não prazos prometidos.
 
-## 5. Frente científica por especialidade
+## 5. Trilhas de carreira e conteúdo científico por especialidade
 
 | Frente | Insumos identificados | Entrega mínima validável | Obstáculo |
 |---|---|---|---|
 | Urgência e Emergência | 170 tópicos; 80.261 referências de índice em M03 | normativos/algoritmos contextualizados, fontes, claims, especialidade e conteúdos por tópico | licenças, atomização e 9.102 links candidatos a triagem |
 | Enfermagem do Trabalho | 885 tópicos históricos | normativa MTE/NR, saúde ocupacional, prevenção/saúde coletiva, conceitos reusáveis com contexto | fontes por tópico, direitos e atomização adicionais |
 | Cardiologia | 10 UCs/300h; 51 módulos/295 tópicos; 8 eixos UC08 | ECG, SBV, SCM, perioperatório, transplante, recursos por UC | colisões UC08/07/09, ECG review, SBV sem texto, SCM falso positivo |
-| Centro Cirúrgico | ementas específicas ainda não recuperadas | currículo fonte, taxonomia, práticas, segurança perioperatória e conteúdo projetável | `HOLD_SOURCE` para grade institucional |
-| CME | ementas específicas ainda não recuperadas | currículo fonte, processamento/segurança/qualidade com normativos pertinentes | `HOLD_SOURCE` para grade institucional |
+| Centro Cirúrgico | ementas específicas ainda não recuperadas | trilha de carreira com ementa-fonte, taxonomia, práticas, segurança perioperatória e conteúdo projetável | `HOLD_SOURCE` para grade institucional |
+| CME | ementas específicas ainda não recuperadas | trilha de carreira com ementa-fonte, processamento/segurança/qualidade com normativos pertinentes | `HOLD_SOURCE` para grade institucional |
 | Outras especialidades CE | escopo de hubs e ferramentas existente | matriz expansão por prioridade e cobertura | não presumir ementas nem mesclar apps distintos |
 
-A priorização curricular é guiada por **documentação recebida e tema**, não pela presença de palavras parecidas em uma diretriz. Cada content master pode ter N relações a especialidades e N projeções, com rastreio de contexto.
+A priorização da Trilha de carreira é guiada por **documentação recebida e tema**, não pela presença de palavras parecidas em uma diretriz. Cada content master pode ter N relações a especialidades e N projeções, com rastreio de contexto.
+
+
+## 5.1 Convenção funcional: **Trilha de carreira**
+
+A interface de gestão, os cards do PMO, as frentes e as entregas antes rotuladas genericamente "Currículos" passam a usar **Trilha de carreira**. A mudança é **de nomenclatura e enquadramento funcional**, não uma reescrita das ementas. A fonte institucional continua descrita com sua terminologia original (`CURRICULUM/UC/MODULE`, "ementa", "carga horária" e "unidade curricular") nos dados de proveniência, schemas e identificadores legados. Não renomear FKs ou tabelas por substituição textual.
+
+Objetos propostos: `CareerPath` (trilha), `CareerStage` (etapa de desenvolvimento), `Competency` (competência com origem), `LearningUnitRef` (UC/ementa fonte), `LearningObjective`, `CredentialRequirement` (quando comprovado), `Assessment`, `ContentMaster` e relacionamentos versionados. Estágios, progressão, competências, títulos profissionais, habilitações, certificações e pré-requisitos **não podem ser inferidos de ementas**; ficam como campos `PENDING_SOURCE`.
+
+Para Cardiologia, a trilha candidata referencia 10 UCs/300h, 51 módulos e 295 tópicos detalhados e 8 eixos UC08 sem módulo próprio. Para Urgência/Trabalho/Centro Cirúrgico/CME, não inferir duração, formação exigida nem atribuições profissionais sem fonte oficial. Governar direitos e aplicabilidade clínica de forma independente.
+
+**Contrato de compatibilidade**: `CareerPath → LearningUnitRef → CURRICULUM/UC/MODULE` por alias de apresentação, sem alterar os IDs `CARDIOLOGIA-UC-xx`, nem os tipos de `contracts/cko-schemas`. O modelo proposto está em `TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md`.
 
 ## 6. Motor de atualização automática e bloqueio de inconsistências
 
@@ -126,7 +137,7 @@ A priorização curricular é guiada por **documentação recebida e tema**, nã
 | Evidência científica | span/página/hash, claim e applicability, proveniência temporal | relação lexical sem conteúdo pertinente |
 | Segurança clínica | revisão independente e conflitos resolvidos por item | qualquer claim crítica sem aprovação |
 | Estrutura DB e metamodelo | schema drift, PK/FK, constraints, RLS, dry-run/rollback | migration não testada ou sem aprovação |
-| Currículo | ementa rastreável e reconciliada por instituição/versão | UC08/UC07/UC09 sem decisão |
+| Trilha de carreira | ementa rastreável e reconciliada por instituição/versão | UC08/UC07/UC09 sem decisão |
 | Publicação | conteúdo derivado de claims liberados; UX/a11y/SEO, referências | divergência de renderização, direitos, acessibilidade ou CI |
 | Handoff | logs, exceptions, dashboard PMO, controles e backups restauráveis | pendência omitida ou falsa conclusão |
 
@@ -145,7 +156,7 @@ A priorização curricular é guiada por **documentação recebida e tema**, nã
 - [ ] 100% das fontes e versões utilizadas em publicações com direitos por operação comprovados.
 - [ ] 100% dos claims publicados com evidência e revisão independente registrada.
 - [ ] Metamodelos/dicionários com versão, histórico, testes de compatibilidade e bloqueio de inconsistências.
-- [ ] Currículo e especialidade com IDs, cobertura e conflitos explicitados; nenhuma UC inventada.
+- [ ] Trilha de carreira e especialidade com IDs, cobertura e conflitos explicitados; nenhuma UC inventada.
 - [ ] Content masters, reuso e projeções multiformato com paridade e referências.
 - [ ] Política, Kernel, CI, RLS, segurança, a11y, SEO e rollback testados no ambiente aprovado.
 - [ ] PRs integrados seletivamente, publication register auditável e monitoramento ativo.

@@ -47,3 +47,7 @@ O PMO Google Sheets recebeu 53 registros de lote M05/registry catalog, preservan
 
 
 **Emenda M05-ID (14/11/2026):** PMO contém agora 59 atividades; 55 linhas adicionadas nas abas do PMO Mestre e catalogação de registries. Supabase investigado apenas por SELECT: 0/29 IDs M05 com correspondência textual exata, hipótese de namespaces diferentes; ver `REGISTRY_LOCATION_AND_WRITE_RECEIPT.md`, B59 e o conflito `CONFLICT-M05-SUPABASE-ID-CROSSWALK`. Sem importação, merge ou publicação.
+
+
+## Atualização de nomenclatura — Trilha de carreira (14/11/2026)
+A frente de produto é **Trilha de carreira**; UCs, ementas, carga horária e os identificadores `CURRICULUM/UC/MODULE` permanecem como documentação-fonte e contratos existentes. B20 recebeu atualização de evidência retificada (51 módulos, 295 tópicos detalhados, UC08 oito eixos não desdobrados), preservando D012/D013 e o histórico de extração anterior. Ver `TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md`.

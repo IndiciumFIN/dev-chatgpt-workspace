@@ -1,3 +1,7 @@
+## Source-of-truth correction (normative and editorial)
+
+The SQL catalog below is **not** the canonical semantic source. Its inventory and 397-column delta are only technical projections/implementation findings. Mandatory upstream provenance and atomized normative/editorial knowledge are governed in `docs/governance/ncos-source-first-canonical.md`; an SQL definition must not be invented or approved from a column name alone.
+
 # NCOS — metamodelo e dicionário relacional derivado
 
 Escopo: PR #52, runtime NCOS integrado. A fonte física é o PostgreSQL real obtido por replay das migrations principais em banco efêmero; não uma regex de DDL. Biblioteca existente: @electric-sql/pglite, com introspecção via pg_catalog.

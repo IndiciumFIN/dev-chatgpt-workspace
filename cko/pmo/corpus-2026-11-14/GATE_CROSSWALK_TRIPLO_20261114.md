@@ -29,7 +29,7 @@ Os três usam os mesmos rótulos `G0, G1, ...` para objetos diferentes. **Qualqu
 | PP12 — Publicação/merge | G8, G9 | G9, G11, G12 | G9 | release manifest, aprovações e rollback |
 | PP13 — Handoff/atualização | G9 | G12 | G10 | monitoração normativa, DR, logs |
 
-`*` Requisitos de infraestrutura distintos: a orientação antiga exige um **ambiente Supabase novo e isolado**, enquanto o código atual e a revisão Git usam os objetos de `Calculadoras-Smart` em modo de análise. **Não há autorização declarada para provisionar ou migrar infraestrutura.** Abrir ADR de escolha entre isolado, integração segura ou ambos como ambientes distintos. Não tornar um gate específico `PASS` em outra matriz por associação de fase.
+`*` Requisitos de infraestrutura distintos: a orientação antiga exige um **ambiente Supabase novo e isolado**, enquanto o código atual e a revisão Git usam os objetos de `Calculadoras-Smart` em modo de análise. **Foi localizado o piloto `SOT-10-09-2026` do PMO-011: ativo, dez tabelas de corpus vazias na listagem e funções implantadas, mas dentro da mesma organização de `Calculadoras-Smart`.** Isso não satisfaz automaticamente o requisito histórico de nova organização isolada. Não há autorização declarada para provisionar nem migrar infraestrutura. Abrir ADR de escolha entre isolado, integração segura ou ambos como ambientes distintos. Não tornar um gate específico `PASS` em outra matriz por associação de fase.
 
 ## Regra de progressão
 1. Anexar ID completo do gate, objeto, revisão de versão, evidência, responsável, tipo de aprovação e riscos.

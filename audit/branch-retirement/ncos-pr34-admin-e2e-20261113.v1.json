@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "NCOS_BRANCH_DELETION_CANDIDATE",
+  "project": "Calculadoras de Enfermagem / NCOS",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "target_branch": "fix/ce-admin-e2e-hierarchy-20261101",
+  "target_head_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+  "base_branch": "main",
+  "base_head_sha_at_analysis": "152f8b1eac55f78d68375c79fceedc5805398663",
+  "source_pull_request": 34,
+  "merged_at": "2026-11-01T14:16:12Z",
+  "merge_commit_sha": "575026f79769fbcf21072018aae47ef9b4a0a548",
+  "classification": "DELETE_CANDIDATE",
+  "actual_deletion_performed": false,
+  "operation": "METADATA_ONLY_MAIN",
+  "observed_on": "2026-11-13",
+  "evidence": {
+    "pull_request_state": "closed",
+    "pull_request_merged": true,
+    "main_contains_target_commit": true,
+    "compare_main_to_target": {
+      "ahead_by": 0,
+      "behind_by": 30,
+      "status": "behind",
+      "exclusive_commits": 0
+    },
+    "repository_pull_requests_checked": 30,
+    "open_pull_requests_using_branch": 0,
+    "github_code_search_references": 0,
+    "github_code_search_caveat": "Search indexing may omit references; not an exhaustive historical or external reference scan.",
+    "branch_head_sha_pinned": true
+  },
+  "recovery": {
+    "branch_head_commit": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+    "merged_pull_request": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/34",
+    "merge_commit": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/575026f79769fbcf21072018aae47ef9b4a0a548"
+  },
+  "pending_before_delete": [
+    "Verify references in branch protection/rulesets, third-party jobs and external deployments outside indexed code search.",
+    "Confirm archive/retention and preservation of reproducible recovery refs.",
+    "Approve actual remote branch deletion as distinct step; this record is only a candidacy.",
+    "Recheck HEAD and main ancestry immediately before any deletion."
+  ],
+  "notes": [
+    "No working code copied from this branch: branch commits are already contained in main.",
+    "This classification does not mean the entire NCOS project is release-ready.",
+    "No changes to WU-TRIB, Supabase, clinical content, history, or production."
+  ]
+}

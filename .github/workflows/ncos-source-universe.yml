@@ -39,6 +39,10 @@ jobs:
         run: node --test scripts/ncos-rights-master-gate.test.mjs
       - name: Rebuild source rights and unresolved CKO master projection report
         run: node scripts/ncos-rights-master-gate.mjs --inventory
+      - name: Test separate data-corpus and literal PDF evidence boundaries
+        run: node --test scripts/ncos-dual-corpus.test.mjs
+      - name: Reconcile reported topic atoms without claiming source PDF atomization
+        run: node scripts/ncos-dual-corpus.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

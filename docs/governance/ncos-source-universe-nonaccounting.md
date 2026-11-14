@@ -77,3 +77,12 @@ Two metadata-only delta manifests were derived without content or SQL writes:
 Run \`node scripts/ncos-rights-master-gate.mjs --inventory\` after \`node --test scripts/ncos-rights-master-gate.test.mjs\` to create \`audit-evidence/ncos-multisource-universe/rights-master-projection-gate.v1.json\`. Structural validity only; release always needs independent review. The rights manifest is an **assessment overlay**, not a second canonical license registry.
 
 A historic ZIP scan found \`CORPUS_MANIFESTOS_SHA256_v0_3.zip\`, \`NORMATIVE_DOCUMENT_RECONCILIATION_v0_3.zip\` and \`CANONICAL_RECONCILIATION_v0_2.zip\` in the user's Drive; none of these three archives contained the 17 named original atomized JSONLs or their stored hash references. This is not a claim that no other backup exists. Work order #59 remains HOLD_SOURCE_MISSING; work order #60 remains HOLD_PROVISION_REVALIDATION.
+
+
+## Historical separate atomized DATA corpus (Drive README v1.1.0)
+
+The connected Drive document \`README_ATOMIZADO_v1.1.0.md\` (id \`14Ic3GbF5Ecy0MYZoGddf8ClntH8seK3F\`) **reports** 547,908 atoms in 15 themes: phase 1 eight themes / 498,178 records and phase 2 seven themes / 49,730 records. It describes generator atomizar.py v1.1.0 and validator verificar.py v1.1.0. The actual source JSONL and per-theme MANIFESTO.json files were not verified in this audit. The exact per-theme documentary counts are in \`registers/governance/ncos-atomized-data-library-v1_1_0-candidate.json\`.
+
+This is NOT the 17 original PDF text extraction corpus (25,508 reported text atoms). Protocol PDF records in this historical DATA corpus are only **index records** with no full PDF text extraction, and Sepsis-3/NEWS2/BP classification fields include explicitly marked manual transcriptions. The README documents one exact item-level crosswalk candidate, COFEN 736/2024, with an original PDF SHA256 prefix. The PDF hash was independently verified; the individual atom record was not. No atom or identifier has been merged.
+
+\`node scripts/ncos-dual-corpus.mjs --inventory\` generates a separate read-only gate report; \`node --test scripts/ncos-dual-corpus.test.mjs\` tests deliberate corpus-count mixing, unverified atom ID admission and mislabeled manual transcription. Copyright/clinical/rights obligations remain independent.

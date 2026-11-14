@@ -448,10 +448,19 @@ export function injectGrokPwaHead(html, ctx = {}) {
   let next = stripShareMetaTags(html);
   if (!readGrokExtensionsEnabled()) next = stripGrokExtensionsScript(next);
 
+  // The application owns any explicitly declared <link rel> identity.
+  // Platform URLs are fallbacks only: matching their HREF must never trump
+  // an existing app manifest or icon with a different URL.
+  const declaredLinkRelations = [...next.matchAll(/<link\\b[^>]*>/gi)]
+    .flatMap(([tag]) => {
+      const rel = tag.match(/\\brel\\s*=\\s*["']([^"']+)["']/i)?.[1] ?? "";
+      return rel.toLowerCase().split(/\\s+/).filter(Boolean);
+    });
   const missing = grokPwaHeadTags(appName)
     .filter(([key]) => {
-      if (key === "manifest") return !next.includes('href="/__grok/manifest.webmanifest"');
-      if (key === "apple-touch-icon") return !next.includes('href="/__grok/icon-180.png"');
+      if (key === "manifest" || key === "apple-touch-icon") {
+        return !declaredLinkRelations.includes(key);
+      }
       return !next.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);

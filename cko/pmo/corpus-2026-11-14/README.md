@@ -26,3 +26,7 @@ A consulta read-only ao Supabase identificou ausência de correspondências exat
 
 ## Trilha de carreira — atualização do nome e execução
 A frente antes denominada Currículos agora se chama **Trilha de carreira**. Objetos de UC, módulo, ementa e carga horária são preservados como dados-fonte; ver `TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md`. A primeira trilha candidata de Cardiologia está no PR #66 e passou no [Actions run #43568372281](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43568372281). A ADR de ambiente `ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md` e a fila `b59/B59_ALIAS_ADMISSION_QUEUE.csv` seguem em HOLD.
+
+
+## Checkpoint M06 — expansão de Trilha de carreira e P0 direitos IA
+`CHECKPOINT_TRILHA_B59_SOT_20261114.md` contém relatório e links para os dois workflows independentes PASS (candidate-only). O PMO mestre recebeu 6 linhas novas e as próximas ações; a área de Trabalho e Urgência ganhou 39 grupos-fonte sem progressão profissional inventada. Proteção TDM externo ainda não implementada.

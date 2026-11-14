@@ -17,8 +17,8 @@ A lógica de expiração é `OG_PENDING_MAX_AGE_MS` em
 `scripts/brand-check.mjs`. Não ocultar falhas de marca por marcadores
 vencidos e não promover placeholder de jogo como identidade final.
 
-Nunca `wait_tasks` nem `get_task_output` para consumir o resultado de
-um agente paralelo; conservar a notificação de conclusão para o sistema.
+Não aguardar nem consumir a saída de um agente paralelo; conservar sua
+notificação de conclusão para o sistema.
 Never wait_tasks, never get_task_output.
 Sem prova de asset/versionamento/testes, classificar `NOT_VERIFIED`.
 

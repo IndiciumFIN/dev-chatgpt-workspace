@@ -59,3 +59,7 @@ A nomenclatura funcional mudou para **Trilha de carreira** (D012) com preservaç
 
 ## M06 — Trilha de carreira, snapshots e direitos de IA externa
 Veja `CHECKPOINT_TRILHA_B59_SOT_20261114.md`, auditoria SOT estática, B59 comparações SHA, novo FIND PR #68 e gate documental CI. B18/B24 avançam somente em metadados; direitos e homologações não avançam automaticamente.
+
+
+## M07 — Hardening de preflight TDM sem mutação de produção
+Testes PostgreSQL 16 descartáveis passaram em Actions #43572600708, FKs compostas e grant único; mock mostrou lacuna de reenvio persistente. Registrados R19, D018 e pacote candidato PXC-017. Nenhuma alteração no SOT ou adoção de DDL. Ver M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md.

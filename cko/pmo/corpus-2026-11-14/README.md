@@ -34,3 +34,7 @@ A frente antes denominada Currículos agora se chama **Trilha de carreira**. Obj
 
 ## M06 — direitos para envio externo a IA (somente candidato)
 O PR #68 contém validador puro, 27 casos negativos, versão candidata `deepseek-atomize.v6.candidate.ts` e SQL em `SCHEMA_PROPOSAL_DO_NOT_APPLY.sql` — **sem implantação**. Actions [#43571430279](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43571430279) PASS. O PMO mestre recebeu HOLD/CHANGE_IMPACT, e `b59/B59_SOURCE_RIGHTS_TDM_BOUNDARY.md` esclarece por que `ALLOWED_FOR_OFFICIAL_TEXT` não equivale a autorização para DeepSeek.
+
+
+## M07 — Restrições em PostgreSQL descartável
+[Checkpoint M07](./M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md): CI #43572600708 PASS para Node + Postgres 16 sintético; replay/idempotência ainda bloqueia release. R19, D018, FIND e PXC-017 propostos e documentados; 59 atividades atuais preservadas.

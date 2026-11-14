@@ -179,3 +179,7 @@ Para Cardiologia, a trilha candidata referencia 10 UCs/300h, 51 módulos e 295 t
 **PMO Mestre:** `PMO-013` renomeado para "CKO CE — Trilha de carreira e conhecimento canônico (PP00–PP13)" e vinculado à decisão ADR; `CHANGE_IMPACT` recebeu dois eventos novos (nomenclatura e arquitetura), `CONFLICT_REGISTER` um e `HOLD_HUMAN` um; todos com leitura de retorno verificada.
 
 A estrutura de 59 tarefas e 16 propostas PXC continua preservada; aprovação de novas fases, migrações, rights e publicação permanece sujeita à cadeia `FIND → política → validador → TASK → WO → Kernel → QA → promoção`.
+
+
+### PP07/PP10/PP11 — Extensão candidata de idempotência (M07)
+Após CI PASS do PostgreSQL 16 descartável em #43572600708, persistem os problemas de reenvio e revogação transacional do outbound ao provedor externo. Novo pacote candidato **PXC-017**, não admitido, exige claim único persistido por documento/fragmento/provider/revisão, teste com sessões PostgreSQL simultâneas, política de retry, lease, eventos, proteção de dados e rollback. **Nenhum direito, migração ou implantação foi aprovado.**

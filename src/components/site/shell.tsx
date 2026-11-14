@@ -4,15 +4,16 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccountSlot, MobileNav, SiteNav } from "@/components/site/site-nav";
 import { useChrome, type FocusColor, type OptionalConsent } from "@/lib/chrome";
 import { brandLogo } from "@/lib/contracts";
+import { focusColorName } from "@/lib/focus-color-i18n";
 import { selectableLocales } from "@/lib/header-i18n";
 import { navLabel } from "@/lib/translate";
 import { storedFooter, useStored } from "@/lib/stored";
 
-const focusColors: { id: FocusColor; hex: string; label: string }[] = [
-  { id: "yellow", hex: "#ff0", label: "Foco amarelo" },
-  { id: "lime", hex: "#b6ff00", label: "Foco verde" },
-  { id: "cyan", hex: "#22d3ee", label: "Foco ciano" },
-  { id: "magenta", hex: "#f0abfc", label: "Foco magenta" },
+const focusColors: { id: FocusColor; hex: string }[] = [
+  { id: "yellow", hex: "#ff0" },
+  { id: "lime", hex: "#b6ff00" },
+  { id: "cyan", hex: "#22d3ee" },
+  { id: "magenta", hex: "#f0abfc" },
 ];
 
 export function Shell({ children, editions = [], currentPath }: { children: ReactNode; editions?: { code: string; label: string; path: string }[]; currentPath?: string }) {
@@ -88,6 +89,12 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const panel = document.querySelector<HTMLElement>(".off-canvas");
+    // Direct menu openings focus the dialog's close control. Keyboard
+    // shortcuts retain their separately selected menu/search destinations.
+    const hasPendingDestination = pendingNav.current !== null;
+    const initialFocus = requestAnimationFrame(() => {
+      if (!hasPendingDestination) panel?.querySelector<HTMLElement>("header button")?.focus();
+    });
     const selector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
     function trap(event: KeyboardEvent) {
       if (event.key !== "Tab" || !panel) return;
@@ -109,6 +116,7 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
     }
     panel?.addEventListener("keydown", trap);
     return () => {
+      cancelAnimationFrame(initialFocus);
       document.body.style.overflow = previous;
       panel?.removeEventListener("keydown", trap);
     };
@@ -281,7 +289,8 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
               type="button"
               className="focus-dot"
               data-on={chrome.focus === color.id}
-              aria-label={color.label}
+              aria-pressed={chrome.focus === color.id}
+              aria-label={focusColorName(chrome.locale, color.id)}
               style={{ background: color.hex }}
               onClick={() => chrome.setFocus(color.id)}
             />
@@ -410,8 +419,8 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
 
       {menu ? (
         <>
-          <button className="menu-overlay" aria-label={chrome.t("close")} onClick={() => { setMenu(false); menuBtn.current?.focus(); }} />
-          <nav className="off-canvas" aria-label="Menu" tabIndex={-1}>
+          <button className="menu-overlay" tabIndex={-1} aria-hidden="true" aria-label={chrome.t("close")} onClick={() => { setMenu(false); menuBtn.current?.focus(); }} />
+          <nav className="off-canvas" role="dialog" aria-modal="true" aria-label={chrome.t("menu")} tabIndex={-1}>
             <header>
               <span>{chrome.t("menu")}</span>
               <button
@@ -425,7 +434,7 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
                 <X size={22} />
               </button>
             </header>
-            <MobileNav menuLabel={chrome.t("menu")} onNavigate={() => setMenu(false)} />
+            <MobileNav menuLabel={chrome.t("menu")} onNavigate={() => { setMenu(false); menuBtn.current?.focus(); }} />
           </nav>
         </>
       ) : null}

@@ -1,0 +1,30 @@
+name: CKO M05 findings structural gate (candidate-only)
+on:
+  push:
+    branches:
+      - 'cko/evidence-index-rights-20261114'
+    paths:
+      - 'cko/evidence-index/2026-11-14/**'
+      - '.github/workflows/cko-m05-findings-static.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cko-findings-candidate-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CKO_CLINICAL_PROMOTION: 'false'
+      CKO_DB_WRITE: 'false'
+      CKO_PUBLICATION: 'false'
+    steps:
+      - name: Checkout (read-only)
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate M05 findings, source metadata and rights blocks
+        run: node cko/evidence-index/2026-11-14/m05/validate-m05-findings.mjs

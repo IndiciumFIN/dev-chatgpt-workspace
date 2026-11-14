@@ -2,7 +2,7 @@
   "as_of": "2026-11-14",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos. | R81: FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 registrado como draft de segurança com hashes do ZIP original, sem prova de execução SQL ou homologação. | M05 (14/11): três FINDs ECG/SBV/SCM e direitos de fonte registrados como CANDIDATE, read-only, sem WO admitida; crosswalk no PMO Mestre (SOURCE_REGISTER, CONFLICT_REGISTER, HOLD_HUMAN) e PR #68; main não alterada. | SOT atomization rights preflight (2026-11-14): new candidate FIND, no admission/deploy, static review only.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos. | R81: FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 registrado como draft de segurança com hashes do ZIP original, sem prova de execução SQL ou homologação. | M05 (14/11): três FINDs ECG/SBV/SCM e direitos de fonte registrados como CANDIDATE, read-only, sem WO admitida; crosswalk no PMO Mestre (SOURCE_REGISTER, CONFLICT_REGISTER, HOLD_HUMAN) e PR #68; main não alterada. | SOT atomization rights preflight (2026-11-14): new candidate FIND, no admission/deploy, static review only. | M07: replay/race condition candidate FIND, mock and disposable PG tests; no live SOT write.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -471,6 +471,42 @@
       "mutation_allowed": false,
       "origin_pr": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/68",
       "register_sync": "PENDING_PMO_SHEETS_SOT_RISKS"
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-CKO-SOT-TDM-REPLAY-RACE-20261114",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-11-14",
+      "provenance_refs": [
+        "SOT-10-09-2026",
+        "PR68:rights-reservation-contract.test.mjs",
+        "CI:43572351313",
+        "CI:43572600708"
+      ],
+      "finding_type": "INTEGRATION_GAP",
+      "severity": "HIGH",
+      "fact": "A synthetic mock demonstrates a duplicate external dispatch on sequential retries with the current candidate reservation adapter; an atomic database-backed idempotency key and revocation ordering are not implemented in the live SOT. GitHub Actions verified composite FKs and single-active-grant uniqueness on a disposable PostgreSQL 16, not actual exactly-once outbound behavior.",
+      "evidence_refs": [
+        "PMO-PR68:CONCURRENCY_AND_SCHEMA_BLOCKERS.md",
+        "PMO-PR68:sql-test/README.md",
+        "PMO-PR67:CONFLICT-CKO-SOT-TDM-REPLAY-20261114"
+      ],
+      "root_cause_status": "EVIDENCED",
+      "remediation_task_refs": [
+        "B28",
+        "B49",
+        "PXC-009"
+      ],
+      "blocking_policy_refs": [
+        "POL-CKO-EXTERNAL-AI-RIGHTS-20261114"
+      ],
+      "policy_ref": "CKO-POL-UT-001@1.2.0",
+      "validator_ref": "PENDING_DB_TRANSACTIONAL_TEST",
+      "work_order": "NOT_ADMITTED",
+      "mutation_allowed": false,
+      "origin_pr": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/68",
+      "register_sync": "SHEETS_CONFLICT_AND_HOLD_REGISTERED_20261114"
     }
   ],
   "candidate_batches": [

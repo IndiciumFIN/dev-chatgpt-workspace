@@ -1,0 +1,16 @@
+{
+  "finding_id": "FIND-CKO-SOT-TDM-REPLAY-RACE-20261114",
+  "scope": "SOT external-AI TDM",
+  "discovered": "2026-11-14",
+  "status": "CANDIDATE",
+  "risk": "EXACTLY_ONCE_GAP_FOR_EXTERNAL_SEND",
+  "evidence": {
+    "mock_concurrency_ci": 43572351313,
+    "synthetic_pg_ci": 43572600708,
+    "single_active_grant_unique": "PASS_SYNTHETIC",
+    "durable_idempotency": "NOT_IMPLEMENTED",
+    "live_sot_guard": "NOT_DEPLOYED"
+  },
+  "must_not_claim": "synthetic PostgreSQL constraint PASS does not establish transactional exactly-once outbound",
+  "admission": false
+}

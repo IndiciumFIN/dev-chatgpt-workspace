@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { Breadcrumb } from "@/components/site/breadcrumb";
 import { PageHero } from "@/components/site/page-hero";
 import { adminContract, type AdminRegion } from "@/lib/admin-contract";
@@ -98,12 +98,14 @@ export function AdminShell({
   const current = selection === "overview" ? null : adminModule(selection);
   const group = current ? adminGroup(current.group) : null;
   const menu = useRef<HTMLDialogElement>(null);
+  const hydratedRoot = useRef<HTMLDivElement>(null);
+  useEffect(() => { hydratedRoot.current?.setAttribute("data-admin-hydrated", "true"); }, []);
   function choose(id: AdminPick) {
     onSelect(id);
     menu.current?.close();
   }
   return (
-    <div className="admin-shell">
+    <div className="admin-shell" ref={hydratedRoot}>
       <button className="admin-launch" type="button" onClick={() => menu.current?.showModal()}>
         {current ? current.title : "Visão geral"}
       </button>

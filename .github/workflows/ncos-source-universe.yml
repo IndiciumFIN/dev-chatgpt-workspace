@@ -63,6 +63,10 @@ jobs:
         run: node --test scripts/ncos-source-page-reuse.test.mjs
       - name: Audit original PDF subdocument overlap without double counting clinical claims
         run: node scripts/ncos-source-page-reuse.mjs --inventory
+      - name: Reject issuer collisions and unauthorized COFFITO-to-COFEN atom links
+        run: node --test scripts/ncos-dou-act-source-boundary.test.mjs
+      - name: Check original signed DOU atom issuer zone hashes, source identities and rights HOLD
+        run: node scripts/ncos-dou-act-source-boundary.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

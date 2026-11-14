@@ -19,7 +19,7 @@ export function ContractView({ row }: { row: CatalogRow }) {
         <h2>Contrato</h2>
         <ul className="guide-cards">
           <li><b>Kind</b><span>{row.kind}</span></li>
-          <li><b>Frame</b><span>{contract.frame}</span></li>
+          <li><b>Frame</b><span>{row.frame}</span></li>
           <li><b>Hero</b><span>{contract.hero}</span></li>
           <li><b>Índice</b><span>{contract.toc}</span></li>
           <li><b>Nota</b><span>{row.note}</span></li>

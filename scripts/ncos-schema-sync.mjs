@@ -72,7 +72,13 @@ try {
     layer:entityMeta.get(t.table_name)?.layer_id||"HOLD_LAYER_REVIEW",
     purpose:entityMeta.get(t.table_name)?.purpose||null,
     rlsEnabled:t.rls_enabled,columns:columns.filter(c=>c.table_name===t.table_name).map(c=>({
-      ...c,definition:colMeta.get(t.table_name+"."+c.column_name)?.definition||null,
+      ...c,
+      primaryKeyPart:(pkMap.get(t.table_name)||[]).includes(c.column_name),
+      referencedByForeignKeys:fks.filter(f=>f.table_name===t.table_name&&f.from_columns.includes(c.column_name)).map(f=>({
+        constraint:f.name,parentTable:f.target_table,parentColumns:f.to_columns,childColumns:f.from_columns
+      })),
+      legacyRefEntity:colMeta.get(t.table_name+"."+c.column_name)?.ref_entity||null,
+      definition:colMeta.get(t.table_name+"."+c.column_name)?.definition||null,
       metadataStatus:colMeta.has(t.table_name+"."+c.column_name)?"LEGACY_DOCUMENTED":"HOLD_MISSING_DEFINITION"
     }))
   }));
@@ -115,6 +121,15 @@ try {
   const candidate={...base,kind:"GENERATED_DICTIONARY_CANDIDATE",entities:generated,
     missingDescriptionsAreNotInvented:true};
   const catalog={...base,kind:"PHYSICAL_CATALOG",tables,columns,constraints,policies};
+  const delta={...base,kind:"AUTO_GENERATED_DICTIONARY_DELTA_CANDIDATE",
+    missingEntities:generated.filter(t=>t.layer==="HOLD_LAYER_REVIEW").map(t=>({name:t.name,purpose:null,review:"HOLD_HUMAN"})),
+    missingColumns:generated.flatMap(t=>t.columns.filter(c=>c.metadataStatus==="HOLD_MISSING_DEFINITION").map(c=>({
+      entity:t.name,name:c.column_name,physicalType:c.data_type,required:c.required,
+      keyPart:c.primaryKeyPart,physicalForeignKeys:c.referencedByForeignKeys,
+      definition:null,review:"HOLD_DEFINITION_AND_OWNER"
+    }))),
+    mode:"PROPOSAL_ONLY_NO_REMOTE_WRITES",
+    caveat:"Missing semantic descriptions are not inferred and no production schema_column upserts are executed."};
   const mermaid=["erDiagram",...relations.map(f=>
     "  "+f.parent.replace(/[^A-Za-z0-9_]/g,"_")+
     " ||--o{ "+f.child.replace(/[^A-Za-z0-9_]/g,"_")+
@@ -123,7 +138,8 @@ try {
   await mkdir(out,{recursive:true});
   for(const [name,content] of [
     ["catalog.v1.json",catalog],["dictionary-candidate.v1.json",candidate],
-    ["relationships.v1.json",graph],["gate.v1.json",result]
+    ["relationships.v1.json",graph],["gate.v1.json",result],
+    ["dictionary-delta.v1.json",delta]
   ])await writeFile(new URL(name,out),JSON.stringify(content,null,2)+"\n");
   await writeFile(new URL("relationships.v1.mmd",out),mermaid);
   console.log("NCOS_RELATIONAL_SUMMARY "+JSON.stringify(summary));

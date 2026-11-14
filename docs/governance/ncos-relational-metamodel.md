@@ -15,3 +15,5 @@ Bloqueios fail-closed: fonte com tabela sem PK; FK inválida; tabela, coluna ou 
 A atualização automática significa REGERAR as versões candidatas a cada CI e bloquear drift, não executar DDL ou preencher descrições imaginadas. Aplicação de migrations reais, sincronização do dicionário persistente, promoção à main e publicação seguem HOLD_HUMAN com revisão de segurança, Kernel e evidências de rollback. Não toca WU-TRIB nem gates do backup histórico.
 
 Relationships declared in schema_column are classified by exact FK column mappings: DIRECT_FK, TRANSITIVE_FK (equality-preserving composite chains), or UNBACKED_DECLARATION. Only the last is a review hold; no FK is inferred from naming.
+
+Delta automatizado: dictionary-delta.v1.json enumera colunas ausentes, tipo físico, obrigatoriedade, PK e FKs por coluna. Definições sem fonte são null e permanecem HOLD_DEFINITION_AND_OWNER. A geração é repetível e não executa UPSERT/DDL no banco.

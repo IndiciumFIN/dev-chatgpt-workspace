@@ -51,6 +51,10 @@ jobs:
         run: node --test scripts/ncos-cko-snapshot-admission.test.mjs
       - name: Audit original archive versus existing exact CKO snapshots, no duplicates
         run: node scripts/ncos-cko-snapshot-admission.mjs --inventory
+      - name: Test original per-page hash-root reconciliation and no unapproved CKO identity
+        run: node --test scripts/ncos-page-evidence.test.mjs
+      - name: Verify original page and atom hash roots against recovered source manifest
+        run: node scripts/ncos-page-evidence.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

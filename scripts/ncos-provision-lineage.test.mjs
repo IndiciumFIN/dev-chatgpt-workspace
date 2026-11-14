@@ -21,7 +21,7 @@ function fixture(){
    derivedSnapshotOrigins:[],
    amendments:[{relationship_id:"R1",source_id:"LAW-AMEND",target_id:"LAW-BASE-ART-1",
      provenance_ref:"SRC-AMEND",relation_type:"AMENDS_PROVISION",status:"CONTROLLED_VALIDATED"}]
- }}
+ }}}
 }
 test("legitimate cross-source amendment is recognized only with explicit provision relation",()=>{
  const x=fixture(),r=auditRegulatorySourceChain(x);

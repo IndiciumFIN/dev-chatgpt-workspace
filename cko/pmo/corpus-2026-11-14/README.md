@@ -42,3 +42,7 @@ O PR #68 contém validador puro, 27 casos negativos, versão candidata `deepseek
 
 ## M08 — Conteúdo canônico e atômico: primeiro lote executado
 [M08 checkpoint](./M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md). Agora temos **34 claims/34 knowledge atom candidates, 33 evidence spans, 3 content masters, 8 questões e 10 flashcards**, derivados de fontes oficiais comprovadas. [Arquivo completo Drive](https://drive.google.com/file/d/1cuXkb1bCg4lwtFtHL9B9aiANY1ioIhEk/view?usp=drivesdk), índices de 28.001 átomos e 9.102 vínculos. **76 registros de dados gravados e conferidos no PMO_MASTER original**; M08 CI [#43575253083](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43575253083) PASS estrutural. Aprovações clínicas e direitos = ZERO.
+
+
+## Sincronização integral M08/M09 para Git privado
+[Recibo de integração](./GIT_CONTENT_SYNC_20261114.md). O conteúdo completo (34 arquivos internos nos dois ZIPs, incluindo índices de 28.001 átomos/9.102 links) e o snapshot dos **104 registros M08/M09** foram gravados na [PR CE privada #39](https://github.com/IndiciumFIN/calculadorasdeenfermagem/pull/39). CI [#43579697365](https://github.com/IndiciumFIN/calculadorasdeenfermagem/actions/runs/43579697365) PASS. `main` e Supabase não modificados; revisão clínica/direitos ainda HOLD.

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "documentType": "NCOS_INTEGRATION_SCOPE_CONFLICT",
+  "project": "Calculadoras de Enfermagem / NCOS",
+  "branch": "fix/ncos-generated-contract-sync-20261113",
+  "sourceEvidence": [
+    {
+      "path": "AGENTS.project.md",
+      "blobSha": "30792e76468950f9aba29a21a525828e537908b3",
+      "fact": "Scope claims CE_PUBLIC_BACKUP_ONLY, independent backup worktree, localStorage only and no remote repository synchronization"
+    },
+    {
+      "path": "scripts/audit-execution-gates.mjs",
+      "blobSha": "652f48bbf4dc48b79eba4a1146bf72e0eec75344",
+      "fact": "Release report explicitly uses scope CE_PUBLIC_BACKUP_ONLY and remoteIntegration PROHIBITED"
+    },
+    {
+      "path": "scripts/check-isolation.mjs",
+      "blobSha": "9bc34816a1fc446c9069a4bb93fc285bba8e5452",
+      "fact": "Requires unconditional DB_ENABLED false, remote getSql denial and PGlite denial"
+    },
+    {
+      "path": "src/lib/db.ts",
+      "blobSha": "d0a89f7ab08220fada355c6fb5eca2f786eceacc",
+      "fact": "Integrated runtime selects Neon with DATABASE_URL and PGlite fallback otherwise; migration runtime exists"
+    }
+  ],
+  "verifiedConflict": "Legacy public-backup isolation checks and current integrated NCOS DB runtime intentionally model different execution scopes. A PASS of one cannot substitute for the other.",
+  "prohibition": "Do not remove or weaken CE_PUBLIC_BACKUP_ONLY tests, or disable integrated DB merely to satisfy historical backup invariants.",
+  "nextExecutionModel": {
+    "backup": "Retain immutable CE_PUBLIC_BACKUP_ONLY evidence and its local-only isolation checks in the historical backup scope.",
+    "integration": "Create and validate a separately scoped NCOS_INTEGRATED_CANDIDATE contract, requiring per-environment DB access, runtime role enforcement and migration/RLS/rollback evidence.",
+    "production": "HOLD until actual secret rotation, auth broker E2E, database RLS/RBAC approval, source-route role contract review and clinical evidence where applicable."
+  },
+  "evidenceRefs": {
+    "sourceRouteScan": "actions/runs/43545020827",
+    "sourceRouteArtifactId": 14093059367,
+    "routesFound": 53,
+    "unregistered": 20,
+    "outdatedRequiredImports": 11,
+    "unitJavaScriptPassed": 463,
+    "unitJavaScriptSkipped": 8,
+    "unitJavaScriptFailed": 0,
+    "unitTypeScriptPassed": 62,
+    "unitTypeScriptFailed": 0,
+    "browserAdminNavigation": "actions/runs/43544634869",
+    "buildDiagnostic": "actions/runs/43545020827"
+  },
+  "readiness": {
+    "candidateBuild": "PASS",
+    "sourceInventory": "PASS_SOURCE_ONLY",
+    "historicalBackupIsolation": "FAIL_WHEN_RUN_ON_INTEGRATED_RUNTIME",
+    "integratedDatabaseIsolation": "NOT_YET_VERIFIED",
+    "release": "HOLD_HUMAN"
+  },
+  "destructiveChanges": false,
+  "permissionChanges": false,
+  "backendConnectionsMade": false
+}

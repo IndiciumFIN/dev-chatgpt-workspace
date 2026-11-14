@@ -1,0 +1,87 @@
+{
+  "schema_ref": "contracts/cko-schemas/find.schema.json",
+  "records": [
+    {
+      "schema_version": "0.1.0",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-11-14",
+      "root_cause_status": "EVIDENCED",
+      "blocking_policy_refs": [
+        "contracts/cko-editorial/policy/editorial_projection.rego"
+      ],
+      "canonical_id": "FIND-CKO-M05-SCM-SEMANTIC-20261114",
+      "finding_type": "INTEGRATION_GAP",
+      "severity": "HIGH",
+      "fact": "TOPIC-UE-2-26 mechanical circulatory support was linked to 80 source text atoms from SRC-SBC-HA-2025, which is the 2025 Brazilian Arterial Hypertension Guideline; spot-check of top-ranked fragments and SQL term audit found no direct terms for ECMO/ventricular support among those 80. This lexical association cannot support clinical claims about MCS.",
+      "provenance_refs": [
+        "M03_CANONICAL_CORPUS_READONLY",
+        "TOPIC-UE-2-26",
+        "SRC-SBC-HA-2025"
+      ],
+      "evidence_refs": [
+        "DOC-25e47589bd1e4eb7",
+        "CKO-M05-SCM-REJECT-RULE-001"
+      ],
+      "remediation_task_refs": [
+        "B29",
+        "B32",
+        "B43"
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-11-14",
+      "root_cause_status": "EVIDENCED",
+      "blocking_policy_refs": [
+        "contracts/cko-editorial/policy/editorial_projection.rego"
+      ],
+      "canonical_id": "FIND-CKO-M05-SBV-MISSING-TEXT-20261114",
+      "finding_type": "SOURCE_GAP",
+      "severity": "HIGH",
+      "fact": "TOPIC-UE-2-3 has 26 evidence_topic_candidates rows and 0 matching evidence_atoms text rows; underlying AHA/ALS/ERC metadata cannot be promoted as independently inspected spans in this local corpus.",
+      "provenance_refs": [
+        "M03_CANONICAL_CORPUS_READONLY",
+        "TOPIC-UE-2-3"
+      ],
+      "evidence_refs": [
+        "SRC-AHA-BLS-2025",
+        "SRC-AHA-ALS-2025",
+        "SRC-ERC-2025"
+      ],
+      "remediation_task_refs": [
+        "B26",
+        "B28",
+        "B29"
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-11-14",
+      "root_cause_status": "EVIDENCED",
+      "blocking_policy_refs": [
+        "contracts/cko-editorial/policy/editorial_projection.rego"
+      ],
+      "canonical_id": "FIND-CKO-M05-HA-RIGHTS-20261114",
+      "finding_type": "LICENSE_HOLD",
+      "severity": "HIGH",
+      "fact": "The SRC-SBC-HA-2025 rights profile cites evidence_urls to PMC9563889 and SciELO's 2022 ECG guideline record, not to the 2025 arterial hypertension guideline. CC-BY authorization for this specific HA2025 item is not established by those cited URLs; source-specific rights evidence needs correction.",
+      "provenance_refs": [
+        "M03_CANONICAL_CORPUS_READONLY",
+        "SOURCE_RIGHTS_PROFILE:SRC-SBC-HA-2025"
+      ],
+      "evidence_refs": [
+        "SRC-SBC-HA-2025",
+        "SRC-SBC-ECG-2022"
+      ],
+      "remediation_task_refs": [
+        "B11",
+        "B28"
+      ]
+    }
+  ]
+}

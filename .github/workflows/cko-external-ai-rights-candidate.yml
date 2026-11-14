@@ -1,0 +1,50 @@
+name: CKO external AI rights preflight candidate
+on:
+  push:
+    branches:
+      - 'cko/evidence-index-rights-20261114'
+    paths:
+      - 'cko/evidence-index/2026-11-14/m06/rights-guard/**'
+      - '.github/workflows/cko-external-ai-rights-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fail-closed-candidate-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: cko_synthetic
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: local_synthetic_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d cko_synthetic"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      SOT_DEPLOY: 'false'
+      SUPABASE_DB_WRITE: 'false'
+      CLINICAL_RELEASE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Negative rights policy and integration static tests
+        run: node --test cko/evidence-index/2026-11-14/m06/rights-guard/external-ai-rights-guard.test.mjs cko/evidence-index/2026-11-14/m06/rights-guard/rights-reservation-contract.test.mjs
+      - name: Synthetic PostgreSQL cross-table integrity tests (NO SOT)
+        env:
+          PGHOST: localhost
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: local_synthetic_only
+          PGDATABASE: cko_synthetic
+        run: |
+          psql -v ON_ERROR_STOP=1 -f cko/evidence-index/2026-11-14/m06/rights-guard/sql-test/00_base_synthetic_schema.sql
+          psql -v ON_ERROR_STOP=1 -f cko/evidence-index/2026-11-14/m06/rights-guard/SCHEMA_HARDENED_PROPOSAL_DO_NOT_APPLY.sql
+          psql -v ON_ERROR_STOP=1 -f cko/evidence-index/2026-11-14/m06/rights-guard/sql-test/01_assert_constraints.sql
+

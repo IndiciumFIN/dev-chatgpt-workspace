@@ -38,6 +38,7 @@
     "merged_pull_request": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/30"
   },
   "pending_before_delete": [
+    "HOLD_REFERENCE_DEPENDENCIES: 39 repository references found, including operational scripts that require the branch ref.",
     "Complete external workflow, integration and deployment reference scan.",
     "Confirm retention/backup policy and restore the original ref from pinned SHA if necessary.",
     "Recheck head SHA and main ancestry at actual deletion time.",
@@ -46,6 +47,34 @@
   "limitations": [
     "The PR merger is proven, not NCOS functional readiness, security clearance, or clinical validation.",
     "This record is a classification only; no branch ref deleted and no archive branch created.",
-    "WU-TRIB unchanged; no migration, DB, release, or production impact."
-  ]
+    "WU-TRIB unchanged; no migration, DB, release, or production impact.",
+    "Deletion is not eligible now even though code was merged: name-level dependencies remain."
+  ],
+  "deletion_gate": "HOLD_REFERENCE_DEPENDENCIES",
+  "deletion_eligible_now": false,
+  "reference_scan": {
+    "github_code_search": "exact branch name in repo",
+    "results": 39,
+    "incomplete_results": false,
+    "operational_examples": [
+      {
+        "path": "audit/ce-wave1/admission/verify-patch-readiness.mjs",
+        "risk": "requires checkout of the named branch in audit"
+      },
+      {
+        "path": "audit/ce-wave1/executable-package/apply_patch.py",
+        "risk": "pins BRANCH for recovery package"
+      },
+      {
+        "path": "audit/ce-wave1/staged-source/scripts/governance/structural-reconcile-all-branches.mjs",
+        "risk": "explicit MISSING_INTEGRATION_BRANCH check"
+      },
+      {
+        "path": "audit/ce-wave1/staged-source/scripts/governance/structural-base-gate.mjs",
+        "risk": "compares expected branch against recorded SHA"
+      }
+    ],
+    "remaining_references": "Other matches include historical audits, manifests and governance registries; classify each as active or immutable evidence before touching refs.",
+    "required_action": "Migrate operational references to immutable commit SHA or versioned recovery tag, rerun gates and recheck external consumers; never rewrite historical evidence without preserving the original."
+  }
 }

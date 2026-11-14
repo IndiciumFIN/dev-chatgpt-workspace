@@ -47,7 +47,7 @@ B45,G8,Testes,Validador UTF-8 CSV JSON com IDs únicos e FKs,DataQA,P0,"B10,B17"
 B46,G8,Testes,Verificar direitos e ausência de PHI/segredos nas branches públicas,Security,P0,B28,TODO,Scan de privacidade + relatório,PUBLIC_REPO_SCAN,Todo binário restrito bloqueado
 B47,G8,Testes,Testes de segurança clínica por afirmação e protocolo,ClinicalReview,P0,"B31,B32",TODO,Pares e críticas assinadas,CLINICAL_SIGNOFF,Hold para divergência
 B48,G8,Testes,"Verificar acessibilidade WCAG, SEO, links, referências e PDF",UXQA,P1,B40,TODO,Relatório perf/a11y/SEO e paridade,PUBLISH_QA,Meta CE QA 90+
-B49,G8,Testes,Executar regressões e CI sem depender de credenciais,CI,P0,"B43,B45,B46",TODO,CI status green + evidência de execução,CI_RESULT,Não afirmar PASS sem job
+B49,G8,Testes,Executar regressões e CI sem depender de credenciais,CI,P0,"B43,B45,B46",IN_PROGRESS,CI status green + evidência de execução,CI_RESULT,GitHub Actions M04/M05 candidato PASS; Vercel status failure build limit; release CI gate HOLD
 B50,G8,Testes,"Executar auditoria 360 independente, amostras de pesquisa e claims",Audit,P0,"B46,B47,B49",TODO,Parecer por gate e exceções com dono,AUDIT_360,Auditoria não é garantia clínica
 B51,G9,Publicação,Preparar release candidate somente para materiais aprovados,Release,P1,B50,TODO,Manifesto fechado e versionado,RC_MANIFEST,Sem publicação automática
 B52,G9,Publicação,Executar aprovação humana do pacote curricular/rights/clinical,ClinicalReview,P0,"B21,B22,B51",HOLD_HUMAN,Assinaturas e decisões no ledger,FINAL_GATE,Sem auto-approval
@@ -55,3 +55,4 @@ B53,G9,Publicação,Criar PR de integração seletiva após checks e sign-offs,R
 B54,G10,Handoff,"Entregar relatório de integridade, lineage e rights",Audit,P1,B50,TODO,Indicadores + pacotes verificáveis,HANDOFF,Separar concl/pending
 B55,G10,Handoff,Atualizar PMO Mestre Drive por ação aprovada,PMO,P1,"B13,B54",TODO,Readback de linhas/versões e logs,PMO_SYNC,Não sobrescrever sem crosswalk
 B56,G10,Handoff,Planejar monitoramento de mudanças normativas e revisão periódica,Authority,P2,"B25,B54",TODO,"Cadência, fonte oficial e diff",MONITORING,Não substituir revisão clínica
+B57,G5,Evidência,"Preparar dossiês candidatos ECG UC02 com fonte, documento e átomos rastreáveis",Evidence,P0,"B05,B20",DONE_TECHNICAL,"3 claims candidatos schema-check, 4 atom hashes, Actions M05 PASS",ECG_CLAIM_DOSSIERS,"NÃO equivale a review clínico, licença de item ou publicação"

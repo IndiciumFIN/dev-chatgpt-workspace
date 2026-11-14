@@ -451,10 +451,10 @@ export function injectGrokPwaHead(html, ctx = {}) {
   // The application owns any explicitly declared <link rel> identity.
   // Platform URLs are fallbacks only: matching their HREF must never trump
   // an existing app manifest or icon with a different URL.
-  const declaredLinkRelations = [...next.matchAll(/<link\\b[^>]*>/gi)]
+  const declaredLinkRelations = [...next.matchAll(/<link\b[^>]*>/gi)]
     .flatMap(([tag]) => {
-      const rel = tag.match(/\\brel\\s*=\\s*["']([^"']+)["']/i)?.[1] ?? "";
-      return rel.toLowerCase().split(/\\s+/).filter(Boolean);
+      const rel = tag.match(/\brel\s*=\s*["']([^"']+)["']/i)?.[1] ?? "";
+      return rel.toLowerCase().split(/\s+/).filter(Boolean);
     });
   const missing = grokPwaHeadTags(appName)
     .filter(([key]) => {

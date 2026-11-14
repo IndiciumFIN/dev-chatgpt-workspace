@@ -51,3 +51,7 @@ O PMO Google Sheets recebeu 53 registros de lote M05/registry catalog, preservan
 
 ## Atualização de nomenclatura — Trilha de carreira (14/11/2026)
 A frente de produto é **Trilha de carreira**; UCs, ementas, carga horária e os identificadores `CURRICULUM/UC/MODULE` permanecem como documentação-fonte e contratos existentes. B20 recebeu atualização de evidência retificada (51 módulos, 295 tópicos detalhados, UC08 oito eixos não desdobrados), preservando D012/D013 e o histórico de extração anterior. Ver `TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md`.
+
+
+## Checkpoint da Trilha de carreira e ambiente
+A nomenclatura funcional mudou para **Trilha de carreira** (D012) com preservação dos IDs originais, e a versão retificada Cardiologia corrigiu B20 para 51 módulos/295 tópicos. O piloto de corpus SOT tem ADR-CKO-002 proposto e HOLD de isolamento/Edge Functions. Cinco aliases do B59 estão pendentes; testes estruturais da Trilha passaram no Actions #43568372281. Ver plano integral e recibos no PMO Mestre.

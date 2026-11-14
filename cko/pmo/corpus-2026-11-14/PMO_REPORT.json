@@ -14,12 +14,12 @@
   },
   "risks": 17,
   "decisions": 15,
-  "version": "0.1.8-career-path-plus-infra-adr",
+  "version": "0.1.9-career-path-ci-adr-master-sync",
   "source": "M03 SQLite checked + live GitHub PRs 66/67/68 + official source discovery",
   "master_pmo_unchanged": false,
   "clinical_release": false,
   "rights_release": false,
-  "last_event_id": "EV-CKO-B59-001",
+  "last_event_id": "EV-CKO-ADR-SHEETS-001",
   "github_actions": {
     "claims": {
       "run_id": 43563078415,
@@ -110,7 +110,22 @@
       "uc08_decomposed_modules": 0
     },
     "decision_id": "D012",
-    "proposed_spec": "TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md"
+    "proposed_spec": "TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md",
+    "master_pmo_program_id": "PMO-013",
+    "master_pmo_label": "CKO CE — Trilha de carreira e conhecimento canônico (PP00–PP13)",
+    "master_pmo_row": 14,
+    "master_pmo_readback": true,
+    "change_impact_id": "CHANGE-CKO-CAREER-PATH-20261114",
+    "cardiology_structural_ci": {
+      "run_id": 43568372281,
+      "status": "success",
+      "checked": [
+        "M04 curriculum refs",
+        "M05 claims",
+        "Trilha de carreira UC/module/UC08 parity"
+      ],
+      "clinical_approval": false
+    }
   },
   "infrastructure_audit": {
     "legacy_pilot": "SOT-10-09-2026",
@@ -124,7 +139,13 @@
     "edge_functions_without_jwt": 3,
     "security_review": "NOT_EXECUTED",
     "decision": "PROPOSED_HOLD_HUMAN",
-    "no_db_write": true
+    "no_db_write": true,
+    "adr_doc": "ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md",
+    "decision_id": "D014",
+    "human_hold_id": "HOLD-CKO-SOT-INFRA-20261114",
+    "conflict_id": "CONFLICT-CKO-SOT-ISOLATION-20261114",
+    "impact_id": "CHANGE-CKO-SOT-ADR-20261114",
+    "pmomaster_next_action_readback": true
   },
   "b59_alias_admission": {
     "pairs": 5,
@@ -132,6 +153,23 @@
     "partial_scope_pairs": 2,
     "admitted": 0,
     "official_cofen_webpage_metadata_reviewed": true,
-    "document_hash_crosschecked": false
+    "document_hash_crosschecked": false,
+    "decision_id": "D015",
+    "queue_file": "b59/B59_ALIAS_ADMISSION_QUEUE.csv",
+    "alias_admitted": 0
+  },
+  "additional_sheet_changes_20261114": {
+    "new_rows": {
+      "CHANGE_IMPACT": 2,
+      "CONFLICT_REGISTER": 1,
+      "HOLD_HUMAN": 1
+    },
+    "updated_cells": {
+      "PMO_MASTER_title": 1,
+      "PMO_MASTER_scope": 1,
+      "PMO_MASTER_next_action": 2
+    },
+    "readback": "PASS",
+    "scope": "Career path rename and infrastructure ADR; excluded from original M05 58-row register count"
   }
 }

@@ -22,3 +22,7 @@ A consulta read-only ao Supabase identificou ausência de correspondências exat
 - [`WBS_EXTENSOES_PONTA_A_PONTA_CANDIDATAS.csv`](./WBS_EXTENSOES_PONTA_A_PONTA_CANDIDATAS.csv): 16 pacotes complementares **propostos, não admitidos**; não adicionar ao denominador de 59 tarefas.
 - PMO Mestre Google Sheets: **PMO-013** criado na linha 14, em `DRAFT_FOR_GOVERNED_REVIEW`, com link ao plano; PMO-012 e demais registros preservados.
 - PMO-011 já descreve piloto separado de Corpus Acquisition Engine `SOT-10-09-2026`: projeto e funções existem; isolamento por nova organização não está comprovado; requer ADR e auditoria, sem reuso automático.
+
+
+## Trilha de carreira — atualização do nome e execução
+A frente antes denominada Currículos agora se chama **Trilha de carreira**. Objetos de UC, módulo, ementa e carga horária são preservados como dados-fonte; ver `TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md`. A primeira trilha candidata de Cardiologia está no PR #66 e passou no [Actions run #43568372281](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43568372281). A ADR de ambiente `ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md` e a fila `b59/B59_ALIAS_ADMISSION_QUEUE.csv` seguem em HOLD.

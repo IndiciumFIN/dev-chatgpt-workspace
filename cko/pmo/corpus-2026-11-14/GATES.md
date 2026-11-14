@@ -5,7 +5,7 @@
 | G0 | Escopo/baseline | inventário, hash, acesso, snapshots | PMO | fonte sem localização |
 | G1 | Inventário detalhado | schemas, IDs, duplicatas, direitos iniciais | DataQA | integridade não demonstrada |
 | G2 | Governança | crosswalk do PMO e registries, política aplicável | PMO/Governance | regressão ou perda de campo |
-| G3 | Universo curricular | currículos com proveniência, especialidades many-to-many | Curriculum | grade inventada, UC08 sem decisão |
+| G3 | Trilha de carreira | ementas e UCs de origem com proveniência, especialidades many-to-many, etapas de carreira somente mediante fonte | CareerPath/CurriculumSource | grade/competência inventada, UC08 sem decisão |
 | G4 | Autoridades e fontes | versão, jurisdição, vigente, URL, direitos | Authority/Rights | fonte inexistente/revogada |
 | G5 | Atomização/claims | source span, hash, claim/review IDs | Evidence/Clinical | sem trecho auditável |
 | G6 | Editorial | master e perfil editorial existente, links e revisão | Editorial | conteúdo não referenciado |

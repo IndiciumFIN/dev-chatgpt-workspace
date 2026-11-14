@@ -8,7 +8,7 @@ Os nomes abaixo designam **papéis e contratos de entrega**, não agentes já in
 | CKO-DataQA | manifests, ZIP/hash, SQLite read-only | SHA-256, CRC, integrity_check, chaves únicas/FK | QA results + inventory | corrupção, dados ausentes |
 | CKO-Authority | normas e diretrizes oficiais | snapshot com URL, data, versão e jurisdição | authority source ledger | norma desatualizada |
 | CKO-Rights | fonte/licença e uso pretendido | matriz de permissões por operação | rights register | publicação sem licença |
-| CKO-Curriculum | ementas institucionais | granularização com origem e collision detection | UC crosswalk | alteração de grade sem aprovação |
+| CKO-CareerPath | ementas institucionais/UCs como fontes | referência de UCs, trilhas candidatas, granularização e detecção de colisões sem inferir estágios profissionais | CareerPath↔UC crosswalk | titulação, competências e progressão sem fonte; alteração de grade sem aprovação |
 | CKO-Ontology | IDs, topics, specialization | many-to-many, alias/duplicate analysis | graph crosswalk | links sem base |
 | CKO-Evidence | documento e atoms | source-span→claim, documento/versão | claim cards candidatos | trecho ausente |
 | CKO-ClinicalReview | claim cards e diretriz vigente | revisão humana científica e de segurança | parecer assinado | risco ao paciente |

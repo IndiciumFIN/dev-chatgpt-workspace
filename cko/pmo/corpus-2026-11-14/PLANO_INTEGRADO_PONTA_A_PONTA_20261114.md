@@ -167,3 +167,15 @@ Para Cardiologia, a trilha candidata referencia 10 UCs/300h, 51 módulos e 295 t
 **Sem cronograma absoluto neste momento:** falta decidir a infraestrutura isolada, existe volume ainda não revisado e dependências de licença/avaliação clínica/ementas. As estimativas devem ser por lote após fechamento de entradas e capacidade, não por promessa infundada.
 
 **Atenção:** esta documentação é plano de trabalho versionado, não execução automática das fases pendentes nem autorização para alterar `Calculadoras-Smart`.
+
+## Emenda de execução — Trilha de carreira e governança de ambiente (14/11/2026)
+
+**Nomenclatura:** `D012` confirmou o novo nome funcional **Trilha de carreira**, com objetos `CURRICULUM/UC/MODULE` preservados como fonte. A entidade candidata `CKO-CAREER-PATH-CARDIO-20261114` referencia 10 UCs, 51 módulos e oito eixos UC08 sem distribuir suas 30 horas. O QA estrutural executou com sucesso em [GitHub Actions #43568372281](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43568372281); não significa aprovação clínica nem profissional.
+
+**Ambiente:** `ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md` contém a auditoria somente leitura do piloto `SOT-10-09-2026`, o risco de organização compartilhada, as nove Edge Functions (três `verify_jwt=false`) e as alternativas. O ADR não está aprovado. Registrados `HOLD-CKO-SOT-INFRA-20261114` e `CONFLICT-CKO-SOT-ISOLATION-20261114` no PMO Mestre.
+
+**Identidade de fontes:** `b59/B59_ALIAS_ADMISSION_QUEUE.csv` documenta cinco pares de URLs, todos `NOT_ADMITTED`. A página oficial COFEN 736/2024 foi verificada como identidade normativa; falta prova de hash e versão dos snapshots. Não houve escrita no Supabase nem admissão Kernel.
+
+**PMO Mestre:** `PMO-013` renomeado para "CKO CE — Trilha de carreira e conhecimento canônico (PP00–PP13)" e vinculado à decisão ADR; `CHANGE_IMPACT` recebeu dois eventos novos (nomenclatura e arquitetura), `CONFLICT_REGISTER` um e `HOLD_HUMAN` um; todos com leitura de retorno verificada.
+
+A estrutura de 59 tarefas e 16 propostas PXC continua preservada; aprovação de novas fases, migrações, rights e publicação permanece sujeita à cadeia `FIND → política → validador → TASK → WO → Kernel → QA → promoção`.

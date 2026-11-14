@@ -2,7 +2,7 @@
   "as_of": "2026-11-14",
   "status": "DRAFT_FOR_GOVERNED_REVIEW",
   "authority": "CKO-POL-UT-001@1.2.0",
-  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos. | R81: FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 registrado como draft de segurança com hashes do ZIP original, sem prova de execução SQL ou homologação. | M05 (14/11): três FINDs ECG/SBV/SCM e direitos de fonte registrados como CANDIDATE, read-only, sem WO admitida; crosswalk no PMO Mestre (SOURCE_REGISTER, CONFLICT_REGISTER, HOLD_HUMAN) e PR #68; main não alterada.",
+  "notes": "Achados abertos do projeto Calculadoras de Enfermagem, no formato do CKO find.schema. A correcao de codigo nao substitui a admissao do Kernel: cada item aqui declara `mutation_allowed` e o work order que o habilitaria.\nLote CKO/COREN/COFEN: revisar candidate_batches antes de admissão; preservado registro vigente. | Em 24/10/2026 incluídos FIND-TRANS-IFRS-20261024 e FIND-TRANS-ISO-20261024 como candidatos, não admitidos. Nenhuma fonte apagada nem contrato paralelo criado. | FIND-TRANS-ARTICLE-INDEX-20261024: índice mecânico de 21 atos com 16 fontes marcadas para revisão, sem admissão, sem certeza de anomalia. | R81 (31/10): adicionados 2 FINDs como DRAFT, sem validação de política por item, sem WO admitida ou autorização de mutação. Issues #2/#25 permanecem fonte dos relatos. | R81: FIND-SPE-RPC-ANSWER-EXPOSURE-20261031 registrado como draft de segurança com hashes do ZIP original, sem prova de execução SQL ou homologação. | M05 (14/11): três FINDs ECG/SBV/SCM e direitos de fonte registrados como CANDIDATE, read-only, sem WO admitida; crosswalk no PMO Mestre (SOURCE_REGISTER, CONFLICT_REGISTER, HOLD_HUMAN) e PR #68; main não alterada. | SOT atomization rights preflight (2026-11-14): new candidate FIND, no admission/deploy, static review only.",
   "finds": [
     {
       "schema_version": "0.1.0",
@@ -435,6 +435,42 @@
       "mutation_allowed": false,
       "origin_pr": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/68",
       "register_sync": "Google Sheets CONFLICT_REGISTER/HOLD_HUMAN M05 on 2026-11-14"
+    },
+    {
+      "schema_version": "0.1.0",
+      "canonical_id": "FIND-CKO-SOT-EXTERNAL-AI-TDM-20261114",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "updated_at": "2026-11-14",
+      "provenance_refs": [
+        "SOT-10-09-2026",
+        "edge-function:deepseek-atomize@5",
+        "source-sha256:2664031bd31a0c089f98c24463f805a1d77295c461a0766a5e1cc4afee4ddef7"
+      ],
+      "finding_type": "LICENSE_HOLD",
+      "severity": "HIGH",
+      "fact": "Static inspection: deepseek-atomize reads corpus_fragments.text_content and sends fragment text to external DeepSeek chat/completions. It requires operator/reviewer JWT and saves DRAFT_AI, but no explicit source/document item-rights gate for EXTERNAL_AI_TDM was observed in this function before the outbound request. Absence of an upstream gate has not been proven.",
+      "evidence_refs": [
+        "PMO-PR67:SOT_EDGE_FUNCTION_STATIC_AUDIT.md",
+        "PMO-PR67:SOT_EXTERNAL_AI_RIGHTS_PREFLIGHT_PROPOSED.json"
+      ],
+      "root_cause_status": "EVIDENCED",
+      "remediation_task_refs": [
+        "B11",
+        "B28",
+        "PXC-002",
+        "PXC-008",
+        "PXC-009"
+      ],
+      "blocking_policy_refs": [
+        "SOT_EXTERNAL_AI_RIGHTS_PREFLIGHT_PROPOSED.json"
+      ],
+      "policy_ref": "CKO-POL-UT-001@1.2.0",
+      "validator_ref": "PENDING_ADMISSION",
+      "work_order": "NOT_ADMITTED",
+      "mutation_allowed": false,
+      "origin_pr": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/68",
+      "register_sync": "PENDING_PMO_SHEETS_SOT_RISKS"
     }
   ],
   "candidate_batches": [

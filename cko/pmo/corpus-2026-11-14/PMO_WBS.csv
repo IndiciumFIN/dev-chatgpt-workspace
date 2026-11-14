@@ -1,0 +1,57 @@
+id,gate,domain,task,responsible_role,priority,dependencies,status,acceptance_evidence,deliverable,hold_or_control
+B01,G0,Governança,Inventariar repositórios acessíveis e escopos GitHub,PMO,P0,,DONE_SCOPE,Inventário de repos + acesso confirmado,GITHUB_REPO,Código de 1 repo autorizado
+B02,G0,Governança,Conferir branches CKO existentes e diferenças contra main,GitAudit,P0,B01,DONE_SCOPE,"Branch inventory, ahead/behind, path list",BRANCH_REPORT,Comparações atuais realizadas
+B03,G0,Governança,Conferir PRs abertos #36 e #31 e conflitos,GitAudit,P0,B02,DONE_SCOPE,PR metadata e cruzamento de escopos,PR_CROSSWALK,Diff profundo ainda necessário
+B04,G0,Fontes,Recuperar ZIP original U/E direitos governados,Acquisition,P0,,DONE_TECHNICAL,ZIP íntegro e hash,M03,Não implica direitos de publicação
+B05,G0,Fontes,Recuperar banco U/E e SQLite canônico,DataQA,P0,B04,DONE_TECHNICAL,PRAGMA integrity_check OK,M03,Somente leitura
+B06,G0,Fontes,Recuperar corpus integral foundation v1.7.7 e hashes,DataQA,P0,B04,DONE_TECHNICAL,213/213 hashes Foundation,M03,Não substitui review semântico
+B07,G0,Fontes,Inventariar UC08 original e alteração informada,Curriculum,P0,,DONE_EDITORIAL,Fonte e alterações versionadas,UC08_CHANGELOG,Conflito UC07/UC09 aberto
+B08,G1,Governança,"Comparar estrutura da main e branches legado editorial, corpus, bibliotecas",GitAudit,P0,B02,IN_PROGRESS,"Matriz per-file, preservação de contratos",BRANCH_MATRIX,Não fazer merge direto de divergências
+B09,G1,Governança,Comparar import Drive CKO/NurseOS com corpus M03,Lineage,P0,"B06,B08",TODO,Conferência hash e IDs + namespace,CROSSWALK,Não duplicar source_id
+B10,G1,Dados,Exportar inventário source/document/topic/evidence sem texto protegido,DataQA,P0,B05,TODO,CSV por ID/versão e contagens por estado,EXPORT_INDEX,Sem PHI e sem trechos restritos
+B11,G1,Dados,Conferir permissões/direitos e jurisdição por fonte,Rights,P0,B10,TODO,Rights matrix por operação + fonte,RIGHTS_LEDGER,HOLD quando direito não demonstrado
+B12,G1,Dados,Conferir duplicatas hash exato e semantic fingerprint,DataQA,P0,B10,TODO,Idêntico versus variante e supersedes,DEDUP_REPORT,Nome semelhante não indica duplicata
+B13,G2,Governança,Conciliar PMO Mestre Drive com plano Git candidato,PMO,P0,B08,TODO,"Crosswalk de colunas, IDs e status",PMO_CROSSWALK,Proibido substituir PMO principal
+B14,G2,Governança,Conciliar 30 registries anteriores e sistema R00-R07,PMO,P0,B13,TODO,Equivalência sem perda de registros,REGISTRY_CATALOG,Manter event log imutável
+B15,G2,Governança,Formalizar cadeia FIND → policy → validation → TASK → WO → Kernel,Governance,P0,B13,TODO,Policy e artefatos de entrada rastreáveis,ADMISSION_POLICY,Sem migração sem autorização
+B16,G2,Governança,"Definir classificação de release por clínico, científico, segurança e direitos",PMO,P0,B15,TODO,Gate matrix e decisores aprovados,GATE_MATRIX,Veto independente para segurança
+B17,G3,Ontologia,Construir crosswalk Specialty↔Topic↔Content↔Tool↔Library,Ontology,P0,"B09,B12",TODO,FKs e múltiplos domínios sem duplicatas,ONTOLOGY_MAP,Usar contratos preexistentes
+B18,G3,Ontologia,"Reconciliar 1.055 temas com IDs, títulos e aliases",Ontology,P0,B10,TODO,"1055 IDs comparados, divergências explicitadas",TOPIC_RECON,"Métrica histórica, medir novo snapshot"
+B19,G3,Ontologia,Classificar 9.102 links candidatos por evidência e pertinência,Evidence,P0,"B17,B18",TODO,Todos com status e justificativa verificável,REUSE_LEDGER,Similaridade lexical insuficiente
+B20,G3,Currículo,Reconciliar 10 UCs de Cardiologia e 300 h,Curriculum,P0,"B07,B17",DONE_STRUCTURAL,"10 UCs, 58 módulos, 326 tópicos extraídos",CURRICULUM,Conteúdo clínico não validado
+B21,G3,Currículo,Resolver conflito UC08 vs UC07 (8 eixos coincidentes),Curriculum,P0,B20,HOLD_HUMAN,Ementa institucional e decisão assinada,UC08_DECISION,Sem autonomia para inventar título
+B22,G3,Currículo,Resolver conflito título UC08 vs UC09,Curriculum,P0,B20,HOLD_HUMAN,Versão de grade com fonte verificável,UC09_DECISION,Não renumerar automaticamente
+B23,G3,Currículo,"Receber ementas Centro Cirúrgico e CME, separar do corpus cardiológico",Curriculum,P0,B20,WAITING_SOURCE,Currículos rastreáveis por instituição,CURRICULUM_CC_CME,Não fabricar grade curricular
+B24,G3,Currículo,Reconciliar Saúde do Trabalhador 885 temas e normas ocupacionais,Curriculum,P0,B18,TODO,"Catalogação, gap por tópico e fonte",OH_CROSSWALK,Não reaproveitar contexto erradamente
+B25,G4,Fontes,Validar authority universe vigente BR e global,Authority,P0,B11,TODO,"Autoridade, jurisdição, vigência, direito",AUTHORITY_LEDGER,Norma oficial prevalece
+B26,G4,Fontes,Conferir snapshot oficial MS/COFEN/ANVISA/MTE em fontes primárias,Authority,P0,B25,TODO,"URL, versão, timestamp e hash",NORMATIVE_SNAPSHOT,Sem citação lembrada de memória
+B27,G4,Fontes,Auditar DOI/PMID/PMCID e retratações dos estudos,Evidence,P1,"B10,B25",TODO,"Metadados reconciliados, flags de retratação",STUDY_REGISTER,Metadado não implica texto autorizado
+B28,G4,Fontes,"Classificar licença por ingestão, indexação, extração, tradução e publicação",Rights,P0,"B11,B25",TODO,Direito por ação e objeto; assinatura humana,RIGHTS_PER_OP,Fail closed em publicações
+B29,G5,Evidência,Provar source→document→evidence_atom por ID e trecho,Evidence,P0,"B18,B26",TODO,Conferência 100% dos links promovidos,LINEAGE_CHECK,Amostras não podem afirmar 100% geral
+B30,G5,Evidência,Segregar 28.001 átomos textuais por direitos/uso,Rights,P0,"B28,B29",TODO,Matriz active/conditional/blocked per item,EVIDENCE_RIGHTS,Sem cópia de texto restrito no Git
+B31,G5,Evidência,Auditar 29 claims e 29 knowledge atoms herdados,ClinicalReview,P0,B29,TODO,"Origem, atualização e revisão clínica",LEGACY_CLAIMS,Preservado não significa aprovado
+B32,G5,Evidência,Criar fichas de claims para UC06/07/08 de Cardiologia,Evidence,P1,"B21,B22,B29",TODO,Cada afirmação vinculada à fonte e trecho,CLAIM_CARDS,Não produzir dose sem revisão
+B33,G5,Evidência,"Reconciliar U/E: choque, RCP, ECG, segurança",ClinicalReview,P1,"B19,B30",TODO,"Pares por ID, corte de direitos, reviewer",UE_REUSE,Sem equivalência clínica automática
+B34,G5,Evidência,"Reconciliar Trabalho: biossegurança, higiene das mãos",ClinicalReview,P1,"B19,B24",TODO,Pares por ID com adaptações contextuais,OH_REUSE,Contexto assistencial ≠ ocupacional
+B35,G6,Editorial,Inventariar modelos existentes de página HTML e guia PDF,Editorial,P0,B08,TODO,"Contrato homologado localizado, asset licença",TEMPLATE_INVENTORY,Não criar template paralelo
+B36,G6,Editorial,Modelo canônico por topic/resource type e suas projeções,Editorial,P0,"B17,B35",TODO,Schema validado e vínculo a IDs fontes,PROJECTION_CONTRACT,Cada mídia herda versão
+B37,G6,Editorial,Produzir conteúdo piloto Processo de Enfermagem,Editorial,P1,"B31,B36",DRAFT_EDITORIAL,Texto + matriz claims + revisão,CONTENT_PILOT_01,Não publicar sem gate
+B38,G6,Editorial,Produzir conteúdo piloto Segurança Perioperatória,Editorial,P1,"B31,B36",DRAFT_EDITORIAL,Texto + matriz claims + revisão,CONTENT_PILOT_02,Não publicar sem gate
+B39,G6,Editorial,Criar caso clínico/simulado/quiz a partir de knowledge atom aprovado,Education,P1,"B32,B36",TODO,Questões comentadas com evidência,ASSESSMENT_PILOT,Não inventar condutas
+B40,G6,Editorial,Gerar flashcards/infográficos/PDF/HTML via projeção única,Education,P2,"B37,B38,B39",TODO,Paridade de conteúdo e referências,MULTI_FORMAT,Acessibilidade i18n
+B41,G7,Integração,Validar schemas e objetos CKO DB-first existentes,DataQA,P0,"B17,B36",TODO,"Testes de schema/IDs, read-only baseline",SCHEMA_PARITY,Não alterar Supabase prod
+B42,G7,Integração,Mapear necessidade de migrações e RLS; preparar scripts candidatos,Backend,P1,B41,TODO,"DDL dry-run, rollback, aprovação",MIGRATION_DRAFT,Sem deploy sem autorização
+B43,G7,Integração,Reconciliar editorial com branch canonical/foundation PR #36,GitAudit,P0,"B08,B36",TODO,Crosswalk seletivo e matriz de conflito,PR36_MAP,Não cherrypick 13.550 arquivos
+B44,G7,Integração,Integrar PMO à fila Kernel sem sobrescrever Master,Governance,P1,"B15,B13",TODO,FIND/TASK/WO e ingestão autorizada,KERNEL_ADMISSION,Kernel não homologado nesta branch
+B45,G8,Testes,Validador UTF-8 CSV JSON com IDs únicos e FKs,DataQA,P0,"B10,B17",TODO,Replay determinístico e contagens,DATA_QA,Falha rejeita promoção
+B46,G8,Testes,Verificar direitos e ausência de PHI/segredos nas branches públicas,Security,P0,B28,TODO,Scan de privacidade + relatório,PUBLIC_REPO_SCAN,Todo binário restrito bloqueado
+B47,G8,Testes,Testes de segurança clínica por afirmação e protocolo,ClinicalReview,P0,"B31,B32",TODO,Pares e críticas assinadas,CLINICAL_SIGNOFF,Hold para divergência
+B48,G8,Testes,"Verificar acessibilidade WCAG, SEO, links, referências e PDF",UXQA,P1,B40,TODO,Relatório perf/a11y/SEO e paridade,PUBLISH_QA,Meta CE QA 90+
+B49,G8,Testes,Executar regressões e CI sem depender de credenciais,CI,P0,"B43,B45,B46",TODO,CI status green + evidência de execução,CI_RESULT,Não afirmar PASS sem job
+B50,G8,Testes,"Executar auditoria 360 independente, amostras de pesquisa e claims",Audit,P0,"B46,B47,B49",TODO,Parecer por gate e exceções com dono,AUDIT_360,Auditoria não é garantia clínica
+B51,G9,Publicação,Preparar release candidate somente para materiais aprovados,Release,P1,B50,TODO,Manifesto fechado e versionado,RC_MANIFEST,Sem publicação automática
+B52,G9,Publicação,Executar aprovação humana do pacote curricular/rights/clinical,ClinicalReview,P0,"B21,B22,B51",HOLD_HUMAN,Assinaturas e decisões no ledger,FINAL_GATE,Sem auto-approval
+B53,G9,Publicação,Criar PR de integração seletiva após checks e sign-offs,Release,P1,"B43,B51,B52",TODO,"PR review, conflitos zero, rollback",MERGE_PR,Nunca forçar merge
+B54,G10,Handoff,"Entregar relatório de integridade, lineage e rights",Audit,P1,B50,TODO,Indicadores + pacotes verificáveis,HANDOFF,Separar concl/pending
+B55,G10,Handoff,Atualizar PMO Mestre Drive por ação aprovada,PMO,P1,"B13,B54",TODO,Readback de linhas/versões e logs,PMO_SYNC,Não sobrescrever sem crosswalk
+B56,G10,Handoff,Planejar monitoramento de mudanças normativas e revisão periódica,Authority,P2,"B25,B54",TODO,"Cadência, fonte oficial e diff",MONITORING,Não substituir revisão clínica

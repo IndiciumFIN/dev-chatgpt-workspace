@@ -12,13 +12,13 @@
 | EVIDENCE_ATOMS | 4 | A2:M5 | Quatro IDs ATM com página/locator/hash, sem texto íntegro |
 | CLAIM_LEDGER | 3 | A2:L4 | Três afirmações ECG CANDIDATE, sem clinical review |
 | RIGHTS_REGISTER | 10 | A2:L11 | Direitos por fonte/documento em HOLD, nenhum liberado |
-| CONFLICT_REGISTER | 5 | A2:L6 | Três achados M05 e dois conflitos curriculares UC08 |
+| CONFLICT_REGISTER | 6 | A2:L7 | Três achados M05 e dois conflitos curriculares UC08 |
 | HOLD_HUMAN | 7 | A2:K8 | Direitos, revisão clínica, SCM, SBV, fontes de descoberta e UC08 |
-| CHANGE_IMPACT | 5 | A2:N6 | Afetação de claims, links, currículos e estados candidatos |
+| CHANGE_IMPACT | 6 | A2:N7 | Afetação de claims, links, currículos e estados candidatos |
 | PMO_MASTER | 1 | A13:J13 | PMO-012 em andamento, com referências PRs 66/67/68 |
 | REGISTRY_CATALOG | 2 | A10:J11 | Localização do Supabase e GitHub canônico |
 
-**Total:** 51 linhas de dados operacionais + 2 registros de catálogo = **53 linhas novas**; todas conferidas por leitura de retorno. IDs do recorte verificados sem repetição. A contagem de linhas não representa fontes/claims clinicamente aprovados.
+**Total:** 53 linhas de dados operacionais + 2 registros de catálogo = **55 linhas novas**; todas conferidas por leitura de retorno. IDs do recorte verificados sem repetição. A contagem de linhas não representa fontes/claims clinicamente aprovados.
 
 ## Crosswalk de identidades M05
 - Fonte existente do Ministério da Saúde `SRC-BR-MS` foi **reutilizada**, sem gerar fonte duplicada, para os documentos `DOC-CAND-M05-EXT-004` e `DOC-CAND-M05-EXT-005`.
@@ -57,3 +57,8 @@ Outras tabelas operacionais observadas: `cko_evidence.source_accreditations` e `
 `SOURCE/DOCUMENT/ATOM/CLAIM` da planilha são **registros de descoberta e reconciliação**, não promoção canônica nem autorização de uso. Licença por documento, vigência, autoridade, reavaliação clínica, rastreabilidade íntegra e admissão governada continuam em HOLD.
 
 **Próximo controle:** reconciliar 15 linhas do SOURCE_REGISTER do Sheets com `cko_evidence.sources` (157 linhas) e com fontes SQLite M03 (118), sem assumir identidades coincidentes pelo nome. Registrar correspondências com `exact_id`, `alias`, `conflict`, `new_candidate` e decisões quando comprovadas.
+
+## Crosswalk físico executado — checagem adicional em Supabase
+Consulta `SELECT` somente leitura comparou todos os **15 SOURCE_ID** do Sheets, **8 DOCUMENT_ID**, **3 CLAIM_ID** e os **3 FIND_ID** da M05 às colunas respectivas de `cko_evidence.sources`, `cko_governance.documents`, `cko_evidence.claims` e `cko_validation.findings`: **0 correspondências exatas em 29 IDs**. Uma consulta parcial independente também confirmou 0/4 sources escolhidas. Isso **não** comprova que o conteúdo não exista no Supabase; demonstra ausência de chaves literais coincidentes no subconjunto verificado. Próximo passo B59: crosswalk por alias, URI, DOI, versão, SHA e autoridade, documentando decisões por registro. Não criar dados no banco por semelhança nominal.
+
+O resultado foi registrado adicionalmente em `CONFLICT_REGISTER!A7:L7` (`CONFLICT-M05-SUPABASE-ID-CROSSWALK`) e `CHANGE_IMPACT!A7:N7` (`CHANGE-M05-06`), com leitura de retorno positiva.

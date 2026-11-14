@@ -10,7 +10,7 @@ import { existsSync, statSync } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-const srcRoot = fileURLToPath(new URL("../src/", import.meta.url));
+const srcRoot = resolve(fileURLToPath(new URL("../src/", import.meta.url)));
 const srcRootURL = pathToFileURL(srcRoot).href;
 const extensions = ["", ".ts", ".tsx", ".mjs", ".js", "/index.ts", "/index.tsx", "/index.js"];
 

@@ -24,6 +24,8 @@ jobs:
           node-version: "22"
       - name: Validate negative examples for normative and editorial evidence
         run: node --test scripts/ncos-source-lineage.test.mjs
+      - name: Generate field-by-field CKO vocabulary drift proposal without rewriting source
+        run: node scripts/ncos-cko-schema-drift.mjs
       - name: Reconcile actual CKO source-first evidence and fail closed
         run: node scripts/ncos-source-lineage-audit.mjs --enforce
       - name: Retain candidate lineages and blockers even if gate fails

@@ -34,3 +34,10 @@ O editorial é uma projeção e fonte adicional de interpretação autoral, **n�
 Identidades entre 24 candidatos URL precisam de conferência de emissor, edição, escopo e vigência; vários URLs podem apontar para landing pages e não identificar univocamente normas. Os 17 pacotes de atomização exigem bytes verificáveis (hash e armazenamento), sign-off clínico e licença. Linhagens de fonte não verificadas não são canonizadas. Promoção segue FIND → política → validador → tarefa → WO → Kernel → testes/auditoria → aprovação por papéis independentes.
 
 Não usar \`main\` ou deploy enquanto PR #52 mantiver gates históricos e os novos gates em HOLD.
+
+
+## Existing master normative handoff (historical, not an admitted policy)
+
+The user-owned Library file \`CKO_NORMATIVE_MASTER_INSTRUCTION_v1.0.0.md\` (2026-09-09, handoff only) documents an already developed chain: Authority → Mandate → Standards Registry → Source → Version → Snapshot → Structure → Fragment → Atom → Requirement → Applicability → Conflict/Crosswalk → Risk/Control → PolicyBasis → Policy/Rule → Validator/CI/Runtime → Assurance → Projection. This is **not** permission to create a new source of truth or to promote a handoff draft. The current versioned contracts and Kernel admission remain authoritative.
+
+The CI now creates \`schema-drift-delta.v1.json\`, grouping runtime source/binding/field enum divergences from the existing CKO JSON Schemas. All values remain pending checker disposition; no automatic mapping to another enum, source license, atom, or clinical claim.

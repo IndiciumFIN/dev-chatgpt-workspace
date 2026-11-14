@@ -22,6 +22,7 @@ export interface Sql {
 
 const globalRef = globalThis as typeof globalThis & {
   __pgSqlPromise__?: Promise<Sql>;
+  __pgPool__?: import("pg").Pool;
   __pgliteInstance__?: Promise<import("@electric-sql/pglite").PGlite>;
   __pgliteMigrateChain__?: Promise<void>;
 };
@@ -54,6 +55,7 @@ function createNeonSql(): Promise<Sql> {
     types.setTypeParser(OID_DATE, identity);
     types.setTypeParser(OID_INTERVAL, identity);
     const pool = new Pool({ connectionString: databaseUrl });
+    globalRef.__pgPool__ = pool;
     return toSql(async <T>(text: string, params: unknown[]) => {
       const res = await pool.query(text, params);
       return res.rows as T[];
@@ -143,6 +145,55 @@ export function getSql(): Promise<Sql> {
     });
   sqlPromise = ready;
   return ready;
+}
+
+
+/**
+ * Contract parity with main: callers use a single transaction on PGLite or
+ * Neon. This recovery candidate is intentionally local-only; the immutable
+ * DB_ENABLED=false guard prevents ALL database access and both helpers fail
+ * closed until a separate approved release enables an authenticated backend.
+ * Adding the typed contracts is NOT an authorization or a DB migration.
+ */
+export async function withSqlTransaction<T>(fn: (sql: Sql) => Promise<T>): Promise<T> {
+  if (!DB_ENABLED) throw new Error("DATABASE_DISABLED_LOCAL_ONLY");
+  if (dbSource === "pglite") {
+    const pg = await getPglite();
+    return pg.transaction(async (tx) => {
+      const sql = toSql(async <TRow>(text: string, params: unknown[]) => {
+        const result = await tx.query<TRow>(text, params);
+        return result.rows;
+      });
+      return fn(sql);
+    });
+  }
+  await getSql();
+  const pool = globalRef.__pgPool__;
+  if (!pool) throw new Error("Conexão do banco indisponível.");
+  const client = await pool.connect();
+  try {
+    await client.query("begin");
+    const sql = toSql(async <TRow>(text: string, params: unknown[]) => {
+      const result = await client.query(text, params);
+      return result.rows as TRow[];
+    });
+    const result = await fn(sql);
+    await client.query("commit");
+    return result;
+  } catch (error) {
+    await client.query("rollback");
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/** Read under the restricted PostgreSQL role, never after transaction exit. */
+export async function withReader<T>(fn: (sql: Sql) => Promise<T>): Promise<T> {
+  return withSqlTransaction(async (sql) => {
+    await sql.query("set local role leitor");
+    return fn(sql);
+  });
 }
 
 export async function getPglite(): Promise<import("@electric-sql/pglite").PGlite> {

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/state_machine.schema.json",
+  "title": "CKO | state_machine",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "states",
+    "initial_state",
+    "transitions",
+    "side_effect_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "initial_state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "event",
+          "guard"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event": {
+            "type": "string",
+            "minLength": 1
+          },
+          "guard": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "side_effect_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stale_result_policy": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

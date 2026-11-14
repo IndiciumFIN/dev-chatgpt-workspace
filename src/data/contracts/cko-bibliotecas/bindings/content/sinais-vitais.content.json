@@ -1,0 +1,1133 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "sinais-vitais",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Sinais vitais",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre temperatura, pulso, frequência respiratória, pressão arterial, saturação de oxigênio, dor e frequência de monitorização.",
+  "template_family": "knowledge-library",
+  "archetype_id": "vital_signs_knowledge_library",
+  "domain": {
+    "domain_id": "nursing",
+    "display_label": "Enfermagem"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Clínico"
+    },
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Baseado em evidências"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Sinais vitais"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "essential-parameters",
+          "adult-reference-values",
+          "nursing-conducts",
+          "triage-risk-clues",
+          "common-changes",
+          "associated-signs-and-symptoms",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "clinical-attention",
+          "warning-signs",
+          "monitoring-frequency",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "parametros",
+        "label": "Parâmetros",
+        "status": "mapped",
+        "module_refs": [
+          "essential-parameters"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tecnica",
+        "label": "Técnica",
+        "status": "mapped",
+        "module_refs": [
+          "videos-and-techniques"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "interpretacao",
+        "label": "Interpretação",
+        "status": "mapped",
+        "module_refs": [
+          "adult-reference-values",
+          "common-changes",
+          "associated-signs-and-symptoms"
+        ],
+        "selectors": [
+          {
+            "module_id": "adult-reference-values"
+          },
+          {
+            "module_id": "common-changes"
+          },
+          {
+            "module_id": "associated-signs-and-symptoms"
+          }
+        ]
+      },
+      {
+        "tab_id": "alteracoes",
+        "label": "Alterações",
+        "status": "mapped",
+        "module_refs": [
+          "common-changes"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "monitorizacao",
+        "label": "Monitorização",
+        "status": "mapped",
+        "module_refs": [
+          "essential-parameters",
+          "monitoring-frequency",
+          "associated-signs-and-symptoms"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "nursing-conducts"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/sinais-vitais/hero_sinais_vitais_transparent.png",
+          "alt": "Monitor, termômetro, oxímetro e esfigmomanômetro.",
+          "raw": {
+            "type": "vital_signs_monitoring_illustration",
+            "asset_ref": "cropped_assets/hero_sinais_vitais_transparent.png",
+            "alt_text": "Monitor, termômetro, oxímetro e esfigmomanômetro."
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "definicao",
+                "title": "Definição",
+                "subtitle": "",
+                "description": "Conjunto de parâmetros fisiológicos que refletem as funções vitais do organismo.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "importancia",
+                "title": "Importância",
+                "subtitle": "",
+                "description": "Permitem avaliar o estado clínico, identificar alterações precoces e orientar decisões.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "objetivo-do-cuidado",
+                "title": "Objetivo do cuidado",
+                "subtitle": "",
+                "description": "Garantir monitorização correta, detecção precoce de alterações e segurança do paciente.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "abrangencia",
+                "title": "Abrangência",
+                "subtitle": "",
+                "description": "Todos os níveis de atenção à saúde e todas as faixas etárias.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "id": "avaliacao-sistematica",
+                "title": "Avaliação sistemática",
+                "subtitle": "",
+                "description": "Realizar em ordem padronizada e registrar corretamente os dados.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "tecnica-adequada",
+                "title": "Técnica adequada",
+                "subtitle": "",
+                "description": "Usar equipamentos calibrados e técnica apropriada para cada parâmetro.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "interpretacao-clinica",
+                "title": "Interpretação clínica",
+                "subtitle": "",
+                "description": "Analisar os valores no contexto do paciente e quadro clínico.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "monitorizacao-continua",
+                "title": "Monitorização contínua",
+                "subtitle": "",
+                "description": "Ajustar a frequência conforme condição clínica e risco.",
+                "image": "../assets/sinais-vitais/parametro_frequencia_monitorizacao_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "essential-parameters",
+      "module_type": "card_grid",
+      "semantic_role": "monitoring",
+      "title": "Parâmetros essenciais",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "temperatura",
+            "title": "Temperatura",
+            "subtitle": "",
+            "description": "Avaliação do equilíbrio térmico do organismo.",
+            "image": "../assets/sinais-vitais/parametro_temperatura_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "°C"
+            }
+          },
+          {
+            "id": "pulso-frequencia-cardiaca",
+            "title": "Pulso (Frequência Cardíaca)",
+            "subtitle": "",
+            "description": "Número de batimentos cardíacos por minuto.",
+            "image": "../assets/sinais-vitais/parametro_pulso_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "bpm"
+            }
+          },
+          {
+            "id": "frequencia-respiratoria",
+            "title": "Frequência Respiratória",
+            "subtitle": "",
+            "description": "Número de incursões respiratórias por minuto.",
+            "image": "../assets/sinais-vitais/parametro_frequencia_respiratoria_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "irpm"
+            }
+          },
+          {
+            "id": "pressao-arterial",
+            "title": "Pressão Arterial",
+            "subtitle": "",
+            "description": "Força do sangue contra as paredes das artérias.",
+            "image": "../assets/sinais-vitais/parametro_pressao_arterial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "mmHg"
+            }
+          },
+          {
+            "id": "saturacao-de-oxigenio",
+            "title": "Saturação de Oxigênio",
+            "subtitle": "",
+            "description": "Percentagem de hemoglobina ligada ao oxigênio.",
+            "image": "../assets/sinais-vitais/parametro_saturacao_oxigenio_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "%"
+            }
+          },
+          {
+            "id": "dor",
+            "title": "Dor",
+            "subtitle": "",
+            "description": "Experiência sensorial e emocional desagradável.",
+            "image": "../assets/sinais-vitais/parametro_dor_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "Escala: 0 a 10"
+            }
+          },
+          {
+            "id": "frequencia-de-monitorizacao",
+            "title": "Frequência de Monitorização",
+            "subtitle": "",
+            "description": "Periodicidade das aferições conforme condição clínica.",
+            "image": "../assets/sinais-vitais/parametro_frequencia_monitorizacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "unit": "Variável"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/essential-parameters"
+    },
+    {
+      "module_id": "adult-reference-values",
+      "module_type": "table",
+      "semantic_role": "reference",
+      "title": "Valores de referência (adultos)",
+      "priority": 20,
+      "payload": {
+        "columns": [
+          {
+            "key": "parameter",
+            "label": "Parameter"
+          },
+          {
+            "key": "reference",
+            "label": "Reference"
+          }
+        ],
+        "rows": [
+          {
+            "parameter": "Temperatura",
+            "reference": "36,0 – 37,5 °C"
+          },
+          {
+            "parameter": "Pulso (FC)",
+            "reference": "60 – 100 bpm"
+          },
+          {
+            "parameter": "Frequência Respiratória",
+            "reference": "12 – 20 irpm"
+          },
+          {
+            "parameter": "Pressão Arterial",
+            "reference": "90/60 – 120/80 mmHg"
+          },
+          {
+            "parameter": "Saturação de Oxigênio (SpO₂)",
+            "reference": "95 – 100 %"
+          },
+          {
+            "parameter": "Dor (Escala Numérica)",
+            "reference": "0 (sem dor) – 10 (dor máxima)"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/adult-reference-values"
+    },
+    {
+      "module_id": "nursing-conducts",
+      "module_type": "step_flow",
+      "semantic_role": "intervention",
+      "title": "Condutas de enfermagem",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliar",
+            "title": "Avaliar",
+            "subtitle": "",
+            "description": "Realizar aferição completa dos sinais vitais na ordem padronizada.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 1,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "verificar",
+            "title": "Verificar",
+            "subtitle": "",
+            "description": "Confirmar identificação do paciente e condições para aferição adequada.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 2,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "registrar",
+            "title": "Registrar",
+            "subtitle": "",
+            "description": "Anotar valores, horário, local, técnica utilizada e observações.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 3,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "interpretar",
+            "title": "Interpretar",
+            "subtitle": "",
+            "description": "Comparar com valores de referência e contexto clínico do paciente.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 4,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "comunicar",
+            "title": "Comunicar",
+            "subtitle": "",
+            "description": "Reportar alterações conforme protocolo e nível de urgência.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 5,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "intervir",
+            "title": "Intervir",
+            "subtitle": "",
+            "description": "Implementar condutas e monitorizar resposta às intervenções.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 6,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "reavaliar",
+            "title": "Reavaliar",
+            "subtitle": "",
+            "description": "Repetir aferições na frequência indicada e avaliar evolução.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": 7,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/nursing-conducts"
+    },
+    {
+      "module_id": "triage-risk-clues",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "Pistas de triagem e risco",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "verde-baixo-risco",
+            "title": "Verde – Baixo risco",
+            "subtitle": "",
+            "description": "Parâmetros dentro da normalidade.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "amarelo-risco-moderado",
+            "title": "Amarelo – Risco moderado",
+            "subtitle": "",
+            "description": "Alterações leves, sem instabilidade hemodinâmica.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "vermelho-alto-risco",
+            "title": "Vermelho – Alto risco",
+            "subtitle": "",
+            "description": "Alterações significativas ou instabilidade clínica.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/triage-risk-clues"
+    },
+    {
+      "module_id": "common-changes",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Alterações mais comuns",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "febre",
+            "title": "Febre",
+            "subtitle": "",
+            "description": "Temperatura > 37,5 °C.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "taquicardia-bradicardia",
+            "title": "Taquicardia / Bradicardia",
+            "subtitle": "",
+            "description": "FC alterada conforme limite de referência.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "taquipneia-bradipneia",
+            "title": "Taquipneia / Bradipneia",
+            "subtitle": "",
+            "description": "FR alterada conforme limite de referência.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "hipertensao-hipotensao",
+            "title": "Hipertensão / Hipotensão",
+            "subtitle": "",
+            "description": "PA fora dos valores de referência.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "dessaturacao",
+            "title": "Dessaturação",
+            "subtitle": "",
+            "description": "SpO₂ < 95% em ar ambiente.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "dor-aguda",
+            "title": "Dor aguda",
+            "subtitle": "",
+            "description": "Dor ≥ 7 na escala numérica.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/common-changes"
+    },
+    {
+      "module_id": "associated-signs-and-symptoms",
+      "module_type": "status_panel",
+      "semantic_role": "monitoring",
+      "title": "Sinais e sintomas associados",
+      "priority": 60,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": [
+              "Palidez, cianose, sudorese fria",
+              "Dispneia, falta de ar, tiragem",
+              "Confusão mental, sonolência",
+              "Tontura, fraqueza, síncope",
+              "Dor torácica, palpitações",
+              "Náuseas, vômitos",
+              "Agitação, ansiedade"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/associated-signs-and-symptoms"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 70,
+      "payload": {
+        "items": [
+          {
+            "id": "afericao-da-pa-com-esfigmomanometro",
+            "title": "Aferição da PA com esfigmomanômetro",
+            "subtitle": "02:45",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "afericao-da-temperatura-axilar-e-timpanica",
+            "title": "Aferição da temperatura (axilar e timpânica)",
+            "subtitle": "03:10",
+            "description": "",
+            "image": "../assets/sinais-vitais/parametro_temperatura_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "contagem-da-frequencia-respiratoria",
+            "title": "Contagem da frequência respiratória",
+            "subtitle": "01:50",
+            "description": "",
+            "image": "../assets/sinais-vitais/parametro_frequencia_respiratoria_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "uso-do-oximetro-de-pulso-spo",
+            "title": "Uso do oxímetro de pulso (SpO₂)",
+            "subtitle": "01:35",
+            "description": "",
+            "image": "../assets/sinais-vitais/parametro_pulso_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "avaliacao-da-dor-escala-numerica",
+            "title": "Avaliação da dor (escala numérica)",
+            "subtitle": "01:25",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 80,
+      "payload": {
+        "items": [
+          {
+            "id": "diretrizes-brasileiras-de-monitorizacao-de-sinais-vitais",
+            "title": "Diretrizes brasileiras de monitorização de sinais vitais",
+            "subtitle": "COFEN/COREN, 2023",
+            "description": "",
+            "image": "../assets/sinais-vitais/hero_sinais_vitais_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "monitorizacao-de-sinais-vitais-em-pacientes-criticos",
+            "title": "Monitorização de sinais vitais em pacientes críticos",
+            "subtitle": "Revista Brasileira de Enfermagem, 2023",
+            "description": "",
+            "image": "../assets/sinais-vitais/hero_sinais_vitais_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "precisao-e-confiabilidade-de-equipamentos",
+            "title": "Precisão e confiabilidade de equipamentos",
+            "subtitle": "Rev. Latino-Am. Enfermagem, 2022",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "clinical-attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Atenção clínica",
+      "priority": 10,
+      "payload": {
+        "groups": [
+          {
+            "tone": "positive",
+            "title": "Cuidados prioritários",
+            "items": [
+              "Avaliar todos os sinais vitais de forma sistemática",
+              "Utilizar técnica correta e equipamentos calibrados",
+              "Registrar valores e horário da aferição",
+              "Identificar e comunicar alterações precocemente",
+              "Ajustar frequência conforme condição do paciente"
+            ]
+          },
+          {
+            "tone": "danger",
+            "title": "Avoid Or Monitor",
+            "items": [
+              "Aferições incompletas ou fora da frequência",
+              "Equipamentos descalibrados ou inadequados",
+              "Registro incompleto ou ilegível",
+              "Interpretação isolada dos parâmetros"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/clinical-attention"
+    },
+    {
+      "module_id": "warning-signs",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Sinais de alerta",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": [
+              "Temperatura < 35 °C ou > 38,5 °C",
+              "FC < 50 bpm ou > 120 bpm",
+              "FR < 8 irpm ou > 24 irpm",
+              "PA sistólica < 90 mmHg ou > 180 mmHg",
+              "SpO₂ < 90%",
+              "Dor intensa (≥ 7 na escala numérica)",
+              "Alteração súbita de qualquer parâmetro"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/warning-signs"
+    },
+    {
+      "module_id": "monitoring-frequency",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "Frequência de monitorização",
+      "priority": 30,
+      "payload": {
+        "columns": [
+          {
+            "key": "clinical_state",
+            "label": "Clinical State"
+          },
+          {
+            "key": "frequency",
+            "label": "Frequency"
+          }
+        ],
+        "rows": [
+          {
+            "clinical_state": "Estável / Baixo risco",
+            "frequency": "A cada 8 a 12 horas"
+          },
+          {
+            "clinical_state": "Moderado",
+            "frequency": "A cada 4 a 6 horas"
+          },
+          {
+            "clinical_state": "Instável / Alto risco",
+            "frequency": "A cada 15 a 60 minutos ou contínuo"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/monitoring-frequency"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "fluxograma-de-sinais-vitais",
+            "title": "Fluxograma de sinais vitais",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/sinais-vitais/hero_sinais_vitais_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "tabela-de-valores-de-referencia",
+            "title": "Tabela de valores de referência",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "checklist-de-monitorizacao",
+            "title": "Checklist de monitorização",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/sinais-vitais/parametro_frequencia_monitorizacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "registro-de-sinais-vitais",
+            "title": "Registro de sinais vitais",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/sinais-vitais/hero_sinais_vitais_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "guia-rapido-de-interpretacao",
+            "title": "Guia rápido de interpretação",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/sinais-vitais.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/sinais-vitais.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/sinais-vitais.provenance.json"
+}

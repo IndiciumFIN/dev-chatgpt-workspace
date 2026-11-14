@@ -1,0 +1,224 @@
+{
+  "context_package": {
+    "package_id": "CP-2026-0005",
+    "generated_at": "2026-09-02T20:12:00-03:00",
+    "task": "Rascunhar SAE para paciente 88412",
+    "identity": {
+      "agent_slug": "sae-copilot",
+      "user_role": "RN",
+      "encounter_ref": "fhir:Encounter/98321"
+    },
+    "twin_snapshot": {
+      "patient_ref": "fhir:Patient/88412",
+      "events": [
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "score",
+          "label": "Escala de Morse",
+          "value": "65 — risco alto",
+          "valid_from": "2026-09-02T20:00:00-03:00",
+          "valid_to": null,
+          "source": "avaliação de enfermagem (FHIR Observation)",
+          "confidence": 0.95,
+          "cko_ref": "cko://procedures/fall-prevention",
+          "fhir_ref": "fhir:Observation/morse-88412-0910"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "medication",
+          "label": "Varfarina",
+          "value": "5 mg/dia — anticoagulante (INR 2.8)",
+          "valid_from": "2026-08-30T08:00:00-03:00",
+          "valid_to": null,
+          "source": "prescrição médica (FHIR MedicationRequest)",
+          "confidence": 1.0,
+          "cko_ref": "cko://medications/varfarina"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "condition",
+          "label": "Pneumonia comunitária",
+          "value": "em tratamento — melhora parcial",
+          "valid_from": "2026-08-29T14:00:00-03:00",
+          "valid_to": null,
+          "source": "diagnóstico médico (FHIR Condition)",
+          "confidence": 0.9,
+          "cko_ref": "cko://diseases/pneumonia-comunitaria"
+        },
+        {
+          "twin_ref": "fhir:Patient/88412",
+          "event_type": "risk",
+          "label": "Risco de queda agravado",
+          "value": "anticoagulante em uso — queda implica risco de sangramento",
+          "valid_from": "2026-09-02T20:05:00-03:00",
+          "valid_to": null,
+          "source": "computado: sae-copilot DEC-2026-0001 (PatientTwin v3)",
+          "confidence": 0.86,
+          "cko_ref": "cko://medications/varfarina"
+        }
+      ],
+      "braden": 14
+    },
+    "knowledge_refs": [
+      "cko://procedures/pressure-injury-prevention",
+      "cko://procedures/fall-prevention",
+      "cko://medications/varfarina"
+    ],
+    "evidence_refs": [
+      "Escala de Morse",
+      "Varfarina",
+      "Pneumonia comunitária",
+      "Risco de queda agravado"
+    ],
+    "policies_resolved": [
+      "POL-001",
+      "POL-004",
+      "POL-006",
+      "POL-007",
+      "POL-008"
+    ],
+    "tools_authorized": [
+      "corpus:ckos.json"
+    ],
+    "temporal_state": {
+      "now": "2026-09-02T20:12:00-03:00",
+      "data_freshness": "15 min"
+    },
+    "risk_flags": [
+      "Risco de queda agravado"
+    ],
+    "integrity": {
+      "complete": true,
+      "current": true,
+      "authorized": true,
+      "relevant": true,
+      "uncontaminated": true,
+      "consistent": true,
+      "sufficient": true
+    },
+    "integrity_gaps": [],
+    "package_hash": "29b1adc69bd96d85…"
+  },
+  "draft": {
+    "nursing_diagnoses": [
+      {
+        "nanda_code": "00047",
+        "label": "Risco de queda",
+        "related_factors": [
+          "anticoagulação em uso (Varfarina)",
+          "escore de Morse 65 — risco alto"
+        ],
+        "source_cko_refs": [
+          "cko://procedures/fall-prevention",
+          "cko://medications/varfarina"
+        ]
+      },
+      {
+        "nanda_code": "00248",
+        "label": "Risco de lesão por pressão",
+        "related_factors": [
+          "Braden 14 — risco moderado"
+        ],
+        "source_cko_refs": [
+          "cko://procedures/pressure-injury-prevention"
+        ]
+      }
+    ],
+    "interventions": [
+      {
+        "nic_code": "6490",
+        "label": "Prevenção de quedas",
+        "priority": 1,
+        "source_cko_refs": [
+          "cko://procedures/fall-prevention"
+        ]
+      },
+      {
+        "nic_code": "0840",
+        "label": "Reposicionamento terapêutico",
+        "priority": 2,
+        "source_cko_refs": [
+          "cko://procedures/pressure-injury-prevention"
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "noc_code": "1902",
+        "label": "Comportamento de prevenção de queda",
+        "target": "0 quedas na internação",
+        "source_cko_refs": [
+          "cko://procedures/fall-prevention"
+        ]
+      }
+    ],
+    "safety_flags": [
+      "anticoagulante em uso — queda implica risco de sangramento"
+    ],
+    "citations_cko": [
+      "cko://procedures/pressure-injury-prevention",
+      "cko://procedures/fall-prevention",
+      "cko://medications/varfarina"
+    ]
+  },
+  "decision_record": {
+    "decision_id": "DEC-2026-0005",
+    "run_id": "RUN-2026-0005",
+    "agent_slug": "sae-copilot",
+    "agent_version": "0.3.0",
+    "applicable_policies": [
+      "POL-001",
+      "POL-004",
+      "POL-006",
+      "POL-007",
+      "POL-008"
+    ],
+    "cko_versions_used": [
+      {
+        "ref": "cko://procedures/fall-prevention",
+        "version": "1.0.0",
+        "hash": "bfa63187b5726726…"
+      },
+      {
+        "ref": "cko://medications/varfarina",
+        "version": "1.0.0",
+        "hash": "4531a852f19b3267…"
+      },
+      {
+        "ref": "cko://procedures/pressure-injury-prevention",
+        "version": "1.0.0",
+        "hash": "e76236a091e063e3…"
+      }
+    ],
+    "model_version": "nurse-palm-v0-drafter",
+    "tool_calls": [
+      {
+        "tool": "corpus:retrieve",
+        "provenance_id": "PRV-0005-b",
+        "result_hash": "89f7fc853bc7c62b…"
+      }
+    ],
+    "input_state_digest": "29b1adc69bd96d85…",
+    "context_package_id": "CP-2026-0005",
+    "runtime_assertions": [
+      {
+        "assertion": "POL-006 context integrity complete",
+        "result": "passed"
+      },
+      {
+        "assertion": "POL-001 sem alteração de medicação",
+        "result": "passed"
+      },
+      {
+        "assertion": "POL-007 uncertainty completa",
+        "result": "passed"
+      },
+      {
+        "assertion": "POL-008 decision_id + provenance fechada",
+        "result": "passed"
+      }
+    ],
+    "action": "sae-draft gerado para revisão do enfermeiro (L1)",
+    "evidence_ref": "EV-NP-0005"
+  }
+}

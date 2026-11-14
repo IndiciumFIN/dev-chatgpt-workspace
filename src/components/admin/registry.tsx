@@ -7,6 +7,7 @@ import { listMedia, saveClinicalSheet, saveTool, setMemberRole, type SourcePerso
 import { LocaleDesk } from "@/components/admin/locale-desk";
 import { useStored } from "@/lib/stored";
 import { templateContracts } from "@/lib/template-contract";
+import { templateExamples } from "@/lib/template-examples";
 import { tools } from "@/lib/tools/catalog";
 
 export function ContentModule({ desk, tab: forced = "paginas" }: { desk: SourceTool[]; tab?: string }) {
@@ -83,7 +84,10 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
   const needle = search.trim().toLowerCase();
 
   useEffect(() => {
-    void listMedia().then(setFiles).catch((err: Error) => setMediaError(err.message));
+    // listMedia supplies only paths; no locale, alt text or rights approval can be inferred.
+    void listMedia()
+      .then((paths) => setFiles(paths.map((path) => ({ path, locale: "—", alt: "", status: "NOT_VERIFIED" }))))
+      .catch((err: Error) => setMediaError(err.message));
   }, []);
 
   return (
@@ -103,7 +107,7 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
               <thead><tr><th>Contrato ou token</th><th>Uso</th></tr></thead>
               <tbody>
                 {Object.entries(templateContracts).filter(([kind]) => kind.includes(needle)).map(([kind, contract]) => (
-                  <tr key={kind}><td data-label="Contrato">{kind}</td><td data-label="Uso">{contract.frame} · {contract.hero} · {contract.toc === "sidebar" ? "índice" : "sem índice"}</td></tr>
+                  <tr key={kind}><td data-label="Contrato">{kind}</td><td data-label="Uso">{templateExamples.find((example) => example.kind === kind)?.frame ?? "sem exemplo"} · {contract.hero} · {contract.toc === "sidebar" ? "índice" : "sem índice"}</td></tr>
                 ))}
                 {tokens.filter((token) => token.name.toLowerCase().includes(needle)).map((token) => <tr key={token.name}><td data-label="Token">{token.name}</td><td data-label="Uso">{token.hex} · {token.role}</td></tr>)}
               </tbody>

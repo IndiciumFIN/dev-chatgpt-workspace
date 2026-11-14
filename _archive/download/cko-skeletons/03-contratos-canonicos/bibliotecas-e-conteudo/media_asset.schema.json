@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/media_asset.schema.json",
+  "title": "CKO | media_asset",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "original_source_ref",
+    "sha256",
+    "media_type",
+    "rights",
+    "alt_key",
+    "fidelity",
+    "variants",
+    "accessibility_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "original_source_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "image",
+        "video",
+        "audio",
+        "3d",
+        "svg",
+        "dataset",
+        "diagram"
+      ]
+    },
+    "rights": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "ALLOWED",
+        "RESTRICTED",
+        "LICENSED"
+      ]
+    },
+    "alt_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "extended_description_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fidelity": {
+      "type": "string",
+      "enum": [
+        "V0",
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ]
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "uri",
+          "format",
+          "width",
+          "height",
+          "sha256"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "avif",
+              "svg",
+              "webp",
+              "png",
+              "jpg",
+              "mp4",
+              "webm",
+              "glb",
+              "csv"
+            ]
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "accessibility_status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "license_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "creator_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "medical_validation_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publication_allowlist": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

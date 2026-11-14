@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "FIND-ADMIN-DECISION-UX-20261031",
+  "date": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "source": "Owner observed absence of Review, Edit, Approve and Approve-with-reservations actions; continuation of existing owner approval recorded in PR #26.",
+  "severity": "P1",
+  "type": "USABILITY_AND_GOVERNANCE_GAP",
+  "state": "CANDIDATE_TESTED_NOT_KERNEL_ADMITTED",
+  "relatedWos": [
+    "WO-ADM-001",
+    "WO-PMO-001",
+    "WO-HOM-001"
+  ],
+  "issue": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25",
+  "approvedContinuityEvidence": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/blob/plan/pmokernel-finalization-20261031/registers/governance/approval-pmokernel-audit-20261031.v1.json",
+  "policy": "FIND -> policy -> validator -> TASK -> WO -> Kernel admission -> tests -> audit -> authorized promotion",
+  "existingImplementation": {
+    "branch": "fix/governed-activities-cli-20261026",
+    "files": [
+      "src/lib/governance/decision-draft.ts",
+      "src/lib/governance/decision-draft.test.ts",
+      "src/components/admin/governed-review-panel.tsx",
+      "src/components/admin/pmo-panel.tsx",
+      "src/styles/admin-console.css",
+      "scripts/test-admin-console.mjs"
+    ],
+    "behavior": "Governed review UI preparing local non-binding drafts, displaying previously recorded approval; no remote persistence and no fresh owner approval required.",
+    "status": "CI_TESTED"
+  },
+  "requiredForRealDecisions": [
+    "Formal Kernel admission interface and authoritative adapter (no parallel approval system)",
+    "Authenticated actor/role and segregation of duties",
+    "Versioned immutable decision event, SHA and expiry checks, server-side anti-replay",
+    "Audit log and reliable durable write, rejected by default when unavailable",
+    "Independent verification and authorized rollout"
+  ],
+  "prohibited": [
+    "Do not treat local draft or click as an approval",
+    "Do not update production database or GitHub automatically from browser",
+    "Do not change WO-HOM-001 HOLD_HUMAN without formal admission",
+    "Do not merge protected main without authorized release"
+  ],
+  "acceptance": [
+    "Visible review and pre-recorded owner approval with source",
+    "Four proposal choices with validation and reservations",
+    "No claim that decisions were submitted, signed or promoted",
+    "Typecheck, negative unit tests, static admin gate and build green",
+    "All decisions and test results persisted via GitHub commit evidence",
+    "WO and evidence search use real local PMO data and prevent cross-WO stale references",
+    "All selectors have labels/help text, keyboard-friendly native controls and candidate tests"
+  ],
+  "kernelAdmission": "NOT_VERIFIED",
+  "releaseGate": "HOLD_HUMAN",
+  "verifiedEvidence": {
+    "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41220932460",
+    "commit": "974f61045df2e09269260cf8ef4c6c847a1bbf37",
+    "result": "SUCCESS",
+    "checks": [
+      "Admin contract checks PASS including visibility and no false persistence",
+      "TypeScript typecheck PASS",
+      "npm test PASS (includes 9 negative decision-draft unit tests)",
+      "npm run build:spa PASS"
+    ],
+    "productionImpact": "NONE_FROM_THIS_CHANGE",
+    "vercelPreview": {
+      "state": "READY",
+      "commit": "974f61045df2e09269260cf8ef4c6c847a1bbf37",
+      "deploymentId": "dpl_BNVGE4Ae15bfazgbAGUmgxbv3vtY",
+      "url": "https://dev-chatgpt-workspace-dscm3fwxc-leivisml-7739s-projects.vercel.app",
+      "note": "Preview READY is a build result, not a browser E2E or authorized production release."
+    },
+    "kernelAdmission": "NOT_VERIFIED",
+    "latestCi": {
+      "result": "SUCCESS",
+      "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41221085087",
+      "commit": "784e6468bbb68ed1cd49359cec6f72b807380e40"
+    }
+  },
+  "enhancements": {
+    "version": "1.1.0-candidate",
+    "date": "2026-10-31",
+    "implementation": [
+      "Search locally over real PMO WOs by ID, title, status, owner, priority, criteria and next action (accent/case-insensitive)",
+      "Explicit labels and help text for work-order search, selection, source search, evidence selection and URL",
+      "Dropdowns populated only from the versioned PMO queue and scoped governance links",
+      "Evidence selection fills the URL without validating admission or compliance",
+      "Changing the WO clears reason, reservations and evidence to prevent stale cross-WO references",
+      "Context insertion quotes criteria and next action with independent-review warning",
+      "Accessible focus, status feedback and responsive layout using existing CE Design System tokens"
+    ],
+    "sourceFiles": [
+      "registers/pmo/queue.v1.json",
+      "registers/governance/find-approval-ux-20261031.v1.json"
+    ],
+    "sourceBranch": "fix/governed-activities-cli-20261026",
+    "codeFiles": [
+      "src/lib/governance/review-source-catalog.ts",
+      "src/lib/governance/review-source-catalog.test.ts",
+      "src/components/admin/governed-review-panel.tsx",
+      "src/styles/admin-console.css",
+      "scripts/test-admin-console.mjs"
+    ],
+    "invariant": "Search results are local suggestions; do not infer formal evidence validity, Kernel admission or authorization; user approval already recorded, no repeat.",
+    "verifiedCI": {
+      "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41222029052",
+      "result": "SUCCESS",
+      "headCommit": "19f5980baa06d167ad62cffac2eca12aaf25749c",
+      "checks": [
+        "30 static admin invariants PASS",
+        "TypeScript PASS",
+        "npm test PASS",
+        "SPA build PASS",
+        "Search/catalog tests exercise actual versioned PMO queue; 10 tests PASS"
+      ],
+      "caveats": [
+        "No browser E2E or independent accessibility review",
+        "No durable write and no authenticated signed decision",
+        "Deploy of later changes needs separate verification"
+      ]
+    }
+  }
+}

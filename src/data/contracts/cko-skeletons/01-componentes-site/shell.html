@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Shell oficial · Esqueleto CKO</title>
+<meta name="description" content="Shell oficial">
+<style>
+/* === TOKENS OFICIAIS (espelho de src/styles.css) === */
+:root{
+  --font-sans:Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;
+  --color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;
+  --color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;
+  --color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;
+  --color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:var(--color-canvas);
+  font-family:var(--font-sans);color:var(--color-body);line-height:1.5;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;
+  z-index:9999;padding:10px;border-radius:4px}
+.skip-link:focus{top:3px}
+
+/* Cabeçalho canônico (master data) */
+.cko-masterhead{
+  background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));
+  color:#fff;padding:22px 24px;border-radius:12px;margin:18px auto;
+  width:min(1380px,calc(100% - 40px));
+}
+.cko-masterhead .eyebrow{
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:#bbd8ff;font-weight:800;
+}
+.cko-masterhead h1{
+  font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);
+  margin:6px 0 4px;letter-spacing:-.03em;line-height:1.15;
+}
+.cko-masterhead .meta{
+  font-size:12px;color:#cfdff5;display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;
+}
+.cko-masterhead .meta span b{color:#fff;font-weight:700}
+
+/* Container principal */
+.cko-wrap{width:min(1380px,calc(100% - 40px));margin:0 auto;padding-bottom:48px}
+
+/* Painel padrão */
+.cko-panel{
+  background:var(--color-paper);border:1px solid var(--color-line);
+  border-radius:11px;box-shadow:0 8px 22px #1433600d;padding:18px;margin:14px 0;
+}
+.cko-panel h2{
+  font-size:18px;color:var(--color-navy-deep);margin:0 0 10px;
+  letter-spacing:-.02em;font-weight:850;
+}
+.cko-panel h3{
+  font-size:14px;color:var(--color-navy);margin:14px 0 6px;font-weight:800;
+}
+.cko-muted{color:var(--color-muted);font-size:12px}
+
+/* Bloco TODO — marca o que ainda precisa ser preenchido */
+.todo{
+  background:#fff8e9;border:1px solid #e5ae29;border-left:4px solid #d49a13;
+  color:#79530d;padding:10px 14px;border-radius:8px;font-size:12px;margin:8px 0;
+}
+.todo strong{color:#5a3f06}
+.todo code{
+  background:#fff;border-radius:3px;padding:1px 5px;font-family:ui-monospace,monospace;
+}
+
+/* Tabela canônica */
+.cko-table{border-collapse:collapse;width:100%;font-size:12px;background:var(--color-paper)}
+.cko-table th{
+  background:var(--color-ice);font-weight:800;color:var(--color-navy);
+  text-align:left;padding:10px 12px;white-space:nowrap;border:1px solid var(--color-line);
+}
+.cko-table td{
+  padding:9px 12px;border:1px solid var(--color-line);vertical-align:top;
+}
+.cko-table .mono{font-family:ui-monospace,monospace;font-size:11px}
+
+/* Status badges */
+.status{
+  display:inline-block;padding:3px 9px;border-radius:14px;
+  font-size:11px;font-weight:750;border:1px solid var(--color-line);
+  background:var(--color-ice);color:var(--color-navy);
+}
+.status.hold{background:#fff2d9;border-color:#ecd49f;color:#825400}
+.status.candidate{background:var(--color-stage);color:var(--color-muted)}
+.status.released{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+
+/* Grid para preview */
+.preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin-top:14px;
+}
+.preview-card{
+  background:var(--color-pane);border:1px dashed var(--color-line);
+  border-radius:8px;padding:14px;min-height:120px;
+}
+.preview-card .label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-muted);margin-bottom:6px;
+}
+
+/* Rodapé */
+.cko-footer{
+  text-align:center;padding:18px;border-top:1px solid var(--color-line);
+  color:var(--color-muted);font-size:11px;margin-top:24px;
+}
+
+@media(max-width:770px){
+  .cko-masterhead{padding:16px}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .cko-masterhead{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="cko-masterhead">
+  <div class="eyebrow">CKO · Esqueleto canônico · Componentes de Site</div>
+  <h1>Shell oficial</h1>
+  <div class="meta">
+    <span><b>canonical_id:</b> <code>CMP-SHELL</code></span>
+    <span><b>schema_version:</b> 0.1.0</span>
+    <span><b>status:</b> <span class="status candidate">CANDIDATE</span></span>
+    <span><b>updated_at:</b> 2026-10-23</span>
+  </div>
+</header>
+
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<section class="cko-panel">
+  <h2>Shell oficial — anatomia</h2>
+  <p class="cko-muted">O Shell é o container canônico de toda página. NUNCA recriar — apenas importar de <code>src/components/site/shell.tsx</code>.</p>
+  <p class="cko-muted">Composição (top → bottom):</p>
+  <ol>
+    <li><strong>Skip link</strong> — primeiro elemento focável, <code>href="#conteudo"</code>.</li>
+    <li><strong>a11y-bar</strong> — faixa navy com: A+, A−, Contraste, Modo escuro, Imprimir, idioma.</li>
+    <li><strong>site-header</strong> — logo/brand, navegação principal, login/subscribe.</li>
+    <li><strong>main#conteudo</strong> — conteúdo da página (hero, workspace, etc.).</li>
+    <li><strong>site-footer</strong> — provenance, copyright, disclaimer.</li>
+  </ol>
+</section>
+
+<section class="cko-panel">
+  <h2>a11y-bar (toolbar de acessibilidade)</h2>
+  <p class="cko-muted">Fundo navy, 36px de altura, overflow-x:auto. Botões com borda translúcida branca.</p>
+  <div style="display:flex;align-items:center;gap:7px;min-height:36px;background:var(--color-navy);color:#fff;padding:4px 22px;border-radius:8px;flex-wrap:wrap">
+    <span style="margin-right:auto;font-weight:800;font-size:12px">🇧🇷 Português</span>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer">A+</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer">A−</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer">Contraste</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer">Modo escuro</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer">Imprimir</button>
+  </div>
+</section>
+
+<section class="cko-panel">
+  <h2>site-header</h2>
+  <div style="background:#fff;box-shadow:0 2px 6px #13284b12;border-bottom:1px solid var(--color-line);border-radius:8px">
+    <div style="max-width:1450px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px 20px;min-height:60px">
+      <div style="display:flex;align-items:center;gap:9px;color:var(--color-navy);font-weight:850">
+        <div style="width:39px;height:39px;background:var(--color-navy);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800">Ce</div>
+        <div><div style="font-size:15px;line-height:1.15">Calculadoras<small style="display:block;font-size:12px;font-weight:600">de Enfermagem</small></div></div>
+      </div>
+      <nav style="display:flex;gap:18px;align-items:center">
+        <a style="font-size:12px;color:var(--color-slate)" href="#">Início</a>
+        <a style="font-size:12px;color:var(--color-slate)" href="#">Bibliotecas</a>
+        <a style="font-size:12px;color:var(--color-navy);font-weight:800" href="#">Contratos</a>
+        <a style="font-size:12px;color:var(--color-slate)" href="#">Agentes</a>
+        <a style="border:1px solid var(--color-line);padding:7px 12px;border-radius:7px;font-size:12px;color:var(--color-slate)" href="#">Governança</a>
+        <a style="background:var(--color-navy);color:white;padding:7px 12px;border-radius:7px;font-weight:800;font-size:12px" href="#">Pendências</a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<section class="cko-panel">
+  <h2>site-footer</h2>
+  <div style="text-align:center;padding:19px;border-top:1px solid var(--color-line);color:var(--color-muted);font-size:11px">
+    Calculadoras de Enfermagem · [nome da página] · Não publicada
+  </div>
+</section>
+<div class="todo"><strong>TODO antes de publicar:</strong><ul><li>Confirmar com produto se há novo item no menu principal</li><li>Validar alt text da marca (logo) — usar marca registrada se aplicável</li><li>Definir se há cookie banner — hoje não está no Shell original</li></ul></div>
+</main>
+
+<footer class="cko-footer">
+  Calculadoras de Enfermagem · Esqueleto CKO · Página local para preenchimento · Não publicada
+</footer>
+</body>
+</html>

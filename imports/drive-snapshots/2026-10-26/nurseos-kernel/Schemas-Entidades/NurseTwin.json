@@ -1,0 +1,64 @@
+{
+  "properties": {
+    "assigned_unit_code": {
+      "type": "string"
+    },
+    "burnout_indicator": {
+      "enum": [
+        "low",
+        "moderate",
+        "high"
+      ],
+      "type": "string"
+    },
+    "certifications": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "fatigue_index": {
+      "type": "number"
+    },
+    "hours_current_shift": {
+      "type": "number"
+    },
+    "nas_workload_score": {
+      "type": "number"
+    },
+    "overtime_hours_30d": {
+      "type": "number"
+    },
+    "patient_ratio": {
+      "type": "number"
+    },
+    "pseudonym": {
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "RN",
+        "TECH",
+        "NURSE_MANAGER"
+      ],
+      "type": "string"
+    },
+    "skills_matrix_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "off_duty",
+        "archived"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "NurseTwin"
+}

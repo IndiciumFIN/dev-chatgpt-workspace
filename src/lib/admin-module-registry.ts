@@ -2,7 +2,7 @@
  * Interface consumidora: src/components/admin/admin-module-workspace.tsx
  */
 export type AdminGroupId = 'G01'|'G02'|'G03'|'G04'|'G05'|'G06'|'G07';
-export type AdminModuleId = 'M02'|'M03'|'M04'|'M05'|'M06'|'M07'|'M08'|'M09'|'M10'|'M11'|'M12'|'M13'|'M14'|'M15'|'M16'|'M17'|'M18'|'M19'|'M20'|'M21'|'M22';
+export type AdminModuleId = 'M01'|'M02'|'M03'|'M04'|'M05'|'M06'|'M07'|'M08'|'M09'|'M10'|'M11'|'M12'|'M13'|'M14'|'M15'|'M16'|'M17'|'M18'|'M19'|'M20'|'M21'|'M22';
 export type AdminSurface = 'overview'|'pmo'|'governance'|'content'|'templates'|'sources'|'publication'|'command';
 export interface AdminGroup {id:AdminGroupId; title:string; description:string}
 export interface AdminModule {
@@ -27,6 +27,7 @@ export const adminGroups:readonly AdminGroup[] = [
   {id:'G07',title:'Qualidade e Auditoria',description:'Testes, validação, homologação, avaliações e auditoria independente'},
 ];
 export const adminModules:readonly AdminModule[] = [
+  {id:'M01',group:'G01',title:'Painel Executivo e Visão Integrada',purpose:'Consolidar indicadores verificáveis, riscos, decisões pendentes e situação dos módulos sem estimar conclusões.',submodules:['Visão institucional','Indicadores derivados','Gates e bloqueios','Painel de decisões','Cobertura por módulo','Relatórios executivos'],receives:['M03','M14','M20','M21'],sends:['M02','M04'],surface:'overview',previewScope:'Resumo derivado de registros versionados; não é telemetria ao vivo nem autorização de mudanças.'},
   {id:'M02',group:'G01',title:'Estratégia e Planejamento',purpose:'Definir objetivos, prioridades, metas e planejamento estratégico.',submodules:['Objetivos e metas','Portfólio estratégico','Roadmap','Orçamento e indicadores','Desempenho'],receives:['M04','M17'],sends:['M03','M22']},
   {id:'M03',group:'G02',title:'PMO e Projetos',purpose:'Controlar trabalhos autorizados, ordem da fila, dependências, WOs e progresso.',submodules:['Portfólio de projetos','Programas e waves','Backlog e tarefas','Work Orders','Kanban e calendário','Dependências e checkpoints','Handoffs'],receives:['M02','M04','M14','M21'],sends:['M05','M06','M08','M15','M16','M19'],surface:'pmo',previewScope:'Fila registrada no GitHub em leitura; não é orquestrador vivo nem executor.'},
   {id:'M04',group:'G01',title:'Governança, Riscos e Compliance',purpose:'Administrar políticas, riscos, RCM, controles e decisões formais.',submodules:['Governança corporativa','Processos e políticas','Riscos e controles','Matriz RCM','Decisões e exceções','COSO/COBIT'],receives:['M02','M17','M21'],sends:['M03','M05','M14','M19','M20'],surface:'governance',previewScope:'Leitura do registro FIND versionado; não aprova política ou controle.'},

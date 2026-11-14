@@ -1,0 +1,48 @@
+{
+  "properties": {
+    "corrective_action": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "detected_by": {
+      "enum": [
+        "guardrail",
+        "runtime_assertion",
+        "human",
+        "audit"
+      ],
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "icps_category": {
+      "type": "string"
+    },
+    "run_ref": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "near_miss",
+        "no_harm",
+        "minor_harm",
+        "serious"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "open",
+        "investigating",
+        "resolved"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "SafetyEvent"
+}

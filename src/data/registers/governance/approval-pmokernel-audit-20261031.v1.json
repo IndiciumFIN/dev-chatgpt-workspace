@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-APPROVAL-PMOKERNEL-AUDIT-20261031",
+  "date": "2026-10-31",
+  "scope": "IndiciumFIN/dev-chatgpt-workspace",
+  "state": "RECORDED",
+  "decision": "APPROVED_FOR_PERSISTENCE_AND_CONTINUED_VERIFICATION",
+  "approvalProvenance": {
+    "source": "Explicit project-owner instruction in ChatGPT conversation on 2026-10-31: 'Aprovado, register tudo no github e assegurar o registro e me avisar'",
+    "attestationLevel": "CONVERSATION_DECLARATION_NOT_CRYPTOGRAPHIC_SIGNED",
+    "identityVerification": "NOT_PERFORMED",
+    "constraint": "This records permission to persist evidence and continue verification, not corporate Kernel admission or release authorization."
+  },
+  "approvedScope": [
+    "Persist findings, plans, tests, audit decisions and remaining gaps as versioned GitHub evidence",
+    "Record and verify hardening corrections and candidate regressions in PR #26",
+    "Keep PMO status and cross-source coverage explicit and auditable",
+    "Notify user after confirming repository persistence"
+  ],
+  "notApproved": [
+    "Do not merge PR #26 or any draft into main",
+    "Do not modify Supabase production, secrets, access roles, rulesets or release protections",
+    "Do not close issues or delete branches under proposed decommission register",
+    "Do not create or assume signed corporate Kernel admission",
+    "Do not mark WO-HOM-001 completed or claim 100% audit compliance"
+  ],
+  "references": {
+    "pullRequest": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26",
+    "centralIssue": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25",
+    "candidateBranch": "plan/pmokernel-finalization-20261031",
+    "candidateHeadBeforeApproval": "249231397f5b4ac56190c986dfe150b5a6e3c68e",
+    "pmoRevision20Branch": "fix/governed-activities-cli-20261026",
+    "sourceIntake": "registers/pmo/cross-source-pending-intake.v1.json",
+    "tasksRegister": "docs/PLAN-TASKS-PMOKERNEL-v0.1.0.json",
+    "plan": "docs/PLAN-PMOKERNEL-FINALIZATION-v0.1.0.md",
+    "dataKernelScenarios": "docs/AUDIT-DATA-KERNEL-SCENARIOS-v0.1.0.md",
+    "decommission": "docs/DECOMMISSION-REGISTER-v0.1.0.json",
+    "securityPolicy": "registers/governance/audit-policy.v1.json",
+    "gateScripts": [
+      "scripts/check-pending-coverage.mjs",
+      "scripts/check-register-schema.mjs"
+    ],
+    "candidateWorkflow": ".github/workflows/pmo-candidate-unit-regressions.yml",
+    "releaseWorkflowPendingActivation": "ci/pending-coverage-gate.yml"
+  },
+  "verifiedEvidence": {
+    "latestCandidateRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41219103717",
+    "candidateRunConclusion": "SUCCESS",
+    "candidateTests": {
+      "coverage": {
+        "pass": 12,
+        "total": 12
+      },
+      "schema": {
+        "pass": 10,
+        "total": 10
+      },
+      "dataKernel": {
+        "pass": 17,
+        "total": 17
+      },
+      "aggregate": {
+        "pass": 39,
+        "total": 39
+      }
+    },
+    "realSourceVerification": {
+      "pmoWos": 10,
+      "plannedTasks": 35,
+      "simuladosPendencies": 13,
+      "openIssuesInSnapshot": 18,
+      "totalPendingInSnapshot": 31,
+      "orphanPendencies": 0,
+      "wosWithoutTask": 0,
+      "openCoverageGaps": 4,
+      "coverageGateExpectedExitCode": 1,
+      "coverageGateResult": "FAIL_CLOSED_ON_REAL_OPEN_GAPS",
+      "schemaGateResult": "PASS_ON_SNAPSHOT"
+    },
+    "integratedWorkflowRun": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41219103727",
+    "integratedWorkflowConclusion": "FAILURE",
+    "integratedWorkflowFailure": "Validar PMO canônico e histórico",
+    "limitation": "Candidate tests green != combined CI green, corporate Kernel admission, reviewed clinical content, DB permissions validation, or release."
+  },
+  "remainingGaps": [
+    {
+      "id": "GAP-01",
+      "state": "OPEN",
+      "action": "Reconcile each issue and Simulados finding to authoritative FIND/WO/validator/Kernel admission with verified lineage"
+    },
+    {
+      "id": "GAP-02",
+      "state": "OPEN",
+      "action": "Authorize and reconcile canonical PMO revision across main 18, editorial 19, governed 20 and preview 23"
+    },
+    {
+      "id": "GAP-03",
+      "state": "OPEN",
+      "action": "Verify exhaustive branches, PRs, Supabase and Drive coverage against authoritative sources"
+    },
+    {
+      "id": "GAP-04",
+      "state": "OPEN",
+      "action": "Resolve or explicitly assess dependency and exposed-answer RPC security risks with evidence and tests"
+    }
+  ],
+  "humanDependencies": [
+    "T0.002: Verified signed/authorized Kernel admission decision still missing",
+    "T0.001: PMO governance must choose canonical revision",
+    "T0.015: Dependabot/code scanning/secret scanning not measured, never report zero alerts",
+    "T0.016: PR #24 workflow approvals and conclusions require live verification",
+    "T0.012: Activate release coverage workflow only in governed sequence after gaps resolved",
+    "Decommission: proposed deletions/issue closures require separate authorization"
+  ],
+  "releaseGate": "HOLD_HUMAN",
+  "integrityPolicy": "Git commit and GitHub readback establish repository persistence; this file is not a signature or independent homologation.",
+  "ownerNotification": "OWNER_NOTIFIED_IN_CHAT_AFTER_READBACK",
+  "githubAcknowledgements": {
+    "centralIssueComment": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/25#issuecomment-6546025363",
+    "pullRequestComment": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/26#issuecomment-6546025805",
+    "originalRecordCommit": "ef9f85b95f6ef0a5f12d47390f67de1b1a4268a4",
+    "originalRecordBlobSha": "e3ee364a340fce6cd8fd61394a06290a6bacb100"
+  }
+}

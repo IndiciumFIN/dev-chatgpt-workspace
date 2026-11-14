@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:sbim-current-claim-profile:v1.0.0",
+  "title": "CKO SBIm Current Claim Profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "vaccine_ref",
+    "source",
+    "claims",
+    "governance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile_id": {
+      "type": "string"
+    },
+    "vaccine_ref": {
+      "type": "string"
+    },
+    "variant_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "type": "object"
+    },
+    "claims": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

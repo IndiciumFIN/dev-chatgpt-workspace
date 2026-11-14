@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vacinas:master:v1.0.0",
+  "title": "CKO Vacinas Master",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "identity",
+    "completeness",
+    "governance",
+    "source_authority",
+    "library",
+    "vaccine_objects",
+    "clinical_program_and_source_profiles",
+    "claims_and_reconciliation",
+    "products_and_regulatory",
+    "relationships",
+    "visual_assets",
+    "ui_ux",
+    "education_and_practice_resources",
+    "audit",
+    "known_gaps",
+    "anti_hallucination"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "cko_vaccine_domain_master"
+    },
+    "identity": {
+      "type": "object"
+    },
+    "completeness": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    },
+    "source_authority": {
+      "type": "object"
+    },
+    "library": {
+      "type": "object"
+    },
+    "vaccine_objects": {
+      "type": "object",
+      "required": [
+        "count",
+        "objects",
+        "readiness"
+      ],
+      "properties": {
+        "count": {
+          "const": 35
+        },
+        "objects": {
+          "type": "array",
+          "minItems": 35,
+          "maxItems": 35
+        },
+        "readiness": {
+          "type": "array",
+          "minItems": 35,
+          "maxItems": 35
+        }
+      },
+      "additionalProperties": false
+    },
+    "clinical_program_and_source_profiles": {
+      "type": "object"
+    },
+    "claims_and_reconciliation": {
+      "type": "object"
+    },
+    "products_and_regulatory": {
+      "type": "object"
+    },
+    "relationships": {
+      "type": "object"
+    },
+    "visual_assets": {
+      "type": "object"
+    },
+    "ui_ux": {
+      "type": "object"
+    },
+    "education_and_practice_resources": {
+      "type": "object"
+    },
+    "audit": {
+      "type": "object"
+    },
+    "known_gaps": {
+      "type": "array"
+    },
+    "anti_hallucination": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

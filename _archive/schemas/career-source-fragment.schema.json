@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Source Fragment Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "source_id",
+    "fact_index",
+    "fragment_kind",
+    "locator",
+    "locator_status",
+    "normalized_text",
+    "source_sha256",
+    "fragment_sha256",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "fact_index": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "fragment_kind": {
+      "enum": [
+        "PARAPHRASE_ANCHOR",
+        "DIRECT_EXCERPT",
+        "STRUCTURAL_LOCATOR"
+      ]
+    },
+    "locator": {
+      "type": "string"
+    },
+    "locator_status": {
+      "enum": [
+        "VERIFIED",
+        "HOLD_HUMAN"
+      ]
+    },
+    "normalized_text": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fragment_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "EVIDENCE_BOUND"
+      ]
+    }
+  }
+}

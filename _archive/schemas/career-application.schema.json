@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Application Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "participant_key",
+    "opportunity_kind",
+    "label",
+    "stage"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "participant_key": {
+      "type": "string",
+      "pattern": "^anon-[a-f0-9-]{36}$"
+    },
+    "opportunity_kind": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160
+    },
+    "stage": {
+      "enum": [
+        "SAVED",
+        "APPLIED",
+        "INTERVIEW",
+        "TECHNICAL_STAGE",
+        "OFFER",
+        "APPROVED",
+        "DECLINED",
+        "CLOSED"
+      ]
+    }
+  }
+}

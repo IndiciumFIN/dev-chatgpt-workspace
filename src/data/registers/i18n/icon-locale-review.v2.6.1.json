@@ -1,0 +1,2103 @@
+{
+  "version": "2.6.1",
+  "scope": "only local public backup",
+  "sourceBackup": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip",
+  "references": [
+    "https://www.w3.org/WAI/standards-guidelines/act/rules/97a4e1/2022-01-28/",
+    "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value",
+    "https://developers.google.com/fonts/docs/material_icons",
+    "https://firefox-source-docs.mozilla.org/code-quality/coding-style/rtl_guidelines.html"
+  ],
+  "finds": [
+    {
+      "id": "ICON-01",
+      "control": "fontGlyph",
+      "status": "FIXED_STATIC",
+      "reason": "Replace Latin-only visible font glyph according to script. Screen-reader action labels unchanged."
+    },
+    {
+      "id": "ICON-02",
+      "control": "rtlDocumentDirection",
+      "status": "FIXED_STATIC",
+      "reason": "Set root.dir by locale; visual mirroring not verified."
+    },
+    {
+      "id": "ICON-03",
+      "control": "focusColors",
+      "status": "HOLD_HUMAN",
+      "reason": "Focus color buttons announce hex code, not localized color and selection state."
+    },
+    {
+      "id": "ICON-04",
+      "control": "iconMirroring",
+      "status": "HOLD_VISUAL",
+      "reason": "Directional icons in RTL require review; logos and non-directional icons must not be mirrored."
+    },
+    {
+      "id": "ICON-05",
+      "control": "sourceOfTruth",
+      "status": "HOLD_HUMAN",
+      "reason": "Header vocabulary and other page controls differ; full localization not synchronized."
+    },
+    {
+      "id": "ICON-06",
+      "control": "a11yName",
+      "status": "HOLD_VISUAL",
+      "reason": "Accessible names / keyboard focus / contrast not browser-tested."
+    }
+  ],
+  "records": [
+    {
+      "locale": "pt-BR",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pt-BR",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "en",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "es",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "de",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "it",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "fr",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "fontDown",
+      "glyph": "अ",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "fontUp",
+      "glyph": "अ",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "hi",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "fontDown",
+      "glyph": "字",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "fontUp",
+      "glyph": "字",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "zh",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "fontDown",
+      "glyph": "أ",
+      "direction": "rtl",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "fontUp",
+      "glyph": "أ",
+      "direction": "rtl",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "dark",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "reset",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "search",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "language",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ar",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "rtl",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "fontDown",
+      "glyph": "あ",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "fontUp",
+      "glyph": "あ",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ja",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "fontDown",
+      "glyph": "А",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "fontUp",
+      "glyph": "А",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ru",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "fontDown",
+      "glyph": "가",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "fontUp",
+      "glyph": "가",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "ko",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "tr",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "nl",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "pl",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "sv",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "id",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "fontDown",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "fontUp",
+      "glyph": "A",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "vi",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "fontDown",
+      "glyph": "А",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "fontUp",
+      "glyph": "А",
+      "direction": "ltr",
+      "status": "STATIC_PATCH_REVIEW",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "contrast",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "dyslexia",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "dark",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "shortcuts",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "reset",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "search",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "language",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "accessibility",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "focusColor",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    },
+    {
+      "locale": "uk",
+      "control": "directionalIcons",
+      "glyph": null,
+      "direction": "ltr",
+      "status": "UNVERIFIED",
+      "humanApproved": false,
+      "evidence": "CE_PUBLIC_BACKUP_WORKTREE_v2.5.0.zip / src/components/site/shell.tsx; src/lib/header-i18n.ts"
+    }
+  ]
+}

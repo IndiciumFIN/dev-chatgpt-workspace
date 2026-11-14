@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nurse-os:slice-1:decision-record",
+  "title": "Decision Record (Evidence Graph v0, NOVO 10 / POL-008)",
+  "description": "Responde 'por que o agente tomou essa decisão?' sem expor chain-of-thought privado: a cadeia é decisão → política aplicada → conhecimento versionado → modelo versionado → asserções → ação.",
+
+  "type": "object",
+  "required": ["decision_id", "run_id", "agent_slug", "applicable_policies", "cko_versions_used", "model_version", "runtime_assertions", "action"],
+
+  "properties": {
+    "decision_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "agent_slug": {"type": "string"},
+    "agent_version": {"type": "string"},
+
+    "applicable_policies": {"type": "array", "items": {"type": "string"}, "description": "POL-… e versões vigentes na decisão"},
+
+    "cko_versions_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ref": {"type": "string", "description": "cko://domain/slug"},
+          "version": {"type": "string"},
+          "hash": {"type": "string"}
+        }
+      }
+    },
+
+    "model_version": {"type": "string"},
+
+    "tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool": {"type": "string"},
+          "provenance_id": {"type": "string"},
+          "result_hash": {"type": "string"}
+        }
+      }
+    },
+
+    "input_state_digest": {"type": "string", "description": "hash do Context Package — o que o modelo viu"},
+    "context_package_id": {"type": "string"},
+
+    "runtime_assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assertion": {"type": "string"},
+          "result": {"enum": ["passed", "triggered_escalation", "failed"]}
+        }
+      }
+    },
+
+    "action": {"type": "string"},
+    "outcome_ref": {"type": "string", "description": "preenchido pelo Outcome Engine quando existir (Fatia 2)"},
+    "evidence_ref": {"type": "string", "description": "evidência assinada correspondente (PolicyEvidence)"}
+  }
+}

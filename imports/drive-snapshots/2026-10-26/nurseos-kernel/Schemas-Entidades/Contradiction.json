@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "claim_a": {
+      "type": "object"
+    },
+    "claim_b": {
+      "type": "object"
+    },
+    "cko_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "contradiction_id": {
+      "type": "string"
+    },
+    "detected_at": {
+      "type": "string"
+    },
+    "detected_by": {
+      "type": "string"
+    },
+    "requires_human_review": {
+      "type": "boolean"
+    },
+    "resolution": {
+      "enum": [
+        "pending",
+        "source_authority",
+        "date_recency",
+        "jurisdiction",
+        "context_specific",
+        "both_true",
+        "human_adjudicated",
+        "unresolved"
+      ],
+      "type": "string"
+    },
+    "resolution_note": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "detected",
+        "resolving",
+        "resolved",
+        "escalated"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "Contradiction"
+}

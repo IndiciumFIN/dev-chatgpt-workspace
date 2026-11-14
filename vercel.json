@@ -1,5 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install --omit=dev --no-audit --no-fund"
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build:spa",
+  "env": {
+    "VITE_AUTH_ENABLED": "false"
+  }
 }

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/visualization.schema.json",
+  "title": "CKO | visualization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "chart_type",
+    "data_source_refs",
+    "unit_refs",
+    "accessible_table_ref",
+    "alt_summary_key",
+    "responsive_profile_ref",
+    "visual_precision_policy_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "chart_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unit_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "accessible_table_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alt_summary_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "responsive_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "visual_precision_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "render_export_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

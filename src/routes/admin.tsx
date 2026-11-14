@@ -1,23 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { AdminDesk } from "@/components/admin/shell";
-import { AreaFrame, AreaGuard } from "@/components/site/areas";
+import { createFileRoute } from '@tanstack/react-router';
+import { LocalWorkbenchPage } from '@/components/local/local-workbench-page';
 
-export const Route = createFileRoute("/admin")({
-  component: AdminPage,
-  head: () => ({
-    meta: [
-      { title: "Administração · Calculadoras de Enfermagem" },
-      { name: "robots", content: "noindex" },
-    ],
-  }),
+/** Local-only administrator for this isolated public-backup baseline. */
+export const Route = createFileRoute('/admin')({
+  component: LocalWorkbenchPage,
+  head: () => ({ meta: [{ title: 'Administração local · Calculadoras de Enfermagem' }, { name: 'robots', content: 'noindex, nofollow' }] }),
 });
-
-function AdminPage() {
-  return (
-    <AreaGuard allow="admin">
-      <AreaFrame role="admin">
-        <AdminDesk />
-      </AreaFrame>
-    </AreaGuard>
-  );
-}

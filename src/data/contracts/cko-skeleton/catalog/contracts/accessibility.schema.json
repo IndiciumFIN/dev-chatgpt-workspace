@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/accessibility.schema.json",
+  "title": "CKO | accessibility",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "target_standard",
+    "keyboard_contract_ref",
+    "focus_ref",
+    "contrast_test_ref",
+    "alt_text_ref",
+    "responsive_breakpoints",
+    "test_evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "target_standard": {
+      "type": "string",
+      "const": "WCAG_2_2_AA"
+    },
+    "keyboard_contract_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "focus_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contrast_test_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alt_text_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "responsive_breakpoints": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 320
+      },
+      "minItems": 4
+    },
+    "test_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reduced_motion_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "screenreader_test_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

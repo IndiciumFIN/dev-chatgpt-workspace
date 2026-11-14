@@ -1,0 +1,1177 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "doencas",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Doenças",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre doenças, síndromes, condições clínicas, sinais e sintomas, fatores de risco, avaliação de enfermagem e condutas de cuidado.",
+  "template_family": "knowledge-library",
+  "archetype_id": "diseases_knowledge_library",
+  "domain": {
+    "domain_id": "nursing",
+    "display_label": "Enfermagem"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Clínico"
+    },
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Baseado em evidências"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Doenças"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "disease-categories",
+          "nursing-conducts",
+          "triage-risk-clues",
+          "quick-access",
+          "educational-resources",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "clinical-attention",
+          "warning-signs",
+          "monitoring-frequency",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "classificacoes",
+        "label": "Classificações",
+        "status": "mapped",
+        "module_refs": [
+          "disease-categories"
+        ],
+        "selectors": [
+          {
+            "module_id": "disease-categories"
+          }
+        ]
+      },
+      {
+        "tab_id": "sinais-e-sintomas",
+        "label": "Sinais e Sintomas",
+        "status": "mapped",
+        "module_refs": [
+          "warning-signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "avaliacao",
+        "label": "Avaliação",
+        "status": "mapped",
+        "module_refs": [
+          "monitoring-frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "condutas",
+        "label": "Condutas",
+        "status": "mapped",
+        "module_refs": [
+          "nursing-conducts"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "nursing-conducts"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials",
+          "educational-resources"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "educacao-ao-paciente",
+        "label": "Educação ao Paciente",
+        "status": "mapped",
+        "module_refs": [
+          "educational-resources"
+        ],
+        "selectors": [
+          {
+            "module_id": "educational-resources"
+          }
+        ]
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/doencas/hero_doencas_transparent.png",
+          "alt": "Ilustração anatômica com pulmões, coração, cérebro, rins, pâncreas e elemento viral, representando diferentes grupos de doenças.",
+          "raw": {
+            "type": "multisystem_disease_illustration",
+            "asset_ref": "cropped_assets/hero_doencas_transparent.png",
+            "alt_text": "Ilustração anatômica com pulmões, coração, cérebro, rins, pâncreas e elemento viral, representando diferentes grupos de doenças.",
+            "visual_elements": [
+              "pulmões",
+              "coração",
+              "cérebro",
+              "rins",
+              "pâncreas",
+              "elemento viral"
+            ],
+            "provenance": {
+              "class": "B",
+              "note": "Descrição visual derivada da imagem; o asset foi recortado diretamente do screenshot atual."
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "definicao",
+                "title": "Definição",
+                "subtitle": "",
+                "description": "Condições clínicas que alteram de forma estrutural ou funcional o organismo.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "importancia",
+                "title": "Importância",
+                "subtitle": "",
+                "description": "Reconhecimento precoce e manejo adequado reduzem complicações e mortalidade.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "objetivo-do-cuidado",
+                "title": "Objetivo do cuidado",
+                "subtitle": "",
+                "description": "Promover estabilidade clínica, prevenir complicações, aliviar sintomas e melhorar a qualidade de vida.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "abrangencia",
+                "title": "Abrangência",
+                "subtitle": "",
+                "description": "Doenças agudas e crônicas prevalentes na atenção primária, secundária e terciária.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "id": "prevalencia",
+                "title": "Prevalência",
+                "subtitle": "",
+                "description": "Alta carga de morbidade no contexto sanitário atual.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "impacto-clinico",
+                "title": "Impacto clínico",
+                "subtitle": "",
+                "description": "Pode levar a limitações funcionais, internações e aumento de custos em saúde.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "fatores-associados",
+                "title": "Fatores associados",
+                "subtitle": "",
+                "description": "Idade, estilo de vida, fatores genéticos, comorbidades e determinantes sociais.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "abordagem-integral",
+                "title": "Abordagem integral",
+                "subtitle": "",
+                "description": "Cuidado centrado na pessoa, baseado em evidências e trabalho em equipe.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "disease-categories",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Categorias de doenças",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "cardiovasculares",
+            "title": "Cardiovasculares",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_cardiovasculares_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 28,
+            "items": [
+              "Hipertensão",
+              "IC",
+              "IAM",
+              "Arritmias e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "28 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "respiratorias",
+            "title": "Respiratórias",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_respiratorias_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 22,
+            "items": [
+              "Asma",
+              "DPOC",
+              "Pneumonia",
+              "Tuberculose e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "22 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "endocrinas-e-metabolicas",
+            "title": "Endócrinas e Metabólicas",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_endocrinas_metabolicas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 18,
+            "items": [
+              "Diabetes",
+              "Dislipidemias",
+              "Obesidade e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "18 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "neurologicas",
+            "title": "Neurológicas",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_neurologicas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 20,
+            "items": [
+              "AVC",
+              "Epilepsia",
+              "Demências",
+              "Cefaleias e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "20 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "renais-e-urinarias",
+            "title": "Renais e Urinárias",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_renais_urinarias_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 16,
+            "items": [
+              "DRC",
+              "ITU",
+              "Litíase renal e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "16 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "infecciosas",
+            "title": "Infecciosas",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/categoria_infecciosas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": 30,
+            "items": [
+              "Dengue",
+              "COVID-19",
+              "ITU",
+              "Hepatites e outras"
+            ],
+            "attributes": {
+              "visible_count_label": "30 condições"
+            },
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/disease-categories"
+    },
+    {
+      "module_id": "nursing-conducts",
+      "module_type": "card_grid",
+      "semantic_role": "intervention",
+      "title": "Condutas de enfermagem",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliacao-inicial",
+            "title": "Avaliação inicial",
+            "subtitle": "",
+            "description": "Coleta de dados, exame físico e identificação de prioridades.",
+            "image": "../assets/doencas/conduta_avaliacao_inicial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "estabilizacao",
+            "title": "Estabilização",
+            "subtitle": "",
+            "description": "Intervenções imediatas para estabilizar e prevenir complicações.",
+            "image": "../assets/doencas/conduta_estabilizacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "tratamento",
+            "title": "Tratamento",
+            "subtitle": "",
+            "description": "Administração de medicamentos e terapias prescritas.",
+            "image": "../assets/doencas/conduta_tratamento_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "educacao-e-adesao",
+            "title": "Educação e adesão",
+            "subtitle": "",
+            "description": "Orientações ao paciente e família para adesão ao tratamento.",
+            "image": "../assets/doencas/conduta_educacao_adesao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "prevencao-de-complicacoes",
+            "title": "Prevenção de complicações",
+            "subtitle": "",
+            "description": "Monitoramento e ações para reduzir riscos associados.",
+            "image": "../assets/doencas/conduta_prevencao_complicacoes_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          },
+          {
+            "id": "acompanhamento",
+            "title": "Acompanhamento",
+            "subtitle": "",
+            "description": "Avaliação contínua da evolução e ajustes no plano de cuidado.",
+            "image": "../assets/doencas/conduta_acompanhamento_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "Ver condições",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/nursing-conducts"
+    },
+    {
+      "module_id": "triage-risk-clues",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "Pistas de triagem e risco",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "verde-baixo-risco",
+            "title": "Verde - Baixo risco",
+            "subtitle": "",
+            "description": "Estável, sintomas leves, controle adequado.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "amarelo-risco-moderado",
+            "title": "Amarelo - Risco moderado",
+            "subtitle": "",
+            "description": "Sintomas persistentes ou fatores de risco associados.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "vermelho-alto-risco",
+            "title": "Vermelho - Alto risco",
+            "subtitle": "",
+            "description": "Instabilidade clínica ou sinais de agravamento.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/triage-risk-clues"
+    },
+    {
+      "module_id": "quick-access",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Acesso rápido",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "protocolos-clinicos",
+            "title": "Protocolos clínicos",
+            "subtitle": "",
+            "description": "Diretrizes e fluxos de atendimento",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "medicamentos-frequentes",
+            "title": "Medicamentos frequentes",
+            "subtitle": "",
+            "description": "Doses, vias e cuidados de enfermagem",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "exames-e-monitorizacao",
+            "title": "Exames e monitorização",
+            "subtitle": "",
+            "description": "Principais exames e parâmetros",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "cuidados-domiciliares",
+            "title": "Cuidados domiciliares",
+            "subtitle": "",
+            "description": "Orientações e segurança do paciente",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/quick-access"
+    },
+    {
+      "module_id": "educational-resources",
+      "module_type": "list_panel",
+      "semantic_role": "education",
+      "title": "Recursos educativos",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "planos-de-educacao-em-saude",
+            "title": "Planos de educação em saúde",
+            "subtitle": "",
+            "description": "Temas e roteiros prontos",
+            "image": "../assets/doencas/conduta_educacao_adesao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "mapas-conceituais",
+            "title": "Mapas conceituais",
+            "subtitle": "",
+            "description": "Organização do conhecimento",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "jogos-e-simulacoes",
+            "title": "Jogos e simulações",
+            "subtitle": "",
+            "description": "Aprendizado interativo",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "casos-clinicos",
+            "title": "Casos clínicos",
+            "subtitle": "",
+            "description": "Situações para discussão e reflexão",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/educational-resources"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 60,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliacao-respiratoria",
+            "title": "Avaliação respiratória",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": "../assets/doencas/categoria_respiratorias_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "afericao-da-pressao-arterial",
+            "title": "Aferição da pressão arterial",
+            "subtitle": "Técnica correta",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "administracao-de-medicamentos",
+            "title": "Administração de medicamentos",
+            "subtitle": "DECISION_REQUIRED",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "oxigenoterapia",
+            "title": "Oxigenoterapia",
+            "subtitle": "Cuidados essenciais",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "glicemia-capilar",
+            "title": "Glicemia capilar",
+            "subtitle": "Procedimento seguro",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 70,
+      "payload": {
+        "items": [
+          {
+            "id": "diretrizes-brasileiras-sobre-doencas-cronicas",
+            "title": "Diretrizes brasileiras sobre doenças crônicas",
+            "subtitle": "SBMFC, 2024",
+            "description": "",
+            "image": "../assets/doencas/hero_doencas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "atualizacoes-em-manejo-de-hipertensao-arterial",
+            "title": "Atualizações em manejo de hipertensão arterial",
+            "subtitle": "SBC, 2024",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "atencao-integral-ao-paciente-com-dm2-na-aps",
+            "title": "Atenção integral ao paciente com DM2 na APS",
+            "subtitle": "SBD, 2023",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "clinical-attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Atenção clínica",
+      "priority": 10,
+      "payload": {
+        "groups": [
+          {
+            "tone": "positive",
+            "title": "Cuidados prioritários",
+            "items": [
+              "Avaliar sinais vitais e estado geral",
+              "Identificar fatores de risco e comorbidades",
+              "Reconhecer sinais de alerta",
+              "Iniciar condutas conforme protocolo"
+            ]
+          },
+          {
+            "tone": "danger",
+            "title": "Avoid Or Monitor",
+            "items": [
+              "Atraso no reconhecimento de sintomas",
+              "Interações medicamentosas",
+              "Adesão inadequada ao tratamento"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/clinical-attention"
+    },
+    {
+      "module_id": "warning-signs",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Sinais de alerta",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": [
+              "Dor intensa ou súbita",
+              "Dispneia ou falta de ar",
+              "Dor no peito",
+              "Confusão mental súbita",
+              "Febre alta persistente",
+              "Sangramento anormal",
+              "Redução importante da diurese"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/warning-signs"
+    },
+    {
+      "module_id": "monitoring-frequency",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "Frequência de monitorização",
+      "priority": 30,
+      "payload": {
+        "columns": [
+          {
+            "key": "clinical_state",
+            "label": "Clinical State"
+          },
+          {
+            "key": "frequency",
+            "label": "Frequency"
+          }
+        ],
+        "rows": [
+          {
+            "clinical_state": "Estável / Leve",
+            "frequency": "A cada consulta ou conforme plano"
+          },
+          {
+            "clinical_state": "Moderado",
+            "frequency": "Semanalmente ou conforme evolução"
+          },
+          {
+            "clinical_state": "Instável / Grave",
+            "frequency": "Diariamente ou monitorização contínua"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/monitoring-frequency"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "fluxograma-de-avaliacao",
+            "title": "Fluxograma de avaliação",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/doencas/conduta_avaliacao_inicial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "condutas-resumidas",
+            "title": "Condutas resumidas",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "checklists-de-enfermagem",
+            "title": "Checklists de enfermagem",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "cartoes-de-bolso",
+            "title": "Cartões de bolso",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "folhetos-para-orientacao",
+            "title": "Folhetos para orientação",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "baixar-todos-os-materiais",
+            "title": "Baixar todos os materiais",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "download_all_support_materials",
+              "action": "open"
+            }
+          },
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "baixar-todos-os-materiais",
+          "title": "Baixar todos os materiais",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "download_all_support_materials",
+            "action": "open"
+          }
+        },
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/doencas.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/doencas.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/doencas.provenance.json"
+}

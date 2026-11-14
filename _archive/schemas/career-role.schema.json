@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Role Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "family",
+    "summary",
+    "education_path",
+    "audience",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "family": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "education_path": {
+      "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

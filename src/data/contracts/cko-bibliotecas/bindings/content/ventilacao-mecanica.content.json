@@ -1,0 +1,652 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "ventilacao-mecanica",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Equipamentos de Ventilação Mecânica",
+  "subtitle": "Informações essenciais sobre ventiladores mecânicos, modos ventilatórios, parâmetros, alarmes e cuidados de enfermagem para o manejo seguro e eficaz do paciente crítico.",
+  "template_family": "device-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Equipamento hospitalar",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Conteúdo atualizado",
+      "tone": "green",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Equipamentos",
+    "Equipamentos de Ventilação Mecânica"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "ventilator_types_and_interfaces",
+          "essential_parameters",
+          "essential_topics",
+          "videos",
+          "articles_and_evidence",
+          "clinical_attention",
+          "common_alarms",
+          "support_materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "ventiladores",
+        "label": "Ventiladores",
+        "status": "mapped",
+        "module_refs": [
+          "ventilator_types_and_interfaces"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "modos-ventilatorios",
+        "label": "Modos Ventilatórios",
+        "status": "mapped",
+        "module_refs": [
+          "essential_topics"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "alarmes",
+        "label": "Alarmes",
+        "status": "mapped",
+        "module_refs": [
+          "common_alarms"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "parametros",
+        "label": "Parâmetros",
+        "status": "mapped",
+        "module_refs": [
+          "essential_parameters"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "cuidados-de-enfermagem",
+        "label": "Cuidados de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "essential_topics",
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "manutencao",
+        "label": "Manutenção",
+        "status": "DECISION_REQUIRED",
+        "module_refs": [],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "articles_and_evidence",
+          "videos",
+          "support_materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/ventilacao-mecanica/hero_ventilador.png",
+          "alt": "Equipamentos de Ventilação Mecânica",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Equipamento que fornece suporte ventilatório invasivo ou não invasivo ao paciente.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Objetivo",
+                "text": "Promover trocas gasosas adequadas, reduzir o trabalho respiratório e estabilizar o paciente.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Indicações comuns",
+                "text": "Insuficiência respiratória aguda ou crônica, após anestesia, trauma, sepse, DPOC, edema agudo de pulmão, entre outras.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Benefícios",
+                "text": "Melhora da oxigenação, redução da fadiga muscular e suporte à recuperação clínica.",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Ventilação invasiva e não invasiva",
+                "text": "Opções de suporte para diferentes necessidades clínicas.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Modos ventilatórios",
+                "text": "Diversos modos para adaptação individual ao quadro do paciente.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Monitorização contínua",
+                "text": "Parâmetros respiratórios em tempo real e gráficos de tendência.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Sistemas de segurança",
+                "text": "Alarmes, limites e recursos para proteção do paciente.",
+                "icon": "system:shield"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "ventilator_types_and_interfaces",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TIPOS DE VENTILADORES E INTERFACES",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Ventilação Invasiva",
+            "description": "Suporte por tubo endotraqueal ou cânula de traqueostomia.",
+            "indications": "IR aguda, coma, choque, pós-operatório.",
+            "asset": "../assets/ventilacao-mecanica/tipo_ventilacao_invasiva.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Ventilação Não Invasiva",
+            "description": "Uso de máscaras facial, nasal ou capacete.",
+            "indications": "DPOC, edema agudo de pulmão, hipoxemia.",
+            "asset": "../assets/ventilacao-mecanica/tipo_ventilacao_nao_invasiva.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Ventilador de Transporte",
+            "description": "Leve e compacto para remoções seguras do paciente.",
+            "indications": "Transporte intra-hospitalar e inter-hospitalar.",
+            "asset": "../assets/ventilacao-mecanica/tipo_ventilador_transporte.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Pressão Positiva Contínua (CPAP/BPAP)",
+            "description": "Suporte contínuo em vias aéreas para manter a oxigenação.",
+            "indications": "Apneia do sono, DPOC, hipoxemia leve.",
+            "asset": "../assets/ventilacao-mecanica/tipo_cpap_bpap.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Interfaces Comuns",
+            "description": "Máscara facial, nasal, oronasal, capacete e traqueostomia.",
+            "indications": "Ajustar e fixar corretamente para evitar vazamentos.",
+            "asset": "../assets/ventilacao-mecanica/tipo_interfaces_comuns.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/ventilator_types_and_interfaces"
+    },
+    {
+      "module_id": "essential_parameters",
+      "module_type": "card_grid",
+      "semantic_role": "monitoring",
+      "title": "PARÂMETROS ESSENCIAIS",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "title": "Volume Corrente (VC)",
+            "description": "Volume de ar entregue a cada ciclo respiratório. Ajuste conforme peso predito e patologia.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Frequência Respiratória (FR)",
+            "description": "Número de ciclos por minuto. Adequar à necessidade e conforto do paciente.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "PEEP",
+            "description": "Pressão positiva ao final da expiração. Melhora oxigenação e evita atelectasias.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "FiO₂",
+            "description": "Fração inspirada de oxigênio. Manter a menor concentração efetiva possível.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Pressão de Pico (Ppico)",
+            "description": "Pressão máxima nas vias aéreas. Monitorar para evitar barotrauma.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/essential_parameters"
+    },
+    {
+      "module_id": "essential_topics",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TEMAS ESSENCIAIS",
+      "priority": 25,
+      "payload": {
+        "items": [
+          {
+            "title": "Modos Ventilatórios",
+            "description": "VCV, PCV, SIMV, PSV, CPAP, PRVC e outros.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver modos",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Alarmes e Monitorização",
+            "description": "Tipos de alarmes, limites e respostas adequadas.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver alarmes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Circuitos e Conexões",
+            "description": "Circuitos, filtros, válvulas e conexões principais.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver circuitos",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Umidificação",
+            "description": "Umidificadores, HMEF e cuidados essenciais.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Segurança do Paciente",
+            "description": "Prevenção de infecções, lesões e eventos adversos.",
+            "icon": "system:shield",
+            "action": {
+              "label": "Ver segurança",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Cuidados de Enfermagem",
+            "description": "Avaliação, intervenções e documentação.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidados",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/essential_topics"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TUTORIAIS",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "title": "Introdução à Ventilação Mecânica",
+            "subtitle": "Conceitos básicos",
+            "duration": "04:15",
+            "asset": "../assets/ventilacao-mecanica/video_intro_vm.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Modos Ventilatórios na Prática",
+            "subtitle": "Principais modos explicados",
+            "duration": "04:32",
+            "asset": "../assets/ventilacao-mecanica/video_modos_na_pratica.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Alarmes do Ventilador",
+            "subtitle": "Respostas e ações",
+            "duration": "03:58",
+            "asset": "../assets/ventilacao-mecanica/video_alarmes.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Cuidados com o Circuito Ventilatório",
+            "subtitle": "Montagem e verificação",
+            "duration": "05:10",
+            "asset": "../assets/ventilacao-mecanica/video_circuito.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Aspiração de Vias Aéreas em Paciente VM",
+            "subtitle": "Técnica segura",
+            "duration": "03:45",
+            "asset": "../assets/ventilacao-mecanica/video_aspiracao_vias_aereas.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:clock"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e tutoriais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "title": "Ventilação protetora: atualização de boas práticas",
+            "source_label": "AMIB, 2023"
+          },
+          {
+            "title": "Guia de ventilação mecânica em adultos",
+            "source_label": "SBPT, 2022"
+          },
+          {
+            "title": "Bundle de prevenção de pneumonia associada à ventilação",
+            "source_label": "ANVISA, 2021"
+          },
+          {
+            "title": "Desmame da ventilação mecânica: recomendações",
+            "source_label": "ATS/ERS, 2020"
+          }
+        ],
+        "verification_note": "Títulos, instituições e anos foram transcritos da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:clock"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "clinical_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO CLÍNICA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Prioridades de segurança",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Confirmar indicações e metas ventilatórias",
+              "Verificar parâmetros e alarmes ativos",
+              "Monitorar continuamente o paciente",
+              "Higienizar mãos antes e após o manuseio",
+              "Registrar todas as intervenções"
+            ],
+            "action": null
+          },
+          {
+            "title": "Evitar / Monitorar",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Desconexões e vazamentos no circuito",
+              "Hipóxia por ajustes inadequados",
+              "Barotrauma e volutrauma",
+              "Retenção de secreções e atelectasias",
+              "Falhas de energia ou bateria"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos relacionados",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/clinical_attention"
+    },
+    {
+      "module_id": "common_alarms",
+      "module_type": "list_panel",
+      "semantic_role": "safety",
+      "title": "ALARMES COMUNS",
+      "priority": 68,
+      "payload": {
+        "items": [
+          "Pressão de via aérea alta",
+          "Pressão de via aérea baixa",
+          "Volume corrente baixo",
+          "Apneia / Frequência baixa",
+          "Desconexão do circuito",
+          "FiO₂ alta / baixa",
+          "Bateria fraca"
+        ],
+        "tone": "danger",
+        "section_icon": "system:clock"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os alarmes",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/common_alarms"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 72,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia rápido de ventilação (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Checklist de ventilação segura (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Cuidados com circuito (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Aspiração de vias aéreas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Higiene e desinfecção (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:clock"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:clock",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:clock",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:clock",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:clock",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/ventilacao-mecanica.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/ventilacao-mecanica.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/ventilacao-mecanica.provenance.json"
+}

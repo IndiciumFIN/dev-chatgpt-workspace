@@ -1,0 +1,32 @@
+{
+  "causal_hypotheses": [
+    {
+      "hypothesis_id": "CH-2026-0001",
+      "twin_ref": "fhir:Patient/88412",
+      "question": "A hipotensão ortostática de 01/09 contribuiu para o Morse 65?",
+      "hypothesis": "O episódio de hipotensão ortostática (10:30–18:00 de 01/09) elevou o componente deambulação do Morse",
+      "method": "temporal_precedence",
+      "intervention": "nenhuma (análise observacional sobre Trajectory)",
+      "expected_effect": "Morse computado após o episódio reflete o componente deambulação reduzido",
+      "counterfactual": "Simulação (não fato): sem o episódio ortostático, o Morse teria tendido a 45–55 em vez de 65",
+      "evidence_refs": ["TwinEvent: Hipotensão ortostática (valid 10:30→18:00 01/09)", "TwinEvent: Escala de Morse 65 (valid_from 20:00 02/09)", "DEC-2026-0001"],
+      "cko_refs": ["cko://procedures/fall-prevention"],
+      "status": "supported",
+      "safety_note": "Contrafactual rotulado como simulação sobre o twin; jamais apresentado como fato clínico (POL-016)."
+    },
+    {
+      "hypothesis_id": "CH-2026-0002",
+      "twin_ref": "fhir:Patient/88412",
+      "question": "Se o reposicionamento (NIC 0840) tivesse iniciado 2h antes, o Braden seria >14 hoje?",
+      "hypothesis": "Início antecipado do reposicionamento teria evitado a perda de 2 pontos no Braden",
+      "method": "counterfactual_simulation",
+      "intervention": "reposicionamento terapêutico NIC 0840 iniciado 2h antes",
+      "expected_effect": "Braden >= 16 no reteste de 03/09",
+      "counterfactual": "Simulação pendente: requer série temporal de mobilidade por turno, ainda não disponível no twin",
+      "evidence_refs": ["TwinEvent: Braden 14 (PatientTwin v3)"],
+      "cko_refs": ["cko://procedures/pressure-injury-prevention"],
+      "status": "inconclusive",
+      "safety_note": "Status inconclusive é o estado correto até existir evidência — POL-016 proíbe afirmar sem método sustentado."
+    }
+  ]
+}

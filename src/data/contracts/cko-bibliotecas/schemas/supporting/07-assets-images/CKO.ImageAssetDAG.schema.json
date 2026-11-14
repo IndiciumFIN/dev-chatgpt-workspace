@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:image-asset-dag:v1.0.0",
+  "title": "CKO Image Asset DAG",
+  "type": "object",
+  "required": [
+    "dag_id",
+    "asset_family",
+    "nodes",
+    "edges",
+    "outputs"
+  ],
+  "properties": {
+    "dag_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "asset_family": {
+      "type": "string",
+      "enum": [
+        "library_thumbnail",
+        "object_image",
+        "content_media",
+        "hero_derivative_forbidden",
+        "icon",
+        "diagram",
+        "infographic",
+        "chart",
+        "table_render",
+        "social_asset",
+        "pdf_figure"
+      ]
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "node_type",
+          "state"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string"
+          },
+          "node_type": {
+            "type": "string",
+            "enum": [
+              "source",
+              "crop",
+              "background_removal",
+              "perspective_correction",
+              "color_normalization",
+              "cleanup",
+              "composition",
+              "resize",
+              "format_export",
+              "quality_check",
+              "placement_definition"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "verified_source",
+              "derived",
+              "approved_output"
+            ]
+          },
+          "parent_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "operation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parameters": {
+            "type": "object"
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provenance_class": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "output_ref",
+          "node_ref",
+          "role",
+          "width",
+          "height",
+          "format"
+        ],
+        "properties": {
+          "output_ref": {
+            "type": "string"
+          },
+          "node_ref": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "png",
+              "webp",
+              "jpg",
+              "svg",
+              "pdf"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

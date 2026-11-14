@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/content-projection-classification.schema.json",
+  "title": "CKO Related Content Normalization Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_label",
+    "normalized_label",
+    "axis",
+    "base_profile",
+    "overlay",
+    "default_host_profile",
+    "channel",
+    "purpose"
+  ],
+  "properties": {
+    "source_label": {
+      "type": "string"
+    },
+    "normalized_label": {
+      "type": "string"
+    },
+    "axis": {
+      "type": "string",
+      "enum": [
+        "profile_or_shell",
+        "channel_scope",
+        "canonical_object_context",
+        "interactive_resource_pattern",
+        "composition_pattern",
+        "purpose_or_governance_context"
+      ]
+    },
+    "base_profile": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "article",
+        "case",
+        "flashcard",
+        "quiz",
+        "infographic",
+        "pocket_guide",
+        "pdf",
+        "slides",
+        null
+      ]
+    },
+    "overlay": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "default_host_profile": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "article",
+        "case",
+        "flashcard",
+        "quiz",
+        "infographic",
+        "pocket_guide",
+        "pdf",
+        "slides",
+        null
+      ]
+    },
+    "channel": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "purpose": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

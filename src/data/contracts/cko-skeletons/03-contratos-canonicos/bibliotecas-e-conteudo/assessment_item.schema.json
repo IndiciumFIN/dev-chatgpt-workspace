@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/assessment_item.schema.json",
+  "title": "CKO | assessment_item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "learning_objective_ref",
+    "prompt_key",
+    "answer_key_ref",
+    "rationale_claim_refs",
+    "evidence_refs",
+    "scoring_rule_ref",
+    "difficulty_source_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "learning_objective_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prompt_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answer_key_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale_claim_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "scoring_rule_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty_source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "license_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shuffle_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answer_exposure_policy": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

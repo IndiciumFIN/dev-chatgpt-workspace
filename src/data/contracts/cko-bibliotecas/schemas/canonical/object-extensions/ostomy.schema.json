@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:ostomy:v1.0.0",
+  "title": "CKO Ostomias Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "ostomy"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "stomaType": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "systemType": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "pouchType": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "plate": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "accessories": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "measurements": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "peristomalCare": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

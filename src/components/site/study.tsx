@@ -1,14 +1,45 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { useStored } from "@/lib/stored";
-import { visitCards, visitQuestions } from "@/lib/education/published";
+
+const questions = [
+  {
+    prompt: "Na Escala de Braden, um escore menor indica",
+    options: ["Menor risco de lesão por pressão", "Maior risco de lesão por pressão", "A idade do paciente em anos"],
+    answer: 1,
+  },
+  {
+    prompt: "Na Morse, 50 pontos indicam",
+    options: ["Risco baixo", "Risco médio", "Risco alto"],
+    answer: 2,
+  },
+  {
+    prompt: "Um Apgar 8, neste template, cai em",
+    options: ["Depressão grave", "Depressão moderada", "Boa vitalidade"],
+    answer: 2,
+  },
+  {
+    prompt: "500 mL em 2 horas, equipo de macrogotas (fator 20), ficam em cerca de",
+    options: ["83 gotas por minuto", "250 gotas por minuto", "20 gotas por minuto"],
+    answer: 0,
+  },
+  {
+    prompt: "IMC 24 kg/m² no adulto, neste template, é",
+    options: ["Baixo peso", "Adequado", "Obesidade I"],
+    answer: 1,
+  },
+];
+
+const cards = [
+  { front: "Braden", back: "De 6 a 23. Quanto menor o escore, maior o risco de lesão por pressão." },
+  { front: "Morse", back: "Até 24 é risco baixo. De 25 a 44, médio. A partir de 45, alto." },
+  { front: "Apgar", back: "O minuto da avaliação não entra na soma. De 7 a 10 é boa vitalidade neste template." },
+  { front: "Gotejamento", back: "Gotas por minuto = (volume em mL × fator do equipo) ÷ tempo em minutos." },
+  { front: "Equipo", back: "Macrogotas usa fator 20. Microgotas usa fator 60. Trocar o equipo exige novo cálculo." },
+  { front: "IMC adulto", back: "Peso em kg dividido pela altura em metros ao quadrado. Não use a faixa adulta em criança." },
+];
 
 const LIMIT = 4 * 60;
 
 export function StudyDesk() {
-  const stored = useStored();
-  const questions = stored.study.questions.length > 0 ? stored.study.questions : visitQuestions;
-  const cards = stored.study.cards.length > 0 ? stored.study.cards : visitCards;
   const [started, setStarted] = useState(false);
   const [left, setLeft] = useState(LIMIT);
   const [step, setStep] = useState(0);
@@ -55,7 +86,7 @@ export function StudyDesk() {
           </span>
         </div>
         <p className="tool-help">
-          Cinco questões dos instrumentos que já estão no ar. A nota desta visita não é gravada. O mesmo banco abre no estúdio, onde a prova pode ser montada de novo.
+          Cinco questões dos instrumentos que já estão no ar. A nota não é gravada. Os cadernos longos do menu continuam no site homologado.
         </p>
         {!started ? (
           <button className="btn-navy" type="button" onClick={() => setStarted(true)}>
@@ -143,12 +174,6 @@ export function StudyDesk() {
           </button>
         </div>
       </section>
-      <p className="tool-help">
-        <Link to="/estudo">Abrir o estúdio de simulados</Link>
-        {" · "}
-        <Link to="/viladocuidado">Vila do Cuidado</Link>
-        . A Vila é o projeto educativo, separado da prova. Os cadernos de 50 questões não estão neste repositório.
-      </p>
     </div>
   );
 }

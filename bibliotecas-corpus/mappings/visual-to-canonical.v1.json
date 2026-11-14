@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "date": "2026-10-26",
+  "status": "CANDIDATE_ONLY",
+  "mappings": [
+    {
+      "visualSlug": "anatomia",
+      "display": "Biblioteca de Anatomia",
+      "canonicalCandidates": [
+        "cko.library.anatomia-fisiologia"
+      ],
+      "sourceContentRefs": [
+        "contracts/cko-bibliotecas/bindings/content/anatomia-fisiologia.content.json"
+      ],
+      "mappingStatus": "CANDIDATE_REVIEW_REQUIRED",
+      "reason": "A biblioteca visual anatomia e a entidade de Anatomia/Fisiologia têm escopos próximos; não é vínculo formal admitido."
+    },
+    {
+      "visualSlug": "seringas-e-agulhas",
+      "display": "Seringas e Agulhas",
+      "canonicalCandidates": [
+        "cko.library.seringa-referencia"
+      ],
+      "sourceContentRefs": [
+        "contracts/cko-bibliotecas/bindings/content/seringa-referencia.content.json"
+      ],
+      "mappingStatus": "CANDIDATE_REVIEW_REQUIRED",
+      "reason": "A biblioteca visual também contempla agulhas, além da entidade canônica seringa; granularidade não reconciliada."
+    },
+    {
+      "visualSlug": "feridas-e-curativos",
+      "display": "Feridas e Curativos",
+      "canonicalCandidates": [
+        "cko.library.curativos",
+        "cko.library.ferimentos"
+      ],
+      "sourceContentRefs": [
+        "contracts/cko-bibliotecas/bindings/content/curativos.content.json",
+        "contracts/cko-bibliotecas/bindings/content/ferimentos.content.json"
+      ],
+      "mappingStatus": "AMBIGUOUS_HOLD_HUMAN",
+      "reason": "Há entidades distintas para curativos e ferimentos; não presumir vínculo 1:1 nem atribuir objeto pela imagem."
+    }
+  ]
+}

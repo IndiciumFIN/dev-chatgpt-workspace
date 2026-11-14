@@ -1,0 +1,603 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "cme",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "CME",
+  "subtitle": "Biblioteca de Enfermagem com conteúdos sobre Centro de Material e Esterilização, fluxo de processamento, limpeza, preparo, embalagem, esterilização, monitorização e rastreabilidade.",
+  "template_family": "knowledge-library",
+  "archetype_id": "cme_knowledge_library",
+  "domain": {
+    "domain_id": "nursing",
+    "display_label": "Enfermagem"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Processamento"
+    },
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Segurança do paciente"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "CME"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "cme-flow",
+          "processing-methods",
+          "quality-indicators",
+          "critical-points",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "clinical-attention",
+          "warning-signs",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "fluxo",
+        "label": "Fluxo",
+        "status": "mapped",
+        "module_refs": [
+          "cme-flow"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "limpeza",
+        "label": "Limpeza",
+        "status": "mapped",
+        "module_refs": [
+          "processing-methods",
+          "critical-points"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "preparo-e-embalagem",
+        "label": "Preparo e Embalagem",
+        "status": "mapped",
+        "module_refs": [
+          "processing-methods"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "esterilizacao",
+        "label": "Esterilização",
+        "status": "mapped",
+        "module_refs": [
+          "processing-methods",
+          "quality-indicators"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "monitorizacao",
+        "label": "Monitorização",
+        "status": "mapped",
+        "module_refs": [
+          "quality-indicators",
+          "warning-signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/cme/hero_cme.png",
+          "alt": "Ilustração conceitual de limpeza, embalagem, esterilização e rastreabilidade de materiais em CME.",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Biblioteca dedicada ao processamento de produtos para saúde e às rotinas do Centro de Material e Esterilização.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Objetivo",
+                "text": "Padronizar etapas, reduzir falhas no processamento e fortalecer segurança do paciente.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Abrangência",
+                "text": "Recebimento, limpeza, preparo, inspeção, embalagem, esterilização, armazenamento, distribuição e rastreabilidade.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Importância",
+                "text": "Qualidade no processamento impacta diretamente a prevenção de infecções e a segurança assistencial.",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "title": "Fluxo unidirecional",
+                "text": "Separação entre áreas suja, limpa e estéril.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Rastreabilidade",
+                "text": "Cada carga/processo deve permitir identificação e acompanhamento.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Monitorização do processo",
+                "text": "Indicadores físicos, químicos e biológicos asseguram qualidade.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Padronização",
+                "text": "Protocolos, POPs e registros estruturam o trabalho seguro.",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "cme-flow",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Fluxo do CME",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "title": "Recebimento",
+            "description": "Conferência, segregação e preparo inicial do material recebido.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Limpeza",
+            "description": "Manual, automatizada ou ultrassônica conforme tipo de artigo.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Inspeção e preparo",
+            "description": "Avaliação de integridade, funcionalidade, montagem e secagem.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Embalagem",
+            "description": "Seleção do sistema de barreira estéril conforme método.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Esterilização",
+            "description": "Vapor saturado, baixa temperatura ou outros métodos autorizados.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Armazenamento e distribuição",
+            "description": "Conservação da esterilidade e rastreabilidade até o uso.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver etapa",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/cme-flow"
+    },
+    {
+      "module_id": "processing-methods",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Métodos e controles",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "title": "Limpeza manual",
+            "description": "Indicada conforme sujidade, delicadeza e instruções do fabricante.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Limpeza automatizada",
+            "description": "Repetibilidade e padronização para itens compatíveis.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Embalagem correta",
+            "description": "Material compatível, integridade e identificação da carga.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Esterilização a vapor",
+            "description": "Método mais comum para artigos termorresistentes.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Baixa temperatura",
+            "description": "Aplicável a materiais sensíveis ao calor, conforme tecnologia.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Rastreabilidade",
+            "description": "Registro de lote, data, operador e destino.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver conteúdo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/processing-methods"
+    },
+    {
+      "module_id": "quality-indicators",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Monitorização e indicadores",
+      "priority": 40,
+      "payload": {
+        "items": [
+          "Parâmetros físicos do ciclo",
+          "Indicadores químicos internos e externos",
+          "Indicador biológico conforme protocolo",
+          "Integridade da embalagem",
+          "Taxa de reprovação / não conformidade",
+          "Rastreabilidade de lotes e cargas"
+        ],
+        "tone": "default",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver monitorização completa",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/quality-indicators"
+    },
+    {
+      "module_id": "critical-points",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Pontos críticos",
+      "priority": 40,
+      "payload": {
+        "items": [
+          "Secagem insuficiente antes da embalagem",
+          "Falha na limpeza prévia do artigo",
+          "Embalagem inadequada ou danificada",
+          "Mistura de cargas incompatíveis",
+          "Rastreabilidade incompleta",
+          "Armazenamento fora das condições recomendadas"
+        ],
+        "tone": "danger",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver riscos e falhas comuns",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/critical-points"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 90,
+      "payload": {
+        "items": [
+          {
+            "title": "Fluxo do CME",
+            "subtitle": "Visão geral",
+            "duration": "03:12",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Limpeza de instrumentais",
+            "subtitle": "Boas práticas",
+            "duration": "04:05",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Inspeção e preparo",
+            "subtitle": "Checklist prático",
+            "duration": "03:18",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Embalagem segura",
+            "subtitle": "Passo a passo",
+            "duration": "02:56",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Leitura de indicadores",
+            "subtitle": "Monitorização",
+            "duration": "03:02",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 95,
+      "payload": {
+        "items": [
+          {
+            "title": "Boas práticas em processamento de produtos para saúde",
+            "source_label": "Material técnico"
+          },
+          {
+            "title": "Rastreabilidade e segurança no CME",
+            "source_label": "Conteúdo editorial"
+          },
+          {
+            "title": "Monitorização de esterilização",
+            "source_label": "Conteúdo editorial"
+          }
+        ],
+        "verification_note": "Conteúdo estruturado para avaliação de template; não houve verificação bibliográfica externa.",
+        "section_icon": "system:clock"
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "clinical-attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "clinical-attention",
+      "priority": 60,
+      "payload": {
+        "groups": [
+          {
+            "title": "Cuidados prioritários",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Garantir fluxo unidirecional",
+              "Conferir limpeza, secagem e integridade",
+              "Selecionar embalagem compatível",
+              "Monitorar cada ciclo de esterilização",
+              "Registrar e rastrear todo o processo"
+            ]
+          },
+          {
+            "title": "Evitar / Monitorar",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Quebra de barreira estéril",
+              "Falha de rastreabilidade",
+              "Uso de material sem liberação do processo"
+            ],
+            "action": {
+              "label": "Ver protocolos relacionados",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/clinical-attention"
+    },
+    {
+      "module_id": "warning-signs",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Sinais de atenção",
+      "priority": 65,
+      "payload": {
+        "items": [
+          "Indicador químico incompatível com o resultado esperado",
+          "Ciclo interrompido ou com alarme",
+          "Pacote úmido ou avariado",
+          "Registro incompleto do lote",
+          "Material sujo ou com corrosão após limpeza"
+        ],
+        "tone": "danger",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver todos os sinais",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/warning-signs"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 80,
+      "payload": {
+        "items": [
+          {
+            "label": "Checklist do fluxo do CME (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "POP de limpeza e secagem (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Guia de embalagem e identificação (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Rastreabilidade de cargas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Monitorização do processo (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:clock"
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / Compartilhar",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:clock",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:clock",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:clock",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:clock",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/cme.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/cme.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/cme.provenance.json"
+}

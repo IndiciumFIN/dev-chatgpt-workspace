@@ -1,0 +1,349 @@
+{
+  "id": "VILA.RECONCILIATION.2026-10-26",
+  "version": "0.1.0",
+  "source": {
+    "name": "VDC_REVISAO_360_FINDINGS_2026-08-26.json",
+    "driveId": "17WHgDAHQUPC-QngRK0kf8ZYL0Kte9gT4",
+    "sourceDate": "2026-08-26",
+    "scope": "Historical release candidate, NOT current workspace"
+  },
+  "target": {
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "branch": "viladocuidado",
+    "baselineTree": "35f5bf307d155300314ee73ca4b59f05b8014141",
+    "scope": "Current workspace derivative"
+  },
+  "policy": {
+    "historicalStateIsNotCurrentVerification": true,
+    "neverClaimResolvedWithoutExecutedValidation": true,
+    "doNotApplyHistoricMigrationsBlindly": true,
+    "productionPublication": "BLOCKED"
+  },
+  "counts": {
+    "historicalFindings": 20,
+    "historicalOPEN": 18,
+    "historicalOPEN_EXPECTED": 2,
+    "uniqueWorkstreams": 10,
+    "combinedOutstandingUnique": "NOT_DETERMINED_PENDING_CROSSWALK"
+  },
+  "workstreams": [
+    {
+      "id": "drive-ingestion",
+      "title": "Extração e verificação do pacote mestre",
+      "relatedHistoricalFindings": [
+        "F-020"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "assets-evidence",
+      "title": "Inventário, evidências, personagens e deduplicação",
+      "relatedHistoricalFindings": [
+        "F-004",
+        "F-008",
+        "F-019"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "official-art",
+      "title": "Integração de personagens e imagens oficiais",
+      "relatedHistoricalFindings": [
+        "F-004",
+        "F-008",
+        "F-019"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "hero-design",
+      "title": "Hero e superfícies no estilo oficial",
+      "relatedHistoricalFindings": [
+        "F-007",
+        "F-008"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "design-navigation",
+      "title": "Design System, navegação e templates",
+      "relatedHistoricalFindings": [
+        "F-007",
+        "F-005"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "content-contracts",
+      "title": "Conteúdo canônico e atividades",
+      "relatedHistoricalFindings": [
+        "F-002",
+        "F-003",
+        "F-005",
+        "F-009",
+        "F-018"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "database-candidate",
+      "title": "Banco candidato, integridade e restore",
+      "relatedHistoricalFindings": [
+        "F-002",
+        "F-003",
+        "F-009",
+        "F-010",
+        "F-011",
+        "F-015"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "i18n-a11y-seo",
+      "title": "Idiomas, acessibilidade, SEO e segurança",
+      "relatedHistoricalFindings": [
+        "F-013",
+        "F-014",
+        "F-017"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "runtime-tests",
+      "title": "Testes, build, E2E e auditoria visual",
+      "relatedHistoricalFindings": [
+        "F-001",
+        "F-012",
+        "F-013",
+        "F-019"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    },
+    {
+      "id": "release-governance",
+      "title": "Kernel, governança, evidências e publicação",
+      "relatedHistoricalFindings": [
+        "F-005",
+        "F-006",
+        "F-012",
+        "F-016"
+      ],
+      "state": "OPEN_RECONCILIATION",
+      "isAdditionalFinding": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "severity": "P0_PUBLIC",
+      "title": "Runtime local ponta a ponta não comprovado",
+      "primaryWorkstream": "runtime-tests",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-002",
+      "severity": "P0_PUBLIC",
+      "title": "Source→Evidence→Claim não seeded nem verificado",
+      "primaryWorkstream": "data-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-003",
+      "severity": "P0_PUBLIC",
+      "title": "Claim↔Evidence aceita entidade divergente",
+      "primaryWorkstream": "data-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-004",
+      "severity": "P0_ASSURANCE",
+      "title": "23 screenshots físicos ausentes do pacote histórico",
+      "primaryWorkstream": "assets-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-005",
+      "severity": "P0_PUBLIC",
+      "title": "Cobertura editorial e estrutural assimétrica",
+      "primaryWorkstream": "content-contracts",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-006",
+      "severity": "P0_PUBLIC",
+      "title": "Go-live exige 14 inputs e 40 decisões humanas",
+      "primaryWorkstream": "release-governance",
+      "historicalState": "OPEN_EXPECTED",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-007",
+      "severity": "P1",
+      "title": "Navegação e copy paralelos ao registro",
+      "primaryWorkstream": "design-navigation",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-008",
+      "severity": "P1",
+      "title": "Referência do asset Caramelo inconsistente",
+      "primaryWorkstream": "assets-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-009",
+      "severity": "P1",
+      "title": "Segregação de funções e hashes frágeis",
+      "primaryWorkstream": "data-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-010",
+      "severity": "P1",
+      "title": "Concorrência da hash-chain de auditoria",
+      "primaryWorkstream": "data-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-011",
+      "severity": "P1",
+      "title": "Restore sem sidecar obrigatório",
+      "primaryWorkstream": "database-candidate",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-012",
+      "severity": "P1",
+      "title": "Gate estático tem pontos cegos",
+      "primaryWorkstream": "runtime-tests",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-013",
+      "severity": "P1",
+      "title": "E2E tem cobertura insuficiente",
+      "primaryWorkstream": "runtime-tests",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-014",
+      "severity": "P1",
+      "title": "Headers de segurança incompletos no pacote histórico",
+      "primaryWorkstream": "i18n-a11y-seo",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-015",
+      "severity": "P1",
+      "title": "Credenciais de preview e defaults",
+      "primaryWorkstream": "database-candidate",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-016",
+      "severity": "P1",
+      "title": "Gate público não bloqueia todo o roteamento",
+      "primaryWorkstream": "release-governance",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-017",
+      "severity": "P1",
+      "title": "SEO somente global no pacote histórico",
+      "primaryWorkstream": "i18n-a11y-seo",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-018",
+      "severity": "P1",
+      "title": "Admin combina dados operacionais e mock",
+      "primaryWorkstream": "content-contracts",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-019",
+      "severity": "P2",
+      "title": "Otimização de imagens",
+      "primaryWorkstream": "assets-evidence",
+      "historicalState": "OPEN",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    },
+    {
+      "id": "F-020",
+      "severity": "P0_HISTORICAL_MASTER",
+      "title": "11 pacotes históricos ausentes",
+      "primaryWorkstream": "drive-ingestion",
+      "historicalState": "OPEN_EXPECTED",
+      "currentDisposition": "NOT_VERIFIED",
+      "claimOfResolution": false
+    }
+  ],
+  "distinctCurrentBranchGaps": [
+    {
+      "id": "VILA-BR-001",
+      "name": "Approved official image binaries not imported",
+      "state": "OPEN"
+    },
+    {
+      "id": "VILA-BR-002",
+      "name": "Candidate SQL not executed against isolated database",
+      "state": "OPEN"
+    },
+    {
+      "id": "VILA-BR-003",
+      "name": "Runtime build and E2E not executed",
+      "state": "OPEN"
+    },
+    {
+      "id": "VILA-BR-004",
+      "name": "Design source documented but hero still emoji placeholder",
+      "state": "OPEN"
+    }
+  ],
+  "method": "20 original findings retained by identity; ten operational streams cross-reference them, not additive; branch-specific gaps are not asserted as distinct from historical findings until verified."
+}

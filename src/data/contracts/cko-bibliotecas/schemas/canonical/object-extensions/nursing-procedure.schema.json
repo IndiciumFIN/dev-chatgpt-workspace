@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:nursing-procedure:v1.0.0",
+  "title": "CKO Procedimentos de Enfermagem Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "nursing-procedure"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "purpose": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "prerequisites": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "equipment": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "asepticTechnique": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "steps": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "complications": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "records": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "competencies": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

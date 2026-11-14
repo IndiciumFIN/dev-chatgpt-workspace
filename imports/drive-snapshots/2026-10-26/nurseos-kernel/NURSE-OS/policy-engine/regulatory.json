@@ -1,0 +1,52 @@
+{
+  "regulatory_items": [
+    {
+      "norm_id": "REG-EU-AIACT-HIGHRISK",
+      "title": "EU AI Act — sistemas de IA de alto risco (incl. saúde)",
+      "authority": "EU",
+      "change_type": "guidance",
+      "summary": "Obrigações para IA de alto risco: gestão de risco, qualidade de dados, registro automático de eventos (logging), supervisão humana, transparência. O registro de eventos alinha-se diretamente com nosso Evidence Fabric (POL-008 + PolicyEvidence).",
+      "effective_date": "2026-08-02",
+      "impact_refs": ["POL-008", "PolicyEvidence", "SafetyCase", "Human Governance Boundary"],
+      "impact_status": "compliant",
+      "last_review": "2026-09-03",
+      "notes": "Logging automático de decisões já é subproduto do pipeline (evidência assinada por run)."
+    },
+    {
+      "norm_id": "REG-BR-LGPD-ART11",
+      "title": "LGPD — art. 11, dados sensíveis de saúde",
+      "authority": "LGPD",
+      "change_type": "guidance",
+      "summary": "Tratamento de dados de saúde exige base legal específica e garantias reforçadas. Consentimento em 3 camadas (care/twin/research) já implementado no PatientTwin; memória de agentes sujeita a Memory Governance (Fatia 1).",
+      "effective_date": "2020-09-18",
+      "impact_refs": ["PatientTwin.consent_*", "POL-006 (context authorization)", "KnowledgeLicense"],
+      "impact_status": "compliant",
+      "last_review": "2026-09-03",
+      "notes": "RIPD pendente quando houver processamento real de dados de pacientes."
+    },
+    {
+      "norm_id": "REG-BR-ANVISA-SW-SAÚDE",
+      "title": "ANVISA — regulação de software de saúde (TEC/REBLA)",
+      "authority": "ANVISA",
+      "change_type": "draft",
+      "summary": "Enquadramento do Nurse-PaLM/SAE Copilot como software de saúde vs. dispositivo médico exige análise de risco classificatório. Monitorar atualizações de requisitos para software com componentes de IA. Nº de normas vigentes a confirmar no momento do enquadramento formal.",
+      "effective_date": "",
+      "impact_refs": ["Agent.risk_class", "SafetyCase", "Model Card"],
+      "impact_status": "monitoring",
+      "last_review": "2026-09-03",
+      "notes": "Gatilho: qualquer piloto em instituição real → enquadramento formal obrigatório antes."
+    },
+    {
+      "norm_id": "REG-BR-COFEN-SAE-DIMENSIONAMENTO",
+      "title": "COFEN — normativas de SAE e dimensionamento de equipe",
+      "authority": "COFEN",
+      "change_type": "guidance",
+      "summary": "O agente nunca substitui registro profissional nem responsabilidade técnica do enfermeiro; UnitTwin/WorkforceTwin usam as referências de dimensionamento vigentes. Verificar nºs de resoluções vigentes na implantação por instituição.",
+      "effective_date": "",
+      "impact_refs": ["UnitTwin.recommended_ratio_compliant", "Agent.requires_human_approval_for", "POL-002"],
+      "impact_status": "impact_assessed",
+      "last_review": "2026-09-03",
+      "notes": "No UnitTwin atual: 3 enfermeiros/10 leitos em UTI marcado como NÃO conforme — o twin não normaliza a não conformidade."
+    }
+  ]
+}

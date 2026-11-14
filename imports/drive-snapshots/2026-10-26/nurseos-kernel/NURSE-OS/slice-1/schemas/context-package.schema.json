@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nurse-os:slice-1:context-package",
+  "title": "Governed Context Package",
+  "description": "O LLM nunca recebe 'prompt'. Recebe um pacote de contexto construído e validado pela arquitetura (Context Engineering, NOVO 24) e inspecionado pelo Context Integrity Engine (NOVO 25 / POL-006).",
+
+  "type": "object",
+  "required": ["package_id", "task", "identity", "twin_snapshot", "knowledge_refs", "policies_resolved", "tools_authorized", "integrity", "package_hash"],
+
+  "properties": {
+    "package_id": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "task": {"type": "string", "description": "objetivo da chamada, nunca 'faça X' solto — vem de mission/plan"},
+
+    "identity": {
+      "type": "object",
+      "properties": {
+        "agent_slug": {"type": "string"},
+        "user_role": {"enum": ["RN", "TECH", "NURSE_MANAGER", "PHYSICIAN", "PATIENT", "SYSTEM"]},
+        "encounter_ref": {"type": "string", "description": "FHIR Encounter — âncora de consentimento e auditoria"}
+      }
+    },
+
+    "twin_snapshot": {
+      "type": "object",
+      "properties": {
+        "patient_twin_id": {"type": "string"},
+        "twin_version": {"type": "number"},
+        "valid_from": {"type": "string"},
+        "valid_to": {"type": "string"},
+        "risk_flags": {"type": "array", "items": {"type": "string"}},
+        "news2_score": {"type": "number"},
+        "morse_fall_score": {"type": "number"},
+        "braden_score": {"type": "number"}
+      },
+      "description": "Estado do twin citado, com validade temporal (Temporal KG)."
+    },
+
+    "knowledge_refs": {"type": "array", "items": {"type": "string"}, "description": "cko://… resolvidos com versão — fonte de grounding"},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}, "description": "evidências aplicáveis com grau e frescor"},
+
+    "policies_resolved": {"type": "array", "items": {"type": "string"}, "description": "POL-… aplicadas a ESTA tarefa/contexto"},
+
+    "tools_authorized": {"type": "array", "items": {"type": "string"}, "description": "ferramentas permitidas para ESTA execução — menos que as do contrato"},
+
+    "temporal_state": {
+      "type": "object",
+      "properties": {
+        "now": {"type": "string", "format": "date-time"},
+        "data_freshness": {"type": "string"},
+        "shift_context": {"type": "string"}
+      }
+    },
+
+    "risk_flags": {"type": "array", "items": {"type": "string"}},
+
+    "model_ref": {"type": "string", "description": "modelo aprovado pelo router para esta tarefa"},
+
+    "integrity": {
+      "type": "object",
+      "required": ["complete", "current", "authorized", "relevant", "uncontaminated", "consistent", "sufficient"],
+      "properties": {
+        "complete": {"type": "boolean"},
+        "current": {"type": "boolean"},
+        "authorized": {"type": "boolean"},
+        "relevant": {"type": "boolean"},
+        "uncontaminated": {"type": "boolean"},
+        "consistent": {"type": "boolean"},
+        "sufficient": {"type": "boolean"}
+      },
+      "description": "POL-006: qualquer false => BLOCK / REDUCE AUTONOMY / REQUEST DATA / ESCALATE"
+    },
+
+    "integrity_gaps": {"type": "array", "items": {"type": "string"}},
+    "package_hash": {"type": "string", "description": "hash do pacote — o que o modelo viu é auditável"}
+  }
+}

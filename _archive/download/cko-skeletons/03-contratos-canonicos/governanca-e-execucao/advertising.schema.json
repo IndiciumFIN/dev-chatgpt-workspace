@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/advertising.schema.json",
+  "title": "CKO | advertising",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "placement_ref",
+    "eligibility_ref",
+    "audience_context_only",
+    "sensitive_targeting",
+    "consent_ref",
+    "brand_safety_ref",
+    "clinical_zone_exclusion"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "placement_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "eligibility_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audience_context_only": {
+      "type": "boolean",
+      "const": true
+    },
+    "sensitive_targeting": {
+      "type": "boolean",
+      "const": false
+    },
+    "consent_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brand_safety_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "clinical_zone_exclusion": {
+      "type": "boolean",
+      "const": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "missions": [
+    {
+      "mission_id": "MIS-2026-0001",
+      "objective": "Plantão sem quedas para a paciente 88412 (Morse 65, anticoagulada)",
+      "success_criteria": ["0 quedas durante o plantão", "NIC 6490 (prevenção de quedas) aplicada integralmente"],
+      "safety_criteria": ["nenhum evento adverso por anticoagulação", "nenhuma escalada clínica não respondida"],
+      "agent_refs": ["sae-copilot"],
+      "tasks": [
+        {"task": "rascunho de SAE com priorização NIC 6490", "run_ref": "RUN-2026-0001", "done": true},
+        {"task": "SBAR no handoff com sinalização de risco", "run_ref": "RUN-2026-0003", "done": true}
+      ],
+      "outcome_refs": ["OUT-2026-0001"],
+      "status": "complete",
+      "completed_at": "2026-09-03T06:00:00-03:00",
+      "verification_note": "MISSION COMPLETE verificada por critérios, não por fim de plano: OUT-2026-0001 (0 quedas) evidencia os critérios de sucesso; nenhum SafetyEvent de anticoagulação no período evidencia os critérios de segurança (POL-021)."
+    },
+    {
+      "mission_id": "MIS-2026-0002",
+      "objective": "Educação ao paciente sobre sinais de alerta de agranulocitose (dipirona), em pt-BR/en/es",
+      "success_criteria": ["material entregue em 3 idiomas", "compreensão confirmada por teach-back"],
+      "safety_criteria": ["conteúdo revisado por enfermeiro", "faixa de risco com incerteza explícita (CON-2026-0001)"],
+      "agent_refs": [],
+      "tasks": [
+        {"task": "delegar CAP-005 via Capability Registry", "delegation_ref": "DR-2026-0002", "done": false}
+      ],
+      "outcome_refs": [],
+      "status": "blocked",
+      "verification_note": "Bloqueada por failed_no_provider no Agent Negotiation (DR-2026-0002): CAP-005 sem fornecedor elegível. Bloqueio é estado de primeira classe — o gap alimenta o roadmap do WorkforceTwin."
+    }
+  ]
+}

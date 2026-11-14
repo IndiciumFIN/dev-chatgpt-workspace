@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-product:v1.0.0",
+  "title": "CKO Vaccine Product",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "product_id",
+    "vaccine_ref",
+    "formulation_ref",
+    "brand_name",
+    "holder",
+    "promotion_state",
+    "regulatory_profile_ref",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "vaccine_product"
+    },
+    "product_id": {
+      "type": "string",
+      "pattern": "^cko\\.product\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "formulation_ref": {
+      "type": "string",
+      "pattern": "^cko\\.formulation\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "brand_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "holder": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manufacturer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "promotion_state": {
+      "const": "promoted_from_regulatory_evidence"
+    },
+    "regulatory_profile_ref": {
+      "type": "string",
+      "pattern": "^cko\\.regulatory-profile\\.vaccine\\.[a-z0-9-]+\\.anvisa$"
+    },
+    "program_profile_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

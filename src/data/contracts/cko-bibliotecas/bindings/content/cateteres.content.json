@@ -1,0 +1,785 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "cateteres",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Cateteres",
+  "subtitle": "Biblioteca de Enfermagem sobre cateteres periféricos, centrais, urinários e especiais, com indicações, tipos, cuidados e manutenção.",
+  "template_family": "device-library",
+  "archetype_id": "catheter_and_access_device_library",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Conteúdo clínico"
+    },
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Baseado em evidências"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Cateteres"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "catheter-types",
+          "maintenance-and-care",
+          "complications",
+          "educational-content",
+          "safety-and-alerts",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tipos-de-cateteres",
+        "label": "Tipos de Cateteres",
+        "status": "mapped",
+        "module_refs": [
+          "catheter-types"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "catheter-types"
+        ],
+        "selectors": [
+          {
+            "module_id": "catheter-types"
+          }
+        ]
+      },
+      {
+        "tab_id": "manutencao-e-cuidados",
+        "label": "Manutenção e Cuidados",
+        "status": "mapped",
+        "module_refs": [
+          "maintenance-and-care"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "complicacoes",
+        "label": "Complicações",
+        "status": "mapped",
+        "module_refs": [
+          "safety-and-alerts"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "seguranca",
+        "label": "Segurança",
+        "status": "mapped",
+        "module_refs": [
+          "safety-and-alerts"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/cateteres/hero_cateteres_transparent.png",
+          "alt": "Conjunto visual de diferentes cateteres e dispositivos de acesso/drenagem.",
+          "raw": {
+            "type": "catheter_collection_illustration",
+            "asset_ref": "cropped_assets/hero_cateteres_transparent.png",
+            "description": "Conjunto visual de diferentes cateteres e dispositivos de acesso/drenagem.",
+            "exact_crop_from_current_user_image": false,
+            "asset_source_status": "reconstructed_crop_from_prior_generated_reference_board",
+            "provenance": {
+              "class": "B",
+              "note": "O assunto/hero é observável na imagem atual. O PNG disponibilizado foi recortado de uma prancha técnica gerada anteriormente a partir da mesma referência, pois os bytes do screenshot atual não foram montados no runtime."
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "definicao",
+                "title": "Definição",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "body_text_not_reliably_legible",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "finalidade",
+                "title": "Finalidade",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "body_text_not_reliably_legible",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "indicacoes",
+                "title": "Indicações",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "body_text_not_reliably_legible",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "responsabilidade",
+                "title": "Responsabilidade",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "body_text_not_reliably_legible",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "id": "material",
+                "title": "Material",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "not_transcribed_safely",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "calibre",
+                "title": "Calibre",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "not_transcribed_safely",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "fixacao",
+                "title": "Fixação",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": "../assets/cateteres/cuidado_fixacao_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "not_transcribed_safely",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              },
+              {
+                "id": "tempo-de-permanencia",
+                "title": "Tempo de permanência",
+                "subtitle": "",
+                "description": "DECISION_REQUIRED",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "source_text_status": "not_transcribed_safely",
+                  "missing_statement": "NÃO CONSTA NA FONTE. O que existe: o rótulo/seção é visível, mas o texto de corpo não está legível com segurança no render disponibilizado ao modelo. O que seria necessário: arquivo-fonte ou imagem em resolução acessível ao runtime."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "catheter-types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Tipos de cateteres",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "cateter-periferico",
+            "title": "Cateter Periférico",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_periferico_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "peripheral_catheter",
+              "clinical_details_status": "not_reconstructed"
+            }
+          },
+          {
+            "id": "picc",
+            "title": "PICC",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_picc_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "picc",
+              "clinical_details_status": "not_reconstructed"
+            }
+          },
+          {
+            "id": "cvc",
+            "title": "CVC",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_cvc_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "cvc",
+              "clinical_details_status": "not_reconstructed"
+            }
+          },
+          {
+            "id": "cateter-arterial",
+            "title": "Cateter Arterial",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_arterial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "arterial_catheter",
+              "clinical_details_status": "not_reconstructed"
+            }
+          },
+          {
+            "id": "cateter-foley",
+            "title": "Cateter Foley",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_foley_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "foley",
+              "clinical_details_status": "not_reconstructed"
+            }
+          },
+          {
+            "id": "cateteres-especiais",
+            "title": "Cateteres Especiais",
+            "subtitle": "",
+            "description": "DECISION_REQUIRED",
+            "image": "../assets/cateteres/cateter_especial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "special_catheters",
+              "clinical_details_status": "not_reconstructed"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/catheter-types"
+    },
+    {
+      "module_id": "maintenance-and-care",
+      "module_type": "card_grid",
+      "semantic_role": "intervention",
+      "title": "Manutenção e cuidados",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "id": "higiene-das-maos",
+            "title": "Higiene das mãos",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_higiene_maos_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "hand_hygiene",
+              "details": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "tecnica-asseptica",
+            "title": "Técnica asséptica",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_tecnica_asseptica_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "aseptic_technique",
+              "details": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "fixacao",
+            "title": "Fixação",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_fixacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "fixation",
+              "details": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "manutencao",
+            "title": "Manutenção",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_manutencao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "maintenance",
+              "details": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "troca",
+            "title": "Troca",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_troca_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "replacement_or_change",
+              "details": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "registro",
+            "title": "Registro",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/cateteres/cuidado_registro_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "key": "documentation",
+              "details": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/maintenance-and-care"
+    },
+    {
+      "module_id": "complications",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Complicações",
+      "priority": 30,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": []
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/complications"
+    },
+    {
+      "module_id": "educational-content",
+      "module_type": "grouped_list",
+      "semantic_role": "education",
+      "title": "Conteúdo educacional",
+      "priority": 40,
+      "payload": {
+        "groups": [
+          {
+            "title": "Vídeos e técnicas",
+            "items": [
+              {
+                "id": "section-visible",
+                "title": "section_visible",
+                "subtitle": "",
+                "description": "True",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "items",
+                "title": "items",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "content-status",
+                "title": "content_status",
+                "subtitle": "",
+                "description": "not_transcribed_safely",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance",
+                "title": "provenance",
+                "subtitle": "",
+                "description": "{'class': 'A', 'note': 'Observável na imagem de referência apresentada pelo usuário.'}",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Artigos e evidências",
+            "items": [
+              {
+                "id": "section-visible",
+                "title": "section_visible",
+                "subtitle": "",
+                "description": "True",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "items",
+                "title": "items",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "content-status",
+                "title": "content_status",
+                "subtitle": "",
+                "description": "not_transcribed_safely",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance",
+                "title": "provenance",
+                "subtitle": "",
+                "description": "{'class': 'A', 'note': 'Observável na imagem de referência apresentada pelo usuário.'}",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/educational-content"
+    },
+    {
+      "module_id": "safety-and-alerts",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Alertas e segurança",
+      "priority": 10,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Priority Items",
+            "items": []
+          },
+          {
+            "tone": "neutral",
+            "title": "Attention Items",
+            "items": []
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/safety-and-alerts"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 20,
+      "payload": {
+        "items": []
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/cateteres.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/cateteres.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/cateteres.provenance.json"
+}

@@ -35,6 +35,10 @@ jobs:
         run: node --test scripts/ncos-provision-lineage.test.mjs
       - name: Rebuild normative source-fragment-provision-master graph from evidence metadata
         run: node scripts/ncos-provision-lineage.mjs --inventory
+      - name: Exercise source rights and controlled master projection failure modes
+        run: node --test scripts/ncos-rights-master-gate.test.mjs
+      - name: Rebuild source rights and unresolved CKO master projection report
+        run: node scripts/ncos-rights-master-gate.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

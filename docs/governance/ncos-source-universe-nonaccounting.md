@@ -65,3 +65,15 @@ The one cross-source provision, Lei 7.498/1986 art. 15-E, points to an official 
 The current consolidated snapshot for Lei 7.498/1986 is **derived** (\`SRC-DERIVED-LEI7498-CURRENT-V0266\`), with source version 0.26.6, base+amendment snapshots and the semantic invariant \`PROJETO_DE_LEI_NAO_E_LEI\`. Its own metadata says \`not_an_official_publication=true\` and \`legal_status_inference=false\`: preserve those restrictions; never call it an official text or assert legal validity based on the composition.
 
 The versioned scope manifest is \`registers/governance/ncos-regulatory-provision-lineage-20261114.v1.json\`; \`node scripts/ncos-provision-lineage.mjs --inventory\` checks source/fragment/master IDs and explicit amendments, generating \`regulatory-atom-source-chain.v1.json\` in CI. \`--enforce-release\` is always HOLD pending legal/clinical approval, rights, and the missing 16+7 projection gaps. No normative full text is committed in this manifest and no Supabase writes occur.
+
+
+## Rights and non-admitted master projections — 14/11/2026
+
+Two metadata-only delta manifests were derived without content or SQL writes:
+
+- \`registers/governance/ncos-rights-triage-20261114.v1.json\`: 17 original PDF SHA256 identities; **six** have specific publisher/license terms located in their front matter and **11** remain unreviewed/unknown. Examples: RCP NEWS2 requires attribution and unmodified colour charts; Amsterdam UMC/JAMA Sepsis-3 contains restrictive redistribution text; two Ministry of Health editions state CC BY-NC-SA 4.0. Neither attribution nor Creative Commons metadata alone grants clinical or product publication approval. PDF content was not copied into the repo.
+- \`registers/governance/ncos-master-provision-delta-20261114.v1.json\`: 16 existing provision IDs of Lei 2.604/1955 have complete registered fragment/source hash references but **no cko_master provision projection**. All 16 have \`RECOVERED_TEXT_PENDING_PROVISION_LEVEL_REVALIDATION\`. Candidate canonical IDs are \`null\`; there is no invented legal text, status inference or SQL upsert.
+
+Run \`node scripts/ncos-rights-master-gate.mjs --inventory\` after \`node --test scripts/ncos-rights-master-gate.test.mjs\` to create \`audit-evidence/ncos-multisource-universe/rights-master-projection-gate.v1.json\`. Structural validity only; release always needs independent review. The rights manifest is an **assessment overlay**, not a second canonical license registry.
+
+A historic ZIP scan found \`CORPUS_MANIFESTOS_SHA256_v0_3.zip\`, \`NORMATIVE_DOCUMENT_RECONCILIATION_v0_3.zip\` and \`CANONICAL_RECONCILIATION_v0_2.zip\` in the user's Drive; none of these three archives contained the 17 named original atomized JSONLs or their stored hash references. This is not a claim that no other backup exists. Work order #59 remains HOLD_SOURCE_MISSING; work order #60 remains HOLD_PROVISION_REVALIDATION.

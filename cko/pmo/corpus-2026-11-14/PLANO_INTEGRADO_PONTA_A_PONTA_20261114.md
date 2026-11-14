@@ -187,3 +187,7 @@ Após CI PASS do PostgreSQL 16 descartável em #43572600708, persistem os proble
 
 ### PP06–PP09 — Lote M08 de conteúdo efetivamente produzido
 O M08 gerou 34 claims/34 knowledge atoms candidatos vinculados a 33 átomos M03 distintos de COFEN 736/2024 e RDC Anvisa 36/2013, 3 content masters, 8 quizzes e 10 flashcards em draft. Registrados 76 itens no PMO Mestre (PMO-014), além dos índices de 28.001 evidence atoms e 9.102 candidate links guardados no pacote protegido Google Drive. Actions #43575253083 PASS **somente estrutural**. Revisões de vigência, direitos, clínica e editorial continuam HOLD e nada publicado. Ver `M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md`.
+
+
+### PP06–PP09 — Checkpoint M09 (conteúdo, não apenas segurança)
+Revisão de proveniência do M08 34/34, mais 12 claims novos, 10 átomos ainda não usados, total 46 claims/43 evidências distintas. M08 preservado, 3 masters revistos, 11 quizzes e 14 flashcards candidatos acumulados. PR66 Actions #43577047974 PASS metadados; PMO MASTER recebeu 28 linhas e atualizou PMO-014; risco R20 e decisão D019 registrados. Texto de normas e direitos/recortes ainda HOLD. Ver `M09_CANONICAL_CONTENT_COMPLETENESS_CHECKPOINT.md`.

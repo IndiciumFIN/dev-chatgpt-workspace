@@ -1,0 +1,52 @@
+# Diagnostics only. This must never publish, merge, migrate, or override release gates.
+name: NCOS build diagnostic (no deploy)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      VITE_AUTH_ENABLED: "false"
+      CI: "true"
+    steps:
+      - name: Checkout candidate without credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install from lockfile
+        run: npm ci
+      - name: Inventory all source routes without assigning roles or publication approval
+        run: node scripts/ncos-route-source-inventory.mjs --output audit-evidence/ncos-route-source-candidate.v1.json
+      - name: Verify route SHA and imports, preserving authorization holds
+        run: node scripts/check-ncos-route-crosswalk.mjs
+      - name: Compile candidate without invoking database migrator
+        env:
+          DATABASE_URL: ""
+        run: node scripts/with-app-env.mjs ./node_modules/.bin/vite build
+      - name: Check generated local build files
+        run: |
+          test -s .vercel/output/nitro.json
+          test -d .vercel/output/functions/__server.func
+          test -s .vercel/output/static/sitemap.xml
+          test -s .vercel/output/static/robots.txt
+          echo "PASS_BUILD_DIAGNOSTIC: compiled artifacts present; independent governance and deployment approvals still required."
+
+      - name: Preserve route-source evidence for independent audit
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ncos-route-source-candidate
+          path: |
+            audit-evidence/ncos-route-source-candidate.v1.json
+            audit-evidence/ncos-route-behavior-check.v1.json
+          if-no-files-found: warn

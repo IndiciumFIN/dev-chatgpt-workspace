@@ -8,6 +8,7 @@ test("a mesa lista M01 a M22 e a leitura não reaprova", () => {
   const layout = readFileSync("src/components/admin/admin-layout.tsx", "utf8");
   const board = readFileSync("src/components/admin/module-board.tsx", "utf8");
   const contract = readFileSync("src/lib/template-contract.ts", "utf8");
+  const pages = readFileSync("src/lib/template-catalog.ts", "utf8");
   const doc = readFileSync("docs/console-administrativo.md", "utf8");
   for (let n = 1; n <= 22; n += 1) assert.match(catalog, new RegExp(`id: "M${String(n).padStart(2, "0")}"`));
   assert.equal(source.includes('if (item.status === "aprovado") await approveItemTx'), false);
@@ -18,7 +19,10 @@ test("a mesa lista M01 a M22 e a leitura não reaprova", () => {
   assert.equal(layout.includes("text-ok"), false);
   assert.equal(layout.includes("#"), false);
   assert.match(board, /Não há coleção consultável/);
-  assert.match(contract, /area: \{ frame: "area", hero: "page", crumbs: true, tools: \[\],/);
+  assert.match(contract, /area: \{ hero: "page", crumbs: true, tools: \[\],/);
+  // Frame is per-page, not a shared TemplateContract dimension.
+  assert.match(pages, /name: "Área do assinante"[^\n]*kind: "area", frame: "area"/);
+  assert.match(pages, /name: "Área do administrador"[^\n]*kind: "area", frame: "admin"/);
   assert.match(doc, /M01 a M22/);
   assert.match(doc, /não faz deploy/);
   assert.equal(doc.includes("super_admin"), false);

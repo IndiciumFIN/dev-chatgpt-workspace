@@ -22,7 +22,15 @@ const results = cases.map(([id,args])=>{ const r=spawnSync(process.execPath,args
 for (const [id,path] of [['vite-bin','node_modules/.bin/vite'],['tsc-bin','node_modules/.bin/tsc'],['playwright-package','node_modules/playwright']]) results.push({id,status:existsSync(resolve(root,path))?'PRESENT':'BLOCKED',reason:'local dependency required for build/render'});
 const report={schemaVersion:1,scope:'CE_PUBLIC_BACKUP_ONLY',base:'v2.6.9',generatedAt:new Date().toISOString(),remoteIntegration:'PROHIBITED',results,releaseGate:'BLOCKED'};
 const out=resolve(root,'audit/execution/execution-gates-latest.json');mkdirSync(resolve(root,'audit/execution'),{recursive:true});writeFileSync(out,JSON.stringify(report,null,2)+'\n');
-for(const r of results) console.log(`${r.status} ${r.id}`);
+for(const r of results) {
+  console.log(`${r.status} ${r.id}`);
+  // Actionable diagnostic evidence: keep every gate blocking, but surface the
+  // command, exit and bounded reason in GitHub Actions, not only an ignored file.
+  if(r.status==='FAIL' || r.status==='BLOCKED') {
+    console.error(`GATE_DIAGNOSTIC ${r.id}: ${r.command ?? 'preflight'} exit=${r.exitCode ?? 'n/a'} ${r.error ?? ''}`);
+    if(r.output) console.error(r.output);
+  }
+}
 // PASS significa controle executado e aprovado; PRESENT significa pré-requisito localizado.
 // BLOCKED/FAIL continuam bloqueantes. O releaseGate permanece separado e não é homologação.
 const executionOk = results.every(x => x.status === 'PASS' || x.status === 'PRESENT');

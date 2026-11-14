@@ -6,7 +6,7 @@
  * regex sobre texto. Fora do bundler o TS puro nao carrega — por isso este
  * arquivo roda com o mesmo mecanismo de alias do app.
  */
-import { tools } from "@/lib/tools/catalog.ts";
+import { tools, candidateTools } from "@/lib/tools/catalog.ts";
 import { FONTES, BINDINGS, CAMPOS, CAMPOS_CONTEXTO, PRIVACY_PROFILE } from "@/lib/tools/governance.ts";
 import { POLITICA_FERRAMENTAS } from "@/lib/tools/contracts.ts";
 
@@ -18,12 +18,14 @@ const destino = process.env.TOOL_CONTRACTS_DUMP ?? "/tmp/tool-contracts.json";
 writeFileSync(
   destino,
   JSON.stringify({
-    tools: tools.map((t) => ({
+    // The contract inventory includes gated candidates, but the site's public
+    // menu remains based on 'tools' alone. Do not promote candidates here.
+    tools: [...tools, ...candidateTools].map((t) => ({
       slug: t.slug,
       kind: t.kind,
       title: t.title,
       status: t.status ?? null,
-      publicacao: t.publicacao ?? "publicada",
+      publicacao: candidateTools.includes(t) ? "candidata" : (t.publicacao ?? "publicada"),
       holds: t.holds ?? [],
       sourceIds: t.sourceIds ?? [],
       faixa: t.bands?.length

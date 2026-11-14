@@ -29,7 +29,8 @@ function appEnvFetch(env) {
 test("the flag predicate matches src/lib/auth", () => {
   assert.equal(authEnabledFromEnvValue("false"), false);
   assert.equal(authEnabledFromEnvValue("true"), true);
-  assert.equal(authEnabledFromEnvValue(undefined), true);
+  assert.equal(authEnabledFromEnvValue(undefined), false);
+  assert.equal(authEnabledFromEnvValue("unexpected"), false);
 });
 
 test("reads the value a live dev server resolved", async () => {
@@ -39,8 +40,8 @@ test("reads the value a live dev server resolved", async () => {
   );
 });
 
-test("a server started without the flag reads as sign-in on", async () => {
-  assert.equal(await probeDevAuthEnabled("http://127.0.0.1:8080", appEnvFetch({})), true);
+test("a server started without an explicit flag stays auth-off", async () => {
+  assert.equal(await probeDevAuthEnabled("http://127.0.0.1:8080", appEnvFetch({})), false);
 });
 
 test("agreement passes", () => {
@@ -90,8 +91,15 @@ test("only a divergence warns the smoke verdict", () => {
   }
 });
 
-test("the build side resolves the template's shipped app-env", () => {
-  assert.equal(buildAuthEnabled(projectRoot(), {}), false);
+test("build auth respects explicit flags without assuming ignored app-env exists", () => {
+  const isolated = mkdtempSync(join(tmpdir(), "auth-build-fixture-"));
+  // GitHub tracks no .grok/app-env.json; absence is not permission to authenticate.
+  assert.equal(buildAuthEnabled(isolated, {}), false);
+  assert.equal(buildAuthEnabled(isolated, { VITE_AUTH_ENABLED: "false" }), false);
+  assert.equal(buildAuthEnabled(isolated, { VITE_AUTH_ENABLED: "true" }), true);
+  // The actual root may contain a platform-local file or a CI-injected flag;
+  // an explicit process override must still take precedence over either.
+  assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "false" }), false);
   assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "true" }), true);
 });
 

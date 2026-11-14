@@ -164,17 +164,21 @@ test("cli: relative paths follow the script's root, not the caller's cwd", () =>
   assert.equal(existsSync(join(root, "public/og.jpg")), false);
 });
 
-test("every hand-over the og skill prints is one this script accepts", () => {
-  // The card and banner recipes live in the skill's references/, not SKILL.md.
+test("versioned OG handoffs (and platform skill if present) use safe atomic moves", () => {
   const skillDir = join(TEMPLATE_ROOT, ".grok/skills/og");
-  const docs = [
-    join(skillDir, "SKILL.md"),
-    ...readdirSync(join(skillDir, "references")).map((f) => join(skillDir, "references", f)),
-  ];
+  const skillFile = join(skillDir, "SKILL.md");
+  const references = join(skillDir, "references");
+  const docs = [join(TEMPLATE_ROOT, "docs/governance/og-brand-handoff-contract.v1.md")];
+  if (existsSync(skillFile)) {
+    docs.push(skillFile);
+    // The platform skill has an explicit references/ handoff contract.
+    assert.ok(existsSync(references), "platform OG skill is missing references");
+    docs.push(...readdirSync(references).map((f) => join(references, f)));
+  }
   const invocations = docs.flatMap(
-    (path) => readFileSync(path, "utf8").match(/node scripts\/write-atomic\.mjs[^\n`]*/g) ?? [],
+    (path) => readFileSync(path, "utf8").match(/node scripts\/write-atomic\.mjs[^\n]*/g) ?? [],
   );
-  assert.ok(invocations.length >= 3, "og.jpg, x-banner.jpg and site.json each hand over");
+  assert.ok(invocations.length >= 3, "OG card, X banner and site.json must each hand over");
   for (const line of invocations) {
     const argv = line.replace("node scripts/write-atomic.mjs", "").trim().split(/\s+/);
     const args = parseWriteAtomicArgs(argv);

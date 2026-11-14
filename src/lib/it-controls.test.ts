@@ -31,6 +31,7 @@ test("só o administrador passa e a publicação com autenticação desligada n�
   assert.throws(() => assertAdminRole("subscriber"), /administrador/);
   assert.doesNotThrow(() => assertAdminRole("admin"));
   assert.throws(() => assertProductionAuth({ VERCEL: "1", VITE_AUTH_ENABLED: "false" }), /desligada/);
+  assert.throws(() => assertProductionAuth({ VERCEL: "1" }), /desligada/);
   assert.doesNotThrow(() => assertProductionAuth({ VERCEL: "1", VITE_AUTH_ENABLED: "true" }));
   assert.doesNotThrow(() => assertProductionAuth({ VITE_AUTH_ENABLED: "false" }));
 });

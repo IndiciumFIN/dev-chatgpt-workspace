@@ -1,0 +1,83 @@
+name: NCOS source universe reconciliation (non-accounting, no deploy)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-universe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      DATABASE_URL: ""
+      PGHOST: ""
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Test source-first universe fail-closed behavior
+        run: node --test scripts/ncos-multisource-audit.test.mjs
+      - name: Regenerate cross-source lineage from pinned metadata and GitHub artifacts
+        run: node scripts/ncos-multisource-audit.mjs --inventory
+      - name: Negative tests for originals, claims, editorial bindings and identity matches
+        run: node --test scripts/ncos-recovery-deltas.test.mjs
+      - name: Verify independent original-PDF SHA256 helper with synthetic bytes
+        run: node --test scripts/ncos-pdf-byte-integrity.test.mjs
+      - name: Derive exact atom-recovery, source identity and claim/editorial deltas
+        run: node scripts/ncos-recovery-deltas.mjs
+      - name: Test authoritative legal amendments and derived non-official snapshots
+        run: node --test scripts/ncos-provision-lineage.test.mjs
+      - name: Rebuild normative source-fragment-provision-master graph from evidence metadata
+        run: node scripts/ncos-provision-lineage.mjs --inventory
+      - name: Exercise source rights and controlled master projection failure modes
+        run: node --test scripts/ncos-rights-master-gate.test.mjs
+      - name: Rebuild source rights and unresolved CKO master projection report
+        run: node scripts/ncos-rights-master-gate.mjs --inventory
+      - name: Test separate data-corpus and literal PDF evidence boundaries
+        run: node --test scripts/ncos-dual-corpus.test.mjs
+      - name: Reconcile reported topic atoms without claiming source PDF atomization
+        run: node scripts/ncos-dual-corpus.mjs --inventory
+      - name: Test fail-closed recovered original JSONL archive attestation
+        run: node --test scripts/ncos-original-archive-attestation.test.mjs
+      - name: Verify source-to-atom recovery archive metadata without raw copyrighted ZIP
+        run: node scripts/ncos-original-archive-attestation.mjs --inventory
+      - name: Test nonpromotable source editions in exact CKO snapshot crosswalk
+        run: node --test scripts/ncos-cko-snapshot-admission.test.mjs
+      - name: Audit original archive versus existing exact CKO snapshots, no duplicates
+        run: node scripts/ncos-cko-snapshot-admission.mjs --inventory
+      - name: Test original per-page hash-root reconciliation and no unapproved CKO identity
+        run: node --test scripts/ncos-page-evidence.test.mjs
+      - name: Verify original page and atom hash roots against recovered source manifest
+        run: node scripts/ncos-page-evidence.mjs --inventory
+      - name: Reject mixed-issuer Gazette pages and unsafe DOU source deduplication
+        run: node --test scripts/ncos-gazette-issuer-boundary.test.mjs
+      - name: Confirm same text in two PDFs cannot qualify unrelated COFFITO acts as COFEN
+        run: node scripts/ncos-gazette-issuer-boundary.mjs --inventory
+      - name: Test exact composite surgery protocol page reuse with rights quarantine
+        run: node --test scripts/ncos-source-page-reuse.test.mjs
+      - name: Audit original PDF subdocument overlap without double counting clinical claims
+        run: node scripts/ncos-source-page-reuse.mjs --inventory
+      - name: Reject issuer collisions and unauthorized COFFITO-to-COFEN atom links
+        run: node --test scripts/ncos-dou-act-source-boundary.test.mjs
+      - name: Check original signed DOU atom issuer zone hashes, source identities and rights HOLD
+        run: node scripts/ncos-dou-act-source-boundary.mjs --inventory
+      - name: Negative tests for COFEN 736 article offsets and clinical publication HOLD
+        run: node --test scripts/ncos-cofen736-article-offsets.test.mjs
+      - name: Verify 14 exact original article spans without reproducing statutory text
+        run: node scripts/ncos-cofen736-article-offsets.mjs --inventory
+      - name: Enforce release gate without making credentials available
+        run: node scripts/ncos-multisource-audit.mjs --enforce-release
+      - name: Preserve inventory and HOLD evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ncos-nonaccounting-source-universe
+          path: audit-evidence/ncos-multisource-universe/
+          if-no-files-found: warn
+          retention-days: 30

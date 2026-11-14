@@ -16,3 +16,9 @@ The hypothetical positive fixture tests the boolean logic, **not** that real-wor
 **Architectural requirements before deploy:** reconcile the SOT-isolation ADR, source acquisition and external-AI contractual terms, privacy/LGPD, independent rights reviewer, DB transaction/TOCTOU, rollback, load and rate limiting, auth, failure logging without raw text, versioned model/purpose, RLS and backups. Only a reviewed and approved WO may update production.
 
 **Test:** `node --test cko/evidence-index/2026-11-14/m06/rights-guard/external-ai-rights-guard.test.mjs`.
+
+
+## Hardening phase (M07)
+- `SCHEMA_HARDENED_PROPOSAL_DO_NOT_APPLY.sql`: proposed composite FKs, active-grant uniqueness and document file SHA verification. Do **not** apply.
+- `rights-reservation-contract.mjs` + `.test.mjs`: synthetic concurrency/claim contract. The mock demonstrates the **remaining exactly-once replay gap**. Do not use as production reservation.
+- `CONCURRENCY_AND_SCHEMA_BLOCKERS.md`: criteria for transactional DB-backed reserve/confirm, idempotency and safe revocation.

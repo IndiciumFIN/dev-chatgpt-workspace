@@ -23,6 +23,12 @@ try {
   await source.getByRole("heading", { name: "Visão geral", exact: true }).waitFor({ timeout: 60000 });
   const connectedNav = source.locator("aside.admin-side nav.admin-tree");
   await connectedNav.getByRole("button", { name: "Produtos e ferramentas", exact: true }).click();
+  console.log("ADMIN_CONNECTED_DEBUG", JSON.stringify({
+    url: source.url(),
+    headings: (await source.locator("h1,h2").allTextContents()).slice(0,20),
+    status: (await source.locator(".admin-main .err").allTextContents()).slice(0,3),
+    uncaught: errors.slice(0,3),
+  }));
   await source.getByRole("heading", { name: "Produtos e ferramentas", exact: true }).waitFor();
   const state = await source.locator(".admin-main").innerText();
   if (/Lendo o banco|erro|falha de banco|database disabled/i.test(state)) {

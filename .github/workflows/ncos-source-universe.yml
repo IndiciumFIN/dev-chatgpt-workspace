@@ -55,6 +55,10 @@ jobs:
         run: node --test scripts/ncos-page-evidence.test.mjs
       - name: Verify original page and atom hash roots against recovered source manifest
         run: node scripts/ncos-page-evidence.mjs --inventory
+      - name: Reject mixed-issuer Gazette pages and unsafe DOU source deduplication
+        run: node --test scripts/ncos-gazette-issuer-boundary.test.mjs
+      - name: Confirm same text in two PDFs cannot qualify unrelated COFFITO acts as COFEN
+        run: node scripts/ncos-gazette-issuer-boundary.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

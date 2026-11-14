@@ -35,7 +35,11 @@ export function checkCkoSnapshotAdmissionCandidates({crosswalk,recovery}){
   if(row.possibleExistingCkoSourceId!==null){
    candidates++;
    if(row.possibleExistingCkoSourceId!=="SRC-COFEN-RES-736-2024"||
-      row.possibleIdentityBasis!=="SAME_REGULATORY_INSTRUMENT_TITLE_ONLY_NOT_SAME_EDITION_OR_SNAPSHOT")
+      !["SAME_REGULATORY_INSTRUMENT_TITLE_ONLY_NOT_SAME_EDITION_OR_SNAPSHOT",
+        "OFFICIAL_GAZETTE_CONTAINS_COFEN_736_AND_OTHER_ISSUERS"].includes(row.possibleIdentityBasis)||
+      (row.possibleIdentityBasis==="OFFICIAL_GAZETTE_CONTAINS_COFEN_736_AND_OTHER_ISSUERS" &&
+       (row.sourcePdfName!=="dou_2024-01-23_s1_p74.pdf"||
+        row.pageIssuerBoundary!=="MIXED_COFEN_AND_COFFITO_HOLD_PER_ATOM_SEGMENTATION")) )
     fail("UNSUPPORTED_EXISTING_SOURCE_CANDIDATE",row.sourcePdfName);
   }
   if(row.historicalDocumentMatch){

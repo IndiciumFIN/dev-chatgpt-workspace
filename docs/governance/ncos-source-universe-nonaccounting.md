@@ -41,3 +41,16 @@ Não usar \`main\` ou deploy enquanto PR #52 mantiver gates históricos e os nov
 The user-owned Library file \`CKO_NORMATIVE_MASTER_INSTRUCTION_v1.0.0.md\` (2026-09-09, handoff only) documents an already developed chain: Authority → Mandate → Standards Registry → Source → Version → Snapshot → Structure → Fragment → Atom → Requirement → Applicability → Conflict/Crosswalk → Risk/Control → PolicyBasis → Policy/Rule → Validator/CI/Runtime → Assurance → Projection. This is **not** permission to create a new source of truth or to promote a handoff draft. The current versioned contracts and Kernel admission remain authoritative.
 
 The CI now creates \`schema-drift-delta.v1.json\`, grouping runtime source/binding/field enum divergences from the existing CKO JSON Schemas. All values remain pending checker disposition; no automatic mapping to another enum, source license, atom, or clinical claim.
+
+
+## Original PDF byte recovery / checksum attestation (2026-11-14)
+
+All 17 original PDFs were fetched from the authenticated Primary Drive account using each recorded Drive file ID. Independent byte hashes were calculated with \`hashlib.sha256\` and checked against the immutable \`calculadoras_de_enfermagem.document_atomization.source_pdf_sha256\` fields: **17 matched, 0 mismatched**. The local metadata-only attestation is \`validacao_sha256_17_pdfs_ncos.json\` (SHA256 \`4da04445000831317ae36ae1cca7ef1fe284d51ffc66714c0aeaec88eb0cb446\`), not the protected PDF content.
+
+The source manifest \`registers/governance/ncos-drive-atomization-recovery-20261114.v1.json\` now carries independently observed SHA256 values with verification method and date. No PDF bytes are committed.
+
+To independently re-run the comparison after legitimately acquiring the same PDFs:
+\`node scripts/ncos-recheck-original-pdf-bytes.mjs /path/to/authorized/drive/pdfs\`
+This generates \`audit-evidence/ncos-multisource-universe/pdf-independent-byte-check.v1.json\` and exits nonzero on any missing or mismatched file. Synthetic negative cases run automatically in CI.
+
+**Still unresolved:** 17 JSONL artifacts are not independently located or byte-hash-verified. Even a fully matching source PDF does not prove exact atom segmentation or semantic correctness; all 17 clinical sign-offs and publication decisions remain HOLD. Respect source rights, including academic literature and licensed standards.

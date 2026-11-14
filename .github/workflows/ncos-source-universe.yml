@@ -27,6 +27,8 @@ jobs:
         run: node scripts/ncos-multisource-audit.mjs --inventory
       - name: Negative tests for originals, claims, editorial bindings and identity matches
         run: node --test scripts/ncos-recovery-deltas.test.mjs
+      - name: Verify independent original-PDF SHA256 helper with synthetic bytes
+        run: node --test scripts/ncos-pdf-byte-integrity.test.mjs
       - name: Derive exact atom-recovery, source identity and claim/editorial deltas
         run: node scripts/ncos-recovery-deltas.mjs
       - name: Enforce release gate without making credentials available

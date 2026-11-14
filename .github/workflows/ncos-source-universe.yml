@@ -47,6 +47,10 @@ jobs:
         run: node --test scripts/ncos-original-archive-attestation.test.mjs
       - name: Verify source-to-atom recovery archive metadata without raw copyrighted ZIP
         run: node scripts/ncos-original-archive-attestation.mjs --inventory
+      - name: Test nonpromotable source editions in exact CKO snapshot crosswalk
+        run: node --test scripts/ncos-cko-snapshot-admission.test.mjs
+      - name: Audit original archive versus existing exact CKO snapshots, no duplicates
+        run: node scripts/ncos-cko-snapshot-admission.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

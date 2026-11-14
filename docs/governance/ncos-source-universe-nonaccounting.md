@@ -97,3 +97,14 @@ Each file was opened independently as original ZIP bytes, hashed with SHA256 and
 **Corrections to previous HOLD:** the original JSONLs have now been located and verified. The repository's original database as-of snapshot retains \`LOCAL_ARTIFACT_NOT_DURABLE\` as a historical value, while the *new* versioned manifest \`registers/governance/ncos-drive-atomization-recovery-20261114.v1.json\` carries the exact archive member, independent hash and recovered location. All original source bytes remain in the private Library, **not in the Git repository or CI**. The metadata-only attestation \`registers/governance/ncos-17-original-jsonl-restoration-attestation.v1.json\` is checked by \`node scripts/ncos-original-archive-attestation.mjs\`; this CI step validates a pinned audit record, **not** the confidential raw ZIP itself.
 
 These verifications authorize *only historical literal-extraction integrity*: NOT semantic clinical qualification, image interpretation, copyright re-use, regulatory legal status, CKO claim promotion, Supabase publication or \`main\` merge. Clinical sign-off is PENDING, visual review HOLD and publication BLOCKED throughout.
+
+
+## Gap after original ZIP recovery: no exact PDF SHA256 in cko_evidence.snapshots
+
+A read-only equality join on \`cko_evidence.snapshots.content_sha256 = calculadoras_de_enfermagem.document_atomization.source_pdf_sha256\` returned **0/17**, even though original PDF and JSONL source bytes have been verified independently. This is an *exact snapshot byte match* check, **not** proof that the same regulatory instrument/edition is missing from the CKO source registry.
+
+A separate historical \`canonical_corpus.sqlite\` file (Drive id \`1d3GKhN9HQZTOM-Xvb5-u38gpX1-SUP0p\`, sha256 \`cad94fa782918fb3ef9f77666306537139e3d04ebc96631425bdbd6383372142\`) contains 118 source metadata rows, 124 documents, and 28,001 evidence atoms; it has five exact PDF byte matches with the 17-source original inventory: 2 COFEN 736/2024 PDFs (99 historical evidence atoms in the other corpus) and 3 NEWS2 PDFs (0 evidence atoms, conditionally gated in the historical corpus). These are **NOT** the 17 original JSONL records and must not be counted or promoted as them.
+
+Two original COFEN 736 PDF documents are candidates for identity review against existing CKO source \`SRC-COFEN-RES-736-2024\`, whose source record already exists, but their exact PDF hashes do not match any CKO snapshot; edition, official publisher, source rights and version must be reviewed before linking. **Never create a second COFEN official source merely by filename equality.**
+
+The metadata-only crosswalk is \`registers/governance/ncos-recovered-pdf-cko-snapshot-gap.v1.json\` (17 rows). Verify with \`node scripts/ncos-cko-snapshot-admission.mjs --inventory\` plus negative tests. Release HOLD and zero database mutations remain mandatory. This is WO #63 under parent #58.

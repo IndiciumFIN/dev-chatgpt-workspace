@@ -59,6 +59,10 @@ jobs:
         run: node --test scripts/ncos-gazette-issuer-boundary.test.mjs
       - name: Confirm same text in two PDFs cannot qualify unrelated COFFITO acts as COFEN
         run: node scripts/ncos-gazette-issuer-boundary.mjs --inventory
+      - name: Test exact composite surgery protocol page reuse with rights quarantine
+        run: node --test scripts/ncos-source-page-reuse.test.mjs
+      - name: Audit original PDF subdocument overlap without double counting clinical claims
+        run: node scripts/ncos-source-page-reuse.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

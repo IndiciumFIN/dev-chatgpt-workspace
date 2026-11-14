@@ -3,6 +3,7 @@ import { Accessibility, ArrowUp, ChevronDown, Instagram, Linkedin, Menu, Search,
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccountSlot, MobileNav, SiteNav } from "@/components/site/site-nav";
 import { useChrome, type FocusColor, type OptionalConsent } from "@/lib/chrome";
+import { brandLogo } from "@/lib/contracts";
 import { selectableLocales } from "@/lib/header-i18n";
 import { navLabel } from "@/lib/translate";
 import { storedFooter, useStored } from "@/lib/stored";
@@ -387,7 +388,7 @@ export function Shell({ children, editions = [], currentPath }: { children: Reac
       <header className="site-header">
         <div className="site-header-inner">
           <Link to="/" className="brand" aria-label="Calculadoras de Enfermagem">
-            <img src="/brand/logo.webp" alt="" width={48} height={48} />
+            <img src={brandLogo.file.replace(/^public/, "")} alt="" width={48} height={48} />
             <span className="brand-name">
               Calculadoras
               <small>de Enfermagem</small>

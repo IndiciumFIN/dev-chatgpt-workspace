@@ -58,22 +58,6 @@ try {
   regenerou = false;
 }
 
-// NCOS TEMP CI SOURCE-DERIVED DUMP — remove once candidate snapshots are committed.
-// This diagnostic runs only on the temporary PR. The generated contracts are
-// public source-derived metadata; do not emit credentials or database data.
-if (process.env.GITHUB_ACTIONS === "true") {
-  for (const arquivo of [
-    "contracts/entities/clinical-tools.v1.json",
-    "contracts/entities/routes.v1.json",
-    "contracts/entities/components.v1.json",
-    "contracts/entities/chrome-bands.v1.json",
-  ]) {
-    if (existsSync(arquivo)) {
-      console.log(`CE_GENERATED_CANDIDATE_BEGIN ${arquivo} ${Buffer.from(readFileSync(arquivo)).toString("base64")} CE_GENERATED_CANDIDATE_END`);
-    }
-  }
-}
-
 for (const a of ALVOS) {
   if (!existsSync(a.arquivo)) { check(`gerado presente: ${a.arquivo}`, false, "nao existe apos regenerar"); continue; }
   const agora = sha(a.arquivo);

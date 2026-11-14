@@ -21,7 +21,9 @@
     "supabase_nursing_duplicate_uri_groups": 3,
     "authority_level_sheet_entries": 4,
     "index_platform_sheet_entries": 3,
-    "discovery_only_sheet_entries": 3
+    "discovery_only_sheet_entries": 3,
+    "supabase_source_lineage_records": 61,
+    "supabase_source_lineage_unverified": 61
   },
   "url_normalization": "casefold; remove http(s) scheme and optional leading www.; trim one trailing slash/fragment; retain query; MD5 only for deterministic comparison not integrity verification",
   "id_match_scope_note": "Source IDs in cko_evidence.sources only; not all possible aliases, documents, lineage tables, or source concept equivalences",
@@ -37,5 +39,24 @@
     "supabase": "SELECT on cko_evidence.sources; normalized URL cross join with M03 MD5 list",
     "sheet": "SOURCE_REGISTER A2:L16, values inspected",
     "pr": "#67 PMO candidate"
+  },
+  "source_lineage": {
+    "total": 61,
+    "not_evaluated": 60,
+    "same_document_candidate_unverified": 1,
+    "example": {
+      "candidate_source_id": "SRC-COFEN-RES-736-2024",
+      "source_url": "https://www.cofen.gov.br/wp-content/uploads/2024/01/Resolucao-736-2024.pdf",
+      "verified": false,
+      "match_status": "MESMO_DOCUMENTO_CANDIDATO"
+    },
+    "state": "READ_ONLY_NO_PROMOTION"
+  },
+  "sheet_write_receipt": {
+    "updated_source_register_notes": 15,
+    "added_conflict_rows": 2,
+    "added_change_impact_rows": 1,
+    "updated_pmo_next_action_rows": 1,
+    "readback_passed": true
   }
 }

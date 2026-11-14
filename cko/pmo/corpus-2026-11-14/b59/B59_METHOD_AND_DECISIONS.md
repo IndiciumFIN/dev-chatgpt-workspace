@@ -38,3 +38,8 @@ Há também dois pares de URLs repetidas em domínios trabalhistas estrangeiros 
 **Evidências complementares:** `SOURCE_REGISTER_ID_CROSSWALK.csv`, `M03_SUPABASE_OFFICIAL_URI_CANDIDATES.csv`, `SUPABASE_CE_DUPLICATE_URI_REVIEW.csv`, `B59_READ_ONLY_AUDIT.json`.
 
 **Status:** revisão estruturada, candidato; B59 permanece `IN_PROGRESS`. Nenhuma migração, exclusão ou merge automático.
+
+## Checagem complementar da linhagem operacional
+Na tabela Supabase `calculadoras_de_enfermagem.source_lineage`, existem 61 registros: 60 `NAO_AVALIADO` e um `MESMO_DOCUMENTO_CANDIDATO`, **todos com `verified=false`**. O único candidato aponta à Resolução COFEN 736/2024, alvo `SRC-COFEN-RES-736-2024`, e referencia PDF do Cofen. Esse vínculo reforça a priorização do documento, mas não constitui aprovação automática nem prova de equivalência sem verificar a versão/hash do PDF.
+
+A referência à `source_lineage` explica por que não se pode equiparar os 61 registros à tabela de 157 `cko_evidence.sources`: são registros de rastreabilidade de outro fluxo.

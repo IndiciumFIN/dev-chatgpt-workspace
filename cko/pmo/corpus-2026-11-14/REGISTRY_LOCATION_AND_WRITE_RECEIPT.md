@@ -12,13 +12,13 @@
 | EVIDENCE_ATOMS | 4 | A2:M5 | Quatro IDs ATM com página/locator/hash, sem texto íntegro |
 | CLAIM_LEDGER | 3 | A2:L4 | Três afirmações ECG CANDIDATE, sem clinical review |
 | RIGHTS_REGISTER | 10 | A2:L11 | Direitos por fonte/documento em HOLD, nenhum liberado |
-| CONFLICT_REGISTER | 6 | A2:L7 | Três achados M05 e dois conflitos curriculares UC08 |
+| CONFLICT_REGISTER | 8 | A2:L9 | Três achados M05 e dois conflitos curriculares UC08 |
 | HOLD_HUMAN | 7 | A2:K8 | Direitos, revisão clínica, SCM, SBV, fontes de descoberta e UC08 |
-| CHANGE_IMPACT | 6 | A2:N7 | Afetação de claims, links, currículos e estados candidatos |
+| CHANGE_IMPACT | 7 | A2:N8 | Afetação de claims, links, currículos e estados candidatos |
 | PMO_MASTER | 1 | A13:J13 | PMO-012 em andamento, com referências PRs 66/67/68 |
 | REGISTRY_CATALOG | 2 | A10:J11 | Localização do Supabase e GitHub canônico |
 
-**Total:** 53 linhas de dados operacionais + 2 registros de catálogo = **55 linhas novas**; todas conferidas por leitura de retorno. IDs do recorte verificados sem repetição. A contagem de linhas não representa fontes/claims clinicamente aprovados.
+**Total:** 56 linhas de dados operacionais + 2 registros de catálogo = **58 linhas novas**; todas conferidas por leitura de retorno. IDs do recorte verificados sem repetição. A contagem de linhas não representa fontes/claims clinicamente aprovados.
 
 ## Crosswalk de identidades M05
 - Fonte existente do Ministério da Saúde `SRC-BR-MS` foi **reutilizada**, sem gerar fonte duplicada, para os documentos `DOC-CAND-M05-EXT-004` e `DOC-CAND-M05-EXT-005`.
@@ -62,3 +62,8 @@ Outras tabelas operacionais observadas: `cko_evidence.source_accreditations` e `
 Consulta `SELECT` somente leitura comparou todos os **15 SOURCE_ID** do Sheets, **8 DOCUMENT_ID**, **3 CLAIM_ID** e os **3 FIND_ID** da M05 às colunas respectivas de `cko_evidence.sources`, `cko_governance.documents`, `cko_evidence.claims` e `cko_validation.findings`: **0 correspondências exatas em 29 IDs**. Uma consulta parcial independente também confirmou 0/4 sources escolhidas. Isso **não** comprova que o conteúdo não exista no Supabase; demonstra ausência de chaves literais coincidentes no subconjunto verificado. Próximo passo B59: crosswalk por alias, URI, DOI, versão, SHA e autoridade, documentando decisões por registro. Não criar dados no banco por semelhança nominal.
 
 O resultado foi registrado adicionalmente em `CONFLICT_REGISTER!A7:L7` (`CONFLICT-M05-SUPABASE-ID-CROSSWALK`) e `CHANGE_IMPACT!A7:N7` (`CHANGE-M05-06`), com leitura de retorno positiva.
+
+## B59 — Reconciliação ampliada (14/11/2026)
+O cruzamento 118 `M03.sources` × 157 `cko_evidence.sources` retornou **0 source_id exatos**, mas **cinco pares de URLs oficiais** compartilhados por quatro fontes M03. Três são candidatos a mesma norma; os dois restantes apontam para a Lei 7498/1986, enquanto o registro M03 agrupa lei e decreto (escopo parcial). O Supabase tem três grupos adicionais de URLs duplicadas dentro do domínio de enfermagem (COFEN 564, Lei 7498, Decreto 94406). Ver `b59/B59_METHOD_AND_DECISIONS.md` e tabelas CSV no PR #67.
+
+**Escritas confirmadas no Sheets:** 15 células `SOURCE_REGISTER!L2:L16` com referência ao crosswalk, dois conflitos novos em `CONFLICT_REGISTER!A8:L9`, um impacto em `CHANGE_IMPACT!A8:N8`, e atualização pontual em `PMO_MASTER!H13`. **Total acumulado de novas linhas: 58** (além das 16 células atualizadas). O histórico anterior não foi sobrescrito. Nenhum direito ou claim foi liberado.

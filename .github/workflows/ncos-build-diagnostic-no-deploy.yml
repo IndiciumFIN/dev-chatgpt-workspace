@@ -27,6 +27,8 @@ jobs:
         run: npm ci
       - name: Inventory all source routes without assigning roles or publication approval
         run: node scripts/ncos-route-source-inventory.mjs --output audit-evidence/ncos-route-source-candidate.v1.json
+      - name: Verify route SHA and imports, preserving authorization holds
+        run: node scripts/check-ncos-route-crosswalk.mjs
       - name: Compile candidate (no deploy, no migrations, no publish)
         run: npm run build:spa
       - name: Check generated local build files
@@ -42,5 +44,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ncos-route-source-candidate
-          path: audit-evidence/ncos-route-source-candidate.v1.json
+          path: |
+            audit-evidence/ncos-route-source-candidate.v1.json
+            audit-evidence/ncos-route-behavior-check.v1.json
           if-no-files-found: warn

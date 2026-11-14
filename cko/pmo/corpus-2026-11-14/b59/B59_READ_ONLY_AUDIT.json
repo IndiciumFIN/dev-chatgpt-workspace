@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-14",
+  "scope": "B59, source identities and authority hierarchy",
+  "sheet_url": "https://docs.google.com/spreadsheets/d/1vi129pgXWMZPFddxlMd5YemMEohumxqk714yCoGCVOg/edit",
+  "sqlite": "/mnt/data/CKO_M03_recuperacao/validacao/canonical_corpus.sqlite (local private; not uploaded)",
+  "supabase_project": "pgsybzggewhinaniybiy",
+  "supabase_schema": "cko_evidence.sources",
+  "snapshots_read_only": true,
+  "counts": {
+    "sheet_sources": 15,
+    "sqlite_sources": 118,
+    "supabase_sources": 157,
+    "exact_sheet_to_sqlite_source_ids": 5,
+    "exact_sheet_to_supabase_source_ids": 0,
+    "exact_sqlite_to_supabase_source_ids": 0,
+    "same_normalized_official_uri_pairs": 5,
+    "unique_sqlite_source_ids_in_uri_pairs": 4,
+    "unique_supabase_source_ids_in_uri_pairs": 5,
+    "proposed_same_document_url_pairs": 3,
+    "broader_scope_url_pairs": 2,
+    "supabase_nursing_duplicate_uri_groups": 3,
+    "authority_level_sheet_entries": 4,
+    "index_platform_sheet_entries": 3,
+    "discovery_only_sheet_entries": 3
+  },
+  "url_normalization": "casefold; remove http(s) scheme and optional leading www.; trim one trailing slash/fragment; retain query; MD5 only for deterministic comparison not integrity verification",
+  "id_match_scope_note": "Source IDs in cko_evidence.sources only; not all possible aliases, documents, lineage tables, or source concept equivalences",
+  "approval": {
+    "source_merge": false,
+    "clinical": false,
+    "rights": false,
+    "supabase_write": false,
+    "main_merge": false
+  },
+  "snapshot_provenance": {
+    "M03": "SQLite M03 read-only source and authority tables",
+    "supabase": "SELECT on cko_evidence.sources; normalized URL cross join with M03 MD5 list",
+    "sheet": "SOURCE_REGISTER A2:L16, values inspected",
+    "pr": "#67 PMO candidate"
+  }
+}

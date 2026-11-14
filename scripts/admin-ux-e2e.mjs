@@ -21,6 +21,9 @@ try {
   observe(source, "connected-admin");
   await source.goto(base + "/admin", { waitUntil: "domcontentloaded" });
   await source.getByRole("heading", { name: "Visão geral", exact: true }).waitFor({ timeout: 60000 });
+  // SSR headings are visible before React has attached click handlers.
+  // Wait for a client-effect marker before interacting; no fixed sleeps.
+  await source.locator('.admin-shell[data-admin-hydrated="true"]').waitFor({ timeout: 60000 });
   const connectedNav = source.locator("aside.admin-side nav.admin-tree");
   await connectedNav.getByRole("button", { name: "Produtos e ferramentas", exact: true }).click();
   console.log("ADMIN_CONNECTED_DEBUG", JSON.stringify({
@@ -43,6 +46,7 @@ try {
   observe(preview, "local-preview");
   await preview.goto(base + "/oficina-local", { waitUntil: "domcontentloaded" });
   await preview.getByRole("heading", { name: "Centro de administração" }).waitFor({ timeout: 60000 });
+  await preview.locator('.ce-admin[data-admin-hydrated="true"]').waitFor({ timeout: 60000 });
   const desktopNav = preview.getByRole("navigation", { name: "Módulos da administração", exact: true });
   await desktopNav.getByRole("button", { name: "Visão geral" }).click();
   await preview.locator(".ce-admin-toolbar h2").getByText("Visão geral", { exact: true }).waitFor();
@@ -58,6 +62,7 @@ try {
   observe(mobile, "local-mobile");
   await mobile.goto(base + "/oficina-local", { waitUntil: "domcontentloaded" });
   await mobile.getByRole("heading", { name: "Centro de administração" }).waitFor({ timeout: 60000 });
+  await mobile.locator('.ce-admin[data-admin-hydrated="true"]').waitFor({ timeout: 60000 });
   await mobile.locator("button.ce-admin-mobile-launch").click();
   const dialog = mobile.getByRole("dialog", { name: "Acesso rápido da administração" });
   await dialog.waitFor();

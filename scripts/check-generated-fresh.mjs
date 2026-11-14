@@ -58,6 +58,12 @@ try {
   regenerou = false;
 }
 
+// TEMP NCOS index generation evidence — remove before review.
+if (process.env.GITHUB_ACTIONS === "true") {
+  const p = "src/lib/contract-index.generated.ts";
+  if (existsSync(p)) console.log(`CE_INDEX_GENERATED_BEGIN ${Buffer.from(readFileSync(p)).toString("base64")} CE_INDEX_GENERATED_END`);
+}
+
 for (const a of ALVOS) {
   if (!existsSync(a.arquivo)) { check(`gerado presente: ${a.arquivo}`, false, "nao existe apos regenerar"); continue; }
   const agora = sha(a.arquivo);

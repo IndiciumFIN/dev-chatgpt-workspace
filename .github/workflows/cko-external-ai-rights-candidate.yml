@@ -1,0 +1,26 @@
+name: CKO external AI rights preflight candidate
+on:
+  push:
+    branches:
+      - 'cko/evidence-index-rights-20261114'
+    paths:
+      - 'cko/evidence-index/2026-11-14/m06/rights-guard/**'
+      - '.github/workflows/cko-external-ai-rights-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fail-closed-candidate-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SOT_DEPLOY: 'false'
+      SUPABASE_DB_WRITE: 'false'
+      CLINICAL_RELEASE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Negative rights policy and integration static tests
+        run: node --test cko/evidence-index/2026-11-14/m06/rights-guard/external-ai-rights-guard.test.mjs

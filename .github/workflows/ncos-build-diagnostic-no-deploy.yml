@@ -29,8 +29,10 @@ jobs:
         run: node scripts/ncos-route-source-inventory.mjs --output audit-evidence/ncos-route-source-candidate.v1.json
       - name: Verify route SHA and imports, preserving authorization holds
         run: node scripts/check-ncos-route-crosswalk.mjs
-      - name: Compile candidate (no deploy, no migrations, no publish)
-        run: npm run build:spa
+      - name: Compile candidate without invoking database migrator
+        env:
+          DATABASE_URL: ""
+        run: node scripts/with-app-env.mjs ./node_modules/.bin/vite build
       - name: Check generated local build files
         run: |
           test -s .vercel/output/nitro.json

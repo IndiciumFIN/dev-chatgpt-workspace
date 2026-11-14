@@ -19,10 +19,10 @@ test("a mesa lista M01 a M22 e a leitura não reaprova", () => {
   assert.equal(layout.includes("text-ok"), false);
   assert.equal(layout.includes("#"), false);
   assert.match(board, /Não há coleção consultável/);
-  assert.match(contract, /area: \\{ hero: "page", crumbs: true, tools: \\[\\],/);
+  assert.match(contract, /area: \{ hero: "page", crumbs: true, tools: \[\],/);
   // Frame is per-page, not a shared TemplateContract dimension.
-  assert.match(pages, /name: "Área do assinante"[^\\n]*kind: "area", frame: "area"/);
-  assert.match(pages, /name: "Área do administrador"[^\\n]*kind: "area", frame: "admin"/);
+  assert.match(pages, /name: "Área do assinante"[^\n]*kind: "area", frame: "area"/);
+  assert.match(pages, /name: "Área do administrador"[^\n]*kind: "area", frame: "admin"/);
   assert.match(doc, /M01 a M22/);
   assert.match(doc, /não faz deploy/);
   assert.equal(doc.includes("super_admin"), false);

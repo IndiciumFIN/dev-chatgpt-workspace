@@ -1,0 +1,1384 @@
+{
+  "schemaVersion": "wutrib.validators-strategy.v0.3.0",
+  "documentId": "WUTRIB-VAL-REGISTRY-001",
+  "documentVersion": "0.3.0",
+  "approvalState": "DRAFT",
+  "date": "2026-11-08",
+  "wo": "WUTRIB-WO-PLAN-018",
+  "scope": "PLANNING_ONLY_NO_VALIDATOR_IMPLEMENTATION",
+  "sourceRefs": [
+    {
+      "id": "COSO_ICIF_2013",
+      "title": "COSO Internal Control — Integrated Framework",
+      "version": "2013",
+      "url": "https://www.coso.org/internal-control",
+      "scope": "CONTROLS",
+      "applicability": "APPLICABILITY_REVIEW",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "COSO_ERM_2017",
+      "title": "COSO Enterprise Risk Management — Integrating with Strategy and Performance",
+      "version": "2017",
+      "url": "https://www.coso.org/enterprise-risk-management",
+      "scope": "ERM",
+      "applicability": "APPLICABILITY_REVIEW",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "COSO_GENAI_2026",
+      "title": "COSO Achieving Effective Internal Control Over Generative AI",
+      "version": "2026",
+      "url": "https://www.coso.org/generative-ai",
+      "scope": "AI_CONTROL_GUIDANCE",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "COBIT_2019",
+      "title": "ISACA COBIT 2019",
+      "version": "2019",
+      "url": "https://www.isaca.org/resources/cobit",
+      "scope": "IT_GOVERNANCE",
+      "applicability": "APPLICABILITY_REVIEW",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "IIA_GIAS_2024",
+      "title": "IIA Global Internal Audit Standards",
+      "version": "issued 2024; effective 2025-01-09",
+      "url": "https://www.theiia.org/en/content/standards/complete-global-internal-audit-standards/",
+      "scope": "AUDIT_PROFESSION",
+      "applicability": "CONDITIONAL_ENGAGEMENT",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "NBC_TA_500",
+      "title": "CFC NBC TA 500 — Evidência de Auditoria",
+      "version": "edition to verify",
+      "url": "https://cfc.org.br/tecnica/normas-brasileiras-de-contabilidade/nbc-ta-de-auditoria-independente/",
+      "scope": "AUDIT_EVIDENCE",
+      "applicability": "CONDITIONAL_INDEPENDENT_AUDIT",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "NBC_TA_530",
+      "title": "CFC NBC TA 530 — Amostragem em Auditoria",
+      "version": "edition to verify",
+      "url": "https://cfc.org.br/tecnica/normas-brasileiras-de-contabilidade/nbc-ta-de-auditoria-independente/",
+      "scope": "AUDIT_SAMPLING",
+      "applicability": "CONDITIONAL_INDEPENDENT_AUDIT",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "OMG_MOF_251",
+      "title": "OMG Meta Object Facility",
+      "version": "2.5.1",
+      "url": "https://www.omg.org/spec/MOF/",
+      "scope": "METAMODELS",
+      "applicability": "IF_SELECTED",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_42001_2023",
+      "title": "ISO/IEC 42001 — AI management system",
+      "version": "2023",
+      "url": "https://www.iso.org/standard/42001",
+      "scope": "AI_MANAGEMENT",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_23894_2023",
+      "title": "ISO/IEC 23894 — AI risk management guidance",
+      "version": "2023",
+      "url": "https://www.iso.org/standard/77304.html",
+      "scope": "AI_RISK",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_5338_2023",
+      "title": "ISO/IEC 5338 — AI lifecycle processes",
+      "version": "2023",
+      "url": "https://www.iso.org/standard/81118.html",
+      "scope": "AI_LIFECYCLE",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_42005_2025",
+      "title": "ISO/IEC 42005 — AI system impact assessment",
+      "version": "2025",
+      "url": "https://www.iso.org/standard/42005",
+      "scope": "AI_IMPACT",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_5259_2_2024",
+      "title": "ISO/IEC 5259-2 — AI data quality measures",
+      "version": "2024",
+      "url": "https://www.iso.org/standard/81860.html",
+      "scope": "AI_DATA_QUALITY",
+      "applicability": "CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "NIST_AIRMF_1",
+      "title": "NIST AI Risk Management Framework",
+      "version": "1.0 (2023)",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "scope": "AI_RISK",
+      "applicability": "VOLUNTARY_CONDITIONAL_AI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "NIST_AI_600_1",
+      "title": "NIST AI RMF Generative AI Profile",
+      "version": "AI 600-1 (2024)",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+      "scope": "AI_GENAIRISK",
+      "applicability": "VOLUNTARY_CONDITIONAL_GENAI",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "OWASP_ASVS_5",
+      "title": "OWASP Application Security Verification Standard",
+      "version": "5.0.0",
+      "url": "https://asvs.owasp.org/",
+      "scope": "APP_SECURITY",
+      "applicability": "REFERENCE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_29119_2",
+      "title": "ISO/IEC/IEEE 29119-2 — Test processes",
+      "version": "2021",
+      "url": "https://www.iso.org/standard/79428.html",
+      "scope": "TEST_PROCESS",
+      "applicability": "REFERENCE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_29119_3",
+      "title": "ISO/IEC/IEEE 29119-3 — Test documentation",
+      "version": "2021",
+      "url": "https://www.iso.org/standard/79429.html",
+      "scope": "TEST_RECORDS",
+      "applicability": "REFERENCE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "ISO_25010_2023",
+      "title": "ISO/IEC 25010 — Product quality model",
+      "version": "2023",
+      "url": "https://www.iso.org/standard/78176.html",
+      "scope": "SOFTWARE_QUALITY",
+      "applicability": "REFERENCE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "W3C_WCAG22",
+      "title": "W3C WCAG 2.2",
+      "version": "2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "scope": "ACCESSIBILITY",
+      "applicability": "REFERENCE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "SPED_EFD",
+      "title": "Receita Federal SPED — Guia Prático EFD ICMS/IPI",
+      "version": "edition valid per period",
+      "url": "https://www.gov.br/sped/pt-br/assuntos/comunicados/efd-icms-ipi/nova-versao-do-guia-pratico-da-efd-icms-ipi-2",
+      "scope": "FISCAL_SOURCE",
+      "applicability": "PER_PERIOD",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "NFE_MOC",
+      "title": "Portal Nacional da NF-e — Manual de Orientação do Contribuinte e XSD",
+      "version": "edition valid per period",
+      "url": "https://www.nfe.fazenda.gov.br/portal/principal.aspx",
+      "scope": "FISCAL_SOURCE",
+      "applicability": "PER_PERIOD",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    },
+    {
+      "id": "TOTVS_FISA170",
+      "title": "TOTVS — FISA170 Configurador de Tributos",
+      "version": "release-specific",
+      "url": "https://centraldeatendimento.totvs.com/hc/pt-br/articles/35314721022103-Cross-Segmento-TOTVS-Backoffice-Linha-Protheus-FIS-FISA170-Quais-tabelas-fazem-parte-do-Configurador-de-Tributos",
+      "scope": "ERP_VENDOR",
+      "applicability": "PER_RELEASE",
+      "documentBodyVerified": false,
+      "ruleBindingAuthorized": false
+    }
+  ],
+  "validators": [
+    {
+      "id": "WUTRIB-VAL-001",
+      "version": "0.3.0-plan",
+      "layer": "GOVERNANCE",
+      "ownerRole": "PMO",
+      "title": "WO admission and lifecycle states",
+      "priority": "P1",
+      "inputs": [
+        "wo",
+        "approval register",
+        "tasks"
+      ],
+      "expectedEvidence": [
+        "unique WO",
+        "admissibility gates",
+        "separation of roles"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P5",
+          "P12",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "BAI06",
+          "MEA02"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_ICIF_2013",
+        "COBIT_2019",
+        "ISO29119_3_2021"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-002",
+      "version": "0.3.0-plan",
+      "layer": "GOVERNANCE",
+      "ownerRole": "GOVERNANCE",
+      "title": "Normative provenance and version applicability",
+      "priority": "P1",
+      "inputs": [
+        "source registry",
+        "effective dates",
+        "source files"
+      ],
+      "expectedEvidence": [
+        "issuer/date/revision",
+        "content digest if captured",
+        "unresolved conflict HOLD"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA03",
+          "APO12"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_ICIF_2013",
+        "SPED_EFD_324",
+        "NFE_MOC"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-003",
+      "version": "0.3.0-plan",
+      "layer": "GOVERNANCE",
+      "ownerRole": "RISK_CONTROL",
+      "title": "RCM risk-to-control completeness",
+      "priority": "P1",
+      "inputs": [
+        "risk register",
+        "control catalog",
+        "assertions"
+      ],
+      "expectedEvidence": [
+        "risk owner",
+        "control coverage",
+        "residual risk",
+        "test assignment"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P6",
+          "P7",
+          "P10"
+        ],
+        "cobitObjectivesCandidate": [
+          "EDM03",
+          "APO12",
+          "MEA02"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_ICIF_2013",
+        "COSO_ERM_2017",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-004",
+      "version": "0.3.0-plan",
+      "layer": "GOVERNANCE",
+      "ownerRole": "DOCUMENT_CONTROL",
+      "title": "Versioned document integrity",
+      "priority": "P1",
+      "inputs": [
+        "document catalog",
+        "MD templates",
+        "signoffs"
+      ],
+      "expectedEvidence": [
+        "unique version",
+        "no forged approvals",
+        "baseline lineage"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P13",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "BAI10",
+          "MEA04"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "ISO29119_3_2021",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-005",
+      "version": "0.3.0-plan",
+      "layer": "GOVERNANCE",
+      "ownerRole": "INTERNAL_AUDIT",
+      "title": "Evidence custody and independent review",
+      "priority": "P1",
+      "inputs": [
+        "audit record",
+        "digest",
+        "evidence pointers"
+      ],
+      "expectedEvidence": [
+        "content integrity",
+        "independent approver",
+        "replay trail"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P13",
+          "P16",
+          "P17"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA04",
+          "MEA02"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "IIA_GIAS_2025",
+        "NBC_TA_500",
+        "COSO_ICIF_2013"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-006",
+      "version": "0.3.0-plan",
+      "layer": "DATA",
+      "ownerRole": "DATA_ARCHITECT",
+      "title": "OMG MOF metamodel compatibility",
+      "priority": "P1",
+      "inputs": [
+        "metamodel version",
+        "schema",
+        "export formats"
+      ],
+      "expectedEvidence": [
+        "type/reference semantics",
+        "backward-compatible model transformations"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P11",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "BAI10"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "OMG_MOF_251",
+        "COBIT_2019",
+        "ISO38505_1_2026"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-007",
+      "version": "0.3.0-plan",
+      "layer": "DATA",
+      "ownerRole": "ERP_SPECIALIST",
+      "title": "Protheus SX2/SX3/SIX dictionary mapping",
+      "priority": "P1",
+      "inputs": [
+        "vendor guidance",
+        "authorized SX2/SX3/SIX snapshot",
+        "release"
+      ],
+      "expectedEvidence": [
+        "field type/length/decimals",
+        "index/physical key",
+        "no fictional mappings"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P11",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "BAI10"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "TOTVS_FISA170",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-008",
+      "version": "0.3.0-plan",
+      "layer": "DATA",
+      "ownerRole": "DATA_STEWARD",
+      "title": "Master data validity and effective dates",
+      "priority": "P1",
+      "inputs": [
+        "SA1/SA2/SB1 reference",
+        "fiscal catalogs",
+        "authorized snapshot"
+      ],
+      "expectedEvidence": [
+        "entity ID duplicates",
+        "regime/NCM/UF and temporal consistency",
+        "source lineage"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "DSS06"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COBIT_2019",
+        "ISO25010_2023",
+        "ISO8000_61_2016",
+        "ISO25012_2008",
+        "ISO38505_1_2026"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-009",
+      "version": "0.3.0-plan",
+      "layer": "DATA",
+      "ownerRole": "ERP_SPECIALIST",
+      "title": "Fiscal structural tables and keys",
+      "priority": "P1",
+      "inputs": [
+        "SF1/SF2/SF3/SFT/SF4/FISA170 snapshot",
+        "schema mapping"
+      ],
+      "expectedEvidence": [
+        "record/key cardinality",
+        "referential coverage",
+        "shared-table scope"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P11"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "BAI10"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "TOTVS_FISA170",
+        "COBIT_2019",
+        "ISO25012_2008"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-010",
+      "version": "0.3.0-plan",
+      "layer": "DATA",
+      "ownerRole": "DATA_STEWARD",
+      "title": "End-to-end lineage provenance",
+      "priority": "P1",
+      "inputs": [
+        "ingest event",
+        "field maps",
+        "document graph"
+      ],
+      "expectedEvidence": [
+        "source to field to rule to finding and user trace",
+        "unbroken lineage"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P13",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "MEA04"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_ICIF_2013",
+        "COBIT_2019",
+        "ISO25012_2008"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-011",
+      "version": "0.3.0-plan",
+      "layer": "FISCAL",
+      "ownerRole": "FISCAL_SPECIALIST",
+      "title": "EFD layout and COD_VER",
+      "priority": "P0",
+      "inputs": [
+        "EFD",
+        "SPED release",
+        "period"
+      ],
+      "expectedEvidence": [
+        "C100/C170/C190 and applicable blocks",
+        "record rules",
+        "reject unsupported version"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA03",
+          "DSS06"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "SPED_EFD_324",
+        "COSO_ICIF_2013"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-012",
+      "version": "0.3.0-plan",
+      "layer": "FISCAL",
+      "ownerRole": "FISCAL_SPECIALIST",
+      "title": "NF-e MOC XSD and key check digit",
+      "priority": "P0",
+      "inputs": [
+        "XML",
+        "official XSD",
+        "MOC",
+        "events"
+      ],
+      "expectedEvidence": [
+        "schema validation",
+        "44 digit key DV",
+        "document lifecycle and effective version"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA03",
+          "DSS06"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "NFE_MOC",
+        "COSO_ICIF_2013"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-013",
+      "version": "0.3.0-plan",
+      "layer": "FISCAL",
+      "ownerRole": "FISCAL_SPECIALIST",
+      "title": "Rule validity and precedence by date",
+      "priority": "P0",
+      "inputs": [
+        "rule catalog",
+        "effective calendar",
+        "fiscal source"
+      ],
+      "expectedEvidence": [
+        "applicability for fact date and ERP release",
+        "conflicts and no automatic approval"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P10"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA03",
+          "APO12"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "SPED_EFD_324",
+        "TOTVS_FISA170",
+        "COSO_ERM_2017"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-014",
+      "version": "0.3.0-plan",
+      "layer": "FISCAL",
+      "ownerRole": "FISCAL_SPECIALIST",
+      "title": "XML EFD ERP and master data reconciliation",
+      "priority": "P0",
+      "inputs": [
+        "NFe XML",
+        "EFD",
+        "ERP data",
+        "master data"
+      ],
+      "expectedEvidence": [
+        "matching key/amount with tolerances set by rule",
+        "exceptions with granular evidence"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "DSS06",
+          "MEA04"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "SPED_EFD_324",
+        "NFE_MOC",
+        "TOTVS_FISA170"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-015",
+      "version": "0.3.0-plan",
+      "layer": "AUDIT",
+      "ownerRole": "INTERNAL_AUDIT",
+      "title": "Sampling design and reproducibility",
+      "priority": "P1",
+      "inputs": [
+        "population manifest",
+        "seed",
+        "sampling method"
+      ],
+      "expectedEvidence": [
+        "population completeness",
+        "sampling risk",
+        "selection replay",
+        "sample limitations"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P10"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA04",
+          "APO12"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "NBC_TA_530",
+        "IIA_GIAS_2025",
+        "ISO29119_4_2021"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-016",
+      "version": "0.3.0-plan",
+      "layer": "AUDIT",
+      "ownerRole": "INTERNAL_AUDIT",
+      "title": "Audit methodology and findings",
+      "priority": "P0",
+      "inputs": [
+        "assertions",
+        "procedures",
+        "workpapers",
+        "exceptions"
+      ],
+      "expectedEvidence": [
+        "control vs substantive tests",
+        "reasonable evidence",
+        "finding and review separation"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P13",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA04",
+          "MEA02"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "IIA_GIAS_2025",
+        "NBC_TA_500",
+        "ISO29119_4_2021"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-017",
+      "version": "0.3.0-plan",
+      "layer": "SECURITY",
+      "ownerRole": "INFORMATION_SECURITY",
+      "title": "IAM RBAC tenant isolation",
+      "priority": "P0",
+      "inputs": [
+        "org membership",
+        "JWT",
+        "policy",
+        "access request"
+      ],
+      "expectedEvidence": [
+        "deny cross-tenant and self approval",
+        "revocation",
+        "deny by default"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P11"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO13",
+          "DSS05"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "OWASP_ASVS_5",
+        "COSO_ICIF_2013"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-018",
+      "version": "0.3.0-plan",
+      "layer": "SECURITY",
+      "ownerRole": "INFORMATION_SECURITY",
+      "title": "Ingestion threat and malicious inputs",
+      "priority": "P0",
+      "inputs": [
+        "XML/CSV",
+        "untrusted strings",
+        "parser settings"
+      ],
+      "expectedEvidence": [
+        "DTD/XXE injection denial",
+        "payload limits",
+        "output escaping"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P11"
+        ],
+        "cobitObjectivesCandidate": [
+          "DSS05",
+          "APO13"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "OWASP_ASVS_5",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-019",
+      "version": "0.3.0-plan",
+      "layer": "SECURITY",
+      "ownerRole": "DEVSECOPS",
+      "title": "Supply chain and safe changes",
+      "priority": "P1",
+      "inputs": [
+        "SBOM",
+        "dependencies",
+        "signatures",
+        "CI artifact"
+      ],
+      "expectedEvidence": [
+        "reproducible build",
+        "CVE evaluation",
+        "secrets avoidance",
+        "change lineage"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P11",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "BAI06",
+          "BAI10"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "OWASP_ASVS_5",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-020",
+      "version": "0.3.0-plan",
+      "layer": "SECURITY",
+      "ownerRole": "PRIVACY_OFFICER",
+      "title": "Data protection and retention",
+      "priority": "P1",
+      "inputs": [
+        "classification",
+        "retention policy",
+        "subject data"
+      ],
+      "expectedEvidence": [
+        "minimum collection",
+        "entitlements",
+        "secrets absent",
+        "retention rationale"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P12",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO14",
+          "APO13"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "OWASP_ASVS_5",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-021",
+      "version": "0.3.0-plan",
+      "layer": "QUALITY",
+      "ownerRole": "PERFORMANCE_ENGINEER",
+      "title": "Capacity and resource limits",
+      "priority": "P1",
+      "inputs": [
+        "synthetic workload",
+        "SLO",
+        "p95/99",
+        "memory"
+      ],
+      "expectedEvidence": [
+        "throughput/degradation/threshold",
+        "no load on prod without authorization"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "DSS01",
+          "MEA01"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "ISO25010_2023",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-022",
+      "version": "0.3.0-plan",
+      "layer": "QUALITY",
+      "ownerRole": "ACCESSIBILITY_SPECIALIST",
+      "title": "Accessibility automated and manual",
+      "priority": "P1",
+      "inputs": [
+        "WCAG scope",
+        "DOM",
+        "keyboard assistive tech"
+      ],
+      "expectedEvidence": [
+        "WCAG 2.2 AA applicable criteria",
+        "manual evidence",
+        "no axe-only certification"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P12",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "MEA04",
+          "APO11"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "WCAG22",
+        "ISO25010_2023"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-023",
+      "version": "0.3.0-plan",
+      "layer": "QUALITY",
+      "ownerRole": "SUSTAINABILITY_ANALYST",
+      "title": "Software sustainability and carbon method",
+      "priority": "P1",
+      "inputs": [
+        "functional unit",
+        "traffic energy estimates",
+        "boundaries"
+      ],
+      "expectedEvidence": [
+        "baseline and measurement/estimate separation",
+        "no unverifiable carbon claims"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "EDM03",
+          "APO11"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_ERM_2017",
+        "COBIT_2019"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-024",
+      "version": "0.3.0-plan",
+      "layer": "QUALITY",
+      "ownerRole": "OPERATIONS",
+      "title": "Continuity backups and recoverability",
+      "priority": "P1",
+      "inputs": [
+        "backups",
+        "RTO/RPO",
+        "rollback manifests"
+      ],
+      "expectedEvidence": [
+        "restore evidence",
+        "rollback gate",
+        "incidents and alarms"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P16"
+        ],
+        "cobitObjectivesCandidate": [
+          "DSS04",
+          "DSS01"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COBIT_2019",
+        "ISO25010_2023"
+      ],
+      "conditional": false,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-025",
+      "version": "0.3.0-plan",
+      "layer": "AI_OPTIONAL",
+      "ownerRole": "AI_GOVERNANCE",
+      "title": "AI use-case and model inventory",
+      "priority": "P1",
+      "inputs": [
+        "AI component registry",
+        "model/prompt versions",
+        "data flows"
+      ],
+      "expectedEvidence": [
+        "AI components declared",
+        "AI impact required determination",
+        "non-AI bypass"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO12",
+          "APO14"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "ISO_42001_2023",
+        "NIST_AIRMF_1",
+        "ISO_42005_2025"
+      ],
+      "conditional": true,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-026",
+      "version": "0.3.0-plan",
+      "layer": "AI_OPTIONAL",
+      "ownerRole": "MODEL_RISK",
+      "title": "Grounding and factual claim validator",
+      "priority": "P0",
+      "inputs": [
+        "reference corpus",
+        "gold cases",
+        "model outputs"
+      ],
+      "expectedEvidence": [
+        "fabricated citation detection",
+        "uncertainty preserved",
+        "hallucinations quarantined"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P13"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO11",
+          "MEA04"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "ISO_23894_2023",
+        "ISO_5259_2_2024",
+        "NIST_AIRMF_1"
+      ],
+      "conditional": true,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-027",
+      "version": "0.3.0-plan",
+      "layer": "AI_OPTIONAL",
+      "ownerRole": "INFORMATION_SECURITY",
+      "title": "Prompt injection and model abuse",
+      "priority": "P0",
+      "inputs": [
+        "red team set",
+        "untrusted docs",
+        "tool permissions"
+      ],
+      "expectedEvidence": [
+        "prompt injection resisted",
+        "no exfiltration",
+        "no unauthorized agent action"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P10",
+          "P11"
+        ],
+        "cobitObjectivesCandidate": [
+          "APO13",
+          "DSS05"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "COSO_GENAI_2026",
+        "NIST_AI_600_1",
+        "OWASP_ASVS_5"
+      ],
+      "conditional": true,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    },
+    {
+      "id": "WUTRIB-VAL-028",
+      "version": "0.3.0-plan",
+      "layer": "AI_OPTIONAL",
+      "ownerRole": "AI_GOVERNANCE",
+      "title": "AI impact drift and human veto",
+      "priority": "P0",
+      "inputs": [
+        "impact record",
+        "model drift metrics",
+        "appeal process"
+      ],
+      "expectedEvidence": [
+        "risk thresholds",
+        "continuous monitor",
+        "veto and independent review"
+      ],
+      "controls": {
+        "cosoICIFPrinciplesCandidate": [
+          "P7",
+          "P16",
+          "P17"
+        ],
+        "cobitObjectivesCandidate": [
+          "EDM03",
+          "MEA04"
+        ],
+        "frameworkMappingsRequireLicensedReview": true
+      },
+      "externalReferences": [
+        "ISO_42001_2023",
+        "ISO_42005_2025",
+        "ISO_5338_2023"
+      ],
+      "conditional": true,
+      "implementationState": "PLANNED_NOT_EXECUTED",
+      "outputAuthority": "TECHNICAL_OBSERVATION_ONLY",
+      "onUnknown": "BLOCKED",
+      "onDependencyError": "ERROR",
+      "releasePromotion": "DENIED"
+    }
+  ],
+  "summary": {
+    "plannedValidators": 28,
+    "aiOptional": 4,
+    "deterministicCore": 24,
+    "implementedOrCertified": 0
+  },
+  "policy": {
+    "allOutputsAdvisory": true,
+    "taxConformity": "NOT_EVALUATED",
+    "approvalByMachine": "FORBIDDEN",
+    "failureMustBlockAdvisoryDecision": true,
+    "sourceScope": "official/public metadata, not complete paid standard texts",
+    "cosoAndCobitMappings": "CANDIDATE_TO_BE_VERIFIED_BY_QUALIFIED_REVIEWER",
+    "mofTermDisambiguation": [
+      "OMG_MOF_251_METAOBJECT_FACILITY",
+      "FISCAL_MANUAL_OF_ORIENTATION_NOT_MOF_STANDARD"
+    ],
+    "samplingPrinciple": "risk selection distinct from statistical projection; never extrapolate without approved methodology",
+    "aiApplicability": "only where actual model-based AI is used; deterministic scripts alone do not trigger ISO 42001 certification"
+  },
+  "normativeRegistryPath": "docs/homologacao/v1/referencias-normativas.v1.json",
+  "inlineSourceMetadataStatus": "DEPRECATED_COMPATIBILITY_SNAPSHOT",
+  "sourceRefResolution": "All validator externalReferences resolve to canonical normative registry. Inline sourceRefs preserved only as a v0.3 drafting snapshot; normative registry wins on conflict, and disagreement is HOLD_HUMAN."
+}

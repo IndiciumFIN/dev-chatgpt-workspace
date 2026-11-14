@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wutrib.invalid/contracts/validator-observation.v0.3.schema.json",
+  "title": "WU-TRIB — candidate validator observation (no approval semantics)",
+  "description": "Planning document only. A machine validator cannot authorize tax conformity, approvals, releases or production. Requires human review and custody.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "validatorId",
+    "validatorVersion",
+    "executionId",
+    "woId",
+    "status",
+    "scope",
+    "fiscalConformity",
+    "humanApproval",
+    "productionAuthorized",
+    "controlId",
+    "sourceRefs",
+    "evidence",
+    "checks",
+    "capturedAt",
+    "reason"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "wutrib.validator-observation.v0.3"
+    },
+    "validatorId": {
+      "type": "string",
+      "pattern": "^WUTRIB-VAL-[0-9]{3}$"
+    },
+    "validatorVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "executionId": {
+      "type": "string",
+      "minLength": 8
+    },
+    "woId": {
+      "type": "string",
+      "pattern": "^WUTRIB-WO-[A-Z0-9-]+$"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_APPLICABLE",
+        "ERROR",
+        "NOT_RUN"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 3
+    },
+    "fiscalConformity": {
+      "const": "NOT_EVALUATED"
+    },
+    "humanApproval": {
+      "const": false
+    },
+    "productionAuthorized": {
+      "const": false
+    },
+    "controlId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidenceId",
+          "uri",
+          "sha256",
+          "captureMethod"
+        ],
+        "properties": {
+          "evidenceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "captureMethod": {
+            "type": "string",
+            "minLength": 3
+          }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "checkId",
+          "status",
+          "reason",
+          "expected",
+          "observed"
+        ],
+        "properties": {
+          "checkId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "BLOCKED",
+              "NOT_APPLICABLE",
+              "ERROR",
+              "NOT_RUN"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "type": "string"
+          },
+          "observed": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "semanticInputDigest": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourcePeriod": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "erpRelease": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewerIdentity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reasonForNotApplicable": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "PASS"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "checks": {
+            "minItems": 1
+          },
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "NOT_APPLICABLE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "reasonForNotApplicable": {
+            "type": "string",
+            "minLength": 8
+          }
+        }
+      }
+    }
+  ]
+}

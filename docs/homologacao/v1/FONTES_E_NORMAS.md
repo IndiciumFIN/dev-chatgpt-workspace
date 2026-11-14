@@ -1,6 +1,6 @@
 ---
 document_id: WUTRIB-DOC-NORMS-001
-version: 0.1.0
+version: 0.2.0
 status: DRAFT
 wo: WUTRIB-WO-PLAN-018
 owner_role: GOVERNANCE
@@ -43,3 +43,31 @@ O escopo do conjunto documental é **WUTRIB**, não a empresa como um todo. A re
 - Normas ISO e conteúdo de fornecedor podem ter direitos/licenças; não embutir sua íntegra sem licença.
 
 **Registro de proveniência editorial:** URLs e edições confirmadas quando acessíveis. Versões internas do produto não herdam a edição de uma norma. Revisão formal de pertinência por Jurídico, Fiscal e Qualidade: **HOLD_HUMAN**.
+
+
+## Adendo v0.2.0 — governança, controles e metadados de validadores
+
+As referências abaixo são **fontes de desenho e avaliação**, não prova de certificação, exigência legal universal ou licença de reprodução da íntegra. A lista estruturada e canônica está em referencias-normativas.v1.json (37 entradas).
+
+| Referência | Edição verificada | Uso na proposta |
+|---|---|---|
+| COSO Internal Control Integrated Framework | 2013 | Controles, riscos, informações e monitoramento |
+| COSO ERM Integrating with Strategy and Performance | 2017 | Risco residual, resposta e apetite |
+| COSO Achieving Effective Internal Control Over Generative AI | 2026 | Controles específicos de IA generativa, **quando houver** |
+| COBIT | 2019 | Objetivos selecionados de governança/gestão I&T |
+| IIA Global Internal Audit Standards | Edição 2024, efetiva 2025 | Auditoria independente e qualidade das evidências |
+| OMG Meta Object Facility | 2.5.1 | Metamodelagem opcional; distinto de manuais fiscais |
+| ISO/IEC 42001 | 2023 | Sistema de gestão de IA, se aplicável |
+| ISO/IEC 23894 | 2023 | Riscos específicos de IA, se aplicável |
+| ISO/IEC 5338 | 2023 | Ciclo de vida de sistemas IA, se aplicável |
+| ISO/IEC 42005 | 2025 | Impacto de sistemas IA, se aplicável |
+| NIST AI RMF e GenAI Profile | 1.0 (2023) / AI 600-1 (2024) | Govern, Map, Measure, Manage e riscos de GenAI |
+| ISO/IEC 5259-2 / 5259-5 | 2024 / 2025 | Qualidade/governança de dados para IA, condicional |
+| ISO/IEC 25012 | 2008 (confirmada 2025) | Qualidade de dados estruturados |
+| ISO 8000-61 | 2016 | Modelo de processos de gestão da qualidade dos dados |
+| ISO/IEC 38505-1 | **2026** (substitui edição 2017) | Governança de dados |
+| ISO/IEC/IEEE 29119-4 | 2021 | Técnicas de projeto de testes |
+
+**Não misturar:** (a) auditoria interna / IIA, (b) IA = inteligência artificial, (c) OMG MOF 2.5.1, (d) manuais fiscais SPED/MOC. A aplicabilidade de NBC TA 500/530 deve ser avaliada em função do tipo de trabalho profissional. O uso de referência COSO/COBIT não produz sozinho conformidade, eficácia de controle ou aceite fiscal.
+
+**Conteúdo e direitos:** metadados públicos foram consultados; o texto integral licenciado e o mapeamento detalhado de princípios ainda exigem revisão/autorizações. Gate atual: HOLD_HUMAN.

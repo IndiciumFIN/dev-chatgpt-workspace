@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "NCOS_BRANCH_DELETION_CANDIDATE",
+  "project": "Calculadoras de Enfermagem / NCOS",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "target_branch": "integration/structural-overlay-20261101",
+  "target_head_sha": "621f73b5abde2dbb65818645c00d4821cbd3d061",
+  "base_branch": "main",
+  "base_head_sha_at_analysis": "6fe6e0708b3ac8969a56c3a57ca0fb89cf1800f7",
+  "source_pull_request": 30,
+  "pull_request_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/30",
+  "merged_at": "2026-11-01T14:09:48Z",
+  "merge_commit_sha": "0ec32cf81b2451c024808677e32fb654ead64ff6",
+  "changed_files_in_merged_pr": 497,
+  "classification": "DELETE_CANDIDATE",
+  "actual_deletion_performed": false,
+  "operation": "METADATA_ONLY_MAIN",
+  "observed_on": "2026-11-13",
+  "evidence": {
+    "pull_request_state": "closed",
+    "pull_request_merged": true,
+    "main_contains_target_commit": true,
+    "compare_main_to_target": {
+      "ahead_by": 0,
+      "behind_by": 34,
+      "status": "behind",
+      "exclusive_commits": 0
+    },
+    "repository_pull_requests_checked": 30,
+    "open_pull_requests_using_branch": 0,
+    "github_code_search_references": 39,
+    "github_code_search_caveat": "Search may not include external workflow configurations, branch-name references outside indexed code, or complete history.",
+    "branch_head_sha_pinned": true
+  },
+  "recovery": {
+    "branch_head_commit": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/621f73b5abde2dbb65818645c00d4821cbd3d061",
+    "merge_commit": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/commit/0ec32cf81b2451c024808677e32fb654ead64ff6",
+    "merged_pull_request": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/pull/30"
+  },
+  "pending_before_delete": [
+    "Complete external workflow, integration and deployment reference scan.",
+    "Confirm retention/backup policy and restore the original ref from pinned SHA if necessary.",
+    "Recheck head SHA and main ancestry at actual deletion time.",
+    "Separate confirmation for destructive remote branch removal."
+  ],
+  "limitations": [
+    "The PR merger is proven, not NCOS functional readiness, security clearance, or clinical validation.",
+    "This record is a classification only; no branch ref deleted and no archive branch created.",
+    "WU-TRIB unchanged; no migration, DB, release, or production impact."
+  ]
+}

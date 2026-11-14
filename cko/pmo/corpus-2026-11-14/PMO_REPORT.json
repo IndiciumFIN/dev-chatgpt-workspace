@@ -1,0 +1,457 @@
+{
+  "date": "2026-11-14",
+  "tasks": 59,
+  "status_counts": {
+    "DONE_SCOPE": 3,
+    "DONE_TECHNICAL": 5,
+    "DONE_EDITORIAL": 1,
+    "IN_PROGRESS": 24,
+    "TODO": 19,
+    "DONE_STRUCTURAL": 1,
+    "HOLD_HUMAN": 3,
+    "WAITING_SOURCE": 1,
+    "DRAFT_EDITORIAL": 2
+  },
+  "risks": 20,
+  "decisions": 19,
+  "version": "0.2.7-private-ce-git-ci-hold",
+  "source": "M03 SQLite checked + live GitHub PRs 66/67/68 + official source discovery",
+  "master_pmo_unchanged": false,
+  "clinical_release": false,
+  "rights_release": false,
+  "last_event_id": "EV-CKO-PRIVATE-GIT-CI-HOLD-001",
+  "github_actions": {
+    "claims": {
+      "run_id": 43563078415,
+      "status": "success",
+      "head_commit": "9b9524cbff296cafb2aa52d2f9cad687952eb02a"
+    },
+    "findings": {
+      "run_id": 43563080148,
+      "status": "success",
+      "head_commit": "f3141cedb89eee391b9df8fbcac04b7b4b60e290"
+    },
+    "scope": "STRUCTURAL_ONLY"
+  },
+  "vercel_build_status": "FAILURE_QUOTA_LIMIT",
+  "master_pmo_registry_write_verified": true,
+  "master_pmo_added_rows": 1,
+  "registry_catalog_added_rows": 2,
+  "master_pmo_sync_scope": "Candidate metadata only; not full corpus or Supabase sync",
+  "source_registry_original_rows_preserved": true,
+  "source_registry_total_rows_excluding_header": 15,
+  "source_registry_new_rows": 8,
+  "supabase_readonly_audited": true,
+  "total_sheet_rows_added_for_m05": 58,
+  "supabase_exact_id_crosswalk": {
+    "queried_sources": 15,
+    "queried_documents": 8,
+    "queried_claims": 3,
+    "queried_findings": 3,
+    "total_queried": 29,
+    "exact_matches": 0,
+    "meaning": "ID mismatch only; semantic alias correspondence not yet determined",
+    "write_to_supabase": false
+  },
+  "b59_identity_audit": {
+    "sqlite_sources": 118,
+    "supabase_sources": 157,
+    "source_id_exact_matches": 0,
+    "uri_candidate_pairs": 5,
+    "distinct_m03_sources_in_uri_pairs": 4,
+    "nursing_related_supabase_internal_duplicate_uri_groups": 3,
+    "sqlite_exact_sources_in_sheet": 5,
+    "source_lineage_verified_rows": 0,
+    "source_lineage_candidate_rows": 1
+  },
+  "operational_registry_rows_added": 56,
+  "integrated_end_to_end_plan": {
+    "version": "0.1.0-proposed",
+    "date": "2026-11-14",
+    "document": "cko/pmo/corpus-2026-11-14/PLANO_INTEGRADO_PONTA_A_PONTA_20261114.md",
+    "phases": "PP00..PP13 (14)",
+    "gate_matrices": [
+      "DRIVE_EXEC G0-G9",
+      "R04 G0-G12 DRAFT",
+      "GIT_CKO G0-G10 CANDIDATE"
+    ],
+    "gate_crosswalk": "GATE_CROSSWALK_TRIPLO_20261114.md",
+    "proposed_incremental_work_packages": 17,
+    "proposals_status": "PROPOSED_NOT_ADMITTED",
+    "wbs_existing_tasks": 59,
+    "master_pmo_program_id": "PMO-013",
+    "master_pmo_program_status": "DRAFT_FOR_GOVERNED_REVIEW",
+    "master_pmo_row": 14,
+    "architecture_reconciliation": {
+      "existing_legacy_pilot_project": "SOT-10-09-2026",
+      "supabase_project_ref": "hcqukuotfwflmebjygam",
+      "existing_tables_in_public_schema": 10,
+      "row_count_in_listed_tables": 0,
+      "same_organization_as_calculadoras_smart": true,
+      "final_isolation_decision": "HOLD_ADR_HUMAN"
+    }
+  },
+  "career_path_naming": {
+    "display_label": "Trilha de carreira",
+    "legacy_contracts_unchanged": [
+      "CURRICULUM",
+      "UC",
+      "MODULE"
+    ],
+    "schema_renamed": false,
+    "source_text_modified": false,
+    "stage_progression_claims_approved": 0,
+    "curriculum_cardio": {
+      "ucs": 10,
+      "hours": 300,
+      "detailed_modules": 51,
+      "detailed_topics": 295,
+      "uc08_axes": 8,
+      "uc08_decomposed_modules": 0
+    },
+    "decision_id": "D012",
+    "proposed_spec": "TRILHA_CARREIRA_CONTRATO_E_MIGRACAO.md",
+    "master_pmo_program_id": "PMO-013",
+    "master_pmo_label": "CKO CE — Trilha de carreira e conhecimento canônico (PP00–PP13)",
+    "master_pmo_row": 14,
+    "master_pmo_readback": true,
+    "change_impact_id": "CHANGE-CKO-CAREER-PATH-20261114",
+    "cardiology_structural_ci": {
+      "run_id": 43568372281,
+      "status": "success",
+      "checked": [
+        "M04 curriculum refs",
+        "M05 claims",
+        "Trilha de carreira UC/module/UC08 parity"
+      ],
+      "clinical_approval": false
+    }
+  },
+  "infrastructure_audit": {
+    "legacy_pilot": "SOT-10-09-2026",
+    "project_ref": "hcqukuotfwflmebjygam",
+    "same_org_as_ce": true,
+    "public_corpus_tables": 10,
+    "all_rls": true,
+    "anon_auth_grants": 0,
+    "policies": 0,
+    "edge_functions_active": 9,
+    "edge_functions_without_jwt": 3,
+    "security_review": "NOT_EXECUTED",
+    "decision": "PROPOSED_HOLD_HUMAN",
+    "no_db_write": true,
+    "adr_doc": "ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md",
+    "decision_id": "D014",
+    "human_hold_id": "HOLD-CKO-SOT-INFRA-20261114",
+    "conflict_id": "CONFLICT-CKO-SOT-ISOLATION-20261114",
+    "impact_id": "CHANGE-CKO-SOT-ADR-20261114",
+    "pmomaster_next_action_readback": true
+  },
+  "b59_alias_admission": {
+    "pairs": 5,
+    "document_identity_candidates": 3,
+    "partial_scope_pairs": 2,
+    "admitted": 0,
+    "official_cofen_webpage_metadata_reviewed": true,
+    "document_hash_crosschecked": false,
+    "decision_id": "D015",
+    "queue_file": "b59/B59_ALIAS_ADMISSION_QUEUE.csv",
+    "alias_admitted": 0
+  },
+  "additional_sheet_changes_20261114": {
+    "new_rows": {
+      "CHANGE_IMPACT": 2,
+      "CONFLICT_REGISTER": 1,
+      "HOLD_HUMAN": 1
+    },
+    "updated_cells": {
+      "PMO_MASTER_title": 1,
+      "PMO_MASTER_scope": 1,
+      "PMO_MASTER_next_action": 2
+    },
+    "readback": "PASS",
+    "scope": "Career path rename and infrastructure ADR; excluded from original M05 58-row register count"
+  },
+  "b59_snapshot_reconciliation": {
+    "pairs": 5,
+    "unique_m03_documents": 6,
+    "supabase_snapshots": 7,
+    "hash_equal_document_to_snapshot_pairs": 0,
+    "eligible_for_auto_alias": 0,
+    "non_normative_site_chrome_rejected": 1
+  },
+  "sot_function_static_review": {
+    "as_of": "2026-11-14",
+    "functions": 9,
+    "public_no_jwt": 3,
+    "public_functions_readonly_by_code": 3,
+    "protected_jwt": 6,
+    "external_ai_fragment_transfer": true,
+    "explicit_external_tdm_rights_guard_in_atomizer": "NOT_OBSERVED",
+    "operational_approval": "HOLD",
+    "note": "static source inspection only; no dynamic security test"
+  },
+  "source_group_career_paths": {
+    "ue": {
+      "topic_groups": 7,
+      "source_topics": 170,
+      "source_link_candidates": 9102
+    },
+    "occupational": {
+      "topic_groups": 32,
+      "source_topics": 885,
+      "source_link_candidates": 0
+    },
+    "group_count": 39,
+    "source_topics_total": 1055,
+    "claim_approval": 0,
+    "career_stage_approval": 0,
+    "github_pr": 66,
+    "ci_run_id": 43569708978,
+    "ci_result": "success"
+  },
+  "b59_sot_candidate_gate_ci": {
+    "run_id": 43570231486,
+    "status": "success",
+    "scope": "Metadata/documented rights HOLD only",
+    "source_documents": 6,
+    "supabase_snapshots": 7,
+    "aliases_admitted": 0,
+    "preflight_deployed": false
+  },
+  "pmo_master_new_records": {
+    "location": "PMO_MASTER!A14:J14",
+    "new_conflicts": 2,
+    "new_human_holds": 2,
+    "new_change_impacts": 2,
+    "scope_cell_updated": true,
+    "next_action_updated": true,
+    "verified_by_readback": true
+  },
+  "external_ai_preflight_candidate": {
+    "pr": 68,
+    "branch": "cko/evidence-index-rights-20261114",
+    "policy": "POL-CKO-EXTERNAL-AI-RIGHTS-20261114",
+    "source_function": "deepseek-atomize@v5",
+    "candidate_function": "deepseek-atomize.v6.candidate.ts",
+    "unit_test_negative_cases": 27,
+    "ci_run_id": 43571430279,
+    "ci_result": "success",
+    "hypothetical_positive_fixture": true,
+    "per_item_rights_registry_deployed": false,
+    "sot_function_updated": false,
+    "supabase_ddl_applied": false,
+    "rights_approved": 0,
+    "security_dynamic_test": "NOT_PERFORMED",
+    "human_hold": "HOLD-CKO-SOT-TDM-DEPLOYMENT-20261114",
+    "synthetic_pg_ci_run_id": 43572600708,
+    "synthetic_pg_ci_result": "success",
+    "synthetic_pg_version": 16,
+    "composite_fk_enforced_in_synthetic": true,
+    "source_file_sha_fk_enforced_in_synthetic": true,
+    "active_grant_uniqueness_enforced_in_synthetic": true,
+    "mock_concurrent_ci_run_id": 43572351313,
+    "mock_concurrent_ci_result": "success",
+    "idempotent_retry_confirmed": false,
+    "transactional_claim_deployed": false
+  },
+  "master_pmo_readback_20261114": {
+    "new_hold": "HOLD-CKO-SOT-TDM-DEPLOYMENT-20261114",
+    "new_impact": "CHANGE-CKO-SOT-TDM-GUARD-CANDIDATE-20261114",
+    "next_action_updated": true,
+    "status": "VERIFIED"
+  },
+  "idempotency_risk": {
+    "finding_id": "FIND-CKO-SOT-TDM-REPLAY-RACE-20261114",
+    "conflict_id": "CONFLICT-CKO-SOT-TDM-REPLAY-20261114",
+    "human_hold_id": "HOLD-CKO-SOT-TDM-ATOMIC-CLAIM-20261114",
+    "change_impact_id": "CHANGE-CKO-SOT-TDM-DB-CONSTRAINTS-20261114",
+    "risk_id": "R19",
+    "decision_id": "D018",
+    "proposed_work_package": "PXC-017",
+    "status": "HOLD_RELEASE"
+  },
+  "master_pmo_readback_m07": {
+    "new_rows": 3,
+    "updated_pmo_next_action": true,
+    "verified": true
+  },
+  "m08_canonical_atomic": {
+    "project_scope": "CKO CE / Trilha de carreira, Urgência, Cardiologia, Segurança Perioperatória",
+    "phase": "PP06_PP08_PP09",
+    "created": "2026-11-14",
+    "package_version": "0.2",
+    "package_drive_file_id": "1cuXkb1bCg4lwtFtHL9B9aiANY1ioIhEk",
+    "package_drive_url": "https://drive.google.com/file/d/1cuXkb1bCg4lwtFtHL9B9aiANY1ioIhEk/view?usp=drivesdk",
+    "package_sha256": "1663f80280684aa005aa58e029c1dabdeba3cd05fb8b15cefccb9abc5c9bfff4",
+    "github_pr": 66,
+    "github_content_path": "cko/canonical-content/2026-11-14/m08",
+    "ci_run": 43575253083,
+    "ci_status": "success",
+    "ci_scope": "metadata structural gate only",
+    "corpus": {
+      "sources": 118,
+      "documents": 124,
+      "evidence_atoms": 28001,
+      "distinct_text_hashes": 25694,
+      "excess_repeated_sha_occurrences": 2307,
+      "topic_evidence_links_candidates": 9102,
+      "link_rights_groups": {
+        "active_candidate": 4142,
+        "conditional_candidate": 1670,
+        "blocked_candidate": 3290
+      },
+      "legacy_claims_hold": 29,
+      "legacy_knowledge_atoms_hold": 29,
+      "content_candidates": 1232,
+      "topic_publication_queue": 1055
+    },
+    "candidate_lot": {
+      "source_ids": [
+        "SRC-COFEN-736-2024",
+        "SRC-ANVISA-RDC36-2013"
+      ],
+      "documents": 2,
+      "distinct_evidence_atom_ids": 33,
+      "normative_claims": 34,
+      "knowledge_atoms_candidate": 34,
+      "content_masters": 3,
+      "quiz_drafts": 8,
+      "flashcard_drafts": 10
+    },
+    "master_sheet": {
+      "name": "CORPUS & KNOWLEDGE PMO — Calculadoras de Enfermagem",
+      "program": "PMO-014",
+      "new_rows": 76,
+      "by_register": {
+        "CLAIM_LEDGER": 34,
+        "EVIDENCE_ATOMS": 33,
+        "CONTENT_REGISTER": 3,
+        "SOURCE_REGISTER": 2,
+        "DOCUMENT_REGISTER": 2,
+        "CHANGE_IMPACT": 1,
+        "PMO_MASTER": 1
+      },
+      "write_readback": "VERIFIED"
+    },
+    "approved": {
+      "clinical_claims": 0,
+      "knowledge_atoms": 0,
+      "publications": 0,
+      "rights_external_ai_tdm": 0
+    },
+    "next_gates": [
+      "OFFICIAL_NORM_VERSION_PER_ARTICLE",
+      "RIGHTS_BY_OPERATION",
+      "CLINICAL_REVIEW",
+      "EDITORIAL_REVIEW",
+      "FULL_SCHEMA_AND_SITE_QA"
+    ],
+    "private_git_draft_pr": 39
+  },
+  "m09_content_addendum": {
+    "date": "2026-11-14",
+    "parent": "M08",
+    "drive_id": "11pA7kaFqtv0UKTpx2h49GBPD4lh1T_Z6",
+    "drive_url": "https://drive.google.com/file/d/11pA7kaFqtv0UKTpx2h49GBPD4lh1T_Z6/view?usp=drivesdk",
+    "package_sha256": "f0abd0869df21d09b9e78d8557f6c2e31ed2cafeae21c32a4912071df8739860",
+    "github_pr": 66,
+    "ci_run_id": 43577047974,
+    "ci_status": "success",
+    "ci_scope": "metadata only",
+    "m08_claim_links_reverified": 34,
+    "m08_linkage_errors": 0,
+    "new_claims": 12,
+    "new_source_atoms_referenced": 12,
+    "new_distinct_evidence_atoms": 10,
+    "cumulative_claims": 46,
+    "cumulative_knowledge_atom_candidates": 46,
+    "cumulative_distinct_evidence_atoms": 43,
+    "revised_content_masters": 3,
+    "cumulative_quizzes": 11,
+    "cumulative_flashcards": 14,
+    "completeness_cases": [
+      "CKO-CLAIM-M08-PS-16",
+      "CKO-CLAIM-M08-PE-16",
+      "CKO-CLAIM-M08-PE-02"
+    ],
+    "sheets": {
+      "new_register_rows": 28,
+      "PMO_program": "PMO-014",
+      "claims": 12,
+      "evidence_atoms": 10,
+      "content_master_revisions": 3,
+      "change_impact": 1,
+      "conflict": 1,
+      "human_hold": 1,
+      "existing_source_rows_updated": 2,
+      "claim_review_flags_updated": 3
+    },
+    "approved_claims": 0,
+    "assured_knowledge_atoms": 0,
+    "published_resources": 0,
+    "normative_amendments_exhaustively_checked": false,
+    "external_ai_rights_grants": 0,
+    "supabase_write": false,
+    "private_git_draft_pr": 39
+  },
+  "private_canonical_content_git_sync": {
+    "date": "2026-11-14",
+    "destination_repository": "IndiciumFIN/calculadorasdeenfermagem",
+    "repository_visibility": "private",
+    "branch": "feat/cko-m08-m09-corpus-atomic-20261114",
+    "draft_pr": 39,
+    "pr_url": "https://github.com/IndiciumFIN/calculadorasdeenfermagem/pull/39",
+    "latest_commit": "46b86af5096f6c94cc85cd2c133cc69f0cd38008",
+    "archive_m08_sha256": "1663f80280684aa005aa58e029c1dabdeba3cd05fb8b15cefccb9abc5c9bfff4",
+    "archive_m09_sha256": "f0abd0869df21d09b9e78d8557f6c2e31ed2cafeae21c32a4912071df8739860",
+    "archive_file_counts": {
+      "m08": 18,
+      "m09": 16
+    },
+    "live_pmo_register_snapshot_rows": 104,
+    "live_pmo_register_snapshot_counts": {
+      "CLAIM_LEDGER": 46,
+      "EVIDENCE_ATOMS": 43,
+      "CONTENT_REGISTER": 6,
+      "SOURCE_REGISTER": 2,
+      "DOCUMENT_REGISTER": 2,
+      "CHANGE_IMPACT": 2,
+      "CONFLICT_REGISTER": 1,
+      "HOLD_HUMAN": 1,
+      "PMO_MASTER": 1
+    },
+    "source_sheet_mutated": false,
+    "supabase_mutated": false,
+    "main_mutated": false,
+    "private_pr_draft": true,
+    "integrity_ci_run": 43579697365,
+    "ci_conclusion": "success",
+    "approved_claims": 0,
+    "web_publications": 0,
+    "ci_runs": {
+      "private_content_integrity": {
+        "id": 43579697365,
+        "conclusion": "success"
+      },
+      "general_validation": {
+        "id": 43579763112,
+        "conclusion": "success"
+      },
+      "deterministic_pipeline": {
+        "id": 43579763106,
+        "conclusion": "success"
+      },
+      "canonical_repository_invariants": {
+        "id": 43579763098,
+        "conclusion": "failure",
+        "blocked_gates": [
+          "parser_import_dependencies",
+          "cli_kernel_validator_namespace"
+        ],
+        "merging_allowed": false
+      }
+    },
+    "all_repo_ci_pass": false
+  }
+}

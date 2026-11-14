@@ -43,6 +43,10 @@ jobs:
         run: node --test scripts/ncos-dual-corpus.test.mjs
       - name: Reconcile reported topic atoms without claiming source PDF atomization
         run: node scripts/ncos-dual-corpus.mjs --inventory
+      - name: Test fail-closed recovered original JSONL archive attestation
+        run: node --test scripts/ncos-original-archive-attestation.test.mjs
+      - name: Verify source-to-atom recovery archive metadata without raw copyrighted ZIP
+        run: node scripts/ncos-original-archive-attestation.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

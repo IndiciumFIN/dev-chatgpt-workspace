@@ -15,6 +15,11 @@ export function buildRecoveryDeltas({sourceInventory,recovery,editorial}) {
    if(x.driveSourceStatus!=="METADATA_READBACK_PRESENT")hold("ORIGINAL_PDF_METADATA_NOT_VERIFIED",x.sourceName,"Revalidate connected Drive file");
    if(x.bytesHashVerified!==true)hold("ORIGINAL_PDF_BYTES_UNVERIFIED",x.sourceName,"Need actual bytes + SHA256");
    if(x.atomizedJsonlBytesVerified!==true)hold("ATOM_JSONL_BYTES_NOT_VERIFIED",x.sourceName,"Recover original JSONL, do not recreate by guessing");
+   if(x.atomizedJsonlBytesVerified===true&&(
+     x.actualJsonlSha256!==x.expectedJsonlSha256||
+     x.atomizedJsonlArchiveSha256!==recovery.originalArchive?.sha256||
+     x.atomizedJsonlArchiveMember!=="atomic_docs/"+x.atomizedJsonlName))
+      fail("RESTORED_JSONL_CLAIM_WITHOUT_VERIFIABLE_HASH",x.sourceName,"Recovered bytes must be linked to the original archive and matching Supabase hash");
    if(x.publicationAllowed===true&&(!x.bytesHashVerified||!x.atomizedJsonlBytesVerified))
      fail("PUBLICATION_FLAG_WITHOUT_BYTES_EVIDENCE",x.sourceName,"Fail closed");
    return {sourceName:x.sourceName,driveFileId:x.driveFileId,

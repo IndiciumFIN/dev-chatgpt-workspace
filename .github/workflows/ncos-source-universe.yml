@@ -67,6 +67,10 @@ jobs:
         run: node --test scripts/ncos-dou-act-source-boundary.test.mjs
       - name: Check original signed DOU atom issuer zone hashes, source identities and rights HOLD
         run: node scripts/ncos-dou-act-source-boundary.mjs --inventory
+      - name: Negative tests for COFEN 736 article offsets and clinical publication HOLD
+        run: node --test scripts/ncos-cofen736-article-offsets.test.mjs
+      - name: Verify 14 exact original article spans without reproducing statutory text
+        run: node scripts/ncos-cofen736-article-offsets.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

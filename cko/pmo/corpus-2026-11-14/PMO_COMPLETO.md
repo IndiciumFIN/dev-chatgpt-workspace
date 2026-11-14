@@ -40,3 +40,7 @@ Os itens DONE_TECHNICAL sinalizam testes de integridade estritamente técnicos, 
 - **Onda 4 (P1/P2)**: CI, auditoria 360, PRs/merge seletivo e handoff.
 
 Duração e datas de fim **não estimadas**: dependem de autorização, volume de documentos e da revisão clínica. O PMO mantém dependências explícitas em vez de prometer prazos sem capacidade confirmada.
+
+
+## Emenda — Cadastro fonte/rights/claim no PMO mestre (14/11/2026)
+O PMO Google Sheets recebeu 53 registros de lote M05/registry catalog, preservando linhas anteriores. Ver `REGISTRY_LOCATION_AND_WRITE_RECEIPT.md`. A condição `MASTER_ATIVO` refere-se ao cadastro lógico, não a uma homologação científica nem ao espelhamento do Supabase.

@@ -30,3 +30,7 @@ A frente antes denominada Currículos agora se chama **Trilha de carreira**. Obj
 
 ## Checkpoint M06 — expansão de Trilha de carreira e P0 direitos IA
 `CHECKPOINT_TRILHA_B59_SOT_20261114.md` contém relatório e links para os dois workflows independentes PASS (candidate-only). O PMO mestre recebeu 6 linhas novas e as próximas ações; a área de Trabalho e Urgência ganhou 39 grupos-fonte sem progressão profissional inventada. Proteção TDM externo ainda não implementada.
+
+
+## M06 — direitos para envio externo a IA (somente candidato)
+O PR #68 contém validador puro, 27 casos negativos, versão candidata `deepseek-atomize.v6.candidate.ts` e SQL em `SCHEMA_PROPOSAL_DO_NOT_APPLY.sql` — **sem implantação**. Actions [#43571430279](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43571430279) PASS. O PMO mestre recebeu HOLD/CHANGE_IMPACT, e `b59/B59_SOURCE_RIGHTS_TDM_BOUNDARY.md` esclarece por que `ALLOWED_FOR_OFFICIAL_TEXT` não equivale a autorização para DeepSeek.

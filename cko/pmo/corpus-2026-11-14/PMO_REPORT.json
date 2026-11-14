@@ -14,12 +14,12 @@
   },
   "risks": 18,
   "decisions": 17,
-  "version": "0.2.1-career-source-groups-and-rights-static-ci",
+  "version": "0.2.2-external-ai-rights-guard-candidate-ci",
   "source": "M03 SQLite checked + live GitHub PRs 66/67/68 + official source discovery",
   "master_pmo_unchanged": false,
   "clinical_release": false,
   "rights_release": false,
-  "last_event_id": "EV-CKO-B59-SOT-MASTER-001",
+  "last_event_id": "EV-CKO-M06-TDM-CANDIDATE-001",
   "github_actions": {
     "claims": {
       "run_id": 43563078415,
@@ -227,5 +227,28 @@
     "scope_cell_updated": true,
     "next_action_updated": true,
     "verified_by_readback": true
+  },
+  "external_ai_preflight_candidate": {
+    "pr": 68,
+    "branch": "cko/evidence-index-rights-20261114",
+    "policy": "POL-CKO-EXTERNAL-AI-RIGHTS-20261114",
+    "source_function": "deepseek-atomize@v5",
+    "candidate_function": "deepseek-atomize.v6.candidate.ts",
+    "unit_test_negative_cases": 27,
+    "ci_run_id": 43571430279,
+    "ci_result": "success",
+    "hypothetical_positive_fixture": true,
+    "per_item_rights_registry_deployed": false,
+    "sot_function_updated": false,
+    "supabase_ddl_applied": false,
+    "rights_approved": 0,
+    "security_dynamic_test": "NOT_PERFORMED",
+    "human_hold": "HOLD-CKO-SOT-TDM-DEPLOYMENT-20261114"
+  },
+  "master_pmo_readback_20261114": {
+    "new_hold": "HOLD-CKO-SOT-TDM-DEPLOYMENT-20261114",
+    "new_impact": "CHANGE-CKO-SOT-TDM-GUARD-CANDIDATE-20261114",
+    "next_action_updated": true,
+    "status": "VERIFIED"
   }
 }

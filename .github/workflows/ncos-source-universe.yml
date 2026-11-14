@@ -31,6 +31,10 @@ jobs:
         run: node --test scripts/ncos-pdf-byte-integrity.test.mjs
       - name: Derive exact atom-recovery, source identity and claim/editorial deltas
         run: node scripts/ncos-recovery-deltas.mjs
+      - name: Test authoritative legal amendments and derived non-official snapshots
+        run: node --test scripts/ncos-provision-lineage.test.mjs
+      - name: Rebuild normative source-fragment-provision-master graph from evidence metadata
+        run: node scripts/ncos-provision-lineage.mjs --inventory
       - name: Enforce release gate without making credentials available
         run: node scripts/ncos-multisource-audit.mjs --enforce-release
       - name: Preserve inventory and HOLD evidence

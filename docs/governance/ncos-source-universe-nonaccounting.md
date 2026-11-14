@@ -54,3 +54,14 @@ To independently re-run the comparison after legitimately acquiring the same PDF
 This generates \`audit-evidence/ncos-multisource-universe/pdf-independent-byte-check.v1.json\` and exits nonzero on any missing or mismatched file. Synthetic negative cases run automatically in CI.
 
 **Still unresolved:** 17 JSONL artifacts are not independently located or byte-hash-verified. Even a fully matching source PDF does not prove exact atom segmentation or semantic correctness; all 17 clinical sign-offs and publication decisions remain HOLD. Respect source rights, including academic literature and licensed standards.
+
+
+## Controlled regulatory provisions — source-first graph
+
+A read-only inspection of \`cko_regulatory.instruments/provisions\`, \`cko_evidence\`, and \`cko_master.entities/relationships\` verified 10 non-accounting nursing/legal instruments, 65 provisions with source fragments, and 18 amendment relations. A 1:1 join through the existing \`REGULATORY_PROVISION\` node's \`attributes.provision_id\` found **49** already materialized nodes, **16** missing for Lei 2.604/1955; 7 of the 10 instruments have no itemized provisions yet.
+
+The one cross-source provision, Lei 7.498/1986 art. 15-E, points to an official fragment from Lei 14.602/2023 and is supported by an explicit \`AMENDS_PROVISION\` edge whose provenance is that amendment source. It is **not** an orphan.
+
+The current consolidated snapshot for Lei 7.498/1986 is **derived** (\`SRC-DERIVED-LEI7498-CURRENT-V0266\`), with source version 0.26.6, base+amendment snapshots and the semantic invariant \`PROJETO_DE_LEI_NAO_E_LEI\`. Its own metadata says \`not_an_official_publication=true\` and \`legal_status_inference=false\`: preserve those restrictions; never call it an official text or assert legal validity based on the composition.
+
+The versioned scope manifest is \`registers/governance/ncos-regulatory-provision-lineage-20261114.v1.json\`; \`node scripts/ncos-provision-lineage.mjs --inventory\` checks source/fragment/master IDs and explicit amendments, generating \`regulatory-atom-source-chain.v1.json\` in CI. \`--enforce-release\` is always HOLD pending legal/clinical approval, rights, and the missing 16+7 projection gaps. No normative full text is committed in this manifest and no Supabase writes occur.

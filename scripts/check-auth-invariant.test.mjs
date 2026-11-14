@@ -90,8 +90,15 @@ test("only a divergence warns the smoke verdict", () => {
   }
 });
 
-test("the build side resolves the template's shipped app-env", () => {
-  assert.equal(buildAuthEnabled(projectRoot(), {}), false);
+test("build auth respects explicit flags without assuming ignored app-env exists", () => {
+  const isolated = mkdtempSync(join(tmpdir(), "auth-build-fixture-"));
+  // GitHub tracks no .grok/app-env.json: absent is auth-on, never silently auth-off.
+  assert.equal(buildAuthEnabled(isolated, {}), true);
+  assert.equal(buildAuthEnabled(isolated, { VITE_AUTH_ENABLED: "false" }), false);
+  assert.equal(buildAuthEnabled(isolated, { VITE_AUTH_ENABLED: "true" }), true);
+  // The actual root may contain a platform-local file or a CI-injected flag;
+  // an explicit process override must still take precedence over either.
+  assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "false" }), false);
   assert.equal(buildAuthEnabled(projectRoot(), { VITE_AUTH_ENABLED: "true" }), true);
 });
 

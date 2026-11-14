@@ -38,3 +38,7 @@ O PR #68 contém validador puro, 27 casos negativos, versão candidata `deepseek
 
 ## M07 — Restrições em PostgreSQL descartável
 [Checkpoint M07](./M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md): CI #43572600708 PASS para Node + Postgres 16 sintético; replay/idempotência ainda bloqueia release. R19, D018, FIND e PXC-017 propostos e documentados; 59 atividades atuais preservadas.
+
+
+## M08 — Conteúdo canônico e atômico: primeiro lote executado
+[M08 checkpoint](./M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md). Agora temos **34 claims/34 knowledge atom candidates, 33 evidence spans, 3 content masters, 8 questões e 10 flashcards**, derivados de fontes oficiais comprovadas. [Arquivo completo Drive](https://drive.google.com/file/d/1cuXkb1bCg4lwtFtHL9B9aiANY1ioIhEk/view?usp=drivesdk), índices de 28.001 átomos e 9.102 vínculos. **76 registros de dados gravados e conferidos no PMO_MASTER original**; M08 CI [#43575253083](https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/43575253083) PASS estrutural. Aprovações clínicas e direitos = ZERO.

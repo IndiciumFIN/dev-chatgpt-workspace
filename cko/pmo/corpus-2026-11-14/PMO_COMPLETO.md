@@ -63,3 +63,7 @@ Veja `CHECKPOINT_TRILHA_B59_SOT_20261114.md`, auditoria SOT estática, B59 compa
 
 ## M07 — Hardening de preflight TDM sem mutação de produção
 Testes PostgreSQL 16 descartáveis passaram em Actions #43572600708, FKs compostas e grant único; mock mostrou lacuna de reenvio persistente. Registrados R19, D018 e pacote candidato PXC-017. Nenhuma alteração no SOT ou adoção de DDL. Ver M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md.
+
+
+## M08 — Prioridade entregue: conteúdo canônico, atômico e reutilizável
+Ao contrário de apenas expandir controles de SOT, foram processados 33 átomos textuais distintos de duas normas oficiais, gerando 34 claims, 34 knowledge atoms candidatos, 3 artigos mestres, 8 questões e 10 flashcards. Inventário full-corpus de 28.001 átomos e 9.102 relações candidatas entregue em pacote privado. PMO-014 e registros no Sheets originais criados com readback. Ver `M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md`. Mantida distinção entre evidence bound e clinical release.

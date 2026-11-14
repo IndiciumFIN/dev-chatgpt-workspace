@@ -183,3 +183,7 @@ A estrutura de 59 tarefas e 16 propostas PXC continua preservada; aprovação de
 
 ### PP07/PP10/PP11 — Extensão candidata de idempotência (M07)
 Após CI PASS do PostgreSQL 16 descartável em #43572600708, persistem os problemas de reenvio e revogação transacional do outbound ao provedor externo. Novo pacote candidato **PXC-017**, não admitido, exige claim único persistido por documento/fragmento/provider/revisão, teste com sessões PostgreSQL simultâneas, política de retry, lease, eventos, proteção de dados e rollback. **Nenhum direito, migração ou implantação foi aprovado.**
+
+
+### PP06–PP09 — Lote M08 de conteúdo efetivamente produzido
+O M08 gerou 34 claims/34 knowledge atoms candidatos vinculados a 33 átomos M03 distintos de COFEN 736/2024 e RDC Anvisa 36/2013, 3 content masters, 8 quizzes e 10 flashcards em draft. Registrados 76 itens no PMO Mestre (PMO-014), além dos índices de 28.001 evidence atoms e 9.102 candidate links guardados no pacote protegido Google Drive. Actions #43575253083 PASS **somente estrutural**. Revisões de vigência, direitos, clínica e editorial continuam HOLD e nada publicado. Ver `M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md`.

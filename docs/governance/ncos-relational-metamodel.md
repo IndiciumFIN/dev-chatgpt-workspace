@@ -13,3 +13,5 @@ A biblioteca nunca escreve no Neon/Supabase, nunca altera schema_entity/schema_c
 Bloqueios fail-closed: fonte com tabela sem PK; FK inválida; tabela, coluna ou relação física sem dicionário correspondente; relacionamento descrito sem FK sustentando-o; RLS crítica ausente; falha na prova negativa de órfão. Uma relação lógica pode ser válida sem FK física, mas exige decisão documentada e não deve receber rótulo de integridade referencial aplicada.
 
 A atualização automática significa REGERAR as versões candidatas a cada CI e bloquear drift, não executar DDL ou preencher descrições imaginadas. Aplicação de migrations reais, sincronização do dicionário persistente, promoção à main e publicação seguem HOLD_HUMAN com revisão de segurança, Kernel e evidências de rollback. Não toca WU-TRIB nem gates do backup histórico.
+
+Relationships declared in schema_column are classified by exact FK column mappings: DIRECT_FK, TRANSITIVE_FK (equality-preserving composite chains), or UNBACKED_DECLARATION. Only the last is a review hold; no FK is inferred from naming.

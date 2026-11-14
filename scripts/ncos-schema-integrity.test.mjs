@@ -37,3 +37,17 @@ test("missing public reader RLS or policy fails",()=>{
   assert.ok(checkRelationalModel(x).errors.some(e=>e.id==="RLS_POLICY_MISSING"));
   assert.ok(checkRelationalModel(x).errors.some(e=>e.id==="RLS_DISABLED"));
 });
+
+test("composite foreign key chain is a proven transitive reference, not a missing FK",()=>{
+  const x=fixture();
+  x.tables.push({table_name:"mid"});
+  x.columns.push({table_name:"mid",column_name:"parent_id"});
+  x.constraints.push({table_name:"mid",kind:"p"},
+    {table_name:"b",target_table:"mid",kind:"f",name:"b_mid_fk",from_columns:["a_id"],to_columns:["parent_id"],validated:true},
+    {table_name:"mid",target_table:"a",kind:"f",name:"mid_a_fk",from_columns:["parent_id"],to_columns:["id"],validated:true});
+  x.constraints=x.constraints.filter(c=>c.name!=="b_a_fk");
+  x.entities.push({name:"mid"});
+  x.dictionary.push({entity:"mid",name:"parent_id",ref_entity:"a"});
+  const r=checkRelationalModel(x);
+  assert.equal(r.holds.length,0);
+});

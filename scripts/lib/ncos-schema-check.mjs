@@ -1,3 +1,26 @@
+// Follow equality-preserving FK columns, including composite and transitive chains.
+// A path from child.column to parent.column proves referential enforcement without guessing by name.
+export function classifyReference(fks, table, column, target) {
+  const visited=new Set();
+  const queue=[{table,column,depth:0}];
+  while(queue.length){
+    const node=queue.shift();
+    const key=node.table+"."+node.column;
+    if(visited.has(key))continue;
+    visited.add(key);
+    for(const fk of fks){
+      if(fk.table_name!==node.table)continue;
+      for(let i=0;i<(fk.from_columns||[]).length;i++){
+        if(fk.from_columns[i]!==node.column)continue;
+        const next={table:fk.target_table,column:fk.to_columns[i],depth:node.depth+1};
+        if(next.table===target)return next.depth===1?"DIRECT_FK":"TRANSITIVE_FK";
+        if(next.table&&next.column)queue.push(next);
+      }
+    }
+  }
+  return "UNBACKED_DECLARATION";
+}
+
 // Pure, deterministic NCOS schema/dictionary integrity policy. No DB connection.
 export function checkRelationalModel({ tables, columns, constraints, entities, dictionary, policies }) {
   const errors=[],gaps=[],holds=[];
@@ -15,7 +38,7 @@ export function checkRelationalModel({ tables, columns, constraints, entities, d
   for(const d of entities)if(!names.has(d.name))gaps.push({id:"STALE_ENTITY",table:d.name});
   for(const d of dictionary){
     if(!cols.has(d.entity+"."+d.name))gaps.push({id:"STALE_COLUMN",table:d.entity,column:d.name});
-    if(d.ref_entity&&!fks.some(f=>f.table_name===d.entity&&f.target_table===d.ref_entity&&(f.from_columns||[]).includes(d.name)))
+    if(d.ref_entity&&classifyReference(fks,d.entity,d.name,d.ref_entity)==="UNBACKED_DECLARATION")
       holds.push({id:"UNBACKED_DECLARED_RELATION",table:d.entity,column:d.name,target:d.ref_entity});
   }
   for(const f of fks){

@@ -5,7 +5,7 @@
 import { PGlite } from "@electric-sql/pglite";
 import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { checkRelationalModel } from "./lib/ncos-schema-check.mjs";
+import { checkRelationalModel, classifyReference } from "./lib/ncos-schema-check.mjs";
 
 const out = new URL("../audit-evidence/ncos-relational/", import.meta.url);
 const digest = input => createHash("sha256").update(input).digest("hex");
@@ -83,7 +83,7 @@ try {
   }));
   const declaredLinks=dictionary.filter(x=>x.ref_entity).map(d=>({
     kind:"DECLARED_DICTIONARY_REFERENCE",child:d.entity,parent:d.ref_entity,
-    column:d.name,physicallyEnforced:fks.some(f=>f.table_name===d.entity&&f.target_table===d.ref_entity&&f.from_columns.includes(d.name))
+    column:d.name,enforcement:classifyReference(fks,d.entity,d.name,d.ref_entity), physicallyEnforced:classifyReference(fks,d.entity,d.name,d.ref_entity)!=="UNBACKED_DECLARATION"
   }));
   let orphanBlocked=false;
   await db.exec("begin");

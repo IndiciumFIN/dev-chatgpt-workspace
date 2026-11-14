@@ -23,14 +23,14 @@ B21,G3,Currículo,Resolver conflito UC08 vs UC07 (8 eixos coincidentes),Curricul
 B22,G3,Currículo,Resolver conflito título UC08 vs UC09,Curriculum,P0,B20,HOLD_HUMAN,Versão de grade com fonte verificável,UC09_DECISION,Não renumerar automaticamente
 B23,G3,Currículo,"Receber ementas Centro Cirúrgico e CME, separar do corpus cardiológico",Curriculum,P0,B20,WAITING_SOURCE,Currículos rastreáveis por instituição,CURRICULUM_CC_CME,Não fabricar grade curricular
 B24,G3,Currículo,Reconciliar Saúde do Trabalhador 885 temas e normas ocupacionais,Curriculum,P0,B18,TODO,"Catalogação, gap por tópico e fonte",OH_CROSSWALK,Não reaproveitar contexto erradamente
-B25,G4,Fontes,Validar authority universe vigente BR e global,Authority,P0,B11,TODO,"Autoridade, jurisdição, vigência, direito",AUTHORITY_LEDGER,Norma oficial prevalece
-B26,G4,Fontes,Conferir snapshot oficial MS/COFEN/ANVISA/MTE em fontes primárias,Authority,P0,B25,TODO,"URL, versão, timestamp e hash",NORMATIVE_SNAPSHOT,Sem citação lembrada de memória
-B27,G4,Fontes,Auditar DOI/PMID/PMCID e retratações dos estudos,Evidence,P1,"B10,B25",TODO,"Metadados reconciliados, flags de retratação",STUDY_REGISTER,Metadado não implica texto autorizado
-B28,G4,Fontes,"Classificar licença por ingestão, indexação, extração, tradução e publicação",Rights,P0,"B11,B25",TODO,Direito por ação e objeto; assinatura humana,RIGHTS_PER_OP,Fail closed em publicações
-B29,G5,Evidência,Provar source→document→evidence_atom por ID e trecho,Evidence,P0,"B18,B26",TODO,Conferência 100% dos links promovidos,LINEAGE_CHECK,Amostras não podem afirmar 100% geral
+B25,G4,Fontes,Validar authority universe vigente BR e global,Authority,P0,B11,IN_PROGRESS,"Autoridade, jurisdição, vigência, direito",AUTHORITY_LEDGER,Norma oficial prevalece
+B26,G4,Fontes,Conferir snapshot oficial MS/COFEN/ANVISA/MTE em fontes primárias,Authority,P0,B25,IN_PROGRESS,"URL, versão, timestamp e hash",NORMATIVE_SNAPSHOT,Sem citação lembrada de memória
+B27,G4,Fontes,Auditar DOI/PMID/PMCID e retratações dos estudos,Evidence,P1,"B10,B25",IN_PROGRESS,"Metadados reconciliados, flags de retratação",STUDY_REGISTER,Metadado não implica texto autorizado
+B28,G4,Fontes,"Classificar licença por ingestão, indexação, extração, tradução e publicação",Rights,P0,"B11,B25",IN_PROGRESS,Direito por ação e objeto; assinatura humana,RIGHTS_PER_OP,Fail closed em publicações
+B29,G5,Evidência,Provar source→document→evidence_atom por ID e trecho,Evidence,P0,"B18,B26",IN_PROGRESS,Conferência 100% dos links promovidos,LINEAGE_CHECK,"M05: fonte/átomo ou claim candidato criado; direitos, validação clínica e fonte relevante pendentes"
 B30,G5,Evidência,Segregar 28.001 átomos textuais por direitos/uso,Rights,P0,"B28,B29",TODO,Matriz active/conditional/blocked per item,EVIDENCE_RIGHTS,Sem cópia de texto restrito no Git
 B31,G5,Evidência,Auditar 29 claims e 29 knowledge atoms herdados,ClinicalReview,P0,B29,TODO,"Origem, atualização e revisão clínica",LEGACY_CLAIMS,Preservado não significa aprovado
-B32,G5,Evidência,Criar fichas de claims para UC06/07/08 de Cardiologia,Evidence,P1,"B21,B22,B29",TODO,Cada afirmação vinculada à fonte e trecho,CLAIM_CARDS,Não produzir dose sem revisão
+B32,G5,Evidência,Criar fichas de claims para UC06/07/08 de Cardiologia,Evidence,P1,"B21,B22,B29",IN_PROGRESS,Cada afirmação vinculada à fonte e trecho,CLAIM_CARDS,"M05: fonte/átomo ou claim candidato criado; direitos, validação clínica e fonte relevante pendentes"
 B33,G5,Evidência,"Reconciliar U/E: choque, RCP, ECG, segurança",ClinicalReview,P1,"B19,B30",IN_PROGRESS,"Pares por ID, corte de direitos, reviewer",UE_REUSE,Sem equivalência clínica automática
 B34,G5,Evidência,"Reconciliar Trabalho: biossegurança, higiene das mãos",ClinicalReview,P1,"B19,B24",IN_PROGRESS,Pares por ID com adaptações contextuais,OH_REUSE,Contexto assistencial ≠ ocupacional
 B35,G6,Editorial,Inventariar modelos existentes de página HTML e guia PDF,Editorial,P0,B08,IN_PROGRESS,"Contrato homologado localizado, asset licença",TEMPLATE_INVENTORY,Não criar template paralelo

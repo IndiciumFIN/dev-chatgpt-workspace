@@ -11,12 +11,10 @@
       "id": "CE-TOOL-braden",
       "slug": "braden",
       "tool_kind": "ESCALA",
-      "status": "EVIDENCE_BOUND",
+      "status": "CANDIDATE",
       "publicacao": "publicada",
       "holds": [],
-      "source_ids": [
-        "SRC-REV-ENF-USP-BRADEN-1999"
-      ],
+      "source_ids": [],
       "authority_binding_refs": [
         "AB-BRADEN-SENSORIAL",
         "AB-BRADEN-UMIDADE",
@@ -74,12 +72,10 @@
       "id": "CE-TOOL-morse",
       "slug": "morse",
       "tool_kind": "ESCALA",
-      "status": "EVIDENCE_BOUND",
+      "status": "CANDIDATE",
       "publicacao": "publicada",
       "holds": [],
-      "source_ids": [
-        "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA"
-      ],
+      "source_ids": [],
       "authority_binding_refs": [
         "AB-MORSE-QUEDAS",
         "AB-MORSE-DIAGNOSTICO",
@@ -133,12 +129,10 @@
       "id": "CE-TOOL-apgar",
       "slug": "apgar",
       "tool_kind": "ESCALA",
-      "status": "EVIDENCE_BOUND",
+      "status": "CANDIDATE",
       "publicacao": "publicada",
       "holds": [],
-      "source_ids": [
-        "SRC-APGAR-1953"
-      ],
+      "source_ids": [],
       "authority_binding_refs": [
         "AB-APGAR-APARENCIA",
         "AB-APGAR-PULSO",
@@ -187,10 +181,95 @@
       "authority": "src/lib/tools/catalog.ts#apgar"
     },
     {
+      "id": "CE-TOOL-gotejamento",
+      "slug": "gotejamento",
+      "tool_kind": "CALCULADORA",
+      "status": "CANDIDATE",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [],
+      "authority_binding_refs": [
+        "AB-GOTEJAMENTO-VOLUME",
+        "AB-GOTEJAMENTO-HORAS",
+        "AB-GOTEJAMENTO-MINUTOS",
+        "AB-GOTEJAMENTO-FATOR"
+      ],
+      "field_definition_refs": [
+        "FD-GOTEJAMENTO-VOLUME",
+        "FD-GOTEJAMENTO-HORAS",
+        "FD-GOTEJAMENTO-MINUTOS",
+        "FD-GOTEJAMENTO-FATOR"
+      ],
+      "formula_ref": "FORMULA-GOTEJAMENTO",
+      "rule_refs": [],
+      "interpretation_ref": "INTERP-GOTEJAMENTO",
+      "result_ref": "RESULT-GOTEJAMENTO",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-GOTEJAMENTO",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": null,
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#gotejamento"
+    },
+    {
+      "id": "CE-TOOL-imc",
+      "slug": "imc",
+      "tool_kind": "CALCULADORA",
+      "status": "CANDIDATE",
+      "publicacao": "publicada",
+      "holds": [],
+      "source_ids": [],
+      "authority_binding_refs": [
+        "AB-IMC-PESO",
+        "AB-IMC-ALTURA"
+      ],
+      "field_definition_refs": [
+        "FD-IMC-PESO",
+        "FD-IMC-ALTURA"
+      ],
+      "formula_ref": "FORMULA-IMC",
+      "rule_refs": [],
+      "interpretation_ref": "INTERP-IMC",
+      "result_ref": "RESULT-IMC",
+      "component_refs": [],
+      "privacy_profile": "PRIVACY-TOOL-PROFILE",
+      "safety_profile": "SAFETY-IMC",
+      "release_gate": "HOLD_HUMAN",
+      "test_vector_refs": [],
+      "seo_profile_ref": "SEO-PROFILE-SITE",
+      "i18n_profile_ref": "I18N-PROFILE-SITE",
+      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
+      "about_tool": null,
+      "visibility": null,
+      "evidence_refs": [],
+      "patient_safety": {
+        "certs": [],
+        "goals": []
+      },
+      "faixa": {
+        "min": 0,
+        "max": 200
+      },
+      "referenciasOriginais": 1,
+      "authority": "src/lib/tools/catalog.ts#imc"
+    },
+    {
       "id": "CE-TOOL-aldrete",
       "slug": "aldrete",
       "tool_kind": "ESCALA",
-      "status": "EVIDENCE_BOUND",
+      "status": "CANDIDATE",
       "publicacao": "candidata",
       "holds": [
         "UTC-003/UTC-071: externalizar toda verdade clinica do source da pagina para binding governado em runtime",
@@ -250,95 +329,6 @@
       },
       "referenciasOriginais": 1,
       "authority": "src/lib/tools/catalog.ts#aldrete"
-    },
-    {
-      "id": "CE-TOOL-gotejamento",
-      "slug": "gotejamento",
-      "tool_kind": "CALCULADORA",
-      "status": "EVIDENCE_BOUND",
-      "publicacao": "publicada",
-      "holds": [],
-      "source_ids": [
-        "SRC-GOTEJAMENTO-FORMULA-CLASSICA"
-      ],
-      "authority_binding_refs": [
-        "AB-GOTEJAMENTO-VOLUME",
-        "AB-GOTEJAMENTO-HORAS",
-        "AB-GOTEJAMENTO-MINUTOS",
-        "AB-GOTEJAMENTO-FATOR"
-      ],
-      "field_definition_refs": [
-        "FD-GOTEJAMENTO-VOLUME",
-        "FD-GOTEJAMENTO-HORAS",
-        "FD-GOTEJAMENTO-MINUTOS",
-        "FD-GOTEJAMENTO-FATOR"
-      ],
-      "formula_ref": "FORMULA-GOTEJAMENTO",
-      "rule_refs": [],
-      "interpretation_ref": "INTERP-GOTEJAMENTO",
-      "result_ref": "RESULT-GOTEJAMENTO",
-      "component_refs": [],
-      "privacy_profile": "PRIVACY-TOOL-PROFILE",
-      "safety_profile": "SAFETY-GOTEJAMENTO",
-      "release_gate": "HOLD_HUMAN",
-      "test_vector_refs": [],
-      "seo_profile_ref": "SEO-PROFILE-SITE",
-      "i18n_profile_ref": "I18N-PROFILE-SITE",
-      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
-      "about_tool": null,
-      "visibility": null,
-      "evidence_refs": [],
-      "patient_safety": {
-        "certs": [],
-        "goals": []
-      },
-      "faixa": null,
-      "referenciasOriginais": 1,
-      "authority": "src/lib/tools/catalog.ts#gotejamento"
-    },
-    {
-      "id": "CE-TOOL-imc",
-      "slug": "imc",
-      "tool_kind": "CALCULADORA",
-      "status": "EVIDENCE_BOUND",
-      "publicacao": "publicada",
-      "holds": [],
-      "source_ids": [
-        "SRC-OMS-OBESIDADE-2000"
-      ],
-      "authority_binding_refs": [
-        "AB-IMC-PESO",
-        "AB-IMC-ALTURA"
-      ],
-      "field_definition_refs": [
-        "FD-IMC-PESO",
-        "FD-IMC-ALTURA"
-      ],
-      "formula_ref": "FORMULA-IMC",
-      "rule_refs": [],
-      "interpretation_ref": "INTERP-IMC",
-      "result_ref": "RESULT-IMC",
-      "component_refs": [],
-      "privacy_profile": "PRIVACY-TOOL-PROFILE",
-      "safety_profile": "SAFETY-IMC",
-      "release_gate": "HOLD_HUMAN",
-      "test_vector_refs": [],
-      "seo_profile_ref": "SEO-PROFILE-SITE",
-      "i18n_profile_ref": "I18N-PROFILE-SITE",
-      "analytics_profile_ref": "ANALYTICS-PROFILE-SITE",
-      "about_tool": null,
-      "visibility": null,
-      "evidence_refs": [],
-      "patient_safety": {
-        "certs": [],
-        "goals": []
-      },
-      "faixa": {
-        "min": 0,
-        "max": 200
-      },
-      "referenciasOriginais": 1,
-      "authority": "src/lib/tools/catalog.ts#imc"
     },
     {
       "id": "CE-TOOL-exames-laboratoriais",

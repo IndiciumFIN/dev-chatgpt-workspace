@@ -19,16 +19,19 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import pg from "pg";
 import { pendingMigrations } from "./migration-plan.mjs";
+import { auditMigrationSources, assertRelease } from "./migration-preflight.mjs";
 
 const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
-  console.log(
-    "[migrate] DATABASE_URL not set — skipping (the PGLite fallback migrates itself).",
-  );
-  process.exit(0);
-}
-
 const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), "..", "migrations");
+// Fail closed before any network or SQL side effect, even CREATE TABLE _migrations.
+try {
+  if (!databaseUrl) throw Error("HOLD_DATABASE_URL_REQUIRED");
+  const manifest = auditMigrationSources(migrationsDir);
+  assertRelease(manifest, process.env, databaseUrl);
+} catch (cause) {
+  console.error("[migrate] HOLD_HUMAN:", cause.message);
+  process.exit(2);
+}
 
 async function main() {
   let entries;

@@ -28,9 +28,9 @@ jobs:
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
           import {createHash} from 'node:crypto';
-          const files=['clinical-tools.v1.json','routes.v1.json','components.v1.json','chrome-bands.v1.json'];
+          const files=['contracts/entities/clinical-tools.v1.json','contracts/entities/routes.v1.json','contracts/entities/components.v1.json','contracts/entities/chrome-bands.v1.json','src/lib/contract-index.generated.ts'];
           for(const name of files){
-            const bytes=readFileSync('contracts/entities/'+name);
+            const bytes=readFileSync(name);
             const hash=createHash('sha256').update(bytes).digest('hex');
             console.log('CE_GENERATED_B64_BEGIN '+name+' '+hash);
             console.log(bytes.toString('base64'));

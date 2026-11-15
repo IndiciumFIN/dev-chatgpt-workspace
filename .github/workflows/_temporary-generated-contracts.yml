@@ -1,0 +1,39 @@
+name: Temporary diagnostics - regenerate canonical contracts
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-generated-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VITE_AUTH_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Regenerate from source and emit exact UTF8 diagnostic contents
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/generate-entity-contracts.mjs
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const files=['clinical-tools.v1.json','routes.v1.json','components.v1.json','chrome-bands.v1.json'];
+          for(const name of files){
+            const bytes=readFileSync('contracts/entities/'+name);
+            const hash=createHash('sha256').update(bytes).digest('hex');
+            console.log('CE_GENERATED_B64_BEGIN '+name+' '+hash);
+            console.log(bytes.toString('base64'));
+            console.log('CE_GENERATED_B64_END '+name);
+          }
+          NODE

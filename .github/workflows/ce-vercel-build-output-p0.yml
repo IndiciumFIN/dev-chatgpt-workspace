@@ -32,3 +32,31 @@ jobs:
         run: npm run build
       - name: Validate Vercel Build Output API v3 with real functions
         run: node scripts/verify-vercel-build-output.mjs
+
+  probe-nitro-rc:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      DATABASE_URL: ""
+      VITE_AUTH_ENABLED: "false"
+    steps:
+      - name: Checkout reviewed candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Setup Node 24 for isolated Nitro release-candidate probe
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install repo lockfile first
+        run: npm ci --no-audit --no-fund
+      - name: Test reviewed Nitro v3 November candidate without modifying Git lockfile
+        run: npm install --no-save --package-lock=false --ignore-scripts --no-audit --no-fund nitro@3.0.261103-rc
+      - name: Confirm the isolated runtime version
+        run: npm ls nitro --depth=0 || true
+      - name: Compile candidate without remote database or deploy
+        run: npm run build
+      - name: Verify Build Output API v3 from new Nitro
+        run: node scripts/verify-vercel-build-output.mjs

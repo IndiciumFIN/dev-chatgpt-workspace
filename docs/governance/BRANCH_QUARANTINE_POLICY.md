@@ -40,3 +40,19 @@ Requer: (1) inventário de referências executáveis e externas; (2) substituiç
 `.github/workflows/branch-quarantine-trusted.yml` usa `pull_request_target` e consulta **exclusivamente a `main` confiável**, sem executar nem conferir checkout do código de uma PR. O job exigível chama-se **`branch-quarantine / authorize-ref-trusted`**. O workflow `pull_request` anterior permanece como diagnóstico na PR, mas **não é suficiente como controle de acesso** porque uma PR pode alterar o próprio script.
 
 **Ativação:** este workflow só começa a proteger novas PRs depois de estar integrado à `main`; exigir seu check em Rulesets/Branch Protection e proibir bypass de administradores. Até isso ocorrer, a proteção não está operacional. O GitHub não fornece garantia sobre orquestradores externos sem integração própria. Não habilitar pull_request_target com permissões de escrita nem executar código da PR.
+
+## Evidências adicionais de consumo da branch estrutural — 15/11/2026
+
+Verificação direta na `main@dacfaa6bc29fd213ffc4d63998b4dd669d10854b`, sem executar o código:
+
+| Referência | Tipo de consumo observado | Decisão |
+| --- | --- | --- |
+| `.github/workflows/opa-candidate-validation.yml` | Disparo por `push` em branch aposentada | Gatilho removido **na PR #75**, pendente de merge |
+| `audit/ce-wave1/admission/verify-patch-readiness.mjs` | Exige checkout da branch e valida manifesto com nome de branch | `HOLD_REFERENCE_DEPENDENCIES`: fluxo de auditoria histórico não portado para ref imutável |
+| `audit/ce-wave1/executable-package/apply_patch.py` | Verificador read-only exige checkout da branch, recusa instalação não autorizada | `HOLD_REFERENCE_DEPENDENCIES`; preservar restrição `--apply` |
+| `audit/ce-wave1/staged-source/scripts/governance/structural-reconcile-all-branches.mjs` | Snapshot guardado exige que ref remota exista e corresponda ao SHA | `HOLD_HISTORICAL_SNAPSHOT`; não reescrever evidência original |
+| `audit/ce-wave1/staged-source/scripts/governance/structural-base-gate.mjs` | Compara referência de branch com SHA de inventário histórico | `HOLD_HISTORICAL_SNAPSHOT`; preservar integridade do snapshot |
+
+**SHA histórico observado da branch:** `621f73b5abde2dbb65818645c00d4821cbd3d061`, contido na `main`, mas isso **não autoriza excluir** uma ref cuja existência é cobrada por scripts antigos. O SHA pode ser utilizado para recuperação e leitura histórica; não altera sozinho a semântica de checkout por nome.
+
+A análise acima não equivale a varredura completa de GitHub Actions, Vercel, bibliotecas, Workflows externos, clonagens locais ou dependências fora destes caminhos. **Exclusão continua NÃO APROVADA.** A solução deverá preservar os artefatos de arquivo e criar novos consumidores versionados que leiam SHAs sem depender da branch. Só então reexecutar testes, confirmar retenção e solicitar fechamento humano.

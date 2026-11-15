@@ -10,7 +10,9 @@ const url = "http://127.0.0.1:8081/";
 const command = process.platform === "win32" ? "npm.cmd" : "npm";
 const child = spawn(command, ["run", "preview"], {
   env: { ...process.env, DATABASE_URL: "", VITE_AUTH_ENABLED: "false", CI: "true" },
-  stdio: ["ignore", "pipe", "pipe"]
+  stdio: ["ignore", "pipe", "pipe"],
+  // npm may spawn a Vite child; isolate a process group to stop both safely.
+  detached: process.platform !== "win32"
 });
 let diagnostics = "";
 for (const stream of [child.stdout, child.stderr]) {
@@ -48,5 +50,12 @@ try {
   }
   if (!verified) throw new Error("HOLD_LOCAL_SSR_PREVIEW_" + lastError);
 } finally {
-  child.kill("SIGTERM");
+  if (process.platform !== "win32" && child.pid) {
+    try { process.kill(-child.pid, "SIGTERM"); } catch { child.kill("SIGTERM"); }
+  } else {
+    child.kill("SIGTERM");
+  }
+  child.stdout.destroy();
+  child.stderr.destroy();
+  child.unref();
 }

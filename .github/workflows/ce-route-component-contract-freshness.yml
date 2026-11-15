@@ -7,6 +7,7 @@ on:
       - 'contracts/entities/routes.v1.json'
       - 'contracts/entities/components.v1.json'
       - 'scripts/check-route-component-contract-freshness.mjs'
+      - 'scripts/audit-clinical-contract-drift.mjs'
       - '.github/workflows/ce-route-component-contract-freshness.yml'
   push:
     branches:
@@ -39,3 +40,21 @@ jobs:
                Object.hasOwn(special,"source_ids")) process.exit(1);
             console.log("HOLD_DOMAIN_REVIEW: route is inventoried only; no clinical admission");
           '
+
+  clinical-drift-readonly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout exact audited source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Setup Node.js from lockfile
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Report clinical drift with explicit HOLD, no contract writes
+        run: node scripts/audit-clinical-contract-drift.mjs

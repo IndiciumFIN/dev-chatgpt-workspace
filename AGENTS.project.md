@@ -40,3 +40,7 @@ Keep this file and the source-lock validator in every derivative package. Do not
 
 For every task involving ISO, ABNT, ISACA, COSO, DAMA, other licensed/proprietary standards, protected terminologies, or normative atomization, **read and apply `agents/normativos-licenciados.md` before preparing a plan, answering the owner or changing files**. The instruction preserves the owner's proportional use of legitimately available sources **without inventing or reusing overloaded evidence-level codes**. It separates source identity, material actually inspected, use permissions and the conclusion supported; forbids unlicensed copying and indiscriminate HOLD of eligible metadata/technical work. It does **not** create or override an admitted Kernel policy and it does **not** relax any of the context-lock invariants above.
 
+
+## Branch quarantine — mandatory preflight (2026-11-15)
+
+Before any use of a source, base, merge, workflow or deployment branch, read `docs/governance/BRANCH_QUARANTINE_POLICY.md` and `registers/governance/branch-quarantine.v1.json` from current `main`. Run the fail-closed CLI check `node scripts/verify-branch-quarantine.mjs --repo IndiciumFIN/dev-chatgpt-workspace --ref <branch> --purpose source` for every candidate. All entries in the quarantine registry are FORBIDDEN for new operational use even if `ahead_by=0`. Historical SHA evidence is read-only. Missing registry, unknown approval or failed check -> HOLD_HUMAN. This does not supersede the original context-lock/clinical-security gates.

@@ -1,6 +1,23 @@
 @import "tailwindcss";
 @import "./styles/article.css";
 
+/* Restore documented chrome layout tokens; exact archived contract values.
+   Human design review is still required for release. */
+:root {
+  --chrome-utility: 44px;
+  --chrome-a11y: 44px;
+  --chrome-header: 64px;
+  --chrome-total: calc(var(--chrome-utility) + var(--chrome-a11y) + var(--chrome-header));
+  --chrome-tablet: calc(var(--chrome-utility) + var(--chrome-header));
+  --chrome-gap: 16px;
+  --chrome-rule: rgba(255, 255, 255, 0.16);
+  --chrome-control-border: rgba(255, 255, 255, 0.34);
+  --chrome-control-hover: rgba(255, 255, 255, 0.14);
+  --chrome-control-selected: rgba(255, 255, 255, 0.2);
+  --chrome-emphasis-bg: #ffffff;
+  --chrome-emphasis-fg: #1a3e74;
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Nunito Sans", "Inter", ui-sans-serif, sans-serif;

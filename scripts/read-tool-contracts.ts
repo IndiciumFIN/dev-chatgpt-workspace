@@ -6,7 +6,7 @@
  * regex sobre texto. Fora do bundler o TS puro nao carrega — por isso este
  * arquivo roda com o mesmo mecanismo de alias do app.
  */
-import { tools } from "@/lib/tools/catalog.ts";
+import { tools, candidateTools } from "@/lib/tools/catalog.ts";
 import { FONTES, BINDINGS, CAMPOS, CAMPOS_CONTEXTO, PRIVACY_PROFILE } from "@/lib/tools/governance.ts";
 import { POLITICA_FERRAMENTAS } from "@/lib/tools/contracts.ts";
 
@@ -15,10 +15,7 @@ import { writeFileSync } from "node:fs";
 // Grava em ARQUIVO, nao em stdout: o hook de alias tambem escreve no stdout e
 // isso quebrava o JSON.parse do gerador.
 const destino = process.env.TOOL_CONTRACTS_DUMP ?? "/tmp/tool-contracts.json";
-writeFileSync(
-  destino,
-  JSON.stringify({
-    tools: tools.map((t) => ({
+const serializeTools = (items: typeof tools) => items.map((t) => ({
       slug: t.slug,
       kind: t.kind,
       title: t.title,
@@ -33,7 +30,13 @@ writeFileSync(
       criteria: (t.criteria ?? []).map((c) => c.id),
       fields: (t.fields ?? []).map((c) => c.id),
       selects: (t.selects ?? []).map((c) => c.id),
-    })),
+  }));
+
+writeFileSync(
+  destino,
+  JSON.stringify({
+    tools: serializeTools(tools),
+    candidateTools: serializeTools(candidateTools),
     fontes: FONTES,
     bindings: BINDINGS,
     campos: CAMPOS,

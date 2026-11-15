@@ -43,3 +43,5 @@ jobs:
         run: npm run build
       - name: Validate Vercel Build Output API v3 with real functions
         run: node scripts/verify-vercel-build-output.mjs
+      - name: Smoke-test SSR over localhost with synthetic no-DB settings
+        run: node scripts/check-local-ssr-preview.mjs

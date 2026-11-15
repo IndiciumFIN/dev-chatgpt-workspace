@@ -70,7 +70,7 @@ const brand = readdirSync("public/brand").filter((f) => !f.startsWith("."));
 
 /* --------------------------------------------------------------- chrome */
 const css = read("src/styles.css");
-const chromeTokens = [...css.matchAll(/--chrome-([a-z-]+):\s*([^;]+);/g)].map((m) => ({
+const chromeTokens = [...css.matchAll(/--chrome-([a-z0-9-]+):\s*([^;]+);/g)].map((m) => ({
   name: `--chrome-${m[1]}`,
   value: m[2].trim(),
 }));

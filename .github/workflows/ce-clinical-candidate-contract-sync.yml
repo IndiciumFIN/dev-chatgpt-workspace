@@ -33,7 +33,7 @@ jobs:
           git diff --name-only
           while IFS= read -r path; do
             case "$path" in
-              contracts/entities/clinical-tools.v1.json|src/lib/contract-index.generated.ts) ;;
+              contracts/entities/clinical-tools.v1.json|contracts/entities/tool-components.v1.json|src/lib/contract-index.generated.ts) ;;
               *) echo "HOLD_UNEXPECTED_GENERATED_CHANGE: $path"; exit 1;;
             esac
           done < <(git diff --name-only)
@@ -70,11 +70,11 @@ jobs:
           git diff --name-only
           while IFS= read -r path; do
             case "$path" in
-              contracts/entities/clinical-tools.v1.json|src/lib/contract-index.generated.ts) ;;
+              contracts/entities/clinical-tools.v1.json|contracts/entities/tool-components.v1.json|src/lib/contract-index.generated.ts) ;;
               *) echo "HOLD_UNEXPECTED_GENERATED_CHANGE: $path"; exit 1;;
             esac
           done < <(git diff --name-only)
-          git add contracts/entities/clinical-tools.v1.json src/lib/contract-index.generated.ts
+          git add contracts/entities/clinical-tools.v1.json contracts/entities/tool-components.v1.json src/lib/contract-index.generated.ts
           if git diff --cached --quiet; then
             echo "CLINICAL_CONTRACT_ALREADY_FRESH"
             exit 0

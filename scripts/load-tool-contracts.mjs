@@ -18,7 +18,7 @@ export function loadToolContracts(root = process.cwd()) {
     ], { encoding: "utf8", cwd: root, stdio: ["ignore", "ignore", "pipe"],
       env: { ...process.env, TOOL_CONTRACTS_DUMP: dump } });
     const result = JSON.parse(readFileSync(dump, "utf8"));
-    for (const key of ["tools", "fontes", "bindings", "campos", "camposContexto"]) {
+    for (const key of ["tools", "candidateTools", "fontes", "bindings", "campos", "camposContexto"]) {
       if (!Array.isArray(result?.[key])) throw new Error(`runtime sem colecao valida: ${key}`);
     }
     if (result.tools.length === 0 || result.tools.some((t) => !t || typeof t.slug !== "string" || !t.slug)) {
@@ -26,6 +26,13 @@ export function loadToolContracts(root = process.cwd()) {
     }
     if (new Set(result.tools.map((t) => t.slug)).size !== result.tools.length) {
       throw new Error("slugs duplicados no catalogo runtime");
+    }
+    if (result.candidateTools.some(t => !t || !t.slug || t.publicacao !== "candidata")) {
+      throw new Error("HOLD: candidate tools must retain candidate publication status");
+    }
+    const combined = [...result.tools, ...result.candidateTools].map(t=>t.slug);
+    if (new Set(combined).size !== combined.length) {
+      throw new Error("HOLD: duplicate slug between published and candidate catalog");
     }
     return result;
   } catch (cause) {

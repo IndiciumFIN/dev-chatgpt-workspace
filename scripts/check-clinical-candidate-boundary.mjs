@@ -4,7 +4,7 @@
  * candidateTools, but never creates source proof, license or clinical approval.
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { loadToolContracts } from "./load-tool-contracts.mjs";
 const gov=loadToolContracts();
 const doc=JSON.parse(readFileSync("contracts/entities/clinical-tools.v1.json","utf8"));
@@ -29,6 +29,11 @@ for(const tool of doc.items){
  assert.equal(Array.isArray(tool.evidence_refs)&&tool.evidence_refs.length,0);
  assert.equal(Array.isArray(tool.test_vector_refs)&&tool.test_vector_refs.length,0);
 }
+const components=JSON.parse(readFileSync("contracts/entities/tool-components.v1.json","utf8"));
+const componentNames=readdirSync("src/components/site").filter(x=>x.endsWith(".tsx")).map(x=>x.slice(0,-4));
+assert.equal(components.schemaVersion,1);
+assert.deepEqual(components.items.map(x=>x.component_key),componentNames);
+assert.ok(components.items.every(x=>x.status==="DRAFT" && x.reusability_scope==="SITE"));
 const zeroHash=(gov.fontes||[]).filter(x=>/^0{64}$/.test(x.integrity?.sha256||"")).length;
 assert.ok(zeroHash>0,"Clinical rights review must not be replaced by fake verified hashes");
 console.log("CE_CKO_CANDIDATE_BOUNDARY "+JSON.stringify({

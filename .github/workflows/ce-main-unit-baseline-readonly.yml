@@ -1,0 +1,26 @@
+name: CE unmodified main unit baseline (DIAGNOSTIC NO RELEASE)
+on:
+  push:
+    branches:
+      - fix/ce-chrome-frozen-tokens-source-20261114
+permissions:
+  contents: read
+jobs:
+  baseline-main-no-mutation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout immutable main baseline, not PR candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: dacfaa6bc29fd213ffc4d63998b4dd669d10854b
+          persist-credentials: false
+      - name: Set up Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install unchanged main lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Run untouched main unit suite and preserve original failure verdict
+        run: npm test

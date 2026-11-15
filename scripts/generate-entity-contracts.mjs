@@ -29,8 +29,11 @@ const routes = readdirSync("src/routes")
 // Fonte unica: avaliacao real do catalogo. Se nao importar, HOLD bloqueante;
 // nunca degradar para regex, nem consumir dump stale compartilhado em /tmp.
 const GOV = loadToolContracts();
-const tools = GOV.tools.map((tool) => tool.slug);
-const toolMeta = Object.fromEntries(GOV.tools.map((tool) => [tool.slug, tool]));
+// Factual contract enumerates both registered and explicitly held candidates.
+// The public menu still consumes only GOV.tools; candidateTools are NEVER promoted.
+const inventoryTools = [...GOV.tools, ...GOV.candidateTools];
+const tools = inventoryTools.map((tool) => tool.slug);
+const toolMeta = Object.fromEntries(inventoryTools.map((tool) => [tool.slug, tool]));
 
 /* ------------------------------------------------------------ componentes */
 const components = readdirSync("src/components/site")

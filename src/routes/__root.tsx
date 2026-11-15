@@ -2,6 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts, retainSearchParams, useR
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { AuthProvider } from "@/lib/auth/provider";
 import { ChromeProvider } from "@/lib/chrome";
+import { contractSummary, routeIds, chromeBands } from "@/lib/contracts";
 import { parseLocale } from "@/lib/translate";
 import { readStoredSite } from "@/lib/stored.functions";
 import { StoredProvider } from "@/lib/stored";
@@ -20,7 +21,18 @@ export const Route = createRootRoute({
     "X-Content-Type-Options": "nosniff",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   }),
-  loader: () => readStoredSite(),
+  loader: () => {
+    // These values originate from the generated contracts and are checked when
+    // the real root route loads. A stale contract must not silently disappear
+    // from runtime because nobody imports its facade.
+    if (!routeIds.some((entry) => entry.file === "src/routes/index.tsx") ||
+        !chromeBands.some((entry) => entry.id === "CE-CHROME-TOTAL") ||
+        contractSummary.tools < 1 || contractSummary.components < 1 ||
+        contractSummary.brand < 1 || contractSummary.tokens < 1) {
+      throw new Error("CONTRACT_VIOLATION: root runtime invariants unavailable");
+    }
+    return readStoredSite();
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },

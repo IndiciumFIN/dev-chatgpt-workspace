@@ -28,92 +28,18 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Check safe build config and explicit migration boundary
         run: node --test scripts/vercel-build-gate.test.mjs
-      - name: Compile Nitro output without deployment or migrations
-        run: npm run build
-      - name: Validate Vercel Build Output API v3 with real functions
-        run: node scripts/verify-vercel-build-output.mjs
-
-  probe-nitro-rc:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    env:
-      CI: "true"
-      DATABASE_URL: ""
-      VITE_AUTH_ENABLED: "false"
-    steps:
-      - name: Checkout reviewed candidate
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          persist-credentials: false
-      - name: Setup Node 24 for isolated Nitro release-candidate probe
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with:
-          node-version: "24"
-          cache: npm
-      - name: Install repo lockfile first
-        run: npm ci --no-audit --no-fund
-      - name: Test reviewed Nitro v3 November candidate without modifying Git lockfile
-        run: npm install --no-save --package-lock=false --ignore-scripts --no-audit --no-fund nitro@3.0.261103-rc
-      - name: Confirm the isolated runtime version
-        run: npm ls nitro --depth=0 || true
-      - name: Compile candidate without remote database or deploy
-        run: npm run build
-      - name: Verify Build Output API v3 from new Nitro
-        run: node scripts/verify-vercel-build-output.mjs
-
-  pin-validated-nitro-rc:
-    needs: probe-nitro-rc
-    if: github.ref == 'refs/heads/fix/ce-tanstack-vercel-build-no-migrations-20261114' && needs.probe-nitro-rc.result == 'success'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 12
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout only the isolated build-remediation branch
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: fix/ce-tanstack-vercel-build-no-migrations-20261114
-          persist-credentials: true
-      - name: Setup Node for lockfile-only upgrade
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with:
-          node-version: "24"
-          cache: npm
-      - name: Pin only tested Nitro RC and its complete dependency closure
+      - name: Verify validated Nitro version is locked for reproducible builds
         run: |
-          set -euo pipefail
-          current="$(node -p "require('./package.json').dependencies.nitro")"
-          if [ "$current" = "3.0.261103-rc" ]; then
-            echo "LOCK_UPGRADE_ALREADY_APPLIED"
-            exit 0
-          fi
-          if [ "$current" != "3.0.260610-beta" ]; then
-            echo "HOLD_UNEXPECTED_NITRO_VERSION: $current"
-            exit 1
-          fi
-          npm install --package-lock-only --save-exact --ignore-scripts --no-audit --no-fund nitro@3.0.261103-rc
           node --input-type=module -e '
             import fs from "node:fs";
             const pkg=JSON.parse(fs.readFileSync("package.json","utf8"));
             const lock=JSON.parse(fs.readFileSync("package-lock.json","utf8"));
             if(pkg.dependencies.nitro!=="3.0.261103-rc" ||
-               lock.packages?.["node_modules/nitro"]?.version!=="3.0.261103-rc" ||
-               lock.packages?.[""]?.dependencies?.nitro!=="3.0.261103-rc")
-              process.exit(1);
-            console.log("NITRO_LOCKFILE_PIN VERIFIED");
+               lock.packages?.[""]?.dependencies?.nitro!=="3.0.261103-rc" ||
+               lock.packages?.["node_modules/nitro"]?.version!=="3.0.261103-rc") process.exit(1);
+            console.log("NITRO_PIN_AND_LOCKFILE VERIFIED");
           '
-          changed="$(git status --porcelain)"
-          if [ -z "$changed" ]; then
-            echo "No lockfile changes"
-            exit 0
-          fi
-          if printf '%s\n' "$changed" | grep -vE '^ M (package.json|package-lock.json)$'; then
-            echo "HOLD_UNEXPECTED_LOCKFILE_SIDE_EFFECT"
-            exit 1
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
-          git diff --cached --quiet && exit 0
-          git commit -m "fix(nitro): pin verified November RC with consistent npm lockfile"
-          git push origin HEAD:refs/heads/fix/ce-tanstack-vercel-build-no-migrations-20261114
+      - name: Compile Nitro output without deployment or migrations
+        run: npm run build
+      - name: Validate Vercel Build Output API v3 with real functions
+        run: node scripts/verify-vercel-build-output.mjs

@@ -1,4 +1,4 @@
-import { describe, it } from "node:test";
+import { after, before, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync, type KeyObject } from "node:crypto";
 import { SignJWT, exportJWK, type JWK } from "jose";
@@ -211,6 +211,12 @@ describe("verifyGateIdentityToken", () => {
 });
 
 describe("gateIdentityFromHeaders", () => {
+  const originalAuthFlag = process.env.VITE_AUTH_ENABLED;
+  before(() => { process.env.VITE_AUTH_ENABLED = "true"; });
+  after(() => {
+    if (originalAuthFlag === undefined) delete process.env.VITE_AUTH_ENABLED;
+    else process.env.VITE_AUTH_ENABLED = originalAuthFlag;
+  });
   it("verifies the header token end to end and fails closed without it", async () => {
     const key = await makeKey("k1");
     const { fetchImpl } = staticJwks([key.jwk]);
@@ -378,10 +384,26 @@ describe("gateIdentityFromHeaders", () => {
 });
 
 describe("gateIdentityEnabled", () => {
-  it("is enabled by default with no gate env vars", () => {
-    delete process.env.GROK_PROJECT_ID;
-    delete process.env.GROK_GATE_ORIGIN;
-    assert.equal(gateIdentityEnabled(), true);
+  it("is disabled by default without an explicit authentication flag", () => {
+    const previous = process.env.VITE_AUTH_ENABLED;
+    delete process.env.VITE_AUTH_ENABLED;
+    try {
+      assert.equal(gateIdentityEnabled(), false);
+    } finally {
+      if (previous === undefined) delete process.env.VITE_AUTH_ENABLED;
+      else process.env.VITE_AUTH_ENABLED = previous;
+    }
+  });
+
+  it("is enabled only with explicit true", () => {
+    const previous = process.env.VITE_AUTH_ENABLED;
+    process.env.VITE_AUTH_ENABLED = "true";
+    try {
+      assert.equal(gateIdentityEnabled(), true);
+    } finally {
+      if (previous === undefined) delete process.env.VITE_AUTH_ENABLED;
+      else process.env.VITE_AUTH_ENABLED = previous;
+    }
   });
 
   it("is disabled when VITE_AUTH_ENABLED is false", () => {

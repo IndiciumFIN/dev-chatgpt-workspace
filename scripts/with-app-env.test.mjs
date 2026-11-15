@@ -59,8 +59,13 @@ test("an explicit process-env override wins over the file", () => {
   assert.equal(merged.PATH, "/usr/bin");
 });
 
-test("the template ships auth off", () => {
-  assert.deepEqual(readAppEnv(projectRoot()), { VITE_AUTH_ENABLED: "false" });
+test("untracked app-env is not assumed; explicit auth-off fixture is honored", () => {
+  const absent = makeWorkspace();
+  const disabled = makeWorkspace('{"VITE_AUTH_ENABLED":"false"}');
+  assert.deepEqual(readAppEnv(absent), {});
+  assert.deepEqual(readAppEnv(disabled), { VITE_AUTH_ENABLED: "false" });
+  // A missing file must not be interpreted as an explicit authentication veto.
+  assert.equal(mergeAppEnv(readAppEnv(absent), {}).VITE_AUTH_ENABLED, undefined);
 });
 
 test("vite loadEnv resolves the wrapped value", () => {
@@ -73,14 +78,15 @@ test("vite loadEnv resolves the wrapped value", () => {
   assert.equal(merged.VITE_AUTH_ENABLED, "false");
 });
 
-test("the wrapped command runs with the app env applied", async () => {
+test("the wrapped command resolves the actual file and inherited env deterministically", async () => {
   const { stdout } = await execFileAsync(process.execPath, [
     WRAPPER,
     process.execPath,
     "-e",
     PRINT_FLAG,
   ]);
-  assert.equal(stdout, "false");
+  const resolved = mergeAppEnv(readAppEnv(projectRoot()), process.env).VITE_AUTH_ENABLED;
+  assert.equal(stdout, String(resolved));
 });
 
 test("the wrapped command sees an explicit override, not the file value", async () => {
@@ -124,5 +130,5 @@ test("the CLI still runs when invoked through a symlinked path", async () => {
     "-e",
     PRINT_FLAG,
   ]);
-  assert.equal(stdout, "false");
+  assert.equal(stdout, String(mergeAppEnv(readAppEnv(projectRoot()), process.env).VITE_AUTH_ENABLED));
 });

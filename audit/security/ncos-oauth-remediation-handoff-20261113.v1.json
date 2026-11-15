@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "NCOS_SECURITY_REMEDIATION_CANDIDATE",
+  "issue_number": 28,
+  "source_pr": 13,
+  "target_pr": 52,
+  "source_branch": "fix/governed-activities-cli-20261026",
+  "source_head_sha": "95a416c1e4ac422e435baf7e95f6ce5c09989c99",
+  "target_branch": "fix/ncos-generated-contract-sync-20261113",
+  "target_parent_sha": "7f1260aca567743ebc8672db38346a46d1c6285e",
+  "source_reuse": {
+    "src/lib/auth/preview.ts": "a01d03af0c721c9618ff001dc706e1b6c6384300",
+    "src/lib/auth/providers.ts": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa",
+    "scripts/check-auth-invariant.mjs": "c58fc0f89a2d8e6bc0318ea65d68e5af91ba4687"
+  },
+  "selective_safety_merges": [
+    "src/lib/auth/server.ts (retains existing DB bootstrap)",
+    "src/lib/auth/client.ts (retains current popup/token/sign-out flow)",
+    "src/lib/auth/gate-identity.server.ts",
+    "src/lib/publish-guard.ts"
+  ],
+  "security_guards": [
+    "no literal preview OAuth secret in new HEAD",
+    "auth-enabled only when VITE_AUTH_ENABLED is exactly true across client/server/gate and prod publishing",
+    "Better Auth 1.7 callback /api/auth/callback/<providerId>",
+    "negative and explicit-opt-in tests retained"
+  ],
+  "evidence_status": "CANDIDATE_NOT_YET_CI_VALIDATED",
+  "deletion_performed": false,
+  "production_deployed": false,
+  "credential_rotated": false,
+  "release_gate": "HOLD_ROTATION_AND_BROKER_E2E",
+  "required_human_evidence": [
+    "revoke and rotate the exposed broker preview client credential, never publish its value",
+    "inspect commit history and external copies / secret-scanning events",
+    "verify Better Auth 1.7 callback broker redirect and PKCE in isolated E2E",
+    "complete independent security review and Kernel authorization before any release"
+  ],
+  "official_doc": "https://better-auth.com/docs/plugins/generic-oauth",
+  "change_intent": "scope isolated to NCOS. WU-TRIB unchanged; no migration, DB reset, clinical release, production deployment, or branch deletion."
+}

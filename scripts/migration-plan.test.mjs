@@ -56,10 +56,25 @@ test("non-.sql entries are dropped (readdir also yields the auth/ directory)", (
   assert.deepEqual(pendingMigrations(["auth", "README.md"], []), []);
 });
 
-test("the auth schema ships outside the globbed directory", () => {
+test("the repository migration plan includes real root SQL files and preserves the auth source", () => {
   const migrationsDir = join(projectRoot(), "migrations");
-  assert.deepEqual(pendingMigrations(readdirSync(migrationsDir), []), []);
+  const rootEntries = readdirSync(migrationsDir);
+  const rootSql = rootEntries.filter(isMigrationFile);
+  const pending = pendingMigrations(rootEntries, []);
+  assert.ok(rootSql.length > 0, "tracked SQL migrations must not disappear");
+  assert.deepEqual(
+    pending.map(({ name }) => name),
+    [...rootSql].sort((a, b) => a.localeCompare(b)),
+    "the migration planner must include every root SQL file exactly once",
+  );
+  assert.equal(new Set(pending.map(({ name }) => name)).size, rootSql.length);
   assert.ok(readdirSync(join(migrationsDir, "auth")).includes("0001_auth.sql"));
+  // If a copy was promoted into root, its source must remain and bytes must agree.
+  if (rootSql.includes(AUTH_MIGRATION)) {
+    const pair = authSchemaCopy(projectRoot());
+    assert.ok(pair, "auth migration promoted without preserved source");
+    assert.equal(pair.copy, pair.source, "promoted auth schema must match its source");
+  }
 });
 
 test("this workspace's auth schema copy is byte-identical to its source", () => {

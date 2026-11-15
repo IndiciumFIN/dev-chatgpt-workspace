@@ -1,0 +1,39 @@
+name: NCOS relational metamodel and dictionary (no deploy)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  schema-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      DATABASE_URL: ""
+      PGHOST: ""
+      CI: "true"
+    steps:
+      - name: Checkout with no persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci
+      - name: Negative integrity tests
+        run: node --test scripts/ncos-schema-integrity.test.mjs
+      - name: Regenerate catalog, dictionary and graph (fail closed)
+        run: node scripts/ncos-schema-sync.mjs --enforce
+      - name: Publish evidence, including failures and pending human review
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ncos-relational-metamodel-dictionary
+          path: audit-evidence/ncos-relational/
+          if-no-files-found: warn
+          retention-days: 30

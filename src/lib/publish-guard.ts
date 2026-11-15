@@ -1,7 +1,7 @@
 /** Recusa gravar na publicação quando a autenticação foi desligada. A pré-visualização não entra nesta trava. */
 export function assertProductionAuth(env: NodeJS.ProcessEnv = process.env) {
-  if (env.VERCEL === "1" && env.VITE_AUTH_ENABLED === "false") {
-    throw new Error("A publicação não grava com a autenticação desligada.");
+  if (env.VERCEL === "1" && env.VITE_AUTH_ENABLED !== "true") {
+    throw new Error("A publicação não grava com a autenticação desligada ou sem habilitação explícita.");
   }
 }
 

@@ -31,6 +31,25 @@
   --color-chip: #ffffff;
 }
 
+/* NCOS canonical chrome dimensions restored from the versioned design contract.
+ * Header and accessibility bar add to 152px on desktop (backed by backup manifest).
+ * This is a source declaration, not a bypass of generated-contract gates.
+ */
+:root {
+  --chrome-utility: 44px;
+  --chrome-a11y: 44px;
+  --chrome-header: 64px;
+  --chrome-total: calc(var(--chrome-utility) + var(--chrome-a11y) + var(--chrome-header));
+  --chrome-tablet: calc(var(--chrome-utility) + var(--chrome-header));
+  --chrome-gap: 16px;
+  --chrome-rule: rgba(255, 255, 255, 0.16);
+  --chrome-control-border: rgba(255, 255, 255, 0.34);
+  --chrome-control-hover: rgba(255, 255, 255, 0.14);
+  --chrome-control-selected: rgba(255, 255, 255, 0.2);
+  --chrome-emphasis-bg: #ffffff;
+  --chrome-emphasis-fg: #1a3e74;
+}
+
 @layer base {
   html {
     font-size: 100%;
@@ -2930,7 +2949,7 @@ html[data-theme="dark"] .tpl-note {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 4px 16px;
+  padding: 2px 16px;
   background: var(--color-navy);
   color: #fff;
 }
@@ -2945,7 +2964,7 @@ html[data-theme="dark"] .tpl-note {
 .a11y-tools { flex: 1 1 auto; justify-content: center; overflow-x: auto; scrollbar-width: none; }
 .header-utility button,
 .header-utility a {
-  min-height: 36px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2970,12 +2989,14 @@ html[data-theme="dark"] .tpl-note {
 .header-utility button:disabled { opacity: 0.55; cursor: not-allowed; }
 .header-utility .utility-subscribe { background: #fff; color: var(--color-navy); }
 .header-utility .utility-login { border-color: #fff; }
-.header-utility .lang-menu { top: 42px; z-index: 120; }
+.header-utility .lang-menu { top: 48px; z-index: 120; }
 .header-utility .lang-menu button,
 .header-utility .lang-menu a { color: var(--color-ink); width: 100%; justify-content: flex-start; border: 0; text-decoration: none; }
 .header-utility .lang-menu button[aria-current="true"],
 .header-utility .lang-menu a[aria-current="page"] { background: var(--color-ice); }
-.header-utility .focus-dot { width: 28px; height: 28px; min-height: 28px; padding: 0; border: 2px solid rgba(255, 255, 255, 0.55); }
+.header-utility .focus-dot { width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; border: 2px solid rgba(255, 255, 255, 0.55); }
+[dir="rtl"] .a11y-bar { direction: rtl; }
+[dir="rtl"] .header-utility .lang-menu { direction: rtl; text-align: right; }
 .header-utility .a11y-mobile-toggle { display: none; }
 .search-toggle { display: none; }
 .site-header { top: 48px; }

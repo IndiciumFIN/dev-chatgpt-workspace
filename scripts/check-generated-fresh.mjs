@@ -39,6 +39,7 @@ const ALVOS = [
   { arquivo: "contracts/entities/chrome-bands.v1.json", gerador: "scripts/generate-entity-contracts.mjs" },
   { arquivo: "contracts/entities/brand-assets.v1.json", gerador: "scripts/generate-entity-contracts.mjs" },
   { arquivo: "contracts/entities/articles.v1.json", gerador: "scripts/generate-entity-contracts.mjs" },
+  { arquivo: "src/lib/contract-index.generated.ts", gerador: "scripts/generate-entity-contracts.mjs" },
 ];
 
 // O gerador aceita um prefixo de saida; quando nao aceita, comparamos o

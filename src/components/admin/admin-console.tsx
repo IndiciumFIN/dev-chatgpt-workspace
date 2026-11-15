@@ -69,6 +69,8 @@ export function AdminConsole() {
   const [selectedModule, setSelectedModule] = useState<AdminModuleId>('M03');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileDialogRef = useRef<HTMLDialogElement>(null);
+  const hydratedRoot = useRef<HTMLElement>(null);
+  useEffect(() => { hydratedRoot.current?.setAttribute("data-admin-hydrated", "true"); }, []);
   const [selected, setSelected] = useState<string>(() => initialWorkbench().tools[0]?.slug ?? '');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'publicado' | 'oculto'>('todos');
@@ -177,7 +179,7 @@ export function AdminConsole() {
   const activeModule = getAdminModule(selectedModule);
   const pageHeading = tab === 'module-detail' ? activeModule.title : tabs.find(x => x.id === tab)?.label;
 
-  return <main id="conteudo" className="page-wide ce-admin" aria-labelledby="admin-heading">
+  return <main id="conteudo" ref={hydratedRoot} className="page-wide ce-admin" aria-labelledby="admin-heading">
     <Breadcrumb items={[{ label: 'Início', to: '/' }, { label: 'Administração' }]} />
     <PageHero title="Centro de administração" titleId="admin-heading" eyebrow="Gestão canônica · ambiente isolado" lead="Organize, edite, confira evidências e veja o resultado como um usuário final — antes de qualquer publicação." />
     <div className="ce-admin-scope" role="note"><LockKeyhole size={18} aria-hidden="true" /><div>

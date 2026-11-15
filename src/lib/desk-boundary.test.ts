@@ -21,10 +21,18 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   const empty = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and btrim(body) = ''");
   assert.equal(empty.rows[0].n, 0);
 
-  const foreign = await db.query<{ n: unknown }>(
-    "select count(*)::int as n from content_text where status = 'publicado' and locale <> 'pt-BR'",
+  // Migration 0054 deliberately reverted bulk publication of translations.
+  // The only explicitly grandfathered exception is the home reading page
+  // in en, es and fr. Every other foreign-language publication is a breach.
+  const foreign = await db.query<{ slug: string; locale: string; view: string }>(
+    "select slug, locale, view from content_text where status = 'publicado' and locale <> 'pt-BR' order by slug, locale, view",
   );
-  assert.equal(Number(foreign.rows[0].n) > 3, true);
+  for (const row of foreign.rows) {
+    assert.equal(row.slug, "home", "unapproved translated page published");
+    assert.equal(row.view, "leitura", "unapproved translated view published");
+    assert.ok(["en", "es", "fr"].includes(row.locale), "unapproved locale published");
+  }
+  assert.equal(new Set(foreign.rows.map((row) => [row.slug, row.locale, row.view].join(":"))).size, foreign.rows.length);
 
   const broken = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and slug like '%/'");
   assert.equal(broken.rows[0].n, 0);
@@ -39,11 +47,16 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   assert.match(menu, /\[braden, morse, apgar, gotejamento, imc\]/);
   assert.equal(menu.includes("aldrete"), false);
 
-  const foreignOnAir = await db.query<{ n: number }>(
-    `select count(*)::int as n
+  const foreignOnAir = await db.query<{ slug: string; locale: string; view: string }>(
+    `select alias.slug, alias.locale, alias.view
      from content_alias as alias
      join content_text as copy on copy.slug = alias.slug and copy.locale = alias.locale and copy.view = alias.view
-     where copy.status = 'publicado' and alias.locale <> 'pt-BR'`,
+     where copy.status = 'publicado' and alias.locale <> 'pt-BR'
+     order by alias.slug, alias.locale, alias.view`,
   );
-  assert.equal(Number(foreignOnAir.rows[0].n) > 3, true);
+  for (const row of foreignOnAir.rows) {
+    assert.equal(row.slug, "home", "unapproved foreign-language alias is public");
+    assert.equal(row.view, "leitura", "unapproved foreign-language alias view is public");
+    assert.ok(["en", "es", "fr"].includes(row.locale), "unsupported public alias locale");
+  }
 });

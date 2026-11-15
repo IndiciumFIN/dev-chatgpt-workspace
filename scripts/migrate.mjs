@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /**
- * Deploy-time database migrator (node-postgres, `pg`).
+ * Explicit database migration command (node-postgres, `pg`).
  *
- * Runs during `npm run build` — on every Vercel deploy — applying pending files
- * in ../migrations to DATABASE_URL. Each file is applied in one transaction and
- * recorded in a `_migrations` table, so it runs once and is safe to re-run.
+ * This script must NOT run in the Vercel build. Invoke `npm run db:migrate`
+ * only under a separately approved migration work order, in the intended
+ * environment with validated DATABASE_URL and an independently checked rollback
+ * plan. Each file is applied in one transaction and recorded in `_migrations`.
+ * This bookkeeping is not a substitute for independent release approval.
  *
  * The read is non-recursive, so the opt-in auth schema under migrations/auth/
  * is not applied to an app that never asked for sign-in.

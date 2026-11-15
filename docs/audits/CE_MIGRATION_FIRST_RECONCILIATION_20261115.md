@@ -37,3 +37,23 @@ O ledger `_migrations` da aplicação guarda apenas nome/data, sem hash de SQL. 
 **Limite importante:** isso não garante equivalência semântica com SQL previamente aplicado; antes de liberar é necessário obter snapshot confiável do banco real e conciliar o conteúdo de cada migration. Variáveis de ambiente não constituem prova autônoma de aprovação humana.
 
 Referências oficiais: https://supabase.com/docs/guides/deployment/database-migrations e https://supabase.com/changelog/supabase-cli-v3.
+
+## Reconciliação ampliada entre cinco repositórios (15/11/2026)
+
+Inventário `GitHub Contents` de cinco `main` (identidade por blob Git SHA-1; não prova aplicação no banco):
+
+| Repositório | SQL em raiz | Exclusivos em relação a raven | Colisões SHA por mesmo nome |
+| --- | ---: | ---: | ---: |
+| dev-chatgpt-workspace | 58 | 0 | 0 |
+| star-monarch-lilac-zippy | 85 | 0 | 0 |
+| blue-ember-fjord-prairie | 86 | 0 | 0 |
+| pearl-rapid-fern-jolly | 86 | 0 | 0 |
+| raven-beam-lion-lagoon | 96 | — | 0 |
+
+**96 nomes / 96 blobs Git distintos** no universo das cinco raízes. `raven` contém os 58 arquivos do Workspace sem diferenças binárias, mais **38** migrações de origem que ainda não existem no Workspace. Isso **não significa** 38 SQL pendentes de aplicar no banco. Os demais espelhos não trazem arquivo raiz exclusivo.
+
+A lacuna `0086` da raiz é distinta de `migrations/preview/0086_publicacao_teste.sql`, que é SQL de **preview somente**. `migrations/preview/0087_atalho_ferramentas.sql` também não é `migrations/0087_dicionario_candidato.sql`; não copiar de preview para a raiz.
+
+A [PR #1 do raven](https://github.com/IndiciumFIN/raven-beam-lion-lagoon/pull/1) mantém quatro **candidatas adicionais** `0098`–`0101` somente em branch, ainda fora da main. São predominantemente `INSERT INTO file_binding ... ON CONFLICT DO NOTHING` para amarração estrutural, sem autorização de implantação remota. Após integradas, o universo versionado poderá chegar a 100 SQL na raiz do raven; não tratar PR como já aplicada.
+
+A fonte de verificação por arquivo está em `registers/governance/migration-source-lineage.v1.json`: nome, tamanho, SHA blob e repositórios com o mesmo conteúdo. O preflight recusa alteração de bytes ou SQL novo não registrado, antes de abrir `DATABASE_URL`. O manifesto é **inventário**, não guia de execução; aplicação só após captura do ledger Neon real e WO aprovada.

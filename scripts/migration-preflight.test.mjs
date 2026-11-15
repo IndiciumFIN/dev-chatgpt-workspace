@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,writeFileSync,rmSync,readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join,dirname} from 'node:path';
-import {auditMigrationSources,assertRelease} from './migration-preflight.mjs';
+import {auditMigrationSources,assertRegisteredLineage,assertRelease} from './migration-preflight.mjs';
 function fixture(rows,fn){
  const root=mkdtempSync(join(tmpdir(),'migration-test-'));
  try{
@@ -46,4 +46,15 @@ test('current repository inventory exposes auth SQL overlap and holds execution'
  assert.ok(x.duplicateNames.some(v=>v.key==='0001_auth.sql'));
  assert.ok(x.duplicateBytes.length>=1);
  assert.ok(x.holds.includes('DUPLICATE_SQL'));
+});
+
+test('cross-repository migration lineage preserves exact Git blob identity (58 subset of 96)',()=>{
+ const file=JSON.parse(readFileSync(new URL('../registers/governance/migration-source-lineage.v1.json',import.meta.url),'utf8'));
+ assert.equal(file.migrations.length,96);
+ assert.equal(file.summary.canonicalAdditionalBeyondWorkspace,38);
+ assert.equal(file.summary.conflictingSameNames,0);
+ const plan=auditMigrationSources();
+ assert.equal(assertRegisteredLineage(plan,file),true);
+ const tampered={...file,migrations:file.migrations.map(x=>x.name==='0001_auth.sql'?{...x,gitBlobSha:'f'.repeat(40)}:x)};
+ assert.throws(()=>assertRegisteredLineage(plan,tampered),/HOLD_MIGRATION_BYTES_CHANGED/);
 });

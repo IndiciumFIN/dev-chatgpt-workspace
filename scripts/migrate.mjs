@@ -19,7 +19,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import pg from "pg";
 import { pendingMigrations } from "./migration-plan.mjs";
-import { auditMigrationSources, assertRelease } from "./migration-preflight.mjs";
+import { auditMigrationSources, assertRegisteredLineage, assertRelease } from "./migration-preflight.mjs";
+import { readFileSync } from "node:fs";
 
 const databaseUrl = process.env.DATABASE_URL;
 const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), "..", "migrations");
@@ -27,6 +28,8 @@ const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), "..", "migra
 try {
   if (!databaseUrl) throw Error("HOLD_DATABASE_URL_REQUIRED");
   const manifest = auditMigrationSources(migrationsDir);
+  const lineage = JSON.parse(readFileSync(new URL("../registers/governance/migration-source-lineage.v1.json", import.meta.url),"utf8"));
+  assertRegisteredLineage(manifest,lineage);
   assertRelease(manifest, process.env, databaseUrl);
 } catch (cause) {
   console.error("[migrate] HOLD_HUMAN:", cause.message);

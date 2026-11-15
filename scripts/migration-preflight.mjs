@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 
 const digest=x=>createHash('sha256').update(x).digest('hex');
+const gitBlobSha=x=>createHash('sha1').update(Buffer.from('blob '+x.length+'\\0'.replace('\\0','\0'))).update(x).digest('hex');
 const HERE=resolve(fileURLToPath(new URL('../migrations/',import.meta.url)));
 function collect(dir,root){
   const out=[];
@@ -15,7 +16,7 @@ function collect(dir,root){
     if(d.isDirectory())out.push(...collect(full,root));
     else if(d.isFile()&&d.name.endsWith('.sql')){
       const buf=readFileSync(full);
-      out.push({name:d.name,path:relative(root,full).split(sep).join('/'),bytes:buf.length,sha256:digest(buf)});
+      out.push({name:d.name,path:relative(root,full).split(sep).join('/'),bytes:buf.length,sha256:digest(buf),gitBlobSha:gitBlobSha(buf)});
     }
   }
   return out.sort((a,b)=>a.path.localeCompare(b.path));
@@ -41,6 +42,16 @@ export function auditMigrationSources(root=HERE){
   const planSha256=digest(JSON.stringify(active.map(f=>[f.path,f.sha256])));
   return {mode:'READ_ONLY',version:1,activeCount:active.length,candidateCount:candidates.length,active,candidates,duplicateNames,duplicateBytes,gaps,invalid,planSha256,holds,
     release:'HOLD_HUMAN'};
+}
+export function assertRegisteredLineage(plan,registry) {
+  if(registry?.policyId!=='CE-MIGRATION-SOURCE-LINEAGE-20261115'||
+     registry?.releaseGate!=='HOLD_HUMAN'||!Array.isArray(registry.migrations))throw Error('HOLD_LINEAGE_MANIFEST_MISSING');
+  const map=new Map(registry.migrations.map(x=>[x.name,x.gitBlobSha]));
+  for(const source of plan.active) {
+    if(!map.has(source.name))throw Error('HOLD_UNREGISTERED_MIGRATION:'+source.name);
+    if(map.get(source.name)!==source.gitBlobSha)throw Error('HOLD_MIGRATION_BYTES_CHANGED:'+source.name);
+  }
+  return true;
 }
 export function assertRelease(plan,env,dbUrl){
   if(plan?.mode!=='READ_ONLY'||!Array.isArray(plan.holds))throw Error('HOLD_INVALID_MIGRATION_PLAN');

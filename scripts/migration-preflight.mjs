@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 
 const digest=x=>createHash('sha256').update(x).digest('hex');
-const gitBlobSha=x=>createHash('sha1').update(Buffer.from('blob '+x.length+'\\0'.replace('\\0','\0'))).update(x).digest('hex');
+const gitBlobSha=x=>createHash('sha1').update(Buffer.from('blob '+x.length+String.fromCharCode(0))).update(x).digest('hex');
 const HERE=resolve(fileURLToPath(new URL('../migrations/',import.meta.url)));
 function collect(dir,root){
   const out=[];

@@ -1,5 +1,16 @@
-name: CE clinical candidate contract sync (NO RELEASE)
+name: CE clinical candidate contract parity (READ ONLY)
 on:
+  pull_request:
+    paths:
+      - 'src/lib/tools/**'
+      - 'scripts/read-tool-contracts.ts'
+      - 'scripts/load-tool-contracts.mjs'
+      - 'scripts/generate-entity-contracts.mjs'
+      - 'scripts/check-clinical-candidate-boundary.mjs'
+      - 'contracts/entities/clinical-tools.v1.json'
+      - 'contracts/entities/tool-components.v1.json'
+      - 'src/lib/contract-index.generated.ts'
+      - '.github/workflows/ce-clinical-candidate-contract-sync.yml'
   push:
     branches:
       - fix/ce-chrome-frozen-tokens-source-20261114
@@ -25,6 +36,8 @@ jobs:
         run: node scripts/generate-entity-contracts.mjs
       - name: Enforce candidate HOLD and no source/rights promotion
         run: node scripts/check-clinical-candidate-boundary.mjs
+      - name: Verify generated files match committed source exactly
+        run: git diff --exit-code -- contracts/entities/clinical-tools.v1.json contracts/entities/tool-components.v1.json src/lib/contract-index.generated.ts
       - name: Reject unexpected generator mutations
         shell: bash
         run: |
@@ -38,48 +51,3 @@ jobs:
             esac
           done < <(git diff --name-only)
           echo "CLINICAL_CANDIDATE_WRITESET verified"
-  pin-clinical-candidate-output:
-    needs: prove-candidate-contract
-    if: github.ref == 'refs/heads/fix/ce-chrome-frozen-tokens-source-20261114' && needs.prove-candidate-contract.result == 'success'
-    permissions:
-      contents: write
-    runs-on: ubuntu-24.04
-    timeout-minutes: 12
-    steps:
-      - name: Checkout only source-parity candidate branch
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: fix/ce-chrome-frozen-tokens-source-20261114
-          persist-credentials: true
-      - name: Setup Node 24
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with:
-          node-version: '24'
-          cache: npm
-      - name: Install pinned dependencies
-        run: npm ci --no-audit --no-fund
-      - name: Derive canonical candidate contract from source
-        run: node scripts/generate-entity-contracts.mjs
-      - name: Verify no release status or source proof fabricated
-        run: node scripts/check-clinical-candidate-boundary.mjs
-      - name: Commit only the two generated files on the candidate branch
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo 'CE_GENERATOR_DIFF_FILE_LIST:'
-          git diff --name-only
-          while IFS= read -r path; do
-            case "$path" in
-              contracts/entities/clinical-tools.v1.json|contracts/entities/tool-components.v1.json|src/lib/contract-index.generated.ts) ;;
-              *) echo "HOLD_UNEXPECTED_GENERATED_CHANGE: $path"; exit 1;;
-            esac
-          done < <(git diff --name-only)
-          git add contracts/entities/clinical-tools.v1.json contracts/entities/tool-components.v1.json src/lib/contract-index.generated.ts
-          if git diff --cached --quiet; then
-            echo "CLINICAL_CONTRACT_ALREADY_FRESH"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "fix(cko): regenerate candidate-safe clinical contract from real runtime"
-          git push origin HEAD:refs/heads/fix/ce-chrome-frozen-tokens-source-20261114

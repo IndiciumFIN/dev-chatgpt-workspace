@@ -28,6 +28,8 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Check safe build config and explicit migration boundary
         run: node --test scripts/vercel-build-gate.test.mjs
+      - name: Test migration preflight and duplicate-SQL HOLD without connecting to database
+        run: node --test scripts/migration-preflight.test.mjs
       - name: Verify validated Nitro version is locked for reproducible builds
         run: |
           node --input-type=module -e '

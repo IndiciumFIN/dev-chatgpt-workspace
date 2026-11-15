@@ -52,7 +52,9 @@ const derived = {
   // Slugs vindos do RUNTIME (o mesmo dump que o gerador usa), nao de regex
   // sobre o fonte: o regex so pegava `slug:` no inicio da linha, e um slug
   // escrito no meio dela deixava o contrato desatualizado — com o gate verde.
-  tools: runtime.tools.map((tool) => tool.slug),
+  // Factual inventory includes held candidateTools. The public menu still
+  // imports only tools; presence here is not clinical publication or evidence.
+  tools: [...runtime.tools, ...runtime.candidateTools].map((tool) => tool.slug),
   toolSources: runtime.fontes.map((f) => f.canonical_id),
   toolBindings: runtime.bindings.map((b) => b.canonical_id)
     .concat(runtime.campos.map((c) => c.canonical_id))

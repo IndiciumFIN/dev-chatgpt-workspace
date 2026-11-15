@@ -29,6 +29,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo 'CE_GENERATOR_DIFF_FILE_LIST:'
+          git diff --name-only
           while IFS= read -r path; do
             case "$path" in
               contracts/entities/clinical-tools.v1.json|src/lib/contract-index.generated.ts) ;;
@@ -64,6 +66,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo 'CE_GENERATOR_DIFF_FILE_LIST:'
+          git diff --name-only
           while IFS= read -r path; do
             case "$path" in
               contracts/entities/clinical-tools.v1.json|src/lib/contract-index.generated.ts) ;;

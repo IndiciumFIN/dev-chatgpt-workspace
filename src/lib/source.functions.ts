@@ -36,6 +36,32 @@ async function sqlClient() {
 }
 
 async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
+  // Never seed (or implicitly publish tools) in a configured remote database
+  // during GET reads. Only the embedded preview database may receive fixtures.
+  const { dbSource } = await import("@/lib/db");
+  if (dbSource !== "pglite") return;
+  // ADMIN E2E FIXTURE: create a verified-in-test member row, NOT an auth bypass.
+  // Only inside a GitHub Actions runner, explicitly opted-in and backed by
+  // in-memory PGlite. Real databases and ordinary previews cannot use this.
+  if (
+    process.env.CE_ADMIN_E2E_FIXTURE === "true" &&
+    process.env.CI === "true" &&
+    process.env.GITHUB_ACTIONS === "true" &&
+    process.env.VITE_AUTH_ENABLED === "false" &&
+    !process.env.DATABASE_URL?.trim()
+  ) {
+    // The member table has a foreign key into Better Auth's user table.
+    // Build this synthetic fixture only in disposable CI PGLite, never Neon.
+    await sql`
+      insert into "user" ("id", "name", "email", "emailVerified")
+      values ('dev-user', 'CI-only Administrator', 'ci-admin@invalid.example', false)
+      on conflict ("id") do nothing
+    `;
+    await sql`
+      insert into member (user_id, role) values ('dev-user', 'admin')
+      on conflict (user_id) do update set role = 'admin'
+    `;
+  }
   const count = await sql<{ n: number }>`select count(*)::int as n from source_tool`;
   if (Number(count[0]?.n ?? 0) > 0) return;
   for (const tool of tools) {
@@ -139,9 +165,8 @@ export const ensureRole = createServerFn({ method: "POST" })
     await seed(sql);
     await sql`
       insert into member (user_id, role)
-      select ${context.userId},
-        case when exists (select 1 from member where role = 'admin') then 'subscriber' else 'admin' end
-      where not exists (select 1 from member where user_id = ${context.userId})
+      values (${context.userId}, 'subscriber')
+      on conflict (user_id) do nothing
     `;
     const rows = await sql<{ role: SourceRole }>`select role from member where user_id = ${context.userId}`;
     return { role: rows[0]?.role === "admin" ? "admin" : "subscriber" } as const;

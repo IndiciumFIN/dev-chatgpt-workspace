@@ -7,7 +7,7 @@ test("AreaGuard does not grant privileged UI merely because auth is disabled", (
  const source=readFileSync(new URL("src/components/site/areas.tsx",root),"utf8");
  assert.doesNotMatch(source,/if\s*\(!authEnabled\)\s*return\s*<>{children}<\/\s*>/);
  assert.match(source,/evaluateAreaAccess\(\{\s*allow,/);
- assert.match(source,/resolvedRole\?\.userId === user\?\.id/);
+ assert.match(source,/resolvedRole && user && resolvedRole\.userId === user\.id/);
  assert.match(source,/setResolvedRole\(\{ userId, role: result\.role \}\)/);
  assert.match(source,/if \(outcome === "login"\) return <Navigate to="\/login" \/>/);
  assert.match(source,/if \(outcome === "member"\) return <Navigate to="\/assinante" \/>/);

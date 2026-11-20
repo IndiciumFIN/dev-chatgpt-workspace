@@ -37,7 +37,7 @@ export function useRole() {
       live = false;
     };
   }, [isPending, user?.id]);
-  const role = resolvedRole?.userId === user?.id ? resolvedRole.role : null;
+  const role = resolvedRole && user && resolvedRole.userId === user.id ? resolvedRole.role : null;
   const failed = Boolean(user && failedFor === user.id);
   return { user, isPending: isPending || Boolean(user && !role && !failed), role, failed };
 }

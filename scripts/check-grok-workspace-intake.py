@@ -61,6 +61,9 @@ def validate(root, archive_path=None, release=False):
     if not re.fullmatch(r'[a-f0-9]{64}', expected_zip):
         stop('missing pinned source ZIP SHA256')
     tracked = tracked_files(root)
+    unexpected = tracked - set(files)
+    if unexpected:
+        stop('unclassified tracked .grok paths: ' + ', '.join(sorted(unexpected)[:12]))
     counts = Counter()
     for name, item in files.items():
         if not name.startswith('.grok/') or '..' in Path(name).parts or Path(name).is_absolute():

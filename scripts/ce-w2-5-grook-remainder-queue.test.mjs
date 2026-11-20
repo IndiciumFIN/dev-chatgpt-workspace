@@ -1,0 +1,42 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { classifyPath } from "./ce-w2-5-orphan-risk-screen.mjs";
+const load = p => JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
+test("W2.5.4: Grook remaining 36 entries exactly cover 47 with prior 11 P0",()=>{
+ const r=load("registers/governance/ce-w2-5-grook-remainder-queue-20261120.v1.json"),m=load(r.source_manifest),p=load(r.p0_content_review);
+ const origin=m.sources.find(x=>x.source_sha===r.source_commit_sha);
+ assert.ok(origin);
+ assert.equal(r.protocol,"CE.CROSS.W2.5.4.GROOK_REMAINDER_QUEUE.v1");
+ assert.equal(origin.source_tree_sha,r.source_tree_sha);
+ assert.equal(r.source_branch,"grook_10_26");
+ assert.equal(r.counts.all_source_deltas,47);
+ assert.equal(r.counts.p0_prior_registered,11);
+ assert.equal(r.counts.non_p0_queue,36);
+ assert.equal(r.queue.length,36);
+ const actual=origin.rows.filter(x=>["D","S","T"].includes(x[1]));
+ const p0=new Set(p.records.map(x=>x.path));
+ assert.equal(p0.size,11);
+ assert.deepEqual([...p0].sort(),actual.filter(x=>classifyPath(x[0])[0]==="P0").map(x=>x[0]).sort());
+ assert.deepEqual(r.queue.map(x=>x.path),actual.filter(x=>!p0.has(x[0])).map(x=>x[0]));
+ for(const item of r.queue){
+  assert.deepEqual(item.origin_row,actual.find(x=>x[0]===item.path));
+  assert.equal(item.priority,classifyPath(item.path)[0]);
+  assert.notEqual(item.priority,"P0");
+  assert.equal(item.final_semantic_decision,null);
+  assert.equal(item.merge_eligible,false);
+  assert.equal(item.independent_review,"NOT_DONE");
+ }
+ assert.equal(new Set(r.queue.map(x=>x.path)).size,36);
+ const reviewed=r.queue.filter(x=>x.content_review==="DONE_IMMUTABLE_BLOBS");
+ assert.deepEqual(reviewed.map(x=>x.path).sort(),[".gitignore","package.json","scripts/check-auth-invariant.mjs","vercel.json"].sort());
+ assert.equal(reviewed.length,r.counts.non_p0_content_compared);
+ assert.equal(r.queue.filter(x=>x.content_review==="PENDING").length,r.counts.non_p0_pending_content_review);
+ assert.equal(r.counts.all_branch_content_compared,r.counts.p0_prior_registered+r.counts.non_p0_content_compared);
+ assert.equal(r.counts.final_semantic_decisions,0);
+ assert.equal(r.counts.branch_sealed,0);
+ assert.equal(r.closure_status,"OPEN");
+ assert.equal(r.merge_authorized,false);
+ assert.equal(r.delete_authorized,false);
+ assert.equal(r.no_revisit,false);
+});

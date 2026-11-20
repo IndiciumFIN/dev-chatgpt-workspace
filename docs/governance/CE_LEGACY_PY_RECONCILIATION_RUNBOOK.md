@@ -73,3 +73,9 @@ Se a allowlist estiver toda preservada, o programa informa que nada mudou; não 
 - Manifesto: 92 arquivados, 20 aliases deduplicados, 58 pendentes, 6 colisões — 112/176 (63,6%) tratados documentalmente.
 - Aprovações, designações e políticas legadas são registros históricos sujeitos a revalidação, não substituem gates clínicos, jurídicos ou de segurança.
 - Próximos 58 arquivos incluem aplicações, CLI, workflows e SQL, sujeitos a triagem e gates específicos; não ampliar a allowlist de execução automaticamente.
+
+## Checkpoint — evidências duplicadas, testes e inicializadores históricos (20/11/2026)
+
+Foram arquivados mais dez arquivos exclusivamente sob `intake/legacy-ce/`, incluindo cópias históricas de instruções de governança/PAT, testes offline e inicializadores Python; nenhuma importação ou execução foi habilitada. Integridade: Git blob SHA e SHA-256, origem fixada `e0f62491b104f4a97c6025a6393cabc2e7ada30e`.
+
+Contagem do manifesto de 176: **102 arquivados**, **20 deduplicados**, **48 pendentes** e **6 colisões**, isto é **122/176 (69,3%) documentalmente tratados**. A cópia de instruções de PAT não constitui recomendação de criar um PAT clássico de escopo amplo; designações de aprovadores permanecem evidência histórica, não aprovação corrente. Código na quarentena não deve ser executado nem importado nos aplicativos. Nenhuma migration aplicada.

@@ -28,7 +28,7 @@ test("CE nine legacy validators that accept anything remain explicit HOLD and ca
  assert.ok(risk);
  assert.equal(risk.affectedPaths.length,9);
  for(const path of risk.affectedPaths){
-  assert.match(txt("intake/legacy-ce/"+path),/def validate\([^\n]*\):\s*\n[ \t]+return True, None\b/,path);
+  assert.match(txt("intake/legacy-ce/"+path),/def validate\([^\n]*:\s*\n[ \t]+return True, None\b/,path);
   assert.equal(manifest.records.find(x=>x.path===path).admitted,false);
  }
 });

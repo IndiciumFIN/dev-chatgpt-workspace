@@ -43,6 +43,7 @@ jobs:
           # se um dos sete documentos migrados sofrer alteração, ou
           # se itens em HOLD forem importados sem novo aceite.
           python3 scripts/check-grok-workspace-intake.py
+          python3 scripts/check-grok-workspace-intake.test.py
       # O checkout integral contém evidências que não devem integrar o deploy.
       # Primeiro executar os gates normativos, depois simular .vercelignore.
       - name: Validar entradas e simular exclusões de upload da Vercel

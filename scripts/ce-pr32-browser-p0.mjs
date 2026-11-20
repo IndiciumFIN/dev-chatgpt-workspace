@@ -46,6 +46,17 @@ try {
   assert.equal(await page.locator(".login-panel form").count(), 0, "auth-off rendered a sign-in form");
   report.routes.push({ path: "/login", status: login.status, verdict: "AUTH_OFF_PANEL_VISIBLE" });
 
+  // No CI admin fixture or real session: the restricted shells must not render.
+  // These are local auth-off negatives, NOT proof of real-user RBAC.
+  for (const path of ["/admin", "/assinante"]) {
+    const attempted = await go(path);
+    await page.waitForURL((url) => url.pathname === "/login", { timeout: 20000 });
+    assert.equal(await page.locator(".area-app, .admin-main").count(), 0,
+      path + ": protected area exposed without an authorized user");
+    report.routes.push({ path, status: attempted.status,
+      verdict: "AUTH_OFF_PROTECTED_AREA_NOT_RENDERED" });
+  }
+
   const home = await go("/kids");
   assert.match(home.text, /Status: CANDIDATE/);
   assert.match(home.text, /aguardando curadoria humana/);

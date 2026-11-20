@@ -1,20 +1,66 @@
-# Workspace exclusivo ChatGPT — contrato de operacao
+# Dev ChatGPT Workspace — contrato canônico de consolidação
 
-**Destino de escrita unico:** `IndiciumFIN/dev-chatgpt-workspace`. Repositorio privado.
+**Decisão do proprietário: 19/11/2026.** **Destino único de versionamento de código, contratos, documentação, planos, evidências e governança dos ambientes e projetos autorizados:** [IndiciumFIN/dev-chatgpt-workspace](https://github.com/IndiciumFIN/dev-chatgpt-workspace), branch **main**. Esta decisão substitui a arquitetura anterior de duas mains canônicas para CE/CKO/NCOS.
 
-Este repositório será o espaço de trabalho para frentes autorizadas pelo usuário, **não** uma autorização geral para modificar outros repositórios, branches ou ambientes. Nenhuma integração automática de produção é habilitada por essa designação.
+> STATUS: DECISÃO REGISTRADA / MIGRAÇÃO OPERACIONAL PENDENTE. A existência deste contrato não prova que outros repositórios, aplicações, bancos, deploys ou conteúdos já tenham sido integrados, testados, homologados ou publicados.
 
-## Organização e limites
+## Alcance e fronteiras
 
-- O estado inicial da raiz é a importação integral do pacote auditado `branch-bibliotecas` (projeto Calculadoras de Enfermagem). É uma **baseline operacional candidata**, não uma homologação e não um design system para outros projetos.
-- Novas frentes não podem herdar componentes, cores, tokens ou contratos de outra marca por conveniência. Antes de desenvolver, cada projeto terá escopo, fontes e design system identificados.
-- Novos artefatos de outros projetos deverão ser organizados em pastas específicas, com documentação de escopo e lineage. Reestruturação da raiz requer plano e testes para não quebrar o build.
-- Processo de execução: intake → plano/decisão → protótipo → desenvolvimento → testes → auditoria/evidências → homologação humana → liberação autorizada.
-- Nada é homologado apenas porque o gate retorna verde. Achados recebem ID, causa, remediação, evidência, dono e estado; falhas e dependências ausentes permanecem bloqueantes para release.
-- LLMs/agentes não recebem poder discricionário para mudar políticas, promover conteúdo clínico, criar branches, fazer deploy ou habilitar DB/auth.
-- **Sem criação de branches remotas**, `--force`, merge automático, alteração de `main` de outros repositórios ou publicação externa sem autorização e gates. A única `main` alvo da importação inicial é a deste workspace, atualmente vazia.
-- Nenhum segredo deve entrar no Git: variáveis sensíveis ficam fora do código e das evidências.
+- O Workspace é o **repositório canônico único** de código-fonte e gerenciamento de mudanças. Calculadoras de Enfermagem, CKO, NCOS, Simulados, Vila do Cuidado, Research Hub, Currículos, Conteúdo Educacional, Carreira/Portal Jovem, Internacionalização e respectivos serviços e agentes devem ser reconciliados e absorvidos modularmente nele, conforme direitos, dependências e gates.
+- Outros projetos do proprietário que utilizem o Workspace, como WU-TRIB, permanecem **isolados por domínio**, dados, identidade, controles, fontes e design system. É proibido misturar informação tributária/contábil ao conteúdo de enfermagem.
+- O Supabase **Calculadoras-Smart** (ref pgsybzggewhinaniybiy) permanece como **banco operacional** do ecossistema de enfermagem. Versionar no Workspace seus contratos, inventários, manifests e migrations aprovadas. Dados de produção, segredos, PHI ou credenciais **não** são migrados para o Git. Não criar outro banco, branch de banco, schema concorrente ou ambiente de produção por conveniência.
+- GitHub Actions, Vercel, Google Drive e serviços externos continuam sendo ambientes de execução/armazenamento separados fisicamente, com configuração/contratos/lineage controlados neste repositório. A designação como repositório canônico não os 'move' fisicamente nem autoriza deploy.
+- Repositórios anteriores são **fontes históricas/candidatas**: manter acessíveis e imutáveis até reconciliação, aceite, verificação de completude e definição explícita de arquivamento. Não excluir nem mudar sua main automaticamente.
 
-## Início
+## Regra operacional: nenhuma branch nova
 
-Consulte `COMO-USAR.md`, `docs/AUDITORIA-RELEASE-2026-10-23.md` e `docs/WORKSPACE-HANDOFF-2026-10-23.md` antes do primeiro deploy. O script `tools/publicar-workspace.ps1` faz o push inicial com proteção contra remoto não vazio; a conexão de ChatGPT atual não permite enviar arquivos locais em lote pelo GitHub.
+- **Não criar novas branches, PRs baseadas em branches novas, repositórios, forks ou projetos Supabase** para esta migração. Priorizar commits pequenos e verificáveis em Workspace@main, com SHA e testes; reutilizar PRs/branches já existentes apenas para absorver seu conteúdo por diff, sem torná-las novas autoridades.
+- Não dar push/merge forçado em repositórios de origem. Respeitar o ruleset ativo na main de IndiciumFIN/calculadorasdeenfermagem (PR + Gate Agregador), sem bypass. O Workspace@main estava sem proteção ativa na consulta de 19/11: isso não equivale a permissão para contornar testes ou aprovações.
+- Antes de cada commit: conferir HEAD, impacto de workflows/deploy, árvore, hashes e estado dos testes; nunca sobrescrever mudança concorrente. Após cada commit: conferir SHA, checks e contrato funcional; registrar reversão via commit e, após aceite, tag/release.
+- Não tratar um commit em main como liberação clínica, editorial, jurídica, de segurança, LGPD ou produção.
+
+## Linhagens e checkpoints de origem (inventário, não integração)
+
+| Origem | SHA main verificado em 19/11/2026 | Situação para migração |
+|---|---|---|
+| IndiciumFIN/dev-chatgpt-workspace | dacfaa6bc29fd213ffc4d63998b4dd669d10854b | Base canônica anterior a esta decisão; há PRs de conteúdo, segurança e integração ainda abertas |
+| IndiciumFIN/calculadorasdeenfermagem | e0f62491b104f4a97c6025a6393cabc2e7ada30e | Fonte CE/CKO/NCOS; extrair deltas e evidências, preservar ruleset |
+| IndiciumFIN/leaf-lilac-bamboo-craft | b8c25f38029dd6aa69b0965e336af5933c2da231 | Fonte de recuperação; CI reprovado por 6 erros TS na rota do blog, não promover integralmente |
+| IndiciumFIN/raven-beam-lion-lagoon | 87218a63ae43f2c31210a41e54400ceb73543710 | Ancestral direto do Leaf; deduplicar por blob SHA antes da importação |
+| IndiciumFIN/calculadorasdeenfermagem-backup-20261031 | e0f62491b104f4a97c6025a6393cabc2e7ada30e | Backup a preservar sem exclusão |
+| IndiciumFIN/ce-bibliotecas-dev | fa70e9e5395f7344349555274795dc39fec8072a | Fonte auxiliar privada; verificar direitos, hashes e diferenças |
+
+Supabase Calculadoras-Smart: **255 migrations remotas distintas**, **320** canonical_objects, **111** clinical_tools e **0** linhas em ce_platform.clinical_evidence_bindings na consulta de 19/11. As duas SQL legadas do Leaf não constam no histórico remoto e permanecem sem autorização de execução. Medidas de cada snapshot são escopadas e não equivalem a aprovação clínica.
+
+## Destino lógico, sem refatoração prematura da raiz
+
+- **apps/**: experiências públicas e administrativas por produto; cada aplicação com domínio, versão, design system e gates próprios (ex.: calculadoras, simulados, vila, carreira).
+- **packages/**: contratos, CKO, NCOS/Kernel, validadores, parsers, terminologias, componentes reutilizáveis, conteúdo atômico e geradores.
+- **infra/**: definição de ambientes, CI, Vercel e migrations Supabase versionadas por projeto, após reconciliação com o histórico remoto.
+- **docs/governance/**, **registers/**, **audit-evidence/** e **tests/**: planos, WO/FIND, decisões, fontes, direitos, QA e evidências.
+- Estes caminhos são **destinos de arquitetura propostos**; a app atualmente na raiz continua intacta até haver testes de regressão e migração por arquivo/módulo. Não criar arquivos em duplicidade apenas para cumprir uma árvore idealizada.
+
+## Programa de migração — um módulo por vez
+
+1. **Censo e reconciliação:** mapear repositório/branch/ref, SHA de árvore e blob, licença, classificação de dados, owners, arquivos e dependências; marcar DUPLICATE, SOURCE_ONLY, MIGRATE, REJECTED ou HOLD por objeto. Priorizar delta real, não contagem de branches.
+2. **Baseline controlada:** comparar cada fonte com Workspace@main e registrar WORK_ORDER, origem/hash, destino, risco, teste, mudança e decisão. Preservar conteúdo histórico divergente quando houver risco de redução editorial ou perda de autoria/licença.
+3. **Recuperação técnica:** sanar primeiro typecheck, imports, parsers, validadores, integridade, OPA/Kernel, autenticação e gates; integrar no Workspace em lotes pequenos; CI e testes adversariais por SHA.
+4. **Corpus e produção educacional em paralelo:** currículos das 65 especialidades e 80 subáreas, mercado/vagas verificadas, fontes normativas licenciadas, atomização/proveniência, conteúdos do básico ao avançado, questões, flashcards, casos e simulados. Permitir estados candidatos; não permitir autopromoção ou publicação clínica.
+5. **Supabase sem duplicação:** cruzar PK/FK, versões, RLS/grants, views, contratos e evidências com o banco existente; preparar apenas migrations incrementais comprovadas. Não copiar as 96 migrations locais de runner próprio para supabase_migrations. Testes isolados, reexecução idempotente, restore/rollback, análise de segurança, aprovação específica e readback antes de qualquer DDL/DML remoto.
+6. **Vercel/UX/I18N:** validar build real, preview, E2E, WCAG, perf, SEO, PWA e 19 idiomas por módulo. Registrar projeto e domínio de execução, sem assumir deploy por existência do workflow.
+7. **Admissão e encerramento:** revisão independente clínica, jurídica, segurança e editorial; registrar PASS/FAIL/HOLD por componente; release/tag por módulo aprovado; somente então decidir arquivamento das fontes históricas sem apagar seu histórico.
+
+## Evidência obrigatória em cada checkpoint
+
+Referência de origem (repo, branch, SHA e caminho), fingerprint de conteúdo, deduplicação, evidência primária, licença/rights, mudança no Workspace (commit SHA), testes executados e não executados, baseline e delta, risco, responsável, estado (PASS/FAIL/HOLD), vínculo com issue/WO, próximo passo e, quando aplicável, ação de rollback. Não inventar percentuais globais; usar numerador e denominador de cada camada.
+
+## Precedência e restrições preexistentes
+
+- Esta autorização explícita do proprietário permite **planejar e executar reconciliações entre repositórios** dentro do escopo CE/CKO/NCOS que antigos artefatos de backup restringiam até autorização posterior. Ela **não** aprova automaticamente cada merge, migration remota, publicação, exclusão, uso de material licenciado ou decisão clínica. Os invariantes de segurança e preservação do AGENTS.project.md permanecem aplicáveis ao baseline histórico; não o reescrever silenciosamente.
+- Preservar a cadeia existente intake → plano/decisão → protótipo → desenvolvimento → teste → auditoria/evidência → revisão humana → liberação autorizada, bem como WO, política ativa, metamodelo/dicionários, Kernel, manifesto, evidência, preview e gate.
+- No histórico do Workspace há colisões entre famílias locais de migration e linhas do banco remoto, e PRs em HOLD. Nunca fazer merge em massa ou tratar presença de arquivo, teste sintético verde ou SQL versionado como funcionalidade/homologação.
+
+## Registro de execução
+
+- **19/11/2026: DECIDIDO** — alterar a arquitetura para uma única fonte canônica GitHub: Workspace@main; não criar branches novas. Migração operacional ainda **NÃO CONCLUÍDA**.
+- Fonte de controle complementar: issue #33 do próprio Workspace, com checkpoints posteriores por SHA; o EPIC CKO #74 do repositório de origem fica como referência histórica até sua transferência/reconciliação, não como autoridade concorrente.

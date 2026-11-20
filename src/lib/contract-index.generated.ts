@@ -6,6 +6,10 @@ export interface Contract<T> { contract: string; domain: string; items: T[] }
 
 export const contractRoutes = [
   {
+    "id": "CE-ROUTE-$",
+    "file": "src/routes/$.tsx"
+  },
+  {
     "id": "CE-ROUTE-admin",
     "file": "src/routes/admin.tsx"
   },
@@ -40,6 +44,14 @@ export const contractRoutes = [
   {
     "id": "CE-ROUTE-blog.$slug",
     "file": "src/routes/blog.$slug.tsx"
+  },
+  {
+    "id": "CE-ROUTE-blog.index",
+    "file": "src/routes/blog.index.tsx"
+  },
+  {
+    "id": "CE-ROUTE-blog.mary-eliza-mahoney",
+    "file": "src/routes/blog.mary-eliza-mahoney.tsx"
   },
   {
     "id": "CE-ROUTE-bolsas",
@@ -146,10 +158,6 @@ export const contractRoutes = [
     "file": "src/routes/login.tsx"
   },
   {
-    "id": "CE-ROUTE-minha-area",
-    "file": "src/routes/minha-area.tsx"
-  },
-  {
     "id": "CE-ROUTE-modelos.$id",
     "file": "src/routes/modelos.$id.tsx"
   },
@@ -216,534 +224,90 @@ export const contractTools = [
     "slug": "apgar"
   },
   {
-    "id": "CE-TOOL-aldrete",
-    "slug": "aldrete"
-  },
-  {
     "id": "CE-TOOL-gotejamento",
     "slug": "gotejamento"
   },
   {
     "id": "CE-TOOL-imc",
     "slug": "imc"
-  },
-  {
-    "id": "CE-TOOL-exames-laboratoriais",
-    "slug": "exames-laboratoriais"
-  },
-  {
-    "id": "CE-TOOL-ferias",
-    "slug": "ferias"
-  },
-  {
-    "id": "CE-TOOL-adicional-noturno",
-    "slug": "adicional-noturno"
-  },
-  {
-    "id": "CE-TOOL-horas-extras",
-    "slug": "horas-extras"
-  },
-  {
-    "id": "CE-TOOL-rescisao",
-    "slug": "rescisao"
-  },
-  {
-    "id": "CE-TOOL-sbar",
-    "slug": "sbar"
-  },
-  {
-    "id": "CE-TOOL-nanda-nic-noc",
-    "slug": "nanda-nic-noc"
-  },
-  {
-    "id": "CE-TOOL-doencas-compulsorias",
-    "slug": "doencas-compulsorias"
-  },
-  {
-    "id": "CE-TOOL-aspiracao-insulina",
-    "slug": "aspiracao-insulina"
-  },
-  {
-    "id": "CE-TOOL-balanco-hidrico",
-    "slug": "balanco-hidrico"
-  },
-  {
-    "id": "CE-TOOL-dimensionamento-cofen",
-    "slug": "dimensionamento-cofen"
-  },
-  {
-    "id": "CE-TOOL-gasometria-arterial",
-    "slug": "gasometria-arterial"
-  },
-  {
-    "id": "CE-TOOL-idade-gestacional",
-    "slug": "idade-gestacional"
-  },
-  {
-    "id": "CE-TOOL-medicamentos",
-    "slug": "medicamentos"
-  },
-  {
-    "id": "CE-TOOL-tabela-vacinas",
-    "slug": "tabela-vacinas"
-  },
-  {
-    "id": "CE-TOOL-aldrete-kroulik",
-    "slug": "aldrete-kroulik"
-  },
-  {
-    "id": "CE-TOOL-apache-ii",
-    "slug": "apache-ii"
-  },
-  {
-    "id": "CE-TOOL-asa",
-    "slug": "asa"
-  },
-  {
-    "id": "CE-TOOL-ballard",
-    "slug": "ballard"
-  },
-  {
-    "id": "CE-TOOL-barthel",
-    "slug": "barthel"
-  },
-  {
-    "id": "CE-TOOL-bps",
-    "slug": "bps"
-  },
-  {
-    "id": "CE-TOOL-berg",
-    "slug": "berg"
-  },
-  {
-    "id": "CE-TOOL-bishop",
-    "slug": "bishop"
-  },
-  {
-    "id": "CE-TOOL-cam-icu",
-    "slug": "cam-icu"
-  },
-  {
-    "id": "CE-TOOL-capurro",
-    "slug": "capurro"
-  },
-  {
-    "id": "CE-TOOL-cincinnati",
-    "slug": "cincinnati"
-  },
-  {
-    "id": "CE-TOOL-wifi-svs",
-    "slug": "wifi-svs"
-  },
-  {
-    "id": "CE-TOOL-copsoq-ii",
-    "slug": "copsoq-ii"
-  },
-  {
-    "id": "CE-TOOL-copsoq-iii",
-    "slug": "copsoq-iii"
-  },
-  {
-    "id": "CE-TOOL-cornell",
-    "slug": "cornell"
-  },
-  {
-    "id": "CE-TOOL-cries",
-    "slug": "cries"
-  },
-  {
-    "id": "CE-TOOL-curb-65",
-    "slug": "curb-65"
-  },
-  {
-    "id": "CE-TOOL-downton",
-    "slug": "downton"
-  },
-  {
-    "id": "CE-TOOL-elpo",
-    "slug": "elpo"
-  },
-  {
-    "id": "CE-TOOL-fast",
-    "slug": "fast"
-  },
-  {
-    "id": "CE-TOOL-flacc",
-    "slug": "flacc"
-  },
-  {
-    "id": "CE-TOOL-four",
-    "slug": "four"
-  },
-  {
-    "id": "CE-TOOL-fugulin",
-    "slug": "fugulin"
-  },
-  {
-    "id": "CE-TOOL-gds",
-    "slug": "gds"
-  },
-  {
-    "id": "CE-TOOL-glasgow",
-    "slug": "glasgow"
-  },
-  {
-    "id": "CE-TOOL-gosnell",
-    "slug": "gosnell"
-  },
-  {
-    "id": "CE-TOOL-hamilton",
-    "slug": "hamilton"
-  },
-  {
-    "id": "CE-TOOL-hendrich-ii",
-    "slug": "hendrich-ii"
-  },
-  {
-    "id": "CE-TOOL-humpty-dumpty",
-    "slug": "humpty-dumpty"
-  },
-  {
-    "id": "CE-TOOL-johns",
-    "slug": "johns"
-  },
-  {
-    "id": "CE-TOOL-jouvet",
-    "slug": "jouvet"
-  },
-  {
-    "id": "CE-TOOL-katz",
-    "slug": "katz"
-  },
-  {
-    "id": "CE-TOOL-lachs",
-    "slug": "lachs"
-  },
-  {
-    "id": "CE-TOOL-lanss",
-    "slug": "lanss"
-  },
-  {
-    "id": "CE-TOOL-lawton",
-    "slug": "lawton"
-  },
-  {
-    "id": "CE-TOOL-manchester",
-    "slug": "manchester"
-  },
-  {
-    "id": "CE-TOOL-meem",
-    "slug": "meem"
-  },
-  {
-    "id": "CE-TOOL-meows",
-    "slug": "meows"
-  },
-  {
-    "id": "CE-TOOL-moca",
-    "slug": "moca"
-  },
-  {
-    "id": "CE-TOOL-news",
-    "slug": "news"
-  },
-  {
-    "id": "CE-TOOL-nihss",
-    "slug": "nihss"
-  },
-  {
-    "id": "CE-TOOL-nips",
-    "slug": "nips"
-  },
-  {
-    "id": "CE-TOOL-norton",
-    "slug": "norton"
-  },
-  {
-    "id": "CE-TOOL-dor-numerica",
-    "slug": "dor-numerica"
-  },
-  {
-    "id": "CE-TOOL-ofras",
-    "slug": "ofras"
-  },
-  {
-    "id": "CE-TOOL-painad",
-    "slug": "painad"
-  },
-  {
-    "id": "CE-TOOL-pelod",
-    "slug": "pelod"
-  },
-  {
-    "id": "CE-TOOL-pews",
-    "slug": "pews"
-  },
-  {
-    "id": "CE-TOOL-perroca",
-    "slug": "perroca"
-  },
-  {
-    "id": "CE-TOOL-prism",
-    "slug": "prism"
-  },
-  {
-    "id": "CE-TOOL-qsofa",
-    "slug": "qsofa"
-  },
-  {
-    "id": "CE-TOOL-ramsay",
-    "slug": "ramsay"
-  },
-  {
-    "id": "CE-TOOL-rancho-los-amigos",
-    "slug": "rancho-los-amigos"
-  },
-  {
-    "id": "CE-TOOL-richmond",
-    "slug": "richmond"
-  },
-  {
-    "id": "CE-TOOL-saps-iii",
-    "slug": "saps-iii"
-  },
-  {
-    "id": "CE-TOOL-silverman-anderson",
-    "slug": "silverman-anderson"
-  },
-  {
-    "id": "CE-TOOL-sinbad",
-    "slug": "sinbad"
-  },
-  {
-    "id": "CE-TOOL-sofa",
-    "slug": "sofa"
-  },
-  {
-    "id": "CE-TOOL-tinetti",
-    "slug": "tinetti"
-  },
-  {
-    "id": "CE-TOOL-waterlow",
-    "slug": "waterlow"
-  },
-  {
-    "id": "CE-TOOL-wood-downes",
-    "slug": "wood-downes"
-  },
-  {
-    "id": "CE-TOOL-zarit",
-    "slug": "zarit"
   }
 ] as const;
 export const contractComponents = [
   {
-    "id": "CE-COMP-admin-account-header",
-    "file": "src/components/admin-account-header.tsx"
-  },
-  {
-    "id": "CE-COMP-admin-bulk-import",
-    "file": "src/components/admin-bulk-import.tsx"
-  },
-  {
-    "id": "CE-COMP-admin-console",
-    "file": "src/components/admin-console.tsx"
-  },
-  {
-    "id": "CE-COMP-admin-module-workspace",
-    "file": "src/components/admin-module-workspace.tsx"
-  },
-  {
-    "id": "CE-COMP-admin-schema-editor",
-    "file": "src/components/admin-schema-editor.tsx"
-  },
-  {
-    "id": "CE-COMP-admin-sidebar-tree",
-    "file": "src/components/admin-sidebar-tree.tsx"
+    "id": "CE-COMP-agent-roster",
+    "file": "src/components/site/agent-roster.tsx"
   },
   {
     "id": "CE-COMP-app-link",
-    "file": "src/components/app-link.tsx"
+    "file": "src/components/site/app-link.tsx"
   },
   {
     "id": "CE-COMP-areas",
-    "file": "src/components/areas.tsx"
-  },
-  {
-    "id": "CE-COMP-article-icons",
-    "file": "src/components/article-icons.tsx"
-  },
-  {
-    "id": "CE-COMP-article-page",
-    "file": "src/components/article-page.tsx"
-  },
-  {
-    "id": "CE-COMP-article-pieces",
-    "file": "src/components/article-pieces.tsx"
-  },
-  {
-    "id": "CE-COMP-biography-view",
-    "file": "src/components/biography-view.tsx"
+    "file": "src/components/site/areas.tsx"
   },
   {
     "id": "CE-COMP-breadcrumb",
-    "file": "src/components/breadcrumb.tsx"
+    "file": "src/components/site/breadcrumb.tsx"
   },
   {
     "id": "CE-COMP-callout",
-    "file": "src/components/callout.tsx"
+    "file": "src/components/site/callout.tsx"
   },
   {
-    "id": "CE-COMP-clinical-form",
-    "file": "src/components/clinical-form.tsx"
-  },
-  {
-    "id": "CE-COMP-clinical-sheet",
-    "file": "src/components/clinical-sheet.tsx"
-  },
-  {
-    "id": "CE-COMP-clinical-tool",
-    "file": "src/components/clinical-tool.tsx"
-  },
-  {
-    "id": "CE-COMP-commander-panel",
-    "file": "src/components/commander-panel.tsx"
+    "id": "CE-COMP-command-center",
+    "file": "src/components/site/command-center.tsx"
   },
   {
     "id": "CE-COMP-community",
-    "file": "src/components/community.tsx"
-  },
-  {
-    "id": "CE-COMP-editorial-view",
-    "file": "src/components/editorial-view.tsx"
-  },
-  {
-    "id": "CE-COMP-form-view",
-    "file": "src/components/form-view.tsx"
-  },
-  {
-    "id": "CE-COMP-governance-panel",
-    "file": "src/components/governance-panel.tsx"
-  },
-  {
-    "id": "CE-COMP-guide-view",
-    "file": "src/components/guide-view.tsx"
+    "file": "src/components/site/community.tsx"
   },
   {
     "id": "CE-COMP-home-page",
-    "file": "src/components/home-page.tsx"
-  },
-  {
-    "id": "CE-COMP-institutional-template",
-    "file": "src/components/institutional-template.tsx"
-  },
-  {
-    "id": "CE-COMP-interface",
-    "file": "src/components/interface.tsx"
-  },
-  {
-    "id": "CE-COMP-library-canonical",
-    "file": "src/components/library-canonical.tsx"
-  },
-  {
-    "id": "CE-COMP-library-shelves",
-    "file": "src/components/library-shelves.tsx"
-  },
-  {
-    "id": "CE-COMP-library-view",
-    "file": "src/components/library-view.tsx"
-  },
-  {
-    "id": "CE-COMP-local-workbench-page",
-    "file": "src/components/local-workbench-page.tsx"
-  },
-  {
-    "id": "CE-COMP-module-directory",
-    "file": "src/components/module-directory.tsx"
-  },
-  {
-    "id": "CE-COMP-norm-view",
-    "file": "src/components/norm-view.tsx"
+    "file": "src/components/site/home-page.tsx"
   },
   {
     "id": "CE-COMP-not-found",
-    "file": "src/components/not-found.tsx"
+    "file": "src/components/site/not-found.tsx"
   },
   {
     "id": "CE-COMP-page-hero",
-    "file": "src/components/page-hero.tsx"
+    "file": "src/components/site/page-hero.tsx"
   },
   {
     "id": "CE-COMP-page-toc",
-    "file": "src/components/page-toc.tsx"
+    "file": "src/components/site/page-toc.tsx"
   },
   {
     "id": "CE-COMP-page-tools",
-    "file": "src/components/page-tools.tsx"
-  },
-  {
-    "id": "CE-COMP-pmo-panel",
-    "file": "src/components/pmo-panel.tsx"
-  },
-  {
-    "id": "CE-COMP-preview-host-bridge",
-    "file": "src/components/preview-host-bridge.tsx"
+    "file": "src/components/site/page-tools.tsx"
   },
   {
     "id": "CE-COMP-related-content",
-    "file": "src/components/related-content.tsx"
-  },
-  {
-    "id": "CE-COMP-report-view",
-    "file": "src/components/report-view.tsx"
+    "file": "src/components/site/related-content.tsx"
   },
   {
     "id": "CE-COMP-section-page",
-    "file": "src/components/section-page.tsx"
+    "file": "src/components/site/section-page.tsx"
   },
   {
     "id": "CE-COMP-shell",
-    "file": "src/components/shell.tsx"
+    "file": "src/components/site/shell.tsx"
   },
   {
     "id": "CE-COMP-site-nav",
-    "file": "src/components/site-nav.tsx"
-  },
-  {
-    "id": "CE-COMP-slide-deck",
-    "file": "src/components/slide-deck.tsx"
+    "file": "src/components/site/site-nav.tsx"
   },
   {
     "id": "CE-COMP-study",
-    "file": "src/components/study.tsx"
+    "file": "src/components/site/study.tsx"
   },
   {
     "id": "CE-COMP-subscription",
-    "file": "src/components/subscription.tsx"
-  },
-  {
-    "id": "CE-COMP-tool-desk",
-    "file": "src/components/tool-desk.tsx"
+    "file": "src/components/site/subscription.tsx"
   },
   {
     "id": "CE-COMP-translated",
-    "file": "src/components/translated.tsx"
-  },
-  {
-    "id": "CE-COMP-vila-asset",
-    "file": "src/components/vila-asset.tsx"
-  },
-  {
-    "id": "CE-COMP-vila-hub",
-    "file": "src/components/vila-hub.tsx"
-  },
-  {
-    "id": "CE-COMP-vila-page",
-    "file": "src/components/vila-page.tsx"
-  },
-  {
-    "id": "CE-COMP-vila-source-home",
-    "file": "src/components/vila-source-home.tsx"
+    "file": "src/components/site/translated.tsx"
   }
 ] as const;
 export const contractTokens = [
@@ -4161,28 +3725,8 @@ export const contractToolBindings = [
 ] as const;
 export const contractToolComponents = [
   {
-    "id": "CE-COMP-admin-account-header",
-    "component_key": "admin-account-header"
-  },
-  {
-    "id": "CE-COMP-admin-bulk-import",
-    "component_key": "admin-bulk-import"
-  },
-  {
-    "id": "CE-COMP-admin-console",
-    "component_key": "admin-console"
-  },
-  {
-    "id": "CE-COMP-admin-module-workspace",
-    "component_key": "admin-module-workspace"
-  },
-  {
-    "id": "CE-COMP-admin-schema-editor",
-    "component_key": "admin-schema-editor"
-  },
-  {
-    "id": "CE-COMP-admin-sidebar-tree",
-    "component_key": "admin-sidebar-tree"
+    "id": "CE-COMP-agent-roster",
+    "component_key": "agent-roster"
   },
   {
     "id": "CE-COMP-app-link",
@@ -4193,22 +3737,6 @@ export const contractToolComponents = [
     "component_key": "areas"
   },
   {
-    "id": "CE-COMP-article-icons",
-    "component_key": "article-icons"
-  },
-  {
-    "id": "CE-COMP-article-page",
-    "component_key": "article-page"
-  },
-  {
-    "id": "CE-COMP-article-pieces",
-    "component_key": "article-pieces"
-  },
-  {
-    "id": "CE-COMP-biography-view",
-    "component_key": "biography-view"
-  },
-  {
     "id": "CE-COMP-breadcrumb",
     "component_key": "breadcrumb"
   },
@@ -4217,76 +3745,16 @@ export const contractToolComponents = [
     "component_key": "callout"
   },
   {
-    "id": "CE-COMP-clinical-form",
-    "component_key": "clinical-form"
-  },
-  {
-    "id": "CE-COMP-clinical-sheet",
-    "component_key": "clinical-sheet"
-  },
-  {
-    "id": "CE-COMP-clinical-tool",
-    "component_key": "clinical-tool"
-  },
-  {
-    "id": "CE-COMP-commander-panel",
-    "component_key": "commander-panel"
+    "id": "CE-COMP-command-center",
+    "component_key": "command-center"
   },
   {
     "id": "CE-COMP-community",
     "component_key": "community"
   },
   {
-    "id": "CE-COMP-editorial-view",
-    "component_key": "editorial-view"
-  },
-  {
-    "id": "CE-COMP-form-view",
-    "component_key": "form-view"
-  },
-  {
-    "id": "CE-COMP-governance-panel",
-    "component_key": "governance-panel"
-  },
-  {
-    "id": "CE-COMP-guide-view",
-    "component_key": "guide-view"
-  },
-  {
     "id": "CE-COMP-home-page",
     "component_key": "home-page"
-  },
-  {
-    "id": "CE-COMP-institutional-template",
-    "component_key": "institutional-template"
-  },
-  {
-    "id": "CE-COMP-interface",
-    "component_key": "interface"
-  },
-  {
-    "id": "CE-COMP-library-canonical",
-    "component_key": "library-canonical"
-  },
-  {
-    "id": "CE-COMP-library-shelves",
-    "component_key": "library-shelves"
-  },
-  {
-    "id": "CE-COMP-library-view",
-    "component_key": "library-view"
-  },
-  {
-    "id": "CE-COMP-local-workbench-page",
-    "component_key": "local-workbench-page"
-  },
-  {
-    "id": "CE-COMP-module-directory",
-    "component_key": "module-directory"
-  },
-  {
-    "id": "CE-COMP-norm-view",
-    "component_key": "norm-view"
   },
   {
     "id": "CE-COMP-not-found",
@@ -4305,20 +3773,8 @@ export const contractToolComponents = [
     "component_key": "page-tools"
   },
   {
-    "id": "CE-COMP-pmo-panel",
-    "component_key": "pmo-panel"
-  },
-  {
-    "id": "CE-COMP-preview-host-bridge",
-    "component_key": "preview-host-bridge"
-  },
-  {
     "id": "CE-COMP-related-content",
     "component_key": "related-content"
-  },
-  {
-    "id": "CE-COMP-report-view",
-    "component_key": "report-view"
   },
   {
     "id": "CE-COMP-section-page",
@@ -4333,10 +3789,6 @@ export const contractToolComponents = [
     "component_key": "site-nav"
   },
   {
-    "id": "CE-COMP-slide-deck",
-    "component_key": "slide-deck"
-  },
-  {
     "id": "CE-COMP-study",
     "component_key": "study"
   },
@@ -4345,28 +3797,8 @@ export const contractToolComponents = [
     "component_key": "subscription"
   },
   {
-    "id": "CE-COMP-tool-desk",
-    "component_key": "tool-desk"
-  },
-  {
     "id": "CE-COMP-translated",
     "component_key": "translated"
-  },
-  {
-    "id": "CE-COMP-vila-asset",
-    "component_key": "vila-asset"
-  },
-  {
-    "id": "CE-COMP-vila-hub",
-    "component_key": "vila-hub"
-  },
-  {
-    "id": "CE-COMP-vila-page",
-    "component_key": "vila-page"
-  },
-  {
-    "id": "CE-COMP-vila-source-home",
-    "component_key": "vila-source-home"
   }
 ] as const;
 export const contractBrand = [

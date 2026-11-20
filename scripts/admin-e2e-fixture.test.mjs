@@ -19,7 +19,9 @@ test("admin fixture cannot write to remote DB or normal preview", () => {
 });
 
 test("fixture seeds role through PGLite member table, never bypasses requireAdmin", () => {
+  assert.match(seed, /insert into "user" \("id", "name", "email", "emailVerified"\)/);
   assert.match(seed, /insert into member \(user_id, role\) values \('dev-user', 'admin'\)/);
+  assert.ok(seed.indexOf('insert into "user"') < seed.indexOf("insert into member"));
   assert.match(source, /async function requireAdmin\(/);
   assert.match(source, /if \(rows\[0\]\?\.role !== "admin"\) throw new Error/);
   assert.match(workflow, /CE_ADMIN_E2E_FIXTURE: "true"/);

@@ -50,6 +50,13 @@ async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
     process.env.VITE_AUTH_ENABLED === "false" &&
     !process.env.DATABASE_URL?.trim()
   ) {
+    // The member table has a foreign key into Better Auth's user table.
+    // Build this synthetic fixture only in disposable CI PGLite, never Neon.
+    await sql`
+      insert into "user" ("id", "name", "email", "emailVerified")
+      values ('dev-user', 'CI-only Administrator', 'ci-admin@invalid.example', false)
+      on conflict ("id") do nothing
+    `;
     await sql`
       insert into member (user_id, role) values ('dev-user', 'admin')
       on conflict (user_id) do update set role = 'admin'

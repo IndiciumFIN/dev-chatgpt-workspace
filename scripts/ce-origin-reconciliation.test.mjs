@@ -16,9 +16,17 @@ test("CE source main inventory is closed, status-counted and free of duplicates"
  assert.equal(rec.policy.overwriteConflicts,false);
  assert.equal(rec.policy.archiveIsAdmission,false);
 });
-test("40 archived CE contracts/policies match source Git SHA and remain unadmitted",()=>{
+test("all archived CE origin files retain source Git blob SHA and are never admitted",()=>{
  const archived=rec.records.filter(x=>x.status==="ARCHIVED_SOURCE_EXACT");
- assert.equal(archived.length,40);
+ assert.equal(archived.length,rec.counts.ARCHIVED_SOURCE_EXACT);
+ assert.ok(archived.length>=40);
+ for(const row of archived){
+  assert.equal(row.archivePath,"intake/legacy-ce/"+row.path);
+  const bytes=readFileSync(new URL(row.archivePath,root));
+  assert.equal(bytes.length,row.bytes,row.path);
+  assert.equal(blobSha(bytes),row.sourceBlobSha,row.path);
+ }
+
  assert.equal(sources.records.length,20);assert.equal(policies.records.length,20);
  const intake=[...sources.records,...policies.records];
  for(const entry of intake){
@@ -33,5 +41,5 @@ test("40 archived CE contracts/policies match source Git SHA and remain unadmitt
   assert.equal(entry.admitted,false);
  }
  assert.equal(rec.counts.COLLISION_MANUAL_RECONCILIATION,6);
- assert.equal(rec.counts.PENDING_TRIAGE,130);
+ assert.equal(rec.counts.PENDING_TRIAGE+rec.counts.ARCHIVED_SOURCE_EXACT+rec.counts.COLLISION_MANUAL_RECONCILIATION,rec.counts.total);
 });

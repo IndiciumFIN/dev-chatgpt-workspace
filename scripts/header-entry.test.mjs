@@ -27,7 +27,8 @@ test("rota de login só renderiza provedor no ramo autenticado", () => {
   assert.match(login, /\{authEnabled \? \(/);
   assert.match(login, /<SignInGate fallback=\{<SignInPanel \/>\}>/);
   assert.match(login, /<AuthOffPanel \/>/);
-  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED !== "false"/);
+  assert.match(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED === "true"/);
+  assert.doesNotMatch(client, /export const authEnabled = import\.meta\.env\.VITE_AUTH_ENABLED !== "false"/);
   assert.match(login, /A autenticação não está habilitada neste ambiente/);
 });
 

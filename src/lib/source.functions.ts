@@ -40,6 +40,21 @@ async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
   // during GET reads. Only the embedded preview database may receive fixtures.
   const { dbSource } = await import("@/lib/db");
   if (dbSource !== "pglite") return;
+  // ADMIN E2E FIXTURE: create a verified-in-test member row, NOT an auth bypass.
+  // Only inside a GitHub Actions runner, explicitly opted-in and backed by
+  // in-memory PGlite. Real databases and ordinary previews cannot use this.
+  if (
+    process.env.CE_ADMIN_E2E_FIXTURE === "true" &&
+    process.env.CI === "true" &&
+    process.env.GITHUB_ACTIONS === "true" &&
+    process.env.VITE_AUTH_ENABLED === "false" &&
+    !process.env.DATABASE_URL?.trim()
+  ) {
+    await sql`
+      insert into member (user_id, role) values ('dev-user', 'admin')
+      on conflict (user_id) do update set role = 'admin'
+    `;
+  }
   const count = await sql<{ n: number }>`select count(*)::int as n from source_tool`;
   if (Number(count[0]?.n ?? 0) > 0) return;
   for (const tool of tools) {

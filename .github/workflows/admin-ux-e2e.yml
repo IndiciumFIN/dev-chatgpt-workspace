@@ -26,6 +26,8 @@ jobs:
     env:
       VITE_AUTH_ENABLED: "false"
       CI: "true"
+      # Test-only PGLite role fixture: never set on Vercel, Neon or production.
+      CE_ADMIN_E2E_FIXTURE: "true"
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:

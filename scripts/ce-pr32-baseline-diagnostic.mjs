@@ -9,6 +9,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseNameStatus } from './ce-large-pr-native-diff.mjs';
+import { parseGitLsTree } from './lib/ce-live-branch-reconcile-core.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const git=(args,opts={})=>execFileSync('git',args,{cwd:root,maxBuffer:128*1024*1024,...opts});
@@ -52,6 +53,22 @@ if (direct) {
  const old=parseNameStatus(git(['diff','--name-status','-z','--no-renames',oldMB,row.source_commit_sha]));
  const now=parseNameStatus(git(['diff','--name-status','-z','--no-renames',nowMB,row.source_commit_sha]));
  const compare=compareFileSets(old,now);
+ const sourceTree=parseGitLsTree(git(['ls-tree','-rz',row.source_commit_sha]));
+ const mainTree=parseGitLsTree(git(['ls-tree','-rz',liveMain]));
+ const main_presence={EXACT:0,PRESENT_DIFFERENT:0,SOURCE_ONLY:0,MAIN_ONLY:0,ABSENT_IN_BOTH:0};
+ const needs_review=[];
+ for(const path of compare.historicalOnly){
+  const a=sourceTree.get(path),b=mainTree.get(path);
+  let relation;
+  if(a&&b&&a.sha===b.sha&&a.mode===b.mode&&a.type===b.type)relation='EXACT';
+  else if(a&&b)relation='PRESENT_DIFFERENT';
+  else if(a)relation='SOURCE_ONLY';
+  else if(b)relation='MAIN_ONLY';
+  else relation='ABSENT_IN_BOTH';
+  main_presence[relation]++;
+  if(relation!=='EXACT')needs_review.push({path,relation,source_git_blob_sha:a?.sha??null,main_git_blob_sha:b?.sha??null,source_mode:a?.mode??null,main_mode:b?.mode??null});
+ }
+ if(Object.values(main_presence).reduce((a,b)=>a+b,0)!==compare.historicalOnlyCount)throw Error('HISTORICAL_ONLY_CROSSCHECK_LOST_ROWS');
  const sameHead=liveHead===row.source_commit_sha;
  const decision=decidePR32({expected:row.expected_pr_changes,oldCount:old.length,newCount:now.length,oldOnly:compare.historicalOnlyCount,newOnly:compare.currentOnlyCount,oldMergeBase:oldMB,currentMergeBase:nowMB,headFresh:sameHead});
  const details=Object.fromEntries(Object.entries(compare).filter(([k])=>['historicalOnly','currentOnly','changedStatus'].includes(k)));
@@ -66,6 +83,8 @@ if (direct) {
    count_gap_old_minus_new:old.length-now.length,
    rest_expected_minus_current:row.expected_pr_changes-now.length,
    comparison:{historicalOnlyCount:compare.historicalOnlyCount,currentOnlyCount:compare.currentOnlyCount,changedStatusCount:compare.changedStatusCount},
+   historical_only_vs_current_main_presence:main_presence,
+   historical_only_review_required:needs_review,
    historical_diff_sha256:createHash('sha256').update(JSON.stringify(old)).digest('hex'),
    current_diff_sha256:createHash('sha256').update(JSON.stringify(now)).digest('hex'),
    decision,
@@ -84,6 +103,7 @@ if (direct) {
   decision,oldBase:historicBase,oldMergeBase:oldMB,newBase:liveMain,newMergeBase:nowMB,
   expected:row.expected_pr_changes,old:old.length,current:now.length,
   historicalOnly:compare.historicalOnlyCount,currentOnly:compare.currentOnlyCount,
+  currentMainPresence:main_presence,
   changedStatus:compare.changedStatusCount,sha256:report.sha256
  }));
  if(decision.startsWith('HOLD_'))process.exitCode=2;

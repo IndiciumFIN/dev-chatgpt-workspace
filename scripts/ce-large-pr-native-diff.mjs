@@ -37,6 +37,13 @@ export function analyzeLargePR({row,currentMainSha,observedSha,mergeBaseSha,file
  result.diff_sha256=createHash('sha256').update(JSON.stringify(files)).digest('hex');
  return result;
 }
+// Historical PR base SHAs read from GitHub PR metadata (2026-11-20).
+// Pin them to reproduce the server's changed_files baseline rather than
+// substituting a later main merge base. Git objects remain independently verified.
+const historicalBaseByPR=new Map([
+ [32,'e9f7fe66075ebe5d7346072dc3a1b4934678c6de'],
+ [36,'152f8b1eac55f78d68375c79fceedc5805398663'],
+]);
 const direct=process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url);
 if(direct){
  const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
@@ -50,12 +57,23 @@ if(direct){
   try {
    git(['cat-file','-e',row.source_commit_sha+'^{commit}']);
    const observedSha=git(['rev-parse','refs/remotes/origin/'+row.branch],{encoding:'utf8'}).trim();
-   const mergeBaseSha=git(['merge-base',currentMainSha,row.source_commit_sha],{encoding:'utf8'}).trim();
-   if(!/^[0-9a-f]{40}$/.test(mergeBaseSha))throw Error('BAD_MERGE_BASE_SHA');
+   const historicBaseSha=historicalBaseByPR.get(row.pr_number);
+   if(!historicBaseSha)throw Error('HISTORICAL_BASE_NOT_REGISTERED');
+   git(['cat-file','-e',historicBaseSha+'^{commit}']);
+   const mergeBaseSha=git(['merge-base',historicBaseSha,row.source_commit_sha],{encoding:'utf8'}).trim();
+   const currentMergeBaseSha=git(['merge-base',currentMainSha,row.source_commit_sha],{encoding:'utf8'}).trim();
+   if(!/^[0-9a-f]{40}$/.test(mergeBaseSha)|| !/^[0-9a-f]{40}$/.test(currentMergeBaseSha))throw Error('BAD_MERGE_BASE_SHA');
    const bytes=git(['diff','--name-status','-z','--no-renames',mergeBaseSha,row.source_commit_sha]);
+   const currentBytes=git(['diff','--name-status','-z','--no-renames',currentMergeBaseSha,row.source_commit_sha]);
    const report=analyzeLargePR({row,currentMainSha,observedSha,mergeBaseSha,files:parseNameStatus(bytes)});
+   report.historical_pr_base_sha=historicBaseSha;
+   report.current_main_merge_base_sha=currentMergeBaseSha;
+   report.current_main_diff_count=parseNameStatus(currentBytes).length;
+   report.reproduces_github_pr_baseline=report.counts_match_original_api;
+   report.method='GIT_DIFF_HISTORIC_PR_BASE_MERGE_BASE_TO_PINNED_HEAD_NO_RENAMES';
+   report.discrepancy_explained_by_baseline=report.counts_match_original_api && report.current_main_diff_count!==report.native_git_diff_count && mergeBaseSha!==currentMergeBaseSha;
    audits.push(report);
-   console.log('LARGE_PR_NATIVE_DIFF',JSON.stringify({pr:report.pr_number,total:report.native_git_diff_count,expected:report.original_expected_changed_files,match:report.counts_match_original_api,status:report.status}));
+   console.log('LARGE_PR_NATIVE_DIFF',JSON.stringify({pr:report.pr_number,total:report.native_git_diff_count,current_main_count:report.current_main_diff_count,expected:report.original_expected_changed_files,match:report.counts_match_original_api,status:report.status}));
   }catch(error){
    audits.push({pr_number:row.pr_number,source_branch:row.branch,status:'HOLD_DIFF_UNAVAILABLE',error_code:'NATIVE_DIFF_OR_SOURCE_REF_UNAVAILABLE',auto_merge:false});
    console.log('HOLD: unable to complete native PR diff for #'+row.pr_number);

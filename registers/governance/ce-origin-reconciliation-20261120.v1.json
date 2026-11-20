@@ -15,8 +15,8 @@
   "counts": {
     "total": 176,
     "COLLISION_MANUAL_RECONCILIATION": 6,
-    "PENDING_TRIAGE": 77,
-    "ARCHIVED_SOURCE_EXACT": 73,
+    "PENDING_TRIAGE": 68,
+    "ARCHIVED_SOURCE_EXACT": 82,
     "DEDUP_SEMANTIC_EXACT": 20
   },
   "policy": {
@@ -103,36 +103,56 @@
       "path": "config/drive_inventory_roots_20261016.json",
       "sourceBlobSha": "ce1e2eb6720aa84b1480f052409ed1088d42f214",
       "bytes": 435,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/config/drive_inventory_roots_20261016.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "contracts/exemplo_atomo.json",
       "sourceBlobSha": "3d1cc8056c640da209e0c0b74f288804abdfb178",
       "bytes": 750,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/contracts/exemplo_atomo.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "contracts/exemplo_escala.json",
       "sourceBlobSha": "d3ee02c73f9d1ac344a13576b741e3033df53873",
       "bytes": 437,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/contracts/exemplo_escala.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "contracts/fonte_diarios.json",
       "sourceBlobSha": "59a3256917018206986d318ed7ca80e9c24b1298",
       "bytes": 649,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/contracts/fonte_diarios.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "contracts/fonte_dou.json",
       "sourceBlobSha": "d25648a8edee4839c17419afca6cfd03fab5881e",
       "bytes": 437,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/contracts/fonte_dou.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "contracts/fontes/anvisa_dev.json",
@@ -665,8 +685,12 @@
       "path": "contracts/task_production.json",
       "sourceBlobSha": "95b5b3f698835c886d31b07589312eaa22d37e76",
       "bytes": 753,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/contracts/task_production.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "data/.gitkeep",
@@ -1038,15 +1062,23 @@
       "path": "packages/builder/composition.schema.json",
       "sourceBlobSha": "7bdfc4a25e793556b741d48d20b3654a8a28e724",
       "bytes": 934,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/packages/builder/composition.schema.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "packages/builder/example_composition.json",
       "sourceBlobSha": "c8b08e8c3deb5dee9a95db8c3054f393c6359a77",
       "bytes": 488,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/packages/builder/example_composition.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "packages/builder/layers/README.md",
@@ -1262,8 +1294,12 @@
       "path": "packages/design-system/tokens.json",
       "sourceBlobSha": "1eb60a88c58ef7cdf205f4986eb6d60c82876334",
       "bytes": 786,
-      "status": "PENDING_TRIAGE",
-      "admitted": false
+      "status": "ARCHIVED_SOURCE_EXACT",
+      "admitted": false,
+      "archivePath": "intake/legacy-ce/packages/design-system/tokens.json",
+      "archiveRole": "UNTRUSTED_DATA_ONLY",
+      "execution": "DISABLED",
+      "review": "HOLD_HUMAN"
     },
     {
       "path": "packages/schemas/atomo.py",
@@ -1410,10 +1446,22 @@
   ],
   "lastStage": {
     "timestamp": "2026-11-20",
-    "method": "GitHub connector JS 20/20 source-pair comparisons",
-    "kind": "FONTS_ALIAS_DEDUP",
-    "proof": "Exact source bytes reproduced by removal of final source_contract from corrected file",
-    "newFilesCopied": 0,
-    "rights": "HOLD_HUMAN"
+    "sourceHead": "e0f62491b104f4a97c6025a6393cabc2e7ada30e",
+    "method": "GitHub connector JS metadata allowlist",
+    "kind": "JSON_METADATA_INERT_ONLY",
+    "files": [
+      "config/drive_inventory_roots_20261016.json",
+      "contracts/exemplo_atomo.json",
+      "contracts/exemplo_escala.json",
+      "contracts/fonte_diarios.json",
+      "contracts/fonte_dou.json",
+      "contracts/task_production.json",
+      "packages/builder/composition.schema.json",
+      "packages/builder/example_composition.json",
+      "packages/design-system/tokens.json"
+    ],
+    "release": "HOLD_HUMAN",
+    "scriptsActivated": 0,
+    "externalWrites": 0
   }
 }

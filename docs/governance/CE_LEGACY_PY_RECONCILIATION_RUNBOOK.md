@@ -12,7 +12,7 @@ Este procedimento usa dois checkouts Git locais e não depende de Supabase, Neon
 - ALREADY_IDENTICAL: somente quando o blob original coincide com a versão canônica.
 - DEDUP_SEMANTIC_EXACT: alias histórico da pasta obsoleta contracts/fonts; é reconstruído byte a byte do contrato já preservado em contracts/fontes sem duplicar arquivos, eliminando apenas o atributo final source_contract.
 
-O inventário contém 176 arquivos; após esta onda: 73 históricos arquivados, 20 aliases deduplicados reversivelmente, 77 pendentes, seis colisões. Inventário 100%; preservação 41,5%; origens tratadas 52,8%; publicação clínica e banco remoto NÃO aprovados.
+O inventário contém 176 arquivos; após esta onda: 82 históricos arquivados, 20 aliases deduplicados reversivelmente, 68 pendentes, seis colisões. Inventário 100%; preservação 46,6%; origens tratadas 58,0%; publicação clínica e banco remoto NÃO aprovados.
 
 ## Pré-requisitos
 
@@ -44,7 +44,7 @@ Python 3.10+, Git e dois checkouts locais limpos. Não registrar credenciais nem
 
 Para PowerShell, substituir python3 por py -3 e ../calculadorasdeenfermagem por ..\calculadorasdeenfermagem. A fonte deve estar no SHA fixado e o destino sem alterações para aplicar. A rotina mostra progresso [NN/TT], detecta grupos de SHA duplicado e mantém histórico do caminho original. Por padrão stage é DRY-RUN; só --apply grava a cópia local, limitado a lotes de 1 a 25.
 
-A seleção automática atual aceita somente docs/*.md com status PENDING_TRIAGE, cabeçalho Markdown válido e ausência de indicadores de chaves privadas. Os demais tipos (SQL, workflows, scripts, tokens, assets, front, banco de dados) exigem reconciliação específica e critérios adicionais; não são executados nem ativados automaticamente.
+A seleção automática aceita docs/*.md com status PENDING_TRIAGE e cabeçalho Markdown válido. Com --category metadata aceita apenas nove arquivos JSON na allowlist do código, com parsing de JSON e verificação de hash, nunca migrations ou fluxos CI. Ambos os modos bloqueiam indicadores de chaves privadas. Os demais tipos (SQL, workflows, scripts, tokens, assets, front, banco de dados) exigem reconciliação específica e critérios adicionais; não são executados nem ativados automaticamente.
 
 ## CI e evidências
 
@@ -58,3 +58,10 @@ O gate verifica SHA Git original, SHA-256 quando disponível, bytes, contadores,
 ## Próxima etapa
 
 Examinar o registro registers/governance/ce-origin-reconciliation-20261120.v1.json; continuar em lotes pequenos, revisar cada delta e registrar commit, resultado GitHub Actions e bloqueios na issue #33. Para colisões, preservar a configuração ativa do Workspace e abrir reconciliação semântica com evidência; nunca forçar merge ou substituir por conteúdo antigo.
+
+### Dados JSON históricos (somente quarentena)
+
+    python3 scripts/ce-legacy-reconcile.py stage --target . --source ../calculadorasdeenfermagem --category metadata --batch-size 9
+    python3 scripts/ce-legacy-reconcile.py stage --target . --source ../calculadorasdeenfermagem --category metadata --batch-size 9 --apply
+
+Se a allowlist estiver toda preservada, o programa informa que nada mudou; não habilitar templates/tokens históricos como fontes operacionais.

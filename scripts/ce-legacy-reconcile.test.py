@@ -84,5 +84,14 @@ class ReconcileTests(unittest.TestCase):
                 with redirect_stdout(StringIO()):
                     module.stage(target,source,module.DEFAULT,1,False)
 
+    def test_metadata_allowlist_never_imports_sql_secrets_or_workflows(self):
+        for path in ["config/drive_inventory_roots_20261016.json","contracts/exemplo_atomo.json","contracts/exemplo_escala.json","contracts/fonte_diarios.json","contracts/fonte_dou.json","contracts/task_production.json","packages/builder/composition.schema.json","packages/builder/example_composition.json","packages/design-system/tokens.json"]:
+            self.assertTrue(module.eligible({"path": path, "status": "PENDING_TRIAGE"}, "metadata"))
+        for path in ["supabase/migrations/20261011000000_initial_schema.sql",
+                     ".github/workflows/ci.yml", ".env.example",
+                     "src/lib/supabase/client.ts", "packages/cli/main.py"]:
+            self.assertFalse(module.eligible({"path": path, "status": "PENDING_TRIAGE"}, "metadata"))
+        self.assertFalse(module.eligible({"path": "config/drive_inventory_roots_20261016.json", "status": "ARCHIVED_SOURCE_EXACT"}, "metadata"))
+
 if __name__=="__main__":
     unittest.main(verbosity=2)

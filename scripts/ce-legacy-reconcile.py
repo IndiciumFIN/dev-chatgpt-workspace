@@ -21,6 +21,28 @@ ARCHIVE = "intake/legacy-ce/"
 ALLOWED_STATES = {"ARCHIVED_SOURCE_EXACT", "DEDUP_SEMANTIC_EXACT", "PENDING_TRIAGE", "COLLISION_MANUAL_RECONCILIATION", "ALREADY_IDENTICAL"}
 DANGER = re.compile(rb"(?:ghp_[A-Za-z0-9]{16,}|sb_secret_[A-Za-z0-9_-]{16,}|sk-[A-Za-z0-9_-]{24,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)", re.I)
 
+SAFE_METADATA = frozenset([
+    "config/drive_inventory_roots_20261016.json",
+    "contracts/exemplo_atomo.json",
+    "contracts/exemplo_escala.json",
+    "contracts/fonte_diarios.json",
+    "contracts/fonte_dou.json",
+    "contracts/task_production.json",
+    "packages/builder/composition.schema.json",
+    "packages/builder/example_composition.json",
+    "packages/design-system/tokens.json"
+])
+
+def eligible(row: dict, category: str) -> bool:
+    if row.get("status") != "PENDING_TRIAGE":
+        return False
+    path = row.get("path", "")
+    if category == "docs":
+        return path.startswith("docs/") and path.endswith(".md")
+    if category == "metadata":
+        return path in SAFE_METADATA
+    return False
+
 def fail(message: str) -> None:
     raise ValueError(message)
 
@@ -148,7 +170,7 @@ def verify(root: Path, manifest: str, source: Path | None) -> dict:
     print("NO SQL / no remote writes / no automatic clinical admission")
     return m
 
-def stage(root: Path, source: Path, manifest: str, size: int, apply: bool) -> None:
+def stage(root: Path, source: Path, manifest: str, size: int, apply: bool, category: str = "docs") -> None:
     m = load(root, manifest)
     if git(source, "rev-parse", "HEAD") != m["source"]["sha"]:
         fail("source revision is not pinned")
@@ -156,9 +178,7 @@ def stage(root: Path, source: Path, manifest: str, size: int, apply: bool) -> No
         fail("source and target checkouts must be distinct")
     if apply and git(root, "status", "--porcelain"):
         fail("target checkout must be clean before --apply")
-    rows = [r for r in m["records"]
-            if r["status"] == "PENDING_TRIAGE" and
-            r["path"].startswith("docs/") and r["path"].endswith(".md")]
+    rows = [r for r in m["records"] if eligible(r, category)]
     rows = sorted(rows, key=lambda r: r["path"])[:size]
     prepared = []
     for n, r in enumerate(rows, 1):
@@ -172,8 +192,15 @@ def stage(root: Path, source: Path, manifest: str, size: int, apply: bool) -> No
             fail("source SHA mismatch: " + original)
         if DANGER.search(blob):
             fail("secret-like string in source: " + original)
-        if not blob.startswith(b"#"):
+        if category == "docs" and not blob.startswith(b"#"):
             fail("unexpected non-Markdown document: " + original)
+        if category == "metadata":
+            try:
+                candidate = json.loads(blob.decode("utf8"))
+                if not isinstance(candidate, dict):
+                    fail("metadata must be a JSON object: " + original)
+            except (UnicodeError, json.JSONDecodeError) as exc:
+                fail("invalid JSON metadata: " + original + " " + str(exc))
         prepared.append((r, blob, dest))
         print(f"[{n:02}/{len(rows):02}] {'STAGING' if apply else 'WOULD STAGE'} {original}")
     if not prepared:
@@ -202,6 +229,7 @@ def main() -> int:
     parser.add_argument("--source", type=Path)
     parser.add_argument("--manifest", default=DEFAULT)
     parser.add_argument("--batch-size", type=int, default=10)
+    parser.add_argument("--category", choices=["docs", "metadata"], default="docs")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     try:
@@ -214,7 +242,7 @@ def main() -> int:
                 fail("stage requires --source (pinned Git checkout)")
             if args.batch_size < 1 or args.batch_size > 25:
                 fail("batch size must be 1..25")
-            stage(root, source, args.manifest, args.batch_size, args.apply)
+            stage(root, source, args.manifest, args.batch_size, args.apply, args.category)
         return 0
     except (ValueError, OSError, KeyError, json.JSONDecodeError) as exc:
         print("FAIL CE reconciliation: " + str(exc), file=sys.stderr)

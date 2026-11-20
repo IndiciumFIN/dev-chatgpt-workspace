@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0.0",
+  "id": "CKO-GOV-FOUNDATION-CONTINUITY-20261026",
+  "snapshot_date": "2026-10-26",
+  "scope": {
+    "repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "working_branch": "preview/central-comando-20261026",
+    "pr_number": 1,
+    "repository_role": "BACKUP_ISOLATED_NOT_CORPORATE_KERNEL",
+    "release_gate": "HOLD_HUMAN",
+    "main_write_authorized": false,
+    "production_deploy_authorized": false,
+    "supabase_write_authorized": false
+  },
+  "last_verified_source": {
+    "commit": "6710352f2fa7aaeb8a78b738ed87e016ab985953",
+    "ci_run_id": 40310026295,
+    "ci_state": "SUCCESS",
+    "unit_tests": {
+      "passed": 284,
+      "failed": 0
+    },
+    "opa_runner": "1.21.4; SHA256-pinned; policy tests and signed bundle verification in CI",
+    "evidence_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/40310026295"
+  },
+  "capabilities": [
+    {
+      "id": "kernel",
+      "state": "LOCAL_TESTED_NOT_CORPORATE_ADMITTED",
+      "required_files": [
+        "src/core/governance/kernel.ts",
+        "src/core/governance/kernel.test.ts"
+      ]
+    },
+    {
+      "id": "opa",
+      "state": "CI_REAL_ENGINE_AND_EPHEMERAL_SIGNATURE_ONLY",
+      "required_files": [
+        "contracts/cko-governance/opa/import_read.rego",
+        "contracts/cko-governance/opa/import_read_test.rego",
+        "contracts/cko-governance/opa/kernel_admission.rego",
+        "contracts/cko-governance/opa/kernel_admission_test.rego",
+        "src/core/governance/import-opa-read.server.ts",
+        "scripts/test-opa-real-http.mjs"
+      ]
+    },
+    {
+      "id": "agents",
+      "state": "PRECHECK_ONLY_NO_EXECUTION",
+      "required_files": [
+        "src/core/governance/agent-authorization.ts",
+        "src/core/governance/agent-authorization.test.ts"
+      ]
+    },
+    {
+      "id": "import_ui",
+      "state": "VERSIONED_AND_BROWSER_TESTED_NO_REMOTE_WRITE",
+      "required_files": [
+        "src/core/governance/bulk-import.ts",
+        "src/components/admin/admin-bulk-import.tsx",
+        "src/styles/admin-bulk-import.css",
+        "src/core/governance/bulk-import.test.ts"
+      ]
+    },
+    {
+      "id": "import_reconciliation",
+      "state": "CODE_TESTED_READ_ONLY_NOT_CONNECTED",
+      "required_files": [
+        "src/core/governance/bulk-import-reconciliation.ts",
+        "src/core/governance/import-read-service.ts",
+        "src/core/governance/import-read-db.server.ts",
+        "src/core/governance/import-reconcile-http.server.ts",
+        "src/core/governance/import-reconcile-http.test.ts",
+        "src/core/governance/import-read-role.test.ts"
+      ]
+    },
+    {
+      "id": "candidate_schema",
+      "state": "DDL_TESTED_ISOLATED_NOT_APPLIED_SUPABASE",
+      "required_files": [
+        "migrations/candidates/20261026_governance_kernel_opa_agents.sql",
+        "migrations/candidates/20261026_governed_admin_bulk_import.sql",
+        "migrations/candidates/20261026_governed_import_reconciliation.sql",
+        "migrations/candidates/20261026_import_readonly_role.sql",
+        "migrations/candidates/20261026_import_read_evidence_receipts.sql"
+      ]
+    },
+    {
+      "id": "governance_evidence",
+      "state": "CANDIDATE_NOT_CORPORATE_CERTIFIED",
+      "required_files": [
+        "docs/governance/FOUNDATION_COSO_OPA_KERNEL_AGENTS_20261026.md",
+        "docs/governance/OPA_REAL_ENGINE_AND_SIGNED_BUNDLES_20261026.md",
+        "docs/governance/OPA_SIGNED_RUNTIME_PG_LEAST_PRIVILEGE_20261026.md",
+        "docs/governance/IMPORT_READ_ONLY_OPA_BACKEND_20261026.md",
+        "docs/governance/IMPORT_RECONCILIATION_HANDOFF_20261026.md"
+      ]
+    }
+  ],
+  "verified_remote_state": {
+    "source": "GitHub, Vercel and Supabase tools, read-only inspection on 2026-10-26",
+    "github": {
+      "pr_state": "OPEN_DRAFT",
+      "main_unchanged_from": "97684528ae2cfe1a2899e8caa53fbac4b45184ef"
+    },
+    "supabase": {
+      "project": "Calculadoras-Smart",
+      "method": "READ_ONLY",
+      "existing_master": "cko_staging.import_packages",
+      "candidate_tables_verified_applied": false,
+      "private_role_verified_created": false
+    },
+    "vercel": {
+      "latest_returned_ready_preview_sha": "9d10968b",
+      "current_feature_branch_sha_at_inspection": "6710352f",
+      "current_head_deployment_verified": false
+    }
+  },
+  "blocking_findings": [
+    {
+      "id": "FIND-CKO-OPA-DEPLOY",
+      "state": "HOLD_HUMAN",
+      "reason": "OPA corporate service, signed-bundle provenance, grant source and trusted service identity not deployed"
+    },
+    {
+      "id": "FIND-CKO-PG-READROLE",
+      "state": "HOLD_HUMAN",
+      "reason": "Dedicated least-privilege PostgreSQL role only candidate DDL; no live role/credential"
+    },
+    {
+      "id": "FIND-CKO-IMPORT-ROUTE",
+      "state": "HOLD_HUMAN",
+      "reason": "No authenticated import reconciliation route under src/routes/api; creation previously blocked"
+    },
+    {
+      "id": "FIND-CKO-SCHEMA-APPLY",
+      "state": "HOLD_HUMAN",
+      "reason": "Candidate SQL schemas and evidence tables tested in isolated PG but not applied to Supabase"
+    },
+    {
+      "id": "FIND-CKO-AUTHZ",
+      "state": "HOLD_HUMAN",
+      "reason": "Live PEP/RBAC, maker/checker, signed decision evidence and independent Kernel corporate admission unverified"
+    },
+    {
+      "id": "FIND-CKO-RELEASE",
+      "state": "HOLD_HUMAN",
+      "reason": "No authorized main merge or production deployment; preview deployment not verified for latest branch head"
+    }
+  ],
+  "next_order": [
+    "Review this checkpoint and PR #1; do not re-run completed unit/static tests manually without a change",
+    "Complete FIND/policy/validator/WO for a segregated test environment and approval",
+    "Provision approved trusted identity, independent OPA bundle distribution and verified read-only role outside source control",
+    "Apply candidate SQL only in approved isolated staging and audit constraints/grants/RLS/rollback",
+    "Register authenticated server route only after access restriction is explicitly released",
+    "Run real OPA/PG/E2E integration, log decisions and verify negative authorization cases",
+    "Audit independently, then seek explicit promotion to main and eventual production"
+  ],
+  "disallowed_in_this_checkpoint": [
+    "create new GitHub branch",
+    "push/merge main",
+    "mutate Supabase",
+    "set credentials or enable OPA service",
+    "publish unaudited endpoints",
+    "run remote agents/write canonic records"
+  ]
+}

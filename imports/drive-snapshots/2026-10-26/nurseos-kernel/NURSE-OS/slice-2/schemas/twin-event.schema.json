@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nurse-os:slice-2:twin-event",
+  "title": "TwinEvent (Temporal Knowledge Graph v0, NOVO 23 / POL-011)",
+  "description": "Um fato do twin com cidadania temporal: classe ontológica, janela de validade, fonte e confiança. Não existe fato atemporal no twin.",
+
+  "type": "object",
+  "required": ["twin_ref", "event_type", "label", "value", "valid_from", "source", "confidence"],
+
+  "properties": {
+    "twin_ref": {"type": "string", "description": "fhir:Patient/… ou unit/org twin ref"},
+    "event_type": {"enum": ["observation", "condition", "medication", "procedure", "risk", "score"]},
+    "label": {"type": "string"},
+    "value": {"type": "string"},
+    "valid_from": {"type": "string", "description": "quando passou a ser verdade (obrigatório)"},
+    "valid_to": {"type": ["string", "null"], "description": "null = vigente"},
+    "source": {"type": "string", "description": "quem produziu: FHIR ref, CKO, escore, agente"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "cko_ref": {"type": "string"},
+    "fhir_ref": {"type": "string"}
+  }
+}

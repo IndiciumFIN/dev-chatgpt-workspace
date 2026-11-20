@@ -1,0 +1,70 @@
+{
+ "protocol": "Jobs de extração (POL-NK-006 C6) — tentativas, evidências, tracking ponta a ponta",
+ "template": {
+  "job_id": "NK-JOB-NNNN",
+  "backlog_ref": "NK-BL-NNNN",
+  "os_ref": "NK-OS-NNNN",
+  "attempts": [
+   {
+    "attempt": 1,
+    "at": "ISO",
+    "method": "api|scraping|ocr|manual",
+    "outcome": "success|failed|partial",
+    "detail": "erro/resultado",
+    "artifacts": []
+   }
+  ],
+  "run_ref": "NK-RUN-NNNN",
+  "doc_ref": "NK-DOC-NNNNN",
+  "evidence_ref": "EV-NK-NNNN",
+  "status": "planned|running|done|failed"
+ },
+ "jobs": {
+  "NK-JOB-0001": {
+   "job_id": "NK-JOB-0001",
+   "backlog_ref": "NK-BL-0001",
+   "os_planned": "NK-OS-0040..0044",
+   "source_ref": "SRC-RFC",
+   "license_ref": "KL-0003",
+   "attempts": [
+    {
+     "ts": "2026-09-29T16:47:50.587238",
+     "url": "https://www.rfc-editor.org/rfc/rfc2119.txt",
+     "http_status": 200,
+     "bytes": 4723,
+     "sha256": "sha256:3c2ceb7bfc84cd34720f4a5271338ab9d8280d34bdd1eb250c64306202f2ed8b",
+     "stored": "raw/rfc2119.txt",
+     "parse": "ok — estrutura RFC 2119 reconhecida (seções 1-6)"
+    }
+   ],
+   "endpoint_verification": {
+    "rfc-editor-2119": {
+     "url": "https://www.rfc-editor.org/rfc/rfc2119.txt",
+     "status": 200,
+     "ok": true,
+     "len": 4723
+    },
+    "datatracker-api": {
+     "url": "https://datatracker.ietf.org/api/v1/doc/document/rfc2119/",
+     "status": 200,
+     "ok": true,
+     "len": 1155
+    },
+    "dou-in-web": {
+     "url": "https://www.in.gov.br/leiturajornal",
+     "status": null,
+     "ok": false,
+     "len": 25
+    },
+    "mqd-api": {
+     "url": "https://queridodiario.ok.org.br/api/",
+     "status": null,
+     "ok": false,
+     "len": 28
+    }
+   },
+   "status": "completed",
+   "evidence_id": "EV-NK-0012"
+  }
+ }
+}

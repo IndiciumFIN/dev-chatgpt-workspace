@@ -1,0 +1,62 @@
+{
+  "template_id": "TPL-CASE-001",
+  "name": "Clinical/Educational Case",
+  "version": "0.2.0",
+  "profile": "case",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "slides"
+  ],
+  "required_roles": [
+    "title",
+    "learning_objective",
+    "case_facts",
+    "decision_points",
+    "references",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "timeline",
+    "reflection",
+    "question",
+    "answer_rationale"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "section",
+    "claim",
+    "figure",
+    "table",
+    "callout",
+    "references",
+    "learning_objective",
+    "question",
+    "answer_rationale",
+    "case_fact",
+    "decision_point",
+    "reflection",
+    "timeline",
+    "action_bar",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "web": "case-timeline-and-decision-stack",
+    "print": "paged-case"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "synthetic_or_governed_case_data",
+      "clinical_high_assurance"
+    ]
+  }
+}

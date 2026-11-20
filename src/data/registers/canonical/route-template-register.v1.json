@@ -1,0 +1,483 @@
+{
+  "schemaVersion": "1.1.0",
+  "scope": "CE_PUBLIC_BACKUP_ONLY",
+  "generatedAt": "2026-10-23T02:06:07.395Z",
+  "authority": "explicit-route-contracts-no-runtime-or-visual-homologation",
+  "templateKinds": [
+    "home",
+    "secao",
+    "artigo",
+    "guia",
+    "biblioteca",
+    "norma",
+    "ferramenta",
+    "editorial",
+    "area",
+    "aviso",
+    "entrada"
+  ],
+  "summary": {
+    "files": 27,
+    "routesWithDefinition": 26,
+    "declaredVisualBindings": 24,
+    "nonvisual": 3,
+    "unregistered": 0,
+    "errors": 0
+  },
+  "records": [
+    {
+      "id": "route:__root.tsx",
+      "file": "src/routes/__root.tsx",
+      "route": null,
+      "role": "system",
+      "surface": "layout",
+      "templateKind": null,
+      "templateBindingStatus": "NOT_APPLICABLE",
+      "sourceSha256": "f086326b32ae938ef1671da10d2f886718ba3289bb9130cba28e19577bd345c2",
+      "imports": [
+        "../styles.css?url",
+        "@/components/preview-host-bridge",
+        "@/lib/auth/provider",
+        "@/lib/chrome",
+        "@/lib/locale-registry",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:admin.tsx",
+      "file": "src/routes/admin.tsx",
+      "route": "/admin",
+      "role": "administrator-local",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "b1497f1be046b54012a09d5e9e0c42696d47fabbb1e1b422dc7212f31dbdf98d",
+      "imports": [
+        "@/components/local/local-workbench-page",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:api/auth/$.ts",
+      "file": "src/routes/api/auth/$.ts",
+      "route": "/api/auth/$",
+      "role": "authentication",
+      "surface": "api",
+      "templateKind": null,
+      "templateBindingStatus": "NOT_APPLICABLE",
+      "sourceSha256": "58e2a72c3dc0b3bb3c40cccbbecbe9205779ea13c5fb9a31bb0f9a3ba253fb26",
+      "imports": [
+        "@/lib/auth/server",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:assinante.ferramentas.$slug.tsx",
+      "file": "src/routes/assinante.ferramentas.$slug.tsx",
+      "route": "/assinante/ferramentas/$slug",
+      "role": "subscriber",
+      "surface": "page",
+      "templateKind": "ferramenta",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "682b16a629e951bf7bbf6e7eb0ecf9dff7e394d9d7b2b43927b12ea33af921e1",
+      "imports": [
+        "@/components/site/areas",
+        "@/components/tools/clinical-tool",
+        "@/lib/local-canonical",
+        "@/lib/tools/catalog",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:assinante.tsx",
+      "file": "src/routes/assinante.tsx",
+      "route": "/assinante",
+      "role": "subscriber",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "7ab579ee4735f75898a965ecc1b364e24a64ac4a84961d7675d3c2da336a2325",
+      "imports": [
+        "@/components/site/areas",
+        "@/components/site/breadcrumb",
+        "@/components/site/community",
+        "@/components/site/page-hero",
+        "@/lib/local-canonical",
+        "@/lib/local-workbench-store",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:bibliotecas.$slug.$object.tsx",
+      "file": "src/routes/bibliotecas.$slug.$object.tsx",
+      "route": "/bibliotecas/$slug/$object",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "045d8ae0c3c901f98bdd12fef1709b3638a42bde980ada7c674cdeed5dba764c",
+      "imports": [
+        "@/components/site/shell",
+        "@/components/templates/library-canonical",
+        "@/lib/bibliotecas",
+        "@/lib/chrome",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:bibliotecas.$slug.index.tsx",
+      "file": "src/routes/bibliotecas.$slug.index.tsx",
+      "route": "/bibliotecas/$slug/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "d8e2593ca915c6d91ce8d2c7641659a47e5af095857678f0471450c4197aebf2",
+      "imports": [
+        "@/components/site/shell",
+        "@/components/templates/library-canonical",
+        "@/lib/bibliotecas",
+        "@/lib/chrome",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:bibliotecas.$slug.tsx",
+      "file": "src/routes/bibliotecas.$slug.tsx",
+      "route": "/bibliotecas/$slug",
+      "role": "public",
+      "surface": "layout",
+      "templateKind": null,
+      "templateBindingStatus": "NOT_APPLICABLE",
+      "sourceSha256": "03692216842c8f0497a86f40ea7388709152f021178b9fb6d2acfae36024137a",
+      "imports": [
+        "@/lib/bibliotecas",
+        "@/lib/chrome",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:bibliotecas.index.tsx",
+      "file": "src/routes/bibliotecas.index.tsx",
+      "route": "/bibliotecas/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "faa04ac436518bc6ab72e06ffd2e09172e0cdeb0a8bea1dc49ad1ef81853a92a",
+      "imports": [
+        "@/components/site/shell",
+        "@/components/templates/library-canonical",
+        "@/lib/bibliotecas",
+        "@/lib/chrome",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:blog.$slug.tsx",
+      "file": "src/routes/blog.$slug.tsx",
+      "route": "/blog/$slug",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "artigo",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "25b25afd801d463611e6c54d438d11930ffae95d0c3ea7a9b0cc9ea1d914b316",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/related-content",
+        "@/components/site/shell",
+        "@/components/templates/biography-view",
+        "@/lib/content/articles/index",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:conta.tsx",
+      "file": "src/routes/conta.tsx",
+      "route": "/conta",
+      "role": "account",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "5ae59b0909a88c3c3756e32844db48f91cffe66acf9490894eae7760af36f881",
+      "imports": [
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:ferramentas.$slug.tsx",
+      "file": "src/routes/ferramentas.$slug.tsx",
+      "route": "/ferramentas/$slug",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "ferramenta",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "c645539b82de6962ba350bcd821c48600a52a436f5aed63c5ae941465efdc048",
+      "imports": [
+        "@/components/site/shell",
+        "@/components/tools/clinical-tool",
+        "@/lib/local-canonical",
+        "@/lib/seo",
+        "@/lib/tools/catalog",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:index.tsx",
+      "file": "src/routes/index.tsx",
+      "route": "/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "home",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "62d151ca4b0fb1e7d52344f9a333b76f461e577aed4fc7761b525dfdc794fe9f",
+      "imports": [
+        "@/components/site/home-page",
+        "@/components/site/shell",
+        "@/lib/seo",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:institucional.$hub.$page.tsx",
+      "file": "src/routes/institucional.$hub.$page.tsx",
+      "route": "/institucional/$hub/$page",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "182a814a0aa68cfb56a6732c4172d6dc0bd5c373bc04f7a139203b6e89918c98",
+      "imports": [
+        "@/lib/institutional-target",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:institucional.$hub.index.tsx",
+      "file": "src/routes/institucional.$hub.index.tsx",
+      "route": "/institucional/$hub/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "d7df10d9f8ffed3a2a855f7fe5e41ab5cc23478d03d5bb067d70950b777cec5b",
+      "imports": [
+        "@/lib/institutional-target",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:institucional.$hub.tsx",
+      "file": "src/routes/institucional.$hub.tsx",
+      "route": "/institucional/$hub",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "eb205decd17ecfb4087fcb166f31b670153edc3848f21cc75545b029673079ef",
+      "imports": [
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:institucional.index.tsx",
+      "file": "src/routes/institucional.index.tsx",
+      "route": "/institucional/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "08d288a72adff414bef5807996469998c768ca650ec116a6056d35d915db218f",
+      "imports": [
+        "@/lib/institutional-target",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:institucional.tsx",
+      "file": "src/routes/institucional.tsx",
+      "route": "/institucional",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "cd77202963ec709b0dd8f86bf24ebd4bc235bce21c061b784266589a1d76cee5",
+      "imports": [
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:login.tsx",
+      "file": "src/routes/login.tsx",
+      "route": "/login",
+      "role": "authentication",
+      "surface": "page",
+      "templateKind": "entrada",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "87113a363d00ba8c796507e58735b37c73679597d5971ba98eecdf030f7aa733",
+      "imports": [
+        "@/lib/auth/client",
+        "@/lib/auth/gates",
+        "@/lib/translate",
+        "@tanstack/react-router",
+        "react"
+      ]
+    },
+    {
+      "id": "route:modelos.$id.tsx",
+      "file": "src/routes/modelos.$id.tsx",
+      "route": "/modelos/$id",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "eadaea6a32f398e1591f455faf133e6fb330740b94a2bdfdd26b92dac26ae2f3",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/related-content",
+        "@/components/site/shell",
+        "@/components/templates/editorial-view",
+        "@/components/templates/form-view",
+        "@/components/templates/guide-view",
+        "@/components/templates/institutional-template",
+        "@/components/templates/library-view",
+        "@/components/templates/norm-view",
+        "@/components/templates/report-view",
+        "@/components/templates/slide-deck",
+        "@/lib/templates",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:modelos.index.tsx",
+      "file": "src/routes/modelos.index.tsx",
+      "route": "/modelos/",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "10269052e5298b967a0a5066aa6df9f0b424dbf0d0c36702c69275829a683f12",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/templates",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:modelos.tsx",
+      "file": "src/routes/modelos.tsx",
+      "route": "/modelos",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "biblioteca",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "e886ef02f83c332e170f9c4bd81945dc24c180894b0f572935fc207e234f67b7",
+      "imports": [
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:oficina-local.tsx",
+      "file": "src/routes/oficina-local.tsx",
+      "route": "/oficina-local",
+      "role": "administrator-local",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "bc115b5851c718c8cf946b5d4b2de2954083c1c3c516ef5a548f5f51cb761703",
+      "imports": [
+        "@/components/local/local-workbench-page",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:pacote.tsx",
+      "file": "src/routes/pacote.tsx",
+      "route": "/pacote",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "ab641d34716a665072152952a7edcd3a43da5e40de00c78efc8c15db099eb9ed",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/chrome",
+        "@/lib/site-data",
+        "@/lib/tools/catalog",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:secao.$slug.tsx",
+      "file": "src/routes/secao.$slug.tsx",
+      "route": "/secao/$slug",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "secao",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "364707f981864235edae72238f76341fc76028ef1d9548b467191e6c9788fd2b",
+      "imports": [
+        "@/components/site/section-page",
+        "@/components/site/shell",
+        "@/lib/chrome",
+        "@/lib/sections",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:sessao.tsx",
+      "file": "src/routes/sessao.tsx",
+      "route": "/sessao",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "0142659c9eccb82938820494ad7382fff47f6aafcbf2b82335b5cc772d221db8",
+      "imports": [
+        "@/components/site/areas",
+        "@tanstack/react-router"
+      ]
+    },
+    {
+      "id": "route:sistema.tsx",
+      "file": "src/routes/sistema.tsx",
+      "route": "/sistema",
+      "role": "public",
+      "surface": "page",
+      "templateKind": "area",
+      "templateBindingStatus": "DECLARED_UNTESTED",
+      "sourceSha256": "79e8bb3bc8bcebd476e9d7e8596ee12b9ccb453943f2537235532a759159bc5f",
+      "imports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/contract",
+        "@/lib/site-data",
+        "@tanstack/react-router"
+      ]
+    }
+  ],
+  "findings": {
+    "errors": []
+  }
+}

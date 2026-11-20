@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.calculadorasdeenfermagem.com.br/schemas/cko-editorial-resource-v1.json",
+  "title": "CKO Editorial Resource v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "identity",
+    "classification",
+    "card",
+    "content",
+    "delivery",
+    "graph",
+    "experience",
+    "transparency",
+    "governance",
+    "migration"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "4.0.0"
+    },
+    "recordType": {
+      "const": "editorial-resource"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "id",
+        "legacyId",
+        "title",
+        "slug",
+        "version",
+        "locale",
+        "updatedAt",
+        "canonicalUrl"
+      ]
+    },
+    "classification": {
+      "type": "object",
+      "required": [
+        "resourceTypeId",
+        "sourceResourceTypeId",
+        "primaryLibraryId",
+        "libraryIds",
+        "declaredFormatId",
+        "tags",
+        "tagIds",
+        "visualFamilyId"
+      ]
+    },
+    "card": {
+      "type": "object",
+      "required": [
+        "title",
+        "summary",
+        "thumbnailAssetId",
+        "thumbnailStrategy",
+        "limits",
+        "actions"
+      ]
+    },
+    "content": {
+      "type": "object",
+      "required": [
+        "description",
+        "theme",
+        "level",
+        "sizeLabel"
+      ]
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "primaryAssetId",
+        "operationalState",
+        "deliveryMode",
+        "representedFormatId"
+      ]
+    },
+    "graph": {
+      "type": "object",
+      "required": [
+        "nodeId",
+        "membershipRelationId",
+        "assetRelationIds",
+        "relatedState"
+      ]
+    },
+    "experience": {
+      "type": "object",
+      "required": [
+        "previewAdapter",
+        "availableModules",
+        "actions"
+      ]
+    },
+    "transparency": {
+      "type": "object",
+      "required": [
+        "publicDisclosure",
+        "limitations",
+        "reviewState",
+        "rightsState"
+      ]
+    },
+    "governance": {
+      "type": "object",
+      "required": [
+        "publicationGate",
+        "sourceIds",
+        "reviewerId",
+        "internalTelemetry"
+      ]
+    },
+    "migration": {
+      "type": "object",
+      "required": [
+        "sourcePath",
+        "sourceSha256",
+        "sourceSnapshot",
+        "fieldMap",
+        "warnings"
+      ]
+    }
+  }
+}

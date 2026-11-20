@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:needle:v1.0.0",
+  "title": "CKO Agulhas Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "needle"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "gauge": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "length": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "isoColor": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "flow": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "material": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "bevel": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "connection": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "safetyMechanism": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

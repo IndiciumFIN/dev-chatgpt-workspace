@@ -1,0 +1,662 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "saude-mental",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Saúde mental",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre transtornos mentais, acolhimento, avaliação, intervenções e recursos educativos para o cuidado integral.",
+  "template_family": "knowledge-library",
+  "archetype_id": "library_object",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Conteúdo clínico",
+      "tone": "blue",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Atualizado",
+      "tone": "green",
+      "provenance_class": "A"
+    },
+    {
+      "label": "Baseado em evidências",
+      "tone": "neutral",
+      "provenance_class": "A"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Saúde mental"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "prevalent_disorders",
+          "nursing_interventions",
+          "support_blocks",
+          "videos",
+          "articles_and_evidence",
+          "clinical_attention",
+          "support_materials",
+          "monitoring_frequency",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "transtornos-prevalentes",
+        "label": "Transtornos prevalentes",
+        "status": "mapped",
+        "module_refs": [
+          "prevalent_disorders"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "avaliacao",
+        "label": "Avaliação",
+        "status": "mapped",
+        "module_refs": [
+          "monitoring_frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "intervencoes",
+        "label": "Intervenções",
+        "status": "mapped",
+        "module_refs": [
+          "nursing_interventions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "comunicacao",
+        "label": "Comunicação",
+        "status": "mapped",
+        "module_refs": [
+          "support_blocks"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "seguranca-do-paciente",
+        "label": "Segurança do paciente",
+        "status": "mapped",
+        "module_refs": [
+          "clinical_attention"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "recursos-educativos",
+        "label": "Recursos educativos",
+        "status": "mapped",
+        "module_refs": [
+          "support_blocks",
+          "videos"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "articles_and_evidence",
+          "support_materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/saude-mental/hero_saude_mental.png",
+          "alt": "Saúde mental",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "general_information",
+            "title": "INFORMAÇÕES GERAIS",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Saúde mental é o bem-estar que permite enfrentar o estresse da vida, desenvolver habilidades e contribuir para a comunidade.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Importância do cuidado",
+                "text": "Atenção precoce reduz sofrimento, previne crises e promove recuperação e inclusão.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Objetivo do cuidado",
+                "text": "Promover acolhimento, segurança, autonomia e adesão ao tratamento.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Abordagem integral",
+                "text": "Considera fatores biológicos, psicológicos, sociais, culturais e espirituais.",
+                "icon": "system:brain"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "important_characteristics",
+            "title": "CARACTERÍSTICAS IMPORTANTES",
+            "items": [
+              {
+                "title": "Multifatorial",
+                "text": "Influências biológicas, psicológicas, sociais e ambientais.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Impacto funcional",
+                "text": "Pode comprometer emoções, pensamentos, comportamentos e relações.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Variabilidade",
+                "text": "Sintomas, intensidade e curso variam entre indivíduos.",
+                "icon": "system:brain"
+              },
+              {
+                "title": "Estigma e preconceito",
+                "text": "Podem dificultar busca por ajuda e adesão ao tratamento.",
+                "icon": "system:brain"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "prevalent_disorders",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "TRANSTORNOS MENTAIS MAIS PREVALENTES",
+      "priority": 15,
+      "payload": {
+        "items": [
+          {
+            "title": "Depressão",
+            "description": "Tristeza persistente, perda de interesse e alterações do sono e apetite.",
+            "asset": "../assets/saude-mental/transtorno_depressao.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Transtorno de Ansiedade",
+            "description": "Preocupação excessiva, medo, tensão e sintomas físicos associados.",
+            "asset": "../assets/saude-mental/transtorno_ansiedade.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Transtorno Bipolar",
+            "description": "Oscilações de humor entre episódios de mania/hipomania e depressão.",
+            "asset": "../assets/saude-mental/transtorno_bipolar.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Esquizofrenia",
+            "description": "Alterações do pensamento, percepção e comportamento, com prejuízo funcional.",
+            "asset": "../assets/saude-mental/transtorno_esquizofrenia.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Uso de Substâncias",
+            "description": "Uso problemático de álcool ou outras drogas com impacto na vida diária.",
+            "asset": "../assets/saude-mental/transtorno_uso_substancias.png",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/prevalent_disorders"
+    },
+    {
+      "module_id": "nursing_interventions",
+      "module_type": "card_grid",
+      "semantic_role": "intervention",
+      "title": "CONDUTAS E INTERVENÇÕES DE ENFERMAGEM",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "title": "Acolhimento e vínculo",
+            "description": "Receber com empatia, escutar ativamente e validar sentimentos.",
+            "icon": "system:brain",
+            "action": {
+              "label": "Ver condutas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Avaliação de risco",
+            "description": "Identificar risco de suicídio, violência ou autoagressão e agir conforme protocolo.",
+            "icon": "system:alert",
+            "action": {
+              "label": "Ver condutas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Plano terapêutico",
+            "description": "Participar do planejamento individualizado com metas reais e possíveis.",
+            "icon": "system:brain",
+            "action": {
+              "label": "Ver condutas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Intervenções terapêuticas",
+            "description": "Aplicar técnicas de manejo da ansiedade, relaxamento e enfrentamento.",
+            "icon": "system:brain",
+            "action": {
+              "label": "Ver condutas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Educação em saúde",
+            "description": "Orientar paciente e família sobre transtorno, tratamento e adesão.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver condutas",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/nursing_interventions"
+    },
+    {
+      "module_id": "support_blocks",
+      "module_type": "grouped_list",
+      "semantic_role": "orientation",
+      "title": null,
+      "priority": 25,
+      "payload": {
+        "groups": [
+          {
+            "title": "COMUNICAÇÃO TERAPÊUTICA",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              "Utilize linguagem clara e respeitosa",
+              "Mantenha contato visual adequado",
+              "Escute sem interromper",
+              "Evite julgamentos e críticas",
+              "Demonstre empatia e compreensão"
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "SEGURANÇA DO PACIENTE",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              "Ambiente seguro e acolhedor",
+              "Remover objetos de risco quando indicado",
+              "Supervisão adequada conforme avaliação",
+              "Sigilo e privacidade garantidos",
+              "Comunicar equipe sobre mudanças"
+            ],
+            "action": {
+              "label": "Ver recomendações completas",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "RECURSOS EDUCATIVOS",
+            "tone": "neutral",
+            "icon": null,
+            "items": [
+              {
+                "label": "Cartilhas para pacientes e famílias",
+                "icon": "system:user"
+              },
+              {
+                "label": "Técnicas de manejo da ansiedade",
+                "icon": "system:brain"
+              },
+              {
+                "label": "Exercícios de respiração e relaxamento",
+                "icon": "system:clock"
+              },
+              {
+                "label": "Grupos terapêuticos e oficinas",
+                "icon": "system:brain"
+              },
+              {
+                "label": "Links úteis e serviços de apoio",
+                "icon": "system:brain"
+              }
+            ],
+            "action": {
+              "label": "Ver todos os recursos",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/support_blocks"
+    },
+    {
+      "module_id": "videos",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "VÍDEOS E TÉCNICAS",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "title": "Acolhimento terapêutico",
+            "subtitle": "Como acolher com empatia",
+            "duration": "03:25",
+            "asset": "../assets/saude-mental/video_acolhimento_terapeutico.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Avaliação de risco",
+            "subtitle": "Passo a passo da avaliação",
+            "duration": "04:10",
+            "asset": "../assets/saude-mental/video_avaliacao_risco.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Manejo de crise",
+            "subtitle": "Técnicas de descalonamento",
+            "duration": "05:18",
+            "asset": "../assets/saude-mental/video_manejo_crise.png",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Comunicação efetiva",
+            "subtitle": "Dicas para melhorar o diálogo",
+            "duration": "04:22",
+            "asset": "../assets/saude-mental/video_comunicacao_efetiva.png",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "play_icon": "system:brain"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os vídeos e técnicas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/videos"
+    },
+    {
+      "module_id": "articles_and_evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "ARTIGOS E EVIDÊNCIAS",
+      "priority": 35,
+      "payload": {
+        "items": [
+          {
+            "title": "Estratégias de cuidado em saúde mental",
+            "source_label": "REBEN, 2023"
+          },
+          {
+            "title": "Comunicação terapêutica em enfermagem",
+            "source_label": "Rev. Gaúcha Enferm., 2023"
+          },
+          {
+            "title": "Intervenções não farmacológicas para ansiedade e depressão",
+            "source_label": "J. Enferm. UFPE, 2023"
+          },
+          {
+            "title": "Prevenção do suicídio: atualização",
+            "source_label": "SBMFC, 2023"
+          }
+        ],
+        "verification_note": "Títulos, veículos e anos são transcrição da captura; não houve verificação bibliográfica externa.",
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Ver todos os artigos e evidências",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/articles_and_evidence"
+    },
+    {
+      "module_id": "clinical_attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "ATENÇÃO CLÍNICA",
+      "priority": 64,
+      "payload": {
+        "groups": [
+          {
+            "title": "Cuidados prioritários",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Acolher sem julgamentos",
+              "Avaliar risco de forma sistemática",
+              "Garantir segurança do paciente",
+              "Promover vínculo terapêutico",
+              "Planejar intervenções individualizadas"
+            ],
+            "action": null
+          },
+          {
+            "title": "SINAIS DE ALERTA",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Ideação ou plano suicida",
+              "Autoagressão ou comportamento agitado",
+              "Alucinações ou delírios ameaçadores",
+              "Retraimento social intenso",
+              "Negligência de autocuidado"
+            ],
+            "action": null
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver protocolos relacionados",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/clinical_attention"
+    },
+    {
+      "module_id": "support_materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "MATERIAIS DE APOIO",
+      "priority": 68,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia de acolhimento em saúde mental (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Avaliação de risco de suicídio (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Comunicação terapêutica (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Plano de segurança do paciente (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Intervenções não farmacológicas (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:document"
+      },
+      "actions": [
+        {
+          "label": "Baixar todos os materiais",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/support_materials"
+    },
+    {
+      "module_id": "monitoring_frequency",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "FREQUÊNCIA DE MONITORIZAÇÃO",
+      "priority": 72,
+      "payload": {
+        "columns": [
+          "risk",
+          "frequency"
+        ],
+        "rows": [
+          {
+            "risk": "Risco baixo",
+            "frequency": "Conforme plano terapêutico"
+          },
+          {
+            "risk": "Risco moderado",
+            "frequency": "Diariamente ou conforme evolução"
+          },
+          {
+            "risk": "Risco alto",
+            "frequency": "Monitorização contínua"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED",
+          "action_type": "navigate",
+          "target_state": "decision_required"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/monitoring_frequency"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Ações",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:brain",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:brain",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:brain",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:brain",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/saude-mental.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/saude-mental.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/saude-mental.provenance.json"
+}

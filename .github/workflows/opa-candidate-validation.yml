@@ -5,9 +5,12 @@ on:
     branches: [main]
     paths:
       - "contracts/cko-governance/opa/**"
+      - "src/core/governance/kernel.ts"
+      - "src/core/governance/kernel.test.ts"
+      - "src/core/governance/types.ts"
       - ".github/workflows/opa-candidate-validation.yml"
   push:
-    branches: [integration/structural-overlay-20261101]
+    branches: [integration/structural-overlay-20261101, canonical/local-20261101]
     paths:
       - "contracts/cko-governance/opa/**"
       - ".github/workflows/opa-candidate-validation.yml"
@@ -35,3 +38,10 @@ jobs:
           contracts/cko-governance/opa/kernel_admission_test.rego
       - name: Test fail-closed OPA policies
         run: opa test --fail-on-empty -v contracts/cko-governance/opa
+
+      - name: Node 22 for typed local preflight checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test local Kernel gate against OPA evidence contract
+        run: node --experimental-strip-types --test src/core/governance/kernel.test.ts

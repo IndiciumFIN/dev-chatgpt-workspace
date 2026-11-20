@@ -1,0 +1,85 @@
+{
+  "contract_id": "AC-SAE-COPILOT-0.3.0",
+  "contract_version": "0.3.0",
+  "effective_date": "2026-09-03",
+
+  "identity": {
+    "slug": "sae-copilot",
+    "name": "SAE Copilot",
+    "version": "0.3.0",
+    "agent_type": "clinical_reasoning",
+    "model_ref": "nurse-palm-v0 (RAG sobre CKOs)",
+    "owner": "Leivis Lima",
+    "clinical_champion": "Enfermeira-chefe (a designar)"
+  },
+
+  "purpose": "Gerar rascunhos de SAE (Sistematização da Assistência de Enfermagem) — diagnósticos NANDA-I, intervenções NIC e metas NOC — a partir do PatientTwin e de CKOs citados, para revisão e aprovação do enfermeiro.",
+
+  "scope": {
+    "in_scope": ["rascunho de SAE", "mapeamento NANDA/NIC/NOC", "geração de SBAR a partir do twin", "sinalização de riscos citando CKOs"],
+    "out_of_scope": ["prescrição ou alteração de medicação", "diagnóstico médico", "registro direto no prontuário sem aprovação humana", "contato direto com paciente"]
+  },
+
+  "capabilities_offered": ["CAP-001:sae-drafting", "CAP-002:fall-risk-assessment", "CAP-003:sbar-generation"],
+
+  "preconditions": [
+    "PatientTwin ativo e sincronizado (validity_window <= 15 min)",
+    "Context Package com integrity=complete (POL-006)",
+    "Licenças de conhecimento aplicáveis ativas (NANDA-I antes de piloto real — ver KnowledgeLicense)",
+    "Enfermeiro responsável identificado no encontro (FHIR Encounter)"
+  ],
+
+  "inputs": {
+    "schema": "slice-1/schemas/context-package.schema.json",
+    "channels": ["workflow:wf:sae-draft-v1"]
+  },
+
+  "outputs": {
+    "schema": "slice-1/schemas/uncertainty.schema.json + estrutura NANDA/NIC/NOC",
+    "guarantees": ["toda afirmação clínica cita CKO (cko://…)", "objeto uncertainty obrigatório (POL-007)", "decision_id emitido (POL-008)"]
+  },
+
+  "policies": ["POL-001", "POL-002", "POL-004", "POL-005", "POL-006", "POL-007", "POL-008"],
+
+  "tools": ["mcp:cko-medications", "mcp:cko-procedures", "fhir:observation-read"],
+
+  "authority": {
+    "autonomy_level": "L1_draft_review",
+    "may_do": ["gerar rascunho", "citar CKOs", "sinalizar riscos"],
+    "may_not_do": ["publicar no prontuário", "alterar medicação", "contatar paciente"],
+    "delegation": "não delega; pode ser convocado via CAP-001"
+  },
+
+  "risks": [
+    "alucinação de associação diagnóstico-intervenção sem base em CKO",
+    "confusão entre evidência de literacia alta vs. orientação ao paciente",
+    "desatualização de CKO citado (mitigada por provenance + freshness)"
+  ],
+
+  "failure_modes": [
+    {"mode": "CKO não encontrado", "detection": "ckoLookup 404", "response": "recusar afirmação, logar, sinalizar lacuna de conhecimento"},
+    {"mode": "context incompleto", "detection": "POL-006 runtime assertion", "response": "BLOCK + request data"},
+    {"mode": "confiança < 0.70", "detection": "POL-004", "response": "escalated → nurse-on-duty"},
+    {"mode": "latência > SLA", "detection": "observabilidade", "response": "timeout + fallback para enfermeiro sem rascunho"}
+  ],
+
+  "escalation": {
+    "targets": ["nurse-on-duty"],
+    "format": "SBAR estruturado + decision_id + objeto uncertainty",
+    "slo": "alerta entregue em <= 5s após decisão de escalada"
+  },
+
+  "evidence_contract": {
+    "emits": ["decision_id (Evidence Graph v0)", "provenance por passo", "evidência assinada de CI gate e runtime assertions"],
+    "retention": "conforme política LGPD do encontro (min. 20 anos para prontuário; artefatos de IA anexados ao encontro)"
+  },
+
+  "sla": {"latency_p95_ms": 2000, "uptime_target": 0.99, "max_runtime_s": 10},
+
+  "certification": {
+    "nursebench_min": 0.80,
+    "current_score": 0.84,
+    "last_ci_gate": "EV-2026-0001 (passed)",
+    "recertification_cadence": "a cada mudança de model/prompt/CKO relevante"
+  }
+}

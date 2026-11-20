@@ -1,0 +1,634 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "luvas",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Luvas",
+  "subtitle": "Biblioteca de Enfermagem com informações sobre luvas para procedimento e luvas estéreis, materiais, indicações, tamanhos, técnica de colocação e retirada, e prevenção de infecções.",
+  "template_family": "knowledge-library",
+  "archetype_id": "gloves_knowledge_library",
+  "domain": {
+    "domain_id": "nursing",
+    "display_label": "Enfermagem"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Biossegurança"
+    },
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Baseado em evidências"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Luvas"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "glove-types",
+          "indications-by-procedure",
+          "placement-removal-technique",
+          "patient-safety",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "clinical-attention",
+          "warning-signs",
+          "monitoring-frequency",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tipos",
+        "label": "Tipos",
+        "status": "mapped",
+        "module_refs": [
+          "glove-types"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "indications-by-procedure"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tecnica",
+        "label": "Técnica",
+        "status": "mapped",
+        "module_refs": [
+          "placement-removal-technique"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "biosseguranca",
+        "label": "Biossegurança",
+        "status": "mapped",
+        "module_refs": [
+          "patient-safety",
+          "clinical-attention",
+          "warning-signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "patient-safety",
+          "monitoring-frequency"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "normas",
+        "label": "Normas",
+        "status": "mapped",
+        "module_refs": [
+          "articles-and-evidence"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": null
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/luvas/hero_luvas.png",
+          "alt": "Conjunto com luvas de procedimento, luvas estéreis, caixa dispensadora, antisséptico e materiais de biossegurança.",
+          "kind": "illustration"
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "title": "Definição",
+                "text": "Barreiras de proteção utilizadas para reduzir risco de contaminação e exposição a agentes biológicos, químicos e físicos.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Importância",
+                "text": "Protegem o profissional e o paciente, prevenindo a transmissão de microrganismos e promovendo segurança no cuidado.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Objetivo",
+                "text": "Garantir o uso correto das luvas para procedimentos seguros e baseados em evidências.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Abrangência",
+                "text": "Assistência direta ao paciente em diferentes níveis de atenção à saúde.",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver mais informações",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "title": "Barreira de proteção",
+                "text": "Reduz o contato com sangue, fluidos corporais, secreções e superfícies contaminadas.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Uso adequado",
+                "text": "A escolha do tipo de luva depende do procedimento e necessidade clínica.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Higienização das mãos",
+                "text": "Deve ser realizada antes e após o uso de luvas, conforme protocolo.",
+                "icon": "system:clock"
+              },
+              {
+                "title": "Descarte correto",
+                "text": "Descartar imediatamente após o uso, sem reutilização.",
+                "icon": "system:clock"
+              }
+            ],
+            "action": {
+              "label": "Ver guia completo",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "glove-types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Tipos de luvas",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "title": "Luvas para procedimento",
+            "description": "Não estéreis. Uso em procedimentos não invasivos. Proteção contra microrganismos e fluidos.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Luvas estéreis",
+            "description": "Uso em procedimentos cirúrgicos e invasivos. Esterilizadas e embaladas individualmente.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Luvas de látex",
+            "description": "Alta elasticidade e sensibilidade tátil. Pode causar reações alérgicas em indivíduos sensíveis ao látex.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Luvas de nitrila",
+            "description": "Hipoalergênicas, resistentes a perfurações e produtos químicos. Excelente opção para alergia ao látex.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Luvas de vinil",
+            "description": "Uso em baixo risco. Menor resistência e sensibilidade em comparação às demais.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver detalhes",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/glove-types"
+    },
+    {
+      "module_id": "indications-by-procedure",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Indicações por procedimento",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "title": "Contato com sangue, fluidos corporais, secreções e excreções.",
+            "description": "Utilizar luvas sempre que houver risco de contato com material biológico.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver indicação",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Procedimentos invasivos e manipulação de dispositivos estéreis.",
+            "description": "Preferir luvas estéreis quando houver necessidade de técnica asséptica.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver indicação",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Curativos, sondagens e cuidados com feridas.",
+            "description": "Selecionar luva conforme tipo de cuidado e risco de contaminação.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver indicação",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Administração de medicamentos e manipulação de citostáticos.",
+            "description": "Avaliar proteção química adicional quando necessária.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver indicação",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Procedimentos de higiene e cuidados diretos ao paciente.",
+            "description": "Trocar as luvas entre procedimentos e pacientes.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver indicação",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/indications-by-procedure"
+    },
+    {
+      "module_id": "placement-removal-technique",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Técnica de colocação e retirada",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "title": "Como colocar",
+            "description": "Higiene das mãos; retire uma luva da caixa; calce a primeira e depois a segunda sem tocar em superfícies inadequadas.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver sequência",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Como retirar",
+            "description": "Pince a parte externa da luva; retire sem contaminar a pele; segure na outra mão; introduza os dedos por dentro e descarte.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver sequência",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Ponto crítico",
+            "description": "Evitar tocar o rosto, superfícies desnecessárias e ajustar a luva com mãos contaminadas.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver atenção",
+              "target": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "title": "Após a retirada",
+            "description": "Realizar imediatamente a higiene das mãos.",
+            "icon": "system:clock",
+            "action": {
+              "label": "Ver cuidado",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/placement-removal-technique"
+    },
+    {
+      "module_id": "patient-safety",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Segurança do paciente",
+      "priority": 40,
+      "payload": {
+        "items": [
+          "Reduz o risco de infecções relacionadas à assistência à saúde.",
+          "Protege o profissional e o paciente contra agentes infecciosos.",
+          "Previne a transmissão cruzada entre pacientes e ambientes.",
+          "Contribui para a qualidade e segurança do cuidado prestado.",
+          "Uso correto das luvas faz parte das precauções padrão."
+        ],
+        "tone": "success",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/patient-safety"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 90,
+      "payload": {
+        "items": [
+          {
+            "title": "Higienização das mãos",
+            "subtitle": "Passo a passo",
+            "duration": "01:40",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Colocação de luvas",
+            "subtitle": "Técnica correta",
+            "duration": "01:28",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Retirada de luvas",
+            "subtitle": "Técnica segura",
+            "duration": "01:35",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "title": "Erros comuns no uso de luvas",
+            "subtitle": "Biossegurança",
+            "duration": "02:05",
+            "asset": "DECISION_REQUIRED",
+            "target": "DECISION_REQUIRED"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 95,
+      "payload": {
+        "items": [
+          {
+            "title": "Diretrizes brasileiras para prevenção de IRAS",
+            "source_label": "ANVISA, 2023"
+          },
+          {
+            "title": "Uso de luvas e prevenção de infecções",
+            "source_label": "Rev. Latino-Am. Enfermagem, 2022"
+          },
+          {
+            "title": "Recomendações de biossegurança em serviços de saúde",
+            "source_label": "MS, 2022"
+          }
+        ],
+        "verification_note": "Conteúdo estruturado para avaliação de template; não houve verificação bibliográfica externa.",
+        "section_icon": "system:clock"
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "clinical-attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "clinical-attention",
+      "priority": 60,
+      "payload": {
+        "groups": [
+          {
+            "title": "Boas práticas",
+            "tone": "success",
+            "icon": "system:alert",
+            "items": [
+              "Realize higiene das mãos antes e após o uso de luvas.",
+              "Utilize luvas apenas quando indicado.",
+              "Troque as luvas entre procedimentos e pacientes.",
+              "Descarte em local apropriado.",
+              "Nunca reutilize luvas."
+            ]
+          },
+          {
+            "title": "Evitar / Monitorar",
+            "tone": "danger",
+            "icon": "system:alert",
+            "items": [
+              "Uso de luvas como substituto da higiene das mãos.",
+              "Tocar desnecessariamente superfícies.",
+              "Uso de luvas danificadas ou fora do tamanho.",
+              "Contaminação durante a retirada."
+            ],
+            "action": {
+              "label": "Ver protocolos relacionados",
+              "target": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/clinical-attention"
+    },
+    {
+      "module_id": "warning-signs",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Sinais de alerta",
+      "priority": 65,
+      "payload": {
+        "items": [
+          "Ruptura da luva durante o procedimento",
+          "Contaminação da pele das mãos",
+          "Reação alérgica (látex ou aceleradores)",
+          "Irritação ou dermatite de contato",
+          "Umidade excessiva dentro da luva"
+        ],
+        "tone": "danger",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver todos os sinais de alerta",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/warning-signs"
+    },
+    {
+      "module_id": "monitoring-frequency",
+      "module_type": "list_panel",
+      "semantic_role": "reference",
+      "title": "Frequência de monitorização",
+      "priority": 70,
+      "payload": {
+        "items": [
+          "Rotina — A cada procedimento",
+          "Alto risco — A cada troca de paciente",
+          "Pós-exposição — Conforme protocolo institucional"
+        ],
+        "tone": "default",
+        "section_icon": "system:clock",
+        "action": {
+          "label": "Ver recomendações completas",
+          "target": "DECISION_REQUIRED"
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/monitoring-frequency"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 80,
+      "payload": {
+        "items": [
+          {
+            "label": "Guia de precauções e isolamento (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Protocolo de higiene das mãos (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Fluxograma de uso de luvas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Tamanhos e medidas das luvas (PDF)",
+            "target": "DECISION_REQUIRED"
+          },
+          {
+            "label": "Checklist de técnica e segurança (PDF)",
+            "target": "DECISION_REQUIRED"
+          }
+        ],
+        "section_icon": "system:clock"
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / Compartilhar",
+      "priority": 100,
+      "payload": {
+        "items": [
+          {
+            "type": "print",
+            "label": "Imprimir página",
+            "icon": "system:clock",
+            "action_type": "print"
+          },
+          {
+            "type": "share",
+            "label": "Compartilhar",
+            "icon": "system:clock",
+            "action_type": "share"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "print",
+          "label": "Imprimir página",
+          "icon": "system:clock",
+          "action_type": "print"
+        },
+        {
+          "type": "share",
+          "label": "Compartilhar",
+          "icon": "system:clock",
+          "action_type": "share"
+        }
+      ],
+      "provenance_ref": "../provenance/pages/luvas.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/luvas.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/luvas.provenance.json"
+}

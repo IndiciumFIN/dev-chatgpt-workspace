@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:library-object-registry:v1.0.0",
+  "title": "CKO Library Object Registry v1.0",
+  "type": "object",
+  "required": [
+    "registry_version",
+    "entity_type",
+    "objects"
+  ],
+  "properties": {
+    "registry_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "library_object_registry"
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "object_id",
+          "library_ref",
+          "object_type",
+          "slug",
+          "title",
+          "file"
+        ],
+        "properties": {
+          "object_id": {
+            "type": "string"
+          },
+          "library_ref": {
+            "type": "string"
+          },
+          "object_type": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

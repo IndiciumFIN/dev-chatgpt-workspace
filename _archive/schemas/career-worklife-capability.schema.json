@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Worklife Capability Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "description",
+    "normative_source_required",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "normative_source_required": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

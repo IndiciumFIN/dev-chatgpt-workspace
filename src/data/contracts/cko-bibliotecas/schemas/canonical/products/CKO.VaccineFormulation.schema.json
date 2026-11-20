@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-formulation:v1.0.0",
+  "title": "CKO Vaccine Formulation",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "formulation_id",
+    "vaccine_ref",
+    "label",
+    "formulation_class",
+    "attributes",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "entity_type": {
+      "const": "vaccine_formulation"
+    },
+    "formulation_id": {
+      "type": "string",
+      "pattern": "^cko\\.formulation\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "formulation_class": {
+      "type": "string",
+      "enum": [
+        "brand_linked",
+        "platform_or_valency",
+        "combination",
+        "seasonal_or_strain_updated",
+        "generic_variant"
+      ]
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "valency": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        },
+        "platform": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        },
+        "composition_summary": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        },
+        "route": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        },
+        "dose_volume": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        },
+        "strain_or_variant": {
+          "$ref": "urn:cko:library-object:epistemic-value:v1.0.0"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

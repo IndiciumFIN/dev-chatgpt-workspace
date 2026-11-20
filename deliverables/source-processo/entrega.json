@@ -1,0 +1,167 @@
+{
+  "tarefa": "source-processo",
+  "chaves": [
+    {
+      "chave_canonica": "migration:0038_processo_source.sql",
+      "contrato_aplicado": "scripts/audit-source.mjs",
+      "evidencia_produzida": "migrations/0038_processo_source.sql — acrescenta o que faltava para a evidência: manifesto ganha hash + approved_at + policy_set + validators + version + evidence_ref; evidência ganha reference; átomo ganha source_quote + pinpoint + source_quote_sha256 + source_canonical_id; pedido ganha owner_id + source_ref + hash + acceptance_criteria; criam-se kernel_approval (o registro de aprovação que casa com o manifesto) e source_publication (o portão, a decisão e a evidência da publicação). Idempotente: aplicada 4 vezes seguidas, o banco fica igual (nenhuma coluna ou linha duplicada). O backfill dá aos 4 átomos semeados o trecho literal, o pinpoint e o sha256 do trecho.",
+      "dependencia_a_revalidar": "o trecho do átomo semeado é a própria afirmação do átomo, porque a base de 26/10 é o que existe; quando a captura transversal das 25 normas virar átomo (0040), o trecho passa a ser o literal da norma, com o mesmo pinpoint e o sha256 recalculado. A 0038 não cria linha em schema_entity: quem fecha o dicionário é a 0041_passa_de_aprovacao.sql, do dono, e ela já adiciona kernel_approval e source_publication com label. CORRIGIDO NA VERIFICACAO: src/core/registry/source-registry.ts gravava e lia kernel_atom.source_canonical_id, coluna que nenhuma migration criava — gravarAtomaDaFonte e fontesDoBanco quebravam em runtime. A coluna entrou na 0038 (add column if not exists) e o teste novo src/core/registry/source-registry.test.ts (8/8) prova o caminho feliz contra as migrations aplicadas e o caminho de falha."
+    },
+    {
+      "chave_canonica": "componente:src/core/governance/kernel.ts",
+      "contrato_aplicado": "src/core/governance/kernel.ts (porta de origin/preview/central-comando-20261026:src/core/governance/kernel.ts) + contracts/cko-governance/opa/kernel_admission.rego",
+      "evidencia_produzida": "kernel fail-closed: 26 testes em src/core/governance/kernel.test.ts. Os 6 casos da doutrina, cada um com o motivo nomeado: sem manifesto -> hold manifest-required; sem política ativa -> reject inactive-policy:<código>; sem validador -> reject validators-required; aprovação do kernel -> hold independent-approval-required; política que nega -> reject policy-denied; hash que não confere -> reject manifest-integrity-mismatch. Mais 14 motivos (id, conjunto de política, dono, origem, regra deny, manifesto de outro pedido, conjunto de política divergente, conjunto de validadores divergente, aprovador não nomeado, aprovação sem registro que case, avaliador ausente, decisão sem evidence, avaliador que estoura, validador que falha, validador que estoura) e o blindagem final: defeito dentro do kernel -> hold kernel-evaluation-error, nunca admit.",
+      "dependencia_a_revalidar": "o avaliador de política é injetado. No banco ele é a avaliação do conjunto de regras com decisão gravada em policy_decision; o binário OPA não está configurado neste repositório, então a política OPA é a candidata local, não um ponto de execução autenticado. Quem plugar o OPA de verdade tem que trocar o avaliador em src/lib/kernel-admit.ts, não o kernel."
+    },
+    {
+      "chave_canonica": "componente:src/core/governance/types.ts",
+      "contrato_aplicado": "src/core/governance/kernel.ts",
+      "evidencia_produzida": "WorkOrder, Manifest, PolicyRule (com efeito allow/deny), ApprovalRecord, EvidenceRecord e KernelDecision. A regra de política carrega o próprio efeito porque o kernel precisa negar antes de perguntar a quem decide.",
+      "dependencia_a_revalidar": "o tipo PolicyRule do preview não tinha efeito; aqui tem. Quem consumir PolicyRule fora do kernel tem que passar o efeito, senão a regra não nega."
+    },
+    {
+      "chave_canonica": "componente:src/core/governance/source-contract.ts",
+      "contrato_aplicado": "src/core/governance/source-contract.ts",
+      "evidencia_produzida": "contrato de fonte com sourceCanonicalId, dono, origem, hash, validadores, trecho literal, pinpoint e quoteSha256; validarContratoDeFonte devolve a lista de violações (vazia = inteiro) e contratoDeFonteEInteiro falha fechado.",
+      "dependencia_a_revalidar": "o id do contrato é o sourceCanonicalId do índice por artigo (ex.: transversal-public.lei-12-965-2014.source). A fonte sem id, sem dono, sem origem, sem hash ou sem validador não entra no registro."
+    },
+    {
+      "chave_canonica": "componente:src/core/governance/state-machine.ts",
+      "contrato_aplicado": "src/core/governance/state-machine.ts",
+      "evidencia_produzida": "allowedTransitions (a ordem de serviço, portada) mais a cadeia do processo de source: capturado -> atomizado -> admitido -> publicado. podeAvancar devolve false para estado desconhecido.",
+      "dependencia_a_revalidar": "a cadeia de source é o caminho que esta rodada fecha; um elo que pula outro não anda."
+    },
+    {
+      "chave_canonica": "componente:src/core/compliance/validators.ts",
+      "contrato_aplicado": "src/core/governance/kernel.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "validadores que o kernel exige: identidade da fonte, citação literal com pinpoint e sha256 conferido, estrutura do pedido, manifesto amarrado ao pedido e portão de publicação (process + process_setting). Cada um devolve o motivo da falha, e nenhum devolve ok por otimismo.",
+      "dependencia_a_revalidar": "o validador de citação recalcula o sha256 do trecho e compara com o gravado: trecho trocado com o hash antigo é reprovado."
+    },
+    {
+      "chave_canonica": "componente:src/core/registry/source-registry.ts",
+      "contrato_aplicado": "src/core/governance/source-contract.ts",
+      "evidencia_produzida": "registro de fontes: registrar (recusa fonte repetida com outro hash), buscar, listar, ligarAtom, ligarPedido, admitir e rejeitar; gravaAtomaDaFonte escreve o átomo com trecho, pinpoint e sha256; fontesDoBanco lê de volta na forma do contrato.",
+      "dependencia_a_revalidar": "o registro em memória e o banco são duas vozes: quem cadastrar a fonte só em um dos dois não tem registro para o outro. A cadeia usa o banco."
+    },
+    {
+      "chave_canonica": "documento:contracts/cko-governance/opa/kernel_admission.rego",
+      "contrato_aplicado": "contracts/cko-governance/opa/kernel_admission.rego + contracts/cko-governance/opa/kernel_admission.test.rego",
+      "evidencia_produzida": "política OPA portada e endurecida: default allow := false (negação por padrão), seis blocos de fato (pedido completo, manifesto amarrado, política com evidência, validadores passados, aprovação independente, execução não pedida) e 8 deny_reason. 12 casos no .rego de teste. O teste Node (scripts/audit-source.test.mjs) prova: existe default allow := false, não existe default allow := true nem permissão incondicional, o fixture tem a forma do input e todo motivo esperado está escrito no .rego.",
+      "dependencia_a_revalidar": "o binário `opa` não está instalado neste sandbox, então o teste do Rego vira fixture + teste Node (o caminho previsto na tarefa). Quando o `opa` voltar, `opa test contracts/cko-governance/opa` é a prova viva e o fixture tem que concordar com ela."
+    },
+    {
+      "chave_canonica": "documento:contracts/cko-governance/opa/kernel_admission.fixture.json",
+      "contrato_aplicado": "contracts/cko-governance/opa/kernel_admission.rego",
+      "evidencia_produzida": "12 casos com o input completo e o resultado esperado (allow e deny_reason), incluindo o caso do input vazio. Serve de paridade entre a política escrita e o resultado esperado enquanto não há `opa` no ambiente.",
+      "dependencia_a_revalidar": "o fixture é a Expected Result do Rego escrito à mão: se a política mudar, o fixture tem que mudar junto, senão o teste Node acusa a divergência de motivo."
+    },
+    {
+      "chave_canonica": "componente:src/lib/kernel-admit.ts",
+      "contrato_aplicado": "src/core/governance/kernel.ts + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "admit(), manifestStatus() e admitOrder() mantidos; o motivo da decisão vem do kernel, não de uma reimplementação. admitOrder grava: status do pedido, manifesto (hash, approved_at, conjuntos e evidence_ref com o id da decisão), policy_decision (allow com a regra que permitiu, deny com a regra que negate) e audit_event. aprovarManifesto() grava o registro de aprovação que casa com o manifesto e recusa o dono e o kernel. Testes em src/lib/kernel-admit.test.ts: 3/3, incluindo a cadeia completa (ordem -> manifesto -> aprovação -> decisão) e o dono recusado como aprovador.",
+      "dependencia_a_revalidar": "admit() agora devolve Promise: o kernel é assíncrono porque o avaliador de política e os validadores são. Ninguém no app chama admit() fora do teste, mas quem chamar tem que fazer await."
+    },
+    {
+      "chave_canonica": "componente:src/lib/intake.ts",
+      "contrato_aplicado": "scripts/audit-source.mjs + migrations/0012_intake.sql",
+      "evidencia_produzida": "classifyPath/suggestFromHead/suggestionOf continuam puros. gravarLote(sql, caminhos, origem) grava intake_batch + intake_file e devolve o resumo lido do banco: quantos admitir/espera/recusar, por módulo e por idioma. Medido: intake_batch 0 -> 1 linha e intake_file 0 -> 6 linhas; a segunda gravação com a mesma origem mantém 1 lote e 6 arquivos. Lote sem origem declarada (caminho ou data) não grava e o banco continua vazio.",
+      "dependencia_a_revalidar": "a identidade do lote é sha256(caminho|data): a mesma origem no mesmo dia é o mesmo lote, e um dia novo é uma passagem nova. O lote gravado não publica nada: intake_file é caminho classificado, sem HTML."
+    },
+    {
+      "chave_canonica": "tabela:intake_batch",
+      "contrato_aplicado": "scripts/audit-source.mjs",
+      "evidencia_produzida": "deixa de estar vazia: 1 lote gravado com origem declarada (source='homologado/apgar', taken_at=2026-10-26). Idempotente por chave (id = sha256 do par origem/data).",
+      "dependencia_a_revalidar": "a tabela guarda caminho de origem e dia. Quem for ler a passagem tem que saber que o lote é a unidade: o mesmo arquivo em outro dia é outra passagem, não uma linha duplicada."
+    },
+    {
+      "chave_canonica": "tabela:intake_file",
+      "contrato_aplicado": "scripts/audit-source.mjs",
+      "evidencia_produzida": "6 linhas classificadas (1 admitir, 3 espera, 2 recusar; 3 instrumento, 1 formulario, 1 catalogo, 1 midia; 4 pt-BR, 1 en, 1 es). O portão acusa intake_file sem intake_batch correspondente e nomeia a linha (intake_file:<lote>/<caminho>).",
+      "dependencia_a_revalidar": "o portão só acha o órfão porque a chave estrangeira foi solta no teste: com a FK ativa o banco não deixa existir a linha. A regra do portão é a segunda linha de defesa, não a primeira."
+    },
+    {
+      "chave_canonica": "tabela:kernel_manifest",
+      "contrato_aplicado": "src/core/governance/kernel.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "ganha hash, approved_at, policy_set, validators, version e evidence_ref. Aprovado só com pessoa independente: o portão acusa manifesto aprovado pelo kernel, pelo dono do pedido, por quem o pedido não nomeia, sem hash, sem data e sem registro de aprovação que case.",
+      "dependencia_a_revalidar": "o banco já recusava approved_by='kernel' por CHECK; o portão é a segunda linha e também pega a autoaprovação do dono, que o banco não pegava. A constraint nova (aprovado exige hash de 64 e approved_at) foi criada NOT VALID para não quebrar linha antiga."
+    },
+    {
+      "chave_canonica": "tabela:kernel_approval",
+      "contrato_aplicado": "src/core/governance/kernel.ts + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "tabela nova: o registro de aprovação que casa com o manifesto (mesma ordem, mesmo aprovador, mesma data, decisão aprovador/rejeitado/espera, com CHECK de que o kernel nunca aprova). O kernel só admite quando encontra essa linha.",
+      "dependencia_a_revalidar": "a aprovação é um processo separado do kernel: aprovarManifesto() é a porta de entrada, e ela recusa o dono e o valor 'kernel'. O histórico fica em kernel_approval; o manifesto é o estado do último pedido."
+    },
+    {
+      "chave_canonica": "tabela:kernel_order",
+      "contrato_aplicado": "src/core/governance/kernel.ts + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "ganha owner_id, source_ref, hash e acceptance_criteria. Sem dono, a independência da aprovação não tem contra quem ser medida (motivo work-order-missing-owner).",
+      "dependencia_a_revalidar": "o status gravado pelo admitOrder é o estado do último pedido: rejeitada, em_espera ou admitida, com o motivo do kernel no campo reason."
+    },
+    {
+      "chave_canonica": "tabela:kernel_atom",
+      "contrato_aplicado": "scripts/audit-source.mjs + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "ganha source_quote, pinpoint, source_quote_sha256 e source_canonical_id. Os 4 átomos semeados passam a citar a fonte, o trecho e o sha256 do trecho. O portão acusa átomo sem source_quote, sem pinpoint ou sem sha256 válido, nomeando o átomo (kernel_atom:<id>).",
+      "dependencia_a_revalidar": "o trecho do átomo semeado é a afirmação do próprio átomo: é o que a base tem hoje. A atomização normativa (0040) tem que substituir o trecho pelo literal da norma, com o mesmo pinpoint e o sha256 recalculado, senão a citação continua sendo do kernel e não da fonte."
+    },
+    {
+      "chave_canonica": "tabela:kernel_claim",
+      "contrato_aplicado": "scripts/audit-source.mjs",
+      "evidencia_produzida": "o portão acusa desdobramento sem nenhuma linha em kernel_evidence e nomeia o desdobramento (kernel_claim:<id>). Medido: 4 desdobramentos com 4 evidências.",
+      "dependencia_a_revalidar": "afirmação sem evidência é afirmação sem fonte; a 0041 preenche admitted_by/admitted_at do que já está admitido, mas não substitui a citação."
+    },
+    {
+      "chave_canonica": "tabela:kernel_evidence",
+      "contrato_aplicado": "scripts/audit-source.mjs + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "ganha reference (onde, fora do banco, a afirmação se confere). As 4 evidências semeadas ganharam reference; o portão acusa evidência sem reference.",
+      "dependencia_a_revalidar": "reference é endereço de conferência, não citação: o trecho literal e o sha256 moram no átomo. Evidência com reference e sem citação continua sendo pista, não prova."
+    },
+    {
+      "chave_canonica": "tabela:policy_decision",
+      "contrato_aplicado": "src/lib/policy-decision.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "decide() devolve agora o decisionId, e o admitOrder grava a decisão de admissão com a regra que decidiu. O portão acusa decisão que cita regra inexistente e decisão allow sem regra; decisão deny sem regra NÃO é violação (negar por falta de regra é a norma).",
+      "dependencia_a_revalidar": "a regra que decide é a do pacote 'acesso'. O portão mede a correspondence entre a decisão e policy_rule; a decisão de negação sem regra continua válida e é a forma normal de o sistema negar."
+    },
+    {
+      "chave_canonica": "tabela:source_publication",
+      "contrato_aplicado": "src/lib/source.functions.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "tabela nova: cada publicação registra o portão (publicar_ferramenta), o id da decisão de política, a evidência (sha256 do conteúdo gravado), quem publicou e quando. O portão acusa publicação que cita portão inexistente.",
+      "dependencia_a_revalidar": "a publicação é o elo final: nada é publicado sem o registro do portão. O instrumento continua no source_tool; esta tabela é a trilha."
+    },
+    {
+      "chave_canonica": "tabela:source_tool",
+      "contrato_aplicado": "src/lib/source.functions.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "o caminho que grava um instrumento agora consulta a decisão (decide), checa o portão publicar_ferramenta em process e em process_setting, e grava a decisão com evidência. O portão acusa instrumento publicado por uma pessoa sem registro do portão; o que foi publicado por processo (normalização DERBY) não é retido — nada fica retido, como o dono mandou.",
+      "dependencia_a_revalidar": "a trava nova é a mesma de antes (o portão publicar_ferramenta continua desligando a gravação quando desligado) mais a conferência de process_setting 'escrita' contra o papel de quem grava. O legado já publicado continua publicado: a exigência vale para a gravação nova."
+    },
+    {
+      "chave_canonica": "componente:src/lib/source.functions.ts",
+      "contrato_aplicado": "src/lib/policy-decision.ts + scripts/audit-source.mjs",
+      "evidencia_produzida": "saveTool e saveClinicalSheet passam por exigirPortaoDePublicacao (process.enabled + process_setting 'escrita') e gravam a publicação com a evidência (sha256 do conteúdo). O decide() continua sendo quem nega: deny para antes de gravar.",
+      "dependencia_a_revalidar": "o portão publicar_ferramenta existe no banco e nasce ligado; o setting 'escrita' = 'admin'. Se o dono desligar o portão, a gravação nova para — e o que já está publicado continua no ar."
+    },
+    {
+      "chave_canonica": "componente:src/lib/policy-decision.ts",
+      "contrato_aplicado": "src/lib/source.functions.ts",
+      "evidencia_produzida": "decide() devolve { effect, ruleId, decisionId } — o id da linha de policy_decision, para que a publicação e a admissão apontem para a decisão que as autorizou. O comportamento de negar continua igual (lança erro).",
+      "dependencia_a_revalidar": "a mudança é aditiva: quem lia { effect, ruleId } continua lendo. O decisionId é o que liga a evidência à decisão."
+    },
+    {
+      "chave_canonica": "componente:scripts/audit-source.mjs",
+      "contrato_aplicado": "docs/entregas/FORMATO-DE-ENTREGA.md + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "portão do processo: abre PGlite em memória, aplica todas as migrations e conta o schema sozinho (96 tabelas medidas, nenhum número fixo no código). 6 tipos de violação, cada um com a linha culpada nomeada; escreve artifacts/source-processo.json; --self-test quebra uma linha de propósito e prova que o portão falha; duas execuções dão o mesmo resultado.",
+      "dependencia_a_revalidar": "o portão aplica TODAS as migrations: se a 0039, a 0040 ou a 0041 do dono quebrar, o portão acusa 'migration-nao-aplicada' em vez de fingir que o schema está bom. O número de tabelas é medido, nunca escrito."
+    },
+    {
+      "chave_canonica": "componente:scripts/audit-source.test.mjs",
+      "contrato_aplicado": "scripts/audit-source.mjs",
+      "evidencia_produzida": "20/20 testes: a cadeia sadia não tem violação, e cada uma das 6 violações é provada com a linha culpada nomeada; a negação por falta de regra não é violação; o portão dá a mesma resposta em duas execuções; o --self-test corrompe e o portão acusa; o portão sai com código 1 sobre banco violado; e a política OPA é deny-by-default com o fixture em paridade com o .rego.",
+      "dependencia_a_revalidar": "o teste que prova o código de saída copia a árvore para uma pasta temporária com uma migration quebrada e a apaga no fim (rollback do PGlite trava o event loop — o mesmo cuidado do teste do índice)."
+    },
+    {
+      "chave_canonica": "teste:src/core/registry/source-registry.test.ts",
+      "contrato_aplicado": "src/core/registry/source-registry.ts + migrations/0038_processo_source.sql",
+      "evidencia_produzida": "8/8 testes: o registro recusa fonte sem identidade, sem dono, sem origem, sem hash e sem validador; citacao com pinpoint vazio e hash fora de forma sao violacao; citacao trocada com o hash velho e reprovada pelo validador (que recalcula o sha256 do trecho); fonte repetida com outro hash e recusada; so entra no registro a fonte inteira; so se admite a fonte que passou pelos validadores; a ligacao com atomo e com pedido so acontece com a fonte existente; gravar o atomo no banco exige a fonte inteira e grava o trecho, o pinpoint, o sha256 e o sourceCanonicalId (nascendo candidato, nao admitido); as fontes do banco voltam no contrato.",
+      "dependencia_a_revalidar": "o teste roda contra as migrations aplicadas de verdade, nao contra um duble. Foi ele que pegou a coluna source_canonical_id faltando na 0038 — tsc nao pega coluna que nao existe em runtime."
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/runtime_test.schema.json",
+  "title": "CKO | runtime_test",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "target_ref",
+    "test_kind",
+    "viewport",
+    "steps",
+    "assertions",
+    "source_version_refs",
+    "run_status",
+    "evidence_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "target_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "test_kind": {
+      "type": "string",
+      "enum": [
+        "UNIT",
+        "INTEGRATION",
+        "E2E",
+        "VISUAL",
+        "A11Y",
+        "PRIVACY",
+        "SECURITY",
+        "PERFORMANCE",
+        "REPLAY"
+      ]
+    },
+    "viewport": {
+      "type": "object",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 320
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 320
+        }
+      },
+      "additionalProperties": false
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_version_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "run_status": {
+      "type": "string",
+      "enum": [
+        "NOT_RUN",
+        "PASS",
+        "FAIL",
+        "BLOCKED"
+      ]
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runner_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "browser_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

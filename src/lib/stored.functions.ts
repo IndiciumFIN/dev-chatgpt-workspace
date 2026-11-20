@@ -29,7 +29,7 @@ function destOf(row: NavRow): Dest | undefined {
     return row.dest_hash ? { kind: "section", slug: row.dest_slug, hash: row.dest_hash } : { kind: "section", slug: row.dest_slug };
   }
   if (row.dest_kind === "tool" && row.dest_slug) return { kind: "tool", slug: row.dest_slug };
-  if (row.dest_kind === "page" && row.dest_to) return { kind: "page", to: row.dest_to as Dest extends { kind: "page" } ? Dest["to"] : never };
+  if (row.dest_kind === "page" && row.dest_to) return { kind: "page", to: row.dest_to as "/login" };
   if (row.dest_kind === "model" && row.dest_model) {
     const id = row.dest_model as "biblioteca";
     return row.dest_hash ? { kind: "model", id, hash: row.dest_hash } : { kind: "model", id };
@@ -103,15 +103,6 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
   const lineRows = await sql<{ specimen_id: string; module_position: number; position: number; path: string; text: string }>`select specimen_id, module_position, position, path, text from specimen_line order by position`;
   const pageRows = await sql<{ slug: string; title: string; lead: string }>`select slug, title, lead from section_page order by title`;
   const linkTitles = await sql<{ slug: string; title: string }>`select slug, title from section_link order by position`;
-  const images = await sql<{ path: string; locale: string; alt: string; status: string }>`
-    select path, locale, text as alt, status from media_alt order by path, locale
-  `;
-  const studyRows = await sql<{ id: string; kind: string; prompt: string; detail: string; answer_index: number; choice_position: number | null; label: string | null }>`
-    select item.id, item.kind, item.prompt, item.detail, item.answer_index, choice.position as choice_position, choice.label
-    from study_item as item
-    left join study_choice as choice on choice.item_id = item.id
-    order by item.position, choice.position
-  `;
   const instPages = await sql<{ path: string; title: string; lead: string }>`select path, title, lead from inst_page where kind = 'page' order by path`;
   const pages: StoredPage[] = pageRows.map((row) => ({
     slug: row.slug,
@@ -159,7 +150,7 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
     shelves: shelves.map((shelf) => {
       const items = shelfItems.filter((item) => item.shelf_id === shelf.id);
       if (shelf.kind === "images") {
-        return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: "images", items: items.map((item) => ({ src: item.href, alt: images.find((image) => image.path === item.href && image.locale === "pt-BR" && image.status === "publicado")?.alt || item.text, caption: item.title })) };
+        return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: "images", items: items.map((item) => ({ src: item.href, alt: item.text, caption: item.title })) };
       }
       if (shelf.kind === "thumbs" || shelf.kind === "pdfs") {
         return { id: shelf.id, title: shelf.title, lead: shelf.lead, kind: shelf.kind, items: items.map((item) => ({ title: item.title, text: item.text, href: item.href })) };
@@ -182,20 +173,6 @@ export const readStoredSite = createServerFn({ method: "GET" }).handler(async ()
     packSha: pack[0]?.sha256 ?? "",
     specimens,
     pages,
-    images,
-    study: {
-      questions: [...new Map(studyRows.filter((row) => row.kind === "question").map((row) => [row.id, row])).values()].map((row) => ({
-        id: row.id,
-        prompt: row.prompt,
-        options: studyRows.filter((choice) => choice.id === row.id && choice.label).map((choice) => choice.label as string),
-        answer: Number(row.answer_index),
-      })),
-      cards: studyRows.filter((row) => row.kind === "card" && row.choice_position == null).map((row) => ({
-        id: row.id,
-        front: row.prompt,
-        back: row.detail,
-      })),
-    },
   };
 });
 
@@ -217,7 +194,9 @@ export const readInstPage = createServerFn({ method: "GET" })
     `;
     const blocks = sections
       .map((section, index) => ({ id: `${slug}-${index + 1}`, title: section.title, text: section.body.replace(/\s+/g, " ").trim(), items: [] }))
-      .filter((block) => block.text.length >= 24);
+      // O marcador DERBY (5 caracteres) é a pendência NOMEADA: some do texto, mas
+      // não pode sumir da tela. Filtro por tamanho escondia a pendência do visitante.
+      .filter((block) => block.text.length > 0);
     return { title: page.title, kicker: page.kicker, lead: page.lead.replace(/\s+/g, " ").trim(), blocks };
   });
 
@@ -373,7 +352,7 @@ export const readLiveSection = createServerFn({ method: "GET" })
               text: item.body.replace(/\s+/g, " ").trim(),
               items: [],
             }))
-            .filter((block) => block.text.length >= 24),
+            .filter((block) => block.text.length > 0),
         };
       }
     }

@@ -1,0 +1,126 @@
+{
+  "projection_id": "PRJ-DEMO-HEART-ARTICLE-001",
+  "template_id": "TPL-ARTICLE-001",
+  "locale": "pt-BR",
+  "audience": "education-demo",
+  "canonical_object_ids": [
+    "OBJ-ANATOMY-HEART-DEMO"
+  ],
+  "claim_ids": [
+    "CLM-HEART-DEMO-001"
+  ],
+  "evidence_ids": [
+    "EVD-HEART-DEMO-001"
+  ],
+  "resource_bindings": [
+    {
+      "resource_id": "CAND-BIOART-HEART-228",
+      "resource_version": null,
+      "required_semantic_role": "anatomy_illustration",
+      "minimum_fidelity": "V2_EDUCATIONAL",
+      "claim_ids": [
+        "CLM-HEART-DEMO-001"
+      ],
+      "evidence_ids": [
+        "EVD-HEART-DEMO-001"
+      ],
+      "placement": {
+        "preferred": "hero-inline"
+      },
+      "fallback_resource_id": "CAND-SMART-HEART"
+    }
+  ],
+  "block_plan": [
+    {
+      "block_id": "b-title",
+      "type": "title",
+      "semantic_role": "title",
+      "source_binding": {
+        "mode": "canonical_object",
+        "canonical_object_ids": [
+          "OBJ-ANATOMY-HEART-DEMO"
+        ]
+      },
+      "presentation": {
+        "variant": "page-title"
+      },
+      "a11y": {
+        "heading_level": 1,
+        "landmark": "main",
+        "requires_extended_description": false
+      },
+      "conditions": []
+    },
+    {
+      "block_id": "b-lead",
+      "type": "lead",
+      "semantic_role": "lead",
+      "source_binding": {
+        "mode": "claim",
+        "claim_ids": [
+          "CLM-HEART-DEMO-001"
+        ]
+      },
+      "presentation": {},
+      "a11y": {
+        "heading_level": null,
+        "landmark": null,
+        "requires_extended_description": false
+      },
+      "conditions": []
+    },
+    {
+      "block_id": "b-figure",
+      "type": "figure",
+      "semantic_role": "anatomy_illustration",
+      "source_binding": {
+        "mode": "visual_resource",
+        "resource_ids": [
+          "CAND-BIOART-HEART-228"
+        ],
+        "claim_ids": [
+          "CLM-HEART-DEMO-001"
+        ],
+        "evidence_ids": [
+          "EVD-HEART-DEMO-001"
+        ]
+      },
+      "presentation": {
+        "size": "large"
+      },
+      "a11y": {
+        "heading_level": null,
+        "landmark": null,
+        "requires_extended_description": true
+      },
+      "conditions": []
+    },
+    {
+      "block_id": "b-ref",
+      "type": "references",
+      "semantic_role": "references",
+      "source_binding": {
+        "mode": "evidence",
+        "evidence_ids": [
+          "EVD-HEART-DEMO-001"
+        ]
+      },
+      "presentation": {},
+      "a11y": {
+        "heading_level": 2,
+        "landmark": null,
+        "requires_extended_description": false
+      },
+      "conditions": []
+    }
+  ],
+  "output": {
+    "channel": "web",
+    "format": "html",
+    "theme": "cko-default",
+    "viewport": null
+  },
+  "runtime_context": {
+    "demo": true
+  }
+}

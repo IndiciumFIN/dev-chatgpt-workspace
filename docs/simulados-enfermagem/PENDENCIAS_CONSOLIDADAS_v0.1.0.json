@@ -1,0 +1,127 @@
+{
+  "id": "SPE-PENDENCIES-2026-10-26",
+  "version": "0.1.0",
+  "scope": "simulados-enfermagem-db-canonico",
+  "evidence_legend": [
+    "DONE_STATIC",
+    "PASS_LOCAL",
+    "HOLD",
+    "NOT_RUN",
+    "BLOCKED",
+    "PARTIAL"
+  ],
+  "workstreams": [
+    {
+      "id": "SPE-01",
+      "name": "Recuperar baseline original v1.4.0 e comparação com migrations candidatas",
+      "status": "PARTIAL",
+      "evidence": "47 migrations e 17 testes encontrados no pacote histórico, crosswalk local v0.4.0 e decisão na branch",
+      "next": "importar artefatos comparativos completos sob hashes e verificar compatibilidade funcional",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-02",
+      "name": "Eliminar modelo duplicado spe_candidate",
+      "status": "HOLD",
+      "evidence": "0001/0002 mantidas como referência, NÃO aplicar",
+      "next": "usar migrations originais como baseline depois de revisão",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-03",
+      "name": "Banco original e ambiente de teste isolado",
+      "status": "BLOCKED",
+      "evidence": "projeto histórico não acessível nesta conexão; nenhum SQL remoto executado",
+      "next": "provisionar ambiente descartável após validação; executar 47 migrations ordenadas",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-04",
+      "name": "Segurança de gabaritos / RLS e private.has_permission",
+      "status": "PARTIAL",
+      "evidence": "inspeção estática e teste pgTAP presente, runtime não executado",
+      "next": "auditar função/claims/grants e executar testes como anon e authenticated não editor",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-05",
+      "name": "Suite de testes de banco original",
+      "status": "NOT_RUN",
+      "evidence": "17 arquivos de teste localizados, sem relatórios de execução atual",
+      "next": "executar 17+ testes em Postgres descartável",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-06",
+      "name": "Inventário completo do acervo PDF",
+      "status": "PARTIAL",
+      "evidence": "Drive pasta ajustadas apresentou somente 100 itens; seis recovery cases registrados em HOLD",
+      "next": "paginar/traversal de todos lotes e hash de arquivos originais",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-07",
+      "name": "Deduplicação e reconciliação das provas",
+      "status": "NOT_RUN",
+      "evidence": "historicamente 2205 pastas e 222 grupos de mesmo nome; PRE_HASH, contagens não revalidadas",
+      "next": "fingerprint Drive ID/hash/prova/versionamento; divergências em review",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-08",
+      "name": "Extrator e validadores VAL-PDF-001..010",
+      "status": "PARTIAL",
+      "evidence": "script incorporado, 3 unit tests PASS local; não são 10 validators integralmente comprovados",
+      "next": "rodar corpora reais, fixtures de colunas, corruption e gabarito",
+      "priority": "P1"
+    },
+    {
+      "id": "SPE-09",
+      "name": "Licenças/proveniência e aprovação de questões",
+      "status": "HOLD",
+      "evidence": "sem importação de questões para base qualificada; POL-017 permite apenas validação interna provisória",
+      "next": "verificar fontes, direitos, evidências, revisões",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-10",
+      "name": "Paridade site publicado versus plataforma original",
+      "status": "BLOCKED",
+      "evidence": "URL tentada, inspeção live falhou",
+      "next": "verificar páginas/SEO/API/deploy quando acessível",
+      "priority": "P1"
+    },
+    {
+      "id": "SPE-11",
+      "name": "Kernel WO/CI gates e autorização",
+      "status": "HOLD",
+      "evidence": "WO candidata documentada, admissão não comprovada",
+      "next": "submeter ao Kernel aprovado e obter evidências",
+      "priority": "P0"
+    },
+    {
+      "id": "SPE-12",
+      "name": "Homologação completa / PR merge",
+      "status": "HOLD",
+      "evidence": "main preservada, nenhuma publicação autorizada",
+      "next": "concluir P0 e evidências antes de pedir merge",
+      "priority": "P0"
+    }
+  ],
+  "validation": {
+    "w03_local_unit_tests": "3/3 PASS",
+    "sql_db_execution": "NOT_RUN",
+    "full_migrations": "NOT_RUN",
+    "live_site": "NOT_VERIFIED",
+    "main_modified": false
+  },
+  "denominators": {
+    "workstreams": 12,
+    "closed": 0,
+    "partial": 4,
+    "blocked": 2,
+    "hold": 4,
+    "not_run": 2
+  },
+  "note": "0/12 workstreams closed is NOT product completion %. Branch files and local test evidence are not production status."
+}

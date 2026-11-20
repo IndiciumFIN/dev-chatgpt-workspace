@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/research-project.candidate.v1.json",
+  "title": "CE | Research Project Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "status",
+    "research_type",
+    "question",
+    "objective",
+    "ethics_state",
+    "source_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^RES-[A-Z0-9-]+$"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "HOLD_HUMAN",
+        "READY_FOR_REVIEW"
+      ]
+    },
+    "research_type": {
+      "enum": [
+        "QUALITATIVE",
+        "QUANTITATIVE",
+        "MIXED",
+        "REVIEW",
+        "IMPLEMENTATION",
+        "OTHER"
+      ]
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ethics_state": {
+      "enum": [
+        "UNASSESSED",
+        "REQUIRES_HUMAN_CHECK",
+        "DOCUMENTED_NOT_APPLICABLE",
+        "APPROVAL_RECORDED"
+      ]
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Path Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "summary",
+    "audience",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "PROFESSIONAL",
+        "YOUTH",
+        "BOTH"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

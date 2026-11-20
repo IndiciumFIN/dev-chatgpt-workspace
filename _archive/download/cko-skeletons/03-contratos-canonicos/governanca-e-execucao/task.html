@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Tarefa · task · Esqueleto CKO</title>
+<meta name="description" content="Tarefa · task">
+<style>
+/* === TOKENS OFICIAIS (espelho de src/styles.css) === */
+:root{
+  --font-sans:Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;
+  --color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;
+  --color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;
+  --color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;
+  --color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:var(--color-canvas);
+  font-family:var(--font-sans);color:var(--color-body);line-height:1.5;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;
+  z-index:9999;padding:10px;border-radius:4px}
+.skip-link:focus{top:3px}
+
+/* Cabeçalho canônico (master data) */
+.cko-masterhead{
+  background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));
+  color:#fff;padding:22px 24px;border-radius:12px;margin:18px auto;
+  width:min(1380px,calc(100% - 40px));
+}
+.cko-masterhead .eyebrow{
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:#bbd8ff;font-weight:800;
+}
+.cko-masterhead h1{
+  font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);
+  margin:6px 0 4px;letter-spacing:-.03em;line-height:1.15;
+}
+.cko-masterhead .meta{
+  font-size:12px;color:#cfdff5;display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;
+}
+.cko-masterhead .meta span b{color:#fff;font-weight:700}
+
+/* Container principal */
+.cko-wrap{width:min(1380px,calc(100% - 40px));margin:0 auto;padding-bottom:48px}
+
+/* Painel padrão */
+.cko-panel{
+  background:var(--color-paper);border:1px solid var(--color-line);
+  border-radius:11px;box-shadow:0 8px 22px #1433600d;padding:18px;margin:14px 0;
+}
+.cko-panel h2{
+  font-size:18px;color:var(--color-navy-deep);margin:0 0 10px;
+  letter-spacing:-.02em;font-weight:850;
+}
+.cko-panel h3{
+  font-size:14px;color:var(--color-navy);margin:14px 0 6px;font-weight:800;
+}
+.cko-muted{color:var(--color-muted);font-size:12px}
+
+/* Bloco TODO — marca o que ainda precisa ser preenchido */
+.todo{
+  background:#fff8e9;border:1px solid #e5ae29;border-left:4px solid #d49a13;
+  color:#79530d;padding:10px 14px;border-radius:8px;font-size:12px;margin:8px 0;
+}
+.todo strong{color:#5a3f06}
+.todo code{
+  background:#fff;border-radius:3px;padding:1px 5px;font-family:ui-monospace,monospace;
+}
+
+/* Tabela canônica */
+.cko-table{border-collapse:collapse;width:100%;font-size:12px;background:var(--color-paper)}
+.cko-table th{
+  background:var(--color-ice);font-weight:800;color:var(--color-navy);
+  text-align:left;padding:10px 12px;white-space:nowrap;border:1px solid var(--color-line);
+}
+.cko-table td{
+  padding:9px 12px;border:1px solid var(--color-line);vertical-align:top;
+}
+.cko-table .mono{font-family:ui-monospace,monospace;font-size:11px}
+
+/* Status badges */
+.status{
+  display:inline-block;padding:3px 9px;border-radius:14px;
+  font-size:11px;font-weight:750;border:1px solid var(--color-line);
+  background:var(--color-ice);color:var(--color-navy);
+}
+.status.hold{background:#fff2d9;border-color:#ecd49f;color:#825400}
+.status.candidate{background:var(--color-stage);color:var(--color-muted)}
+.status.released{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+
+/* Grid para preview */
+.preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin-top:14px;
+}
+.preview-card{
+  background:var(--color-pane);border:1px dashed var(--color-line);
+  border-radius:8px;padding:14px;min-height:120px;
+}
+.preview-card .label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-muted);margin-bottom:6px;
+}
+
+/* Rodapé */
+.cko-footer{
+  text-align:center;padding:18px;border-top:1px solid var(--color-line);
+  color:var(--color-muted);font-size:11px;margin-top:24px;
+}
+
+@media(max-width:770px){
+  .cko-masterhead{padding:16px}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .cko-masterhead{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="cko-masterhead">
+  <div class="eyebrow">CKO · Esqueleto canônico · Contratos · Governança e execução</div>
+  <h1>Tarefa · task</h1>
+  <div class="meta">
+    <span><b>canonical_id:</b> <code>task</code></span>
+    <span><b>schema_version:</b> 0.1.0</span>
+    <span><b>status:</b> <span class="status candidate">CANDIDATE</span></span>
+    <span><b>updated_at:</b> 2026-10-23</span>
+  </div>
+</header>
+
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<section class="cko-panel">
+  <h2>Identificação canônica</h2>
+  <table class="cko-table">
+    <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">canonical_id</td><td>task</td></tr>
+      <tr><td class="mono">label (PT-BR)</td><td>Tarefa</td></tr>
+      <tr><td class="mono">family</td><td>Governança e execução</td></tr>
+      <tr><td class="mono">file</td><td>task.schema.json</td></tr>
+      <tr><td class="mono">field_count</td><td>15</td></tr>
+      <tr><td class="mono">required_count</td><td>14</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cko-panel">
+  <h2>Campos do schema</h2>
+  <div style="border:1px solid var(--color-line);border-radius:9px;overflow:auto">
+    <table class="cko-table">
+      <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Constraints</th></tr></thead>
+      <tbody><tr>
+  <td><b class="mono">schema_version</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>const</td>
+</tr><tr>
+  <td><b class="mono">canonical_id</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>pattern</td>
+</tr><tr>
+  <td><b class="mono">version</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">status</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>enum</td>
+</tr><tr>
+  <td><b class="mono">updated_at</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>format</td>
+</tr><tr>
+  <td><b class="mono">provenance_refs</b></td>
+  <td>array</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>—</td>
+</tr><tr>
+  <td><b class="mono">task_kind</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>enum</td>
+</tr><tr>
+  <td><b class="mono">find_ref</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">policy_ref</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">validator_ref</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">depends_on</b></td>
+  <td>array</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>—</td>
+</tr><tr>
+  <td><b class="mono">acceptance_tests</b></td>
+  <td>array</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>—</td>
+</tr><tr>
+  <td><b class="mono">executor_role</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">work_order_ref</b></td>
+  <td>string</td>
+  <td><span class="status hold">Sim</span></td>
+  <td>minLength</td>
+</tr><tr>
+  <td><b class="mono">estimated_effort_label</b></td>
+  <td>string</td>
+  <td><span class="status">Não</span></td>
+  <td>minLength</td>
+</tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="cko-panel">
+  <h2>JSON Schema completo</h2>
+  <details style="border:1px solid var(--color-line);border-radius:8px;background:var(--color-paper);padding:0">
+    <summary style="padding:10px 12px;color:var(--color-navy);font-weight:800;font-size:12px;cursor:pointer">Ver schema JSON completo</summary>
+    <div style="padding:3px 12px 12px">
+      <pre style="background:var(--color-pane);border:1px solid var(--color-line);border-radius:8px;white-space:pre-wrap;word-break:break-word;padding:12px;font-family:ui-monospace,monospace;font-size:11px;max-height:400px;overflow:auto">{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/task.schema.json",
+  "title": "CKO | task",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "task_kind",
+    "find_ref",
+    "policy_ref",
+    "validator_ref",
+    "depends_on",
+    "acceptance_tests",
+    "executor_role",
+    "work_order_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "task_kind": {
+      "type": "string",
+      "enum": [
+        "SOURCE",
+        "MD",
+        "CONTENT",
+        "VISUAL",
+        "REFACTOR",
+        "VALIDATOR",
+        "QA",
+        "RELEASE",
+        "OTHER"
+      ]
+    },
+    "find_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "acceptance_tests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "executor_role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "work_order_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "estimated_effort_label": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}</pre>
+    </div>
+  </details>
+  <p style="margin-top:12px"><a class="cko-btn" href="task.schema.json" download style="border:1px solid var(--color-navy);background:var(--color-navy);color:#fff;padding:10px 17px;border-radius:7px;font-weight:800;display:inline-block;text-decoration:none">⬇ Baixar task.schema.json</a></p>
+</section>
+
+<section class="cko-panel">
+  <h2>Slots a preencher antes de promover</h2>
+  <table class="cko-table">
+    <thead><tr><th>Slot</th><th>Responsável</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>canonical_id</td><td>Editor</td><td><span class="status hold">TODO</span></td></tr>
+      <tr><td>version</td><td>Editor</td><td><span class="status hold">TODO</span></td></tr>
+      <tr><td>provenance_refs[]</td><td>Acquisition Agent</td><td><span class="status hold">TODO</span></td></tr>
+      <tr><td>updated_at</td><td>Sistema</td><td>2026-10-23</td></tr>
+      <tr><td>status</td><td>Editor</td><td><span class="status candidate">CANDIDATE</span></td></tr>
+    </tbody>
+  </table>
+</section>
+<div class="todo"><strong>TODO antes de publicar:</strong><ul><li>Substituir TODOS os valores placeholder pelos reais (canonical_id, version, provenance_refs)</li><li>Validar que cada campo obrigatório tem fonte autorizada mapeada (authority_binding)</li><li>Confirmar com Checker que additionalProperties=false não quebra integrações existentes</li><li>Registrar o contrato no catálogo master (CKO-SCHEMA-CATALOG) após preenchimento</li></ul></div>
+</main>
+
+<footer class="cko-footer">
+  Calculadoras de Enfermagem · Esqueleto CKO · Página local para preenchimento · Não publicada
+</footer>
+</body>
+</html>

@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Heart, Printer, Search, ArrowRight, ShieldCheck, Layers3, CircleHelp, Image as ImageIcon, Share2, FileDown, Bookmark } from "lucide-react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { PageHero } from "@/components/page-hero";
+import { Breadcrumb } from "@/components/site/breadcrumb";
+import { PageHero } from "@/components/site/page-hero";
 import { getLibrary, getAssets, heroOf, idOf, assetById, titleOf, libraryDefinitions, type LibraryAsset, type LibraryDefinition } from "@/lib/bibliotecas";
 import "@/styles/library-canonical.css";
 

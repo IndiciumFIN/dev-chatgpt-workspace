@@ -1,0 +1,1230 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "nutricao-paciente",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Nutrição do paciente",
+  "subtitle": "Diretrizes, condutas e materiais para avaliação, prescrição, administração e monitorização da terapia nutricional.",
+  "template_family": "knowledge-library",
+  "archetype_id": "clinical_nutrition_knowledge_library",
+  "domain": {
+    "domain_id": "nursing",
+    "display_label": "Enfermagem"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Atualizado"
+    },
+    {
+      "label": "Baseado em evidências"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Enfermagem",
+    "Nutrição do paciente"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "nutrition-categories",
+          "conducts-and-good-practices",
+          "key-points",
+          "tools-and-scales",
+          "special-situations",
+          "videos-and-tutorials",
+          "articles-and-evidence",
+          "nutritional-attention",
+          "nutritional-risk-signs",
+          "monitoring",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "triagem-nutricional",
+        "label": "Triagem Nutricional",
+        "status": "mapped",
+        "module_refs": [
+          "nutritional-attention",
+          "nutritional-risk-signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "dietas-e-prescricoes",
+        "label": "Dietas e Prescrições",
+        "status": "mapped",
+        "module_refs": [
+          "nutrition-categories",
+          "conducts-and-good-practices"
+        ],
+        "selectors": [
+          {
+            "module_id": "nutrition-categories",
+            "item_title_contains": [
+              "Dietas"
+            ]
+          },
+          {
+            "module_id": "conducts-and-good-practices",
+            "item_title_contains": [
+              "Prescrição e Planejamento"
+            ]
+          }
+        ]
+      },
+      {
+        "tab_id": "vias-de-alimentacao",
+        "label": "Vias de Alimentação",
+        "status": "mapped",
+        "module_refs": [
+          "nutrition-categories"
+        ],
+        "selectors": [
+          {
+            "module_id": "nutrition-categories",
+            "item_title_contains": [
+              "Vias de Alimentação"
+            ]
+          }
+        ]
+      },
+      {
+        "tab_id": "suporte-nutricional",
+        "label": "Suporte Nutricional",
+        "status": "mapped",
+        "module_refs": [
+          "nutritional-attention",
+          "nutritional-risk-signs"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "hidratacao",
+        "label": "Hidratação",
+        "status": "mapped",
+        "module_refs": [
+          "nutrition-categories",
+          "tools-and-scales"
+        ],
+        "selectors": [
+          {
+            "module_id": "nutrition-categories",
+            "item_title_contains": [
+              "Hidratação"
+            ]
+          },
+          {
+            "module_id": "tools-and-scales",
+            "item_title_contains": [
+              "Balanço Hídrico"
+            ]
+          }
+        ]
+      },
+      {
+        "tab_id": "monitorizacao",
+        "label": "Monitorização",
+        "status": "mapped",
+        "module_refs": [
+          "monitoring"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "educacao-ao-paciente",
+        "label": "Educação ao Paciente",
+        "status": "mapped",
+        "module_refs": [
+          "conducts-and-good-practices",
+          "videos-and-tutorials"
+        ],
+        "selectors": [
+          {
+            "module_id": "conducts-and-good-practices",
+            "item_title_contains": [
+              "Educação ao Paciente"
+            ]
+          },
+          {
+            "module_id": "videos-and-tutorials",
+            "item_title_contains": [
+              "Orientação nutricional"
+            ]
+          }
+        ]
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/nutricao-paciente/hero_nutricao_paciente_transparent.png",
+          "alt": "Ilustração com prato de refeição saudável, copos, mamadeira graduada, maçã, banana, seringa/conector e utensílios clínicos, representando cuidado nutricional ao paciente.",
+          "raw": {
+            "type": "clinical_nutrition_illustration",
+            "asset_ref": "cropped_assets/hero_nutricao_paciente_transparent.png",
+            "alt_text": "Ilustração com prato de refeição saudável, copos, mamadeira graduada, maçã, banana, seringa/conector e utensílios clínicos, representando cuidado nutricional ao paciente.",
+            "visual_elements": [
+              "prato com alimentos",
+              "copo com água",
+              "recipientes de dieta",
+              "frutas",
+              "seringa/conector",
+              "utensílios clínicos"
+            ],
+            "provenance": {
+              "class": "B",
+              "note": "Descrição visual derivada da ilustração presente na imagem."
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "definicao",
+                "title": "Definição",
+                "subtitle": "",
+                "description": "Conjunto de práticas que visam promover e manter o estado nutricional adequado.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "importancia",
+                "title": "Importância",
+                "subtitle": "",
+                "description": "Contribui para recuperação, cicatrização, função imunológica e redução de complicações.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "objetivo-do-cuidado",
+                "title": "Objetivo do cuidado",
+                "subtitle": "",
+                "description": "Garantir oferta adequada de nutrientes e hidratação conforme as necessidades individuais do paciente.",
+                "image": "../assets/nutricao-paciente/categoria_cuidados_enfermagem_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "abrangencia",
+                "title": "Abrangência",
+                "subtitle": "",
+                "description": "Pacientes internados, ambulatoriais e em cuidados domiciliares ou paliativos.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Características importantes",
+            "items": [
+              {
+                "id": "individualidade",
+                "title": "Individualidade",
+                "subtitle": "",
+                "description": "Considerar idade, diagnóstico, metabolismo, hábitos e preferências.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "seguranca",
+                "title": "Segurança",
+                "subtitle": "",
+                "description": "Prevenir aspiração, contaminação e complicações relacionadas à terapia.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "monitorizacao-continua",
+                "title": "Monitorização contínua",
+                "subtitle": "",
+                "description": "Avaliar tolerância, ingestão, sinais clínicos e exames laboratoriais.",
+                "image": "../assets/nutricao-paciente/conduta_monitorizacao_registro_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "equipe-multiprofissional",
+                "title": "Equipe multiprofissional",
+                "subtitle": "",
+                "description": "Atuação integrada de enfermagem, nutrição, medicina e farmácia.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "nutrition-categories",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Categorias de nutrição",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "triagem-nutricional",
+            "title": "Triagem Nutricional",
+            "subtitle": "",
+            "description": "Avaliação do risco nutricional e estado nutricional.",
+            "image": "../assets/nutricao-paciente/categoria_triagem_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": "Ferramentas: MUST, NRS-2002, MNA e outras."
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "dietas",
+            "title": "Dietas",
+            "subtitle": "",
+            "description": "Dietas gerais, terapêuticas e especiais.",
+            "image": "../assets/nutricao-paciente/categoria_dietas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": "Textura, consistência e restrições."
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "vias-de-alimentacao",
+            "title": "Vias de Alimentação",
+            "subtitle": "",
+            "description": "Via oral, enteral (SNE, SNG, GTT, GJ) e parenteral.",
+            "image": "../assets/nutricao-paciente/categoria_vias_alimentacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": "Indicações e cuidados específicos."
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "suporte-nutricional",
+            "title": "Suporte Nutricional",
+            "subtitle": "",
+            "description": "Nutrição enteral e parenteral.",
+            "image": "../assets/nutricao-paciente/categoria_suporte_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": "Indicações, fórmulas, equipo e administração."
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "hidratacao",
+            "title": "Hidratação",
+            "subtitle": "",
+            "description": "Necessidades hídricas, balanço hídrico e hidratação oral/EV.",
+            "image": "../assets/nutricao-paciente/categoria_hidratacao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": ""
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "cuidados-de-enfermagem",
+            "title": "Cuidados de Enfermagem",
+            "subtitle": "",
+            "description": "Cuidados na administração, prevenção de complicações e registro.",
+            "image": "../assets/nutricao-paciente/categoria_cuidados_enfermagem_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "details": ""
+            },
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/nutrition-categories"
+    },
+    {
+      "module_id": "conducts-and-good-practices",
+      "module_type": "card_grid",
+      "semantic_role": "intervention",
+      "title": "Condutas e boas práticas",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliacao-inicial",
+            "title": "Avaliação Inicial",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_avaliacao_inicial_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Coletar dados, anamnese alimentar e avaliação antropométrica."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conteúdos",
+              "action": "open"
+            }
+          },
+          {
+            "id": "prescricao-e-planejamento",
+            "title": "Prescrição e Planejamento",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_prescricao_planejamento_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Definir plano alimentar e necessidades calóricas e proteicas."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conduta",
+              "action": "open"
+            }
+          },
+          {
+            "id": "administracao-segura",
+            "title": "Administração Segura",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_administracao_segura_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Conferir prescrição, via, equipo, fórmula e identificação do paciente."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conduta",
+              "action": "open"
+            }
+          },
+          {
+            "id": "monitorizacao-e-registro",
+            "title": "Monitorização e Registro",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_monitorizacao_registro_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Avaliar tolerância, sinais, exames e registrar evolução."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conduta",
+              "action": "open"
+            }
+          },
+          {
+            "id": "educacao-ao-paciente",
+            "title": "Educação ao Paciente",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_educacao_paciente_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Orientar sobre alimentação, hidratação e adesão ao tratamento."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conduta",
+              "action": "open"
+            }
+          },
+          {
+            "id": "prevencao-de-complicacoes",
+            "title": "Prevenção de Complicações",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_prevencao_complicacoes_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [
+              "Aspiração, diarreia, obstrução de sonda e infecção."
+            ],
+            "attributes": {},
+            "cta": {
+              "label": "Ver conduta",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/conducts-and-good-practices"
+    },
+    {
+      "module_id": "key-points",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Pontos-chave",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "item-1",
+            "title": "Item 1",
+            "subtitle": "",
+            "description": "Estado nutricional estável e ingestão adequada.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "color_label": "Verde - Adequado"
+            }
+          },
+          {
+            "id": "item-2",
+            "title": "Item 2",
+            "subtitle": "",
+            "description": "Risco nutricional ou redução da ingestão.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "color_label": "Amarelo - Atenção"
+            }
+          },
+          {
+            "id": "item-3",
+            "title": "Item 3",
+            "subtitle": "",
+            "description": "Desnutrição grave ou complicações.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "color_label": "Vermelho - Crítico"
+            }
+          },
+          {
+            "id": "item-4",
+            "title": "Item 4",
+            "subtitle": "",
+            "description": "Acompanhamento contínuo e reavaliação periódica.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "color_label": "Azul - Monitorização"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/key-points"
+    },
+    {
+      "module_id": "tools-and-scales",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Ferramentas e escalas",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "must",
+            "title": "MUST",
+            "subtitle": "",
+            "description": "Malnutrition Universal Screening Tool",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "nrs-2002",
+            "title": "NRS-2002",
+            "subtitle": "",
+            "description": "Nutritional Risk Screening 2002",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "imc",
+            "title": "IMC",
+            "subtitle": "",
+            "description": "Cálculo do Índice de Massa Corporal",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "balanco-hidrico",
+            "title": "Balanço Hídrico",
+            "subtitle": "",
+            "description": "Planilha de controle de entradas e saídas",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/tools-and-scales"
+    },
+    {
+      "module_id": "special-situations",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Situações especiais",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "pos-operatorio",
+            "title": "Pós-operatório",
+            "subtitle": "",
+            "description": "Adaptação da dieta conforme tolerância.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "paciente-critico",
+            "title": "Paciente crítico",
+            "subtitle": "",
+            "description": "Suporte precoce e monitorização intensiva.",
+            "image": "../assets/nutricao-paciente/hero_nutricao_paciente_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "pediatria",
+            "title": "Pediatria",
+            "subtitle": "",
+            "description": "Necessidades e fórmulas específicas.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "geriatria",
+            "title": "Geriatria",
+            "subtitle": "",
+            "description": "Atenção à deglutição e aceitação alimentar.",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/special-situations"
+    },
+    {
+      "module_id": "videos-and-tutorials",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e tutoriais",
+      "priority": 60,
+      "payload": {
+        "items": [
+          {
+            "id": "triagem-nutricional",
+            "title": "Triagem nutricional",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_triagem_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "administracao-enteral",
+            "title": "Administração enteral",
+            "subtitle": "Técnica correta",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_administracao_segura_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "preparacao-de-dieta",
+            "title": "Preparação de dieta",
+            "subtitle": "Cuidados e segurança",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_dietas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "monitorizacao-da-dieta",
+            "title": "Monitorização da dieta",
+            "subtitle": "O que observar",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_dietas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "orientacao-nutricional",
+            "title": "Orientação nutricional",
+            "subtitle": "Educação ao paciente",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_suporte_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/videos-and-tutorials"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 70,
+      "payload": {
+        "items": [
+          {
+            "id": "diretrizes-brasileiras-de-terapia-nutricional",
+            "title": "Diretrizes brasileiras de terapia nutricional",
+            "subtitle": "BRASPEN, 2023",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_suporte_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "indicadores-de-qualidade-em-nutricao-hospitalar",
+            "title": "Indicadores de qualidade em nutrição hospitalar",
+            "subtitle": "SBNPE, 2022",
+            "description": "",
+            "image": "../assets/nutricao-paciente/hero_nutricao_paciente_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "prevencao-de-complicacoes-na-nutricao-enteral",
+            "title": "Prevenção de complicações na nutrição enteral",
+            "subtitle": "REBEn, 2023",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_prevencao_complicacoes_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "nutritional-attention",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Atenção nutricional",
+      "priority": 10,
+      "payload": {
+        "groups": [
+          {
+            "tone": "positive",
+            "title": "Good Practices",
+            "items": [
+              "Realizar triagem nutricional na admissão",
+              "Prescrever dieta individualizada",
+              "Registrar evolução e tolerância",
+              "Monitorizar ingestão e sinais clínicos",
+              "Educar paciente e família"
+            ]
+          },
+          {
+            "tone": "danger",
+            "title": "Attention Points",
+            "items": [
+              "Risco de aspiração",
+              "Intolerância à dieta ou fórmula",
+              "Desidratação ou sobrecarga hídrica"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/nutritional-attention"
+    },
+    {
+      "module_id": "nutritional-risk-signs",
+      "module_type": "status_panel",
+      "semantic_role": "safety",
+      "title": "Sinais de risco nutricional",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Items",
+            "items": [
+              "Perda de peso não intencional",
+              "IMC abaixo do recomendado",
+              "Ingestão alimentar reduzida",
+              "Náuseas, vômitos ou diarreia persistentes",
+              "Edema e desidratação",
+              "Atraso na cicatrização",
+              "Sinais de deficiência de micronutrientes"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/nutritional-risk-signs"
+    },
+    {
+      "module_id": "monitoring",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "Monitorização",
+      "priority": 30,
+      "payload": {
+        "columns": [
+          {
+            "key": "frequency",
+            "label": "Frequency"
+          },
+          {
+            "key": "items",
+            "label": "Items"
+          }
+        ],
+        "rows": [
+          {
+            "frequency": "Diária",
+            "items": "Ingestão, aceitação, sinais vitais, diurese"
+          },
+          {
+            "frequency": "Semanal",
+            "items": "Peso, IMC, exames laboratoriais"
+          },
+          {
+            "frequency": "Conforme prescrição",
+            "items": "Eletrólitos, glicemia, balanço hídrico"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/monitoring"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "fluxograma-de-terapia-nutricional",
+            "title": "Fluxograma de terapia nutricional",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_suporte_nutricional_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "prescricao-de-dieta",
+            "title": "Prescrição de dieta",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_dietas_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "checklist-de-administracao-enteral",
+            "title": "Checklist de administração enteral",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/conduta_administracao_segura_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "balanco-hidrico",
+            "title": "Balanço hídrico",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "cuidados-com-acesso-venoso",
+            "title": "Cuidados com acesso venoso",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/nutricao-paciente/categoria_cuidados_enfermagem_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "baixar-todos-os-materiais",
+            "title": "Baixar todos os materiais",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "download_all_support_materials",
+              "action": "open"
+            }
+          },
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "baixar-todos-os-materiais",
+          "title": "Baixar todos os materiais",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "download_all_support_materials",
+            "action": "open"
+          }
+        },
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/nutricao-paciente.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/nutricao-paciente.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/nutricao-paciente.provenance.json"
+}

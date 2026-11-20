@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/user_state.schema.json",
+  "title": "CKO | user_state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "user_state_kind",
+    "target_object_id",
+    "payload_class",
+    "persistence_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "user_state_kind": {
+      "type": "string",
+      "enum": [
+        "FAVORITE",
+        "RECENT",
+        "COLLECTION",
+        "PROGRESS",
+        "PREFERENCE"
+      ]
+    },
+    "target_object_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payload_class": {
+      "type": "string",
+      "enum": [
+        "NON_SENSITIVE_ONLY"
+      ]
+    },
+    "persistence_policy": {
+      "type": "string",
+      "enum": [
+        "SESSION_ONLY",
+        "LOCAL_NON_SENSITIVE",
+        "LOCAL_WITH_CONSENT"
+      ]
+    },
+    "consent_id": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

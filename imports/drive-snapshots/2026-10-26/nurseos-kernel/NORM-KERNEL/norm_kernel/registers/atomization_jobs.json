@@ -1,0 +1,350 @@
+{
+ "program": "NK-PROGRAM-ATOM-0001",
+ "version": "1.0.0",
+ "os_development": "NK-OS-0083",
+ "guide": "docs/how-to-atomize-locally.md",
+ "tool": "tools/fetch_source.py",
+ "status_enum": [
+  "draft",
+  "in_progress",
+  "atoms_ready",
+  "validated",
+  "canon_complete"
+ ],
+ "jobs": [
+  {
+   "job_id": "NK-JOB-0001",
+   "universal_ref": "NK-UNIV-0002",
+   "name": "RFC 8785 (JCS) — atomização integral",
+   "status": "draft",
+   "priority": 1,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+    "format": "txt",
+    "ocr": false,
+    "license_ref": "KL-0003",
+    "source_ref": "SRC-RFC"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": ""
+  },
+  {
+   "job_id": "NK-JOB-0002",
+   "universal_ref": "NK-UNIV-0004",
+   "name": "Lei 9.610/1998 — atomização (cóp diária do kernel)",
+   "status": "draft",
+   "priority": 2,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0001",
+    "source_ref": "SRC-PLANALTO"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "obra oficial (art. 8º); usada como citação em TODO artefato"
+  },
+  {
+   "job_id": "NK-JOB-0003",
+   "universal_ref": "NK-UNIV-0003",
+   "name": "LGPD 13.709/2018 — atomização (bloqueante p/ fatia ANVISA)",
+   "status": "draft",
+   "priority": 3,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13709.htm",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0001",
+    "source_ref": "SRC-PLANALTO"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": ""
+  },
+  {
+   "job_id": "NK-JOB-0004",
+   "universal_ref": "NK-UNIV-0005",
+   "name": "WCAG 2.2 — critérios de sucesso ponto a ponto",
+   "status": "draft",
+   "priority": 4,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.w3.org/TR/WCAG22/",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0006",
+    "source_ref": "SRC-W3C"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "analisar só critérios AA (nosso alvo declarado)"
+  },
+  {
+   "job_id": "NK-JOB-0005",
+   "universal_ref": "NK-UNIV-0009",
+   "name": "IETF TLP — termos de uso de RFCs",
+   "status": "draft",
+   "priority": 5,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://trustee.ietf.org/about-trust/",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0003",
+    "source_ref": "SRC-RFC"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": ""
+  },
+  {
+   "job_id": "NK-JOB-0006",
+   "universal_ref": "NK-UNIV-0012",
+   "name": "SemVer 2.0.0 — spec completa (curta)",
+   "status": "draft",
+   "priority": 6,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://semver.org/lang/pt-BR/",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0008",
+    "source_ref": "SRC-0001"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "existe tradução oficial pt-BR; citar ambas"
+  },
+  {
+   "job_id": "NK-JOB-0007",
+   "universal_ref": "NK-UNIV-0010",
+   "name": "JSON Schema draft 2020-12 — core + validation",
+   "status": "draft",
+   "priority": 7,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://json-schema.org/draft/2020-12/json-schema-core",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0008",
+    "source_ref": "SRC-0001"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "2 documentos (core e validation) = 2 runs ou 1 run com 2 docs"
+  },
+  {
+   "job_id": "NK-JOB-0008",
+   "universal_ref": "NK-UNIV-0011",
+   "name": "Open Graph protocol + sitemaps.org (padrão SEO/OG)",
+   "status": "draft",
+   "priority": 8,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://ogp.me/",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0008",
+    "source_ref": "SRC-0001"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "incluir sitemaps.org/protocol.html; schema.org: só classes usadas no front"
+  },
+  {
+   "job_id": "NK-JOB-0009",
+   "universal_ref": "NK-UNIV-0016",
+   "name": "CNCF Serverless Workflow v1.0 — spec",
+   "status": "draft",
+   "priority": 9,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://raw.githubusercontent.com/serverless-workflow/specification/main/README.md",
+    "format": "md",
+    "ocr": false,
+    "license_ref": "KL-0008",
+    "source_ref": "SRC-0001"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "verificar licença exata no ato (POL-NK-010 C4)"
+  },
+  {
+   "job_id": "NK-JOB-0010",
+   "universal_ref": "NK-UNIV-0013",
+   "name": "PEP 8 — convenções Python",
+   "status": "draft",
+   "priority": 10,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://peps.python.org/pep-0008/",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0008",
+    "source_ref": "SRC-0001"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": ""
+  },
+  {
+   "job_id": "NK-JOB-0011",
+   "universal_ref": "NK-UNIV-0017",
+   "name": "RFC 9110 — HTTP Semantics",
+   "status": "draft",
+   "priority": 11,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+    "format": "txt",
+    "ocr": false,
+    "license_ref": "KL-0003",
+    "source_ref": "SRC-RFC"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "focar: métodos, códigos de status, cabeçalhos usados nos contratos das 5 funções"
+  },
+  {
+   "job_id": "NK-JOB-0012",
+   "universal_ref": "NK-UNIV-0025",
+   "name": "CDC Lei 8.078 — arts. 30-45 (publicidade)",
+   "status": "draft",
+   "priority": 12,
+   "acquisition": {
+    "method": "fetch HTTPS",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
+    "format": "html",
+    "ocr": false,
+    "license_ref": "KL-0001",
+    "source_ref": "SRC-PLANALTO"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "somente seção de publicidade/práticas comerciais"
+  },
+  {
+   "job_id": "NK-JOB-0013",
+   "universal_ref": "NK-UNIV-0024",
+   "name": "Código CONAR — seções de publicidade",
+   "status": "draft",
+   "priority": 13,
+   "acquisition": {
+    "method": "fetch + OCR",
+    "url": "https://www.conar.com.br/codigo/",
+    "format": "html",
+    "ocr": true,
+    "license_ref": "KL-0009",
+    "source_ref": "SRC-0002"
+   },
+   "requirements": {
+    "tools": [
+     "python3",
+     "tools/fetch_source.py",
+     "pdftotext|tesseract"
+    ]
+   },
+   "agent_instructions": "1) fetch_source.py; 2) verificar licença+citação; 3) atomizar com NK-ATOM-DRAFT.template.json (1 proposição = 1 átomo); 4) checksum JCS+sha256; 5) OS create DRAFT (NormDocument + NormAtoms + ExtractionRun); 6) pipeline 100% PASS; 7) revisão humana + transição draft→active; universal→canon_complete",
+   "acceptance": "100% dos itens do documento: átomo OU não-aplicável com motivo evidenciado; checksum JCS por átomo; run registrado",
+   "note": "site pode servir PDF: extrair com pdftotext/tesseract e registrar AMBOS no manifest (proveniência dupla)"
+  },
+  {
+   "job_id": "NK-JOB-0014",
+   "universal_ref": "NK-UNIV-0006/0007/0008/0018/0019/0026",
+   "name": "Grupo ISO (8000, 26514, 42010, 27001, 42001, 9241)",
+   "status": "blocked_pending_license",
+   "priority": 99,
+   "acquisition": {
+    "method": "bloqueado: KL-0004 pending_contract — sem licença não há texto",
+    "ocr": false,
+    "license_ref": "KL-0004",
+    "source_ref": "SRC-ISO"
+   },
+   "requirements": {
+    "tools": [
+     "aquisição de licença ISO/ABNT (ato humano)"
+    ]
+   },
+   "agent_instructions": "após a licença: repetir o fluxo padrão do job; até lá o universal permanece metadata_alternative (evidenciado, POL-NK-009 C3)",
+   "acceptance": "licença obtida → análise cláusula a cláusula → canon_complete por transição",
+   "note": "upgrade path declarado no cânone; nada de texto ISO sem licença"
+  }
+ ]
+}

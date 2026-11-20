@@ -1,0 +1,50 @@
+{
+  "template_id": "TPL-QUIZ-001",
+  "name": "Quiz / Simulado",
+  "version": "0.2.0",
+  "profile": "quiz",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "offline"
+  ],
+  "required_roles": [
+    "instructions",
+    "questions",
+    "answer_model",
+    "references",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "rationale",
+    "score_summary"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "question",
+    "answer_rationale",
+    "figure",
+    "references",
+    "metadata",
+    "action_bar",
+    "footer"
+  ],
+  "layout_contract": {
+    "web": "question-flow",
+    "print": "assessment-pages"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "qti_interchange",
+      "answer_evidence"
+    ]
+  }
+}

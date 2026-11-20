@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:v2:content-page",
+  "title": "CKO v2 Content Page",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "identity",
+    "title",
+    "subtitle",
+    "template_family",
+    "archetype_id",
+    "domain",
+    "locale",
+    "jurisdiction",
+    "governance",
+    "badges",
+    "breadcrumbs",
+    "navigation",
+    "modules",
+    "asset_manifest_ref",
+    "provenance_manifest_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "slug",
+        "id",
+        "state"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "assigned",
+            "decision_required"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "template_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "archetype_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "object",
+      "required": [
+        "domain_id",
+        "display_label"
+      ],
+      "properties": {
+        "domain_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "locale": {
+      "type": "string",
+      "const": "pt-BR"
+    },
+    "jurisdiction": {
+      "type": "object",
+      "required": [
+        "state",
+        "value"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "declared",
+            "decision_required"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "governance": {
+      "type": "object"
+    },
+    "badges": {
+      "type": "array"
+    },
+    "breadcrumbs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2
+    },
+    "navigation": {
+      "type": "object",
+      "required": [
+        "active_tab_id",
+        "tabs"
+      ],
+      "properties": {
+        "active_tab_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "tab_id",
+              "label",
+              "status",
+              "module_refs",
+              "selectors"
+            ],
+            "properties": {
+              "tab_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "mapped",
+                  "DECISION_REQUIRED"
+                ]
+              },
+              "module_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "selectors": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "overflow_control": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "CKO.v2.ContentModule.schema.json"
+      }
+    },
+    "asset_manifest_ref": {
+      "type": "string"
+    },
+    "provenance_manifest_ref": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

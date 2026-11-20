@@ -1,0 +1,41 @@
+{
+  "ckos": [
+    {
+      "identity": {"cko_uri": "cko://medications/varfarina", "domain": "medications", "slug": "varfarina", "version": "1.0.0", "name": "Varfarina"},
+      "clinical": {"indications": ["profilaxia/treatment de tromboembolismo"], "warnings": ["anticoagulante — queda implica risco de sangramento", "INR monitoramento", "interações medicamentosas amplas"], "high_alert": true},
+      "nursing": {"nic_refs": ["cko://procedures/fall-prevention"], "safer_use": ["identificação de anticoagulado", "educação sobre sinais de sangramento"]},
+      "governance": {"sources": ["ANVISA", "FDA"], "last_review": "2026-09-01"}
+    },
+    {
+      "identity": {"cko_uri": "cko://medications/dipirona", "domain": "medications", "slug": "dipirona", "version": "1.1.0", "name": "Dipirona sódica"},
+      "clinical": {"indications": ["dor aguda leve a moderada", "febre"], "warnings": ["risco de agranulocitose — monitorar febre/sinais de infecção", "hipotensão em administração IV rápida", "terceiro trimestre de gestação: contraindicada"], "high_alert": false},
+      "nursing": {"nic_refs": [], "safer_use": ["orientar paciente a reportar febre/angina/sinais infecciosos"]},
+      "uncertainty_note": "FAIXA de risco de agranulocitose varia por método/população (~1:1.000.000 em séries europeias até ~1:1.439 em séries latino-americanas com vigilância ativa) — CON-2026-0001. Agente jamais apresenta uma das pontas como certeza.",
+      "governance": {"sources": ["ANVISA", "FDA", "WHO"], "last_review": "2026-09-03"}
+    },
+    {
+      "identity": {"cko_uri": "cko://procedures/fall-prevention", "domain": "procedures", "slug": "fall-prevention", "version": "1.0.0", "name": "Prevenção de quedas"},
+      "clinical": {"indications": ["pacientes com Morse >= 45", "uso de anticoagulantes", "idade >= 65"], "protocol": ["identificação por bracelete amarelo", "sinalização de risco no leito", "cama travada e baixa", "chamada de emergência ao alcance"]},
+      "nursing": {"nic_refs": ["cko://procedures/fall-prevention"], "nic_code": "6490", "noc_code": "1902", "safer_use": ["reavaliar Morse a cada turno e após queda"]},
+      "governance": {"sources": ["AORN", "diretrizes nacionais"], "last_review": "2026-09-01"}
+    },
+    {
+      "identity": {"cko_uri": "cko://procedures/pressure-injury-prevention", "domain": "procedures", "slug": "pressure-injury-prevention", "version": "1.0.0", "name": "Prevenção de lesão por pressão"},
+      "clinical": {"indications": ["Braden <= 16", "mobilidade reduzida"], "protocol": ["reposicionamento a cada 2h", "inspeção de pele por turno", "proteção de proeminências ósseas"]},
+      "nursing": {"nic_refs": [], "nic_code": "0840", "noc_code": "1103", "safer_use": ["Braden por turno em pacientes acamados"]},
+      "governance": {"sources": ["NPIAP", "diretrizes nacionais"], "last_review": "2026-09-01"}
+    },
+    {
+      "identity": {"cko_uri": "cko://procedures/pews-assessment", "domain": "procedures", "slug": "pews-assessment", "version": "1.0.0", "name": "Avaliação PEWS"},
+      "clinical": {"indications": ["monitoramento pediátrico de deterioração"], "protocol": ["escore comportamental + cardiovascular + respiratório", "reavalização conforme faixa de risco"]},
+      "nursing": {"nic_refs": [], "safer_use": ["PEWS não substitui avaliação clínica do enfermeiro"]},
+      "governance": {"sources": ["diretrizes internacionais"], "last_review": "2026-09-01"}
+    },
+    {
+      "identity": {"cko_uri": "cko://procedures/sbar-handoff", "domain": "procedures", "slug": "sbar-handoff", "version": "1.0.0", "name": "Handoff SBAR"},
+      "clinical": {"indications": ["troca de plantão", "escalada clínica"], "protocol": ["Situation: paciente e alerta", "Background: contexto clínico vigente", "Assessment: riscos e escores", "Recommendation: ação esperada"]},
+      "nursing": {"nic_refs": [], "safer_use": ["SBAR estruturado com decisão do agente citada"]},
+      "governance": {"sources": ["Joint Commission", "práticas nacionais"], "last_review": "2026-09-01"}
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "applies_to": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "effective_date": {
+      "type": "string"
+    },
+    "enforcement_point": {
+      "enum": [
+        "schema",
+        "graph",
+        "ci_gate",
+        "runtime"
+      ],
+      "type": "string"
+    },
+    "expression": {
+      "type": "string"
+    },
+    "policy_id": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "blocking",
+        "warning"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "deprecated"
+      ],
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "AgentPolicy"
+}

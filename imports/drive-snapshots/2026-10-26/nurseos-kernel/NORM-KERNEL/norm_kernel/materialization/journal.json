@@ -1,0 +1,109 @@
+{
+ "orders": [
+  {
+   "ts": "2026-09-29T15:47:55",
+   "cmd": "stage",
+   "artifact": "NK-BUNDLE-0001",
+   "to": "drafts",
+   "note": "draft não materializa em produção (POL-NK-004 C1)"
+  },
+  {
+   "ts": "2026-09-29T15:47:55",
+   "cmd": "stage",
+   "artifact": "NK-BUNDLE-0002",
+   "to": "drafts",
+   "note": "draft não materializa em produção (POL-NK-004 C1)"
+  },
+  {
+   "ts": "2026-09-29T15:48:41",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0001",
+   "to": "homologacao",
+   "os": "NK-OS-0012",
+   "os_target": "NK-DOC-DEMO-0001",
+   "os_newstatus": "review_pending",
+   "os_decision": "accepted",
+   "from_layer": "drafts"
+  },
+  {
+   "ts": "2026-09-29T15:48:41",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0001",
+   "to": "producao",
+   "os": "NK-OS-0013",
+   "os_target": "NK-DOC-DEMO-0001",
+   "os_newstatus": "valid",
+   "os_decision": "accepted",
+   "from_layer": "homologacao"
+  },
+  {
+   "ts": "2026-09-29T15:48:55",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0002",
+   "to": "homologacao",
+   "os": "NK-OS-0015",
+   "os_target": "NK-DOC-DEMO-0002",
+   "os_newstatus": "review_pending",
+   "os_decision": "accepted",
+   "from_layer": "drafts"
+  },
+  {
+   "ts": "2026-09-29T15:48:55",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0002",
+   "to": "producao",
+   "os": "NK-OS-0016",
+   "os_target": "NK-DOC-DEMO-0002",
+   "os_newstatus": "valid",
+   "os_decision": "accepted",
+   "from_layer": "homologacao",
+   "replaced": "NK-BUNDLE-0001"
+  },
+  {
+   "ts": "2026-09-29T15:48:55",
+   "cmd": "kernel-move-versioning",
+   "artifact": "NK-BUNDLE-0001",
+   "to": "versionamento",
+   "os": "NK-OS-0016",
+   "note": "kernel moveu a versão anterior ao aprovar NK-BUNDLE-0002 (POL-NK-004 C5)"
+  },
+  {
+   "ts": "2026-09-29T15:49:01",
+   "cmd": "restore",
+   "artifact": "NK-BUNDLE-0003",
+   "to": "drafts",
+   "restores_content_of": "NK-BUNDLE-0001",
+   "replaces_bad": "NK-BUNDLE-0002",
+   "note": "restauração: id novo com conteúdo da versão anterior (POL-NK-004 C6)"
+  },
+  {
+   "ts": "2026-09-29T15:49:01",
+   "cmd": "kernel-move-quarantena",
+   "artifact": "NK-BUNDLE-0002",
+   "to": "quarantena",
+   "note": "deploy com erro — kernel moveu para quarantena; restaurado via NK-BUNDLE-0003"
+  },
+  {
+   "ts": "2026-09-29T15:49:18",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0003",
+   "to": "homologacao",
+   "os": "NK-OS-0018",
+   "os_target": "NK-DOC-DEMO-0003",
+   "os_newstatus": "review_pending",
+   "os_decision": "accepted",
+   "from_layer": "drafts"
+  },
+  {
+   "ts": "2026-09-29T15:49:18",
+   "cmd": "move",
+   "artifact": "NK-BUNDLE-0003",
+   "to": "producao",
+   "os": "NK-OS-0020",
+   "os_target": "NK-DOC-DEMO-0003",
+   "os_newstatus": "valid",
+   "os_decision": "accepted",
+   "from_layer": "homologacao"
+  }
+ ]
+}

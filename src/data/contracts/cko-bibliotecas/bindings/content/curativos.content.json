@@ -1,0 +1,1109 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "curativos",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Curativos",
+  "subtitle": "Coberturas para tratamento de feridas: indicações, tipos, características e condutas.",
+  "template_family": "device-library",
+  "archetype_id": "dressing_and_wound_covering_library",
+  "domain": {
+    "domain_id": "materials-devices",
+    "display_label": "Materiais e Dispositivos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Dispositivo médico"
+    },
+    {
+      "label": "Uso tópico"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Materiais e Dispositivos",
+    "Biblioteca de Curativos"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "covering-types",
+          "general-dressing-change-conduct",
+          "warning-signs",
+          "videos-and-techniques",
+          "articles-and-evidence",
+          "compatibilities",
+          "change-frequency-guidance",
+          "selection-criteria",
+          "support-materials",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tipos-de-coberturas",
+        "label": "Tipos de Coberturas",
+        "status": "mapped",
+        "module_refs": [
+          "covering-types"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "indicacoes",
+        "label": "Indicações",
+        "status": "mapped",
+        "module_refs": [
+          "covering-types",
+          "selection-criteria"
+        ],
+        "selectors": [
+          {
+            "module_id": "covering-types"
+          },
+          {
+            "module_id": "selection-criteria"
+          }
+        ]
+      },
+      {
+        "tab_id": "condutas",
+        "label": "Condutas",
+        "status": "mapped",
+        "module_refs": [
+          "general-dressing-change-conduct"
+        ],
+        "selectors": [
+          {
+            "module_id": "general-dressing-change-conduct"
+          }
+        ]
+      },
+      {
+        "tab_id": "compatibilidades",
+        "label": "Compatibilidades",
+        "status": "mapped",
+        "module_refs": [
+          "compatibilities"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "tecnica-de-aplicacao",
+        "label": "Técnica de Aplicação",
+        "status": "mapped",
+        "module_refs": [
+          "videos-and-techniques"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "support-materials"
+        ],
+        "selectors": []
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/curativos/hero_curativos_transparent.png",
+          "alt": "Curativo adesivo com almofada absorvente central.",
+          "raw": {
+            "type": "product_illustration",
+            "visual_description": "Cobertura/curativo adesivo com área central absorvente.",
+            "asset_id": "DECISION_REQUIRED",
+            "alt_text": "Curativo adesivo com almofada absorvente central.",
+            "provenance": {
+              "class": "B",
+              "note": "Descrição visual derivada da imagem; a fonte não fornece identificador do asset."
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações gerais",
+            "items": [
+              {
+                "id": "funcao",
+                "title": "Função",
+                "subtitle": "",
+                "description": "Proteger o leito da ferida, controlar exsudato, promover ambiente úmido e favorecer cicatrização.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "beneficios",
+                "title": "Benefícios",
+                "subtitle": "",
+                "description": "Reduz dor, previne infecção, absorve exsudato e mantém controle da umidade.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "indicacoes-gerais",
+                "title": "Indicações gerais",
+                "subtitle": "",
+                "description": "Feridas agudas e crônicas, com diferentes níveis de exsudato.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "contraindicacoes-gerais",
+                "title": "Contraindicações gerais",
+                "subtitle": "",
+                "description": "Hipersensibilidade aos componentes da cobertura.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "id": "secondary",
+            "title": "Tipos de exsudato",
+            "items": [
+              {
+                "id": "seco",
+                "title": "Seco",
+                "subtitle": "",
+                "description": "Sem exsudato",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "pouco",
+                "title": "Pouco",
+                "subtitle": "",
+                "description": "Exsudato leve",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "moderado",
+                "title": "Moderado",
+                "subtitle": "",
+                "description": "Exsudato moderado",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "intenso",
+                "title": "Intenso",
+                "subtitle": "",
+                "description": "Exsudato intenso",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "covering-types",
+      "module_type": "card_grid",
+      "semantic_role": "classification",
+      "title": "Tipos de coberturas",
+      "priority": 10,
+      "payload": {
+        "items": [
+          {
+            "id": "hidrocoloide",
+            "title": "Hidrocolóide",
+            "subtitle": "",
+            "description": "Mantém ambiente úmido, absorve exsudato leve a moderado.",
+            "image": "../assets/curativos/cobertura_hidrocoloide_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas com pouco a moderado exsudato.",
+              "change_frequency": "Até 7 dias"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "hidrogel",
+            "title": "Hidrogel",
+            "subtitle": "",
+            "description": "Hidrata o leito da ferida, promove desbridamento autolítico.",
+            "image": "../assets/curativos/cobertura_hidrogel_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas secas e com necrose.",
+              "change_frequency": "Diária"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "alginato",
+            "title": "Alginato",
+            "subtitle": "",
+            "description": "Alta absorção, forma gel e mantém umidade.",
+            "image": "../assets/curativos/cobertura_alginato_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas com exsudato moderado a intenso.",
+              "change_frequency": "24–72 horas"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "espuma-de-poliuretano",
+            "title": "Espuma de Poliuretano",
+            "subtitle": "",
+            "description": "Alta absorção e proteção, reduz pressão e dor.",
+            "image": "../assets/curativos/cobertura_espuma_poliuretano_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas com exsudato moderado a intenso.",
+              "change_frequency": "2–7 dias"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "filme-transparente",
+            "title": "Filme Transparente",
+            "subtitle": "",
+            "description": "Protege a pele, impermeável à água e bactérias.",
+            "image": "../assets/curativos/cobertura_filme_transparente_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Fixação de cateteres e feridas secas.",
+              "change_frequency": "Até 7 dias"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "carvao-ativado",
+            "title": "Carvão Ativado",
+            "subtitle": "",
+            "description": "Controla odor e absorve exsudato.",
+            "image": "../assets/curativos/cobertura_carvao_ativado_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas com odor.",
+              "change_frequency": "24–72 horas"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "prata-ionica",
+            "title": "Prata Iônica",
+            "subtitle": "",
+            "description": "Ação antimicrobiana de amplo espectro.",
+            "image": "../assets/curativos/cobertura_prata_ionica_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas infectadas ou com risco de infecção.",
+              "change_frequency": "24–72 horas"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          },
+          {
+            "id": "hidrofibra",
+            "title": "Hidrofibra",
+            "subtitle": "",
+            "description": "Alta absorção e retenção vertical do exsudato.",
+            "image": "../assets/curativos/cobertura_hidrofibra_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "indications": "Feridas com exsudato moderado a intenso.",
+              "change_frequency": "24–72 horas"
+            },
+            "cta": {
+              "label": "Ver detalhes",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/covering-types"
+    },
+    {
+      "module_id": "general-dressing-change-conduct",
+      "module_type": "grouped_list",
+      "semantic_role": "intervention",
+      "title": "Conduta geral na troca de curativos",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "title": "Title",
+            "items": [
+              {
+                "id": "title",
+                "title": "Conduta geral na troca de curativos",
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Steps",
+            "items": [
+              {
+                "id": "higienizar-as-maos-e-reunir-os-materiais",
+                "title": "Higienizar as mãos e reunir os materiais.",
+                "subtitle": "",
+                "description": "Higienizar as mãos e reunir os materiais.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 1,
+                  "transcription_status": "legible"
+                }
+              },
+              {
+                "id": "nao-consta-na-fonte-o-que-existe-trecho-parcialmente-legivel-na-imagem-o-que-ser",
+                "title": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "subtitle": "",
+                "description": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 2,
+                  "visible_fragment": "... ferida e pele perilesional.",
+                  "transcription_status": "partially_legible"
+                }
+              },
+              {
+                "id": "nao-consta-na-fonte-o-que-existe-trecho-parcialmente-legivel-na-imagem-o-que-ser",
+                "title": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "subtitle": "",
+                "description": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 3,
+                  "visible_fragment": "Realizar limpeza com a solução ...",
+                  "transcription_status": "partially_legible"
+                }
+              },
+              {
+                "id": "nao-consta-na-fonte-o-que-existe-trecho-parcialmente-legivel-na-imagem-o-que-ser",
+                "title": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "subtitle": "",
+                "description": "NÃO CONSTA NA FONTE. O que existe: trecho parcialmente legível na imagem. O que seria necessário: imagem em maior resolução para transcrição literal.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 4,
+                  "visible_fragment": "Avaliar ferida e ... correta.",
+                  "transcription_status": "partially_legible"
+                }
+              },
+              {
+                "id": "aplicar-cobertura-conforme-tecnica",
+                "title": "Aplicar cobertura conforme técnica.",
+                "subtitle": "",
+                "description": "Aplicar cobertura conforme técnica.",
+                "image": "../assets/curativos/cobertura_alginato_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 5,
+                  "transcription_status": "legible"
+                }
+              },
+              {
+                "id": "fixar-se-necessario-e-orientar-paciente",
+                "title": "Fixar se necessário e orientar paciente.",
+                "subtitle": "",
+                "description": "Fixar se necessário e orientar paciente.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "step": 6,
+                  "transcription_status": "legible"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/general-dressing-change-conduct"
+    },
+    {
+      "module_id": "warning-signs",
+      "module_type": "warning_list",
+      "semantic_role": "safety",
+      "title": "Sinais de alerta",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "aumento-de-dor",
+            "title": "Aumento de dor",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "interpretation_display": "Pode indicar infecção."
+            }
+          },
+          {
+            "id": "vermelhidao-e-calor",
+            "title": "Vermelhidão e calor",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "interpretation_display": "Sinais de inflamação/infecção."
+            }
+          },
+          {
+            "id": "exsudato-purulento",
+            "title": "Exsudato purulento",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "interpretation_display": "Avaliar e comunicar equipe médica."
+            }
+          },
+          {
+            "id": "mau-odor-persistente",
+            "title": "Mau odor persistente",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "interpretation_display": "Pode indicar infecção."
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/warning-signs"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "tecnica-de-aplicacao-de-espuma",
+            "title": "Técnica de aplicação de espuma",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": "../assets/curativos/cobertura_espuma_poliuretano_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "tecnica-com-hidrogel",
+            "title": "Técnica com hidrogel",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": "../assets/curativos/cobertura_hidrogel_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "tecnica-com-alginato",
+            "title": "Técnica com alginato",
+            "subtitle": "Passo a passo",
+            "description": "",
+            "image": "../assets/curativos/cobertura_alginato_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "articles-and-evidence",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos e evidências",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "atualizacao-sobre-coberturas-e-cicatrizacao-de-feridas",
+            "title": "Atualização sobre coberturas e cicatrização de feridas",
+            "subtitle": "Rev. Enferm. Atual, 2023",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "coberturas-modernas-revisao-integrativa",
+            "title": "Coberturas modernas: revisão integrativa",
+            "subtitle": "Acta Paul. Enferm., 2022",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "consenso-brasileiro-de-tratamento-de-feridas",
+            "title": "Consenso brasileiro de tratamento de feridas",
+            "subtitle": "SOBENFe, 2021",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/articles-and-evidence"
+    },
+    {
+      "module_id": "compatibilities",
+      "module_type": "compatibility",
+      "semantic_role": "safety",
+      "title": "Compatibilidades",
+      "priority": 10,
+      "payload": {
+        "tabs": [
+          "Com feridas",
+          "Com outros produtos",
+          "Com soluções"
+        ],
+        "active_tab": "Com feridas",
+        "positive": [
+          "Soro fisiológico 0,9%",
+          "PHMB",
+          "Prata iônica",
+          "Hidrogel"
+        ],
+        "negative": [
+          "Água oxigenada",
+          "Clorexidina alcoólica concentrada"
+        ],
+        "attention": []
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/compatibilities"
+    },
+    {
+      "module_id": "change-frequency-guidance",
+      "module_type": "table",
+      "semantic_role": "monitoring",
+      "title": "Frequência de troca",
+      "priority": 20,
+      "payload": {
+        "columns": [
+          {
+            "key": "exudate_level",
+            "label": "Exudate Level"
+          },
+          {
+            "key": "frequency",
+            "label": "Frequency"
+          }
+        ],
+        "rows": [
+          {
+            "exudate_level": "Pouco exsudato",
+            "frequency": "Até 7 dias"
+          },
+          {
+            "exudate_level": "Moderado exsudato",
+            "frequency": "A cada 3–5 dias"
+          },
+          {
+            "exudate_level": "Intenso exsudato",
+            "frequency": "Diariamente ou conforme saturação"
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/change-frequency-guidance"
+    },
+    {
+      "module_id": "selection-criteria",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Critérios de escolha",
+      "priority": 30,
+      "payload": {
+        "items": [
+          {
+            "id": "avaliar-tipo-de-ferida-e-exsudato",
+            "title": "Avaliar tipo de ferida e exsudato",
+            "subtitle": "",
+            "description": "Avaliar tipo de ferida e exsudato",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "selecionar-cobertura-adequada",
+            "title": "Selecionar cobertura adequada",
+            "subtitle": "",
+            "description": "Selecionar cobertura adequada",
+            "image": "../assets/curativos/cobertura_alginato_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "considerar-pele-perilesional",
+            "title": "Considerar pele perilesional",
+            "subtitle": "",
+            "description": "Considerar pele perilesional",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "definir-frequencia-de-troca",
+            "title": "Definir frequência de troca",
+            "subtitle": "",
+            "description": "Definir frequência de troca",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "monitorar-resposta-ao-tratamento",
+            "title": "Monitorar resposta ao tratamento",
+            "subtitle": "",
+            "description": "Monitorar resposta ao tratamento",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/selection-criteria"
+    },
+    {
+      "module_id": "support-materials",
+      "module_type": "resource_list",
+      "semantic_role": "resource",
+      "title": "Materiais de apoio",
+      "priority": 40,
+      "payload": {
+        "items": [
+          {
+            "id": "guia-de-coberturas",
+            "title": "Guia de coberturas",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "algoritmo-de-escolha",
+            "title": "Algoritmo de escolha",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "tabela-de-compatibilidades",
+            "title": "Tabela de compatibilidades",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "protocolo-institucional",
+            "title": "Protocolo institucional",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "PDF"
+            }
+          },
+          {
+            "id": "video-tecnica-de-aplicacao",
+            "title": "Vídeo: técnica de aplicação",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "format": "video"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/support-materials"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "imprimir-pagina",
+            "title": "Imprimir página",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          },
+          {
+            "id": "baixar-todos-os-materiais",
+            "title": "Baixar todos os materiais",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "download_all_support_materials",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "imprimir-pagina",
+          "title": "Imprimir página",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        },
+        {
+          "id": "baixar-todos-os-materiais",
+          "title": "Baixar todos os materiais",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "download_all_support_materials",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/curativos.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/curativos.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/curativos.provenance.json"
+}

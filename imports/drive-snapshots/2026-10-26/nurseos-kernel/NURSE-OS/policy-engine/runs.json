@@ -1,0 +1,205 @@
+{
+  "runs": [
+    {
+      "run_id": "RUN-2026-0001",
+      "agent_slug": "sae-copilot",
+      "confidence": 0.86,
+      "human_review_required": true,
+      "has_medication_change": false,
+      "citations_cko": [
+        "cko://procedures/fall-prevention"
+      ],
+      "context_integrity": "complete",
+      "uncertainty": {
+        "state": "high_confidence",
+        "why": "padrão clínico clássico (anticoagulante + Morse 65), corroborado por CKO vigente",
+        "based_on": [
+          "cko://procedures/fall-prevention 1.0.0",
+          "PatientTwin v3 (janela 12 min)"
+        ],
+        "freshness": "escores do twin com <= 15 min",
+        "conflicts": [],
+        "what_would_change_conclusion": [
+          "Morse < 45 na reavaliação",
+          "suspensão do anticoagulante"
+        ]
+      },
+      "decision_id": "DEC-2026-0001",
+      "provenance": [
+        {
+          "provenance_id": "PRV-0001-a",
+          "step": "input",
+          "source": "context-package:CP-0001",
+          "version": "twin v3",
+          "hash": "3f9a…",
+          "actor": "sae-copilot",
+          "policy": "POL-006"
+        },
+        {
+          "provenance_id": "PRV-0001-b",
+          "step": "retrieval",
+          "source": "cko://procedures/fall-prevention",
+          "version": "1.0.0",
+          "hash": "a1b2…",
+          "actor": "mcp:cko-procedures",
+          "policy": "POL-008"
+        },
+        {
+          "provenance_id": "PRV-0001-c",
+          "step": "model",
+          "source": "nurse-palm-v0",
+          "version": "v0",
+          "hash": "9c8d…",
+          "actor": "nurse-palm-v0",
+          "policy": "POL-001"
+        },
+        {
+          "provenance_id": "PRV-0001-d",
+          "step": "output",
+          "source": "sae-draft",
+          "version": "0.3.0",
+          "hash": "e5f6…",
+          "actor": "sae-copilot",
+          "policy": "POL-007"
+        }
+      ]
+    },
+    {
+      "run_id": "RUN-2026-0002",
+      "agent_slug": "sae-copilot",
+      "confidence": 0.55,
+      "human_review_required": true,
+      "has_medication_change": false,
+      "citations_cko": [
+        "cko://medications/insulina-regular"
+      ],
+      "context_integrity": "degraded",
+      "integrity_gaps": [
+        "dados glicêmicos noturnos incompletos (2 de 4 medições registradas)"
+      ],
+      "uncertainty": {
+        "state": "low_evidence",
+        "why": "associação insulina/hipoglicemia noturna com dados incompletos — lacuna de contexto detectada pelo Context Integrity Engine",
+        "based_on": [
+          "cko://medications/insulina-regular 1.0.0",
+          "PatientTwin v3 (janela 9h — dados parciais)"
+        ],
+        "freshness": "medições glicêmicas com até 9h de defasagem",
+        "conflicts": [],
+        "what_would_change_conclusion": [
+          "série glicêmica completa",
+          "relato de hipoglicemia sintomática"
+        ]
+      },
+      "decision_id": "DEC-2026-0002",
+      "provenance": [
+        {
+          "provenance_id": "PRV-0002-a",
+          "step": "input",
+          "source": "context-package:CP-0002",
+          "version": "twin v3",
+          "hash": "77aa…",
+          "actor": "sae-copilot",
+          "policy": "POL-006"
+        },
+        {
+          "provenance_id": "PRV-0002-b",
+          "step": "retrieval",
+          "source": "cko://medications/insulina-regular",
+          "version": "1.0.0",
+          "hash": "b2c3…",
+          "actor": "mcp:cko-medications",
+          "policy": "POL-008"
+        },
+        {
+          "provenance_id": "PRV-0002-c",
+          "step": "model",
+          "source": "nurse-palm-v0",
+          "version": "v0",
+          "hash": "d4e5…",
+          "actor": "nurse-palm-v0",
+          "policy": "POL-004"
+        },
+        {
+          "provenance_id": "PRV-0002-d",
+          "step": "output",
+          "source": "escalation-sbar",
+          "version": "0.3.0",
+          "hash": "f6a7…",
+          "actor": "sae-copilot",
+          "policy": "POL-006"
+        }
+      ]
+    },
+    {
+      "run_id": "RUN-2026-0005",
+      "agent_slug": "sae-copilot",
+      "confidence": 0.85,
+      "human_review_required": true,
+      "has_medication_change": false,
+      "citations_cko": [
+        "cko://procedures/pressure-injury-prevention",
+        "cko://procedures/fall-prevention",
+        "cko://medications/varfarina"
+      ],
+      "context_integrity": "complete",
+      "uncertainty": {
+        "state": "high_confidence",
+        "confidence": 0.85,
+        "why": "rascunho grounded em 3 CKOs versionados; escores frescos (<15 min); integridade completa",
+        "based_on": [
+          "cko://procedures/fall-prevention 1.0.0",
+          "cko://medications/varfarina 1.0.0",
+          "cko://procedures/pressure-injury-prevention 1.0.0",
+          "PatientTwin v4 (15min)"
+        ],
+        "freshness": "escores do twin com <= 15 min",
+        "conflicts": [],
+        "what_would_change_conclusion": [
+          "Morse < 45 na reavaliação",
+          "suspensão do anticoagulante",
+          "Braden < 12"
+        ]
+      },
+      "decision_id": "DEC-2026-0005",
+      "provenance": [
+        {
+          "provenance_id": "PRV-0005-a",
+          "step": "input",
+          "source": "context-package:CP-2026-0005",
+          "version": "twin v4",
+          "hash": "29b1adc69bd96d85…",
+          "actor": "sae-copilot",
+          "policy": "POL-006"
+        },
+        {
+          "provenance_id": "PRV-0005-b",
+          "step": "retrieval",
+          "source": "corpus:ckos.json (6 CKOs)",
+          "version": "v0",
+          "hash": "89f7fc853bc7c62b…",
+          "actor": "nurse-palm-v0/retrieve",
+          "policy": "POL-008"
+        },
+        {
+          "provenance_id": "PRV-0005-c",
+          "step": "model",
+          "source": "nurse-palm-v0-drafter (determinístico)",
+          "version": "v0",
+          "hash": "846dd5a74b2eb596…",
+          "actor": "nurse-palm-v0",
+          "policy": "POL-001"
+        },
+        {
+          "provenance_id": "PRV-0005-d",
+          "step": "output",
+          "source": "sae-draft",
+          "version": "0.3.0",
+          "hash": "be0c7bf1843909a2…",
+          "actor": "sae-copilot",
+          "policy": "POL-007"
+        }
+      ]
+    }
+  ]
+}

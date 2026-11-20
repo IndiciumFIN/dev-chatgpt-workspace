@@ -1,0 +1,61 @@
+{
+  "twin_events": [
+    {
+      "twin_ref": "fhir:Patient/88412",
+      "event_type": "score",
+      "label": "Escala de Morse",
+      "value": "65 — risco alto",
+      "valid_from": "2026-09-02T20:00:00-03:00",
+      "valid_to": null,
+      "source": "avaliação de enfermagem (FHIR Observation)",
+      "confidence": 0.95,
+      "cko_ref": "cko://procedures/fall-prevention",
+      "fhir_ref": "fhir:Observation/morse-88412-0910"
+    },
+    {
+      "twin_ref": "fhir:Patient/88412",
+      "event_type": "medication",
+      "label": "Varfarina",
+      "value": "5 mg/dia — anticoagulante (INR 2.8)",
+      "valid_from": "2026-08-30T08:00:00-03:00",
+      "valid_to": null,
+      "source": "prescrição médica (FHIR MedicationRequest)",
+      "confidence": 1.0,
+      "cko_ref": "cko://medications/varfarina"
+    },
+    {
+      "twin_ref": "fhir:Patient/88412",
+      "event_type": "condition",
+      "label": "Pneumonia comunitária",
+      "value": "em tratamento — melhora parcial",
+      "valid_from": "2026-08-29T14:00:00-03:00",
+      "valid_to": null,
+      "source": "diagnóstico médico (FHIR Condition)",
+      "confidence": 0.9,
+      "cko_ref": "cko://diseases/pneumonia-comunitaria"
+    },
+    {
+      "twin_ref": "fhir:Patient/88412",
+      "event_type": "condition",
+      "label": "Hipotensão ortostática",
+      "value": "registro positivo no plantão diurno",
+      "valid_from": "2026-09-01T10:30:00-03:00",
+      "valid_to": "2026-09-01T18:00:00-03:00",
+      "source": "avaliação de enfermagem",
+      "confidence": 0.8,
+      "cko_ref": null,
+      "fhir_ref": "fhir:Observation/ortho-88412-0901"
+    },
+    {
+      "twin_ref": "fhir:Patient/88412",
+      "event_type": "risk",
+      "label": "Risco de queda agravado",
+      "value": "anticoagulante em uso — queda implica risco de sangramento",
+      "valid_from": "2026-09-02T20:05:00-03:00",
+      "valid_to": null,
+      "source": "computado: sae-copilot DEC-2026-0001 (PatientTwin v3)",
+      "confidence": 0.86,
+      "cko_ref": "cko://medications/varfarina"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "template_id": "TPL-SLIDES-001",
+  "name": "Slides",
+  "version": "0.2.0",
+  "profile": "slides",
+  "channels": [
+    "slides",
+    "pdf"
+  ],
+  "required_roles": [
+    "deck_title",
+    "slide_sequence",
+    "references",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "diagram",
+    "chart",
+    "question"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "section",
+    "claim",
+    "figure",
+    "diagram",
+    "table",
+    "chart",
+    "callout",
+    "definition",
+    "steps",
+    "timeline",
+    "comparison",
+    "references",
+    "learning_objective",
+    "question",
+    "case_fact",
+    "decision_point",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "slides": "16:9-safe-area-grid"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "speaker_notes_evidence",
+      "slide_density_gate"
+    ]
+  }
+}

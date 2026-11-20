@@ -1,0 +1,100 @@
+name: Portões
+
+# Os portões são a prova de que o banco é o contrato e o código só renderiza.
+# Esta CI roda os quatro, a suíte, o typecheck e o build. Quem roda o build
+# localmente é o dono; a CI é a rede de segurança do pull request.
+
+on:
+  push:
+    branches: ["feat/**", "main", "grook_10_26"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: portoes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  portoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Código
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Dependências
+        run: npm ci --no-audit --no-fund
+
+      - name: Índice do banco — rótulo humano para tudo
+        if: ${{ !cancelled() }}
+        run: node scripts/audit-indice-banco.mjs --check
+
+      - name: Governança — rejeitar placeholders de aprovação
+        if: ${{ !cancelled() }}
+        run: node scripts/check-governance-placeholders.mjs migrations/*.sql
+
+      - name: CE — integridade dos 870 arquivos recuperados (sem autorização de release)
+        if: ${{ !cancelled() }}
+        run: node scripts/audit-historical-recovery.mjs
+
+      - name: DERBY — nada fica retido
+        if: ${{ !cancelled() }}
+        run: node scripts/preencher-derby.mjs --check
+
+      - name: Processo de source
+        if: ${{ !cancelled() }}
+        run: node scripts/audit-source.mjs
+
+      - name: Fonte — o texto no banco é o texto da fonte
+        if: ${{ !cancelled() }}
+        run: node scripts/auditar-fonte.mjs --check
+
+      - name: Registro — o mapa do PMO é verdade
+        if: ${{ !cancelled() }}
+        run: node scripts/auditar-registro.mjs
+
+      - name: P1 — inventário de colisões de migrations (evidência, sem DDL)
+        if: ${{ always() }}
+        run: node scripts/inventory-migration-collisions.mjs
+
+      - name: Preservar evidência P1 sem dados nem credenciais
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-p1-foundation-reconciliation-evidence
+          path: |
+            artifacts/migration-collision-evidence.json
+            artifacts/db-indice.json
+          if-no-files-found: warn
+          retention-days: 60
+
+      - name: Suíte
+        if: ${{ always() }}
+        # Os testes de scripts correm em série: cada um abre um PGlite (um
+        # Postgres em RAM) e, em paralelo, o runner mata o processo por
+        # memória — foi assim que um arquivo de teste morreu com SIGKILL.
+        run: npm test
+
+      # TanStack Start generates routeTree.gen.ts during the build plugin.
+      # Typecheck runs after code generation, while always() keeps independent failure visibility.
+      - name: Build
+        if: ${{ always() }}
+        run: npm run build
+
+      - name: Tipos
+        if: ${{ always() }}
+        run: npx tsc --noEmit
+
+      - name: Segurança — dependências de produção
+        if: ${{ always() }}
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Painel de status
+        if: ${{ always() }}
+        run: node scripts/status-projeto.mjs --detalhe

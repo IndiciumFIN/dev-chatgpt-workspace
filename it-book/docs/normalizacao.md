@@ -36,6 +36,7 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | cmd_command | id | — | ordem, modo, texto, ator, correlação, estado, motivo, data |
 | cmd_run | id | ordem + tentativa | comando, estado, chave de idempotência, ator, data |
 | cmd_event | id | execução + sequência | tipo, detalhe, ator, data |
+| ops_record | id | — | módulo, tipo, nome, estado, nota, data |
 | site_route | path | — | idioma, contrato, título, lead, corpo, estado, caminho de origem |
 | content_object | slug | origin_path | tipo, capa quando é instrumento |
 | content_alias | path | — | objeto, idioma, vista |
@@ -71,12 +72,12 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | section_page | slug | — | linha fina, título, lead, tipo |
 | content_place | id | — | objeto, seção de tela, página institucional |
 | screen_dest | id | — | tipo, lugar, ferramenta, âncora, página, modelo |
-| study_item | id | — | tipo, ordem, enunciado, verso, índice da resposta |
-| template_contract | id | — | ordem, nome, endereço, tipo, moldura, nota, situação, origem |
-| ops_record | id | — | módulo, tipo, título, estado, nota, data |
-| repo_source | repo | — | nota |
+| kernel_approval | id | — | pedido, aprovador, decisão, motivo, data |
+| source_publication | id | — | instrumento, portão, decisão de política, evidência, ator, data |
 
 `page` guarda o id da peça, não o título dela. `community_post` e `audit_event` guardam o id da pessoa, não o nome. Por isso não há dependência transitiva.
+
+A 0038 guardou três listas em coluna (`acceptance_criteria`, `policy_set`, `validators`). Lista em coluna é lista escondida: a tabela passa a depender do conteúdo inteiro da lista e a prova de normalização não fecha. A 0043 converte as três em tabela filha — o pedido, o conjunto de política e o conjunto de validadores — sem perder nenhum valor. Schema não guarda lista nem JSON: isso é regra, e a regra é testada em `src/lib/it-controls.test.ts`.
 
 `account` não declara unicidade de provedor mais conta externa. A chave continua sendo `id`. Não se altera esta tabela: ela é do mecanismo de sessão.
 
@@ -91,6 +92,9 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | tool_criterion | tool_slug + id | O mesmo id pode ter outro rótulo em outra ferramenta |
 | tool_choice | tool_slug + criterion_id + value | O valor 1 não tem o mesmo rótulo em outro critério |
 | tool_field | tool_slug + id | Unidade, mínimo, máximo e passo são deste campo nesta ferramenta |
+| kernel_order_criterion | order_id + position | O critério é deste pedido, nesta posição. O mesmo texto em outro pedido é outro critério |
+| kernel_manifest_policy | order_id + policy_id | A política pertence ao conjunto deste pedido. A mesma política em outro pedido é outra linha |
+| kernel_manifest_validator | order_id + validator_id | O validador pertence ao conjunto deste pedido. O mesmo validador em outro pedido é outra linha |
 | tool_select | tool_slug + id | O rótulo é desta escolha nesta ferramenta |
 | tool_select_option | tool_slug + select_id + value | O valor não carrega o rótulo sozinho |
 | tool_meta | tool_slug + id | O rótulo é deste metadado nesta ferramenta |
@@ -128,10 +132,6 @@ Nestas tabelas a 2FN não se aplica. A 3FN vale porque o texto de uma coluna nã
 | specimen_line | specimen_id + module_position + position | O trecho é deste bloco nesta posição |
 | section_block | slug + position | O bloco é desta seção nesta posição |
 | section_link | slug + block_position + position | O item é deste bloco nesta posição |
-| study_choice | item_id + position | O texto é desta alternativa nesta questão. A posição 1 não é a mesma alternativa em outra questão |
-| media_alt | path + locale | O texto é desta imagem neste idioma. O mesmo caminho tem outro texto noutro idioma |
-| repo_branch | repo + branch | O commit é desta branch neste repositório. A mesma branch noutro repositório não é o mesmo commit |
-| repo_file | repo + branch + path | O blob e o confronto são deste caminho nesta branch. O commit ficou em repo_branch |
 
 Em `tool_faq`, a resposta não depende da pergunta sozinha. Depende da ferramenta e da posição. Isso é o que mantém a 3FN.
 

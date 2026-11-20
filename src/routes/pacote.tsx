@@ -1,11 +1,12 @@
 import { createFileRoute, Link, retainSearchParams } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { ArticlePage } from "@/components/article/article-page";
-import { useStored } from "@/lib/stored";
+import { phases } from "@/lib/site-data";
 import { tools } from "@/lib/tools/catalog";
 import { parseLocale } from "@/lib/translate";
+import type { Locale } from "@/lib/chrome";
 
-type PackSearch = { q?: string; lang?: "pt-BR" | "en" | "es" | "fr" };
+type PackSearch = { q?: string; lang?: Locale };
 
 export const Route = createFileRoute("/pacote")({
   search: {
@@ -28,7 +29,6 @@ export const Route = createFileRoute("/pacote")({
 });
 
 function Pacote() {
-  const { phases } = useStored();
   const { q } = Route.useSearch();
   return (
     <Shell>

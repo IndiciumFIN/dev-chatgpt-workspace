@@ -1,0 +1,25 @@
+name: CE recovery crosswalk integrity
+on:
+  pull_request:
+    paths:
+      - 'registers/canonical/recovery-crosswalk.20261101.v1.json'
+      - 'audit/ce-continuity/**'
+      - 'contracts/cko-schemas/**'
+      - 'src/data/contracts/cko-schemas/**'
+      - '_archive/schemas/**'
+      - 'src/components/templates/**'
+      - 'contracts/cko-skeleton/catalog/profiles/**'
+      - 'scripts/check-ce-recovery-crosswalk.mjs'
+  push:
+    branches: [canonical/local-20261101]
+permissions:
+  contents: read
+jobs:
+  blob-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/check-ce-recovery-crosswalk.mjs

@@ -1,0 +1,59 @@
+{
+  "events": [
+    {
+      "seq": 1,
+      "stream": "gov",
+      "type": "run_registered",
+      "payload": {
+        "run_id": "RUN-2026-0005"
+      },
+      "idem": "idem:run:0005",
+      "attempts": 1,
+      "status": "done",
+      "result": "run RUN-2026-0005 aceita no stream (validação de contrato)"
+    },
+    {
+      "seq": 2,
+      "stream": "gov",
+      "type": "run_registered",
+      "payload": {
+        "run_id": "RUN-2026-0005"
+      },
+      "idem": "idem:run:0005",
+      "attempts": 0,
+      "status": "deduped"
+    },
+    {
+      "seq": 3,
+      "stream": "gov",
+      "type": "traceability_check",
+      "payload": {},
+      "idem": "idem:trace:2026-09-03",
+      "attempts": 3,
+      "status": "dead",
+      "error": "traceability check falhou: TRACEABILITY: FAILED\n  [ORPHAN] POL-027: órfã — não aparece em nenhuma seção do MD fonte\n"
+    },
+    {
+      "seq": 4,
+      "stream": "gov",
+      "type": "frontend_rebuild",
+      "payload": {},
+      "idem": "idem:frontend:2026-09-03",
+      "attempts": 1,
+      "status": "done",
+      "result": "frontend regenerado do grafo"
+    },
+    {
+      "seq": 5,
+      "stream": "gov",
+      "type": "poison",
+      "payload": {
+        "crash": true
+      },
+      "idem": "idem:poison:1",
+      "attempts": 1,
+      "status": "done",
+      "result": "sem handler para poison"
+    }
+  ]
+}

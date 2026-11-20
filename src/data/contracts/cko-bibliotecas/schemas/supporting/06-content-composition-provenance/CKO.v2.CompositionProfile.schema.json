@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:v2:composition-profile",
+  "title": "CKO v2 Composition Profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "page_slug",
+    "shell_contract_ref",
+    "modules"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "page_slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shell_contract_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "module_ref",
+          "zone",
+          "tab_behavior",
+          "layout"
+        ],
+        "properties": {
+          "module_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "zone": {
+            "type": "string",
+            "enum": [
+              "main",
+              "sidebar",
+              "auto"
+            ]
+          },
+          "tab_behavior": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

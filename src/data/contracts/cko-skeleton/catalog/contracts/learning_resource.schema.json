@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/learning_resource.schema.json",
+  "title": "CKO | learning_resource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "canonical_topic_ids",
+    "resource_type",
+    "projection_profile_ref",
+    "learning_objective_refs",
+    "assessment_refs",
+    "source_claim_ids",
+    "privacy_profile"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "canonical_topic_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "ARTICLE",
+        "CASE",
+        "FLASHCARD",
+        "QUIZ",
+        "INFOGRAPHIC",
+        "POCKET_GUIDE",
+        "PDF",
+        "SLIDES",
+        "MIND_MAP",
+        "STUDY_PATH",
+        "RESEARCH_TOOL"
+      ]
+    },
+    "projection_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "learning_objective_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "assessment_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "privacy_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluation_contract_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

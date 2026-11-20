@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/cko-editorial-theme.schema.json",
+  "title": "CKO Editorial Theme Registry Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "themes"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "registry_id": {
+      "type": "string"
+    },
+    "themes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "theme_id",
+          "name",
+          "mode",
+          "description",
+          "tokens",
+          "layout_template",
+          "css_contract"
+        ],
+        "properties": {
+          "theme_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark",
+              "reference"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "tokens": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          },
+          "layout_template": {
+            "type": "array",
+            "items": {
+              "$ref": "https://cko.local/schemas/cko-editorial-image.schema.json#/$defs/zone"
+            }
+          },
+          "css_contract": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

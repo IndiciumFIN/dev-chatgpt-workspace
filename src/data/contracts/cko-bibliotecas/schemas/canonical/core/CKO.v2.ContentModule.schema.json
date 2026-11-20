@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:v2:content-module",
+  "title": "CKO v2 Content Module",
+  "type": "object",
+  "required": [
+    "module_id",
+    "module_type",
+    "semantic_role",
+    "title",
+    "priority",
+    "payload",
+    "provenance_ref"
+  ],
+  "properties": {
+    "module_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "actions",
+        "calculator",
+        "card_grid",
+        "compatibility",
+        "generic",
+        "grouped_list",
+        "item_grid",
+        "list_panel",
+        "media_grid",
+        "overview",
+        "reference_list",
+        "resource_list",
+        "status_panel",
+        "step_flow",
+        "table",
+        "warning_list"
+      ]
+    },
+    "semantic_role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "payload": {
+      "type": "object"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "provenance_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:clinical-visual-asset:v1.0.0",
+  "title": "CKO Clinical Visual Asset",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "asset_type",
+    "dag_ref",
+    "object_refs",
+    "role",
+    "dimensions",
+    "format",
+    "validation",
+    "sustainability",
+    "relations",
+    "actions"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "image",
+        "diagram",
+        "chart",
+        "table_render",
+        "icon",
+        "pdf_figure",
+        "video_thumbnail"
+      ]
+    },
+    "dag_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "library_thumbnail",
+        "object_image",
+        "content_media",
+        "clinical_evidence_media",
+        "related_image",
+        "resource_cover",
+        "diagram",
+        "chart",
+        "table_render"
+      ]
+    },
+    "dimensions": {
+      "type": "object",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "png",
+        "webp",
+        "jpg",
+        "svg",
+        "pdf"
+      ]
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "state",
+        "clinically_validated"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "validated",
+            "rejected",
+            "not_applicable"
+          ]
+        },
+        "clinically_validated": {
+          "type": "boolean"
+        },
+        "validator_role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validated_on": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sustainability": {
+      "type": "object",
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "qualified",
+            "not_qualified"
+          ]
+        },
+        "reuse_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "derivative_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preferred_formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_reuse_state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "relation_type",
+          "target_ref"
+        ],
+        "properties": {
+          "relation_type": {
+            "type": "string",
+            "enum": [
+              "depicts",
+              "related_to",
+              "alternative_view_of",
+              "detail_of",
+              "before_after_of",
+              "supports_evidence_for",
+              "derived_from"
+            ]
+          },
+          "target_ref": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "actions": {
+      "type": "object",
+      "properties": {
+        "view": {
+          "type": "boolean"
+        },
+        "open": {
+          "type": "boolean"
+        },
+        "download": {
+          "type": "boolean"
+        },
+        "offline": {
+          "type": "boolean"
+        },
+        "share": {
+          "type": "boolean"
+        },
+        "copy_link": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

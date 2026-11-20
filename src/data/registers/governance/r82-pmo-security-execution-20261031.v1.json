@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "CE-R82-PMO-SECURITY-EXECUTION-20261031",
+  "date": "2026-10-31",
+  "type": "CANDIDATE_TECHNICAL_EXECUTION_NON_RELEASE",
+  "repo": "IndiciumFIN/dev-chatgpt-workspace",
+  "scope": {
+    "branch": "plan/pmokernel-finalization-20261031",
+    "sourceFixBranch": "fix/governed-activities-cli-20261026",
+    "mainShaAtStart": "6c62bb61791631681979b229ccfbb05f7f5ac411",
+    "mainChanged": false,
+    "sourceWosModified": false,
+    "officialKernelAdmission": "NOT_VERIFIED",
+    "releaseGate": "HOLD_HUMAN"
+  },
+  "workOrders": [
+    {
+      "wo": "WO-ADM-001",
+      "task": "TASK-PLAN-003",
+      "state": "TECHNICAL_CANDIDATE_VALIDATION",
+      "finding": "Legacy gate required PAUSED even though owner-approved local Commander event seq20 moves to IN_PROGRESS",
+      "implementation": "scripts/check-pmo-queue.mjs",
+      "sourceCandidateBlobSha": "96f76963fd6aa9aa3a064b18256962178d746f4c",
+      "tests": "scripts/check-pmo-queue.test.mjs",
+      "testCaseCount": 7,
+      "controls": [
+        "Owner-approved local scope and commit evidence required",
+        "Commander cannot perform HTTP/network/DB calls",
+        "Immutable PMO event sequence and last-event state enforced",
+        "No dependency cycles or DONE with unmet dependencies",
+        "WO-HOM-001 must remain HOLD_HUMAN"
+      ],
+      "scopeLimit": "Candidate branch only, official queue rev18 unchanged"
+    },
+    {
+      "wo": "WO-SEC-001",
+      "task": "TASK-PLAN-015",
+      "state": "TECHNICAL_CANDIDATE_SECURITY_FIX",
+      "finding": "GitHub Actions npm audit --audit-level=high rejected Better Auth 1.6.30 dependency chain (GHSA-44jh-23m7-hpcf)",
+      "dependency": {
+        "previous": "~1.6.30",
+        "candidate": "1.7.14",
+        "lockSha": "f576a666ce59590113e06d8c0cb68bf7b17d0b86",
+        "sourceBranch": "fix/governed-activities-cli-20261026",
+        "changedLockEntries": 15,
+        "nonBetterAuthUnrelatedUpdates": 0,
+        "scope": "Targeted Better Auth upgrade, no broad npm audit fix --force",
+        "files": [
+          "package.json",
+          "package-lock.json"
+        ]
+      },
+      "apiCompatibility": {
+        "files": [
+          "src/lib/auth/client.ts",
+          "src/lib/auth/server.ts",
+          "src/lib/auth/preview.ts",
+          "src/lib/auth/providers.ts",
+          "scripts/check-auth-invariant.mjs"
+        ],
+        "changes": [
+          "Removed obsolete genericOAuthClient plugin",
+          "OAuth sign-in calls supported signIn.social API",
+          "Explicit opt-in only: VITE_AUTH_ENABLED exactly true in client/server",
+          "Preview client secret read from server environment, not literal source",
+          "Provider callback path for 1.7 documented"
+        ]
+      },
+      "tests": [
+        "scripts/test-auth-secret-env.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "scripts/check-better-auth-lock.mjs",
+        "scripts/check-better-auth-lock.test.mjs"
+      ],
+      "remains": [
+        "OAuth broker preview credential rotation and revocation NOT_DONE",
+        "Main still exposes historical source and must be patched only after authorized promotion",
+        "Successful high-severity audit does not establish zero moderate/low advisories",
+        "No live OAuth end-to-end against broker"
+      ]
+    },
+    {
+      "wo": "WO-SEC-001",
+      "task": "TASK-PLAN-080",
+      "state": "STATIC_EVIDENCE_IMPROVED_NOT_DB_TESTED",
+      "sourceArchiveSha256": "5cf346be3e823b192395ad898a7798b6375b23077714353d2817a8697fe59f47",
+      "report": "registers/governance/r81-simulados-original-rpc-static-20261031.v1.json",
+      "migrationFilesReadOnly": 47,
+      "aclEventsIdentified": 6,
+      "affectedRpcCount": 2,
+      "postgresClientInstalledInCurrentRuntime": false,
+      "postgresServerInstalledInCurrentRuntime": false,
+      "postgresqlReplay": "NOT_RUN",
+      "pgtap": "NOT_RUN",
+      "anonAndAuthenticatedE2E": "NOT_RUN",
+      "sourceZipCommitted": false
+    }
+  ],
+  "ci": {
+    "technicalEvidence": {
+      "pmoCandidate": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235411365",
+      "npmAuditHighPassedTypecheckPassedNpmTestPassed": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
+      "sourceMigrationInventory": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235411368"
+    },
+    "globalVerifyFinalState": "SUCCESS_CANDIDATE_NOT_RELEASE",
+    "releaseStatus": "HOLD_HUMAN",
+    "latestPassingGlobalVerify": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235967540",
+    "latestPassingPmoCandidate": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235980220",
+    "executionInterpretation": {
+      "npmAuditHigh": "PASS",
+      "typecheck": "PASS",
+      "npmTest": "PASS",
+      "spaBuild": "PASS",
+      "firstFullyPassingGlobalCI": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/41235891544",
+      "securityCaveats": [
+        "Moderate and low npm audit advisories not individually resolved",
+        "Broker OAuth secret revocation not verified",
+        "No E2E auth flow",
+        "Original Simulados PostgreSQL 47 migrations and 17 pgTAP not run"
+      ],
+      "releaseGate": "HOLD_HUMAN"
+    }
+  },
+  "remainingGaps": [
+    "GAP-01",
+    "GAP-02",
+    "GAP-03",
+    "GAP-04"
+  ],
+  "noMerge": true,
+  "noDeploy": true,
+  "noDatabaseWrite": true,
+  "note": "All code fixes on existing candidate branch. Actual default branch remains unchanged and unprotected; credential revocation requires external broker owner. CI verde da candidata não altera autoridade, fila, decisão, proteção de branch ou homologação."
+}

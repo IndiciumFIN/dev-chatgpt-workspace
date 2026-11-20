@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/workflow.schema.json",
+  "title": "CKO | workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "workflow_kind",
+    "stages",
+    "failure_policy",
+    "publication_restriction"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "workflow_kind": {
+      "type": "string",
+      "enum": [
+        "ACTIVE_INITIATIVE",
+        "PASSIVE_INTAKE",
+        "REMEDIATION",
+        "CONTENT_FACTORY",
+        "RELEASE"
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "stage_id",
+          "depends_on",
+          "gate_ref"
+        ],
+        "properties": {
+          "stage_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "gate_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "failure_policy": {
+      "type": "string",
+      "const": "FAIL_CLOSED"
+    },
+    "publication_restriction": {
+      "type": "string",
+      "const": "HUMAN_APPROVAL_REQUIRED"
+    },
+    "owner_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pmo_item_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

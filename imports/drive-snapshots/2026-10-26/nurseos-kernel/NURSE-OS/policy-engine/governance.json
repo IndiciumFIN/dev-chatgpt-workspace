@@ -1,0 +1,52 @@
+{
+  "access_records": [
+    {
+      "run_id": "RUN-2026-0001",
+      "principal_id": "rn:maria.souza",
+      "role": "RN",
+      "authorized_via": "contract:sae-copilot"
+    },
+    {
+      "run_id": "RUN-2026-0002",
+      "principal_id": "rn:joao.pereira",
+      "role": "RN",
+      "authorized_via": "contract:sae-copilot"
+    },
+    {
+      "run_id": "RUN-2026-0005",
+      "principal_id": "rn:maria.souza",
+      "role": "RN",
+      "authorized_via": "contract:sae-copilot"
+    }
+  ],
+  "consent_records": [
+    {
+      "patient_ref": "fhir:Patient/88412",
+      "purpose": "care",
+      "granted": true,
+      "recorded_on": "2026-09-02",
+      "source": "PatientTwin.consent_care"
+    },
+    {
+      "patient_ref": "fhir:Patient/88412",
+      "purpose": "twin_simulation",
+      "granted": false,
+      "recorded_on": "2026-09-02",
+      "source": "PatientTwin.consent_twin_simulation"
+    }
+  ],
+  "revalidations": [
+    {
+      "agent_slug": "sae-copilot",
+      "last_eval": "2026-09-03",
+      "valid_until": "2026-12-31",
+      "evidence_ref": "SC-2026-0001"
+    },
+    {
+      "agent_slug": "pews-sentinel",
+      "last_eval": "2026-09-03",
+      "valid_until": "2026-09-30",
+      "evidence_ref": "SC-2026-0002"
+    }
+  ]
+}

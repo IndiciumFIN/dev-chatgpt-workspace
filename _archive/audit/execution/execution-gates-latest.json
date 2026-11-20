@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "scope": "CE_PUBLIC_BACKUP_ONLY",
+  "base": "v2.6.9",
+  "generatedAt": "2026-10-26T20:08:29.506Z",
+  "remoteIntegration": "PROHIBITED",
+  "results": [
+    {
+      "id": "isolation",
+      "command": "node scripts/check-isolation.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS src/routes/admin.tsx\nPASS src/routes/assinante.tsx\nPASS src/routes/ferramentas.$slug.tsx\nPASS src/routes/assinante.ferramentas.$slug.tsx\nPASS DB_ENABLED is false as const (kill switch incondicional)\nPASS getSql rejeita com REMOTE_INTEGRATION_BLOCKED (comportamento observado)\nPASS getPglite rejeita com DATABASE_DISABLED_LOCAL_ONLY (comportamento observado)\nPASS scripts/migrate.mjs guardado\n"
+    },
+    {
+      "id": "context",
+      "command": "node scripts/check-context-invariants.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "{\n  \"checks\": [\n    {\n      \"id\": \"project-instructions-present\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"baseline-present\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"version-register-present\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"git-metadata-present-by-decision\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"baseline-origin-is-backup\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"baseline-has-204-paths\",\n      \"pass\": true\n    },\n    {\n      \"id\": \"crosswalk-deferred\",\n      \"pass\": true\n    }\n  ],\n  \"passed\": 7,\n  \"failed\": 0\n}\n"
+    },
+    {
+      "id": "publication-structure",
+      "command": "node scripts/check-local-publication.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS draft and published are independent slots\nPASS legacy cannot automatically promote\nPASS save does not write published\nPASS publishing is explicit action\nPASS unsaved edits block publishing\nPASS public projection reads published slot\nPASS events have revision linkage\nPASS change signal emitted\nPASS remote db not referenced by register\n"
+    },
+    {
+      "id": "publication-behavior",
+      "command": "node --experimental-strip-types scripts/test-local-publication.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS runtime: separacao rascunho/publicado, publicacao explicita, log de revisao, migracao legada\n"
+    },
+    {
+      "id": "surface-bindings",
+      "command": "node scripts/audit-surface-bindings-v2.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "{\"total\":27,\"withExplicitContracts\":27,\"findings\":0,\"visualHomologations\":0}\n"
+    },
+    {
+      "id": "header-p0",
+      "command": "node scripts/test-header-p0.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS escape_handler\nPASS escape_language_focus\nPASS escape_accessibility_focus\nPASS escape_mobile_menu_focus\nPASS outside_click_cleanup\nPASS language_trigger_ref\nPASS language_focus_selection\nPASS mobile_touch_target\nPASS rtl_language_menu\n9 static assertions passed; browser interaction NOT verified\n"
+    },
+    {
+      "id": "mobile-focus",
+      "command": "node scripts/test-mobile-focus.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS mobile dialog semantics\nPASS localized navigation name\nPASS keyboard trap handles shift tab\nPASS keyboard trap handles forward tab\nPASS keyboard trap attached and removed\nPASS overlay removed from tab order\nPASS escape handler remains\n7/7 static checks passed; browser keyboard test remains required.\n"
+    },
+    {
+      "id": "header-contracts",
+      "command": "node scripts/test-header-contracts.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS menu takes initial focus\nPASS menu search focuses input\nPASS mobile closes and restores focus after navigate\nPASS mobile prevents background scroll\nPASS body scrolling restored on cleanup\nPASS mobile tab cycles\nPASS escape restores trigger\nPASS mobile utility buttons have min touch target\n8/8 static checks passed; browser validation not performed.\n"
+    },
+    {
+      "id": "locale-registry",
+      "command": "node scripts/test-locale-registry.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS: 19 canonical locales, 4 partial dictionaries, SEO policy, shared imports\n"
+    },
+    {
+      "id": "focus-color-i18n",
+      "command": "node scripts/test-focus-colors-i18n.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS: 19 locales / 76 labels / UI binding / no automatic approval\n"
+    },
+    {
+      "id": "country-icons-a11y",
+      "command": "node scripts/test-country-icon-a11y.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS: 8 accessibility invariants; runtime/visual unverified\n"
+    },
+    {
+      "id": "template-contract",
+      "command": "node --experimental-strip-types --import ./scripts/alias-hook.mjs scripts/check-template-contract.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "error": null,
+      "output": "PASS nao-aplicavel-tem-justificativa-e-evidencia — 1 kind(s) nao aplicavel(is)\nPASS todo-kind-tem-pagina-ou-nao-aplicavel — 10 com pagina, 1 nao aplicavel\nPASS uma-pagina-por-kind\nPASS exemplos-referem-se-a-kinds-existentes\nPASS nenhuma-dimensao-do-contrato-e-morta — 7 dimensoes consumidas pelo codigo\nPASS frame-e-note-nao-sao-dimensoes-do-frame — frame e note descrevem a PAGINA; vivem em template-examples.ts\nPASS exemplos-declaram-frame-e-note — 10/10 exemplos declaram frame e note\nPASS todo-template-do-catalogo-declara-a-sua-materia-prima — 30 templates com materia-prima declarada\nPASS toda-pagina-do-catalogo-tem-kind-com-exemplo — 22 paginas com kind conhecido\nPASS frame-e-note-do-catalogo-sao-validos — todos os frames e notas sao validos\nPASS recursos-governados-pelo-contrato — formulario e laudo sao renderizados por decisao do contrato\n\nContrato de template: tudo consistente.\n"
+    },
+    {
+      "id": "vite-bin",
+      "status": "PRESENT",
+      "reason": "local dependency required for build/render"
+    },
+    {
+      "id": "tsc-bin",
+      "status": "PRESENT",
+      "reason": "local dependency required for build/render"
+    },
+    {
+      "id": "playwright-package",
+      "status": "PRESENT",
+      "reason": "local dependency required for build/render"
+    }
+  ],
+  "releaseGate": "BLOCKED"
+}

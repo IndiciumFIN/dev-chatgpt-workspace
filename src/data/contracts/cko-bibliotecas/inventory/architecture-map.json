@@ -1,0 +1,15 @@
+{
+  "model_id": "CKO.LibraryArchitecture.CorrectedInventory.v1.1",
+  "distinctions": {
+    "schema": "Contract/shape, e.g. CKO.Library.schema.json.",
+    "library_entity": "Instance of that schema, e.g. seringa-referencia.library.json or uti-emergencia.library.json.",
+    "content_binding": "ContentPage payload associated with one Library.",
+    "composition_binding": "Layout/composition associated with the ContentPage.",
+    "asset_binding": "Assets used by the page.",
+    "provenance_binding": "Sources/provenance for the page.",
+    "object_extension_schema": "typed_attributes contract for an object type after explicit objectization."
+  },
+  "current_flow": "CKO.Library.schema.json -> <slug>.library.json -> content/composition/assets/provenance -> renderer",
+  "object_flow": "CKO.LibraryObject.schema.json + object extension -> LibraryObject -> dedicated ContentPage",
+  "anti_hallucination": "Do not automatically promote cards/topics into LibraryObjects."
+}

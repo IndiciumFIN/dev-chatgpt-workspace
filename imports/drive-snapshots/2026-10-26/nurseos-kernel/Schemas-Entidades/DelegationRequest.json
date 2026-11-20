@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "candidates": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "capability_id": {
+      "type": "string"
+    },
+    "policies_satisfied": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "requester": {
+      "type": "string"
+    },
+    "selected": {
+      "type": "string"
+    },
+    "selection_reason": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "discovering",
+        "negotiating",
+        "authorized",
+        "executed",
+        "failed_no_provider",
+        "rejected"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "DelegationRequest"
+}

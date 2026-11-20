@@ -1,0 +1,44 @@
+{
+  "template_id": "TPL-FLASHCARD-001",
+  "name": "Flashcard",
+  "version": "0.2.0",
+  "profile": "flashcard",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "offline"
+  ],
+  "required_roles": [
+    "prompt",
+    "answer",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "definition",
+    "references"
+  ],
+  "allowed_block_types": [
+    "flashcard",
+    "figure",
+    "definition",
+    "references",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "web": "flip-or-reveal-card",
+    "print": "duplex-card-grid"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "answer_traceability"
+    ]
+  }
+}

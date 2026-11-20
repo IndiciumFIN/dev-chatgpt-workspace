@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/authority_binding.schema.json",
+  "title": "CKO | authority_binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "field_path",
+    "requirement_id",
+    "source_ids",
+    "authority_class",
+    "validity",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "field_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+      },
+      "minItems": 1
+    },
+    "authority_class": {
+      "type": "string",
+      "enum": [
+        "REGULATORY",
+        "TECHNICAL_STANDARD",
+        "AUTHORITATIVE_TERMINOLOGY",
+        "CLINICAL_EVIDENCE",
+        "INTERNAL_NONCLINICAL"
+      ]
+    },
+    "validity": {
+      "type": "object",
+      "required": [
+        "jurisdiction",
+        "applicable_from"
+      ],
+      "properties": {
+        "jurisdiction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "applicable_from": {
+          "type": "string",
+          "format": "date"
+        },
+        "applicable_until": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "ALLOW",
+        "HOLD_HUMAN",
+        "REJECT",
+        "NOT_APPLICABLE_JUSTIFIED"
+      ]
+    },
+    "validator_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_bundle_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "exception_reason": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

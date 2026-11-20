@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "capability_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "eligibility": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "input_schema_ref": {
+      "type": "string"
+    },
+    "min_trust_score": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "output_schema_ref": {
+      "type": "string"
+    },
+    "provided_by": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "required_policies": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "risk_class": {
+      "enum": [
+        "I",
+        "II",
+        "III"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "available",
+        "no_provider",
+        "deprecated"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "Capability"
+}

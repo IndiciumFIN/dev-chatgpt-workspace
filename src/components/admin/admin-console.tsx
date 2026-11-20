@@ -9,8 +9,6 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode 
 import { PageHero } from '@/components/site/page-hero';
 import { Breadcrumb } from '@/components/site/breadcrumb';
 import { tools } from '@/lib/tools/catalog';
-import { templateCatalogo } from '@/lib/template-catalog';
-import { templateContracts } from '@/lib/template-contract';
 import {
   initialWorkbench, validateWorkbench, exportWorkbench,
   type LocalToolPublication, type LocalWorkbench,
@@ -20,6 +18,11 @@ import {
   type PublicationEvent,
 } from '@/lib/local-publication-register';
 import { PmoPanel } from '@/components/admin/pmo-panel';
+import { AdminErrorBoundary } from '@/components/admin/admin-error-boundary';
+import { AdminOverviewModule } from '@/components/admin/modules/admin-overview-module';
+import { TemplatesPanel } from '@/components/admin/templates-panel';
+import { SourcesPanel } from '@/components/admin/sources-panel';
+import { AdminModuleWorkspace } from '@/components/admin/admin-module-workspace';
 import { CommanderPanel } from '@/components/admin/commander-panel';
 import { AdminSidebarTree } from '@/components/admin/admin-sidebar-tree';
 import { getAdminModule, type AdminModuleId, type AdminSurface } from '@/lib/admin-module-registry';
@@ -54,10 +57,6 @@ function Panel({ children, title, subtitle, action }: { children: ReactNode; tit
 }
 function Indicator({ tone, children }: { tone: 'ok' | 'warn' | 'neutral'; children: ReactNode }) {
   return <span className={`ce-admin-indicator ce-admin-indicator--${tone}`}>{children}</span>;
-}
-function Stat({ label, value, note, icon: Icon }: { label: string; value: string | number; note: string; icon: LucideIcon }) {
-  return <div className="ce-admin-stat"><span className="ce-admin-stat-icon"><Icon size={19} aria-hidden="true" /></span>
-    <span className="ce-admin-stat-label">{label}</span><strong>{value}</strong><small>{note}</small></div>;
 }
 
 export function AdminConsole() {
@@ -172,7 +171,6 @@ export function AdminConsole() {
   const base = tools.find(x => x.slug === selected);
   const publishedCount = published.tools.filter(x => x.published).length;
   const draftCount = model.tools.filter(x => x.published).length;
-  const noPage = templateCatalogo.filter(t => t.url === null);
   const showRisk = dirty || loadingFailed || externalChange || !dataIsValid;
   const activeModule = getAdminModule(selectedModule);
   const pageHeading = tab === 'module-detail' ? activeModule.title : tabs.find(x => x.id === tab)?.label;
@@ -219,38 +217,17 @@ export function AdminConsole() {
           </div>
         </div>
         {tab !== 'pmo' && tab !== 'commander' && <div className={`ce-admin-feedback${statusError ? ' ce-admin-feedback--error' : ''}`} role="status" aria-live="polite"><AlertCircle size={17} aria-hidden="true" /><span>{status}</span></div>}
-        {tab === 'pmo' && <PmoPanel />}
-        {tab === 'commander' && <CommanderPanel />}
-        {tab === 'module-detail' && <Panel title={activeModule.title} subtitle={activeModule.purpose}>
-          <p>Este módulo consta no catálogo administrativo, mas ainda não possui uma superfície operacional conectada.</p>
-          {activeModule.previewScope && <p className="ce-admin-detail-note">{activeModule.previewScope}</p>}
-          <ul>{activeModule.submodules.map(item => <li key={item}>{item}</li>)}</ul>
-        </Panel>}
-        {tab === 'overview' && <>
-          <div className="ce-admin-stats">
-            <Stat label="Instrumentos" value={model.tools.length} note="Catálogo existente" icon={BookOpenCheck} />
-            <Stat label="Publicados aqui" value={publishedCount} note="Projeção do navegador" icon={Eye} />
-            <Stat label="Templates" value={templateCatalogo.length} note={`${noPage.length} ainda sem página`} icon={Layers3} />
-            <Stat label="Revisões" value={revision} note="Histórico local" icon={FileClock} />
-          </div>
-          <Panel title="Sua próxima ação" subtitle="Trabalhe por etapas, sem precisar abrir dezenas de campos.">
-            <div className="ce-admin-next">
-              <div><h3>1. Revise o conteúdo existente</h3><p>Selecione um instrumento, ajuste somente os metadados editoriais e compare o rascunho com a visão de quem acessa o site.</p>
-                <button className="ce-admin-btn ce-admin-btn--primary" type="button" onClick={() => setTab('content')}>Abrir editor <ChevronRight size={16} /></button></div>
-              <div><h3>2. Verifique os contratos</h3><p>Confira templates, fontes identificadas e pendências. Conteúdo clínico ainda depende de revisão qualificada e autorização.</p>
-                <button className="ce-admin-btn" type="button" onClick={() => setTab('sources')}>Conferir fontes <ChevronRight size={16} /></button></div>
-            </div>
-          </Panel>
-          <Panel title="Visão do usuário final" subtitle="Os cartões usam os mesmos metadados da projeção publicada local; não simulam a interface completa de cada calculadora.">
-            <div className="ce-admin-cards">
-              {published.tools.filter(x => x.published).slice(0,4).map(item => <button className="ce-admin-consumer-card" type="button" key={item.slug} onClick={() => { setSelected(item.slug); setPreviewVersion('published'); setTab('content'); }}>
-                <span className="ce-admin-card-kicker">Instrumento · {item.slug}</span><strong>{item.title}</strong><span>{item.lead}</span><span className="ce-admin-card-link">Ver e editar <ArrowUpRight size={14}/></span>
-              </button>)}
-              {publishedCount === 0 && <p>Nenhum instrumento está habilitado na projeção deste navegador.</p>}
-            </div>
-          </Panel>
-        </>}
-        {tab === 'content' && <>
+        {tab === 'pmo' && <AdminErrorBoundary moduleName="PMO"><PmoPanel /></AdminErrorBoundary>}
+        {tab === 'commander' && <AdminErrorBoundary moduleName="Commander"><CommanderPanel /></AdminErrorBoundary>}
+        {tab === 'module-detail' && <AdminErrorBoundary moduleName={activeModule.title} resetKey={selectedModule}>
+          <AdminModuleWorkspace key={selectedModule} moduleId={selectedModule}
+            onOpenExisting={(view) => { if (view === 'governance') { setSelectedModule('M04'); setTab('module-detail'); } else { setTab(view); } }}
+            onEditRecord={id => {setSelected(id);setPreviewVersion('draft');setTab('content');}}/>
+        </AdminErrorBoundary>}
+        {tab === 'overview' && <AdminErrorBoundary moduleName="Visão geral"><AdminOverviewModule model={model} published={published} revision={revision}
+          onOpenContent={() => setTab('content')} onOpenSources={() => setTab('sources')}
+          onSelectPublished={slug => { setSelected(slug); setPreviewVersion('published'); setTab('content'); }} /></AdminErrorBoundary>}
+        {tab === 'content' && <AdminErrorBoundary moduleName="content">
           <div className="ce-admin-content-grid">
             <Panel title="Catálogo de instrumentos" subtitle={`${visibleTools.length} de ${model.tools.length} itens no registro local.`}>
               <div className="ce-admin-filterbar">
@@ -288,39 +265,15 @@ export function AdminConsole() {
               </div>
             </div>}
           </Panel>
-        </>}
-        {tab === 'templates' && <Panel title="Inventário canônico de templates" subtitle="Derivado diretamente de template-catalog.ts e template-contract.ts; os contratos não são alterados por este painel.">
-          <div className="ce-admin-table-scroll"><table className="ce-admin-table"><thead><tr><th>Template / família</th><th>Contrato</th><th>Origem / matéria-prima</th><th>Disponibilidade</th></tr></thead><tbody>
-            {templateCatalogo.map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
-          </tbody></table></div>
-          <p className="ce-admin-detail-note">Contrato da área administrativa: hero <strong>{templateContracts.area.hero}</strong>, breadcrumbs <strong>{String(templateContracts.area.crumbs)}</strong>. A ausência de página não é aprovação de conteúdo.</p>
-        </Panel>}
-        {tab === 'sources' && <>
-          <div className="ce-admin-stats ce-admin-stats--three"><Stat label="Registros clínicos" value={tools.length} note="Catálogo de ferramentas no código" icon={BookOpenCheck}/><Stat label="Sem página de template" value={noPage.length} note="Inventário, não erro automático" icon={Layers3}/><Stat label="Escrita remota" value="Bloqueada" note="Kill switch preservado" icon={LockKeyhole}/></div>
-          <Panel title="Proveniência exibida por instrumento" subtitle="Referências e IDs vêm do catálogo. Sua existência não comprova licença, vigência ou revisão clínica.">
-            <div className="ce-admin-sources">
-              {tools.map(item => <details key={item.slug}><summary><span><strong>{item.title}</strong><small>{item.slug} · {item.status} · {item.publicacao}</small></span><ChevronRight size={17}/></summary>
-                <div><h3>Identificadores de fonte</h3>{item.sourceIds?.length ? <ul>{item.sourceIds.map(id => <li key={id}><code>{id}</code></li>)}</ul> : <p>Sem identificador de fonte.</p>}
-                  <h3>Referências declaradas</h3>{item.references?.length ? <ol>{item.references.map((ref, index) => <li key={`${item.slug}-${index}`}>{ref}</li>)}</ol> : <p>Nenhuma referência declarada.</p>}
-                  <p className="ce-admin-source-warning">HOLD de revisão: verificar origem, direitos, versão, jurisdição, binding por campo e testes-ouro antes de promoção clínica.</p>
-                </div>
-              </details>)}
-            </div>
-          </Panel>
-          <Panel title="Camadas de autoridade" subtitle="A área administrativa é o ponto único de controle desejado; esta etapa somente consome os contratos existentes.">
-            <div className="ce-admin-authority">
-              <div><strong>Normas e fontes</strong><p>Proveniência, licença, jurisdição, vigência e evidências.</p><Indicator tone="warn">Revisão necessária</Indicator></div>
-              <div><strong>Dados e regras</strong><p>CKO, campos, fórmula, interpretação e validações.</p><Indicator tone="warn">Release clínico bloqueado</Indicator></div>
-              <div><strong>Interface e publicação</strong><p>Design system, template e projeção por público.</p><Indicator tone="ok">Contrato consumido</Indicator></div>
-            </div>
-          </Panel>
-        </>}
-        {tab === 'publication' && <>
+        </AdminErrorBoundary>}
+        {tab === 'templates' && <AdminErrorBoundary moduleName="Templates"><TemplatesPanel /></AdminErrorBoundary>}
+        {tab === 'sources' && <AdminErrorBoundary moduleName="Fontes"><SourcesPanel /></AdminErrorBoundary>}
+        {tab === 'publication' && <AdminErrorBoundary moduleName="Publicação"><>
           <Panel title="Controle de alterações e publicação" subtitle="O ato de publicar aqui altera apenas a projeção deste navegador. Não aciona GitHub, Vercel ou Supabase.">
             <div className="ce-admin-publication-state"><div><span>Rascunho marcado para exibição</span><strong>{draftCount} / {model.tools.length}</strong></div><div><span>Publicado no navegador</span><strong>{publishedCount} / {published.tools.length}</strong></div><div><span>Última revisão</span><strong>#{revision}</strong></div></div>
             <div className="ce-admin-publish-actions"><button type="button" className="ce-admin-btn ce-admin-btn--primary" onClick={save} disabled={!dirty || !dataIsValid || externalChange || loadingFailed}><Check size={16}/> Salvar rascunho local</button>
               <label className="ce-admin-confirm"><input type="checkbox" checked={confirmation} onChange={e => setConfirmation(e.target.checked)} disabled={dirty || loadingFailed || externalChange} /><span>Entendo que esta publicação é apenas local e não constitui homologação clínica.</span></label>
-              <button type="button" className="ce-admin-btn" onClick={publish} disabled={dirty}><Eye size={16}/> Publicar rascunho salvo (local)</button>
+              <button type="button" className="ce-admin-btn" onClick={publish} disabled={dirty || !confirmation || !dataIsValid || externalChange || loadingFailed}><Eye size={16}/> Publicar rascunho salvo (local)</button>
               <p className="ce-admin-detail-note">A publicação exige confirmação explícita; alterações ainda não salvas, conflito de revisão e registro inválido bloqueiam a operação.</p>
             </div>
           </Panel>
@@ -332,7 +285,7 @@ export function AdminConsole() {
           <Panel title="Histórico de revisões" subtitle="Até 500 eventos validados por sequência e ID no navegador. Não é auditoria imutável de servidor.">
             {events.length ? <ol className="ce-admin-history">{[...events].reverse().slice(0,20).map(event => <li key={event.id}><ClipboardCheck size={18}/><div><strong>{event.action === 'PUBLISHED' ? 'Publicação local' : 'Rascunho salvo'}</strong><small>{event.at} · Revisão {event.revision} · anterior {event.previousRevision}</small></div></li>)}</ol> : <p>Nenhuma alteração registrada nesta instalação.</p>}
           </Panel>
-        </>}
+        </></AdminErrorBoundary>}
       </div>
     </div>
   </main>;

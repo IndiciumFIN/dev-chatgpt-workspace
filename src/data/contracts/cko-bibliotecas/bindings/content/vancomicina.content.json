@@ -1,0 +1,1347 @@
+{
+  "schema_version": "2.0.0",
+  "identity": {
+    "slug": "vancomicina",
+    "id": null,
+    "state": "decision_required"
+  },
+  "title": "Vancomicina",
+  "subtitle": "Objeto de medicamento com informações clínicas, administração, compatibilidades, materiais, segurança e cálculo de dose.",
+  "template_family": "clinical-object",
+  "archetype_id": "medication_object",
+  "domain": {
+    "domain_id": "medications",
+    "display_label": "Medicamentos"
+  },
+  "locale": "pt-BR",
+  "jurisdiction": {
+    "state": "decision_required",
+    "value": null
+  },
+  "governance": {
+    "lifecycle_status": "template_evaluation",
+    "review_status": "not_reviewed",
+    "evidence_verification_status": "not_verified",
+    "approved_by": null,
+    "last_reviewed": null
+  },
+  "badges": [
+    {
+      "label": "Antibiótico"
+    },
+    {
+      "label": "Glicopeptídeo"
+    },
+    {
+      "label": "Alta Vigilância"
+    }
+  ],
+  "breadcrumbs": [
+    "Início",
+    "Medicamentos",
+    "Vancomicina"
+  ],
+  "navigation": {
+    "active_tab_id": "visao-geral",
+    "tabs": [
+      {
+        "tab_id": "visao-geral",
+        "label": "Visão Geral",
+        "status": "mapped",
+        "module_refs": [
+          "overview",
+          "high-alert",
+          "administration",
+          "materials-and-devices",
+          "step-by-step-technique",
+          "related-content",
+          "videos-and-techniques",
+          "related-articles",
+          "evidence-footer",
+          "iv-compatibilities",
+          "adverse-events",
+          "dose-calculator",
+          "clinical-simulator",
+          "page-actions"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "administracao",
+        "label": "Administração",
+        "status": "mapped",
+        "module_refs": [
+          "administration",
+          "dose-calculator"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "compatibilidades",
+        "label": "Compatibilidades",
+        "status": "mapped",
+        "module_refs": [
+          "iv-compatibilities"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "materiais",
+        "label": "Materiais",
+        "status": "mapped",
+        "module_refs": [
+          "materials-and-devices"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "monitorizacao",
+        "label": "Monitorização",
+        "status": "mapped",
+        "module_refs": [
+          "clinical-simulator",
+          "evidence-footer"
+        ],
+        "selectors": []
+      },
+      {
+        "tab_id": "processo-de-enfermagem",
+        "label": "Processo de Enfermagem",
+        "status": "mapped",
+        "module_refs": [
+          "related-content",
+          "clinical-simulator",
+          "adverse-events"
+        ],
+        "selectors": [
+          {
+            "module_id": "related-content",
+            "group_title_contains": [
+              "Nursing Diagnoses",
+              "Protocols"
+            ]
+          },
+          {
+            "module_id": "clinical-simulator"
+          },
+          {
+            "module_id": "adverse-events"
+          }
+        ]
+      }
+    ],
+    "overflow_control": {
+      "present": true,
+      "label": "+",
+      "status": "DECISION_REQUIRED",
+      "provenance": {
+        "class": "A",
+        "derivation": "O controle '+' consta na fonte como affordance de navegação; não é tratado como aba de conteúdo."
+      }
+    }
+  },
+  "modules": [
+    {
+      "module_id": "overview",
+      "module_type": "overview",
+      "semantic_role": "orientation",
+      "title": "Visão Geral",
+      "priority": 1,
+      "payload": {
+        "media": {
+          "src": "../assets/vancomicina/hero_vancomicina_transparent.png",
+          "alt": "Imagem principal de Vancomicina",
+          "raw": {
+            "primary_image": {
+              "role": "medication_packshot",
+              "visible_label": "VANCOMICINA 500 mg",
+              "asset_ref": "DECISION_REQUIRED",
+              "provenance_class": "A"
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "primary",
+            "title": "Informações clínicas",
+            "items": []
+          },
+          {
+            "id": "secondary",
+            "title": "Dose habitual",
+            "items": [
+              {
+                "id": "calculator-link-available",
+                "title": "Calculator Link Available",
+                "subtitle": "",
+                "description": "True",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/overview"
+    },
+    {
+      "module_id": "high-alert",
+      "module_type": "warning_list",
+      "semantic_role": "safety",
+      "title": "Atenção clínica",
+      "priority": 10,
+      "payload": {
+        "items": []
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/high-alert"
+    },
+    {
+      "module_id": "administration",
+      "module_type": "grouped_list",
+      "semantic_role": "intervention",
+      "title": "Administração",
+      "priority": 20,
+      "payload": {
+        "groups": [
+          {
+            "title": "Route",
+            "items": [
+              {
+                "id": "label",
+                "title": "label",
+                "subtitle": "",
+                "description": "Via",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "value",
+                "title": "value",
+                "subtitle": "",
+                "description": "Endovenosa (EV)",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance-class",
+                "title": "provenance_class",
+                "subtitle": "",
+                "description": "A",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Dilution",
+            "items": [
+              {
+                "id": "label",
+                "title": "label",
+                "subtitle": "",
+                "description": "Diluição",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "value",
+                "title": "value",
+                "subtitle": "",
+                "description": "Diluir em SF 0,9%",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance-class",
+                "title": "provenance_class",
+                "subtitle": "",
+                "description": "A",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Maximum Concentration",
+            "items": [
+              {
+                "id": "label",
+                "title": "label",
+                "subtitle": "",
+                "description": "Concentração",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "value",
+                "title": "value",
+                "subtitle": "",
+                "description": "5 mg/mL (máx)",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance-class",
+                "title": "provenance_class",
+                "subtitle": "",
+                "description": "A",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Infusion Time",
+            "items": [
+              {
+                "id": "label",
+                "title": "label",
+                "subtitle": "",
+                "description": "Tempo de infusão",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "value",
+                "title": "value",
+                "subtitle": "",
+                "description": "60–120 minutos",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance-class",
+                "title": "provenance_class",
+                "subtitle": "",
+                "description": "A",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Pump Compatible",
+            "items": [
+              {
+                "id": "label",
+                "title": "label",
+                "subtitle": "",
+                "description": "Compatível com bomba",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "value",
+                "title": "value",
+                "subtitle": "",
+                "description": "True",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "display",
+                "title": "display",
+                "subtitle": "",
+                "description": "Sim",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "provenance-class",
+                "title": "provenance_class",
+                "subtitle": "",
+                "description": "A",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/administration"
+    },
+    {
+      "module_id": "materials-and-devices",
+      "module_type": "grouped_list",
+      "semantic_role": "resource",
+      "title": "Materiais e dispositivos recomendados",
+      "priority": 30,
+      "payload": {
+        "groups": [
+          {
+            "title": "Preview Items",
+            "items": [
+              {
+                "id": "equipo-para-bomba-em-infusao",
+                "title": "Equipo para bomba (em infusão)",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_equipo_bomba_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "filtro-de-linha-0-22-m",
+                "title": "Filtro de linha 0,22 µm",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_filtro_linha_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "seringa-10-20-ml-luer-lock",
+                "title": "Seringa 10-20 mL Luer Lock",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_seringa_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "bomba-de-infusao-volumetrica",
+                "title": "Bomba de infusão (volumétrica)",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_bomba_infusao_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "alcool-cap",
+                "title": "Álcool Cap",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_alcool_cap_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              },
+              {
+                "id": "extensor-de-linha-min-10-cm",
+                "title": "Extensor de linha (min. 10 cm)",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_extensor_linha_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {}
+              }
+            ]
+          },
+          {
+            "title": "Declared Total",
+            "items": [
+              {
+                "id": "declared-total",
+                "title": "12",
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/materials-and-devices"
+    },
+    {
+      "module_id": "step-by-step-technique",
+      "module_type": "grouped_list",
+      "semantic_role": "workflow",
+      "title": "Técnica passo a passo",
+      "priority": 40,
+      "payload": {
+        "groups": [
+          {
+            "title": "Steps",
+            "items": [
+              {
+                "id": "higienizar-as-maos",
+                "title": "Higienizar as mãos.",
+                "subtitle": "",
+                "description": "Higienizar as mãos.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 1
+                }
+              },
+              {
+                "id": "conferir-prescricao-10-certos",
+                "title": "Conferir prescrição (10 certos).",
+                "subtitle": "",
+                "description": "Conferir prescrição (10 certos).",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 2
+                }
+              },
+              {
+                "id": "reconstituir-o-frasco-com-ad-diluente-conforme-fabricante",
+                "title": "Reconstituir o frasco com AD diluente conforme fabricante.",
+                "subtitle": "",
+                "description": "Reconstituir o frasco com AD diluente conforme fabricante.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 3
+                }
+              },
+              {
+                "id": "diluir-na-solucao-prescrita",
+                "title": "Diluir na solução prescrita.",
+                "subtitle": "",
+                "description": "Diluir na solução prescrita.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 4
+                }
+              },
+              {
+                "id": "infundir-no-tempo-recomendado",
+                "title": "Infundir no tempo recomendado.",
+                "subtitle": "",
+                "description": "Infundir no tempo recomendado.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 5
+                }
+              },
+              {
+                "id": "monitorar-sinais-vitais-e-reacoes",
+                "title": "Monitorar sinais vitais e reações.",
+                "subtitle": "",
+                "description": "Monitorar sinais vitais e reações.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 6
+                }
+              },
+              {
+                "id": "registrar-cuidados-e-orientacoes",
+                "title": "Registrar cuidados e orientações.",
+                "subtitle": "",
+                "description": "Registrar cuidados e orientações.",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "order": 7
+                }
+              }
+            ]
+          },
+          {
+            "title": "Full Technique With Images Available",
+            "items": [
+              {
+                "id": "full-technique-with-images-available",
+                "title": "True",
+                "attributes": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/step-by-step-technique"
+    },
+    {
+      "module_id": "related-content",
+      "module_type": "grouped_list",
+      "semantic_role": "orientation",
+      "title": "Conteúdos relacionados",
+      "priority": 50,
+      "payload": {
+        "groups": [
+          {
+            "title": "Procedures",
+            "items": [
+              {
+                "id": "puncao-de-picc",
+                "title": "Punção de PICC",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "preparo-e-administracao-ev",
+                "title": "Preparo e administração EV",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "troca-de-equipo",
+                "title": "Troca de equipo",
+                "subtitle": "",
+                "description": "",
+                "image": "../assets/vancomicina/material_equipo_bomba_transparent.png",
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Scales",
+            "items": [
+              {
+                "id": "news",
+                "title": "NEWS",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "sofa",
+                "title": "SOFA",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "risco-para-flebite-ins",
+                "title": "Risco para flebite (INS)",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Nursing Diagnoses",
+            "items": [
+              {
+                "id": "risco-de-infeccao",
+                "title": "Risco de infecção",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "perfusao-tissular-ineficaz",
+                "title": "Perfusão tissular ineficaz",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "integridade-da-pele-prejudicada",
+                "title": "Integridade da pele prejudicada",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Protocols",
+            "items": [
+              {
+                "id": "protocolo-institucional-de-antimicrobianos",
+                "title": "Protocolo institucional de antimicrobianos",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              },
+              {
+                "id": "bundle-de-prevencao-de-ipcsl",
+                "title": "Bundle de prevenção de IPCSL",
+                "subtitle": "",
+                "description": "",
+                "image": null,
+                "icon": null,
+                "badge": null,
+                "sequence": null,
+                "metric": null,
+                "items": [],
+                "attributes": {
+                  "target_ref": "DECISION_REQUIRED"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/related-content"
+    },
+    {
+      "module_id": "videos-and-techniques",
+      "module_type": "media_grid",
+      "semantic_role": "media",
+      "title": "Vídeos e técnicas",
+      "priority": 60,
+      "payload": {
+        "items": [
+          {
+            "id": "preparo-de-vancomicina-passo-a-passo",
+            "title": "Preparo de Vancomicina — Passo a passo",
+            "subtitle": "04:28",
+            "description": "",
+            "image": "../assets/vancomicina/hero_vancomicina_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "target_ref": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "infusao-segura-na-bomba-volumetrica",
+            "title": "Infusão segura na bomba volumétrica",
+            "subtitle": "03:15",
+            "description": "",
+            "image": "../assets/vancomicina/material_bomba_infusao_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "target_ref": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "prevencao-de-flebite-e-infiltracao",
+            "title": "Prevenção de flebite e infiltração",
+            "subtitle": "02:40",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "target_ref": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/videos-and-techniques"
+    },
+    {
+      "module_id": "related-articles",
+      "module_type": "reference_list",
+      "semantic_role": "reference",
+      "title": "Artigos relacionados",
+      "priority": 70,
+      "payload": {
+        "items": [
+          {
+            "id": "administracao-segura-de-antibioticos-na-enfermagem",
+            "title": "Administração segura de antibióticos na enfermagem",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "citation_display": "Rev. Enferm. Atual, 2023",
+              "target_ref": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "vancomicina-monitorizacao-e-seguranca-do-paciente",
+            "title": "Vancomicina: monitorização e segurança do paciente",
+            "subtitle": "",
+            "description": "",
+            "image": "../assets/vancomicina/hero_vancomicina_transparent.png",
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "citation_display": "Acta Paul. Enferm., 2022",
+              "target_ref": "DECISION_REQUIRED"
+            }
+          },
+          {
+            "id": "tecnicas-para-prevencao-de-flebite-em-terapia-iv",
+            "title": "Técnicas para prevenção de flebite em terapia IV",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {
+              "citation_display": "Rev. SOBECC, 2021",
+              "target_ref": "DECISION_REQUIRED"
+            }
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/related-articles"
+    },
+    {
+      "module_id": "evidence-footer",
+      "module_type": "status_panel",
+      "semantic_role": "monitoring",
+      "title": "Base de evidências",
+      "priority": 80,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "References Display",
+            "items": [
+              "ANVISA",
+              "INS",
+              "CDC",
+              "WHO",
+              "SBCC",
+              "Protocolos institucionais"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/evidence-footer"
+    },
+    {
+      "module_id": "iv-compatibilities",
+      "module_type": "compatibility",
+      "semantic_role": "safety",
+      "title": "Compatibilidades IV",
+      "priority": 10,
+      "payload": {
+        "tabs": [
+          "Y-SITE",
+          "SOLUÇÕES",
+          "MEDICAMENTOS"
+        ],
+        "active_tab": "Y-SITE",
+        "positive": [
+          {
+            "label": "Meropenem",
+            "item_type": "medication",
+            "provenance_class": "A"
+          },
+          {
+            "label": "Piperacilina/Tazobactam",
+            "item_type": "medication",
+            "provenance_class": "A"
+          },
+          {
+            "label": "SF 0,9%",
+            "item_type": "solution",
+            "provenance_class": "A"
+          }
+        ],
+        "negative": [
+          {
+            "label": "Ceftriaxona",
+            "item_type": "medication",
+            "provenance_class": "A"
+          },
+          {
+            "label": "Furosemida",
+            "item_type": "medication",
+            "provenance_class": "A"
+          },
+          {
+            "label": "Ranitidina",
+            "item_type": "medication",
+            "provenance_class": "A"
+          }
+        ],
+        "attention": []
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/iv-compatibilities"
+    },
+    {
+      "module_id": "adverse-events",
+      "module_type": "list_panel",
+      "semantic_role": "orientation",
+      "title": "Eventos adversos",
+      "priority": 20,
+      "payload": {
+        "items": [
+          {
+            "id": "nefrotoxicidade",
+            "title": "Nefrotoxicidade",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "ototoxicidade",
+            "title": "Ototoxicidade",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "sindrome-do-homem-vermelho",
+            "title": "Síndrome do homem vermelho",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "flebite",
+            "title": "Flebite",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          },
+          {
+            "id": "reacoes-alergicas",
+            "title": "Reações alérgicas",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {}
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/adverse-events"
+    },
+    {
+      "module_id": "dose-calculator",
+      "module_type": "calculator",
+      "semantic_role": "tool",
+      "title": "Calculadora de dose",
+      "priority": 30,
+      "payload": {
+        "model": {
+          "observed_reference_state": {
+            "weight_kg": 70,
+            "second_control_label": "Dose (mg/kg/dose)",
+            "second_control_value_display": "12/12h",
+            "additional_label_visible": "Dose (mg/kg/dose)",
+            "dose_per_application_mg": 1050,
+            "next_dose_display": "Hoje às 20:00",
+            "provenance_class": "A"
+          },
+          "normalized_input_model": {
+            "weight_kg": {
+              "type": "number",
+              "required": true
+            },
+            "dose_mg_per_kg_per_dose": {
+              "type": "number",
+              "required": true
+            },
+            "interval_hours": {
+              "type": "number",
+              "required": true
+            },
+            "provenance_class": "B"
+          },
+          "derived_observation": {
+            "calculated_mg_per_kg_from_visible_result": 15.0,
+            "calculation": "1050 mg / 70 kg = 15 mg/kg/dose",
+            "ui_consistency_status": "mismatch_detected",
+            "note": "O valor visível '12/12h' representa intervalo, mas aparece sob um rótulo de dose. O modelo normalizado separa dose e intervalo.",
+            "provenance_class": "B"
+          }
+        }
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/dose-calculator"
+    },
+    {
+      "module_id": "clinical-simulator",
+      "module_type": "status_panel",
+      "semantic_role": "monitoring",
+      "title": "Simulador / caso clínico",
+      "priority": 40,
+      "payload": {
+        "groups": [
+          {
+            "tone": "neutral",
+            "title": "Input Domains",
+            "items": [
+              "Prescrição médica",
+              "Resultados de exames",
+              "Evolução clínica"
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/clinical-simulator"
+    },
+    {
+      "module_id": "page-actions",
+      "module_type": "actions",
+      "semantic_role": "action",
+      "title": "Imprimir / compartilhar",
+      "priority": 50,
+      "payload": {
+        "items": [
+          {
+            "id": "favoritar",
+            "title": "Favoritar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "favorite",
+              "action": "open"
+            }
+          },
+          {
+            "id": "compartilhar",
+            "title": "Compartilhar",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "share",
+              "action": "open"
+            }
+          },
+          {
+            "id": "imprimir",
+            "title": "Imprimir",
+            "subtitle": "",
+            "description": "",
+            "image": null,
+            "icon": null,
+            "badge": null,
+            "sequence": null,
+            "metric": null,
+            "items": [],
+            "attributes": {},
+            "cta": {
+              "label": "print",
+              "action": "open"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "favoritar",
+          "title": "Favoritar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "favorite",
+            "action": "open"
+          }
+        },
+        {
+          "id": "compartilhar",
+          "title": "Compartilhar",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "share",
+            "action": "open"
+          }
+        },
+        {
+          "id": "imprimir",
+          "title": "Imprimir",
+          "subtitle": "",
+          "description": "",
+          "image": null,
+          "icon": null,
+          "badge": null,
+          "sequence": null,
+          "metric": null,
+          "items": [],
+          "attributes": {},
+          "cta": {
+            "label": "print",
+            "action": "open"
+          }
+        }
+      ],
+      "provenance_ref": "../provenance/pages/vancomicina.provenance.json#/module_provenance/page-actions"
+    }
+  ],
+  "asset_manifest_ref": "../../assets/pages/vancomicina.assets.json",
+  "provenance_manifest_ref": "../../provenance/pages/vancomicina.provenance.json"
+}

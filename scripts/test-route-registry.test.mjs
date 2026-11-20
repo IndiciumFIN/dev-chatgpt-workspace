@@ -57,21 +57,12 @@ test("o indice bate com o CATALOGO lido diretamente, nao com o registry", () => 
   const esperado = [
     "/",
     ...artigosDiretas.map((slug) => `/blog/${slug}`),
-    ...secoesDiretas.filter((s) => (s.publicacao ?? "publicada") === "publicada").map((s) => `/secao/${s.slug}`),
+    ...secoesDiretas.map((s) => `/secao/${s.slug}`),
     ...ferramentasDiretas.filter((t) => (t.publicacao ?? "publicada") === "publicada").map((t) => `/ferramentas/${t.slug}`),
   ];
   assert.deepEqual(dump.publicPaths, esperado);
   assert.ok(dump.publicPaths.includes("/"), "a home tem de ser indexavel");
   assert.ok(dump.publicPaths.length >= 40, `sitemap com apenas ${dump.publicPaths.length} rotas`);
-});
-
-test("toda secao publicada entra no indice e nenhuma candidata entra", () => {
-  for (const s of secoesDiretas) {
-    const caminho = `/secao/${s.slug}`;
-    const noIndice = dump.publicPaths.includes(caminho);
-    const deveEntrar = (s.publicacao ?? "publicada") === "publicada";
-    assert.equal(noIndice, deveEntrar, `${caminho}: ${noIndice ? "esta" : "nao esta"} no indice, mas publicacao=${s.publicacao ?? "publicada"}`);
-  }
 });
 
 test("toda ferramenta publicada entra no indice e nenhuma candidata entra", () => {

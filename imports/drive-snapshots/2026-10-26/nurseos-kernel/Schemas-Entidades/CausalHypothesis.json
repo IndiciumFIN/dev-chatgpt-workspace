@@ -1,0 +1,63 @@
+{
+  "properties": {
+    "counterfactual": {
+      "type": "string"
+    },
+    "cko_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "expected_effect": {
+      "type": "string"
+    },
+    "hypothesis": {
+      "type": "string"
+    },
+    "hypothesis_id": {
+      "type": "string"
+    },
+    "intervention": {
+      "type": "string"
+    },
+    "method": {
+      "enum": [
+        "temporal_precedence",
+        "counterfactual_simulation",
+        "observational_study",
+        "rct_evidence",
+        "expert_elicitation"
+      ],
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "safety_note": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "hypothesis",
+        "testing",
+        "supported",
+        "refuted",
+        "inconclusive"
+      ],
+      "type": "string"
+    },
+    "twin_ref": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "CausalHypothesis"
+}

@@ -1,0 +1,40 @@
+{
+  "behavior_profiles": [
+    {
+      "agent_slug": "sae-copilot",
+      "baseline": {
+        "avg_drafts_per_shift": 12,
+        "avg_tool_calls_per_hour": 6,
+        "avg_data_volume_mb": 45,
+        "peak_hours": ["07:00-09:00", "19:00-21:00"]
+      },
+      "envelope": {
+        "max_drafts_per_hour": 8,
+        "max_tool_calls_per_hour": 20,
+        "max_data_volume_mb_per_session": 120,
+        "allowed_tools": ["mcp:cko-medications", "mcp:cko-procedures", "fhir:observation-read"]
+      },
+      "anomalies_detected": 1,
+      "last_updated": "2026-09-03",
+      "status": "active"
+    },
+    {
+      "agent_slug": "pews-sentinel",
+      "baseline": {
+        "avg_alerts_per_shift": 3,
+        "avg_tool_calls_per_hour": 2,
+        "avg_data_volume_mb": 20,
+        "peak_hours": ["turnos com troca de plantão"]
+      },
+      "envelope": {
+        "max_alerts_per_hour": 10,
+        "max_tool_calls_per_hour": 12,
+        "max_data_volume_mb_per_session": 80,
+        "allowed_tools": ["fhir:observation-subscription", "mcp:cko-procedures"]
+      },
+      "anomalies_detected": 1,
+      "last_updated": "2026-09-03",
+      "status": "review_required"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ const load=()=>({
  lock:JSON.parse(readFileSync('package-lock.json','utf8'))
 });
 test('R82: Better Auth direct, root lock and adapter integrity are consistent',()=>{
- const r=validate(load());assert.equal(r.betterAuth,'1.7.15');assert.equal(r.verifiedDependencies,4);
+ const r=validate(load());assert.equal(r.betterAuth,'1.7.14');assert.equal(r.verifiedDependencies,4);
  assert.equal(r.oauthRuntimeStatus,'NOT_VERIFIED');
 });
 test('R82: updating only package manifest fails closed',()=>{

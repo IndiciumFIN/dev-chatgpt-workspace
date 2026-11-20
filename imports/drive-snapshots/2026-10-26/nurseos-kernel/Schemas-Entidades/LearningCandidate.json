@@ -1,0 +1,44 @@
+{
+  "properties": {
+    "applied_to_production": {
+      "type": "boolean"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "change_type": {
+      "enum": [
+        "finetune_sample",
+        "prompt_update",
+        "policy_update",
+        "cko_update",
+        "model_update"
+      ],
+      "type": "string"
+    },
+    "evidence_ref": {
+      "type": "string"
+    },
+    "proposed_change": {
+      "type": "string"
+    },
+    "source_run_ref": {
+      "type": "string"
+    },
+    "target_agent": {
+      "type": "string"
+    },
+    "validation_status": {
+      "enum": [
+        "proposed",
+        "offline_validated",
+        "certified",
+        "rejected"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "LearningCandidate"
+}

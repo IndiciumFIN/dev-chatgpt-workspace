@@ -1,0 +1,56 @@
+{
+  "template_id": "TPL-INFOGRAPHIC-001",
+  "name": "Infographic",
+  "version": "0.2.0",
+  "profile": "infographic",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "social"
+  ],
+  "required_roles": [
+    "title",
+    "key_message",
+    "source_note",
+    "metadata"
+  ],
+  "optional_roles": [
+    "figure",
+    "diagram",
+    "chart",
+    "comparison",
+    "timeline"
+  ],
+  "allowed_block_types": [
+    "title",
+    "lead",
+    "claim",
+    "figure",
+    "diagram",
+    "table",
+    "chart",
+    "callout",
+    "steps",
+    "timeline",
+    "comparison",
+    "references",
+    "metadata",
+    "footer"
+  ],
+  "layout_contract": {
+    "web": "responsive-visual-story",
+    "print": "poster-or-page"
+  },
+  "governance": {
+    "facts_from_canonical_only": true,
+    "resources_from_registry_only": true,
+    "rights_gate": true,
+    "a11y_gate": true,
+    "evidence_gate": true,
+    "special_gates": [
+      "complex_image_accessibility",
+      "data_contract_for_charts"
+    ]
+  }
+}

@@ -1,9 +1,10 @@
-import { siteOrigin } from "@/lib/seo";
+import { siteOrigin } from "@/lib/site-origin";
 import { indexablePaths } from "@/lib/route-registry";
 import { tools } from "@/lib/tools/catalog";
+import { listSections } from "@/lib/sections";
+import { articleSlugs } from "@/lib/content/articles/index";
 
 export type ContractCheck = { id: string; ok: boolean; detail: string };
-export type ContractPage = { slug: string; items: string[] };
 
 export function nandaLabels() {
   const labels = new Set<string>();
@@ -15,6 +16,14 @@ export function nandaLabels() {
   return [...labels];
 }
 
+/**
+ * Os caminhos que entram no sitemap.
+ *
+ * Deriva do ROUTE REGISTRY (UTC-051): a rota e declarada uma vez, com titulo,
+ * descricao e se e indexavel. Nao ha mais lista de rotas parallelas — nao
+ * existe mais como um caminho estar no sitemap e nao ter canonical, ou vice
+ * versa.
+ */
 export function publicPaths() {
   return indexablePaths();
 }
@@ -26,7 +35,7 @@ export function sitemapXml() {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
 }
 
-export function contractReport(pages: ContractPage[]): ContractCheck[] {
+export function contractReport(): ContractCheck[] {
   const checks: ContractCheck[] = [];
   const slugs = tools.map((tool) => tool.slug);
   checks.push({
@@ -49,20 +58,28 @@ export function contractReport(pages: ContractPage[]): ContractCheck[] {
       detail: hasBody && hasInput ? `${tool.title}: texto, entrada e referência.` : `${tool.title}: falta conteúdo do contrato.`,
     });
   }
+  const sections = listSections();
   const required = ["politicas", "mapa", "acessibilidade", "compromisso", "simulados", "nanda", "glossario"];
   checks.push({
     id: "secoes",
-    ok: required.every((slug) => pages.some((page) => page.slug === slug)),
+    ok: required.every((slug) => sections.some((section) => section.slug === slug)),
     detail: "Políticas, mapa, acessibilidade, compromisso, simulado, NANDA e glossário existem.",
   });
   const nanda = nandaLabels();
-  const listed = new Set(pages.find((page) => page.slug === "nanda")?.items ?? []);
+  const listed = new Set(
+    sections.find((section) => section.slug === "nanda")?.blocks.flatMap((block) => block.items.map((item) => item.title)) ?? [],
+  );
   checks.push({
     id: "nanda",
     ok: nanda.length > 0 && nanda.every((label) => listed.has(label)),
     detail: nanda.every((label) => listed.has(label))
       ? "Cada sugestão NANDA das escalas aparece no índice."
       : "Há sugestão NANDA sem página de índice.",
+  });
+  checks.push({
+    id: "artigos",
+    ok: articleSlugs.length > 0 && new Set(articleSlugs).size === articleSlugs.length,
+    detail: `${articleSlugs.length} artigo(s) no catalogo, com endereço único.`,
   });
   checks.push({
     id: "mapa",

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-claim-reconciliation:v1.0.0",
+  "title": "CKO Vaccine Claim Reconciliation",
+  "type": "object",
+  "required": [
+    "reconciliation_id",
+    "vaccine_ref",
+    "pni_claim_ref",
+    "counterpart_field",
+    "status",
+    "decision",
+    "authority_precedence",
+    "reviewed_on"
+  ],
+  "properties": {
+    "reconciliation_id": {
+      "type": "string",
+      "pattern": "^cko\\.recon\\.vaccine\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "variant_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pni_claim_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sbim_claim_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "counterpart_field": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "concordant",
+        "concordant_programmatic",
+        "concordant_with_variant_scope",
+        "complementary",
+        "different_scope",
+        "temporal_difference",
+        "conflict",
+        "counterpart_not_extracted"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "keep_both",
+        "pni_precedence_in_program_scope",
+        "no_merge_required",
+        "requires_human_resolution"
+      ]
+    },
+    "authority_precedence": {
+      "const": "PNI_for_CNV_2026_and_SUS_program_rules"
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "reviewed_on": {
+      "const": "2026-08-09"
+    },
+    "next_review_due": {
+      "const": "2027-01-31"
+    }
+  },
+  "additionalProperties": false
+}

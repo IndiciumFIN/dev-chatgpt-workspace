@@ -1,0 +1,122 @@
+{
+ "stack_id": "NK-STACK-0001",
+ "version": "1.0.0",
+ "status": "documented-under-OS",
+ "platform": {
+  "name": "Base44 (app 6a66b1a87d027966b69a3423)",
+  "sdk": "@base44/sdk@0.8.31",
+  "why": "backend gerenciado, entidades com schema JSON, funções Deno/TS, workflows CNCF SWF, storage assinado — sem infra própria; foco no produto"
+ },
+ "database": {
+  "name": "Entidades Base44 (33 entidades, schema JSON, RLS disponível)",
+  "metamodel": "anexo pinado field_norms.json v1.4.0 (sha256:17530e3c) — drift detectável por pin",
+  "why": "metamodelo EXTERNO ao código e pinado = máquina de estado única (lifecycles.birth/transitions) para todos os instrumentos; nada nasce fora do draft sem OS"
+ },
+ "backend_functions": {
+  "runtime": "Deno/TypeScript (funcões HTTP do Base44)",
+  "versions": {
+   "normKernelOrder": "v0.5.1",
+   "normKernelIntake": "v0.3.1",
+   "normKernelMetaAudit": "v0.2.1",
+   "normKernelDeployGate": "v0.2.1",
+   "normKernelRenderPage": "v0.1.2"
+  },
+  "why": "SDK oficial; contrato HTTP documentado (docs §5); validação server-side é o guardião"
+ },
+ "hooks": {
+  "name": "6 workflows NK Guard (CNCF Serverless Workflow v1.0, gatilho de entidade → intake)",
+  "why": "guard automático em CADA criação/atualização de registro; PROVADO no incidente F-0006 (quarentena em segundos)"
+ },
+ "kernel_instruments": {
+  "runtime": "Python 3.11 (sandbox)",
+  "versions": {
+   "pipeline": "v0.7.2 (15 gates bloqueantes)",
+   "check_links": "G1..G14",
+   "materializer": "v0.1.0 (POL-NK-004 camadas de pasta)",
+   "atomizer-real": "v0.1.0 (RFC 2119)"
+  },
+  "why": "instrumentos auditáveis, checksums JCS RFC 8785 + sha256 em tudo"
+ },
+ "frontend": {
+  "name": "front-end GERADO do grafo (build_frontend + renderPage)",
+  "targets": "WCAG 2.2 AA + Lighthouse ≥ 95 + OG images (gates PUBLISH; hoje estáticos, runtime é débita)",
+  "why": "rastreabilidade integral campo→norma→tela; edição manual proibida por política"
+ },
+ "file_types_per_tool": {
+  "policies": "policies/POL-NK-*.md (11 políticas ativas)",
+  "registers": "registers/*.json (anexo, capabilities, universals, findings, backlog, jobs, dth_changes, materialization, artifact_register)",
+  "evidence": "evidence/EV-NK-NNNN.json (checksum JCS + PolicyEvidence no banco)",
+  "orders": "ServiceOrder no banco (JSON via API; assinatura sha256)",
+  "raw": "raw/*.txt (fontes verificadas por hash)",
+  "workflows": "workflows SWF (.jsonc, CNCF v1.0)",
+  "functions": "functions/*.ts (Deno)",
+  "frontend_out": "HTML/OG gerados do grafo"
+ },
+ "decision_records": [
+  {
+   "id": "NK-ADR-0001",
+   "decision": "Base44 como plataforma",
+   "why": "capex/opex previsíveis, sem operação de infra",
+   "alternatives": "infra própria",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0002",
+   "decision": "Kernel guardião, humano autoridade",
+   "why": "kernel valida e assina, NUNCA aprova: exclusão, emenda e deploy são atos humanos",
+   "evidence": "POL-NK-003/POL-NK-011",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0003",
+   "decision": "OS como ID único bloqueante",
+   "why": "toda mudança nasce de uma ServiceOrder assinada; audit trail integral (76+ OSes, recusas incluídas)",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0004",
+   "decision": "Banco com schema pinado externo",
+   "why": "anexo sha256-pinned = drift detectável; máquina de estado única",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0005",
+   "decision": "Hooks: workflows de entidade → intake",
+   "why": "guard automático universal, provado em produção (F-0006)",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0006",
+   "decision": "Front-end gerado, nunca editado",
+   "why": "grafo é a única fonte; conformidade por construção",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0007",
+   "decision": "JCS (RFC 8785) + sha256 para checksums/assinaturas/pins",
+   "why": "determinismo byte-a-byte; comparação canônica",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0008",
+   "decision": "Python para instrumentos, Deno/TS para funções",
+   "why": "separação sandbox (análise/gates) vs runtime (validação real-time)",
+   "status": "accepted"
+  },
+  {
+   "id": "NK-ADR-0009",
+   "decision": "Processo de universe scan obrigatório na adoção + cânone ampliado (segurança/governança/propaganda)",
+   "why": "diretriz 14:59: optar por norma exige avaliar o universo todo; novos domínios entram no cânone com status honesto",
+   "evidence": "POL-NK-012 + NK-CHG-0002 + OS-0077..0079",
+   "status": "accepted"
+  }
+ ],
+ "pending_documentation": [
+  "análise ponto a ponto dos 8 padrões técnicos (universals.json — analysis_pending com uso real evidenciado)",
+  "validação RUNTIME de WCAG/Lighthouse (hoje: gates estáticos no build)",
+  "monitor de carbono por página (débita da Fase 0)",
+  "emendas com aprovação humana pendente (conforme registro de emendas) + emenda 'tech' no enum de fontes",
+  "política LGPD completa ANTES da fatia ANVISA (NK-BL-0003) — cânone LGPD analysis_pending",
+  "COBIT / ITIL 4 / NIST AI RMF: candidatos de mercado NÃO adotados — adoção exige registrar a fonte (OS) + análise canônica (POL-NK-009)"
+ ]
+}

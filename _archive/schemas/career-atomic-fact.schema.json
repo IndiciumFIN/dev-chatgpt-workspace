@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Atomic Fact Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "fragment_id",
+    "source_id",
+    "normalized_statement",
+    "fact_type",
+    "subject_key",
+    "predicate_key",
+    "object_value",
+    "jurisdiction",
+    "sha256",
+    "status",
+    "review"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "fragment_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "normalized_statement": {
+      "type": "string"
+    },
+    "fact_type": {
+      "enum": [
+        "REGULATORY",
+        "EDUCATIONAL",
+        "NONCLINICAL"
+      ]
+    },
+    "subject_key": {
+      "type": "string"
+    },
+    "predicate_key": {
+      "type": "string"
+    },
+    "object_value": {
+      "type": "string"
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "EVIDENCE_BOUND"
+      ]
+    },
+    "review": {
+      "enum": [
+        "PENDING",
+        "EDITORIAL_APPROVED",
+        "REJECTED"
+      ]
+    }
+  }
+}

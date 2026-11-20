@@ -1,0 +1,59 @@
+{
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "detected_by": {
+      "type": "string"
+    },
+    "is_multi_agent": {
+      "type": "boolean"
+    },
+    "response": {
+      "type": "string"
+    },
+    "run_ref": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "detected",
+        "blocked",
+        "contained",
+        "investigated",
+        "closed"
+      ],
+      "type": "string"
+    },
+    "threat_id": {
+      "type": "string"
+    },
+    "threat_type": {
+      "enum": [
+        "prompt_injection",
+        "tool_abuse",
+        "memory_poisoning",
+        "rag_poisoning",
+        "data_exfiltration",
+        "privilege_escalation",
+        "identity_spoofing",
+        "model_manipulation",
+        "agent_collusion",
+        "supply_chain"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "ThreatEvent"
+}

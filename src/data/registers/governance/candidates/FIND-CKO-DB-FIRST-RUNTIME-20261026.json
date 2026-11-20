@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "updated_at": "2026-10-26",
+  "root_cause_status": "PENDING",
+  "remediation_task_refs": [],
+  "provenance_refs": [
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json",
+    "docs/audits/sql/CKO_VERTICAL_SLICE_APGAR_FUGULIN_20261026.sql"
+  ],
+  "blocking_policy_refs": [
+    "CKO-POL-UT-001@1.2.0"
+  ],
+  "canonical_id": "FIND-CKO-DB-FIRST-RUNTIME-20261026",
+  "finding_type": "INTEGRATION_GAP",
+  "severity": "HIGH",
+  "fact": "Apgar consta com publicacao='publicada' e criterios/pontuacoes em src/lib/tools/catalog.ts, enquanto cko_closure.tool_dossiers indica publication_state=HOLD, canonical_promotion=false e cko_master.entities.source_of_truth=false. O fluxo src/components/tools/clinical-tool.tsx -> src/lib/tools/engine.ts usa catalogo TypeScript estatico; nao foi evidenciada resolucao canônica por versao a partir do banco. Fugulin existe no banco e no guia editorial, mas nao consta no array tools exportado por esse catalogo. Requer reconciliação antes de implantar consumo remoto.",
+  "evidence_refs": [
+    "src/lib/tools/catalog.ts#apgar",
+    "src/lib/tools/catalog.ts#tools",
+    "src/components/tools/clinical-tool.tsx#calculate",
+    "src/lib/tools/engine.ts#evaluateScale",
+    "audit-evidence/cko/db-first/20261026/apgar-fugulin-live-readback.json"
+  ]
+}

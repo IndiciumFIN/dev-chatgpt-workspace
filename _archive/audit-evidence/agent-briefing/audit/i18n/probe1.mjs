@@ -1,0 +1,18 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await (await b.newContext({viewport:{width:1440,height:900}})).newPage();
+const errs=[]; p.on("pageerror",e=>errs.push(String(e).slice(0,300)));
+const r = await p.goto("http://127.0.0.1:4190/?lang=ja",{waitUntil:"networkidle",timeout:60000});
+await p.waitForTimeout(1500);
+console.log("status",r.status());
+console.log("title",await p.title());
+console.log("lang",await p.evaluate(()=>document.documentElement.lang),"dir",await p.evaluate(()=>document.documentElement.dir));
+console.log("h1",await p.evaluate(()=>document.querySelector("h1")?.textContent?.trim()));
+console.log("trigger",await p.evaluate(()=>document.querySelector(".lang-trigger")?.textContent?.trim()));
+console.log("triggerAria",await p.evaluate(()=>document.querySelector(".lang-trigger")?.getAttribute("aria-label")));
+console.log("utilitySearch",await p.evaluate(()=>document.querySelector(".utility-search")?.textContent?.trim()));
+console.log("subscribe",await p.evaluate(()=>document.querySelector(".utility-subscribe")?.textContent?.trim()));
+console.log("login",await p.evaluate(()=>document.querySelector(".utility-login")?.textContent?.trim()));
+console.log("a11y",await p.evaluate(()=>Array.from(document.querySelectorAll("#header-accessibility-controls > button")).map(b=>({aria:b.getAttribute("aria-label"),t:b.textContent.trim().slice(0,40)}))));
+console.log("errors",errs);
+await b.close();

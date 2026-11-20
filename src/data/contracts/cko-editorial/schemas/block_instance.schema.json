@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/block-instance.schema.json",
+  "title": "CKO Editorial Block Instance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "block_id",
+    "type",
+    "semantic_role",
+    "source_binding"
+  ],
+  "properties": {
+    "block_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "title",
+        "lead",
+        "section",
+        "claim",
+        "figure",
+        "diagram",
+        "table",
+        "chart",
+        "callout",
+        "definition",
+        "steps",
+        "timeline",
+        "comparison",
+        "references",
+        "learning_objective",
+        "flashcard",
+        "question",
+        "answer_rationale",
+        "case_fact",
+        "decision_point",
+        "reflection",
+        "toc",
+        "breadcrumb",
+        "action_bar",
+        "metadata",
+        "related_content",
+        "footer"
+      ]
+    },
+    "semantic_role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "canonical_object",
+            "claim",
+            "evidence",
+            "visual_resource",
+            "computed_projection",
+            "static_nontechnical_copy"
+          ]
+        },
+        "canonical_object_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "resource_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "projection_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "a11y": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "heading_level": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 6
+        },
+        "landmark": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requires_extended_description": {
+          "type": "boolean"
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": []
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "source_binding": {
+            "properties": {
+              "mode": {
+                "enum": [
+                  "canonical_object",
+                  "claim",
+                  "evidence",
+                  "visual_resource"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source_binding": {
+            "anyOf": [
+              {
+                "required": [
+                  "canonical_object_ids"
+                ]
+              },
+              {
+                "required": [
+                  "claim_ids"
+                ]
+              },
+              {
+                "required": [
+                  "evidence_ids"
+                ]
+              },
+              {
+                "required": [
+                  "resource_ids"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

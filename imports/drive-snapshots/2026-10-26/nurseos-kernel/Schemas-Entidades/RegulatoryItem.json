@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "authority": {
+      "enum": [
+        "ANVISA",
+        "COFEN",
+        "LGPD",
+        "EU",
+        "NIST",
+        "WHO",
+        "HL7",
+        "OTHER"
+      ],
+      "type": "string"
+    },
+    "change_type": {
+      "enum": [
+        "new",
+        "amendment",
+        "guidance",
+        "draft"
+      ],
+      "type": "string"
+    },
+    "effective_date": {
+      "type": "string"
+    },
+    "impact_refs": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "impact_status": {
+      "enum": [
+        "monitoring",
+        "impact_assessed",
+        "revalidation_required",
+        "compliant"
+      ],
+      "type": "string"
+    },
+    "last_review": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "norm_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [],
+  "name": "RegulatoryItem"
+}

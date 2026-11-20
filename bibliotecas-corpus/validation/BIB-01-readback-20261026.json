@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "date": "2026-10-26",
+  "workId": "BIB-01",
+  "branch": "staging/bibliotecas-corpus-20261026",
+  "sourceCommit": "179b053084fc479546071cc68d5c52abdb02daab",
+  "type": "READ_ONLY_GITHUB_API_READBACK",
+  "checks": [
+    {
+      "id": "BIB01-ASSET-001",
+      "test": "94 page routes recorded and unique",
+      "expected": 94,
+      "actual": 94,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-HTML-002",
+      "test": "94 separate HTML index.html files in Git tree",
+      "expected": 94,
+      "actual": 94,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-ASSET-003",
+      "test": "All 94 AVIF files exist in public bibliotecas",
+      "expected": 0,
+      "actual": 0,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-ATOM-004",
+      "test": "All 783 JSON pointers resolve exactly to source text",
+      "expected": 0,
+      "actual": 0,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-ATOM-005",
+      "test": "All 783 local trace IDs unique",
+      "expected": 783,
+      "actual": 783,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-HOLD-006",
+      "test": "All generated pages marked HOLD_HUMAN",
+      "expected": 94,
+      "actual": 94,
+      "result": "PASS"
+    },
+    {
+      "id": "BIB01-GIT-007",
+      "test": "Independent branch based on main without merging preview",
+      "actual": "2 commits ahead / 0 behind before evidence commit",
+      "result": "PASS"
+    }
+  ],
+  "boundaries": {
+    "cliNodeExecution": "NOT_RUN",
+    "htmlBrowserE2E": "NOT_RUN",
+    "vercelDeployment": "NOT_RUN",
+    "canonicalBindingAdmission": "HOLD_HUMAN",
+    "rightsAndLicensing": "NOT_VERIFIED",
+    "clinicalReview": "NOT_VERIFIED",
+    "publication": "BLOCKED",
+    "note": "Counts are source and Git-tree checks; HTML existence does not demonstrate deploy reachability or clinical suitability."
+  }
+}

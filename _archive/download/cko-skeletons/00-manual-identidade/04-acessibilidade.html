@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a3e74">
+<title>Acessibilidade · Esqueleto CKO</title>
+<meta name="description" content="Acessibilidade">
+<style>
+/* === TOKENS OFICIAIS (espelho de src/styles.css) === */
+:root{
+  --font-sans:Inter,ui-sans-serif,system-ui,sans-serif;
+  --font-display:"Nunito Sans",Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-navy:#1a3e74;--color-navy-mid:#1e4d8c;--color-navy-deep:#163269;
+  --color-navy-ink:#122a50;--color-sky:#4a90e2;--color-ice:#eff6ff;--color-ice-2:#eaf1fb;
+  --color-ink:#0f2440;--color-body:#1f2937;--color-slate:#475569;--color-muted:#64748b;
+  --color-line:#dbe3ec;--color-canvas:#f9fafb;--color-paper:#fdfefe;
+  --color-stage:#eef2f7;--color-pane:#f8fafc;--color-track:#e2e8f0;--color-focus:#2563eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:var(--color-canvas);
+  font-family:var(--font-sans);color:var(--color-body);line-height:1.5;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--color-navy);color:#fff;
+  z-index:9999;padding:10px;border-radius:4px}
+.skip-link:focus{top:3px}
+
+/* Cabeçalho canônico (master data) */
+.cko-masterhead{
+  background:linear-gradient(112deg,var(--color-navy),var(--color-navy-deep));
+  color:#fff;padding:22px 24px;border-radius:12px;margin:18px auto;
+  width:min(1380px,calc(100% - 40px));
+}
+.cko-masterhead .eyebrow{
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:#bbd8ff;font-weight:800;
+}
+.cko-masterhead h1{
+  font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);
+  margin:6px 0 4px;letter-spacing:-.03em;line-height:1.15;
+}
+.cko-masterhead .meta{
+  font-size:12px;color:#cfdff5;display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;
+}
+.cko-masterhead .meta span b{color:#fff;font-weight:700}
+
+/* Container principal */
+.cko-wrap{width:min(1380px,calc(100% - 40px));margin:0 auto;padding-bottom:48px}
+
+/* Painel padrão */
+.cko-panel{
+  background:var(--color-paper);border:1px solid var(--color-line);
+  border-radius:11px;box-shadow:0 8px 22px #1433600d;padding:18px;margin:14px 0;
+}
+.cko-panel h2{
+  font-size:18px;color:var(--color-navy-deep);margin:0 0 10px;
+  letter-spacing:-.02em;font-weight:850;
+}
+.cko-panel h3{
+  font-size:14px;color:var(--color-navy);margin:14px 0 6px;font-weight:800;
+}
+.cko-muted{color:var(--color-muted);font-size:12px}
+
+/* Bloco TODO — marca o que ainda precisa ser preenchido */
+.todo{
+  background:#fff8e9;border:1px solid #e5ae29;border-left:4px solid #d49a13;
+  color:#79530d;padding:10px 14px;border-radius:8px;font-size:12px;margin:8px 0;
+}
+.todo strong{color:#5a3f06}
+.todo code{
+  background:#fff;border-radius:3px;padding:1px 5px;font-family:ui-monospace,monospace;
+}
+
+/* Tabela canônica */
+.cko-table{border-collapse:collapse;width:100%;font-size:12px;background:var(--color-paper)}
+.cko-table th{
+  background:var(--color-ice);font-weight:800;color:var(--color-navy);
+  text-align:left;padding:10px 12px;white-space:nowrap;border:1px solid var(--color-line);
+}
+.cko-table td{
+  padding:9px 12px;border:1px solid var(--color-line);vertical-align:top;
+}
+.cko-table .mono{font-family:ui-monospace,monospace;font-size:11px}
+
+/* Status badges */
+.status{
+  display:inline-block;padding:3px 9px;border-radius:14px;
+  font-size:11px;font-weight:750;border:1px solid var(--color-line);
+  background:var(--color-ice);color:var(--color-navy);
+}
+.status.hold{background:#fff2d9;border-color:#ecd49f;color:#825400}
+.status.candidate{background:var(--color-stage);color:var(--color-muted)}
+.status.released{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+
+/* Grid para preview */
+.preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin-top:14px;
+}
+.preview-card{
+  background:var(--color-pane);border:1px dashed var(--color-line);
+  border-radius:8px;padding:14px;min-height:120px;
+}
+.preview-card .label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-muted);margin-bottom:6px;
+}
+
+/* Rodapé */
+.cko-footer{
+  text-align:center;padding:18px;border-top:1px solid var(--color-line);
+  color:var(--color-muted);font-size:11px;margin-top:24px;
+}
+
+@media(max-width:770px){
+  .cko-masterhead{padding:16px}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media print{
+  .cko-masterhead{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="cko-masterhead">
+  <div class="eyebrow">CKO · Esqueleto canônico · Design System</div>
+  <h1>Acessibilidade</h1>
+  <div class="meta">
+    <span><b>canonical_id:</b> <code>CKO-DS-A11Y</code></span>
+    <span><b>schema_version:</b> 0.1.0</span>
+    <span><b>status:</b> <span class="status candidate">CANDIDATE</span></span>
+    <span><b>updated_at:</b> 2026-10-23</span>
+  </div>
+</header>
+
+<main id="conteudo" class="cko-wrap" tabindex="-1">
+
+<section class="cko-panel">
+  <h2>WCAG 2.2 AA — perfil obrigatório</h2>
+  <p class="cko-muted">Todo componente referencia <code>accessibility.schema.json</code> com <code>target_standard: WCAG_2_2_AA</code>.</p>
+  <table class="cko-table">
+    <thead><tr><th>Critério</th><th>Como cumprir</th></tr></thead>
+    <tbody>
+      <tr><td>1.4.3 Contraste</td><td>Texto ≥ 4.5:1, UI ≥ 3:1. Validar com <code>contrast_test_ref</code>.</td></tr>
+      <tr><td>2.1.1 Teclado</td><td>Toda ação acessível via Tab/Enter/Esc. <code>keyboard_contract_ref</code> obrigatório.</td></tr>
+      <tr><td>2.4.7 Focus visível</td><td><code>outline:3px solid var(--color-focus);outline-offset:3px</code> em todos os interativos.</td></tr>
+      <tr><td>1.1.1 Texto alternativo</td><td>Imagens com <code>alt</code> + <code>alt_text_ref</code> no contrato.</td></tr>
+      <tr><td>1.4.10 Reflow</td><td>Funciona em 320px sem scroll horizontal.</td></tr>
+      <tr><td>2.3.3 Animação</td><td>Respeitar <code>prefers-reduced-motion</code> via <code>reduced_motion_ref</code>.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cko-panel">
+  <h2>Skip link</h2>
+  <p class="cko-muted">Primeiro elemento focável da página. Escondido fora do viewport, aparece ao receber focus.</p>
+  <pre style="background:var(--color-pane);border:1px solid var(--color-line);border-radius:8px;padding:12px;font-family:ui-monospace,monospace;font-size:11px;overflow:auto">&lt;a href="#conteudo" class="skip-link"&gt;Pular para o conteúdo&lt;/a&gt;</pre>
+</section>
+
+<section class="cko-panel">
+  <h2>Focus ring</h2>
+  <p>
+    <button style="padding:10px 16px;border-radius:7px;border:1px solid var(--color-navy);background:var(--color-navy);color:#fff;cursor:pointer;outline:3px solid var(--color-focus);outline-offset:3px">Botão com focus visível</button>
+  </p>
+  <p class="cko-muted">Regra CSS: <code>:focus-visible { outline:3px solid var(--color-focus); outline-offset:3px; }</code></p>
+</section>
+
+<section class="cko-panel">
+  <h2>aria-live region (toaster / feedback)</h2>
+  <p class="cko-muted">Toda mensagem dinâmica (sucesso, erro, aviso) deve ir para uma região <code>aria-live="polite"</code> ou <code>assertive</code>.</p>
+  <pre style="background:var(--color-pane);border:1px solid var(--color-line);border-radius:8px;padding:12px;font-family:ui-monospace,monospace;font-size:11px;overflow:auto">&lt;div role="status" aria-live="polite" id="toaster"&gt;&lt;/div&gt;</pre>
+</section>
+
+<section class="cko-panel">
+  <h2>Toggles do usuário</h2>
+  <p class="cko-muted">Faixa superior (a11y-bar) com 5 controles:</p>
+  <p>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px">A+</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px">A−</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px">Contraste</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px">Modo escuro</button>
+    <button style="border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:5px;padding:4px 8px;font-size:11px">Imprimir</button>
+  </p>
+</section>
+
+<section class="cko-panel">
+  <h2>Screen reader</h2>
+  <p class="cko-muted">Toda tabela/gráfico deve ter <code>screenreader_test_ref</code>. Toda imagem <code>screenreader_test_ref</code> + <code>extended_description_key</code> quando complexa.</p>
+</section>
+
+</main>
+
+<footer class="cko-footer">
+  Calculadoras de Enfermagem · Esqueleto CKO · Página local para preenchimento · Não publicada
+</footer>
+</body>
+</html>

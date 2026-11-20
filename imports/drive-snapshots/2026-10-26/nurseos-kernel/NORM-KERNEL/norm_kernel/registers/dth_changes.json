@@ -1,0 +1,73 @@
+{
+ "process": "POL-NK-011 — Desenvolvimento → Teste → Homologação",
+ "environments": [
+  "sandbox (desenvolvimento)",
+  "gates (teste)",
+  "homologacao (staged — aguardando humano)",
+  "producao (pinado/publicado)"
+ ],
+ "status_enum": [
+  "dev",
+  "test",
+  "staged",
+  "approved",
+  "deployed"
+ ],
+ "changes": {
+  "NK-CHG-0001": {
+   "title": "BACKFILL: linha de base v1.0.1 — funções do kernel, pipeline e front-end vigentes",
+   "os_ref": "NK-OS-0001..0069 (cadeia integral da Fase 0 + Fase 1)",
+   "kind": "backfill_baseline",
+   "impacts": {
+    "functions": [
+     "normKernelIntake v0.3.1",
+     "normKernelOrder v0.5.1",
+     "normKernelMetaAudit v0.2.1",
+     "normKernelDeployGate v0.2.1",
+     "normKernelRenderPage v0.1.2"
+    ],
+    "pipeline": "v0.7.1 (14 gates)",
+    "frontend": "gerado do grafo (PUBLISH gates estáticos)",
+    "registers": "todos sob pin/OS (anexo, capabilities, universals, findings, backlog, jobs)",
+    "migration": "n/d (linha de base)",
+    "rollback": "backup v1.0.0 sha256:1ff36da0 + OS de restauração (POL-NK-004 C6)"
+   },
+   "status": "deployed",
+   "test_evidence": "EV-NK-0006..0013 — gates 100% PASS em todos os runs; drills provados: recusa fora-de-máquina, quarentena do guard (F-0006), drift de pin, tamper no deploy gate",
+   "kernel_approval": "approved (gates + assinaturas + deploy gate PASS)",
+   "human_approval": "approved (Leivis: fechamento v1.0.0 às 13:43 + diretrizes 14:38/14:45)"
+  },
+  "NK-CHG-0002": {
+   "title": "Adoção: processo de universe scan (POL-NK-012) + cânone ampliado (OWASP, NIST CSF, COBIT, ITIL, CONAR, CDC)",
+   "os_ref": "NK-OS-0077..0079",
+   "kind": "adoption",
+   "adr_ref": "NK-ADR-0009",
+   "universe_scan": {
+    "libraries": "por domínio — segurança: OWASP Top 10/ASVS + NIST CSF 2.0 (ISO 27005 descartado: 27001 já cobre SGSI no cânone); governança: COBIT 2019 + ITIL 4 (TOGAF descartado: 42010 já cobre arquitetura como metadata_alternative); propaganda: CONAR + CDC (auto-regulação + lei federal — ambos necessários)",
+    "dictionaries": "nenhum termo novo obrigatório; frameworks entram como universais NK-UNIV-0020..0025 no registro canônico (fontes SRC-0002/SRC-PLANALTO, licenças KL-0009/KL-0001)",
+    "layers": "política (POL-NK-012), gates (G14 estendido), registro (universals.json 25 entradas), stack (ADR-0009), documentação (gates-technical.md)",
+    "conflicts": "nenhum conflito: extensão do cânone existente (POL-NK-009/010); COBIT/ITIL como metadata_alternative não afirmam aderência — análise exige licença (evidenciado); CONAR/CDC vigem só com comunicação comercial",
+    "new_structure": "POL-NK-012 + G14 estendido + SRC-0002/KL-0009 registrados + 6 universais novos + ADR-0009"
+   },
+   "status": "deployed",
+   "test_evidence": "pipeline v0.7.3 com G14 validando universe_scan (EV-NK-0016)",
+   "kernel_approval": "approved (gates + assinaturas OS-0077..0079)",
+   "human_approval": "approved (Leivis, diretriz 14:59 — o universo todo deve ser avaliado)",
+   "impacts": {
+    "functions": [
+     "normKernel* (nenhuma mudança de código de função nesta adoção)"
+    ],
+    "pipeline": "v0.7.3 (G14 estendido: kind=adoption exige universe_scan)",
+    "frontend": "nenhum (cânone/documentação)",
+    "registers": [
+     "universals.json (+6)",
+     "dth_changes.json (+CHG-0002)",
+     "stack.json (+ADR-0009)",
+     "KL-0009 + SRC-0002 (ativos via OS-0077/0078)"
+    ],
+    "migration": "nenhum dado migrado",
+    "rollback": "remover entradas do cânone + reverter G14 (por OS)"
+   }
+  }
+ }
+}

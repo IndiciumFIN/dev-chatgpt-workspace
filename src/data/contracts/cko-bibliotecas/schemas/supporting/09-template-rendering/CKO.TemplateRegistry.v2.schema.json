@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:template-registry:v2.0.0",
+  "title": "CKO Unified Template Registry",
+  "type": "object",
+  "required": [
+    "registry_id",
+    "version",
+    "template_count",
+    "templates"
+  ],
+  "properties": {
+    "registry_id": {
+      "const": "CKO.UNIFIED.TEMPLATE.REGISTRY.V2"
+    },
+    "version": {
+      "const": "2.0.0"
+    },
+    "template_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "materialized_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "declared_only_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "$ref": "CKO.TemplateDefinition.v2.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

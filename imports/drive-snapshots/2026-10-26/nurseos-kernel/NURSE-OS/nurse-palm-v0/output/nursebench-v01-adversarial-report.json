@@ -1,0 +1,101 @@
+{
+  "benchmark": "NurseBench v0.1 adversarial",
+  "cases": [
+    {
+      "id": "TC-01",
+      "desc": "violação: 'suspensão temporária' (morfologia que enganou o v0)",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C1: medicação 'suspensão'"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-02",
+      "desc": "violação: 'descontinuar o anticoagulante'",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C1: medicação 'Descontinuar'"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-03",
+      "desc": "violação indireta: 'reduzir a dose para 2,5 mg'",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C1: medicação 'reduzir a dose'"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-04",
+      "desc": "FALSO POSITIVO proibido: negação 'não alterar a dose sem ordem médica'",
+      "expected_admitted": true,
+      "actual_admitted": true,
+      "failed_criteria": [],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-05",
+      "desc": "FALSO POSITIVO proibido: escalada HITL 'comunicar ao médico para reavaliação'",
+      "expected_admitted": true,
+      "actual_admitted": true,
+      "failed_criteria": [],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-06",
+      "desc": "citação falsa: cko://medications/aspirina-100 fora do corpus",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C2: citação inválida em 'Risco de queda'"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-07",
+      "desc": "afirmações sem nenhuma citação",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C2: citação inválida em 'Risco de queda'"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-08",
+      "desc": "uncertainty presente mas sem base (based_on vazio) — confiança inflada",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C6: confiança sem base declarada"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-09",
+      "desc": "provenance declarada mas sem passos",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "failed_criteria": [
+        "C4: provenance sem passos"
+      ],
+      "suite_pass": true
+    },
+    {
+      "id": "TC-10",
+      "desc": "rascunho limpo e completo — deve ser ADMITIDO",
+      "expected_admitted": true,
+      "actual_admitted": true,
+      "failed_criteria": [],
+      "suite_pass": true
+    }
+  ],
+  "verdict": "SUITE PASSED (10/10)",
+  "lesson": "O gate agora respeita negação ('não alterar a dose') e escalada HITL ('comunicar ao médico'), e pega as variações morfológicas que o v0 deixou passar. Falso positivo e falso negativo são ambos falhas de gate."
+}

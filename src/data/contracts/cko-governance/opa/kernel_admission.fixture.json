@@ -1,0 +1,208 @@
+{
+  "package": "cko.kernel_admission",
+  "nota": "Fixture da política de admissão. O binário `opa` não está instalado neste ambiente, então o resultado esperado fica aqui e o teste Node (scripts/audit-source.test.mjs) confere a forma do input, o default deny-by-default e a paridade entre o motivo esperado e a regra escrita no .rego. Quando o `opa` voltar, `opa test contracts/cko-governance/opa` é a prova viva.",
+  "base": {
+    "work_order": {
+      "id": "wo-1",
+      "task_ref": "task-1",
+      "find_ref": "find-1",
+      "owner": "dono",
+      "approver": "revisor",
+      "source_ref": "transversal-public.lei-12-965-2014.source",
+      "policy_set": ["source.admitir"],
+      "acceptance_criteria": ["atomo-com-pinpoint"]
+    },
+    "manifest": {
+      "service_order_id": "wo-1",
+      "status": "approved",
+      "approved_by": "revisor",
+      "approved_at": "2026-10-26T12:00:00Z",
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "validators": ["schema", "pinpoint"],
+      "policy_set": ["source.admitir"]
+    },
+    "policy": {
+      "allow": true,
+      "bundle_signature_verified": true,
+      "bundle_ref": "bundle://cko-governance/1.0.0",
+      "decision_ref": "decisao-1",
+      "decision_evidence_ref": "evidencia/decisao-1",
+      "work_order_ref": "wo-1",
+      "input_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "validator_results": [
+      {
+        "id": "schema",
+        "result": "PASS",
+        "evidence_ref": "evidencia/schema",
+        "run_ref": "run/schema"
+      },
+      {
+        "id": "pinpoint",
+        "result": "PASS",
+        "evidence_ref": "evidencia/pinpoint",
+        "run_ref": "run/pinpoint"
+      }
+    ],
+    "approval": {
+      "human_required": true,
+      "human_status": "APPROVED",
+      "scope_ref": "wo-1",
+      "actor_ref": "revisor",
+      "approved_at": "2026-10-26T12:00:00Z",
+      "evidence_ref": "evidencia/aprovacao"
+    },
+    "execution": {
+      "requested": false
+    }
+  },
+  "casos": [
+    {
+      "nome": "pedido completo e aprovado admite",
+      "ajustes": {},
+      "esperado": {
+        "allow": true,
+        "deny_reason": []
+      }
+    },
+    {
+      "nome": "sem política ativa nega",
+      "ajustes": {
+        "policy": {
+          "allow": false
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["no_valid_policy_or_evidence"]
+      }
+    },
+    {
+      "nome": "bundle sem assinatura nega",
+      "ajustes": {
+        "policy": {
+          "bundle_signature_verified": false
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["unsigned_policy_bundle"]
+      }
+    },
+    {
+      "nome": "manifesto em rascunho nega",
+      "ajustes": {
+        "manifest": {
+          "status": "draft"
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["missing_manifest"]
+      }
+    },
+    {
+      "nome": "manifesto de outro pedido nega",
+      "ajustes": {
+        "manifest": {
+          "service_order_id": "wo-2"
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": []
+      }
+    },
+    {
+      "nome": "hash invalido nega",
+      "ajustes": {
+        "manifest": {
+          "hash": "abc"
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["manifest_hash_mismatch"]
+      }
+    },
+    {
+      "nome": "sem validador nega",
+      "ajustes": {
+        "manifest": {
+          "validators": []
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["no_validators"]
+      }
+    },
+    {
+      "nome": "validador que falhou nega",
+      "ajustes": {
+        "validator_results": [
+          {
+            "id": "schema",
+            "result": "FAIL",
+            "evidence_ref": "evidencia/schema",
+            "run_ref": "run/schema"
+          },
+          {
+            "id": "pinpoint",
+            "result": "PASS",
+            "evidence_ref": "evidencia/pinpoint",
+            "run_ref": "run/pinpoint"
+          }
+        ]
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": []
+      }
+    },
+    {
+      "nome": "dono que aprova o proprio nega",
+      "ajustes": {
+        "work_order": {
+          "owner": "revisor"
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["missing_independent_approval"]
+      }
+    },
+    {
+      "nome": "aprovacao que nao casa com o manifesto nega",
+      "ajustes": {
+        "approval": {
+          "actor_ref": "outro"
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["approval_does_not_match_manifest"]
+      }
+    },
+    {
+      "nome": "execucao pedida nega",
+      "ajustes": {
+        "execution": {
+          "requested": true
+        }
+      },
+      "esperado": {
+        "allow": false,
+        "deny_reason": ["execution_not_authorized_here"]
+      }
+    },
+    {
+      "nome": "sem fatos a politica nega",
+      "ajustes": "substitui-tudo",
+      "esperado": {
+        "allow": false,
+        "deny_reason": []
+      }
+    }
+  ]
+}

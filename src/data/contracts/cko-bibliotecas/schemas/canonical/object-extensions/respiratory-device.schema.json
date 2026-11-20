@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:respiratory-device:v1.0.0",
+  "title": "CKO Dispositivos Respiratórios Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "respiratory-device"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "deviceType": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "interface": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "oxygenFlow": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "humidification": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "pressure": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "alarms": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "compatibility": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

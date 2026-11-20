@@ -1,0 +1,538 @@
+{
+  "audit_id": "CKO-CANDIDATE-BANK-FIRST-MODEL-20261026",
+  "captured_date": "2026-10-26",
+  "source": "Supabase Calculadoras-Smart",
+  "policy": "READ_ONLY_DIAGNOSTIC_NO_CLINICAL_RELEASE",
+  "lineage_query": "docs/audits/sql/CKO_CANONICAL_PILOT_MANIFEST_20261026.sql",
+  "in_scope": [
+    "apgar",
+    "fugulin"
+  ],
+  "records": [
+    {
+      "claims": [
+        {
+          "status": "CANDIDATE",
+          "claim_id": "CLM-APGAR-5-COMPONENTS-20260901",
+          "claim_type": "CLINICAL_RULE",
+          "evidence_refs": [
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-COMPONENTS",
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-DOMAIN"
+          ],
+          "human_review_required": true
+        },
+        {
+          "status": "CANDIDATE",
+          "claim_id": "CLM-APGAR-NO-ASPHYXIA-DX-20260901",
+          "claim_type": "CLINICAL_SAFETY_CONSTRAINT",
+          "evidence_refs": [
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-NO-ASPHYXIA-DX",
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-NO-INDIVIDUAL-PROGNOSIS"
+          ],
+          "human_review_required": true
+        },
+        {
+          "status": "CANDIDATE",
+          "claim_id": "CLM-APGAR-TIMING-20260901",
+          "claim_type": "CLINICAL_RULE",
+          "evidence_refs": [
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-TIMING-1-5",
+            "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-TIMING-REPEAT"
+          ],
+          "human_review_required": true
+        }
+      ],
+      "fields": [
+        {
+          "datatype": "text_short",
+          "field_id": "TF-E1214743C9EF",
+          "field_name": "pacNome",
+          "enum_values": null,
+          "required_status": "NOT_REQUIRED",
+          "source_field_id": "apgar::pacNome",
+          "validation_completeness_status": "PASS_LEGACY_LINEAGE_CLASSIFIED"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-2A619DC403F8",
+          "field_name": "evaluationMinute",
+          "enum_values": [
+            {
+              "label": "1º minuto",
+              "value": 1
+            },
+            {
+              "label": "5º minuto",
+              "value": 5
+            },
+            {
+              "label": "10º minuto",
+              "value": 10
+            },
+            {
+              "label": "15º minuto",
+              "value": 15
+            },
+            {
+              "label": "20º minuto",
+              "value": 20
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::pacMinuto",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        },
+        {
+          "datatype": "datetime",
+          "field_id": "TF-9BF36CB3BBE0",
+          "field_name": "pacData",
+          "enum_values": null,
+          "required_status": "NOT_REQUIRED",
+          "source_field_id": "apgar::pacData",
+          "validation_completeness_status": "PASS_LEGACY_LINEAGE_CLASSIFIED"
+        },
+        {
+          "datatype": "text_short",
+          "field_id": "TF-7BDEB681E4E0",
+          "field_name": "pacProfissional",
+          "enum_values": null,
+          "required_status": "NOT_REQUIRED",
+          "source_field_id": "apgar::pacProfissional",
+          "validation_completeness_status": "PASS_LEGACY_LINEAGE_CLASSIFIED"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-CAND-APGAR-FC",
+          "field_name": "fc",
+          "enum_values": [
+            {
+              "label": "Ausente",
+              "value": 0
+            },
+            {
+              "label": "< 100 bpm",
+              "value": 1
+            },
+            {
+              "label": "≥ 100 bpm",
+              "value": 2
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::fc",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-CAND-APGAR-RESP",
+          "field_name": "resp",
+          "enum_values": [
+            {
+              "label": "Ausente",
+              "value": 0
+            },
+            {
+              "label": "Lenta ou irregular",
+              "value": 1
+            },
+            {
+              "label": "Choro vigoroso",
+              "value": 2
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::resp",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-CAND-APGAR-TONUS",
+          "field_name": "tonus",
+          "enum_values": [
+            {
+              "label": "Flácido",
+              "value": 0
+            },
+            {
+              "label": "Alguma flexão de extremidades",
+              "value": 1
+            },
+            {
+              "label": "Movimentos ativos / Boa flexão",
+              "value": 2
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::tonus",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-CAND-APGAR-REFLEXO",
+          "field_name": "reflexo",
+          "enum_values": [
+            {
+              "label": "Ausente",
+              "value": 0
+            },
+            {
+              "label": "Caretas ou choro fraco",
+              "value": 1
+            },
+            {
+              "label": "Choro forte, tosse ou espirro",
+              "value": 2
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::reflexo",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-CAND-APGAR-COR",
+          "field_name": "cor",
+          "enum_values": [
+            {
+              "label": "Cianose central ou palidez geral",
+              "value": 0
+            },
+            {
+              "label": "Corpo rosado, extremidades cianóticas",
+              "value": 1
+            },
+            {
+              "label": "Completamente rosado",
+              "value": 2
+            }
+          ],
+          "required_status": "REQUIRED",
+          "source_field_id": "apgar::cor",
+          "validation_completeness_status": "PASS_CONTRACT_COMPLETE"
+        }
+      ],
+      "tool_slug": "apgar",
+      "tool_state": {
+        "rights_state": "SOURCE_DERIVED_PENDING_FORMAL_HOMOLOGATION",
+        "entity_status": "CONTROLLED_CANDIDATE",
+        "clinical_state": "CONVERGENTE_COM_REFERENCIA",
+        "entity_type_id": "CLINICAL_TOOL",
+        "entity_version": "1",
+        "source_of_truth": false,
+        "deployment_status": "HOLD_NO_DEPLOYMENT_BINDING",
+        "publication_state": "HOLD",
+        "canonical_promotion": false,
+        "clinical_review_status": "HOLD_FORMAL_CLINICAL_HOMOLOGATION"
+      },
+      "canonical_id": "cko:tool:clinical:apgar@1",
+      "candidate_only": true,
+      "normative_roles": [
+        {
+          "count": 4,
+          "binding_role": "BR_NURSING_ETHICS_CONTEXT",
+          "normative_ref": "COFEN Res. 564/2017",
+          "requirement_ref": "REQ-BR-NURSING-ETHICS-CONTEXT"
+        },
+        {
+          "count": 4,
+          "binding_role": "BR_NURSING_REGULATION_CONTEXT",
+          "normative_ref": "Decreto 94.406/1987",
+          "requirement_ref": "REQ-BR-NURSING-REGULATION-CONTEXT"
+        },
+        {
+          "count": 1,
+          "binding_role": "DATETIME_INTERCHANGE",
+          "normative_ref": "ISO 8601-1:2019",
+          "requirement_ref": "REQ-DATETIME-FIELD-INTERCHANGE"
+        },
+        {
+          "count": 4,
+          "binding_role": "BR_LEGAL_ACCESSIBILITY_OVERLAY",
+          "normative_ref": "Lei 13.146/2015",
+          "requirement_ref": "REQ-BR-LBI-ART63-WEB-ACCESSIBILITY"
+        },
+        {
+          "count": 4,
+          "binding_role": "BR_PRIVACY_DATA_CLASSIFICATION",
+          "normative_ref": "Lei 13.709/2018",
+          "requirement_ref": "REQ-BR-LGPD-FIELD-DATA-CLASSIFICATION"
+        },
+        {
+          "count": 4,
+          "binding_role": "BR_NURSING_PROFESSIONAL_CONTEXT",
+          "normative_ref": "Lei 7.498/1986",
+          "requirement_ref": "REQ-BR-NURSING-PROFESSIONAL-CONTEXT"
+        },
+        {
+          "count": 4,
+          "binding_role": "TECHNICAL_ACCESSIBILITY_CONTROL",
+          "normative_ref": "WCAG 2.2",
+          "requirement_ref": "REQ-WEB-FIELD-ACCESSIBILITY"
+        }
+      ],
+      "object_versions": [
+        {
+          "state": "CONTROLLED_CANDIDATE",
+          "version": "1.0.0",
+          "version_id": "OV-B3-CLIN-D9DF84E648195B3176F37042-1.0.0",
+          "content_hash": "1673990f821d7c069dce0ac3cd70e632142af46331d52f27ecadba7d61ecb93d"
+        }
+      ],
+      "runtime_control": {
+        "rule_pack_ref": null,
+        "runtime_status": "HOLD_OBSERVED_RUNTIME_NOT_REPERFORMED_B4",
+        "rule_pack_status": "HOLD_SCORING_RULE_PACK_NOT_MATERIALIZED",
+        "object_engine_ref": null,
+        "reg_binding_status": "PASS_REG_CONTEXT",
+        "field_binding_status": "HOLD_FIELD_CONTRACT_INCOMPLETE",
+        "object_engine_status": "HOLD_OBJECT_ENGINE_NOT_MATERIALIZED",
+        "object_validator_ref": null,
+        "evidence_binding_status": "PASS_EVIDENCE_CONTEXT",
+        "object_validator_status": "HOLD_OBJECT_SPECIFIC_VALIDATOR_NOT_MATERIALIZED"
+      },
+      "requirement_bridges": [
+        {
+          "claim_id": "CLM-APGAR-5-COMPONENTS-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-COMPONENTS",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-COMPONENTS",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        },
+        {
+          "claim_id": "CLM-APGAR-5-COMPONENTS-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-DOMAIN",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-DOMAIN",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        },
+        {
+          "claim_id": "CLM-APGAR-NO-ASPHYXIA-DX-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-NO-ASPHYXIA-DX",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-NO-ASPHYXIA-DX",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        },
+        {
+          "claim_id": "CLM-APGAR-NO-ASPHYXIA-DX-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-NO-INDIVIDUAL-PROGNOSIS",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-NO-INDIVIDUAL-PROGNOSIS",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        },
+        {
+          "claim_id": "CLM-APGAR-TIMING-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-TIMING-1-5",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-TIMING-1-5",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        },
+        {
+          "claim_id": "CLM-APGAR-TIMING-20260901",
+          "evidence_ref": "NDE-APGAR-AAP-ACOG-2015-CAND:REG-APGAR-TIMING-REPEAT",
+          "extraction_id": "NDE-APGAR-AAP-ACOG-2015-CAND",
+          "requirement_id": "REG-APGAR-TIMING-REPEAT",
+          "checker_recorded": false,
+          "extraction_status": "CANDIDATE_UNCHECKED",
+          "requirement_status": "CANDIDATE"
+        }
+      ]
+    },
+    {
+      "claims": [],
+      "fields": [
+        {
+          "datatype": "text_short",
+          "field_id": "TF-3113228F25F1",
+          "field_name": "pacNome",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacNome",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "decimal",
+          "field_id": "TF-58F4F4F89421",
+          "field_name": "pacIdade",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacIdade",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "text_short",
+          "field_id": "TF-E9996E13429C",
+          "field_name": "pacSetor",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacSetor",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-5F5A89349B04",
+          "field_name": "pacPlantao",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacPlantao",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "choice_single",
+          "field_id": "TF-F0E1E601F177",
+          "field_name": "pacParImpar",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacParImpar",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "date",
+          "field_id": "TF-04183381DE5C",
+          "field_name": "pacData",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::pacData",
+          "validation_completeness_status": "HOLD_CONTRACT_INCOMPLETE"
+        },
+        {
+          "datatype": "decimal",
+          "field_id": "TF-329408131527",
+          "field_name": "undPacientes",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::undPacientes",
+          "validation_completeness_status": "HOLD_EFFECTIVE_VALIDATION_RECONCILIATION"
+        },
+        {
+          "datatype": "decimal",
+          "field_id": "TF-01DF886733AF",
+          "field_name": "undLeitos",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::undLeitos",
+          "validation_completeness_status": "HOLD_EFFECTIVE_VALIDATION_RECONCILIATION"
+        },
+        {
+          "datatype": "decimal",
+          "field_id": "TF-1BB22F7BFFF0",
+          "field_name": "undTecEnf",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::undTecEnf",
+          "validation_completeness_status": "HOLD_EFFECTIVE_VALIDATION_RECONCILIATION"
+        },
+        {
+          "datatype": "decimal",
+          "field_id": "TF-E4EECF7DB380",
+          "field_name": "undEnfermeiros",
+          "enum_values": null,
+          "required_status": "CONDITIONAL",
+          "source_field_id": "fugulin::undEnfermeiros",
+          "validation_completeness_status": "HOLD_EFFECTIVE_VALIDATION_RECONCILIATION"
+        }
+      ],
+      "tool_slug": "fugulin",
+      "tool_state": {
+        "rights_state": "UNRESOLVED",
+        "entity_status": "CONTROLLED_CANDIDATE",
+        "clinical_state": "CONVERGENTE_SEM_REFERENCIA",
+        "entity_type_id": "CLINICAL_TOOL",
+        "entity_version": "1",
+        "source_of_truth": false,
+        "deployment_status": "HOLD_NO_DEPLOYMENT_BINDING",
+        "publication_state": "HOLD",
+        "canonical_promotion": false,
+        "clinical_review_status": "HOLD_FORMAL_CLINICAL_HOMOLOGATION"
+      },
+      "canonical_id": "cko:tool:clinical:fugulin@1",
+      "candidate_only": true,
+      "normative_roles": [
+        {
+          "count": 10,
+          "binding_role": "BR_NURSING_ETHICS_CONTEXT",
+          "normative_ref": "COFEN Res. 564/2017",
+          "requirement_ref": "REQ-BR-NURSING-ETHICS-CONTEXT"
+        },
+        {
+          "count": 10,
+          "binding_role": "BR_NURSING_REGULATION_CONTEXT",
+          "normative_ref": "Decreto 94.406/1987",
+          "requirement_ref": "REQ-BR-NURSING-REGULATION-CONTEXT"
+        },
+        {
+          "count": 1,
+          "binding_role": "QUANTITY_SEMANTICS",
+          "normative_ref": "ISO 80000-1:2022",
+          "requirement_ref": "REQ-QTY-FIELD-SEMANTICS"
+        },
+        {
+          "count": 1,
+          "binding_role": "DATETIME_INTERCHANGE",
+          "normative_ref": "ISO 8601-1:2019",
+          "requirement_ref": "REQ-DATETIME-FIELD-INTERCHANGE"
+        },
+        {
+          "count": 10,
+          "binding_role": "BR_LEGAL_ACCESSIBILITY_OVERLAY",
+          "normative_ref": "Lei 13.146/2015",
+          "requirement_ref": "REQ-BR-LBI-ART63-WEB-ACCESSIBILITY"
+        },
+        {
+          "count": 10,
+          "binding_role": "BR_PRIVACY_DATA_CLASSIFICATION",
+          "normative_ref": "Lei 13.709/2018",
+          "requirement_ref": "REQ-BR-LGPD-FIELD-DATA-CLASSIFICATION"
+        },
+        {
+          "count": 10,
+          "binding_role": "BR_NURSING_PROFESSIONAL_CONTEXT",
+          "normative_ref": "Lei 7.498/1986",
+          "requirement_ref": "REQ-BR-NURSING-PROFESSIONAL-CONTEXT"
+        },
+        {
+          "count": 1,
+          "binding_role": "COMPUTABLE_UNIT_CODE",
+          "normative_ref": "UCUM 2.2",
+          "requirement_ref": "REQ-UNIT-FIELD-UCUM"
+        },
+        {
+          "count": 10,
+          "binding_role": "TECHNICAL_ACCESSIBILITY_CONTROL",
+          "normative_ref": "WCAG 2.2",
+          "requirement_ref": "REQ-WEB-FIELD-ACCESSIBILITY"
+        }
+      ],
+      "object_versions": [
+        {
+          "state": "CONTROLLED_CANDIDATE",
+          "version": "1.0.0",
+          "version_id": "OV-B3-CLIN-C0671E1E603F513A6F8E02F3-1.0.0",
+          "content_hash": "effa5fd2c67410aed380750fa4558bae0c0595e9c6252e3a72db8233c0818076"
+        }
+      ],
+      "runtime_control": {
+        "rule_pack_ref": null,
+        "runtime_status": "HOLD_OBSERVED_RUNTIME_NOT_REPERFORMED_B4",
+        "rule_pack_status": "HOLD_SCORING_RULE_PACK_NOT_MATERIALIZED",
+        "object_engine_ref": null,
+        "reg_binding_status": "PASS_REG_CONTEXT",
+        "field_binding_status": "PASS_FIELD_BINDING_PRESENT",
+        "object_engine_status": "HOLD_OBJECT_ENGINE_NOT_MATERIALIZED",
+        "object_validator_ref": null,
+        "evidence_binding_status": "PASS_EVIDENCE_CONTEXT",
+        "object_validator_status": "HOLD_OBJECT_SPECIFIC_VALIDATOR_NOT_MATERIALIZED"
+      },
+      "requirement_bridges": []
+    }
+  ]
+}

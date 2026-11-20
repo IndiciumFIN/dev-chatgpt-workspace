@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-image-asset:v1",
+  "title": "CKO Vaccine Image Asset",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "vaccine_object_ref",
+    "slug",
+    "source_sha256",
+    "derivatives",
+    "dag_check",
+    "provenance_class"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string"
+    },
+    "vaccine_object_ref": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "source_file_original": {
+      "type": "string"
+    },
+    "canonical_evidence_png": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "source_alpha": {
+      "type": "boolean"
+    },
+    "visual_basis_type": {
+      "type": "string"
+    },
+    "label_text": {
+      "type": "string"
+    },
+    "archetype_candidate": {
+      "type": "object"
+    },
+    "color_scheme_governed": {
+      "type": "object"
+    },
+    "geometry_measurement": {
+      "type": "object"
+    },
+    "normalization": {
+      "type": "object"
+    },
+    "derivatives": {
+      "type": "object",
+      "required": [
+        "master",
+        "card",
+        "list"
+      ]
+    },
+    "dag_check": {
+      "type": "object"
+    },
+    "provenance_class": {
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

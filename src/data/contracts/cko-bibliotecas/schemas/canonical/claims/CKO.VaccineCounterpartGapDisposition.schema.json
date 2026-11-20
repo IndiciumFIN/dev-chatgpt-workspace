@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:vaccine-counterpart-gap-disposition:v1.0.0",
+  "title": "CKO Vaccine Counterpart Gap Disposition",
+  "type": "object",
+  "required": [
+    "gap_id",
+    "reconciliation_ref",
+    "vaccine_ref",
+    "pni_claim_ref",
+    "field",
+    "classification",
+    "closure_status",
+    "freeze_blocker",
+    "authority_resolution",
+    "source_strategy",
+    "rationale",
+    "reviewed_on",
+    "next_review_due"
+  ],
+  "properties": {
+    "gap_id": {
+      "type": "string",
+      "pattern": "^cko\\.gap\\.vaccine\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+    },
+    "reconciliation_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "vaccine_ref": {
+      "type": "string",
+      "pattern": "^cko\\.object\\.vaccine\\.[a-z0-9-]+$"
+    },
+    "variant_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pni_claim_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "field": {
+      "type": "string",
+      "enum": [
+        "administration_site",
+        "dose",
+        "simultaneous_administration"
+      ]
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "pni_program_only",
+        "source_available_elsewhere",
+        "intrinsic_source_gap"
+      ]
+    },
+    "closure_status": {
+      "type": "string",
+      "enum": [
+        "closed_no_sbim_counterpart_required",
+        "accepted_source_gap",
+        "deferred_optional_regulatory_enrichment"
+      ]
+    },
+    "freeze_blocker": {
+      "type": "boolean"
+    },
+    "authority_resolution": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_strategy": {
+      "type": "object",
+      "required": [
+        "primary_authority",
+        "target_source",
+        "target_source_state",
+        "action"
+      ],
+      "properties": {
+        "primary_authority": {
+          "type": "string"
+        },
+        "target_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_source_state": {
+          "type": "string",
+          "enum": [
+            "not_required",
+            "canonical_source_gap",
+            "candidate_system_verified_per_product_not_extracted"
+          ]
+        },
+        "action": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_on": {
+      "const": "2026-08-09"
+    },
+    "next_review_due": {
+      "const": "2027-01-31"
+    }
+  },
+  "additionalProperties": false
+}

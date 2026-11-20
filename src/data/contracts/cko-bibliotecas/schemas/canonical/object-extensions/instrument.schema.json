@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cko:object-extension:instrument:v1.0.0",
+  "title": "CKO Instrumentais Object Extension",
+  "description": "Scope contract only. Attribute names are source-derived; values remain epistemic and must be supplied with provenance.",
+  "type": "object",
+  "required": [
+    "extension_version",
+    "object_type",
+    "attributes"
+  ],
+  "properties": {
+    "extension_version": {
+      "const": "1.0.0"
+    },
+    "object_type": {
+      "const": "instrument"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "model": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "length": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "articulation": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "material": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "processing": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "traceability": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        },
+        "ergonomicFeature": {
+          "$ref": "../object/CKO.EpistemicValue.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

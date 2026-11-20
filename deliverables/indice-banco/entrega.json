@@ -1,0 +1,29 @@
+{
+  "tarefa": "indice-banco",
+  "chaves": [
+    {
+      "chave_canonica": "migration:0036_indice_do_banco.sql",
+      "contrato_aplicado": "scripts/audit-indice-banco.mjs",
+      "evidencia_produzida": "migrations/0036_indice_do_banco.sql — 94/94 tabelas do dicionário com label humana (idempotente, com update que só reescreve quem está vazio ou é eco do nome técnico); 94/94 com label em src/lib/banco/indice.ts; 0 fora do dicionário. O portão conta sozinho: não há número fixo no código.",
+      "dependencia_a_revalidar": "o número de tabelas é medido, não escrito: 94 na medição de 26/10. Se a árvore ganhar tabela, o portão acusa e o índice tem que acompanhar. 102 e 98 estavam errados e o código é que estava certo."
+    },
+    {
+      "chave_canonica": "tabela:schema_entity",
+      "contrato_aplicado": "scripts/audit-indice-banco.mjs",
+      "evidencia_produzida": "coluna label criada e preenchida nas 94 tabelas; a área admin passa a ter nome de uso para todo o banco. O portão tem 8/8 testes e falha com --self-test nomeando a tabela.",
+      "dependencia_a_revalidar": "a label é o rótulo humano de uso final. Regras do portão: não pode ser eco do nome técnico, não pode ser GRITADA (tudo maiúsculo, exceto sigla de até 4 letras com 's' opcional) e não pode ter palavra capitalizada no meio. Acento e maiúscula inicial são legítimos em português — a regra antiga que proibia isso estava errada."
+    },
+    {
+      "chave_canonica": "componente:src/lib/banco/indice.ts",
+      "contrato_aplicado": "scripts/audit-indice-banco.mjs",
+      "evidencia_produzida": "exporta indiceDoBanco, normalizar, buscarNoIndice, tabelasDaAdmin e labelDaTabela. A busca é normalizada (sem acento, sem caixa): buscarNoIndice('faixa') acha 'Faixas de escore'.",
+      "dependencia_a_revalidar": "a área admin tem que consumir este módulo em vez de manter lista própria de tabelas — lista duplicada é a fratura que a rodada quer fechar."
+    },
+    {
+      "chave_canonica": "componente:scripts/audit-indice-banco.mjs",
+      "contrato_aplicado": "docs/entregas/FORMATO-DE-ENTREGA.md",
+      "evidencia_produzida": "portão com 8/8 testes, --self-test que quebra um label e prova que o portão acusa nomeando a tabela; escreve artifacts/db-indice.json.",
+      "dependencia_a_revalidar": "o teste usa um helper que restaura a label explicitamente (comLabelAlterada) em vez de rollback do PGlite: rollback em PGlite trava o event loop. Quem reescrever o teste não volta ao rollback."
+    }
+  ]
+}

@@ -33,6 +33,6 @@ jobs:
         run: npm ci
       - name: Test topbar and gated auth behavior
         run: node --test scripts/header-entry.test.mjs
-      - name: Typecheck
-        run: npx tsc --noEmit
+      - name: Typecheck with canonical route generation
+        run: npm run typecheck
 # Candidate only. PR includes pre-existing CSS divergence; no merge authorization.

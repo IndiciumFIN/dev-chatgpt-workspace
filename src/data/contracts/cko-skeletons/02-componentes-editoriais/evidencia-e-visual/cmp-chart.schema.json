@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/components/v0.1.0/cmp-chart.schema.json",
+  "title": "CKO Component | CMP-CHART",
+  "description": "Esqueleto do bloco editorial chart. Data visualization. Família: evidencia-e-visual.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "component_id",
+    "block_type",
+    "slots"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "component_id": {
+      "type": "string",
+      "const": "CMP-CHART"
+    },
+    "block_type": {
+      "type": "string",
+      "const": "chart"
+    },
+    "purpose": {
+      "type": "string",
+      "const": "Data visualization"
+    },
+    "default_source_mode": {
+      "type": "string",
+      "const": "computed_projection"
+    },
+    "family": {
+      "type": "string",
+      "const": "evidencia-e-visual"
+    },
+    "slots": {
+      "type": "object",
+      "description": "TODO: preencher os slots específicos deste bloco",
+      "additionalProperties": true
+    },
+    "bindings": {
+      "type": "object",
+      "description": "TODO: mapear bindings para claim/canonical_object/media_asset",
+      "properties": {
+        "claim_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "canonical_object_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "media_asset_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reference_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "a11y_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reusability_scope": {
+      "type": "string",
+      "enum": [
+        "GLOBAL",
+        "FAMILY",
+        "OBJECT_VARIANT"
+      ]
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "TODO: listar exceções autorizadas (com justification_ref)"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

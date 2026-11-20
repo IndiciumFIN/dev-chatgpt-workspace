@@ -1,0 +1,92 @@
+{
+  "schema_version": "0.1.0",
+  "template_id": "TPL-INFOGRAPHIC-001",
+  "profile": "infographic",
+  "version": "0.0.0-placeholder",
+  "status": "CANDIDATE",
+  "updated_at": "2026-10-23",
+  "channels": [
+    "web",
+    "print",
+    "pdf",
+    "social"
+  ],
+  "block_slots": [
+    "CMP-TITLE",
+    "CMP-LEAD",
+    "CMP-FIGURE (imagem principal)",
+    "CMP-CHART[] (se houver dados)",
+    "CMP-CALLOUT[] (highlights)",
+    "CMP-REFERENCES",
+    "CMP-ACTION-BAR (share, download PDF/SVG)"
+  ],
+  "required_contracts": [
+    "canonical_object",
+    "claim",
+    "media_asset",
+    "visualization",
+    "projection",
+    "publication"
+  ],
+  "block_bindings_schema": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": [
+        "block_id",
+        "semantic_role",
+        "binding_kind",
+        "binding_ids"
+      ],
+      "properties": {
+        "block_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "semantic_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binding_kind": {
+          "type": "string",
+          "enum": [
+            "OBJECT",
+            "CLAIM",
+            "EVIDENCE",
+            "MEDIA",
+            "RELATION",
+            "COMPUTED_METADATA",
+            "I18N_KEY"
+          ]
+        },
+        "binding_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "overlay_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "visibility_rule_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "gates": {
+    "sources": "NOT_APPLICABLE",
+    "rights": "NOT_APPLICABLE",
+    "a11y": "NOT_APPLICABLE",
+    "privacy": "NOT_APPLICABLE",
+    "human": "HOLD"
+  },
+  "renderer_ref": "TODO: preencher renderer_id",
+  "notes": "Esqueleto do perfil infographic. Preencha todos os TODOs antes de promover."
+}

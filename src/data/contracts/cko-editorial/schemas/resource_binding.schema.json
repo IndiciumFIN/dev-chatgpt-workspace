@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/resource-binding.schema.json",
+  "title": "CKO Resource Binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "resource_id",
+    "required_semantic_role"
+  ],
+  "properties": {
+    "resource_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resource_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "required_semantic_role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "minimum_fidelity": {
+      "type": "string",
+      "enum": [
+        "V0_CONCEPTUAL",
+        "V1_ILLUSTRATIVE",
+        "V2_EDUCATIONAL",
+        "V3_TECHNICALLY_REPRESENTATIVE",
+        "V4_VERIFIED_OBJECT",
+        "V5_SOURCE_REFERENCE_IMAGE"
+      ]
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "placement": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "fallback_resource_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/template-manifest.schema.json",
+  "title": "CKO Template Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "template_id",
+    "name",
+    "version",
+    "profile",
+    "channels",
+    "required_roles",
+    "allowed_block_types",
+    "governance"
+  ],
+  "properties": {
+    "template_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "article",
+        "case",
+        "flashcard",
+        "quiz",
+        "infographic",
+        "pocket_guide",
+        "pdf",
+        "slides"
+      ]
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "web",
+          "print",
+          "pdf",
+          "slides",
+          "epub",
+          "social",
+          "offline"
+        ]
+      }
+    },
+    "required_roles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "optional_roles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_block_types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "layout_contract": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "facts_from_canonical_only",
+        "resources_from_registry_only",
+        "rights_gate",
+        "a11y_gate",
+        "evidence_gate"
+      ],
+      "properties": {
+        "facts_from_canonical_only": {
+          "const": true
+        },
+        "resources_from_registry_only": {
+          "const": true
+        },
+        "rights_gate": {
+          "const": true
+        },
+        "a11y_gate": {
+          "const": true
+        },
+        "evidence_gate": {
+          "const": true
+        },
+        "special_gates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

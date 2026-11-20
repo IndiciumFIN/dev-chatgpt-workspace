@@ -1,0 +1,89 @@
+{
+ "evidence_id": "EV-NK-0003",
+ "generated_by": "norm-kernel-pipeline-v0.2.0",
+ "generated_at": "2026-09-29T14:22:36+00:00",
+ "policy_ids": [
+  "POL-NK-001"
+ ],
+ "gates": [
+  {
+   "gate": "G1-reconstruction",
+   "doc": "NK-DOC-FIX-0001",
+   "status": "PASSED",
+   "detail": "sha256:fc3d964fbac179c2874cf5b0d3df535cbc32d6ff62914a1f45cbcf745aabae96"
+  },
+  {
+   "gate": "G1-reconstruction",
+   "doc": "NK-DOC-FIX-0002",
+   "status": "PASSED",
+   "detail": "sha256:6bcbb601d4b3af3c422c701995b30839eec5045de4b7f65e5b797fdeacbda7cd"
+  },
+  {
+   "gate": "G2-coverage",
+   "status": "PASSED",
+   "detail": "9 trechos não-normativos explícitos, 0 não classificados"
+  },
+  {
+   "gate": "G4-field_norms",
+   "status": "PASSED",
+   "detail": "66 campos, 0 órfãos",
+   "missing": []
+  },
+  {
+   "gate": "G4-pin",
+   "status": "PASSED",
+   "detail": "pin=sha256:f72441e8d40e0e21c54106e7f48baa00b5d383743f94dbab1f37385a119650ba computed=sha256:f72441e8d40e0e21c54106e7f48baa00b5d383743f94dbab1f37385a119650ba",
+   "drift": false
+  },
+  {
+   "gate": "G3-links",
+   "status": "PASSED",
+   "detail": "10 átomos verificados, 0 problemas",
+   "problems": []
+  },
+  {
+   "gate": "G5-iso8000-completude",
+   "status": "PASSED",
+   "detail": "10 átomos, 0 incompletos",
+   "problems": []
+  },
+  {
+   "gate": "G6-value-conformance",
+   "status": "PASSED",
+   "detail": "34 registros verificados contra composição/enum declarados, 0 violações",
+   "problems": []
+  }
+ ],
+ "run": {
+  "run_id": "NK-RUN-0003",
+  "source_ref": "SRC-CAL-FIXTURE",
+  "doc_refs": [
+   "NK-DOC-FIX-0001",
+   "NK-DOC-FIX-0002"
+  ],
+  "atoms_created": 10,
+  "coverage_percent": 100.0,
+  "failures": [],
+  "extractor_version": "atomizer-v0.1.1",
+  "evidence_id": "EV-NK-0003",
+  "status": "passed"
+ },
+ "unknown_universe": [
+  "multi-átomo por linha (1 linha = 1 segmento no v0.1)",
+  "OCR/PDF e diários reais (fixtures sintéticos apenas)",
+  "deôntica implícita sem modal explícito",
+  "condicionais aninhadas e exceções estruturadas (R7 parcial)",
+  "serialização de floats no JCS (RFC 8785 ES6)",
+  "PUBLISH: gates axe/pa11y/Lighthouse/OG no build_frontend (Fase 0.2)",
+  "OSCAL e PROV-O export (Fase 0.2)",
+  "ISO 8000: partes citadas '(verificar)', aquisição pendente",
+  "definições de DictionaryTerm pendentes (Fase 0)",
+  "enums duplicados entre anexo (Python) e intake guard (TS) — fonte única de enums é débita"
+ ],
+ "artifacts": {
+  "atoms": "evidence/atoms.json",
+  "documents": "evidence/documents.json",
+  "terms": "evidence/terms.json"
+ },
+ "checksum": "sha256:54b6da4a2d1741ec9a2ee0fdcae0cbbd82ce464af53aa27c3c531c1e2bf30767"
+}

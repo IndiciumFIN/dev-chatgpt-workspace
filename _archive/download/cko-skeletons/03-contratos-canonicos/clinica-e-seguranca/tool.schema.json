@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/cko/contracts/v0.1.0/tool.schema.json",
+  "title": "CKO | tool",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "version",
+    "status",
+    "updated_at",
+    "provenance_refs",
+    "tool_kind",
+    "input_bindings",
+    "engine_ref",
+    "result_schema_ref",
+    "privacy_profile",
+    "safety_profile",
+    "test_vector_refs",
+    "release_gate"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "REVIEW_REQUIRED",
+        "HOLD_HUMAN",
+        "ASSURED",
+        "ELIGIBLE_FOR_RELEASE",
+        "RELEASED",
+        "RETIRED"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "tool_kind": {
+      "type": "string",
+      "enum": [
+        "CALCULATOR",
+        "SCALE",
+        "SCORE",
+        "DECISION_SUPPORT",
+        "RESEARCH_TOOL",
+        "OTHER"
+      ]
+    },
+    "input_bindings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "engine_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result_schema_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "privacy_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safety_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "test_vector_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "release_gate": {
+      "type": "string",
+      "enum": [
+        "HOLD",
+        "ASSURED",
+        "RELEASED"
+      ]
+    },
+    "inference_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ui_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_precision_policy_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

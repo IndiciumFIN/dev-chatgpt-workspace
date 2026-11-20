@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CKO Design Tokens — Gallery</title>
+<link rel="stylesheet" href="../dist/cko-universal-content-tokens.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:var(--cko-bg-canvas);color:var(--cko-text-primary);font-family:var(--cko-font-body)}
+main{max-width:1280px;margin:auto;padding:28px}.hero{padding:30px;border-radius:24px;background:#1A3E74;color:#fff}
+h1,h2,h3{font-family:var(--cko-font-display)}.hero h1{margin:0 0 6px;font-size:2.2rem}.toolbar{margin:18px 0}
+button{min-height:44px;padding:0 14px;border:1px solid var(--cko-border-default);border-radius:9px;background:var(--cko-surface);color:var(--cko-text-primary);font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.swatch,.card,.family{border:1px solid var(--cko-border-subtle);background:var(--cko-surface);border-radius:16px;overflow:hidden}
+.swatch div{height:76px}.swatch span{display:block;padding:10px;font-size:12px}.family{padding:14px}.family-color{height:72px;border-radius:11px;background:var(--cko-family-accent)}
+.family button{background:var(--cko-family-accent);color:#fff;border:0}.family p{font-size:12px;color:var(--cko-text-muted)}
+.components{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{padding:18px}.callout{padding:14px;border-radius:12px;background:#EFF6FF;border:1px solid #BFDBFE}
+.callout.warn{background:#FFFBEB;border-color:#FDE68A}.callout.danger{background:#FEF2F2;border-color:#FECACA}.flash{min-height:180px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:20px;display:grid;place-items:center;padding:20px;text-align:center;font-weight:900}
+.option{display:block;width:100%;margin:7px 0;text-align:left}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.components{grid-template-columns:1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}main{padding:14px}}
+</style>
+</head>
+<body data-theme="light">
+<main>
+<section class="hero"><h1>CKO Universal Content Design Tokens</h1><div>Artigos · Flashcards · Infográficos · Simulados · Casos clínicos · E-books · Guias</div></section>
+<div class="toolbar"><button onclick="document.body.dataset.theme=document.body.dataset.theme==='dark'?'light':'dark'">Alternar light/dark</button></div>
+
+<h2>Paleta</h2>
+<div class="grid">
+<div class="swatch"><div style="background:#1A3E74"></div><span>Navy 700 · #1A3E74</span></div>
+<div class="swatch"><div style="background:#2563EB"></div><span>Blue 600 · #2563EB</span></div>
+<div class="swatch"><div style="background:#0E7490"></div><span>Cyan 700 · #0E7490</span></div>
+<div class="swatch"><div style="background:#6D28D9"></div><span>Violet 700 · #6D28D9</span></div>
+<div class="swatch"><div style="background:#D97706"></div><span>Amber 600 · #D97706</span></div>
+<div class="swatch"><div style="background:#DC2626"></div><span>Red 600 · #DC2626</span></div>
+<div class="swatch"><div style="background:#0F172A"></div><span>Slate 900 · #0F172A</span></div>
+<div class="swatch"><div style="background:#F8FAFC"></div><span>Slate 50 · #F8FAFC</span></div>
+</div>
+
+<h2>Famílias</h2>
+<div class="grid">
+<div class="family" data-content-family="editorial-content"><div class="family-color"></div><h3>editorial-content</h3><p>Artigos e conteúdos</p><button>Ação</button></div>
+<div class="family" data-content-family="study-guide"><div class="family-color"></div><h3>study-guide</h3><p>Guias de estudo</p><button>Ação</button></div>
+<div class="family" data-content-family="quick-reference"><div class="family-color"></div><h3>quick-reference</h3><p>Guias de bolso</p><button>Ação</button></div>
+<div class="family" data-content-family="book-publication"><div class="family-color"></div><h3>book-publication</h3><p>E-books e apostilas</p><button>Ação</button></div>
+<div class="family" data-content-family="assessment"><div class="family-color"></div><h3>assessment</h3><p>Simulados e quizzes</p><button>Ação</button></div>
+<div class="family" data-content-family="clinical-simulation"><div class="family-color"></div><h3>clinical-simulation</h3><p>Casos clínicos</p><button>Ação</button></div>
+<div class="family" data-content-family="visual-learning"><div class="family-color"></div><h3>visual-learning</h3><p>Flashcards e infográficos</p><button>Ação</button></div>
+</div>
+
+<h2>Componentes</h2>
+<div class="components">
+<div class="card"><h3>Callouts</h3><div class="callout"><b>Informação</b> — destaque editorial.</div><br><div class="callout warn"><b>Atenção</b> — requer revisão.</div><br><div class="callout danger"><b>Alerta</b> — risco ou erro.</div></div>
+<div class="card"><h3>Flashcard</h3><div class="flash">Qual é a ideia central deste conceito?</div></div>
+<div class="card"><h3>Questão / simulado</h3><button class="option">A. Alternativa</button><button class="option">B. Alternativa</button><button class="option">C. Alternativa</button><button class="option">D. Alternativa</button></div>
+<div class="card"><h3>Tipografia</h3><h1 style="margin:.2rem 0">Título H1</h1><h2 style="margin:.2rem 0">Título H2</h2><p>Corpo editorial em Inter, com legibilidade e medida controladas.</p></div>
+</div>
+</main>
+</body></html>

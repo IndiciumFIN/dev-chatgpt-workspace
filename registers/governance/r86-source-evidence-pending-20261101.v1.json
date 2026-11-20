@@ -1,0 +1,298 @@
+{
+ "schemaVersion": "1.0.0",
+ "recordId": "CE-R86-SOURCE-EVIDENCE-PENDING-20261101",
+ "date": "2026-11-01",
+ "type": "EVIDENCE_INTAKE_NOT_FORMAL_ADMISSION",
+ "repo": "IndiciumFIN/dev-chatgpt-workspace",
+ "source": {
+  "origin": "auditoria de integridade dos contratos (owner, 01/11/2026)",
+  "gate": "scripts/check-contract-integrity.mjs",
+  "gateReport": "16 violacoes: 6 x propriedade fora do contrato + 5 x sha256 sem representacao + 5 x snapshot placeholder",
+  "decisionIntake": "este registo (decisoes propostas, selection null)",
+  "noteR84": "o intake r84 e um registo fechado e validado (4 decisoes indexadas contra r83/r77, validador scripts/verify-r84-pmo-decision-intake.mjs): nao foi alterado por esta frente"
+ },
+ "counts": {
+  "sourcesRegistered": 6,
+  "sourcesWithPreservedArtifact": 1,
+  "sourcesEvidencePending": 5,
+  "proposedDecisions": 2,
+  "ownerDecisionsRecorded": 0,
+  "kernelAdmitted": 0,
+  "independentValidatorsExecuted": 0
+ },
+ "rows": [
+  {
+   "sourceId": "SRC-REV-ENF-USP-BRADEN-1999",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-REV-ENF-USP-BRADEN-1999",
+    "title": "Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa",
+    "sourceType": "PRIMARY_STUDY",
+    "authority": "Revista de Enfermagem da USP",
+    "locatorUri": "https://www.revistas.usp.br/revenf",
+    "locatorPinpoint": "Paranhos WY, Santos VLCG. Rev Esc Enferm USP. 1999;33(esp):191-206",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R86",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-CAPES-MEC-MANUAL-CONSULTA-RAPIDA",
+    "title": "Manual de Consulta Rápida em Enfermagem — Escala de Morse",
+    "sourceType": "GUIDELINE",
+    "authority": "CAPES/MEC",
+    "locatorUri": "https://educapes.capes.gov.br/bitstream/capes/1180808/2/Manual%20de%20consulta%20r%C3%A1pida-%20monitoria.pdf",
+    "locatorPinpoint": "Escala de Morse — Fonte: Urbanetto et al., 2013",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R86",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-OMS-OBESIDADE-2000",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-OMS-OBESIDADE-2000",
+    "title": "Obesity: preventing and managing the global epidemic — cortes de IMC",
+    "sourceType": "GUIDELINE",
+    "authority": "Organização Mundial da Saúde (OMS/WHO)",
+    "locatorUri": "https://www.who.int/publications/i/item/9789240015128",
+    "locatorPinpoint": "Cortes de IMC para adultos (WHO 2000, tabela de référence)",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R86",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-APGAR-1953",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-APGAR-1953",
+    "title": "A proposal for a new method of evaluation of the newborn infant",
+    "sourceType": "PRIMARY_STUDY",
+    "authority": "Current Researches in Anesthesia & Analgesia",
+    "locatorUri": "https://pubmed.ncbi.nlm.nih.gov/",
+    "locatorPinpoint": "Apgar V. Curr Res Anesth Analg. 1953;32(4):260-267",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R86",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  },
+  {
+   "sourceId": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
+   "proposedTask": "TASK-PLAN-171",
+   "proposedWo": "WO-CKO-SRC-EVIDENCE-001",
+   "source": {
+    "kind": "SOURCE_EVIDENCE_PENDING",
+    "path": "contracts/entities/tool-sources.v1.json",
+    "canonicalId": "SRC-GOTEJAMENTO-FORMULA-CLASSICA",
+    "title": "Fórmula clássica de gotejamento",
+    "sourceType": "INTERNAL_GOVERNED",
+    "authority": "Prática assistencial de gotejamento",
+    "locatorUri": "",
+    "locatorPinpoint": "gts/min = (volume em mL × fator do equipo) / tempo em minutos",
+    "artifactPreserved": false,
+    "snapshotRef": "PENDING_SNAPSHOT",
+    "declaredReason": "documento-fonte nao preservado no pacote de evidencia; a captura normativa cobre apenas o parecer do CFM",
+    "contractGap": "o contrato `source` exige sha256 ^[a-f0-9]{64}$ de um artefacto preservado e nao tem estado para 'documento nao preservado'"
+   },
+   "policy": {
+    "modelPath": "docs/governance/04-work-order-model.md",
+    "auditPolicyPath": "registers/governance/audit-policy.v1.json",
+    "applicability": "NOT_VALIDATED"
+   },
+   "validator": {
+    "status": "ITEM_VALIDATOR_NOT_BOUND",
+    "path": null
+   },
+   "governance": {
+    "findAdmission": "NOT_VERIFIED",
+    "policyApproved": "NOT_VERIFIED",
+    "validatorPassed": "NOT_RUN_BY_R86",
+    "kernelAdmission": "NOT_VERIFIED",
+    "sourceWo": "UNRECONCILED",
+    "release": "HOLD_HUMAN"
+   }
+  }
+ ],
+ "decisions": [
+  {
+   "id": "R86-CKO-SRC-EVIDENCE-STATE",
+   "subject": "O contrato `source` nao tem representacao para 'documento nao preservado'",
+   "sourceObservation": "O contrato canonico `source` exige integrity.sha256 com pattern ^[a-f0-9]{64}$ e integrity.additionalProperties false; as 43 instancias canonicas tem todas artefacto preservado. 5 das 6 fontes de ferramenta nao tem documento preservado.",
+   "recommendedCode": "AMEND_CONTRACT_WITH_EXPLICIT_ABSENT_STATE",
+   "options": [
+    {
+     "code": "AMEND_CONTRACT_WITH_EXPLICIT_ABSENT_STATE",
+     "label": "Emendar o contrato `source` para declarar um estado explicito de evidencia ausente (com motivo)",
+     "effect": "Exige WORK ORDER do Kernel sobre um contrato canonico. Nao altera o release gate nem admite a fonte; torna o estado representavel."
+    },
+    {
+     "code": "PRESERVE_THE_FIVE_DOCUMENTS",
+     "label": "Preservar os cinco documentos e registar a fonte como as 43 instancias canonicas",
+     "effect": "Satisfaz o contrato sem emendar. Impossivel para SRC-GOTEJAMENTO-FORMULA-CLASSICA (nao existe documento) e sujeito a direitos de redistribuicao."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Adiar e rever com o Kernel",
+     "effect": "Mantem o estado actual, com HOLD_HUMAN e as 5 fontes em evidencia pendente registada."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "registers/governance/r86-source-evidence-pending-20261101.v1.json",
+    "scripts/check-contract-integrity.mjs",
+    "registers/governance/transversal-source-instances/",
+    "contracts/cko-skeleton/catalog/cko-data.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decisao a rever nao e declaracao de autoridade corporativa; nenhuma fonte sai de HOLD por esta linha."
+  },
+  {
+   "id": "R86-CKO-SRC-CITATION-SLOT",
+   "subject": "O contrato `source` nao tem campo para a citacao que a pratica carrega",
+   "sourceObservation": "As 6 fontes de ferramenta carregam `citacao`, propriedade que o contrato nao declara (additionalProperties: false). O contrato declara language, effective_from e license_ref, mas nao citacao; locator.pinpoint carrega um pinpoint mais curto.",
+   "recommendedCode": "AMEND_CONTRACT_TO_DECLARE_CITACAO",
+   "options": [
+    {
+     "code": "AMEND_CONTRACT_TO_DECLARE_CITACAO",
+     "label": "Declarar `citacao` no contrato `source`",
+     "effect": "Exige WORK ORDER do Kernel sobre um contrato canonico; torna a pratica conforme sem perder informacao."
+    },
+    {
+     "code": "CONFORM_RECORDS_AND_MOVE_CITATION",
+     "label": "Mover a citacao para locator.pinpoint e remover o campo",
+     "effect": "Torna a pratica conforme sem emendar o contrato, ao custo de encurtar a citacao e de mexer em registos que nao sao desta frente."
+    },
+    {
+     "code": "DEFER_AND_REVIEW",
+     "label": "Adiar e rever com o Kernel",
+     "effect": "Mantem o campo e a lacura registada; o portao continua a reprovar."
+    }
+   ],
+   "selection": null,
+   "justification": null,
+   "evidencePaths": [
+    "contracts/entities/tool-sources.v1.json",
+    "scripts/check-contract-integrity.mjs",
+    "contracts/cko-skeleton/catalog/cko-data.json"
+   ],
+   "reviewState": "PENDING_OWNER_SPECIFIC_DECISION",
+   "makerAttestation": null,
+   "independentCheckerAttestation": null,
+   "kernelAdmissibility": null,
+   "approvalSignature": null,
+   "approvalTimestamp": null,
+   "statusEffectsAllowed": false,
+   "reason": "Decisao a rever nao e declaracao de autoridade corporativa."
+  }
+ ],
+ "releaseGate": "HOLD_HUMAN",
+ "mainModified": false,
+ "sourceModified": false,
+ "notes": [
+  "Intake de evidencia, nao admissao: listar a linha nao e prova de que a fonte qualifies.",
+  "O contrato `source` (contracts/cko-skeleton/catalog/cko-data.json, id `source`) declara integrity.sha256 com pattern ^[a-f0-9]{64}$ e integrity.additionalProperties false: nao existe estado para 'documento nao preservado'.",
+  "SRC-GOTEJAMENTO-FORMULA-CLASSICA e INTERNAL_GOVERNED e descreve uma formula sem documento-fonte: nenhum documento pode existir para satisfazer o contrato actual - a emenda do contrato e a unica via para essa fonte.",
+  "As outras quatro tem documento localizavel (Rev Esc Enferm USP 1999; manual de consulta CAPES; WHO 2000; Apgar 1953) mas a captura nao esta no pacote e o hash nao pode ser inventado."
+ ],
+ "verification": {
+  "measuredBy": "owner",
+  "method": "execucao do portao + leitura do contrato canonico + leitura das 43 instancias canonicas em registers/governance/transversal-source-instances/",
+  "result": "GAP_CONFIRMED_PENDING_OWNER_DECISION"
+ }
+}

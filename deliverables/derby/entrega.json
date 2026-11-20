@@ -1,0 +1,65 @@
+{
+  "tarefa": "derby",
+  "chaves": [
+    {
+      "chave_canonica": "migration:0037_preencher_derby.sql",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "migrations/0037_preencher_derby.sql — normaliza o legado: 82/82 instrumentos com version, evidence e band_from = DERBY; 26 idiomas com o nome real (label <> id, 31/31); 2.158 textos de rascunho publicados; 15 corpos e 15 títulos que eram caminho com DERBY; 4 átomos admitidos; 43 itens de governança e 110 características do dicionário aprovadas. Gate passa (exit 0) e falha com --self-test nomeando a coluna.",
+      "dependencia_a_revalidar": "o texto publicado das 26 traduções continua sem revisão humana: a coluna nova content_text.review_state = 'DERBY' é o que marca a pendência. Quem for à área admin tem que ler review_state, não o status, para dizer 'publicado e revisado'."
+    },
+    {
+      "chave_canonica": "migration:0041_passa_de_aprovacao.sql",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "migrations/0041_passa_de_aprovacao.sql — fecha a fila de rascunhos depois das migrations da rodada: 14/14 business_rule, 110/110 data_specification, 43/43 governance_item e 5/5 ai_control em 'aprovado' com approved_by = 'derby-normalizacao'. Não toca kernel_atom, kernel_claim, policy_package nem policy_rule.",
+      "dependencia_a_revalidar": "a aprovação em massa é do dono, com o responsável 'derby-normalizacao' e a data da ordem. Quem vier depois tem que conferir se a execução de cada regra continua existindo: as 10 legadas têm FK/CHECK no banco ou motivo no kernel (policy-set-required, validators-required, policy-denied, inactive-policy) e as 4 novas da 0038 têm motivo no kernel (manifest-required, independent-approval-required) ou no portão do processo (atom-sem-evidencia, instrumento-sem-portao)."
+    },
+    {
+      "chave_canonica": "tabela:source_tool",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "82/82 instrumentos com version, evidence, band_from, category, nanda_mode e updated_by preenchidos; as 5 capas publicadas mantêm o valor real de category e nanda_mode. Nenhum valor clínico inventado: a faixa de escore (band_from) recebe o marcador, não um número.",
+      "dependencia_a_revalidar": "a faixa de escore real dos 77 instrumentos não publicados continua fora do banco (o limiar está no JavaScript da origem). Quem for publicar um instrumento tem que trazer a faixa da fonte antes de trocar o DERBY por número; o marcador não pode virar faixa."
+    },
+    {
+      "chave_canonica": "tabela:content_text",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "3.925/3.925 linhas publicadas (antes: 1.767), 19 idiomas com texto publicado (antes: 3), 0 texto publicado sem alias (gap = 0), 15 corpos e 15 títulos que eram caminho trocados pelo marcador. 2.158 linhas com review_state = 'DERBY' (publicadas, aguardando revisão humana).",
+      "dependencia_a_revalidar": "publicar as traduções que estavam em rascunho muda o que o site serve: 19 idiomas em vez de 3. Quem for mexer no i18n tem que olhar review_state e o achado P1 de vazamento de jurisdição (calculo-de-ferias) que segue aberto — a publicação foi feita com marcador, não com revisão."
+    },
+    {
+      "chave_canonica": "tabela:locale",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "31/31 idiomas com nome real em português; 0 idiomas com label = id (o teste prova). O nome do idioma é fato de ISO 639-1, então NÃO recebeu DERBY — recebeu o nome verdadeiro.",
+      "dependencia_a_revalidar": "o país e a jurisdição de cada idioma continuam sem vínculo declarado no banco. O achado FND-FERIAS-LOCALE-JURISDICTION-LEAKAGE-20260902 (HIGH) segue aberto: publicar em pt-BR não significa que o texto é de jurisdição brasileira."
+    },
+    {
+      "chave_canonica": "tabela:phase_note",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "a linha F19–F34 sai da fila de retidas: o app separa status is not null (publicadas) de status is null (retidas) em src/lib/stored.functions.ts; 0 linhas ficam retidas e 1 linha com status = 'DERBY'.",
+      "dependencia_a_revalidar": "'DERBY' como status de fase aparece na lista de fases publicadas do site. Quem for escrever a fase tem que substituir o marcador por um estado do vocabulário real ('Publicado' é o que existe hoje)."
+    },
+    {
+      "chave_canonica": "tabela:inst_section",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "31/31 corpos de seção preenchidos. Atinge 10 páginas públicas (Planos, Termos de Uso, Perguntas frequentes, Cancelamento e reembolso, Condições da assinatura, Conta e exclusão de dados, Declaração de Acessibilidade, Política editorial, Fontes e evidências, Uso responsável de IA).",
+      "dependencia_a_revalidar": "essas páginas públicas passam a exibir o texto DERBY no lugar da prosa que falta. A pendência é de escrita humana, não de banco: quem for redigir precisa substituir o marcador. Se o dono preferir texto vazio nessas páginas, é uma linha da 0037 para reverter — e o portão passa a acusar."
+    },
+    {
+      "chave_canonica": "tabela:policy_ack",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "a política vigente tem dono: owner_user_id = 'derby-normalizacao' e accepted_at com a data da ordem. A tela de governança mostra quem assumiu.",
+      "dependencia_a_revalidar": "o valor 'derby-normalizacao' não é um user_id de verdade: a tabela não tem chave estrangeira para 'user'. Se a área admin tentar assumir a política de novo (botão assumir_politica), o valor real do usuário substitui o marcador e a trilha de assumir_politica entra no audit_event."
+    },
+    {
+      "chave_canonica": "tabela:kernel_atom",
+      "contrato_aplicado": "scripts/preencher-derby.mjs",
+      "evidencia_produzida": "4/4 átomos legados de 'candidato' para 'admitido', com admitted_by = 'derby-normalizacao' e admitted_at com a data. A coluna admitted_by do kernel_claim (que só existe a partir da 0038) é preenchida pela 0041 para o que já está admitido.",
+      "dependencia_a_revalidar": "a admissão em massa é do dono, não do kernel: o valor 'kernel' continua recusado pelos CHECK do banco (kernel_manifest_approved_by_check e kernel_order_approver_id_check). Átomo novo não entra por esta migration — ele passa pelo kernel, e o que sobrar candidato é achado nomeado."
+    },
+    {
+      "chave_canonica": "componente:scripts/preencher-derby.mjs",
+      "contrato_aplicado": "docs/entregas/FORMATO-DE-ENTREGA.md",
+      "evidencia_produzida": "portão com 10/10 testes (node --test scripts/preencher-derby.test.mjs). O contrato do portão (COLUNAS_ALVO, ESTADOS_ALVO, COLUNAS_CAMINHO) é conferido contra a migration dentro do teste: trocar a lista sem a migration quebra o teste. 36 colunas de vazio estrutural (discriminador) são classificadas e nomeadas, não acusadas.",
+      "dependencia_a_revalidar": "o portão lê o estado depois de todas as migrations. Se uma migration nova criar linha em rascunho nas tabelas de aprovação, o portão acusa e ela tem que estar coberta pela 0041 ou pela migration que a criou."
+    }
+  ]
+}

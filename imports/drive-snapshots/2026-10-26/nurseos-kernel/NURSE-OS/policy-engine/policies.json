@@ -1,0 +1,354 @@
+{
+  "policies": [
+    {
+      "policy_id": "POL-001",
+      "version": "1.2",
+      "title": "Nenhum agente altera ou sugere alteração de medicação (detector v0.1 com consciência de negação)",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "advice scanned by detectors.med_change_violation v0.3 (negação com fronteira de oração); has_medication_change==false AND no detector hit",
+      "applies_to": [
+        "agent_type:clinical_reasoning"
+      ],
+      "description": "v1.2 (03/09/2026): o property-based fuzzing (2000 casos) encontrou 78 falsos positivos no detector v0.2 (formas 'jamais fazer a suspensão de...'): lista de mediadores é insustentável — v0.3 usa fronteira de oração (, ; .): negação em outra oração não anula o termo. Verificado: golden 103/103, fuzz 2000/2000, mutation 6/6. A política segue a realidade do verificador, e a realidade agora é v0.3."
+    },
+    {
+      "policy_id": "POL-002",
+      "version": "1.0",
+      "title": "Autonomia L2/L3 exige nó HITL no grafo de handoff",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "autonomy in [L2_hitl, L3_autonomous] => requires_human_approval_for non-empty",
+      "applies_to": [
+        "autonomy:L2_hitl",
+        "autonomy:L3_autonomous"
+      ]
+    },
+    {
+      "policy_id": "POL-003",
+      "version": "1.1",
+      "title": "Gate de deploy: NurseBench >= 0.80 + model card + evidência",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "nursebench_score >= 0.80 and model_card_ref != null",
+      "applies_to": [
+        "deploy:production",
+        "deploy:pilot"
+      ]
+    },
+    {
+      "policy_id": "POL-004",
+      "version": "1.0",
+      "title": "Confiança < 0.70 => handoff automático ao enfermeiro",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "run.confidence < 0.70 => run.status=escalated",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-005",
+      "version": "1.0",
+      "title": "Agente em pilot/production exige guardrail ativo vinculado",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "status in [pilot, production] => >=1 active guardrail policy linked",
+      "applies_to": [
+        "status:production",
+        "status:pilot"
+      ]
+    },
+    {
+      "policy_id": "POL-006",
+      "version": "1.0",
+      "title": "Context Integrity: todo run executa sob Context Package validado",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "context_integrity == complete OR run.status in [blocked, escalated]; gaps => BLOCK / REDUCE AUTONOMY / REQUEST DATA / ESCALATE",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-007",
+      "version": "1.0",
+      "title": "Uncertainty obrigatória: toda saída clínica declara estado epistêmico",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "uncertainty exists and has {state, why, based_on, freshness}",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-008",
+      "version": "1.0",
+      "title": "Evidence Graph: todo run emite decision_id com cadeia fechada",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "decision_id present AND provenance steps all have {provenance_id, actor, version, hash}",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-009",
+      "version": "1.0",
+      "title": "Nenhuma autoalteração silenciosa em produção",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "applied_to_production => validation_status == 'certified' (offline_validated -> certified -> deploy; nunca deploy direto de learning candidate)",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-010",
+      "version": "1.0",
+      "title": "Outcome sempre vinculado à decisão que o produziu",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "outcome.run_ref present AND outcome.decision_id present — sem outcome órfão",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-011",
+      "version": "1.0",
+      "title": "Validade temporal dos fatos do twin (nada atemporal)",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "every twin fact has valid_from + source + confidence; valid_to null = vigente",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-012",
+      "version": "1.0",
+      "title": "Contradições seguem protocolo; RAG nunca escolhe frase vencedora silenciosamente",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "every contradiction has declared resolution method; unresolved => requires_human_review AND uncertainty.state=conflicting in Context Package (autonomy degraded)",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-013",
+      "version": "1.0",
+      "title": "Mudança de conhecimento em produção exige impact graph + revalidação + recertificação",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "applied_to_production => affected_objects non-empty AND revalidation_status=='completed' AND recertified==true",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-014",
+      "version": "1.0",
+      "title": "Norma em vigor exige impacto avaliado",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "effective_date non-empty and in the past => impact_status != 'monitoring'",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-015",
+      "version": "1.0",
+      "title": "Safety Case: pilot exige submetido; production exige aprovado por humano com autoridade clínica",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "pilot => safety_case.approval_status in [submitted, approved]; production => approval_status == 'approved' AND approved_by is human clinical authority",
+      "applies_to": [
+        "status:pilot",
+        "status:production"
+      ]
+    },
+    {
+      "policy_id": "POL-016",
+      "version": "1.0",
+      "title": "Asserção causal exige método declarado; contrafactual é simulação, nunca fato",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "causal claim => method declared + evidence_refs non-empty; counterfactual labeled simulation; status without evidence => inconclusive/hypothesis only",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-017",
+      "version": "1.0",
+      "title": "Todo input de run passa por triagem de ameaça; ameaça crítica exige resposta bloqueada/contida",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "input screened before Context Package; threat detected => execution blocked + ThreatEvent + SafetyEvent; severity==critical => status in [blocked, contained, investigated]",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-018",
+      "version": "1.0",
+      "title": "Comportamento multiagente validado como combinação (colusão)",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "agent_collusion events => is_multi_agent==true AND analysis registered; combined behavior validated, not action-by-action",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-019",
+      "version": "1.0",
+      "title": "Behavioral Firewall: agente em pilot/production exige envelope; fora do envelope = bloqueado",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "agent in [pilot, production] => BehaviorProfile with envelope exists; action beyond envelope blocked pending review",
+      "applies_to": [
+        "status:pilot",
+        "status:production"
+      ]
+    },
+    {
+      "policy_id": "POL-020",
+      "version": "1.0",
+      "title": "Delegação de capacidade só via Capability Registry (negociação com método e motivo)",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "delegation authorized/executed => selection_reason + policies_satisfied declared; no direct agent-to-agent calls outside protocol; failed gracefully when no provider",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-021",
+      "version": "1.0",
+      "title": "Mission complete só com critérios de sucesso E segurança evidenciados",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "mission complete => success_criteria + safety_criteria + outcome_refs non-empty; blocked mission => verification_note with reason",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-022",
+      "version": "1.0",
+      "title": "Identidade & Autorização: todo run tem principal autenticado com papel declarado",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "run => access_record with principal_id + role; authorized via agent contract",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-023",
+      "version": "1.0",
+      "title": "Consentimento: run que toca dados do paciente exige consentimento vigente para o propósito",
+      "enforcement_point": "runtime",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "run touching patient data => consent_record(purpose=care, granted=true); simulation => consent_twin_simulation; research => consent_research",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-024",
+      "version": "1.0",
+      "title": "Observabilidade/Drift: agente em pilot/production exige revalidação dentro da validade",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "agent in [pilot, production] => revalidation with valid_until >= today; stale safety case = deploy bloqueado",
+      "applies_to": [
+        "status:pilot",
+        "status:production"
+      ]
+    },
+    {
+      "policy_id": "POL-025",
+      "version": "1.0",
+      "title": "Completude vertical: vertical só é COVERED com missão+delegação+run+outcome evidenciados",
+      "enforcement_point": "graph",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "vertical status==covered => mission_ref + delegation_ref + run_ref + outcome_ref non-empty; otherwise honest status (partial/blocked/data_level/knowledge_level)",
+      "applies_to": [
+        "*"
+      ]
+    },
+    {
+      "policy_id": "POL-026",
+      "version": "1.2",
+      "title": "Traceabilidade integral como POLÍTICA: a cadeia MD → norma granular → aderência → front-end segue da política e nela consta",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "cláusulas C1-C5 + anexos normativos fixados por sha256 nesta política; drift de anexo bloqueia o gate",
+      "applies_to": [
+        "*"
+      ],
+      "description": "A cadeia de rastreabilidade não é infraestrutura solta — é norma. Cláusulas C1-C5 + anexos normativos (links.json, field_norms.json) fixados por checksum sha256 DENTRO desta política. Alterar um anexo sem revisar a política produz DRIFT detectado no gate: o registro não muda em silêncio, muda por ato normativo.",
+      "clauses": [
+        "C1 — MD fonte única: todo artefato provém do documento-mestre; nada existe fora dele sem registro",
+        "C2 — Legislação integral granular: cada CAMPO sustenta-se em norma granular registrada no anexo field_norms.json",
+        "C3 — Aderência evidenciada: o sistema exibe aderência por campo; a norma é fundação, não vitrine",
+        "C4 — Front-end gerado: ninguém edita HTML; muda-se o MD e regenera-se a partir do grafo verificado",
+        "C5 — Enforcement como instrumento: check_links.py, build_frontend.py e o gate do pipeline são instrumentos desta política, não código independente"
+      ],
+      "annexes": [
+        {
+          "file": "traceability/links.json",
+          "sha256": "1d0bc03d910d53ab6883e41108f51183242a627a918623a189d094c03cfc5608"
+        },
+        {
+          "file": "traceability/field_norms.json",
+          "sha256": "d1789bdd136512a0adac64bafa1176da3bb1bad828ef26baebdc121c5a90631a"
+        }
+      ],
+      "annex_repin_note": "Re-pin 03/09/2026 (registro da POL-027 no anexo links.json com base legal ISO/IEC 42001 cl.9 + NIST AI RMF Measure): mudança de registro feita por ato de política, com rastro. Drill de drift anterior: field_norms.json restaurado e re-pinado."
+    },
+    {
+      "policy_id": "POL-027",
+      "version": "1.0",
+      "title": "Cobertura, evidência e incerteza: cada gate declara cobertura do universo conhecido, evidence coverage, test pass, incerteza residual e universo desconhecido explícito",
+      "enforcement_point": "ci_gate",
+      "severity": "blocking",
+      "status": "active",
+      "expression": "evidence artifact CONTAINS coverage_declaration{coverage=100% universo conhecido, evidence_coverage=100%, test_pass=100% dos definidos, residual_uncertainty=X declarado, unknown_universe != []}",
+      "applies_to": [
+        "*"
+      ]
+    }
+  ]
+}

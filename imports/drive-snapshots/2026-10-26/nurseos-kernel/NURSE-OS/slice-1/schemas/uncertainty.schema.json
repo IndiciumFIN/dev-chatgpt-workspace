@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nurse-os:slice-1:uncertainty",
+  "title": "Uncertainty Object (Uncertainty Fabric, NOVO 02 / POL-007)",
+  "description": "Confiança vira infraestrutura: não é apenas um número — declara estado epistêmico, base, frescor, conflitos e o que mudaria a conclusão.",
+
+  "type": "object",
+  "required": ["state", "why", "based_on", "freshness"],
+
+  "properties": {
+    "state": {
+      "enum": ["known", "unknown", "uncertain", "conflicting", "stale", "missing", "low_evidence", "high_confidence"]
+    },
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "why": {"type": "string", "description": "por que este estado"},
+    "based_on": {"type": "array", "items": {"type": "string"}, "description": "quais fontes/CKOs sustentam a conclusão"},
+    "freshness": {"type": "string", "description": "idade/validade dos dados de base"},
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_a": {"type": "string"},
+          "claim_a": {"type": "string"},
+          "source_b": {"type": "string"},
+          "claim_b": {"type": "string"},
+          "resolution": {"type": "string", "description": "como o Contradiction Engine resolveu (autoridade, data, jurisdição, contexto)"}
+        }
+      }
+    },
+    "what_would_change_conclusion": {"type": "array", "items": {"type": "string"}}
+  }
+}

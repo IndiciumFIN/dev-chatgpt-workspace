@@ -12,11 +12,13 @@
 - GitHub Actions, Vercel, Google Drive e serviços externos continuam sendo ambientes de execução/armazenamento separados fisicamente, com configuração/contratos/lineage controlados neste repositório. A designação como repositório canônico não os 'move' fisicamente nem autoriza deploy.
 - Repositórios anteriores são **fontes históricas/candidatas**: manter acessíveis e imutáveis até reconciliação, aceite, verificação de completude e definição explícita de arquivamento. Não excluir nem mudar sua main automaticamente.
 
-## Regra operacional: nenhuma branch nova
+## Regra operacional vigente (20/11/2026): main protegida e PR obrigatório
 
-- **Não criar novas branches, PRs baseadas em branches novas, repositórios, forks ou projetos Supabase** para esta migração. Priorizar commits pequenos e verificáveis em Workspace@main, com SHA e testes; reutilizar PRs/branches já existentes apenas para absorver seu conteúdo por diff, sem torná-las novas autoridades.
-- Não dar push/merge forçado em repositórios de origem. Respeitar o ruleset ativo na main de IndiciumFIN/calculadorasdeenfermagem (PR + Gate Agregador), sem bypass. O Workspace@main estava sem proteção ativa na consulta de 19/11: isso não equivale a permissão para contornar testes ou aprovações.
-- Antes de cada commit: conferir HEAD, impacto de workflows/deploy, árvore, hashes e estado dos testes; nunca sobrescrever mudança concorrente. Após cada commit: conferir SHA, checks e contrato funcional; registrar reversão via commit e, após aceite, tag/release.
+- **A `main` permanece o único destino canônico.** A decisão original de 19/11 de não criar branches e fazer commits diretos foi superada em 20/11 pela proteção de servidor. Não fazer `push`, `update_ref`, merge forçado ou bypass diretamente na `main`; a exceção prevista é **somente uma branch temporária por microentrega elegível**, originada do SHA atual da `main`, com remoção controlada após o merge. Não criar branches permanentes, forks, repositórios ou bancos concorrentes.
+- **Fluxo obrigatório:** inventariar SHAs, executar cross e gates aplicáveis → branch temporária → commit com diff restrito → PR contra `main` → check GitHub Actions **`verify`** aprovado no SHA e atualizado com a base → revisão independente quando requerida pela governança (o ruleset inicialmente exige zero aprovações) → merge apenas se `MERGE_ELIGIBLE` e sem bloqueios relevantes. Se o estado do ruleset ou da CI for inconclusivo, manter HOLD e não tentar atalhos.
+- **Revisão dinâmica:** confirmar antes de cada ação a proteção efetiva da `main` no GitHub. Em 20/11/2026 o ruleset `CE-G02-MAIN-PROTECTED` (id `27746579`, alvo `~DEFAULT_BRANCH`) exige PR e `verify`, `strict=true`, proíbe deleção/force-push e não possui bypass configurado. Esse registro é histórico; uma configuração alterada depois deve ser verificada novamente na origem.
+- Não dar push/merge forçado em repositórios históricos. Respeitar seus rulesets e conservar branches e evidências. Antes de cada commit: conferir HEAD, impacto no deploy, origem, hashes e testes; nunca sobrescrever mudanças concorrentes. Após PR/merge autorizado: conferir SHA, checks, contrato funcional e reversibilidade.
+- **A existência de PR ou CI verde não autoriza release clínico, migrations remotas, decisão de Kernel, publicação de conteúdo em HOLD nem exclusão de branches históricas.** Se a exclusão automática da branch temporária estiver desativada, registrar limpeza manual posterior; não supor exclusão realizada.
 - Não tratar um commit em main como liberação clínica, editorial, jurídica, de segurança, LGPD ou produção.
 
 ## Linhagens e checkpoints de origem (inventário, não integração)
@@ -90,7 +92,7 @@ A **norma obrigatória de completude** está em [docs/governance/CE_BRANCH_COMPL
 
 ## Checkpoint CE W2.1/W2.2 — árvores completas e reutilização de SHA
 
-**20/11/2026; escopo CE/CKO/NCOS; execução na `main`, sem branches novas.**
+**20/11/2026; escopo CE/CKO/NCOS; checkpoint originalmente planejado para execução direta na `main` sem branches novas.** Este trecho é histórico; para novas alterações prevalece a regra G02 de branch temporária + PR + `verify` estabelecida acima.
 
 - O W2 continua preservado como baseline histórico: 48/48 branches CE censadas, 23/25 PRs com lista `changed_files` completa, 23 órfãs apenas em nível de raiz, 0/48 `SEALED`. Não reescrever esses denominadores a partir de métricas distintas.
 - W2.1 encerrou a **enumeração por arquivo da árvore Git completa**, não a reconciliação semântica, das duas mega-PRs #32 e #36. Com `truncated=false` para ambas as origens e para a `main@d977c6ef1e142d4a5c9dd3dfc528912b44f3b031`, os manifestos `registers/governance/ce-w2-1-pr32-full-tree-union-20261120.v1.json` e `registers/governance/ce-w2-1-pr36-full-tree-union-20261120.v1.json` documentam respectivamente 16.216 e 16.242 caminhos da união, com hashes Git por arquivo; arquivos na origem: 15.595 e 16.022.

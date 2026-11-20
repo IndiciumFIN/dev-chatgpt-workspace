@@ -192,5 +192,28 @@
     "activateArchivedWorkflow": false,
     "requiresIndependentClinicalReview": true
   },
-  "decision": "ARCHIVED_ONLY_NOT_OPERATIONAL"
+  "decision": "ARCHIVED_ONLY_NOT_OPERATIONAL",
+  "functionalGuard": {
+    "component": "canonical-kernel-admit",
+    "status": "IMPLEMENTED_AWAITING_CURRENT_HEAD_CI",
+    "code": "src/lib/kernel-admit.ts",
+    "tests": [
+      "src/lib/kernel-admit.test.ts",
+      "scripts/ce-legacy-functional-readiness.test.mjs"
+    ],
+    "scope": "Reject nine known legacy placeholder validator IDs in active database admission; require literal boolean true and consistent identity evidence when supplied",
+    "prohibited": [
+      "No external clinical claims admitted",
+      "No execution of archived Python",
+      "No remote database migrations or writes"
+    ],
+    "remainingHolds": [
+      "Validator provenance cannot be proven by historical true/false alone",
+      "All 15 archived validator/schema modules remain unadmitted",
+      "Clinical evidence and license review remain independent",
+      "Other validator types still require independent registry and attestation"
+    ],
+    "clinicalRelease": "HOLD_HUMAN",
+    "sqlWrites": 0
+  }
 }

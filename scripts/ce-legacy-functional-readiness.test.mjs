@@ -48,3 +48,15 @@ test("CE old migrations and malformed authorizations are archive-only, never exe
  assert.equal(gates.policy.applyArchivedSql,false);
  assert.equal(gates.policy.runArchivedCode,false);
 });
+test("known CE validator stubs are blocked by canonical Kernel name registry", () => {
+ const risk = gates.criticalFindings.find(f => f.code === "LEGACY_VALIDATOR_UNCONDITIONAL_ACCEPT");
+ assert.ok(risk);
+ const active = txt("src/lib/kernel-admit.ts");
+ const match = active.match(/export const LEGACY_UNTRUSTED_VALIDATOR_IDS = \[([\s\S]*?)\] as const;/);
+ assert.ok(match, "missing canonical deny registry");
+ const names = Array.from(match[1].matchAll(/"([a-z0-9_]+)"/g), m => m[1]).sort();
+ const observed = risk.affectedPaths.map(p => p.split("/").at(-1).replace(/\.py$/, "")).sort();
+ assert.deepEqual(names, observed);
+ assert.match(active, /select id, passed from kernel_validator where order_id = \$1/);
+ assert.match(active, /validatorIds: validators\.map\(\(row\) => row\.id\)/);
+});

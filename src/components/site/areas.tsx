@@ -4,46 +4,59 @@ import { authEnabled, signOut } from "@/lib/auth/client";
 import { hasGateSessionMarker } from "@/lib/auth/gate-session-marker";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { ensureRole, type SourceRole } from "@/lib/source.functions";
+import { evaluateAreaAccess } from "@/components/site/area-access-policy";
 
 const subscribe = () => () => {};
 
 export function useRole() {
   const { user, isPending } = useCurrentUserState();
-  const [role, setRole] = useState<SourceRole | null>(null);
-  const [failed, setFailed] = useState(false);
+  // A response belongs to exactly one principal; never reuse an old admin
+  // role while a different person's session is being resolved.
+  const [resolvedRole, setResolvedRole] = useState<{ userId: string; role: SourceRole } | null>(null);
+  const [failedFor, setFailedFor] = useState<string | null>(null);
   useEffect(() => {
     if (isPending) return;
     if (!user) {
-      setRole(null);
+      setResolvedRole(null);
+      setFailedFor(null);
       return;
     }
+    const userId = user.id;
     let live = true;
     ensureRole()
       .then((result) => {
-        if (live) setRole(result.role);
+        if (live) {
+          setResolvedRole({ userId, role: result.role });
+          setFailedFor(null);
+        }
       })
       .catch(() => {
-        if (live) setFailed(true);
+        if (live) setFailedFor(userId);
       });
     return () => {
       live = false;
     };
   }, [isPending, user?.id]);
+  const role = resolvedRole?.userId === user?.id ? resolvedRole.role : null;
+  const failed = Boolean(user && failedFor === user.id);
   return { user, isPending: isPending || Boolean(user && !role && !failed), role, failed };
 }
 
 export function AreaGuard({ allow, children }: { allow: "admin" | "member"; children: ReactNode }) {
   const { user, isPending, role } = useRole();
-  if (!authEnabled) return <>{children}</>;
-  if (isPending) {
+  // Auth-disabled environments are NOT automatically privileged. The role
+  // still comes from ensureRole() behind server-side authMiddleware, including
+  // the explicitly isolated PGlite CI admin fixture.
+  const outcome = evaluateAreaAccess({ allow, userId: user?.id ?? null, role, isPending });
+  if (outcome === "loading") {
     return (
       <div className="login-screen">
         <p>Abrindo a sua área…</p>
       </div>
     );
   }
-  if (!user || !role) return <Navigate to="/login" />;
-  if (allow === "admin" && role !== "admin") return <Navigate to="/assinante" />;
+  if (outcome === "login") return <Navigate to="/login" />;
+  if (outcome === "member") return <Navigate to="/assinante" />;
   return <>{children}</>;
 }
 

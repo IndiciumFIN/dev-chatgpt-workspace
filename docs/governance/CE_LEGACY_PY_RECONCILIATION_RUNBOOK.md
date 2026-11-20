@@ -85,3 +85,7 @@ Contagem do manifesto de 176: **102 arquivados**, **20 deduplicados**, **48 pend
 Mais dez arquivos do snapshot CE (quatro workflows antigos, cinco módulos/dependências Python e um verificador) foram preservados somente em `intake/legacy-ce/`, por blob Git byte-exato, tamanho e SHA-256. **Nenhum workflow foi reativado em `.github/workflows/` e nenhum script importado ou executado.** O CI canônico continua sendo a autoridade para testes; workflows antigos têm cláusulas que poderiam mascarar falhas e não devem ser promovidos.
 
 Inventário de 176: **112 arquivados**, **20 deduplicados**, **38 pendentes**, **6 colisões**; **132/176 (75,0%) documentalmente tratados**, sem aprovação clínica ou migrations remotas. Reconciliar os módulos ativos, dependências e gates antes de qualquer admissão.
+
+## Histórico CE — fechamento da triagem dos 38 objetos (20/11/2026)
+
+Arquivados 38/38 com Git blob SHA idêntico à origem; estado final: 150 arquivados, 20 aliases deduplicados, 0 pendentes, 6 colisões; 170/176 = 96,6% documental. Integrados funcionalmente: 0/38; decisão por família e gates no relatório `docs/governance/CE_LEGACY_FUNCTIONAL_READINESS_20261120.md`. Os quatro `data/legado/autorizacao_WO-*.json` contêm padding fora do JSON; são evidência histórica, não autoridade. Duas migrations antigas têm leitura aberta `USING (true)` e não foram executadas. Validadores de domínio legados apresentam nove implementações incondicionais; não liberar Kernel sem correção e testes.

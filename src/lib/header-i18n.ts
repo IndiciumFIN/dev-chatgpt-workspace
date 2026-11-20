@@ -11,9 +11,10 @@ export type HeaderLocale = typeof headerLocales[number]["id"];
 /**
  * Os idiomas que o SITE ENTREGA DE VERDADE.
  *
- * O chrome tem as 47 chaves nos 19 idiomas. O seletor lista quem tem dicionario.
- * Nos 15 marcados interface_ready a pagina continua em portugues, entao o
- * idioma do documento nao muda. Conteudo clinico e SEO nao entram aqui.
+ * O vocabulario de cabecalho tem candidatos nos 19 idiomas; nao ha prova de
+ * 47 chaves gerais da interface nem do conteudo clinico nos 15 header_only.
+ * O seletor usa somente os quatro idiomas com interface parcial conhecida.
+ * Conteudo clinico e SEO permanecem sujeitos a revisao humana.
  */
 export const selectableLocales = localeRegistry.filter((item) => item.interfaceDictionary === "partial_existing");
 

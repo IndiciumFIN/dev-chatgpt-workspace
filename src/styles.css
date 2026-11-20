@@ -3006,3 +3006,13 @@ html[data-theme="dark"] .tpl-note {
   --chrome-emphasis-bg: #ffffff;
   --chrome-emphasis-fg: #1a3e74;
 }
+
+/* A11y keyboard/touch and RTL menu, independent of the legacy .a11y-bar. */
+.header-utility button,
+.header-utility a { min-height: 44px; }
+.header-utility .lang-trigger { min-width: 44px; }
+.header-utility .focus-dot { width: 44px; height: 44px; min-height: 44px; }
+[dir="rtl"] .header-utility .lang-menu { right: 0; left: auto; }
+.header-utility button:focus-visible,
+.header-utility a:focus-visible,
+.off-canvas :focus-visible { outline: 3px solid var(--color-sky); outline-offset: 3px; }

@@ -79,3 +79,9 @@ Se a allowlist estiver toda preservada, o programa informa que nada mudou; não 
 Foram arquivados mais dez arquivos exclusivamente sob `intake/legacy-ce/`, incluindo cópias históricas de instruções de governança/PAT, testes offline e inicializadores Python; nenhuma importação ou execução foi habilitada. Integridade: Git blob SHA e SHA-256, origem fixada `e0f62491b104f4a97c6025a6393cabc2e7ada30e`.
 
 Contagem do manifesto de 176: **102 arquivados**, **20 deduplicados**, **48 pendentes** e **6 colisões**, isto é **122/176 (69,3%) documentalmente tratados**. A cópia de instruções de PAT não constitui recomendação de criar um PAT clássico de escopo amplo; designações de aprovadores permanecem evidência histórica, não aprovação corrente. Código na quarentena não deve ser executado nem importado nos aplicativos. Nenhuma migration aplicada.
+
+## Checkpoint — workflows e CLI somente em quarentena (20/11/2026)
+
+Mais dez arquivos do snapshot CE (quatro workflows antigos, cinco módulos/dependências Python e um verificador) foram preservados somente em `intake/legacy-ce/`, por blob Git byte-exato, tamanho e SHA-256. **Nenhum workflow foi reativado em `.github/workflows/` e nenhum script importado ou executado.** O CI canônico continua sendo a autoridade para testes; workflows antigos têm cláusulas que poderiam mascarar falhas e não devem ser promovidos.
+
+Inventário de 176: **112 arquivados**, **20 deduplicados**, **38 pendentes**, **6 colisões**; **132/176 (75,0%) documentalmente tratados**, sem aprovação clínica ou migrations remotas. Reconciliar os módulos ativos, dependências e gates antes de qualquer admissão.

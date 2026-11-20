@@ -41,5 +41,25 @@ test("all archived CE origin files retain source Git blob SHA and are never admi
   assert.equal(entry.admitted,false);
  }
  assert.equal(rec.counts.COLLISION_MANUAL_RECONCILIATION,6);
- assert.equal(rec.counts.PENDING_TRIAGE+rec.counts.ARCHIVED_SOURCE_EXACT+rec.counts.COLLISION_MANUAL_RECONCILIATION,rec.counts.total);
+ assert.equal(rec.counts.PENDING_TRIAGE+rec.counts.ARCHIVED_SOURCE_EXACT+rec.counts.DEDUP_SEMANTIC_EXACT+rec.counts.COLLISION_MANUAL_RECONCILIATION,rec.counts.total);
+});
+
+test("20 historical fonts aliases reconstruct byte-identical source without copies",()=>{
+ const aliases=rec.records.filter(x=>x.status==="DEDUP_SEMANTIC_EXACT");
+ assert.equal(aliases.length,20);
+ for(const row of aliases){
+  assert.match(row.path,/^contracts\/fonts\/[a-z0-9_]+\.json$/);
+  const canonical="contracts/fontes/"+row.path.split("/").at(-1);
+  assert.equal(row.dedupOf,canonical);
+  assert.equal(row.dedupProof,"REVERSIBLE_REMOVE_FINAL_SOURCE_CONTRACT_PROPERTY");
+  const bytes=readFileSync(new URL("intake/legacy-ce/"+canonical,root));
+  assert.equal(blobSha(bytes),row.canonicalBlobSha,canonical);
+  const needle=',\n  "source_contract": "'+canonical+'"';
+  const original=bytes.toString("utf8"),split=original.split(needle);
+  assert.equal(split.length,2,canonical);
+  const restored=Buffer.from(original.replace(needle,""),"utf8");
+  assert.equal(restored.length,row.bytes,row.path);
+  assert.equal(blobSha(restored),row.sourceBlobSha,row.path);
+  assert.equal(row.admitted,false);
+ }
 });

@@ -18,7 +18,7 @@ import sys
 
 DEFAULT = "registers/governance/ce-origin-reconciliation-20261120.v1.json"
 ARCHIVE = "intake/legacy-ce/"
-ALLOWED_STATES = {"ARCHIVED_SOURCE_EXACT", "PENDING_TRIAGE", "COLLISION_MANUAL_RECONCILIATION", "ALREADY_IDENTICAL"}
+ALLOWED_STATES = {"ARCHIVED_SOURCE_EXACT", "DEDUP_SEMANTIC_EXACT", "PENDING_TRIAGE", "COLLISION_MANUAL_RECONCILIATION", "ALREADY_IDENTICAL"}
 DANGER = re.compile(rb"(?:ghp_[A-Za-z0-9]{16,}|sb_secret_[A-Za-z0-9_-]{16,}|sk-[A-Za-z0-9_-]{24,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)", re.I)
 
 def fail(message: str) -> None:
@@ -102,6 +102,23 @@ def verify(root: Path, manifest: str, source: Path | None) -> dict:
                 fail("archive SHA or length mismatch: " + archive)
             if r.get("sha256") and hashlib.sha256(blob).hexdigest() != r["sha256"]:
                 fail("archive SHA-256 mismatch: " + archive)
+        if state == "DEDUP_SEMANTIC_EXACT":
+            name = PurePosixPath(original).name
+            expected = "contracts/fontes/" + name
+            if original != "contracts/fonts/" + name or r.get("dedupOf") != expected:
+                fail("invalid semantic duplicate pointer: " + original)
+            canonical = target_path(root, ARCHIVE + expected)
+            if canonical.is_symlink() or not canonical.is_file():
+                fail("canonical source contract missing: " + expected)
+            contents = canonical.read_bytes()
+            if git_sha(contents) != r.get("canonicalBlobSha"):
+                fail("canonical source contract hash mismatch: " + expected)
+            needle = (b',\n  "source_contract": "' + expected.encode("utf8") + b'"')
+            if contents.count(needle) != 1:
+                fail("dedup transform not reversible: " + expected)
+            reconstructed = contents.replace(needle, b"", 1)
+            if len(reconstructed) != r["bytes"] or git_sha(reconstructed) != r["sourceBlobSha"]:
+                fail("semantic alias source hash mismatch: " + original)
         if source is not None:
             s = source_path(source, original)
             if not s.is_file():
@@ -125,6 +142,7 @@ def verify(root: Path, manifest: str, source: Path | None) -> dict:
     print("PASS CE source inventory: " + str(len(m["records"])) +
           " records; " + str(count["ARCHIVED_SOURCE_EXACT"]) + " archived; " +
           str(count["PENDING_TRIAGE"]) + " pending; " +
+          str(count["DEDUP_SEMANTIC_EXACT"]) + " dedup exact; " +
           str(count["COLLISION_MANUAL_RECONCILIATION"]) + " collisions; " +
           str(len(duplicates)) + " duplicate-content candidate group(s).")
     print("NO SQL / no remote writes / no automatic clinical admission")

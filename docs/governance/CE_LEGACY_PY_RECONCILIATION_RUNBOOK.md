@@ -10,8 +10,9 @@ Este procedimento usa dois checkouts Git locais e não depende de Supabase, Neon
 - PENDING_TRIAGE: identificado no inventário, pendente de preservação.
 - COLLISION_MANUAL_RECONCILIATION: mesmo caminho no Workspace, blob divergente; nunca sobrescrever.
 - ALREADY_IDENTICAL: somente quando o blob original coincide com a versão canônica.
+- DEDUP_SEMANTIC_EXACT: alias histórico da pasta obsoleta contracts/fonts; é reconstruído byte a byte do contrato já preservado em contracts/fontes sem duplicar arquivos, eliminando apenas o atributo final source_contract.
 
-O inventário contém 176 arquivos; após esta onda: 60 históricos preservados, 110 pendentes, seis colisões. Inventário 100%; preservação 34,1%; publicação clínica e banco remoto NÃO aprovados.
+O inventário contém 176 arquivos; após esta onda: 73 históricos arquivados, 20 aliases deduplicados reversivelmente, 77 pendentes, seis colisões. Inventário 100%; preservação 41,5%; origens tratadas 52,8%; publicação clínica e banco remoto NÃO aprovados.
 
 ## Pré-requisitos
 

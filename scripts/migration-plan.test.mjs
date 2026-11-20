@@ -56,10 +56,19 @@ test("non-.sql entries are dropped (readdir also yields the auth/ directory)", (
   assert.deepEqual(pendingMigrations(["auth", "README.md"], []), []);
 });
 
-test("the auth schema ships outside the globbed directory", () => {
+test("migration runner finds only root SQL files, never descends into auth/", () => {
   const migrationsDir = join(projectRoot(), "migrations");
-  assert.deepEqual(pendingMigrations(readdirSync(migrationsDir), []), []);
+  const entries = readdirSync(migrationsDir);
+  // This workspace intentionally has product migrations at the root; checking
+  // that the directory is empty was a stale template assumption, not a gate.
+  const expectedRootSql = entries.filter(isMigrationFile).sort();
+  const discovered = pendingMigrations(entries, []);
+  assert.ok(expectedRootSql.length > 0, "existing root migrations must stay visible");
+  assert.deepEqual(discovered.map(({ name }) => name), expectedRootSql);
+  assert.ok(discovered.every(({ path }) => !path.includes("/")));
   assert.ok(readdirSync(join(migrationsDir, "auth")).includes("0001_auth.sql"));
+  // Auth copy in the root must still match the nested original byte-for-byte
+  // (the independent authSchemaCopy test below remains blocking).
 });
 
 test("this workspace's auth schema copy is byte-identical to its source", () => {

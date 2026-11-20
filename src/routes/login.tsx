@@ -42,12 +42,9 @@ function AuthOffPanel() {
   const navigate = useNavigate();
   return (
     <div className="login-panel">
-      <p>A autenticação está desligada neste ambiente. O site público abre sem entrar.</p>
+      <p role="status" aria-live="polite">A autenticação não está habilitada neste ambiente. Esta tela não inicia sessão nem concede acesso às áreas restritas. O site público permanece disponível.</p>
       <button className="btn-navy" type="button" onClick={() => void navigate({ to: "/" })}>
         Continuar sem entrar
-      </button>
-      <button className="linkish" type="button" onClick={() => void navigate({ to: "/assinante" })}>
-        Abrir a área do assinante
       </button>
     </div>
   );

@@ -36,6 +36,10 @@ async function sqlClient() {
 }
 
 async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
+  // Never seed (or implicitly publish tools) in a configured remote database
+  // during GET reads. Only the embedded preview database may receive fixtures.
+  const { dbSource } = await import("@/lib/db");
+  if (dbSource !== "pglite") return;
   const count = await sql<{ n: number }>`select count(*)::int as n from source_tool`;
   if (Number(count[0]?.n ?? 0) > 0) return;
   for (const tool of tools) {

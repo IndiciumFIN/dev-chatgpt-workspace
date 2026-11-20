@@ -1,0 +1,47 @@
+name: CE — first-admin bootstrap security (no deploy)
+on:
+  push:
+    branches:
+      - fix/security-auth-env-optin-oauth-17-20261114
+    paths:
+      - 'src/lib/source.functions.ts'
+      - 'scripts/ce-first-admin-bootstrap.test.mjs'
+      - '.github/workflows/ce-first-admin-bootstrap.yml'
+  pull_request:
+    paths:
+      - 'src/lib/source.functions.ts'
+      - 'scripts/ce-first-admin-bootstrap.test.mjs'
+      - '.github/workflows/ce-first-admin-bootstrap.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ce-first-admin-bootstrap-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify-first-admin:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ""
+      VITE_AUTH_ENABLED: "false"
+      CE_ADMIN_E2E_FIXTURE: "false"
+    steps:
+      - name: Checkout without retained credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked packages
+        run: npm ci
+      - name: Run real disposable Postgres SQL bootstrap tests
+        run: node --test scripts/ce-first-admin-bootstrap.test.mjs
+      - name: Run candidate OAuth and fail-closed auth guard tests
+        run: node --test scripts/test-auth-secret-env.mjs scripts/check-auth-invariant.test.mjs
+# This never sets application roles in Neon/Supabase or tests a real OAuth session.
+# Release remains blocked by OAuth credential rotation, RBAC E2E, review and Vercel.

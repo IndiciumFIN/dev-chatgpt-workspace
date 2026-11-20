@@ -1,4 +1,4 @@
-import { languageLinks } from "./seo.ts";
+import { localesWithInterface } from "./locale-registry.ts";
 
 export type AuditLevel = "bloqueio" | "achado";
 
@@ -68,10 +68,10 @@ export async function auditEcosystem(db: Queryable): Promise<AuditFinding[]> {
     block("LGPD-PACIENTE", "Política de dado: paciente, leito e documento não entram em tabela", patient.rows.map((row) => `${row.table_name}.${row.column_name}`).join(", "));
   }
 
-  const alternates = languageLinks("/ferramentas/braden", "pt-BR").filter(
-    (link): link is { rel: "alternate"; hrefLang: string; href: string } =>
-      link.rel === "alternate" && "hrefLang" in link && link.hrefLang !== "pt-BR" && link.hrefLang !== "x-default",
-  );
+  // The same canonical UI locale registry consumed by route-registry.ts,
+  // without importing the application router (Node's isolated TS audit does
+  // not resolve Vite-only @/ aliases).
+  const alternates = localesWithInterface.filter((code) => code !== "pt-BR");
   if (alternates.length > 0) {
     note("I18N-HREFLANG", "WCAG 3.1.1: não anunciar idioma cujo texto não está publicado", "languageLinks emite en, es e fr para uma ferramenta que só abre em pt-BR");
   }

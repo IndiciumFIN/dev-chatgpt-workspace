@@ -1,4 +1,4 @@
-import { describe, it } from "node:test";
+import { before, after, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync, type KeyObject } from "node:crypto";
 import { SignJWT, exportJWK, type JWK } from "jose";
@@ -12,6 +12,15 @@ import {
   verifyGateIdentityToken,
   type GateJwks,
 } from "./gate-identity.server.ts";
+
+// Positive token-verification tests must not inherit the app's CI preview
+// auth-off flag; a separate negative test below still validates auth-off.
+const previousAuthFlag = process.env.VITE_AUTH_ENABLED;
+before(() => { process.env.VITE_AUTH_ENABLED = "true"; });
+after(() => {
+  if (previousAuthFlag === undefined) delete process.env.VITE_AUTH_ENABLED;
+  else process.env.VITE_AUTH_ENABLED = previousAuthFlag;
+});
 
 const ISSUER = "https://gate.app-builder-testing.com";
 const AUDIENCE = "app:proj-123";

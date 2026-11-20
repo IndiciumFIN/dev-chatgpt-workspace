@@ -435,6 +435,15 @@ export function normalizeHeadContext(ctx = {}) {
   };
 }
 
+/** Treat PWA link relations as semantic tokens, never as a platform href. */
+function hasLinkRelation(html, relation) {
+  return [...String(html).matchAll(/<link\\b[^>]*>/gi)].some(([tag]) => {
+    const attr = tag.match(/\\brel\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))/i);
+    const value = attr ? (attr[1] ?? attr[2] ?? attr[3] ?? "") : "";
+    return value.toLowerCase().split(/\\s+/).includes(relation);
+  });
+}
+
 export function injectGrokPwaHead(html, ctx = {}) {
   if (typeof html !== "string") return html;
   const { site, projectId, creator, creatorId, host, cwd } = normalizeHeadContext(ctx);
@@ -450,8 +459,8 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   const missing = grokPwaHeadTags(appName)
     .filter(([key]) => {
-      if (key === "manifest") return !next.includes('href="/__grok/manifest.webmanifest"');
-      if (key === "apple-touch-icon") return !next.includes('href="/__grok/icon-180.png"');
+      if (key === "manifest") return !hasLinkRelation(next, "manifest");
+      if (key === "apple-touch-icon") return !hasLinkRelation(next, "apple-touch-icon");
       return !next.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);

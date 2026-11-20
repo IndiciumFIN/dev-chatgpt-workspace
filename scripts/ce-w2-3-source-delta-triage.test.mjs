@@ -21,7 +21,7 @@ function classify(p) {
 }
 test("W2.3: 480 risk-screened rows exhaustively reconcile to immutable W2.2 manifest, without admissibility claims", () => {
   const origin = read(sourcePath);
-  const digest = createHash("sha1").update(`blob ${origin.length}\\0`).update(origin).digest("hex");
+  const digest = createHash("sha1").update(`blob ${origin.length}\0`).update(origin).digest("hex");
   assert.equal(digest, "bcae37d1e74329ac853c2e77cc089bcf606f866d");
   const m = JSON.parse(origin);
   const triage = JSON.parse(read(reviewPath));

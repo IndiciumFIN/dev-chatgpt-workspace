@@ -28,7 +28,7 @@ for (const r of results) {
     // Return the actual command and bounded diagnostics. A mere FAIL flag
     // hides the cause and leads to bypasses instead of fixes.
     const safe = String(r.output ?? r.error ?? 'sem stdout/stderr')
-      .replace(/Bearer\\s+[A-Za-z0-9._-]+/g, 'Bearer [REDACTED]')
+      .replace(/Bearer\s+[A-Za-z0-9._-]+/g, 'Bearer [REDACTED]')
       .replace(/(?:sk-|ghp_|sb_secret_)[A-Za-z0-9_-]{12,}/g, '[REDACTED_TOKEN]');
     console.error(`::error title=${r.id}::Falha em ${r.command}`);
     console.error(safe.slice(-1800));

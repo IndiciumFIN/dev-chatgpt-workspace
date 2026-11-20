@@ -106,3 +106,7 @@ A partir dos 480 itens não compartilháveis no W2.2, foi registrada uma fila ex
 ## W2.4 — encerramento do inventário profundo das órfãs (20/11/2026)
 
 Foram confrontadas por arquivo 23/23 branches CE sem PR, representando 22 SHAs únicos e seis manifestos completos com `truncated=false`. Os registros vivem em [W2.4](registers/governance/ce-w2-4-orphan-full-file-index-20261120.v1.json), com auditoria em [relatório](docs/governance/CE_W2_4_ORPHAN_FULL_FILE_INVENTORY_20261120.md), teste agregado `scripts/ce-w2-4-orphan-full-file-index.test.mjs` e testes por lote. Baseline imutável `main@80d5e19778b90d69c621eea381a152fbcd7e9912`, diferente dos commits de publicação da própria auditoria. Manter o W2 anterior como histórico; **23/23 inventário estrutural, 0/23 revisão semântica final, 0/48 `SEALED`**. Reutilizar a evidência fixada para não varrer novamente o mesmo SHA, mas não declarar `no_revisit=true` antes da selagem.
+
+## W2.5 — triagem de risco das órfãs, sem disposição definitiva
+
+A [fila W2.5](docs/governance/CE_W2_5_ORPHAN_RISK_SCREEN_20261120.md) utiliza exclusivamente o índice W2.4 já validado na `main`, classificando `D/S/T` em P0/P1/P2 com deduplicação por path+Git blob. [Script](scripts/ce-w2-5-orphan-risk-screen.mjs) e [teste](scripts/ce-w2-5-orphan-risk-screen.test.mjs) garantem que as **30.551 ocorrências estruturais** (entre 22 SHAs distintos) recebem triagem preliminar sem serem declaradas semanticamente integradas. Não altera o W2 histórico; `SEALED` segue 0/48 e `no_revisit=false` até os gates externos e revisão independente.

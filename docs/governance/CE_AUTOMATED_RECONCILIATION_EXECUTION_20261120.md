@@ -31,3 +31,7 @@
 4. Submeter microPR elegível à main protegida e exigir check `verify` e demais gates, sem bypass. Após merge, conferir o SHA e repetir cross; só então considerar `SEALED` com prova íntegra.
 
 **Nota de implantação:** o agendamento de GitHub Actions só ativa na `main` após PR aprovada. Em PR, o workflow demonstra a execução Git-only, sem promoção para produção. CKO, CE, WU-TRIB e Cânone continuam com fronteiras de domínio explícitas.
+
+## Reconciliação integral de PRs gigantes (incremento da própria PR)
+
+O passo `scripts/ce-large-pr-native-diff.mjs` usa `git merge-base` + `git diff --name-status -z --no-renames` para obter o **diff nativo inteiro** das PRs históricas #32 e #36, cujas listagens REST estavam truncadas em 500 registros. Registra status/caminho/total/SHA-256 da lista, marca mismatch e HEAD drift em HOLD, e preserva o estado `PR_FILES_INCOMPLETE_API_LIMIT` até revisão independente. Um diff Git contra merge-base pode diferir da contagem de changed-files do GitHub em casos de renames e não se converte sozinho em decisão semântica, admissão ou merge. Teste unitário com casos negativos incluído. O arquivo sai somente no artefato Git-only da execução.

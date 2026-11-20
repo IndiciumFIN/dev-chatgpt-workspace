@@ -65,3 +65,11 @@ Examinar o registro registers/governance/ce-origin-reconciliation-20261120.v1.js
     python3 scripts/ce-legacy-reconcile.py stage --target . --source ../calculadorasdeenfermagem --category metadata --batch-size 9 --apply
 
 Se a allowlist estiver toda preservada, o programa informa que nada mudou; não habilitar templates/tokens históricos como fontes operacionais.
+
+## Checkpoint — segundo lote curado de documentos e evidências inertes (20/11/2026)
+
+- Dez caminhos adicionais do commit fixado `e0f62491b104f4a97c6025a6393cabc2e7ada30e` foram preservados apenas em `intake/legacy-ce/`.
+- A entrada de cada arquivo é conferida por tamanho, Git blob SHA e SHA-256; arquivos históricos continuam excluídos do deploy e não recebem admissão automática.
+- Manifesto: 92 arquivados, 20 aliases deduplicados, 58 pendentes, 6 colisões — 112/176 (63,6%) tratados documentalmente.
+- Aprovações, designações e políticas legadas são registros históricos sujeitos a revalidação, não substituem gates clínicos, jurídicos ou de segurança.
+- Próximos 58 arquivos incluem aplicações, CLI, workflows e SQL, sujeitos a triagem e gates específicos; não ampliar a allowlist de execução automaticamente.

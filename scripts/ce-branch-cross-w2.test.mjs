@@ -21,7 +21,12 @@ test("independent W2 snapshots account for all branches and PR sources", () => {
   const prMap = new Map(prs.entries.map(x => [x.branch, x]));
   const rootMap = new Map(orphan.rows.map(x => [x.branch, x]));
   for (const row of ledger.rows) {
-    assert.equal(github.get(row.branch)?.commit_sha, row.source_commit_sha, row.branch);
+    if (row.scope === "CANONICAL_MAIN") {
+      assert.equal(row.source_commit_sha, ledger.baseline_main_sha,
+        "main row must use the W2 review baseline, not the earlier W1 census HEAD");
+    } else {
+      assert.equal(github.get(row.branch)?.commit_sha, row.source_commit_sha, row.branch);
+    }
     if (row.pr_number) {
       const ref = prMap.get(row.branch);
       assert.ok(ref, row.branch);

@@ -7,11 +7,31 @@ export type PolicyFact = {
   effect: "allow" | "deny";
 };
 
+/**
+ * Legacy validators from the CE source snapshot currently return unconditional
+ * success and are not acceptable admission evidence. Names are normalized at
+ * the database boundary; a future implementation needs independent review.
+ */
+export const LEGACY_UNTRUSTED_VALIDATOR_IDS = [
+  "catmat_validator",
+  "cid10_validator",
+  "cid11_validator",
+  "cvx_validator",
+  "human_review_validator",
+  "loinc_validator",
+  "mesh_validator",
+  "ncm_validator",
+  "schema_validator",
+] as const;
+const legacyUntrustedValidatorIds = new Set<string>(LEGACY_UNTRUSTED_VALIDATOR_IDS);
+
 export type AdmitInput = {
   workOrderId: string;
   policyCodes: string[];
   rules: PolicyFact[];
   validators: boolean[];
+  /** Observed validator IDs, supplied by the database adapter, not the caller. */
+  validatorIds?: string[];
   approverId: string | null;
   /** HMAC-SHA256 hex of the canonical allow decision. Never a caller boolean. */
   policySignature?: string | null;
@@ -51,7 +71,22 @@ export function admit(input: AdmitInput): AdmitDecision {
   }
 
   if (input.validators.length === 0) return { outcome: "reject", reason: "validators-required" };
-  if (input.validators.some((ok) => !ok)) return { outcome: "reject", reason: "validator-failed" };
+  // Reject coerced truthy strings such as "false"; only boolean true is valid.
+  if (input.validators.some((ok) => ok !== true)) return { outcome: "reject", reason: "validator-failed" };
+
+  if (input.validatorIds !== undefined) {
+    if (
+      !Array.isArray(input.validatorIds) ||
+      input.validatorIds.length !== input.validators.length ||
+      input.validatorIds.some((id) => typeof id !== "string" || !id.trim())
+    ) {
+      return { outcome: "reject", reason: "validator-evidence-invalid" };
+    }
+    const legacy = input.validatorIds
+      .map((id) => id.trim().toLowerCase())
+      .find((id) => legacyUntrustedValidatorIds.has(id));
+    if (legacy) return { outcome: "reject", reason: `legacy-validator-untrusted:${legacy}` };
+  }
 
   if (input.executionRequested) return { outcome: "reject", reason: "execution-not-authorized" };
 
@@ -104,8 +139,8 @@ export async function admitOrder(
      where link.order_id = $1`,
     [orderId],
   );
-  const validators = await sql.query<{ passed: boolean | string }>(
-    "select passed from kernel_validator where order_id = $1",
+  const validators = await sql.query<{ id: string; passed: boolean | string }>(
+    "select id, passed from kernel_validator where order_id = $1",
     [orderId],
   );
   const on = (value: boolean | string) => value === true || value === "t" || value === "true";
@@ -114,6 +149,7 @@ export async function admitOrder(
     policyCodes: rules.map((rule) => rule.code),
     rules: rules.map((rule) => ({ code: rule.code, active: on(rule.active), effect: rule.effect })),
     validators: validators.map((row) => on(row.passed)),
+    validatorIds: validators.map((row) => row.id),
     approverId: order.approver_id,
     ownerId: order.owner_id,
     executionRequested: on(order.execution_requested),

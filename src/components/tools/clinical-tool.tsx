@@ -13,6 +13,7 @@ import { getTool, tools } from "@/lib/tools/catalog";
 import { disclaimer, type ClinicalTool } from "@/lib/tools/types";
 import { downloadDocx } from "@/lib/docx";
 import { useChrome } from "@/lib/chrome";
+import { contractOf } from "@/lib/template-contract";
 
 type Patient = ClinicalPatient;
 
@@ -39,6 +40,9 @@ function emptyPatient(tool: ClinicalTool): Patient {
 export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool; area?: "public" | "assinante" }) {
   const { locale, t } = useChrome();
   const { view, change, compact } = useToolView();
+  // Recursos do kind efetivamente governam a interface, não só o JSON do contrato.
+  const canRenderForm = contractOf("ferramenta").resources.includes("formulario");
+  const canExportReport = contractOf("ferramenta").resources.includes("laudo");
   const [patient, setPatient] = useState<Patient>(() => emptyPatient(tool));
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [raw, setRaw] = useState<Record<string, string>>(() => {
@@ -156,9 +160,9 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
             ]}
       />
       <PageHero eyebrow={tool.category} title={tool.title} lead={tool.lead} />
-      <PageTools kind="ferramenta" onDocx={saveDoc} onClear={clearCalc} />
+      <PageTools kind="ferramenta" onDocx={canExportReport ? saveDoc : undefined} onClear={clearCalc} />
 
-      <ClinicalForm
+      {canRenderForm ? <ClinicalForm
         tool={tool}
         patient={patient}
         onPatient={setPatient}
@@ -172,7 +176,7 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
         onClearCalc={clearCalc}
         onClearPatient={() => setPatient(emptyPatient(tool))}
         compact={compact}
-      />
+      /> : null}
       <ClinicalSheet tool={tool} patient={patient} raw={raw} answers={answers} notes={notes} result={result} />
       <ToolMeta tool={tool} />
       <ToolViewBar view={view} onChange={change} />

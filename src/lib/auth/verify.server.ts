@@ -15,11 +15,7 @@ import { auth, authConfigured } from "./server";
 /** True when a real database is configured server-side. */
 const databaseConfigured = Boolean(process.env.DATABASE_URL?.trim());
 
-/**
- * Shared dev identity is strictly a LOCAL dev fixture, never a deployed user.
- * A missing DATABASE_URL must not turn a preview or production endpoint into
- * one cross-visitor identity. No opt-in flag or client input can bypass this.
- */
+/** A shared fixture identity is allowed only in non-deployed local development. */
 const devFallbackAllowed =
   process.env.NODE_ENV === "development" &&
   !process.env.VERCEL &&
@@ -31,8 +27,8 @@ export { authConfigured };
 
 if (!devFallbackAllowed && !authConfigured) {
   console.error(
-    "[auth] Real authentication is not configured outside isolated local development " +
-      "— requireUserId() will reject requests without a verified identity (fail closed).",
+    "[auth] Real authentication is missing outside isolated local development — " +
+      "requireUserId() rejects anonymous requests (fail closed).",
   );
 }
 
@@ -86,10 +82,10 @@ export async function getSessionUser(
  * - Auth enabled -> the verified session user id; throws
  *   `UnauthorizedError` when signed out. Works in the sandbox preview too (real
  *   sign-in via the baked preview client).
- * - Auth disabled outside isolated local development -> throw (fail
- *   closed): one shared dev user outside local development could let visitors
+ * - Auth disabled (`VITE_AUTH_ENABLED=false`) + `DATABASE_URL` set -> throw (fail
+ *   closed): one shared dev user on a real database would let every visitor
  *   read/write everyone's rows.
- * - Auth disabled + NODE_ENV=development + no deployment or database -> local dev fixture only.
+ * - Auth disabled + no database -> the shared dev user id.
  */
 export async function requireUserId(bearerToken?: string): Promise<string> {
   if (!authConfigured && !gateIdentityEnabled()) {

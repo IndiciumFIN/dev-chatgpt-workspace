@@ -1,16 +1,14 @@
 #!/usr/bin/env node
 /**
- * Deploy-time database migrator (node-postgres, `pg`).
+ * Manual database migrator (node-postgres, pg). NEVER invoked by build.
  *
- * Runs during `npm run build` — on every Vercel deploy — applying pending files
- * in ../migrations to DATABASE_URL. Each file is applied in one transaction and
- * recorded in a `_migrations` table, so it runs once and is safe to re-run.
+ * Requires BOTH CE_DB_MIGRATION_APPROVED=true and CLI --approved, plus a
+ * configured DATABASE_URL. Rejects GitHub Actions/CI even with those values.
+ * Approval is operational and target-specific: validate planned deltas,
+ * rights, RLS, rollback and backup BEFORE running the manual command.
  *
- * The read is non-recursive, so the opt-in auth schema under migrations/auth/
- * is not applied to an app that never asked for sign-in.
- *
- * No DATABASE_URL (local / preview builds) -> skip; the PGLite fallback applies
- * the same files at startup instead (see src/lib/db.ts).
+ * Non-recursive migrations/ prevents implicit admission of auth migrations.
+ * Each SQL migration is applied transactionally and recorded in _migrations.
  */
 import { readdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -18,12 +16,20 @@ import { dirname, join } from "node:path";
 import pg from "pg";
 import { pendingMigrations } from "./migration-plan.mjs";
 
-const databaseUrl = process.env.DATABASE_URL;
+const migrationApproved = process.env.CE_DB_MIGRATION_APPROVED === "true";
+const cliApproved = process.argv.slice(2).length === 1 && process.argv[2] === "--approved";
+if (process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true") {
+  console.error("[migrate] HOLD_DB_MIGRATION_CI_FORBIDDEN: migrations never run in CI/build.");
+  process.exit(2);
+}
+if (!migrationApproved || !cliApproved) {
+  console.error("[migrate] HOLD_DB_MIGRATION_APPROVAL_REQUIRED: review target and run with CE_DB_MIGRATION_APPROVED=true plus --approved.");
+  process.exit(2);
+}
+const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) {
-  console.log(
-    "[migrate] DATABASE_URL not set — skipping (the PGLite fallback migrates itself).",
-  );
-  process.exit(0);
+  console.error("[migrate] HOLD_DB_MIGRATION_DATABASE_URL_REQUIRED: no target selected.");
+  process.exit(2);
 }
 
 const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), "..", "migrations");

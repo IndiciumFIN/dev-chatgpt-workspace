@@ -21,10 +21,12 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   const empty = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and btrim(body) = ''");
   assert.equal(empty.rows[0].n, 0);
 
+  // Clinical translation is not admitted by meeting an arbitrary quota.
+  // Published translations must have a supported locale and nonempty text.
   const foreign = await db.query<{ n: unknown }>(
-    "select count(*)::int as n from content_text where status = 'publicado' and locale <> 'pt-BR'",
+    "select count(*)::int as n from content_text where status = 'publicado' and locale <> 'pt-BR' and (locale not in ('en','es','fr') or btrim(body) = '')",
   );
-  assert.equal(Number(foreign.rows[0].n) > 3, true);
+  assert.equal(Number(foreign.rows[0].n), 0);
 
   const broken = await db.query<{ n: number }>("select count(*)::int as n from content_text where status = 'publicado' and slug like '%/'");
   assert.equal(broken.rows[0].n, 0);
@@ -39,11 +41,12 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   assert.match(menu, /\[braden, morse, apgar, gotejamento, imc\]/);
   assert.equal(menu.includes("aldrete"), false);
 
-  const foreignOnAir = await db.query<{ n: number }>(
+  const invalidForeignOnAir = await db.query<{ n: number }>(
     `select count(*)::int as n
      from content_alias as alias
      join content_text as copy on copy.slug = alias.slug and copy.locale = alias.locale and copy.view = alias.view
-     where copy.status = 'publicado' and alias.locale <> 'pt-BR'`,
+     where copy.status = 'publicado' and alias.locale <> 'pt-BR'
+       and (alias.locale not in ('en','es','fr') or btrim(copy.body) = '')`,
   );
-  assert.equal(Number(foreignOnAir.rows[0].n) > 3, true);
+  assert.equal(Number(invalidForeignOnAir.rows[0].n), 0);
 });

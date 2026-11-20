@@ -2991,3 +2991,28 @@ html[data-theme="dark"] .tpl-note {
 @media print {
   .header-utility { display: none !important; }
 }
+
+/* Fonte CSS dos tokens de chrome existentes no contrato. */
+:root {
+  --chrome-utility: 44px;
+  --chrome-header: 64px;
+  --chrome-total: calc(var(--chrome-utility) + var(--chrome-a11y) + var(--chrome-header));
+  --chrome-tablet: calc(var(--chrome-utility) + var(--chrome-header));
+  --chrome-gap: 16px;
+  --chrome-rule: rgba(255, 255, 255, 0.16);
+  --chrome-control-border: rgba(255, 255, 255, 0.34);
+  --chrome-control-hover: rgba(255, 255, 255, 0.14);
+  --chrome-control-selected: rgba(255, 255, 255, 0.2);
+  --chrome-emphasis-bg: #ffffff;
+  --chrome-emphasis-fg: #1a3e74;
+}
+
+/* A11y keyboard/touch and RTL menu, independent of the legacy .a11y-bar. */
+.header-utility button,
+.header-utility a { min-height: 44px; }
+.header-utility .lang-trigger { min-width: 44px; }
+.header-utility .focus-dot { width: 44px; height: 44px; min-height: 44px; }
+[dir="rtl"] .header-utility .lang-menu { right: 0; left: auto; }
+.header-utility button:focus-visible,
+.header-utility a:focus-visible,
+.off-canvas :focus-visible { outline: 3px solid var(--color-sky); outline-offset: 3px; }

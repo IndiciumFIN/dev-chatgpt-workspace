@@ -22,7 +22,18 @@ const results = cases.map(([id,args])=>{ const r=spawnSync(process.execPath,args
 for (const [id,path] of [['vite-bin','node_modules/.bin/vite'],['tsc-bin','node_modules/.bin/tsc'],['playwright-package','node_modules/playwright']]) results.push({id,status:existsSync(resolve(root,path))?'PRESENT':'BLOCKED',reason:'local dependency required for build/render'});
 const report={schemaVersion:1,scope:'CE_PUBLIC_BACKUP_ONLY',base:'v2.6.9',generatedAt:new Date().toISOString(),remoteIntegration:'PROHIBITED',results,releaseGate:'BLOCKED'};
 const out=resolve(root,'audit/execution/execution-gates-latest.json');mkdirSync(resolve(root,'audit/execution'),{recursive:true});writeFileSync(out,JSON.stringify(report,null,2)+'\n');
-for(const r of results) console.log(`${r.status} ${r.id}`);
+for (const r of results) {
+  console.log(`${r.status} ${r.id}`);
+  if (r.status === 'FAIL') {
+    // Return the actual command and bounded diagnostics. A mere FAIL flag
+    // hides the cause and leads to bypasses instead of fixes.
+    const safe = String(r.output ?? r.error ?? 'sem stdout/stderr')
+      .replace(/Bearer\s+[A-Za-z0-9._-]+/g, 'Bearer [REDACTED]')
+      .replace(/(?:sk-|ghp_|sb_secret_)[A-Za-z0-9_-]{12,}/g, '[REDACTED_TOKEN]');
+    console.error(`::error title=${r.id}::Falha em ${r.command}`);
+    console.error(safe.slice(-1800));
+  }
+}
 // PASS significa controle executado e aprovado; PRESENT significa pré-requisito localizado.
 // BLOCKED/FAIL continuam bloqueantes. O releaseGate permanece separado e não é homologação.
 const executionOk = results.every(x => x.status === 'PASS' || x.status === 'PRESENT');

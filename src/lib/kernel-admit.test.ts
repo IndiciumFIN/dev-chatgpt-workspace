@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import type { Sql } from "./db.ts";
-import { admit, admitOrder, manifestStatus, type AdmitInput } from "./kernel-admit.ts";
+import { admit, admitOrder, manifestStatus, LEGACY_UNTRUSTED_VALIDATOR_IDS, type AdmitInput } from "./kernel-admit.ts";
 import { signAllowDecision } from "./policy-signature.ts";
 
 const allow = { code: "publicar", active: true, effect: "allow" as const };
@@ -76,6 +76,37 @@ test("validador vazio não admite e o kernel não se aprova", () => {
   assert.equal(admitted.outcome, "admit");
   assert.equal(admitted.reason, "policy-validator-and-human");
   assert.deepEqual(manifestStatus(admitted, "admin-1"), { status: "approved", approvedBy: "admin-1" });
+});
+
+test("validadores legados que retornam true não podem admitir um pedido", () => {
+  const input = signed({
+    workOrderId: "wo-legacy-gate",
+    policyCodes: ["publicar"],
+    rules: [allow],
+    validators: [true],
+    approverId: "admin-1",
+    ownerId: "autor-1",
+  });
+
+  assert.equal(LEGACY_UNTRUSTED_VALIDATOR_IDS.length, 9);
+  for (const id of LEGACY_UNTRUSTED_VALIDATOR_IDS) {
+    assert.deepEqual(
+      admit({ ...input, validatorIds: [id] }),
+      { outcome: "reject", reason: `legacy-validator-untrusted:${id}` },
+      id,
+    );
+  }
+  assert.equal(
+    admit({ ...input, validatorIds: ["  HUMAN_REVIEW_VALIDATOR  "] }).reason,
+    "legacy-validator-untrusted:human_review_validator",
+  );
+  assert.equal(admit({ ...input, validatorIds: [""] }).reason, "validator-evidence-invalid");
+  assert.equal(admit({ ...input, validatorIds: [] }).reason, "validator-evidence-invalid");
+  assert.equal(
+    admit({ ...input, validators: ["false" as unknown as boolean], validatorIds: ["forma"] }).reason,
+    "validator-failed",
+  );
+  assert.equal(admit({ ...input, validatorIds: ["forma"] }).outcome, "admit");
 });
 
 test("booleano do chamador não verifica a assinatura; forja e payload adulterado rejeitam", () => {
@@ -214,16 +245,19 @@ test("a admissão grava tabela e não aprova sem validador", async () => {
       ('wo-vazio', 'Sem validador', 'admin-1', 'autor-1'),
       ('wo-ok', 'Completa', 'admin-1', 'autor-1'),
       ('wo-nega', 'Regra negada', 'admin-1', 'autor-1'),
-      ('wo-forja', 'Assinatura forjada', 'admin-1', 'autor-1');
+      ('wo-forja', 'Assinatura forjada', 'admin-1', 'autor-1'),
+      ('wo-stub', 'Validador placeholder legado', 'admin-1', 'autor-1');
     insert into kernel_order_policy (order_id, package_id, rule_id) values
       ('wo-vazio', 'acesso', 'admin-publica-idioma'),
       ('wo-ok', 'acesso', 'admin-publica-idioma'),
       ('wo-nega', 'acesso', 'agente-nao-publica'),
-      ('wo-forja', 'acesso', 'admin-publica-idioma');
+      ('wo-forja', 'acesso', 'admin-publica-idioma'),
+      ('wo-stub', 'acesso', 'admin-publica-idioma');
     insert into kernel_validator (order_id, id, passed, note) values
       ('wo-ok', 'forma', true, 'Conferido'),
       ('wo-nega', 'forma', true, 'Conferido'),
-      ('wo-forja', 'forma', true, 'Conferido');
+      ('wo-forja', 'forma', true, 'Conferido'),
+      ('wo-stub', 'human_review_validator', true, 'Legacy true must not admit');
   `);
   assert.equal(
     (await admitOrder(sql, "wo-vazio", proofFor("wo-vazio", ["admin-publica-idioma"]))).reason,
@@ -242,6 +276,10 @@ test("a admissão grava tabela e não aprova sem validador", async () => {
     ).reason,
     "policy-signature-failed",
   );
+  assert.equal(
+    (await admitOrder(sql, "wo-stub", proofFor("wo-stub", ["admin-publica-idioma"]))).reason,
+    "legacy-validator-untrusted:human_review_validator",
+  );
   assert.equal((await admitOrder(sql, "wo-ok", proofFor("wo-ok", ["admin-publica-idioma"]))).outcome, "admit");
   const rows = await db.query<{ id: string; status: string; manifest: string; approved_by: string | null }>(`
     select o.id, o.status, m.status as manifest, m.approved_by
@@ -259,4 +297,7 @@ test("a admissão grava tabela e não aprova sem validador", async () => {
   assert.equal(byId.get("wo-forja")?.status, "rejeitada");
   assert.equal(byId.get("wo-forja")?.manifest, "rascunho");
   assert.equal(byId.get("wo-forja")?.approved_by, null);
+  assert.equal(byId.get("wo-stub")?.status, "rejeitada");
+  assert.equal(byId.get("wo-stub")?.manifest, "rascunho");
+  assert.equal(byId.get("wo-stub")?.approved_by, null);
 });

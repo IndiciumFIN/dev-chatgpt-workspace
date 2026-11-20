@@ -1,0 +1,219 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "CE_LEGACY_FUNCTIONAL_INTAKE_DISPOSITION",
+  "asOf": "2026-11-20",
+  "source": {
+    "repo": "IndiciumFIN/calculadorasdeenfermagem",
+    "sha": "e0f62491b104f4a97c6025a6393cabc2e7ada30e"
+  },
+  "destination": {
+    "repo": "IndiciumFIN/dev-chatgpt-workspace",
+    "branch": "main"
+  },
+  "counts": {
+    "filesAssessed": 38,
+    "filesPreservedInert": 38,
+    "filesFunctionallyAdmitted": 0,
+    "filesAwaitingFunctionalGates": 38
+  },
+  "groups": [
+    {
+      "id": "KERNEL_CLI",
+      "gate": "HOLD_RUNTIME_COMPATIBILITY",
+      "risk": "HIGH",
+      "required": [
+        "Map imports absolutos kernel/validators para namespace canônico",
+        "Testes de erro, segregação e fail-closed do Kernel",
+        "Teste de fluxo real CLI sem rede nem escritas",
+        "Revisão de autenticação/autoridade e política de emissão de decisões"
+      ],
+      "paths": [
+        "packages/cli/drive_recursive_inventory.py",
+        "packages/cli/generate_docs.py",
+        "packages/cli/kernel/__init__.py",
+        "packages/cli/kernel/cli.py",
+        "packages/cli/kernel/core.py",
+        "packages/cli/kernel/policy_registry.py",
+        "packages/cli/main.py",
+        "packages/cli/pipeline.py",
+        "packages/cli/registry.py"
+      ]
+    },
+    {
+      "id": "VALIDATORS_SCHEMAS",
+      "gate": "BLOCKED_PLACEHOLDERS",
+      "risk": "CRITICAL",
+      "required": [
+        "Substituir nove validações que retornam sucesso incondicional",
+        "Testes positivos e negativos contra normas primárias",
+        "Testar mismatch de hash, direitos, papel e origem",
+        "Aprovação clínica e auditoria de isolamento"
+      ],
+      "paths": [
+        "packages/cli/validators/base.py",
+        "packages/cli/validators/catmat_validator.py",
+        "packages/cli/validators/cid10_validator.py",
+        "packages/cli/validators/cid11_validator.py",
+        "packages/cli/validators/cvx_validator.py",
+        "packages/cli/validators/human_review_validator.py",
+        "packages/cli/validators/loinc_validator.py",
+        "packages/cli/validators/mesh_validator.py",
+        "packages/cli/validators/ncm_validator.py",
+        "packages/cli/validators/registry.py",
+        "packages/cli/validators/schema_validator.py",
+        "packages/cli/validators/sha256_validator.py",
+        "packages/schemas/atomo.py",
+        "packages/schemas/escala.py",
+        "packages/schemas/invariantes.py"
+      ]
+    },
+    {
+      "id": "UI_NEXTJS",
+      "gate": "HOLD_FRAMEWORK_MIGRATION",
+      "risk": "MEDIUM",
+      "required": [
+        "Mapeamento de rotas/UX Next.js 15 para Vite/TanStack",
+        "Testar SSR, acessibilidade, responsividade, i18n e E2E",
+        "Nenhuma conexão direta de client legado ao banco por variável"
+      ],
+      "paths": [
+        "src/app/builder/page.tsx",
+        "src/app/globals.css",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/components/builder/CompositionPreview.tsx",
+        "src/lib/supabase/client.ts"
+      ]
+    },
+    {
+      "id": "MIGRATIONS_SQL",
+      "gate": "BLOCKED_PUBLIC_READ_POLICIES",
+      "risk": "CRITICAL",
+      "required": [
+        "Comparar com schemas/migrations remotas (255 versões identificadas)",
+        "Revisão de RLS/grants antes de qualquer DDL",
+        "Idempotência, rollback e teste isolado",
+        "Aprovação específica e readback antes de aplicação remota"
+      ],
+      "paths": [
+        "supabase/migrations/20261011000000_initial_schema.sql",
+        "supabase/migrations/20261011120000_registry.sql"
+      ]
+    },
+    {
+      "id": "LEGACY_WO",
+      "gate": "BLOCKED_MALFORMED_JSON_AUTHORITY",
+      "risk": "HIGH",
+      "required": [
+        "Quatro arquivos com comentários após objeto JSON, inválidos como JSON",
+        "Não aceitar PREAUTHORIZED como autorização válida",
+        "Reconstruir evidência primária, autoria e cadeia de aprovação",
+        "Tratar como texto histórico inerte; não converter em autorização executável"
+      ],
+      "paths": [
+        "data/legado/autorizacao_WO-0087.json",
+        "data/legado/autorizacao_WO-0088.json",
+        "data/legado/autorizacao_WO-0090.json",
+        "data/legado/autorizacao_WO-0091.json"
+      ]
+    },
+    {
+      "id": "ANCILLARY",
+      "gate": "ARCHIVE_ONLY",
+      "risk": "LOW",
+      "required": [
+        "Sem admitir entrada de teste ou .gitkeep como funcionalidade"
+      ],
+      "paths": [
+        "data/.gitkeep",
+        "test.txt"
+      ]
+    }
+  ],
+  "criticalFindings": [
+    {
+      "code": "LEGACY_VALIDATOR_UNCONDITIONAL_ACCEPT",
+      "severity": "CRITICAL",
+      "affectedPaths": [
+        "packages/cli/validators/catmat_validator.py",
+        "packages/cli/validators/cid10_validator.py",
+        "packages/cli/validators/cid11_validator.py",
+        "packages/cli/validators/cvx_validator.py",
+        "packages/cli/validators/human_review_validator.py",
+        "packages/cli/validators/loinc_validator.py",
+        "packages/cli/validators/mesh_validator.py",
+        "packages/cli/validators/ncm_validator.py",
+        "packages/cli/validators/schema_validator.py"
+      ],
+      "evidence": "Os nove métodos validate() retornam True, None sem executar validação de domínio.",
+      "gate": "BLOCKED"
+    },
+    {
+      "code": "LEGACY_SQL_OPEN_READ",
+      "severity": "CRITICAL",
+      "affectedPaths": [
+        "supabase/migrations/20261011000000_initial_schema.sql",
+        "supabase/migrations/20261011120000_registry.sql"
+      ],
+      "evidence": "Migrations legadas incluem CREATE POLICY ... USING (true) no esquema public; consulta read-only não encontrou as duas migrations nem quatro tabelas correspondentes no projeto Supabase atual.",
+      "gate": "BLOCKED"
+    },
+    {
+      "code": "LEGACY_WO_JSON_INVALID",
+      "severity": "HIGH",
+      "affectedPaths": [
+        "data/legado/autorizacao_WO-0087.json",
+        "data/legado/autorizacao_WO-0088.json",
+        "data/legado/autorizacao_WO-0090.json",
+        "data/legado/autorizacao_WO-0091.json"
+      ],
+      "evidence": "Arquivos incluem padding com linhas não-JSON após o objeto e não podem ser lidos como autorizações válidas.",
+      "gate": "BLOCKED"
+    },
+    {
+      "code": "LEGACY_NEXTJS_UNINTEGRATED",
+      "severity": "HIGH",
+      "affectedPaths": [
+        "src/app/builder/page.tsx",
+        "src/app/globals.css",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/components/builder/CompositionPreview.tsx",
+        "src/lib/supabase/client.ts"
+      ],
+      "evidence": "Origem usa Next.js 15 e createBrowserClient com NEXT_PUBLIC_SUPABASE_*; Workspace canônico usa Vite e banco em modo bloqueado.",
+      "gate": "HOLD"
+    }
+  ],
+  "policy": {
+    "archiveIsAdmission": false,
+    "runArchivedCode": false,
+    "applyArchivedSql": false,
+    "activateArchivedWorkflow": false,
+    "requiresIndependentClinicalReview": true
+  },
+  "decision": "ARCHIVED_ONLY_NOT_OPERATIONAL",
+  "functionalGuard": {
+    "component": "canonical-kernel-admit",
+    "status": "IMPLEMENTED_AWAITING_CURRENT_HEAD_CI",
+    "code": "src/lib/kernel-admit.ts",
+    "tests": [
+      "src/lib/kernel-admit.test.ts",
+      "scripts/ce-legacy-functional-readiness.test.mjs"
+    ],
+    "scope": "Reject nine known legacy placeholder validator IDs in active database admission; require literal boolean true and consistent identity evidence when supplied",
+    "prohibited": [
+      "No external clinical claims admitted",
+      "No execution of archived Python",
+      "No remote database migrations or writes"
+    ],
+    "remainingHolds": [
+      "Validator provenance cannot be proven by historical true/false alone",
+      "All 15 archived validator/schema modules remain unadmitted",
+      "Clinical evidence and license review remain independent",
+      "Other validator types still require independent registry and attestation"
+    ],
+    "clinicalRelease": "HOLD_HUMAN",
+    "sqlWrites": 0
+  }
+}

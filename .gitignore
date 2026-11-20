@@ -16,4 +16,25 @@ coverage
 attachments
 screenshots
 
-.grok
+# Grok files remain excluded; only the non-secret build flag is reproducible.
+.grok/**
+!.grok/app-env.json
+
+# Documentacao OG original recuperada, somente esta especialidade.
+!.grok/skills/
+.grok/skills/*
+!.grok/skills/og/
+.grok/skills/og/*
+!.grok/skills/og/SKILL.md
+!.grok/skills/og/references/
+.grok/skills/og/references/*
+!.grok/skills/og/references/*.md
+# Historic CE safety ignores reconciled without replacing canonical Vite patterns.
+*.pem
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.next/
+.pnp
+.pnp.js

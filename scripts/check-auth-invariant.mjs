@@ -14,7 +14,7 @@
  *  - **build**: what the wrapper hands `vite build` / `vite preview`.
  *
  * The built bundle is not read: Vite inlines the flag and the minifier folds
- * `"false" === "true"` away, so the built client JS carries no marker to
+ * `"false" !== "false"` away, so the built client JS carries no marker to
  * compare against unless the app is made to emit one.
  *
  * `scripts/browser-smoke.mjs` runs the comparison on every smoke; run it

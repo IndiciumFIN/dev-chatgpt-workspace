@@ -1,0 +1,25 @@
+import test from "node:test";import assert from "node:assert/strict";import {readFileSync} from "node:fs";
+const get=p=>JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
+test("W2.5.7 immutable origin tree proves catalog identity and traces 114 generated IDs without sealing",()=>{
+ const r=get("registers/governance/ce-w2-5-grook-generated-id-source-tree-trace-20261120.v1.json"),m=get(r.origin_manifest),cross=get(r.generated_id_crosswalk),s=m.sources.find(x=>x.source_sha===r.source_sha),p=get("registers/governance/ce-w2-5-review-current-20261120.v1.json");
+ const paths=new Map(s.rows.map(row=>[row[0],row]));
+ assert.equal(p.origin_tree_trace,"registers/governance/ce-w2-5-grook-generated-id-source-tree-trace-20261120.v1.json");
+ assert.equal(r.rows.length,114);
+ assert.equal(r.rows.reduce((n,x)=>n+x.occurrences,0),149);
+ assert.equal(cross.stats.source_only_unique_ids,114);
+ const catalog=paths.get("src/lib/tools/catalog.ts");
+ assert.equal(catalog[1],"E");assert.equal(catalog[2],catalog[3]);
+ assert.equal(r.findings.source_and_main_runtime_catalog_blob_sha,catalog[2]);
+ assert.equal(paths.get("scripts/generate-entity-contracts.mjs")[1],"C");
+ assert.equal(paths.get("contracts/entities/clinical-tools.v1.json")[1],"C");
+ const comp=r.rows.filter(x=>x.category==="CE-COMP");
+ assert.equal(comp.length,35);
+ assert.ok(comp.every(x=>x.occurrences===2));
+ assert.ok(comp.every(x=>!paths.has(x.expected_runtime_path)));
+ const rt=r.rows.filter(x=>x.category==="CE-ROUTE");
+ assert.equal(rt.length,1);assert.equal(paths.has(rt[0].expected_runtime_path),false);
+ assert.equal(r.rows.filter(x=>x.category==="CE-TOOL").length,78);
+ assert.ok(r.rows.every(x=>x.independent_final_decision===null));
+ assert.equal(r.independent_decisions,0);assert.equal(r.closure_status,"OPEN");
+ assert.equal(r.merge_authorized,false);assert.equal(r.delete_source_authorized,false);assert.equal(r.remote_db_write_authorized,false);
+});

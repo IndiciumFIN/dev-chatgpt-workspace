@@ -39,7 +39,7 @@ test("reads the value a live dev server resolved", async () => {
   );
 });
 
-test("a server started without the flag reads as sign-in off (fail-closed)", async () => {
+test("a server started without the flag reads as sign-in off", async () => {
   assert.equal(await probeDevAuthEnabled("http://127.0.0.1:8080", appEnvFetch({})), false);
 });
 

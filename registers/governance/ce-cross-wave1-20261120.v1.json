@@ -1,0 +1,148 @@
+{
+  "protocol": "CE.CROSS.v1",
+  "wave": "W1",
+  "date": "2026-11-20",
+  "state": "HOLD_MULTISOURCE_SEMANTIC",
+  "scope": "Metadata-only evidence: GitHub branch and priority PR file crosses, Supabase read-only inventory, and scoped Drive metadata searches",
+  "sources": {
+    "github": {
+      "repository": "IndiciumFIN/dev-chatgpt-workspace",
+      "baseline_sha": "a435e1521bfa309a7aad661c493de50f75c6e3ca",
+      "branches": 63,
+      "ce_cko_ncos_review": 48,
+      "canonical_main": 1,
+      "wutrib_isolated": 14,
+      "open_prs": 35,
+      "priority_prs_compared": 9,
+      "priority_file_occurrences": 361,
+      "priority_file_equality": {
+        "same_git_blob": 6,
+        "divergent_git_blob": 63,
+        "source_only": 292
+      },
+      "exact_same_commit_branch_groups": [
+        [
+          "archivamento",
+          "planning"
+        ]
+      ],
+      "records": "registers/governance/ce-cross-github-branches-20261120.v1.json",
+      "comparisons": "registers/governance/ce-cross-pr-files-20261120.v1.json",
+      "caveat": "PR file occurrences are NOT 361 distinct files; no semantic content or clinical approval inferred."
+    },
+    "supabase": {
+      "project_alias": "Calculadoras-Smart",
+      "project_ref": "pgsybzggewhinaniybiy",
+      "read_only": true,
+      "app_schemas": 36,
+      "app_tables": 566,
+      "remote_migrations": 255,
+      "canonical_objects": 320,
+      "clinical_tools": 111,
+      "clinical_evidence_bindings": 0,
+      "pilot_published_code_tools": [
+        "braden",
+        "morse",
+        "apgar",
+        "gotejamento",
+        "imc"
+      ],
+      "pilot_matched_by_slug": 5,
+      "pilot_source_dossier_refs_present": 5,
+      "pilot_formula_refs_present": 0,
+      "caveat": "Slug matches are candidates; formula implementations can exist in source code without formula_ref; no DB writes or publication."
+    },
+    "drive": {
+      "scan_is_scope_limited": true,
+      "private_data_in_public_repo": false,
+      "Drive-1": {
+        "cko_documents_scanned": 496,
+        "cko_documents_pages": 5,
+        "cko_documents_cursor_exhausted": false,
+        "enfermagem_folders_scanned": 426,
+        "enfermagem_folders_pages": 5,
+        "enfermagem_folders_cursor_exhausted": false,
+        "repeated_cko_titles_candidates": 72,
+        "repeated_enfermagem_folder_titles_candidates": 35
+      },
+      "Drive-2": {
+        "cko_documents_scanned": 67,
+        "cko_documents_pages": 1,
+        "cko_documents_cursor_exhausted": true,
+        "enfermagem_folders_scanned": 29,
+        "enfermagem_folders_pages": 2,
+        "enfermagem_folders_cursor_exhausted": true,
+        "repeated_cko_titles_candidates": 7,
+        "repeated_enfermagem_folder_titles_candidates": 0
+      },
+      "pilot_title_candidate_searches": [
+        {
+          "tool": "braden",
+          "drive1_returned": 100,
+          "drive1_cursor_exhausted": false,
+          "drive2_returned": 13,
+          "drive2_cursor_exhausted": true
+        },
+        {
+          "tool": "morse",
+          "drive1_returned": 97,
+          "drive1_cursor_exhausted": false,
+          "drive2_returned": 13,
+          "drive2_cursor_exhausted": true
+        },
+        {
+          "tool": "apgar",
+          "drive1_returned": 100,
+          "drive1_cursor_exhausted": false,
+          "drive2_returned": 15,
+          "drive2_cursor_exhausted": true
+        },
+        {
+          "tool": "gotejamento",
+          "drive1_returned": 100,
+          "drive1_cursor_exhausted": false,
+          "drive2_returned": 14,
+          "drive2_cursor_exhausted": true
+        },
+        {
+          "tool": "imc",
+          "drive1_returned": 100,
+          "drive1_cursor_exhausted": false,
+          "drive2_returned": 9,
+          "drive2_cursor_exhausted": true
+        }
+      ],
+      "aggregate_records": "registers/governance/ce-cross-drive-aggregates-20261120.v1.json",
+      "caveat": "Title duplicates and keyword searches are only candidates; no hashes/contents/IDs from private Drive published."
+    }
+  },
+  "cross": {
+    "github_branch_commit_identical_pairs": 1,
+    "github_priority_prs_per_file_compared": 9,
+    "github_supabase_pilot_slug_matches": 5,
+    "github_supabase_content_hash_matches_verified": 0,
+    "drive_content_hash_matches_verified": 0,
+    "all_three_sources_semantically_crossed": false,
+    "status": "HOLD",
+    "limitations": [
+      "Missing verified canonical mapping between private Drive documents and executable/code/database objects",
+      "Drive-1 paginated scoped searches not complete; Drive folders/content beyond keyword scope unexamined",
+      "Not all 48 CE candidate branches and 25 CE PRs compared at file/semantic level",
+      "All nine priority PRs still require per-file functional, licensing, security, provenance and test review"
+    ],
+    "next_priority": [
+      "Exhaust Drive inventory with recoverable cursors in a private evidence environment",
+      "Per-file comparison of all CE/CKO/NCOS branches and PRs against canonical main",
+      "Apply explicit canonical identity mapping and independent SHA-256 to permitted content",
+      "Safely integrate approved deltas in batches, with main SHA lease and CI; no SQL or clinical promotion without gates"
+    ]
+  },
+  "safety": {
+    "auto_merge": false,
+    "remote_sql_writes": 0,
+    "drive_writes": 0,
+    "branches_created": 0,
+    "clinical_release": false,
+    "public_repo_private_drive_names_and_ids": false
+  }
+}

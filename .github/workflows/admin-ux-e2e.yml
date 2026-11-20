@@ -7,6 +7,12 @@ on:
       - 'src/components/local/local-workbench-page.tsx'
       - 'src/styles/admin-console.css'
       - 'scripts/admin-ux-e2e.mjs'
+      - 'src/lib/source.functions.ts'
+      - 'scripts/admin-e2e-fixture.test.mjs'
+      - 'src/lib/auth/verify.server.ts'
+      - 'src/components/site/areas.tsx'
+      - 'src/components/site/area-access-policy.ts'
+      - 'scripts/ce-area-access-policy.test.mjs'
       - '.github/workflows/admin-ux-e2e.yml'
   push:
     branches: [main]
@@ -15,6 +21,12 @@ on:
       - 'src/components/local/local-workbench-page.tsx'
       - 'src/styles/admin-console.css'
       - 'scripts/admin-ux-e2e.mjs'
+      - 'src/lib/source.functions.ts'
+      - 'scripts/admin-e2e-fixture.test.mjs'
+      - 'src/lib/auth/verify.server.ts'
+      - 'src/components/site/areas.tsx'
+      - 'src/components/site/area-access-policy.ts'
+      - 'scripts/ce-area-access-policy.test.mjs'
       - '.github/workflows/admin-ux-e2e.yml'
   workflow_dispatch:
 permissions:
@@ -26,6 +38,8 @@ jobs:
     env:
       VITE_AUTH_ENABLED: "false"
       CI: "true"
+      # Test-only PGLite role fixture: never set on Vercel, Neon or production.
+      CE_ADMIN_E2E_FIXTURE: "true"
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:

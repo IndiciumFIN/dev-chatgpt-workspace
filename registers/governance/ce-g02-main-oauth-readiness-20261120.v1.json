@@ -1,0 +1,53 @@
+{
+  "protocol": "CE.G02.MAIN_OAUTH_SECURITY_REMEDIATION.v1",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "evidence_date": "2026-11-20",
+  "capture_parent_main_sha": "7f221584e8491c028beebc5fdb60985251e9fb18",
+  "phase": "P0_ADMIN_AND_OAUTH_EXTERNAL_EXECUTION",
+  "evidence": {
+    "github_branch_protected": false,
+    "github_rulesets_visible": 0,
+    "github_classic_protection_endpoint": "403_RESOURCE_NOT_ACCESSIBLE_BY_INTEGRATION",
+    "latest_confirmed_ci": {
+      "sha": "7f221584e8491c028beebc5fdb60985251e9fb18",
+      "check": "verify",
+      "conclusion": "success",
+      "run_id": 44775660399
+    },
+    "main_auth_code_reference": "src/lib/auth/preview.ts",
+    "main_auth_secret_resolved_from_server_env": true,
+    "historical_secret_literal_not_in_current_preview_code": true,
+    "historical_secret_revocation_verified": false,
+    "secret_scanning_exposure_scope_verified": false,
+    "active_ruleset_enforcement_verified": false,
+    "oauth_live_e2e_verified": false,
+    "independent_security_review_verified": false
+  },
+  "controls": {
+    "G02_MAIN_PROTECTION": "HOLD_SERVER_CONFIG",
+    "G02_MANDATORY_CI": "HOLD_RULESET",
+    "OAUTH_CREDENTIAL_REVOKED": "HOLD_BROKER_ATTESTATION",
+    "OAUTH_LIVE_E2E": "HOLD_TEST",
+    "G02_RELEASE": "NO_GO"
+  },
+  "write_scope": "Only runbook, non-secret evidence and regression test in main",
+  "secret_values_recorded": false,
+  "github_settings_mutated": false,
+  "broker_credentials_mutated": false,
+  "db_changes": false,
+  "release_eligible": false,
+  "independent_review_complete": false,
+  "instructions_path": "docs/governance/CE_G02_MAIN_OAUTH_EXECUTION_20261120.md",
+  "issues": [
+    12,
+    28
+  ],
+  "note": "Provisional force-push/deletion controls alone do not satisfy full G02; direct-main-only workflow conflicts with required PR.",
+  "audit_recheck": [
+    "GET /branches/main",
+    "GET /rulesets",
+    "verify status for selected commit",
+    "broker revocation attestation",
+    "controlled auth E2E"
+  ]
+}

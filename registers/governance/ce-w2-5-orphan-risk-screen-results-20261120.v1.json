@@ -1,0 +1,115 @@
+{
+  "protocol": "CE.CROSS.W2.5.RESULTS.v1",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "scope": "W2.4 23 orphan branches, 22 distinct immutable origin commits",
+  "risk_screen_main_sha": "b56ae8a86e700e47e4f7f4b411968eb2a7d91cf3",
+  "risk_screen_ci_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/44706372476",
+  "risk_screen_ci_conclusion": "success",
+  "baseline_main_sha": "80d5e19778b90d69c621eea381a152fbcd7e9912",
+  "index_path": "registers/governance/ce-w2-4-orphan-full-file-index-20261120.v1.json",
+  "index_blob_sha": "c68c54599d4b464be5dc3e701585288932c5da7f",
+  "counts": {
+    "orphan_branches": 23,
+    "distinct_source_sha": 22,
+    "file_path_occurrences": 92459,
+    "exact_git_blob_occurrences": 36591,
+    "canonical_only_occurrences": 25317,
+    "nonidentical_origin_occurrences": 30551,
+    "distinct_review_objects_by_path_blob_mode": 15374,
+    "repeated_review_objects_count": 9273,
+    "P0_occurrences": 842,
+    "P1_occurrences": 4522,
+    "P2_occurrences": 25187
+  },
+  "first_review_wave": [
+    {
+      "branch": "grook_10_26",
+      "source_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "delta": 47,
+      "p0": 11
+    },
+    {
+      "branch": "fix/ce-route-component-contract-freshness-20261114",
+      "source_sha": "5c5cfeca440d32c76e8fdee00eff5befc94da2cb",
+      "delta": 56,
+      "p0": 13
+    },
+    {
+      "branch": "fix/ce-generated-contract-fresh-20261115",
+      "source_sha": "19ced90f3ac51533daed1e441fc253d77e2fbffd",
+      "delta": 57,
+      "p0": 13
+    },
+    {
+      "branch": "review/grook-na-main",
+      "source_sha": "c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f",
+      "delta": 74,
+      "p0": 15
+    }
+  ],
+  "first_wave_content_spot_checks": [
+    {
+      "path": "src/lib/auth/preview.ts",
+      "source_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+      "baseline_main_blob": "9346354e7510bebb9bde3651b1da148d7080854a",
+      "finding": "The checked canonical version reads GROK_PREVIEW_CLIENT_SECRET from process.env whereas source version did not. Security gate: do not overwrite newer secret-handling behavior.",
+      "status": "SECURITY_NO_BLIND_OVERWRITE"
+    },
+    {
+      "path": "scripts/check-auth-invariant.mjs",
+      "source_sha": "b558378c35f88069e34e344579391c395f565640",
+      "baseline_main_blob": "52ea0bae18460e0fddaaacf80af19632e28f482b",
+      "finding": "Checked canonical version explicitly handles opt-in string true; the historical version differs.",
+      "status": "SECURITY_NO_BLIND_OVERWRITE"
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "source_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "baseline_main_blob": "8eb4736b4c7277ed5b4e329443b0a036da0d0426",
+      "finding": "Canonical test handles existing SQL files at migration root; historical assertion risks returning to an empty-root assumption.",
+      "status": "PRESERVE_CANONICAL_TEST"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "source_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "baseline_main_blob": "4251544045c70ee90cd2595c23900bf48084eb4a",
+      "finding": "Different runtime Kernel/admission blobs inspected; neither functional equivalence nor permission to replace proved by path alone.",
+      "status": "HOLD_FUNCTIONAL_REVIEW"
+    },
+    {
+      "path": "scripts/migrate.mjs",
+      "source_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "baseline_main_blob": "754b21a8e904587b7ef11ea92b818473fd21a8eb",
+      "finding": "Historical and canonical migration runners differ; SQL sequence, idempotence, provenance and remote DB mapping not tested here.",
+      "status": "HOLD_DB_RUNNER_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "source_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "baseline_main_blob": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1",
+      "finding": "Source and canonical server-auth blobs differ; retain canonical until security regression testing confirms equivalence.",
+      "status": "HOLD_AUTH_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "source_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "baseline_main_blob": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa",
+      "finding": "Source/canonical OAuth provider definitions differ; preserve canonical pending proof.",
+      "status": "HOLD_AUTH_REVIEW"
+    },
+    {
+      "path": "package.json",
+      "source_sha": "844f8aad72fcfc6a17b30268f7d50c8d95a92b69",
+      "baseline_main_blob": "a6834d59c30429141ebd600c2fef328c11a5e1bd",
+      "finding": "Dependency scripts and versions differ between canonical and source; no bulk replacement permitted.",
+      "status": "HOLD_BUILD_COMPATIBILITY"
+    }
+  ],
+  "semantic_final_dispositions": 0,
+  "closure_status": "OPEN",
+  "no_revisit": false,
+  "authorization_to_merge": false,
+  "remote_db_write": false,
+  "independent_review_complete": false,
+  "next_step": "Review 11 P0 of grook_10_26 by actual file content and per-item disposition, then the remaining 36 and further small branches; cross Supabase/Drive and review independently before sealing."
+}

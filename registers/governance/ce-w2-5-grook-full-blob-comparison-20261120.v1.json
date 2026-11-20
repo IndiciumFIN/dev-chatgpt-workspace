@@ -32,7 +32,13 @@
       "CE-ROUTE": 1
     },
     "status": "HOLD_RECONCILIATION",
-    "caveat": "Historic candidate IDs do not by themselves prove 149 runtime features were lost."
+    "caveat": "149 old id-line occurrences are 114 distinct identifiers. The source-generated file repeats 35 components, and absence in generated index alone cannot prove executable functionality lost.",
+    "source_unique_ids_absent_in_canonical": 114,
+    "unique_group_counts": {
+      "CE-ROUTE": 1,
+      "CE-TOOL": 78,
+      "CE-COMP": 35
+    }
   },
   "security_finding": {
     "path": "src/components/site/areas.tsx",
@@ -318,9 +324,9 @@
       "origin_mode": "100755",
       "canonical_mode": "100644",
       "comparison_status": "BOTH_IMMUTABLE_BLOBS_INSPECTED",
-      "observed_difference": "Historical generated index has 269 ID occurrences versus 127 canonical; 149 historical IDs absent from canonical: 78 CE-TOOL, 70 CE-COMP, 1 CE-ROUTE.",
+      "observed_difference": "Old generated index has 149 source-only ID occurrences but 114 distinct IDs: 78 CE-TOOL, 35 CE-COMP repeated twice and one CE-ROUTE; the active source catalog must be checked independently.",
       "proposed_disposition": "HOLD_CONTRACT_RECONCILIATION",
-      "required_confirmation": "Rebuild from primary contracts, map 149 IDs to runtime/features, licenses and historic branches; current coverage gate alone does not prove historic completeness.",
+      "required_confirmation": "Trace 114 distinct historical references to active code and other branch sources; preserve licencing and do not assume 78 runtime tools lost.",
       "final_decision": null,
       "independent_review": "PENDING",
       "merge_eligible": false

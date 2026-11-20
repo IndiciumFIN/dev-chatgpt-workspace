@@ -8,7 +8,11 @@ test("W2.5.6 historical 149 identifiers crosswalk, never presented as admitted r
  assert.equal(a.stats.by_category["CE-TOOL"],78);
  assert.equal(a.stats.by_category["CE-COMP"],70);
  assert.equal(a.stats.by_category["CE-ROUTE"],1);
- assert.equal(new Set(a.rows.map(x=>x.id)).size,149);
+ assert.equal(new Set(a.rows.map(x=>x.id)).size,114);
+ assert.equal(a.stats.source_only_unique_ids,114);
+ assert.equal(a.stats.by_unique_category["CE-TOOL"],78);
+ assert.equal(a.stats.by_unique_category["CE-COMP"],35);
+ assert.equal(a.stats.by_unique_category["CE-ROUTE"],1);
  assert.deepEqual([...c.items.map(x=>x.slug)].sort(),a.canonical_current_clinical_slugs);
  assert.equal(c.items.length,5);
  assert.equal(a.stats.canonical_current_clinical_catalog_entries,5);

@@ -46,6 +46,10 @@ jobs:
           python3 scripts/check-grok-workspace-intake.test.py
       # O checkout integral contém evidências que não devem integrar o deploy.
       # Primeiro executar os gates normativos, depois simular .vercelignore.
+      - name: Conferir 176 entradas históricas CE, hashes Git e testes negativos Python
+        run: |
+          python3 scripts/ce-legacy-reconcile.py verify --target .
+          python3 scripts/ce-legacy-reconcile.test.py
       - name: Validar entradas e simular exclusões de upload da Vercel
         run: |
           critical_files=(

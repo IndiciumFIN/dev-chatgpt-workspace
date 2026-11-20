@@ -12,6 +12,10 @@ on:
       - 'scripts/ce-live-branch-reconcile.test.mjs'
       - 'scripts/ce-large-pr-native-diff.mjs'
       - 'scripts/ce-large-pr-native-diff.test.mjs'
+      - 'scripts/ce-pr32-baseline-diagnostic.mjs'
+      - 'scripts/ce-pr32-baseline-diagnostic.test.mjs'
+      - 'scripts/ce-pr32-17-content-screen.mjs'
+      - 'scripts/ce-pr32-17-content-screen.test.mjs'
       - 'registers/governance/ce-branch-completion-20261120.v1.json'
 permissions:
   contents: read
@@ -41,7 +45,7 @@ jobs:
           git rev-parse --verify refs/remotes/origin/main
       - name: Verify negative invariants and source coverage
         run: |
-          node --test scripts/ce-live-branch-reconcile.test.mjs scripts/ce-large-pr-native-diff.test.mjs scripts/ce-pr32-baseline-diagnostic.test.mjs
+          node --test scripts/ce-live-branch-reconcile.test.mjs scripts/ce-large-pr-native-diff.test.mjs scripts/ce-pr32-baseline-diagnostic.test.mjs scripts/ce-pr32-17-content-screen.test.mjs
           python3 scripts/ce-branch-closure.py
       - name: Reconcile all pinned CE branches with complete native Git trees
         run: |
@@ -52,6 +56,8 @@ jobs:
         run: node scripts/ce-large-pr-native-diff.mjs
       - name: Diagnose 486-file PR32 discrepancy against both immutable baselines
         run: node scripts/ce-pr32-baseline-diagnostic.mjs
+      - name: Verify 17 changed PR32 blobs by content and risk (no execution)
+        run: node scripts/ce-pr32-17-content-screen.mjs
       - name: Publish aggregate progress in the Actions summary
         if: always()
         shell: bash
@@ -89,6 +95,7 @@ jobs:
             audit-evidence/ce-live-reconciliation/summary.json
             audit-evidence/ce-live-reconciliation/large-pr-native-diff.json
             audit-evidence/ce-live-reconciliation/pr32-baseline-diagnostic.json
+            audit-evidence/ce-live-reconciliation/pr32-17-content-screen.json
           if-no-files-found: warn
           retention-days: 14
 # Only Git paths/hash metadata already visible in this public repository are exported.

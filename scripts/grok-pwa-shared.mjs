@@ -437,10 +437,10 @@ export function normalizeHeadContext(ctx = {}) {
 
 /** Treat PWA link relations as semantic tokens, never as a platform href. */
 function hasLinkRelation(html, relation) {
-  return [...String(html).matchAll(/<link\\b[^>]*>/gi)].some(([tag]) => {
-    const attr = tag.match(/\\brel\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))/i);
+  return [...String(html).matchAll(/<link\b[^>]*>/gi)].some(([tag]) => {
+    const attr = tag.match(/\brel\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
     const value = attr ? (attr[1] ?? attr[2] ?? attr[3] ?? "") : "";
-    return value.toLowerCase().split(/\\s+/).includes(relation);
+    return value.toLowerCase().split(/\s+/).includes(relation);
   });
 }
 

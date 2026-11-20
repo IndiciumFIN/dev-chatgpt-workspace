@@ -42,3 +42,17 @@ jobs:
             package-lock.json
           retention-days: 3
           if-no-files-found: error
+      - name: Verify exact lockfile hashes (no credentials)
+        run: |
+          printf '%s\n' '83ee0469fa4fa62ba0b14b228fd33605de83adcdd29896187a7ac0b0d23643d6  package.json' 'b8288b00ca117bb521f6de70bc1b1309b1f2d78f4d2ae1f606def242a541dd09  package-lock.json' | sha256sum -c -
+      - name: Emit inert package-lock chunks for traceable Git blob upload
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync } from "node:fs";
+          for (const file of ["package.json", "package-lock.json"]) {
+            const content = readFileSync(file, "utf8");
+            for (let offset = 0, part = 0; offset < content.length; offset += 2048, part++) {
+              console.log("CE_LOCK_CHUNK|" + file + "|" + part + "|" + JSON.stringify(content.slice(offset, offset + 2048)));
+            }
+          }
+          JS

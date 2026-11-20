@@ -50,7 +50,7 @@ jobs:
         run: |
           python3 scripts/ce-legacy-reconcile.py verify --target .
           python3 scripts/ce-legacy-reconcile.test.py
-      - name: Validar entradas e simular exclusões de upload da Vercel
+      - name: Validar entradas obrigatórias antes dos testes (sem excluir fontes)
         run: |
           critical_files=(
             audit/baseline/v0.1.0/file-register.json
@@ -68,9 +68,7 @@ jobs:
           for file in "${critical_files[@]}"; do
             test -s "$file" || { echo "::error::Falta arquivo de build: $file"; exit 1; }
           done
-          # Mesmo conjunto de arquivos que Vercel prepara para npm ci/build.
-          git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
-          echo "PASS: entradas criticas preservadas; exclusoes Vercel simuladas"
+          echo "PASS: entradas críticas verificadas antes dos testes; quarantena histórica continua disponível para checagem de hash"
       - run: npm ci
       - name: Auditoria de dependências bloqueante
         run: npm audit --audit-level=high
@@ -81,6 +79,16 @@ jobs:
       - run: node scripts/check-contract-coverage.mjs
       - run: npm test
       - run: node scripts/audit-execution-gates.mjs
+      - name: Simular exclusões do upload Vercel após testes completos
+        run: |
+          # Os testes de hashes já foram executados com toda a fonte.
+          # Agora a simulação do pacote exclui artefatos legados antes do build.
+          git ls-files --cached --ignored --exclude-from=.vercelignore -z | xargs -0 -r rm -f
+          test ! -e intake/legacy-ce/docs/AGENTS.md
+          test ! -e intake/legacy-ce/docs/SETUP_GITHUB_PAT.md
+          test ! -e intake/legacy-ce/contracts/fontes/cofen_dou.json
+          test ! -e .grok/skills/og/SKILL.md
+          echo "PASS: evidências legadas excluídas do pacote; nenhum teste de hash foi contornado"
       - run: npm run build:spa
       - name: Verificar arquivos estaticos basicos
         run: test -s .vercel/output/nitro.json && test -d .vercel/output/functions/__server.func && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt

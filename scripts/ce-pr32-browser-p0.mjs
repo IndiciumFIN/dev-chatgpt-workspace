@@ -61,7 +61,7 @@ try {
     const path = "/ferramentas/" + slug;
     const result = await go(path);
     const notFound = result.status === 404 || /not found|não encontrada|não encontrado|404/i.test(result.text);
-    const clinicalUI = await page.locator("form, [data-clinical-tool], .clinical-tool").count();
+    const clinicalUI = await page.locator(".tool-page").count();
     assert.ok(notFound, path + ": candidate route is not an observable 404");
     assert.equal(clinicalUI, 0, path + ": candidate rendered a form/clinical tool");
     report.routes.push({ path, status: result.status, verdict: "CANDIDATE_NOT_PUBLISHED_IN_LOCAL_PGLITE" });

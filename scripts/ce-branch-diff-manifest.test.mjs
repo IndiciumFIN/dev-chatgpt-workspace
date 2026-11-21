@@ -102,7 +102,7 @@ test("strict cohort head drift fails closed and no in-repo output is accepted",(
  const f=mkfixture();
  try{
   const cohort=join(f.root,"scope.json");
-  writeFileSync(cohort,JSON.stringify({protocol:"CE.BRANCH.COHORT.v1",main_sha:"f".repeat(40),
+  writeFileSync(cohort,JSON.stringify({protocol:"CE.BRANCH.COHORT.v1",counts:{ce:1},main_sha:"f".repeat(40),
    branches:[{name:"refs/heads/legacy",sha:f.source}]}));
   const fail=run(f,["--cohort",cohort,"--strict-heads"]);
   assert.equal(fail.proc.status,2);assert.match(fail.proc.stderr,/main SHA drift/);

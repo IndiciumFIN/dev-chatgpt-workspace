@@ -9,3 +9,7 @@ Esta pasta **não é uma aplicação, pacote, módulo importável ou origem auto
 - Fechar uma PR/branch de origem requer 100% do seu escopo classificado e destino comprovado: este **piloto de 1 arquivo não encerra a PR #78**. \`SOURCE_STAGED\` não equivale a \`SEALED_FOR_RELEASE\`.
 - Migrations nesta pasta não são executáveis por migração automática.
 - Governança e plano: issue #125; origem de inventário: PR #123; fase DEV, aprovação de release diferida.
+
+## Lote 2 — Research Hub (21/11/2026)
+
+Sete documentos do commit `01574c5bfbe366a6ede9c0aee6bf2e3a907d92a1` transferidos como blobs Git identicos sob `conteudos/research-hub-handoff-20261026/`. O recibo de cobertura dos 7/7 paths deste **commit de handoff** e quatro outras branches sem commits exclusivos esta em `registers/governance/ce-quarantine-source-closure-20261121.v1.json`. Os ZIPs locais referidos na documentacao nao estao no Git, continuam **HOLD_EXTERNO** e nao foram fingidos como copiados. O codigo da PR #19 permanece separado e pendente; nenhum Research Hub completo foi homologado ou publicado.

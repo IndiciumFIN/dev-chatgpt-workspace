@@ -58,7 +58,7 @@ jobs:
           import {createHash} from "node:crypto";
           const indexPath="registers/governance/ce-w2-4-orphan-full-file-index-20261120.v1.json";
           const riskPath="registers/governance/ce-w2-5-orphan-risk-screen-results-20261120.v1.json";
-          const pinned=path=>execFileSync("git",["show","HEAD:"+path]);
+          const pinned=path=>execFileSync("git",["show","HEAD:"+path],{maxBuffer:64*1024*1024});
           const index=JSON.parse(pinned(indexPath).toString("utf8"));
           const paths=[indexPath,riskPath,...index.batches.map(x=>x.path)];
           if(paths.length!==8||new Set(paths).size!==8)throw Error("Unexpected pinned W2.4 files");

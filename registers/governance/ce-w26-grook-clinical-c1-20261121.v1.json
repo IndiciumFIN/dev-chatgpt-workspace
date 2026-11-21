@@ -1,0 +1,555 @@
+{
+  "protocol": "CE.W2.6.G2.CLINICAL.C1.v1",
+  "task_issue": 115,
+  "parent_issue": 106,
+  "followup_catalog_issue": 116,
+  "phase": "DEVELOPMENT",
+  "source": {
+    "branch": "grook_10_26",
+    "commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+    "tree": "d8de6c9a983e9ad4ecb95fb5aec68bd2389d0b8b"
+  },
+  "baseline": {
+    "branch": "main",
+    "commit": "5eab78270291fb34fc7d76fb37752e31413b64cd",
+    "tree": "309432607b5dc5391f44b6cf310707f11d2b9e78"
+  },
+  "source_manifest": "registers/governance/ce-w26-grook-full-delta-20261121.v1.json",
+  "prior_ledgers": [
+    "registers/governance/ce-w26-grook-p1-test-disposition-20261121.v1.json",
+    "registers/governance/ce-w26-grook-p0-security-s1-20261121.v1.json",
+    "registers/governance/ce-w26-grook-security-s2-20261121.v1.json"
+  ],
+  "crosswalk_path": "registers/governance/ce-w26-grook-78-tools-crosswalk-20261121.v1.json",
+  "counts": {
+    "total": 48,
+    "prior_dev_disposed": 15,
+    "new_dev_code_disposed": 5,
+    "total_dev_disposed": 20,
+    "holds": 2,
+    "other_pending": 26,
+    "total_unresolved": 28,
+    "security_unresolved": 1,
+    "clinical_unresolved": 1,
+    "runtime_unresolved": 16,
+    "ui_unresolved": 10,
+    "branches_sealed": 0
+  },
+  "normative_sources": [
+    {
+      "authority": "COFEN",
+      "identifier": "Resolução Cofen 736/2024",
+      "url": "https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/",
+      "relevance": "Processo de Enfermagem, instrumentos de avaliação validados, protocolos baseados em evidências, registro e competências",
+      "replaces": "Cofen 358/2009 (revogada)",
+      "status": "PRIMARY_OFFICIAL_REVIEWED",
+      "clinical_clearance": false
+    },
+    {
+      "authority": "ANVISA",
+      "identifier": "RDC 657/2022 SaMD perguntas e respostas",
+      "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/produtos-para-a-saude/manuais/software-como-dispositivo-medico-perguntas-e-respostas",
+      "relevance": "Determinar enquadramento de software por uso pretendido; não presumir",
+      "status": "PRIMARY_OFFICIAL_REVIEWED_SCOPE_UNDETERMINED",
+      "clinical_clearance": false
+    }
+  ],
+  "new_decisions": [
+    {
+      "path": "src/components/tools/clinical-tool.tsx",
+      "relation": "TEMPLATE_RESOURCE_RENDERING",
+      "old_marker": "<PageTools kind=\"ferramenta\" onDocx={saveDoc} onClear={clearCalc} />",
+      "new_marker": "onDocx={canExportReport ? saveDoc : undefined}",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "The historical clinical tool page offered report export and rendered ClinicalForm without consulting the template resource contract. Current page gates DOCX action and form rendering by contractOf('ferramenta').resources; the form and formula model were not changed in this historical diff. Decision concerns UI resource enforcement only.",
+      "dependencies": [
+        "src/lib/template-contract.ts",
+        "src/components/tools/clinical-form.tsx",
+        "scripts/admin-catalog.test.mjs"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "source assertion confirms canRenderForm and canExportReport are consumed"
+      ],
+      "residual": "No assessment of clinical result correctness, tool-specific validated formula, emergency advice, user accessibility or file-download content. COFEN 736/2024 requires validated assessment instruments when appropriate.",
+      "source_git_blob_sha": "e0def64a8d588bff619e7702361b2c57b0c4af37",
+      "canonical_git_blob_sha": "ccdf2599d0dd21d930b2b7e95db44e6e8b7d037d",
+      "risk": "P0_CLINICAL",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "clinical_approval": false,
+      "rights_state": "HOLD",
+      "rollback": "Revert only by explicit PR and new evidence; do not restore unsafe legacy code",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "5eab78270291fb34fc7d76fb37752e31413b64cd"
+    },
+    {
+      "path": "src/lib/contract.ts",
+      "relation": "SITEMAP_SINGLE_ROUTE_REGISTRY",
+      "old_marker": "export function publicPaths(pages: ContractPage[]) {",
+      "new_marker": "export function publicPaths() {",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Historical publicPaths hand-constructed section and clinical paths; current publicPaths consumes route-registry.indexablePaths. Route registry identifies tools with publicacao candidata as non-indexable and constructs canonical/alternates centrally. It is a route contract correction rather than validation or publication of unreviewed clinical tools.",
+      "dependencies": [
+        "src/lib/route-registry.ts",
+        "src/lib/tools/catalog.ts",
+        "src/lib/seo.ts"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "source-contract route-registry and publicPaths marker assertions"
+      ],
+      "residual": "Sitemap coherence in code cannot establish crawling, deployment, real hreflang or correctness of each candidate's clinical metadata.",
+      "source_git_blob_sha": "e4775ae60914b6f787fa79fcbdb34a8ad56a197d",
+      "canonical_git_blob_sha": "f059f3d8fd4135b5aa22b65879aba568ab25b9c2",
+      "risk": "P0_CLINICAL",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "clinical_approval": false,
+      "rights_state": "HOLD",
+      "rollback": "Revert only by explicit PR and new evidence; do not restore unsafe legacy code",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "5eab78270291fb34fc7d76fb37752e31413b64cd"
+    },
+    {
+      "path": "src/lib/kernel-admit.test.ts",
+      "relation": "KERNEL_UNTRUSTED_VALIDATOR_REGRESSION",
+      "old_marker": "import { admit, admitOrder, manifestStatus, type AdmitInput }",
+      "new_marker": "LEGACY_UNTRUSTED_VALIDATOR_IDS",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Current kernel tests add nine named legacy validators whose unconditional true responses must reject, positive normalized ID test and PGlite SQL integration confirming placeholder IDs do not admit a work order. This tests anti-stub admission, not clinical truth or legal reviewer identity. The test file was not listed in the original npm test script, so this subgate adds a dedicated runner.",
+      "dependencies": [
+        "src/lib/kernel-admit.ts",
+        "src/lib/policy-signature.ts",
+        "scripts/ce-w26-grook-clinical-c1.test.mjs"
+      ],
+      "tests": [
+        "Node --experimental-strip-types --test src/lib/kernel-admit.test.ts in dedicated CI runner",
+        "npm run typecheck"
+      ],
+      "residual": "Tests use synthetic signatures/users; no real clinical professional approval, normative evidence or production database. A passing isolated test does not grant clinical release.",
+      "source_git_blob_sha": "0f1fb85ea9fd2d76e14cf41f259ea82a294fc4fe",
+      "canonical_git_blob_sha": "d551f2869154f686bec06760d5b28d5125e8a538",
+      "risk": "P0_CLINICAL",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "clinical_approval": false,
+      "rights_state": "HOLD",
+      "rollback": "Revert only by explicit PR and new evidence; do not restore unsafe legacy code",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "5eab78270291fb34fc7d76fb37752e31413b64cd"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "relation": "KERNEL_LEGACY_TRUE_VALIDATOR_FAIL_CLOSED",
+      "old_marker": "input.validators.some((ok) => !ok)",
+      "new_marker": "input.validators.some((ok) => ok !== true)",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Historical kernel used truthiness for validator results and the SQL adapter read only passed booleans. Current code requires boolean true, rejects nine legacy validator IDs normalized from DB, and fetches (id,passed) in admitOrder. These code-level guards reduce acceptance of placeholders and forged truthy strings. Admission requires valid signed policy and human approver separate from owner; however, validatorIds remain optional in the exported pure admit API.",
+      "dependencies": [
+        "src/lib/kernel-admit.test.ts",
+        "src/lib/policy-signature.ts",
+        "src/lib/db.ts"
+      ],
+      "tests": [
+        "direct adversarial kernel admission tests including PGlite adapter through dedicated CI runner",
+        "source assertion checks ID normalization and DB adapter forwards validatorIds"
+      ],
+      "residual": "Public pure admit() can be called without validatorIds, so anti-stub condition depends on a trusted DB adapter; further audit of all callsites and identity attestations needed. Human approval is simulated in tests. Code-level disposition is NOT a clinical gate/SEALED clearance.",
+      "source_git_blob_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "canonical_git_blob_sha": "4251544045c70ee90cd2595c23900bf48084eb4a",
+      "risk": "P0_CLINICAL",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "clinical_approval": false,
+      "rights_state": "HOLD",
+      "rollback": "Revert only by explicit PR and new evidence; do not restore unsafe legacy code",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "5eab78270291fb34fc7d76fb37752e31413b64cd"
+    },
+    {
+      "path": "src/lib/template-contract.ts",
+      "relation": "TEMPLATE_CONTRACT_FRAME_NOTE_NORMALIZATION",
+      "old_marker": "frame: \"shell\" | \"area\" | \"login\" | \"home\";",
+      "new_marker": "export type TemplateContract = {",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "The prior TemplateKind contract mixed shared behavioral resource permissions with page-specific frame and note presentation tokens. Current contract keeps hero/crumbs/tools/toc/related/stickyTools/resources, while the catalog maps frames and notes by page. This supports one source for feature behavior and per-page frame, not a clinical formula change.",
+      "dependencies": [
+        "src/lib/template-catalog.ts",
+        "src/components/tools/clinical-tool.tsx",
+        "scripts/admin-catalog.test.mjs"
+      ],
+      "tests": [
+        "scripts/admin-catalog.test.mjs",
+        "template resource marker and frame absence checks"
+      ],
+      "residual": "Template consistency is not content validity, accessibility conformance, screen completeness or owner design-system acceptance.",
+      "source_git_blob_sha": "d4f3908f43c882a6173630967124398b0e181582",
+      "canonical_git_blob_sha": "84fd27e310b97acb3f0d54da5105d4f6a58f167b",
+      "risk": "P0_CLINICAL",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "clinical_approval": false,
+      "rights_state": "HOLD",
+      "rollback": "Revert only by explicit PR and new evidence; do not restore unsafe legacy code",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "5eab78270291fb34fc7d76fb37752e31413b64cd"
+    }
+  ],
+  "previous_dev_dispositions": [
+    {
+      "path": "scripts/admin-catalog.test.mjs",
+      "issue": 109,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "be35ebbebd7f2370551c3d71dcc9dadabf415ada",
+      "canonical_git_blob_sha": "e3d3b818df2ac0b08326a0540810ef117f9b77f9"
+    },
+    {
+      "path": "src/lib/desk-boundary.test.ts",
+      "issue": 109,
+      "decision": "REJECTED_WITH_PROVENANCE",
+      "source_git_blob_sha": "314ee405f8d8796461f674292ee6c95dad9ea043",
+      "canonical_git_blob_sha": "1bbb89333dab4efcc8fd9d3901de01d33f416a72"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.test.ts",
+      "issue": 109,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "23f9969b20f5f377cb8b31f2e23b16ff02d557db",
+      "canonical_git_blob_sha": "4e3c76b2b8973101ba89d79b33214dbb7f0fe0e5"
+    },
+    {
+      "path": "scripts/check-auth-invariant.mjs",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b558378c35f88069e34e344579391c395f565640",
+      "canonical_git_blob_sha": "52ea0bae18460e0fddaaacf80af19632e28f482b"
+    },
+    {
+      "path": "scripts/check-auth-invariant.test.mjs",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "4cc9b6faa28b56c83a498003bfc9a2b200aad276",
+      "canonical_git_blob_sha": "e41fbc72c773f9d39983b7940e4bb70a71dd3608"
+    },
+    {
+      "path": "scripts/with-app-env.mjs",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e48dfafa69fa33d5288269ce939236956ff75e9c",
+      "canonical_git_blob_sha": "cc1ec4b520a7d8364665663415e0a96c712933d4"
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "canonical_git_blob_sha": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1"
+    },
+    {
+      "path": "src/lib/auth/verify.server.ts",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "2bf5acc72dd13134b1ec86781aa7591e1b2dca5c",
+      "canonical_git_blob_sha": "5cc0e660c914851fca9761bacdff84d9f74e415d"
+    },
+    {
+      "path": "src/lib/db.ts",
+      "issue": 111,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d0a89f7ab08220fada355c6fb5eca2f786eceacc",
+      "canonical_git_blob_sha": "2178a40c7fc0d6bfd959db33d2703fead48bcaf1"
+    },
+    {
+      "path": "src/lib/auth/client.ts",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+      "canonical_git_blob_sha": "3d7efba87c1c1fc55b259e1095fb226efbc0a2d9"
+    },
+    {
+      "path": "src/lib/auth/gate-identity.test.ts",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "02cf0269fe3cdbcba3d96be110264f94e0cdea13",
+      "canonical_git_blob_sha": "84aba93d9aa0e218f74df7e50ba8bf3a8c067380"
+    },
+    {
+      "path": "src/lib/auth/popup.server.ts",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "9e686ae29e2b0463b7868ce755dd066479ebe8a3",
+      "canonical_git_blob_sha": "40adca02eaf00dcd6cf4108b91b7b68df746fc58"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "canonical_git_blob_sha": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa"
+    },
+    {
+      "path": "src/lib/source.functions.ts",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "812f9dfecac5932dd269f4d08ede9804065faafc",
+      "canonical_git_blob_sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "issue": 113,
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "01de60dfb265c8648cef46f739ce6d6d96dcdb69",
+      "canonical_git_blob_sha": "390247798436e287a518dbbea30ca2e762b93f50"
+    }
+  ],
+  "holds": [
+    {
+      "path": "src/lib/auth/preview.ts",
+      "risk": "P0_SECURITY",
+      "decision": "HOLD_ISSUER_ROTATION_AND_HISTORY_SCAN",
+      "source_git_blob_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+      "canonical_git_blob_sha": "9346354e7510bebb9bde3651b1da148d7080854a",
+      "code_transition_observed": "Historical preview credential literal is absent from current source and replaced with a server environment variable. Never copy the credential value.",
+      "operational_evidence": "NO_ISSUER_REVOCATION_RECEIPT",
+      "related_issues": [
+        91,
+        92
+      ],
+      "security_incident_open": true,
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "why": "The old token remains in immutable historical Git objects and might still be valid at the issuer; a code diff or CI passing is insufficient to prove revocation, audience rotation or independent security review.",
+      "revisit_conditions": [
+        "issuer-authenticated revocation or rotation receipt with no secret bytes",
+        "all reachable Git history scanned and sanitized report",
+        "preview/issuer allowlist and credentials revalidated by authorized operator"
+      ],
+      "release_allowed": false,
+      "origin_issue": 113
+    },
+    {
+      "path": "src/lib/contract-index.generated.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "9708b014d6114b586a33b5eba6085280ddd30c56",
+      "canonical_git_blob_sha": "99255c97157d7cbfee29e670bd852dd3a7ec23ad",
+      "decision": "HOLD_CONTRACT_COMPLETENESS_AND_RIGHTS",
+      "origin_issue": 115,
+      "crosswalk_issue": 116,
+      "crosswalk_path": "registers/governance/ce-w26-grook-78-tools-crosswalk-20261121.v1.json",
+      "historical_tool_contract_items": 83,
+      "canonical_published_tool_contract_items": 5,
+      "old_only_ids": 78,
+      "of_which_candidates": 2,
+      "of_which_scope_review": 4,
+      "of_which_unmapped": 72,
+      "clinical_correctness": "NOT_VERIFIED",
+      "rights_state": "HOLD",
+      "regulatory_scope": "NOT_DETERMINED",
+      "reason": "Generated file shrunk sharply, reflecting an active runtime tools registry of five tools, not an audited disposition of 78 historical tool IDs. Two are currently candidateTools; other 76 require cross-source mapping. Do not presume 78 disappeared from entire ecosystem or restore them as published clinical resources.",
+      "release_allowed": false,
+      "clinical_approval": false
+    }
+  ],
+  "other_pending_paths": [
+    {
+      "path": ".gitignore",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "8f7fd077b4d8fd61238b6b452b51b24b41422fa3",
+      "baseline_git_blob_sha": "ba41cb8913e0fbbe50be389ba48836ecaf9d03fa",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "package-lock.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b6432638b56727d1e822e1d1d8ca6a5b76375adc",
+      "baseline_git_blob_sha": "c2beea71660d7f44d647f3adb1195e4a75701d92",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "package.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "844f8aad72fcfc6a17b30268f7d50c8d95a92b69",
+      "baseline_git_blob_sha": "a6834d59c30429141ebd600c2fef328c11a5e1bd",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b67be804cf79dec86dcbde559dea7a6f408baeec",
+      "baseline_git_blob_sha": "08675cad3cdac219fe1a3c97aebc65ef8f5157e4",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/alias-hook.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "4fcff75b3776c70d820983d1e869437070e632f3",
+      "baseline_git_blob_sha": "d23b5c1fbcb33ef23efa06e59ea50bbb15f1c98b",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/grok-pwa-plugin.test.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "30d01b79d8b71b64b00ff6c835cf66066be1df92",
+      "baseline_git_blob_sha": "317bd1be1aab4dc04fd2ff0ecfed0f7091aae93b",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/grok-pwa-shared.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b05a47d95e97d3f617585ddf10a7a0e9623a5fb7",
+      "baseline_git_blob_sha": "29bce8f98b4aa129b6ee4730a1c72f72dfff31f4",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/migrate.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "baseline_git_blob_sha": "754b21a8e904587b7ef11ea92b818473fd21a8eb",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "baseline_git_blob_sha": "8eb4736b4c7277ed5b4e329443b0a036da0d0426",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/admin/registry.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "9f068cc0ceb2d626bc89d90594689b13a9962203",
+      "baseline_git_blob_sha": "8602fede9a520364fe56f167ff4e613ce9b06cff",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/areas.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "1b7fdc584d8a44c6b887fb1d641ede9d3af59239",
+      "baseline_git_blob_sha": "7425ab275f1b6a18be346aee790f2fca49b5ee28",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/related-content.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "a1270f39b0abe2fd0e4e17f311c4a479ae06e606",
+      "baseline_git_blob_sha": "c6a96f5524e4101a3d9fd4f833433df5c823d71e",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/shell.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ec9c61954bfbac5b5ff33a630a56cbac4d83bbc4",
+      "baseline_git_blob_sha": "d3a24f6267a13bd2c0259a26d2017282f357fd1d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/templates/contract-view.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ee95cc2662bbb9698a2f58fd82119c40ae4e68cd",
+      "baseline_git_blob_sha": "a60136229d473b51503878446a73b4587f862c2d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "3376721a85fd3d39f94d2d38ef010eaa81ab5ac5",
+      "baseline_git_blob_sha": "c36d7b7e1d3e5a8904ceaa25ed040f01cfff75fb",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/focus-color-i18n.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "de43d9a4276c41410bc0521e5b8a004480f51a3f",
+      "baseline_git_blob_sha": "e24aee8e4458404265efc2fbfd30ac023abf0398",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/header-i18n.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "65e9418cab58e08ae33f519d3e1671cede885a86",
+      "baseline_git_blob_sha": "58a0251cb093b05fe94eeaaadfe81ec4b93e7cb3",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/locale-registry.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "9b72fbc7593cc2f2d6d2984e592c921d44ec0d5b",
+      "baseline_git_blob_sha": "dac9eab10830c27e20e3af97dd85e5a1baaad732",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/sections.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "6ead8e9e3926df7edb0fa0f929b04472f1f84c1b",
+      "baseline_git_blob_sha": "f7c08bdc6f20474799b0ab612c29ce7e35206073",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/seo.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "ecc4e8693f207a5f5ee8e8a8d8a50f249f095f55",
+      "baseline_git_blob_sha": "d879d5e454da71981ab12d7888ed62e15f57607d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/template-catalog.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "c3b3ec7574b044b01a1c0f16a5e76554e579e432",
+      "baseline_git_blob_sha": "8794e7428de8288652baac8c88d88cdbb26952f9",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/router.tsx",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "fd662dabc3270ed3c70eb11fd4c4bfe4bb0501ab",
+      "baseline_git_blob_sha": "49561b83ea097cab9ac7fa0f6e58a9a21fafcbce",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "d020d11d40ab143cd0a2c435d8ecf7e95267ff55",
+      "baseline_git_blob_sha": "140ece4fff6ef32196ee6475d6bb5be860915467",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/styles.css",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "84baefd591567ba69ab9e8b9152dfba6361b619d",
+      "baseline_git_blob_sha": "b8bd267f36fb6c6363f9ccd7cf3de4a478bca2ff",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "vercel.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6",
+      "baseline_git_blob_sha": "935d5d78ad166e4bb6189d21056fe80a1b342b16",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "vite.config.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "f0aa67ddb6b5067c5aece4678259caa57638aa5a",
+      "baseline_git_blob_sha": "39c0cd51ea5f59ccf11776abf442760c6a4df7ac",
+      "decision": "PENDING_SEMANTIC"
+    }
+  ],
+  "release": {
+    "owner_approval": "NOT_REQUESTED_DEFERRED",
+    "clinical_or_medical_approval": false,
+    "regulatory_classification_final": false,
+    "rights_clearance": false,
+    "production_deployment": false,
+    "remote_db_write": false,
+    "secret_rotation_verified": false,
+    "release_authorized": false,
+    "historical_branch_dev_reconciled": false,
+    "historical_branch_sealed": false,
+    "branch_deleted": false
+  },
+  "testing": {
+    "baseline_verify": {
+      "sha": "5eab78270291fb34fc7d76fb37752e31413b64cd",
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/44904314717",
+      "conclusion": "success"
+    },
+    "kernel_admit_test_in_default_package_script": false,
+    "dedicated_kernel_test_required_in_ci": true,
+    "postmerge_verify_required": true
+  }
+}

@@ -24,11 +24,11 @@ Uma atividade possui **ID estável**, issue, classificação, owner, executor, e
 1. **Issue/WO** específico, com o objeto e decisão; uma issue ser criada não é trabalho executado.
 2. **PR temática**, diff paginado e HEAD/base SHA fixados, ou referência privada verificável a ação externa de rotação/revogação (não inventar PR para operação que não ocorreu no Git).
 3. **Prova de execução**: check/run ID no SHA, inputs e outputs sanitizados, testes negativos, integridade por SHA e cobertura do universo.
-4. **Aprovação independente** quando aplicável, distinta do autor. Leivis Lima é owner da decisão; isso não conta como revisão independente se for o autor por trás da conta `IndiciumFIN`.
+4. **Fase DEV — aprovação diferida:** Cauê Zipfel é o proprietário; Leivis Lima coordena a execução. Revisão independente de PR em desenvolvimento é opcional e não bloqueia merge técnico que passe pelos gates efetivos. Aprovação do proprietário **não solicitada** até a transição formal para homologação/publicação. Ver [adendo DEV](CE_DEV_APPROVAL_DEFERRAL_20261121.md).
 5. **Integração segura** em `main` somente quando elegível; merge SHA e CI pós-merge no mesmo SHA, eventuais gates clínicos/DB/legal/segurança mantidos.
 6. **Recuperação e encerramento**: rollback/retention, cross pós-integração, evidência por arquivo/objeto e revisão; `SEALED` apenas quando todos os requisitos da norma `CE.BRANCH.CLOSURE.v1` forem satisfeitos.
 
-Estados de projeto: `PLANNED → IN_PROGRESS → HOLD_EVIDENCE/HOLD_HUMAN → PR_READY → CI_VERIFIED → MERGED_VERIFIED → SEALED` ou `REJECTED_WITH_PROOF`. **Nenhuma transição para `SEALED` ocorre apenas porque a PR passou no `verify`.**
+Estados de projeto: `PLANNED → IN_PROGRESS → HOLD_EVIDENCE/HOLD_HUMAN → PR_READY → CI_VERIFIED → DEV_MERGED_VERIFIED → DEV_RECONCILED → SEALED_FOR_RELEASE` ou `REJECTED_WITH_PROOF`. **Nenhuma transição para `SEALED` ocorre apenas porque a PR passou no `verify`.**
 
 ## Índice completo de ações — 44/44 registradas
 
@@ -45,21 +45,26 @@ A matriz histórica tem **12 ações ainda sem issue dedicada ou remapeamento fi
 
 | Trilha | Prioridade | Ações | Prova antes de avançar |
 |---|---|---|---|
-| **S0 — estabilização documental/CI** | P1 | [A05 #95](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/95), [A11 #101](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/101) | PR #89 diffs reais, SHA exato, `verify`, regressões, separação owner/reviewer; nenhuma homologação falsa |
+| **S0 — estabilização documental/CI** | P1 | [A05 #95](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/95), [A11 #101](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/101) | PR #89 diffs reais, SHA exato, `verify`, regressões; owner Cauê (aprovação diferida) e coordenador Leivis; revisão independente opcional em DEV; nenhuma homologação falsa |
 | **S1 — segurança G00** | P0 | [A01 #91](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/91), [A02 #92](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/92) | Cobertura de scan com output restrito; quando confirmado segredo, rotação/revogação no emissor; 401/403; nenhuma chave publicada |
 | **S2 — build e preview** | P0 | [A06 #96](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/96) | Vercel Preview `READY` e smoke no SHA correto, sem deploy à produção |
 | **S3 — inventário e automação** | P0/P1 | [A03 #93](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/93), [A07 #97](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/97), [A08 #98](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/98), [A09 #99](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/99) | Censo real de refs e blobs, dedupe por proveniência, agendamento na `main` com execução real; sem exclusão automática |
 | **S4 — runtime H2 e qualidade** | P1 | [A10 #100](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/100), [A04 #94](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/94) | DB real identificado, RLS e linhagem de evidências; lint reexecutado com JSON, SSR/auth tests |
-| **S5 — histórico, publicação seletiva e closure** | P1/P2 | [A12 #102](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/102), [#103](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/103) + W2.5 | Disposição por objeto, requisitos clínicos e direitos, reviewer legítimo, merge/testes em `main`, posterior `SEALED` comprovado |
+| **S5 — histórico, publicação seletiva e closure** | P1/P2 | [A12 #102](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/102), [#103](https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/103) + W2.5 | Disposição por objeto, requisitos clínicos e direitos, merge/testes em `main`, `DEV_RECONCILED` após evidência integral; aprovação do proprietário e `SEALED_FOR_RELEASE` apenas na homologação |
 
 A contenção de credenciais **não deve esperar S0/S2** quando houver confirmação de comprometimento; S0 e S1 são paralelizáveis. Cada bloco gera recibo por PR/issue e só altera o percentual por denominador e evidência. A nona onda P0 foi pré-triada, mas **não recebe status de concluída** enquanto G00 e a cadeia de execução forem incorporados à gestão de riscos.
 
 ## Caso histórico `audit-hardening-2026-10-24`
 
-A matriz de fechamento `registers/governance/ce-w2-5-audit-hardening-closure-readiness-20261121.v1.json` documentou 1.733 arquivos de origem, 421 diferenças frente à baseline histórica, 282 mudanças apenas de modo Git e 139 divergências em bytes. **Não** é `SEALED`: faltam decisões semânticas, revisão humana independente, cross Drive/Supabase e integração. Não excluir a branch, não dizer que 92% dos bytes implicam 92% da conclusão.
+A matriz de fechamento `registers/governance/ce-w2-5-audit-hardening-closure-readiness-20261121.v1.json` documentou 1.733 arquivos de origem, 421 diferenças frente à baseline histórica, 282 mudanças apenas de modo Git e 139 divergências em bytes. **Não** é `DEV_RECONCILED` nem `SEALED_FOR_RELEASE`: faltam decisões semânticas, cross Drive/Supabase e integração. A revisão independente foi dispensada como bloqueio DEV; não é a causa do HOLD nesta fase. Não excluir a branch, não dizer que 92% dos bytes implicam 92% da conclusão.
 
 ## Itens que devem vir para decisão do proprietário na conversa
 
-Formato obrigatório: **🟨 DECISÃO SUA — assunto, recomendação, alternativas, riscos e prazo/efeito**. Não exigir intervenção para tarefas técnicas ordinárias. Exemplos que podem depender do proprietário: seleção de revisor independente real, decisão sobre projeto Vercel canônico e publicação/visibilidade, aprovação de rotação em provedor externo, licença/direito clínico, autorização de operação remota com dados e mudança de ruleset que possa criar deadlock.
+Formato obrigatório: **🟨 DECISÃO DO COORDENADOR — assunto, recomendação, alternativas, riscos e prazo/efeito**; decisões reservadas ao proprietário Cauê Zipfel permanecem como `DEFERRED_UNTIL_RELEASE`. Não exigir intervenção para tarefas técnicas ordinárias. Em DEV não pedir escolha de revisor independente nem aprovação do proprietário. Escalar à coordenação alterações de ambiente, permissões ou segurança que exijam decisão; reservar autorização de produção, direitos clínicos, decisões legais e atos do proprietário para Cauê na homologação. Rotação emergencial de segredo comprometido segue protocolo de segurança do emissor.
 
-**Baseline de release:** `HOLD` até G00, Preview, runtime, autorização clínica e revisão independente aplicáveis. `main` intocada por esta documentação; esta PR continua candidata a merge, não uma execução homologada.
+**Baseline de release:** `HOLD` até G00, Preview, runtime, autorização clínica e aprovação autêntica de Cauê; a revisão independente pode voltar a ser exigida conforme política aplicável na transição de fase. Em DEV ela não bloqueia as atividades. `main` intocada por esta documentação; esta PR continua candidata a merge, não uma execução homologada.
+
+
+## Adendo de papéis — 21/11/2026
+
+A identificação anterior de Leivis Lima como *proprietário* foi corrigida: **Cauê Zipfel é o proprietário**, **Leivis Lima é o coordenador/executor técnico**. A aprovação de Cauê ainda não foi solicitada e não deve ser presumida. Para PRs de desenvolvimento, a exigência interna de revisor humano independente foi dispensada temporariamente; CI, segurança, integridade, auditoria de PR/SHA e eventual política técnica real da `main` permanecem obrigatórias. Uma integração em DEV não implica liberação de produção. Norma: [`CE_DEV_APPROVAL_DEFERRAL_20261121.md`](CE_DEV_APPROVAL_DEFERRAL_20261121.md).

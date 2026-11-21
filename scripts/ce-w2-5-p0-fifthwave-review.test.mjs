@@ -61,8 +61,8 @@ test("fifth wave does not approve managed Supabase auth or historical Git-pushin
  assert.equal(fifth.live_auth_table_names_checked_read_only,27);
  assert.equal(fifth.history_auth_table_names,27);
  const projected=projectEvidenceReuse();
- assert.equal(projected.reviewed_p0_unique_objects,31);
- assert.equal(projected.projectable_p0_unique_objects,21);
+ assert.equal(projected.reviewed_p0_unique_objects,32);
+ assert.equal(projected.projectable_p0_unique_objects,22);
  assert.equal(projected.source_only_review_objects_without_canonical_baseline,10);
  assert.equal(projected.independent_approvals,0);
  assert.equal(projected.branch_closures,0);

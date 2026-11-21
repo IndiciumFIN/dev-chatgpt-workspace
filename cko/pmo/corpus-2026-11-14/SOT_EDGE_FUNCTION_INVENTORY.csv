@@ -1,0 +1,10 @@
+function,version,verify_jwt,class,static_code_evidence,required_review
+corpus-test-ui,3,false,PUBLIC_410_DISABLED,Static 410; no HTML frontend or DB access detected,Monitor
+corpus-demo-health,2,false,PUBLIC_NETWORK_DIAGNOSTIC,"Static code probes public upstream endpoints, no credential/database access detected; GET/HEAD only",Monitor for exposed status/abuse
+corpus-public-health,2,false,PUBLIC_NETWORK_DIAGNOSTIC,"Static code probes public upstream endpoints and returns health metadata, GET only; no caller-controlled URL",Monitor rate limiting
+corpus-operator-session,2,true,OPERATOR_SESSION,"Validates bearer token and corpus_operators role, response includes authenticated user's email; no direct writes detected",Verify JWT/role lifecycle
+deepseek-atomize,5,true,EXTERNAL_AI_ATOMIZATION,Fetches corpus_fragments.text_content and sends to external DeepSeek; authenticates operator/reviewer; saves draft proposals; per-document external-AI rights gate NOT OBSERVED in function source,P0_HOLD_TDM_AI_RIGHTS
+dou-inlabs,5,true,ACQUISITION_WRITES,"Validates operator, downloads INLABS and writes corpus storage and corpus_documents; returns STORED_UNVERIFIED",HOLD_DEPLOY_UNTIL_GOVERNED_SOURCE
+corpus-connectivity,4,true,PROTECTED_NETWORK_DIAGNOSTIC,"Validates operator role, logs to corpus_events; CORS wildcard but bearer auth enabled",Review CORS and response metadata
+inlabs-session-probe,2,true,PROTECTED_INLABS_PROBE,Validates operator; uses remote login/session; may expose status metadata but not secrets in inspected return patterns,External effect/secret handling review
+inlabs-single-edition-pilot,2,true,PROTECTED_INLABS_PILOT,Validates operator; calls protected dou-inlabs endpoint; no direct DB table write in inspected function,Do not invoke before approved source gate

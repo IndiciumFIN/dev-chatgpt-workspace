@@ -78,6 +78,8 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Validar preset TanStack Start-Nitro na Vercel sem deploy
+        run: node scripts/ce-vercel-nitro-config.mjs
       - name: Auditar 44 tarefas v6/legado por issue e bloquear falso encerramento
         run: node scripts/ce-audit-v6-execution-ledger.mjs
       - name: Validar adendo do censo CE sem selar branches

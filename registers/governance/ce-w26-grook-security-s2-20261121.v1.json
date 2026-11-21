@@ -1,0 +1,550 @@
+{
+  "protocol": "CE.W2.6.G2.P0_SECURITY.S2.v1",
+  "task_issue": 113,
+  "parent_issue": 106,
+  "phase": "DEVELOPMENT",
+  "source": {
+    "branch": "grook_10_26",
+    "commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+    "tree": "d8de6c9a983e9ad4ecb95fb5aec68bd2389d0b8b"
+  },
+  "baseline": {
+    "branch": "main",
+    "commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+    "tree": "99d096f1876d48077f38d6de5298a3d24cc6479b"
+  },
+  "origin_manifest": "registers/governance/ce-w26-grook-full-delta-20261121.v1.json",
+  "previous_ledgers": [
+    "registers/governance/ce-w26-grook-p1-test-disposition-20261121.v1.json",
+    "registers/governance/ce-w26-grook-p0-security-s1-20261121.v1.json"
+  ],
+  "lock_dependency": {
+    "package": "better-auth",
+    "pinned_version": "1.7.15",
+    "evidence": "package.json and scripts/check-better-auth-lock.test.mjs",
+    "official_upgrade_url": "https://github.com/better-auth/better-auth/blob/main/docs/content/docs/guides/1-7-upgrade-guide.mdx",
+    "runtime_oauth_e2e_verified": false
+  },
+  "counts": {
+    "total_historical": 48,
+    "prior_dispositions": 9,
+    "new_code_dispositions": 6,
+    "total_disposed_dev": 15,
+    "hold_issuer": 1,
+    "other_pending": 32,
+    "total_unresolved": 33,
+    "security_unresolved": 1,
+    "clinical_unresolved": 6,
+    "runtime_unresolved": 16,
+    "ui_unresolved": 10,
+    "branches_sealed": 0
+  },
+  "new_decisions": [
+    {
+      "path": "src/lib/auth/client.ts",
+      "relationship": "AUTH_CLIENT_1_7_SOCIAL_MIGRATION",
+      "old_marker": "authClient.signIn.oauth2({",
+      "new_marker": "authClient.signIn.social({",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Better Auth 1.7.15 migration removes genericOAuthClient and replaces signIn.oauth2/providerId with signIn.social/provider. Current client also enables auth only if VITE_AUTH_ENABLED is exact true. This matches Better Auth 1.7 upgrade guidance; this is code/API consistency, not proof that actual broker login, callbacks, account linking, production cookies or issuer revocation work.",
+      "dependencies": [
+        "package.json",
+        "scripts/check-better-auth-lock.test.mjs",
+        "src/lib/auth/providers.ts",
+        "src/lib/auth/server.ts"
+      ],
+      "tests": [
+        "scripts/check-better-auth-lock.test.mjs",
+        "scripts/check-auth-invariant.test.mjs",
+        "npm run typecheck"
+      ],
+      "residual": "OAuth live E2E, broker callback behavior, account linking, revoked credentials and session trust still require issuer/operational gates #92.",
+      "source_git_blob_sha": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+      "canonical_git_blob_sha": "3d7efba87c1c1fc55b259e1095fb226efbc0a2d9",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    },
+    {
+      "path": "src/lib/auth/gate-identity.test.ts",
+      "relationship": "ISOLATED_GATE_TEST_ENV",
+      "old_marker": "import { describe, it } from \"node:test\";",
+      "new_marker": "import { before, after, describe, it } from \"node:test\";",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "The current test isolates positive token-verification cases by setting VITE_AUTH_ENABLED=true in a before hook, restoring the original environment in after. It still includes separate negative auth-off and wrong issuer, audience, expiration and key tests. The old test lacked this isolation when CI inherited the new default-off state.",
+      "dependencies": [
+        "src/lib/auth/gate-identity.server.ts",
+        "src/lib/auth/server.ts",
+        "src/lib/auth/verify.server.ts"
+      ],
+      "tests": [
+        "src/lib/auth/gate-identity.test.ts via npm test",
+        "scripts/check-auth-invariant.test.mjs"
+      ],
+      "residual": "Isolated local keys and mocked loopback HTTP prove token rejection behavior, not live issuer trust or real SSO on deployed hosts.",
+      "source_git_blob_sha": "02cf0269fe3cdbcba3d96be110264f94e0cdea13",
+      "canonical_git_blob_sha": "84aba93d9aa0e218f74df7e50ba8bf3a8c067380",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    },
+    {
+      "path": "src/lib/auth/popup.server.ts",
+      "relationship": "AUTH_POPUP_1_7_SOCIAL_MIGRATION",
+      "old_marker": "auth.api.signInWithOAuth2({",
+      "new_marker": "auth.api.signInSocial({",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "The historical popup invoked a deprecated generic OAuth server endpoint with providerId; current code invokes signInSocial with provider and preserves state/callback flow. This aligns with the Better Auth 1.7 migration for generic providers, and existing typecheck validates the API usage in the locked dependency; no real broker redirect was executed.",
+      "dependencies": [
+        "src/lib/auth/client.ts",
+        "src/lib/auth/providers.ts",
+        "src/lib/auth/server.ts",
+        "package.json"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "scripts/check-better-auth-lock.test.mjs"
+      ],
+      "residual": "Real popup OAuth redirects, CSRF/PKCE state binding, host allowlist and broker issuer still require controlled E2E and security assessment.",
+      "source_git_blob_sha": "9e686ae29e2b0463b7868ce755dd066479ebe8a3",
+      "canonical_git_blob_sha": "40adca02eaf00dcd6cf4108b91b7b68df746fc58",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "relationship": "CALLBACK_DOCUMENTATION_ONLY",
+      "old_marker": "/api/auth/oauth2/callback/<providerId>",
+      "new_marker": "/api/auth/callback/<providerId>",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Only the explanatory callback URL in this provider registry differs. New callback naming matches official Better Auth 1.7 upgrade guidance; provider IDs and upstream mappings remain identical. This is documentation-only supersession, not a functional authentication or issuer validation result.",
+      "dependencies": [
+        "src/lib/auth/server.ts",
+        "src/lib/auth/popup.server.ts",
+        "package.json"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "scripts/check-better-auth-lock.test.mjs"
+      ],
+      "residual": "Callback allowlist actually registered at the broker and compatibility with its deployments remain unverified.",
+      "source_git_blob_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "canonical_git_blob_sha": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    },
+    {
+      "path": "src/lib/source.functions.ts",
+      "relationship": "FIRST_ADMIN_FAIL_CLOSED_AND_ISOLATED_FIXTURE",
+      "old_marker": "case when exists (select 1 from member where role = 'admin') then 'subscriber' else 'admin' end",
+      "new_marker": "values (${context.userId}, 'subscriber')",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "Historical ensureRole automatically promoted the first authenticated visitor to admin. Current ensureRole only inserts subscriber and retains admin authorization against member role; a synthetic admin fixture is explicitly gated to GitHub Actions CI, in-memory PGlite and no DATABASE_URL. Existing test executes actual bootstrap SQL against disposable PGlite, covering first, subsequent and concurrent visitors, and test verifies fixture isolation.",
+      "dependencies": [
+        "scripts/ce-first-admin-bootstrap.test.mjs",
+        "scripts/admin-e2e-fixture.test.mjs",
+        "scripts/ce-db-deployment-guard.test.mjs",
+        "src/lib/auth/verify.server.ts"
+      ],
+      "tests": [
+        "scripts/ce-first-admin-bootstrap.test.mjs (real disposable PGlite)",
+        "scripts/admin-e2e-fixture.test.mjs",
+        "scripts/ce-db-deployment-guard.test.mjs"
+      ],
+      "residual": "No live production RBAC/SSO or RLS verification; runtime database identity and privileged role provisioning remain open #100.",
+      "source_git_blob_sha": "812f9dfecac5932dd269f4d08ede9804065faafc",
+      "canonical_git_blob_sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "relationship": "AUTH_OFF_UI_NO_DIRECT_RESTRICTED_LINK",
+      "old_marker": "Abrir a área do assinante",
+      "new_marker": "role=\"status\" aria-live=\"polite\"",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "reason": "When auth is disabled, the historical login panel offered a direct button to /assinante, creating misleading access affordance. The current panel communicates that no session or restricted access is granted, marks the notice as a live status and offers only public-home navigation. This removes an unsafe UX cue, but true authorization still depends on server-side checks.",
+      "dependencies": [
+        "src/lib/auth/client.ts",
+        "src/lib/auth/verify.server.ts",
+        "src/lib/auth/sign-in-gate.test.ts"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "src/lib/auth/sign-in-gate.test.ts via npm test",
+        "source contract negative check added by this subgate"
+      ],
+      "residual": "No end-to-end browser accessibility audit or comprehensive route authorization test; UI navigation is not a security boundary.",
+      "source_git_blob_sha": "01de60dfb265c8648cef46f739ce6d6d96dcdb69",
+      "canonical_git_blob_sha": "390247798436e287a518dbbea30ca2e762b93f50",
+      "risk": "P0_SECURITY",
+      "evidence_status": "SEMANTICALLY_DISPOSED_DEV_CODE_ONLY",
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "reviewed_source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "reviewed_main_commit": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "rollback": "Explicit revert PR only; do not reintroduce historical authentication/authorization defaults",
+      "tests_executed_in_baseline_ci": "verify #44901600533 success; new tests require PR/merge CI"
+    }
+  ],
+  "prior_dispositions": [
+    {
+      "path": "scripts/admin-catalog.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "be35ebbebd7f2370551c3d71dcc9dadabf415ada",
+      "canonical_git_blob_sha": "e3d3b818df2ac0b08326a0540810ef117f9b77f9",
+      "issue": 109
+    },
+    {
+      "path": "src/lib/desk-boundary.test.ts",
+      "decision": "REJECTED_WITH_PROVENANCE",
+      "source_git_blob_sha": "314ee405f8d8796461f674292ee6c95dad9ea043",
+      "canonical_git_blob_sha": "1bbb89333dab4efcc8fd9d3901de01d33f416a72",
+      "issue": 109
+    },
+    {
+      "path": "src/lib/ecosystem-audit.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "23f9969b20f5f377cb8b31f2e23b16ff02d557db",
+      "canonical_git_blob_sha": "4e3c76b2b8973101ba89d79b33214dbb7f0fe0e5",
+      "issue": 109
+    },
+    {
+      "path": "scripts/check-auth-invariant.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b558378c35f88069e34e344579391c395f565640",
+      "canonical_git_blob_sha": "52ea0bae18460e0fddaaacf80af19632e28f482b",
+      "issue": 111
+    },
+    {
+      "path": "scripts/check-auth-invariant.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "4cc9b6faa28b56c83a498003bfc9a2b200aad276",
+      "canonical_git_blob_sha": "e41fbc72c773f9d39983b7940e4bb70a71dd3608",
+      "issue": 111
+    },
+    {
+      "path": "scripts/with-app-env.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e48dfafa69fa33d5288269ce939236956ff75e9c",
+      "canonical_git_blob_sha": "cc1ec4b520a7d8364665663415e0a96c712933d4",
+      "issue": 111
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "canonical_git_blob_sha": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1",
+      "issue": 111
+    },
+    {
+      "path": "src/lib/auth/verify.server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "2bf5acc72dd13134b1ec86781aa7591e1b2dca5c",
+      "canonical_git_blob_sha": "5cc0e660c914851fca9761bacdff84d9f74e415d",
+      "issue": 111
+    },
+    {
+      "path": "src/lib/db.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d0a89f7ab08220fada355c6fb5eca2f786eceacc",
+      "canonical_git_blob_sha": "2178a40c7fc0d6bfd959db33d2703fead48bcaf1",
+      "issue": 111
+    }
+  ],
+  "hold_issuer": {
+    "path": "src/lib/auth/preview.ts",
+    "risk": "P0_SECURITY",
+    "decision": "HOLD_ISSUER_ROTATION_AND_HISTORY_SCAN",
+    "source_git_blob_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+    "canonical_git_blob_sha": "9346354e7510bebb9bde3651b1da148d7080854a",
+    "code_transition_observed": "Historical preview credential literal is absent from current source and replaced with a server environment variable. Never copy the credential value.",
+    "operational_evidence": "NO_ISSUER_REVOCATION_RECEIPT",
+    "related_issues": [
+      91,
+      92
+    ],
+    "security_incident_open": true,
+    "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+    "why": "The old token remains in immutable historical Git objects and might still be valid at the issuer; a code diff or CI passing is insufficient to prove revocation, audience rotation or independent security review.",
+    "revisit_conditions": [
+      "issuer-authenticated revocation or rotation receipt with no secret bytes",
+      "all reachable Git history scanned and sanitized report",
+      "preview/issuer allowlist and credentials revalidated by authorized operator"
+    ],
+    "release_allowed": false
+  },
+  "pending_paths": [
+    {
+      "path": ".gitignore",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "8f7fd077b4d8fd61238b6b452b51b24b41422fa3",
+      "baseline_git_blob_sha": "ba41cb8913e0fbbe50be389ba48836ecaf9d03fa",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "package-lock.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b6432638b56727d1e822e1d1d8ca6a5b76375adc",
+      "baseline_git_blob_sha": "c2beea71660d7f44d647f3adb1195e4a75701d92",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "package.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "844f8aad72fcfc6a17b30268f7d50c8d95a92b69",
+      "baseline_git_blob_sha": "a6834d59c30429141ebd600c2fef328c11a5e1bd",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b67be804cf79dec86dcbde559dea7a6f408baeec",
+      "baseline_git_blob_sha": "08675cad3cdac219fe1a3c97aebc65ef8f5157e4",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/alias-hook.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "4fcff75b3776c70d820983d1e869437070e632f3",
+      "baseline_git_blob_sha": "d23b5c1fbcb33ef23efa06e59ea50bbb15f1c98b",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/grok-pwa-plugin.test.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "30d01b79d8b71b64b00ff6c835cf66066be1df92",
+      "baseline_git_blob_sha": "317bd1be1aab4dc04fd2ff0ecfed0f7091aae93b",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/grok-pwa-shared.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "b05a47d95e97d3f617585ddf10a7a0e9623a5fb7",
+      "baseline_git_blob_sha": "29bce8f98b4aa129b6ee4730a1c72f72dfff31f4",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/migrate.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "baseline_git_blob_sha": "754b21a8e904587b7ef11ea92b818473fd21a8eb",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "baseline_git_blob_sha": "8eb4736b4c7277ed5b4e329443b0a036da0d0426",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/admin/registry.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "9f068cc0ceb2d626bc89d90594689b13a9962203",
+      "baseline_git_blob_sha": "8602fede9a520364fe56f167ff4e613ce9b06cff",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/areas.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "1b7fdc584d8a44c6b887fb1d641ede9d3af59239",
+      "baseline_git_blob_sha": "7425ab275f1b6a18be346aee790f2fca49b5ee28",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/related-content.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "a1270f39b0abe2fd0e4e17f311c4a479ae06e606",
+      "baseline_git_blob_sha": "c6a96f5524e4101a3d9fd4f833433df5c823d71e",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/shell.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ec9c61954bfbac5b5ff33a630a56cbac4d83bbc4",
+      "baseline_git_blob_sha": "d3a24f6267a13bd2c0259a26d2017282f357fd1d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/templates/contract-view.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ee95cc2662bbb9698a2f58fd82119c40ae4e68cd",
+      "baseline_git_blob_sha": "a60136229d473b51503878446a73b4587f862c2d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/tools/clinical-tool.tsx",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "e0def64a8d588bff619e7702361b2c57b0c4af37",
+      "baseline_git_blob_sha": "ccdf2599d0dd21d930b2b7e95db44e6e8b7d037d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/contract-index.generated.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "9708b014d6114b586a33b5eba6085280ddd30c56",
+      "baseline_git_blob_sha": "99255c97157d7cbfee29e670bd852dd3a7ec23ad",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/contract.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "e4775ae60914b6f787fa79fcbdb34a8ad56a197d",
+      "baseline_git_blob_sha": "f059f3d8fd4135b5aa22b65879aba568ab25b9c2",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "3376721a85fd3d39f94d2d38ef010eaa81ab5ac5",
+      "baseline_git_blob_sha": "c36d7b7e1d3e5a8904ceaa25ed040f01cfff75fb",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/focus-color-i18n.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "de43d9a4276c41410bc0521e5b8a004480f51a3f",
+      "baseline_git_blob_sha": "e24aee8e4458404265efc2fbfd30ac023abf0398",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/header-i18n.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "65e9418cab58e08ae33f519d3e1671cede885a86",
+      "baseline_git_blob_sha": "58a0251cb093b05fe94eeaaadfe81ec4b93e7cb3",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/kernel-admit.test.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "0f1fb85ea9fd2d76e14cf41f259ea82a294fc4fe",
+      "baseline_git_blob_sha": "d551f2869154f686bec06760d5b28d5125e8a538",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "baseline_git_blob_sha": "4251544045c70ee90cd2595c23900bf48084eb4a",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/locale-registry.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "9b72fbc7593cc2f2d6d2984e592c921d44ec0d5b",
+      "baseline_git_blob_sha": "dac9eab10830c27e20e3af97dd85e5a1baaad732",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/sections.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "6ead8e9e3926df7edb0fa0f929b04472f1f84c1b",
+      "baseline_git_blob_sha": "f7c08bdc6f20474799b0ab612c29ce7e35206073",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/seo.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "ecc4e8693f207a5f5ee8e8a8d8a50f249f095f55",
+      "baseline_git_blob_sha": "d879d5e454da71981ab12d7888ed62e15f57607d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/template-catalog.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "c3b3ec7574b044b01a1c0f16a5e76554e579e432",
+      "baseline_git_blob_sha": "8794e7428de8288652baac8c88d88cdbb26952f9",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/template-contract.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "d4f3908f43c882a6173630967124398b0e181582",
+      "baseline_git_blob_sha": "84fd27e310b97acb3f0d54da5105d4f6a58f167b",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/router.tsx",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "fd662dabc3270ed3c70eb11fd4c4bfe4bb0501ab",
+      "baseline_git_blob_sha": "49561b83ea097cab9ac7fa0f6e58a9a21fafcbce",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "d020d11d40ab143cd0a2c435d8ecf7e95267ff55",
+      "baseline_git_blob_sha": "140ece4fff6ef32196ee6475d6bb5be860915467",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/styles.css",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "84baefd591567ba69ab9e8b9152dfba6361b619d",
+      "baseline_git_blob_sha": "b8bd267f36fb6c6363f9ccd7cf3de4a478bca2ff",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "vercel.json",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6",
+      "baseline_git_blob_sha": "935d5d78ad166e4bb6189d21056fe80a1b342b16",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "vite.config.ts",
+      "risk": "P1_RUNTIME",
+      "source_git_blob_sha": "f0aa67ddb6b5067c5aece4678259caa57638aa5a",
+      "baseline_git_blob_sha": "39c0cd51ea5f59ccf11776abf442760c6a4df7ac",
+      "decision": "PENDING_SEMANTIC"
+    }
+  ],
+  "evidence_gates": {
+    "read_seven_old_and_new_blob_shas": true,
+    "baseline_verify": {
+      "run": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/44901600533",
+      "head_sha": "87da72f59261348bc1975dfc57fbba5cbab7745b",
+      "conclusion": "success"
+    },
+    "external_issuer_revocation_verified": false,
+    "history_secret_scan_completed": false,
+    "full_live_oauth_e2e_verified": false,
+    "production_rbac_verified": false,
+    "operational_db_identified": false,
+    "supabase_write": false,
+    "rights_of_external_content_verified": false,
+    "clinical_release_approved": false
+  },
+  "branch_closure": {
+    "grook_dev_reconciled": false,
+    "grook_sealed": false,
+    "owner_approval": "NOT_REQUESTED_DEFERRED",
+    "branch_deletion": false,
+    "release_authorized": false,
+    "technical_ci_branch_expected_tree_equal_only_after_merging_and_push_ci": true
+  },
+  "notes": "A code-level supersession decision is not an approval of identity-provider operations; the credential-bearing historical path remains HOLD. No secret bytes are included."
+}

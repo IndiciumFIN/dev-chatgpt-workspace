@@ -53,6 +53,14 @@ export function requiredChecks(paths,workflowSources){
  }
  return [...checks];
 }
+export function baselineWorkflowSources(candidateWorkflows,readBaseline){
+ return Object.fromEntries(Object.entries(candidateWorkflows).map(([path,candidate])=>{
+  const baseline=readBaseline(path);
+  if(baseline!==null && typeof baseline!=='string')throw Error('UNTRUSTED_BASE_WORKFLOW');
+  // A new workflow has no baseline file: require its candidate triggers, never discard them.
+  return [path,baseline===null?candidate:baseline];
+ }));
+}
 export function requiredAcrossBaselines(changedPaths,candidateWorkflows,baselineWorkflows){
  return [...new Set([...requiredChecks(changedPaths,candidateWorkflows),...requiredChecks(changedPaths,baselineWorkflows)])];
 }
@@ -124,7 +132,12 @@ async function main(){
  const files=[...new Set(CHECK_POLICIES.map(x=>x[1]))];
  const sources=Object.fromEntries(files.map(p=>[p,readFileSync(resolve(ROOT,p),'utf8')]));
  // Union of base and proposed path policies: a PR cannot bypass checks by weakening triggers.
- const historical=Object.fromEntries(files.map(p=>[p,execFileSync('git',['show',base+':'+p],{cwd:ROOT,encoding:'utf8',maxBuffer:1024*1024})]));
+ const historical=baselineWorkflowSources(sources,(p)=>{
+  const found=execFileSync('git',['ls-tree','-r','--name-only',base,'--',p],{cwd:ROOT,encoding:'utf8'}).trim();
+  if(!found){console.log('CE_WORKFLOW_NEW_IN_CANDIDATE',p);return null;}
+  if(found!==p)throw Error('BASE_WORKFLOW_PATH_AMBIGUOUS');
+  return execFileSync('git',['show',base+':'+p],{cwd:ROOT,encoding:'utf8',maxBuffer:1024*1024});
+ });
  const required=requiredAcrossBaselines(changed,sources,historical);
  console.log('CE_INTEGRATION_EXPECTED',JSON.stringify({head,count_changed_paths:changed.length,required}));
  for(let attempt=0;attempt<88;attempt++){

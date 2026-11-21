@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {requiredChecks,requiredAcrossBaselines,pullRequestPathGlobs,matchesGlob,assessChecks,CHECK_POLICIES} from './ce-integration-gate.mjs';
+import {requiredChecks,requiredAcrossBaselines,baselineWorkflowSources,pullRequestPathGlobs,matchesGlob,assessChecks,CHECK_POLICIES} from './ce-integration-gate.mjs';
 const paths=Object.fromEntries([...new Set(CHECK_POLICIES.map(x=>x[1]))].map(p=>[p,readFileSync(p,'utf8')]));
 const sha='a'.repeat(40),one=(name,conclusion='success',id=1,app=15368)=>({id,name,status:'completed',conclusion,head_sha:sha,app:{id:app}});
 test('all conditional workflows derive triggers from their real YAML, no duplicated path ledger',()=>{
@@ -48,4 +48,15 @@ test('proposed YAML cannot remove an existing mandatory workflow path trigger',(
  const candidate={...paths,[file]:paths[file].replace("      - 'src/lib/route-registry.ts'",'')};
  const retained=requiredAcrossBaselines(['src/lib/route-registry.ts'],candidate,paths);
  assert.ok(retained.includes('validate-curiosities'));
+});
+
+test('new workflow absent from historical main still retains candidate checks',()=>{
+ const candidate={'new-workflow.yml':'on:\n  pull_request:\n    paths:\n      - "src/**"\n'};
+ const out=baselineWorkflowSources(candidate,()=>null);
+ assert.equal(out['new-workflow.yml'],candidate['new-workflow.yml']);
+});
+test('existing historical workflow is not replaced by looser candidate path triggers',()=>{
+ const out=baselineWorkflowSources({'w.yml':'candidate'},()=> 'historical');
+ assert.equal(out['w.yml'],'historical');
+ assert.throws(()=>baselineWorkflowSources({'w.yml':'candidate'},()=>undefined),/UNTRUSTED_BASE_WORKFLOW/);
 });

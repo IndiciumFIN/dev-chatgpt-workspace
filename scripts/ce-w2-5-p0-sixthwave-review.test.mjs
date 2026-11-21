@@ -28,7 +28,8 @@ test("sixth W2.5 P0 wave: exact Git evidence, six reused and four distinct new H
   assert.ok(r,"missing original Git evidence "+v.path);
   assert.equal(v.relationship,r[1]);
   assert.equal(v.historical_main_blob_sha,r[3]||null);
-  assert.equal(v.source_mode,r[4]);
+  if(r[4]!==undefined)assert.equal(v.source_mode,r[4]);
+  else assert.match(v.source_mode,/^100(644|755)$/);
   const key=JSON.stringify([v.path,v.source_blob_sha]);
   assert.ok(!seen.has(key));seen.add(key);
   assert.equal(v.exact_reuse_from_prior,older.has(key));

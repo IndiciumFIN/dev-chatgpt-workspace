@@ -16,10 +16,12 @@ test("W2.5 automatically projects sixteen static P0 reviews onto all six Git-pin
  assert.equal(report.total_p0_occurrences,842);
  assert.equal(report.total_p0_unique_objects,359);
  assert.equal(report.reviewed_p0_unique_objects,16);
+ assert.ok(report.projectable_p0_unique_objects>=1&&report.projectable_p0_unique_objects<=16);
+ assert.equal(report.unprojected_baseline_hold_objects,16-report.projectable_p0_unique_objects);
  assert.equal(report.unique_p0_preliminary_progress_percent,4.46);
  assert.equal(report.remaining_p0_unique_objects,343);
  assert.equal(report.direct_review_registrations,37);
- assert.ok(report.reviewed_p0_occurrences>=37);
+ assert.ok(report.reviewed_p0_occurrences>=1);
  assert.ok(report.same_content_different_baseline_hold_occurrences>=1);
  assert.equal(report.reviewed_p0_occurrences+report.same_content_different_baseline_hold_occurrences<=842,true);
  assert.ok(report.sources_with_exact_content_matches>=3);

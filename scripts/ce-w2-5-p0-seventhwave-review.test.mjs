@@ -1,0 +1,78 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+import {classifyPath} from "./ce-w2-5-orphan-risk-screen.mjs";
+import {loadActionQueue} from "./ce-w2-5-action-queue.mjs";
+import {normalizeReviewEvidence,projectEvidenceReuse} from "./ce-w2-5-p0-evidence-reuse.mjs";
+const read=p=>JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
+const ix=read("registers/governance/ce-w2-4-orphan-full-file-index-20261120.v1.json");
+const seventh=read("registers/governance/ce-w2-5-p0-seventhwave-review-20261121.v1.json");
+test("seventh W2.5 P0 wave: SHA-pinned structural overlay 10 findings, 9 reused, one new HOLD",()=>{
+ loadActionQueue(100);
+ const pointer=ix.sources.find(s=>s.source_sha===seventh.source_commit_sha);
+ assert.ok(pointer);
+ assert.ok(pointer.branches.includes(seventh.source_branch));
+ assert.equal(pointer.source_tree_sha,seventh.source_tree_sha);
+ assert.equal(pointer.manifest_path,seventh.source_manifest_path);
+ assert.equal(pointer.manifest_blob_sha,seventh.source_manifest_blob_sha);
+ assert.equal(ix.batches.find(b=>b.path===pointer.manifest_path).git_blob_sha,seventh.source_manifest_blob_sha);
+ const source=read(pointer.manifest_path).sources.find(s=>s.source_sha===seventh.source_commit_sha);
+ assert.ok(source);
+ assert.deepEqual(seventh.inventoried_relations,{E:1934,C:810,D:105,S:0,T:293});
+ assert.equal(seventh.nonidentical_source_files,398);
+ const p0=source.rows.filter(r=>["D","S","T"].includes(r[1])&&classifyPath(r[0])[0]==="P0");
+ assert.equal(p0.length,10);
+ assert.equal(seventh.records.length,10);
+ const prior=new Map(seventh.prior_review_paths.flatMap(p=>read(p).records).map(r=>[JSON.stringify([r.path,r.source_blob_sha]),r]));
+ const unique=new Set();
+ for(const rec of seventh.records){
+  const row=p0.find(r=>r[0]===rec.path&&r[2]===rec.source_blob_sha);
+  assert.ok(row,"missing immutable historical source: "+rec.path);
+  assert.equal(rec.relationship,row[1]);
+  assert.equal(rec.historical_main_blob_sha,row[3]||null);
+  if(row[4]!==undefined)assert.equal(rec.source_mode,row[4]);
+  else assert.match(rec.source_mode,/^100(644|755)$/);
+  const key=JSON.stringify([rec.path,rec.source_blob_sha]);
+  assert.ok(!unique.has(key),"duplicate source record");unique.add(key);
+  assert.equal(rec.exact_reuse_from_prior,prior.has(key));
+  if(prior.has(key))assert.equal(rec.provisional_decision,prior.get(key).provisional_decision);
+  else {
+    assert.equal(rec.path,".github/workflows/admin-ux-e2e.yml");
+    assert.equal(rec.relationship,"D");
+    assert.equal(rec.source_blob_sha,"78c2587b3bbd06cb2e1e9fda09d6a07f8849a66d");
+    assert.equal(rec.comparison_main_blob_sha,"4eef082193b82fbfdae83cea452c1ae5c33b9e73");
+    assert.match(rec.provisional_decision,/^PRESERVE_/);
+  }
+  assert.equal(rec.status,"HOLD_INDEPENDENT_REVIEW");
+  assert.equal(rec.final_semantic_disposition,false);
+  assert.ok(rec.required_next_evidence.length>65);
+ }
+ assert.equal(seventh.exact_reuses,9);
+ assert.equal(seventh.new_distinct_review_objects,1);
+ assert.equal(seventh.seventh_wave_prelim_unique_p0,32);
+ assert.equal(seventh.seventh_wave_prelim_pct,8.91);
+ for(const field of ["workflow_import_authorized","independent_review_complete","branch_sealed","merge_authorized","remote_db_write","production_deploy_authorized","release_eligible"])assert.equal(seventh[field],false);
+});
+test("seventh wave has no authority to merge historical workflow or issue false independent approval",()=>{
+ const novel=seventh.records.filter(r=>!r.exact_reuse_from_prior);
+ assert.equal(novel.length,1);
+ assert.equal(novel[0].path,".github/workflows/admin-ux-e2e.yml");
+ assert.ok(novel[0].finding.includes("pull_request"));
+ assert.ok(novel[0].finding.includes("CE_ADMIN_E2E_FIXTURE"));
+ const report=projectEvidenceReuse();
+ assert.equal(report.reviewed_p0_unique_objects,33);
+ assert.equal(report.projectable_p0_unique_objects,23);
+ assert.equal(report.remaining_p0_unique_objects,326);
+ assert.equal(report.source_only_review_objects_without_canonical_baseline,10);
+ assert.equal(report.direct_review_registrations,103);
+ assert.equal(report.independent_approvals,0);
+ assert.equal(report.branch_closures,0);
+ assert.equal(report.merge_authorized,false);
+ const forged=[...seventh.prior_review_paths.map(read),seventh,read("registers/governance/ce-w2-5-p0-eighthwave-review-20261121.v1.json")];
+ const forgedStatus=structuredClone(forged);
+ forgedStatus[6].records[0].status="APPROVED";
+ assert.throws(()=>normalizeReviewEvidence(forgedStatus),/claims closure/);
+ const forgedSHA=structuredClone(forged);
+ forgedSHA[6].records[0].source_blob_sha="bad";
+ assert.throws(()=>normalizeReviewEvidence(forgedSHA),/invalid source evidence/);
+});

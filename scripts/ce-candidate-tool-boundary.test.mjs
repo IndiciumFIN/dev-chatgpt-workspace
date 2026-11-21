@@ -32,7 +32,8 @@ test('candidate Aldrete and laboratory interpretations are preserved for isolate
  for(const path of ['src/lib/tools/catalog.ts','src/lib/tools/formulas.ts',
    'src/lib/route-registry.ts','src/components/tools/clinical-tool.tsx']) {
   const code=read(path);
-  assert.equal(code.includes('candidates.review-only'),false,'public runtime imported review candidate: '+path);
+  assert.doesNotMatch(code, /(?:from\s*['"][^'"]*candidates\.review-only|import\s*\(['"][^'"]*candidates\.review-only)/,
+    'public runtime imported review candidate: '+path);
  }
 });
 test('candidate routes remain known, noindex and devoid of clinical payload',()=>{

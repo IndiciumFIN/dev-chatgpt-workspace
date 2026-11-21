@@ -26,8 +26,12 @@ const report = {
   reviewer_approval: false
 };
 const target = (path) => new URL(path, base).href;
-const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+let page;
+const browserPageOptions = { viewport: { width: 1280, height: 800 } };
 const go = async (path) => {
+  // Isolate navigation/hydration per route to avoid cross-route ERR_ABORTED races.
+  if (page) await page.close();
+  page = await browser.newPage(browserPageOptions);
   const errors = [];
   const onError = (error) => errors.push(error.message);
   page.on("pageerror", onError);
@@ -100,6 +104,6 @@ try {
 } finally {
   mkdirSync("audit-evidence/ce-pr32-browser", { recursive: true });
   writeFileSync("audit-evidence/ce-pr32-browser/verdict.json", JSON.stringify(report, null, 2) + "\n");
-  await page.close();
+  if (page) await page.close();
   await browser.close();
 }

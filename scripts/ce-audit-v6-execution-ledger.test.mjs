@@ -27,4 +27,12 @@ test("v6 ledger rejects forged execution, self-review, database cross and hidden
  assert.throws(()=>validateAuditV6Ledger(db),/falsely admitted/);
  const approver=structuredClone(data);approver.tracking.approval_policy="OWNER_ALONE";
  assert.throws(()=>validateAuditV6Ledger(approver),/false completion/);
+ const falseOwner=structuredClone(data);falseOwner.tracking.project_owner="Leivis Lima";
+ assert.throws(()=>validateAuditV6Ledger(falseOwner),/false completion/);
+ const falseReview=structuredClone(data);falseReview.tracking.independent_review_dev_gate="REQUIRED";
+ assert.throws(()=>validateAuditV6Ledger(falseReview),/false completion/);
+ const earlyApproval=structuredClone(data);earlyApproval.tracking.owner_approval_state="APPROVED";
+ assert.throws(()=>validateAuditV6Ledger(earlyApproval),/false completion/);
+ const falsePhase=structuredClone(data);falsePhase.tracking.governance_phase="PRODUCTION";
+ assert.throws(()=>validateAuditV6Ledger(falsePhase),/false completion/);
 });

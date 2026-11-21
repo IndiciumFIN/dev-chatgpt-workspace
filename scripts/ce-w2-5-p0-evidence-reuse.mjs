@@ -17,7 +17,8 @@ const sourcePaths=[
  "registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json",
  "registers/governance/ce-w2-5-p0-thirdwave-review-20261121.v1.json",
  "registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json",
- "registers/governance/ce-w2-5-p0-fifthwave-review-20261121.v1.json"
+ "registers/governance/ce-w2-5-p0-fifthwave-review-20261121.v1.json",
+ "registers/governance/ce-w2-5-p0-sixthwave-review-20261121.v1.json"
 ];
 const proof=(condition,reason)=>{if(!condition)throw Error("CE_P0_REUSE_HOLD:"+reason);};
 const read=p=>JSON.parse(readFileSync(new URL(p,root),"utf8"));
@@ -26,13 +27,14 @@ const objectKey=(path,blob,mode="")=>JSON.stringify([path,blob,mode]);
 export const sameCanonicalBaseline=(recorded,observed)=>(recorded??null)===(observed??null);
 
 export function normalizeReviewEvidence(documents){
- proof(Array.isArray(documents)&&documents.length===5,"five wave reviews are required");
- const [first,second,third,fourth,fifth]=documents;
+ proof(Array.isArray(documents)&&documents.length===6,"six wave reviews are required");
+ const [first,second,third,fourth,fifth,sixth]=documents;
  proof(first?.protocol==="CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1"&&
        second?.protocol==="CE.CROSS.W2.5.P0.SECOND_WAVE_STATIC_REVIEW.v1"&&
        third?.protocol==="CE.CROSS.W2.5.P0.THIRD_WAVE_STATIC_REVIEW.v1"&&
        fourth?.protocol==="CE.CROSS.W2.5.P0.FOURTH_WAVE_STATIC_REVIEW.v1"&&
-       fifth?.protocol==="CE.CROSS.W2.5.P0.FIFTH_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
+       fifth?.protocol==="CE.CROSS.W2.5.P0.FIFTH_WAVE_STATIC_REVIEW.v1"&&
+       sixth?.protocol==="CE.CROSS.W2.5.P0.SIXTH_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
  const referenceShas=new Set();
  const canonical=new Map(),registrations=new Map();
  for(const doc of documents){
@@ -65,8 +67,8 @@ export function normalizeReviewEvidence(documents){
   }
  }
  proof(first.records.length===11&&second.records.length===13&&third.records.length===13&&
-       fourth.records.length===15&&fifth.records.length===20,"unexpected wave widths");
- proof(canonical.size===27&&registrations.size===72,"object/provenance dedup regression");
+       fourth.records.length===15&&fifth.records.length===20&&sixth.records.length===10,"unexpected wave widths");
+ proof(canonical.size===31&&registrations.size===82,"object/provenance dedup regression");
  return {canonical,registrations};
 }
 

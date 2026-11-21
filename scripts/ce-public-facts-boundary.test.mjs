@@ -30,6 +30,15 @@ test('public route imports generated client-safe snapshot, not full candidate se
  assert.doesNotMatch(route,/onlyReleased|setOnlyReleased/);
 });
 
+test('canonical public route contract enforces release-only import without changing route authority',()=>{
+ const registry=JSON.parse(read('registers/canonical/surface-contracts.v2.json'));
+ const entry=registry.entries?.['curiosidades.tsx'];
+ assert.ok(entry,'curiosidades contract missing');
+ assert.equal(entry.role,'public');
+ assert.ok(entry.requiredImports.includes('@/lib/editorial/fun-facts.public.generated'));
+ assert.equal(entry.requiredImports.includes('@/lib/editorial/fun-facts.seed'),false);
+});
+
 test('release-only generator fails closed on missing rights, duplicates and removed approval',()=>{
  const changed=seed.replace('rights_status: "PUBLIC_DOMAIN"','rights_status: "HOLD"');
  assert.notEqual(changed,seed);

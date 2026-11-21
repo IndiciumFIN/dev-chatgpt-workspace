@@ -1,0 +1,89 @@
+# Read-only inventory: no merge, no deploy, no DB, no hidden private patches.
+name: CE — diff completo por branch × main (somente leitura)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/ce-branch-diff-manifest.py'
+      - 'scripts/ce-branch-diff-manifest.test.mjs'
+      - 'registers/governance/ce-branch-live-cohort-20261121.v1.json'
+      - '.github/workflows/ce-branch-diff-manifest.yml'
+  schedule:
+    - cron: '17 4 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: ce-branch-manifest-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout imutável com histórico completo (token somente leitura)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Buscar todas as refs remotas, sem push e sem checkout de branch histórica
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+          test "$(git for-each-ref --format='%(refname)' refs/remotes/origin | grep -c '^refs/remotes/origin/' || :)" -ge 55
+      - name: Gerar 54 manifestos de todos os paths Git, sem diff textual sensível
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -m 700 -p "$RUNNER_TEMP/ce-branch-path-manifests"
+          python3 scripts/ce-branch-diff-manifest.py \
+            --repo . --main refs/remotes/origin/main \
+            --cohort registers/governance/ce-branch-live-cohort-20261121.v1.json \
+            --jobs 4 --out "$RUNNER_TEMP/ce-branch-path-manifests"
+      - name: Validar cobertura 54/54, SHA256 de todos os gzip e zero promoção
+        shell: bash
+        env:
+          CE_OUT: ${{ runner.temp }}/ce-branch-path-manifests
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import gzip, hashlib, json, os
+          from pathlib import Path
+          out=Path(os.environ['CE_OUT'])
+          idx=json.loads((out/'index.json').read_text())
+          assert idx['protocol']=='CE.BRANCH.RUN.INDEX.v1'
+          assert idx['requested']==54 and idx['generated']==54 and idx['cohort_count']==54
+          assert len(idx['branches'])==54 and idx['seal_branch'] is False
+          assert idx['local_remote_ref_coverage_checked'] is True
+          assert idx['cohort_missing_remote_refs']==[], 'cohort branch absent locally'
+          assert idx['cohort_new_remote_refs']==[], 'new CE refs need explicit scope update'
+          total=0
+          for branch in idx['branches']:
+              raw=gzip.decompress((out/branch['manifest_file']).read_bytes())
+              assert hashlib.sha256(raw).hexdigest()==branch['manifest_uncompressed_sha256']
+              m=json.loads(raw)
+              n=m['scope']
+              assert n['source_paths']<=n['union_paths']
+              assert n['main_paths']<=n['union_paths']
+              assert n['identical']+n['divergent']==n['union_paths']==len(m['paths'])
+              assert m['controls']['seal_branch'] is False
+              assert m['controls']['auto_merge'] is False
+              assert m['source']['sha']==branch['source_sha'] and m['main']['sha']==branch['main_sha']
+              assert len(set(p['path'] for p in m['paths']))==len(m['paths'])
+              assert all(p['decision'].get('justification') and p['decision'].get('tests_evidence') for p in m['paths'])
+              total+=len(m['paths'])
+          assert total==idx['total_union_path_instances']
+          print('PASS: 54 manifests, full path coverage, immutable SHA256 and no auto SEALED')
+          if idx['incomplete']:
+              print('HOLD: head drift relative to historical cohort snapshot. Refresh evidence before closure.')
+          PY
+      - name: Preservar evidências de metadados por sete dias (sem patches)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-branch-54-path-manifests-${{ github.run_id }}
+          path: ${{ runner.temp }}/ce-branch-path-manifests/
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 0

@@ -144,6 +144,8 @@ jobs:
           done
           echo "PASS: entradas críticas verificadas antes dos testes; quarantena histórica continua disponível para checagem de hash"
       - run: npm ci
+      - name: Observar ESLint completo por contagens sanitizadas (HOLD sem bypass de erro CLI)
+        run: node scripts/ce-eslint-observation.mjs
       - name: Contrato OPA/HTTP assinado no loopback (sem deploy)
         run: node --experimental-strip-types scripts/test-opa-real-http.mjs "${RUNNER_TEMP}/opa" "${RUNNER_TEMP}/cko-signed.tar.gz" "${RUNNER_TEMP}/opa-ci-public.pem"
       - name: Auditoria de dependências bloqueante

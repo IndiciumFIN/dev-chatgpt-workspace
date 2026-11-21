@@ -5,11 +5,11 @@
   "baseline_main_sha": "cdc707d5333fb7cc533999ac5dbdd4cebd4feb57",
   "source_branch": "grook_10_26",
   "source_commit_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
-  "review_method": "DIRECT_GITHUB_BLOB_CONTENT_AND_LINE_DIFF",
+  "review_method": "DIRECT_GITHUB_BLOB_CONTENT_AND_LINE_DIFF_FOR_ALL_11_FIRST_WAVE_P0",
   "scope": "FIRST_WAVE_P0_PRELIMINARY_NOT_CLINICAL_OR_INDEPENDENT_ADMISSION",
   "first_wave_total_p0_occurrences": 11,
-  "technically_inspected_source_blob_pairs": 5,
-  "first_wave_technical_progress_percent": 45.45,
+  "technically_inspected_source_blob_pairs": 11,
+  "first_wave_technical_progress_percent": 100,
   "semantic_final_dispositions": 0,
   "independent_review_complete": false,
   "release_authorized": false,
@@ -60,6 +60,61 @@
       "provisional_decision": "PRESERVE_CURRENT_SQL_ROOT_COVERAGE",
       "required_next_evidence": "Recheck SQL root inventory on protected main and idempotence/rollback in isolated database.",
       "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/preview.ts",
+      "source_blob_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+      "canonical_blob_sha": "9346354e7510bebb9bde3651b1da148d7080854a",
+      "difference": "Historical preview source embeds a literal client credential. Canonical code retrieves GROK_PREVIEW_CLIENT_SECRET from the server environment; Git history must be treated as exposed independently of source cleanup. Never reproduce the credential in evidence.",
+      "provisional_decision": "PRESERVE_ENV_ONLY_SECRET_AND_ESCALATE_ROTATION",
+      "required_next_evidence": "Confirm credential rotation/revocation by its owner using nonsecret confirmation and verify OAuth preview callback under approved environment, issue #28.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "source_blob_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "canonical_blob_sha": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa",
+      "difference": "Git textual diff is limited to a provider callback path comment: old oauth2/callback vs current callback. No executable statement difference observed in this pair; callback compatibility still requires E2E.",
+      "provisional_decision": "PRESERVE_CANONICAL_PROVIDER_CONTRACT",
+      "required_next_evidence": "Verify configured provider names, callback path, signed OAuth state, redirect allowlist and user roles against live preview, without publishing credentials.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "source_blob_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "canonical_blob_sha": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1",
+      "difference": "Old runtime disables auth only when VITE_AUTH_ENABLED=false; current requires VITE_AUTH_ENABLED=true explicitly. Historical copy would permit implicit auth activation when flag is absent.",
+      "provisional_decision": "PRESERVE_SERVER_AUTH_EXPLICIT_OPT_IN",
+      "required_next_evidence": "Test VITE_AUTH_ENABLED undefined/false/true, provider credentials and request rejection with protected database, including cross-session 401/403.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/verify.server.ts",
+      "source_blob_sha": "2bf5acc72dd13134b1ec86781aa7591e1b2dca5c",
+      "canonical_blob_sha": "5cc0e660c914851fca9761bacdff84d9f74e415d",
+      "difference": "Canonical code allows a shared development identity only when NODE_ENV=development, no VERCEL/VERCEL_ENV and no configured database; old version could fall back to a dev identity on hosted auth-off sessions without DATABASE_URL.",
+      "provisional_decision": "PRESERVE_HOSTED_IDENTITY_FAIL_CLOSED",
+      "required_next_evidence": "Negative tests on Vercel with absent DATABASE_URL, auth-off, missing session and cross-user access, plus preview SSR smoke and real session isolation.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/kernel-admit.test.ts",
+      "source_blob_sha": "0f1fb85ea9fd2d76e14cf41f259ea82a294fc4fe",
+      "canonical_blob_sha": "d551f2869154f686bec06760d5b28d5125e8a538",
+      "difference": "Canonical tests added rejection for nine legacy validator IDs and coercion of truthy string false; removed historical coverage cannot verify fail-closed admission decisions.",
+      "provisional_decision": "PRESERVE_NEGATIVE_KERNEL_VALIDATOR_TESTS",
+      "required_next_evidence": "Independent policy/clinical reviewer confirms all nine validators against real evidence sources and reruns signed-order negative cases in isolated PostgreSQL.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "source_blob_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "canonical_blob_sha": "4251544045c70ee90cd2595c23900bf48084eb4a",
+      "difference": "Current kernel admission rejects nine untrusted legacy validators, requires strict boolean true and reads validator id and passed status from database. Historical version checked truthiness and did not inspect the validator identity.",
+      "provisional_decision": "PRESERVE_KERNEL_UNTRUSTED_VALIDATOR_REJECTION",
+      "required_next_evidence": "Independent security and clinical policy review; real OPA identity and signed grant verification; negative SQL/HTTP tests and authorizer segregation before any corporate admission.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
     }
-  ]
+  ],
+  "first_wave_scope_closed_technically": true
 }

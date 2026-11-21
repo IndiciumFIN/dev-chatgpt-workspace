@@ -6,11 +6,11 @@ import {loadActionQueue} from "./ce-w2-5-action-queue.mjs";
 const fromRoot=(p)=>readFileSync(new URL("../"+p,import.meta.url));
 const register=JSON.parse(fromRoot("registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json"));
 const gitBlobSha=(bytes)=>createHash("sha1").update("blob "+bytes.length+"\0").update(bytes).digest("hex");
-test("five P0 first-wave code pairs are anchored to W2.4 immutable source blobs",()=>{
+test("eleven P0 first-wave code pairs are anchored to W2.4 immutable source blobs",()=>{
  const queue=loadActionQueue(100);
  assert.equal(register.protocol,"CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1");
- assert.equal(register.records.length,5);
- assert.equal(register.technically_inspected_source_blob_pairs,5);
+ assert.equal(register.records.length,11);
+ assert.equal(register.technically_inspected_source_blob_pairs,11);
  assert.equal(register.first_wave_total_p0_occurrences,11);
  assert.equal(register.semantic_final_dispositions,0);
  assert.equal(register.independent_review_complete,false);
@@ -45,6 +45,22 @@ test("canonical P0 safety invariants not silently reversed by historical imports
  const popup=fromRoot("src/lib/auth/popup.server.ts").toString("utf8");
  assert.match(popup,/auth\.api\.signInSocial\(/);
  assert.match(popup,/disableRedirect:\s*true/);
+ const preview=fromRoot("src/lib/auth/preview.ts").toString("utf8");
+ assert.match(preview,/PREVIEW_CLIENT_SECRET\s*=\s*process\.env\.GROK_PREVIEW_CLIENT_SECRET/);
+ const authServer=fromRoot("src/lib/auth/server.ts").toString("utf8");
+ assert.match(authServer,/authDisabled\s*=\s*env\("VITE_AUTH_ENABLED"\)\s*!==\s*"true"/);
+ const verify=fromRoot("src/lib/auth/verify.server.ts").toString("utf8");
+ assert.match(verify,/devFallbackAllowed/);
+ assert.match(verify,/process\.env\.NODE_ENV\s*===\s*"development"/);
+ assert.match(verify,/!process\.env\.VERCEL/);
+ assert.match(verify,/!databaseConfigured/);
+ const kernel=fromRoot("src/lib/kernel-admit.ts").toString("utf8");
+ assert.match(kernel,/LEGACY_UNTRUSTED_VALIDATOR_IDS/);
+ assert.match(kernel,/validatorIds/);
+ assert.match(kernel,/ok\s*!==\s*true/);
+ assert.match(kernel,/select id, passed from kernel_validator/);
+ const kernelTest=fromRoot("src/lib/kernel-admit.test.ts").toString("utf8");
+ assert.match(kernelTest,/LEGACY_UNTRUSTED_VALIDATOR_IDS\.length, 9/);
  const migration=fromRoot("scripts/migration-plan.test.mjs").toString("utf8");
  assert.match(migration,/expectedRootSql/);
  assert.match(migration,/existing root migrations must stay visible/);

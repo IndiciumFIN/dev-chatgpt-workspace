@@ -1,0 +1,182 @@
+{
+  "protocol": "CE.QUARANTINE.SOURCE.CLOSURE.v1",
+  "date": "2026-11-21",
+  "phase": "DEVELOPMENT",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "batch": 3,
+  "baseline_main_sha": "c873893374e9878cb05dd94e478a89518db6893f",
+  "source_branches": 4,
+  "quarantine_before": 8,
+  "quarantine_new": 8,
+  "quarantine_after": 16,
+  "staged_source_branches": [
+    {
+      "name": "fix/ce-generated-contract-fresh-20261115",
+      "source_sha": "19ced90f3ac51533daed1e441fc253d77e2fbffd",
+      "compare_main_result": {
+        "status": "diverged",
+        "ahead_by": 5,
+        "behind_by": 227
+      },
+      "source_unique_diff_paths_total": 7,
+      "candidate_inert_copied": 5,
+      "exact_in_main": 2,
+      "quarantine_destinations": [
+        {
+          "source_path": ".github/workflows/_temporary-generated-contracts.yml",
+          "source_blob": "efbd2c3866c719ba99c45a5c90cf5a0bbf8b2b38",
+          "destination": "_quarantine/ce/interfaces/generated-contracts-20261115/.github/workflows/_temporary-generated-contracts.yml"
+        },
+        {
+          "source_path": "audit/generated-contracts/2026-11-15-source-reconciliation.md",
+          "source_blob": "27ece72fb0c95c60ab93dd2667f159f2b8ad1d1f",
+          "destination": "_quarantine/ce/interfaces/generated-contracts-20261115/audit/generated-contracts/2026-11-15-source-reconciliation.md"
+        },
+        {
+          "source_path": "contracts/entities/clinical-tools.v1.json",
+          "source_blob": "062dff4c2cebce087952e5007a58e4dcb36eeb00",
+          "destination": "_quarantine/ce/interfaces/generated-contracts-20261115/contracts/entities/clinical-tools.v1.json"
+        },
+        {
+          "source_path": "scripts/read-tool-contracts.ts",
+          "source_blob": "c18308e5aeedf583d577318eb4c870386ea53e9a",
+          "destination": "_quarantine/ce/interfaces/generated-contracts-20261115/scripts/read-tool-contracts.ts"
+        },
+        {
+          "source_path": "scripts/tool-contracts-candidate.test.mjs",
+          "source_blob": "31303ed36a7562d0b0e19af6f2163e24ed3cab5a",
+          "destination": "_quarantine/ce/interfaces/generated-contracts-20261115/scripts/tool-contracts-candidate.test.mjs"
+        }
+      ],
+      "verified_main_parity": [
+        {
+          "source_path": "contracts/entities/components.v1.json",
+          "sha": "d53c5ba6ebf5638803578cc9fe9216487a56259e",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        },
+        {
+          "source_path": "contracts/entities/routes.v1.json",
+          "sha": "369313370131edeb2f3f8fbb5fdd25a9de05e195",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        }
+      ],
+      "undisposed_unique_paths": 0,
+      "operational_status": "FULL_SOURCE_DELTA_DISPOSED_PENDING_POSTMERGE_CI",
+      "review_status": "NOT_CLINICALLY_ADMITTED",
+      "source_branch_delete": false,
+      "sealed_for_release": false
+    },
+    {
+      "name": "fix/ce-route-component-contract-freshness-20261114",
+      "source_sha": "5c5cfeca440d32c76e8fdee00eff5befc94da2cb",
+      "compare_main_result": {
+        "status": "diverged",
+        "ahead_by": 6,
+        "behind_by": 227
+      },
+      "source_unique_diff_paths_total": 5,
+      "candidate_inert_copied": 3,
+      "exact_in_main": 2,
+      "quarantine_destinations": [
+        {
+          "source_path": ".github/workflows/ce-route-component-contract-freshness.yml",
+          "source_blob": "bcaf10a571363e7572df8970e79acdc7b270524c",
+          "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/.github/workflows/ce-route-component-contract-freshness.yml"
+        },
+        {
+          "source_path": "scripts/audit-clinical-contract-drift.mjs",
+          "source_blob": "d301f5def0dfe18d5a94770571371b8a8c84aabe",
+          "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/scripts/audit-clinical-contract-drift.mjs"
+        },
+        {
+          "source_path": "scripts/check-route-component-contract-freshness.mjs",
+          "source_blob": "d925c7dd1ea45bf7ae088d9398cc7c4c09ec1629",
+          "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/scripts/check-route-component-contract-freshness.mjs"
+        }
+      ],
+      "verified_main_parity": [
+        {
+          "source_path": "contracts/entities/components.v1.json",
+          "sha": "d53c5ba6ebf5638803578cc9fe9216487a56259e",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        },
+        {
+          "source_path": "contracts/entities/routes.v1.json",
+          "sha": "369313370131edeb2f3f8fbb5fdd25a9de05e195",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        }
+      ],
+      "undisposed_unique_paths": 0,
+      "operational_status": "FULL_SOURCE_DELTA_DISPOSED_PENDING_POSTMERGE_CI",
+      "review_status": "NOT_CLINICALLY_ADMITTED",
+      "source_branch_delete": false,
+      "sealed_for_release": false
+    }
+  ],
+  "exact_main_branches": [
+    {
+      "branch": "fix/ce-first-admin-fail-closed-20261121",
+      "source_sha": "3ed991e8b4c67fa1516270b695912557f20044e7",
+      "pr": 87,
+      "git_status": "DIVERGED_BY_COMMIT_ANCESTRY_BUT_ALL_SOURCE_DIFF_PATH_BLOBS_MATCH_MAIN",
+      "diff_paths_total": 2,
+      "verified_main_parity": [
+        {
+          "path": "scripts/ce-first-admin-bootstrap.test.mjs",
+          "sha": "f9f3f49245de9d63a4d5f74fe9a380092a05ae63",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        },
+        {
+          "path": "src/lib/source.functions.ts",
+          "sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        }
+      ],
+      "operational_status": "SOURCE_CONTENT_EXACT_IN_MAIN",
+      "unresolved_diff_paths": 0,
+      "source_branch_delete": false,
+      "sealed_for_release": false
+    },
+    {
+      "branch": "fix/ce-vercel-db-fail-closed-20261121",
+      "source_sha": "abcb2c65f40d5f27562681cbd43210d4ae714091",
+      "pr": 88,
+      "git_status": "DIVERGED_BY_COMMIT_ANCESTRY_BUT_ALL_SOURCE_DIFF_PATH_BLOBS_MATCH_MAIN",
+      "diff_paths_total": 3,
+      "verified_main_parity": [
+        {
+          "path": "scripts/ce-db-deployment-guard.mjs",
+          "sha": "190f3be685d30240debd92eef3bf4d94307e8b0f",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        },
+        {
+          "path": "scripts/ce-db-deployment-guard.test.mjs",
+          "sha": "0aa5662325025b8a833657c9ab1a03e3c1c904cc",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        },
+        {
+          "path": "src/lib/db.ts",
+          "sha": "2178a40c7fc0d6bfd959db33d2703fead48bcaf1",
+          "status": "EXACT_IN_MAIN_PROVEN"
+        }
+      ],
+      "operational_status": "SOURCE_CONTENT_EXACT_IN_MAIN",
+      "unresolved_diff_paths": 0,
+      "source_branch_delete": false,
+      "sealed_for_release": false
+    }
+  ],
+  "control": {
+    "quarantine_guard": "scripts/ce-quarantine-guard.mjs",
+    "required_ci": "verify",
+    "merge_gate": "ce-integration-gate",
+    "release": false,
+    "remote_supabase_writes": false,
+    "production_publish": false,
+    "remote_branch_delete": false
+  },
+  "links": {
+    "decision_issue": 125,
+    "batch2_pr": 127
+  }
+}

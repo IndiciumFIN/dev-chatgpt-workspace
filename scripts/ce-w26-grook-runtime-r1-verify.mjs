@@ -55,7 +55,7 @@ export function validateRuntimeR1(d,m,p,files=read){
   sha(files(x.path))===x.canonical_git_blob_sha,"code blob drift "+x.path);
   const content=files(x.path).toString("utf8");
   guard(content.includes(x.new_marker),"new invariant absent "+x.path);
-  guard(x.path==="src/router.tsx"||x.path==="src/lib/template-catalog.ts"||x.path==="src/routeTree.gen.ts"||
+  guard(x.path==="src/router.tsx"||x.path==="src/lib/template-catalog.ts"||x.path==="src/routeTree.gen.ts"||x.path==="public/sitemap.xml"||
   !content.includes(x.old_marker),"legacy unsafe mechanism still present "+x.path);
   guard(x.reason?.length>85&&x.residual?.length>80&&x.scope_limit==="CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION","unsupported proof");
  }

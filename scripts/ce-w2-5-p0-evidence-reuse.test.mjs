@@ -6,7 +6,8 @@ const read=p=>JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
 const first=read("registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json");
 const second=read("registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json");
 const third=read("registers/governance/ce-w2-5-p0-thirdwave-review-20261121.v1.json");
-test("W2.5 automatically projects sixteen static P0 reviews onto all six Git-pinned manifests",()=>{
+const fourth=read("registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json");
+test("W2.5 projects nineteen static P0 reviews onto six Git-pinned manifests",()=>{
  const report=projectEvidenceReuse();
  assert.equal(report.protocol,"CE.CROSS.W2.5.P0.EVIDENCE_REUSE.v1");
  assert.equal(report.state,"PRELIMINARY_STATIC_ONLY_NO_ADMISSION");
@@ -15,12 +16,12 @@ test("W2.5 automatically projects sixteen static P0 reviews onto all six Git-pin
  assert.equal(report.source_branches,23);
  assert.equal(report.total_p0_occurrences,842);
  assert.equal(report.total_p0_unique_objects,359);
- assert.equal(report.reviewed_p0_unique_objects,16);
- assert.ok(report.projectable_p0_unique_objects>=1&&report.projectable_p0_unique_objects<=16);
- assert.equal(report.unprojected_baseline_hold_objects,16-report.projectable_p0_unique_objects);
- assert.equal(report.unique_p0_preliminary_progress_percent,4.46);
- assert.equal(report.remaining_p0_unique_objects,343);
- assert.equal(report.direct_review_registrations,37);
+ assert.equal(report.reviewed_p0_unique_objects,19);
+ assert.ok(report.projectable_p0_unique_objects>=1&&report.projectable_p0_unique_objects<=19);
+ assert.equal(report.unprojected_baseline_hold_objects,19-report.projectable_p0_unique_objects);
+ assert.equal(report.unique_p0_preliminary_progress_percent,5.29);
+ assert.equal(report.remaining_p0_unique_objects,340);
+ assert.equal(report.direct_review_registrations,52);
  assert.ok(report.reviewed_p0_occurrences>=1);
  assert.ok(report.same_content_different_baseline_hold_occurrences>=1);
  assert.equal(report.reviewed_p0_occurrences+report.same_content_different_baseline_hold_occurrences<=842,true);
@@ -34,10 +35,10 @@ test("W2.5 automatically projects sixteen static P0 reviews onto all six Git-pin
  assert.equal(report.merge_authorized,false);
 });
 test("reuse rejects spoofed SHA, forged approval and conflicting prior decision",()=>{
- const docs=[first,second,third];
+ const docs=[first,second,third,fourth];
  const validated=normalizeReviewEvidence(docs);
- assert.equal(validated.canonical.size,16);
- assert.equal(validated.registrations.size,37);
+ assert.equal(validated.canonical.size,19);
+ assert.equal(validated.registrations.size,52);
  const fake=structuredClone(docs);
  fake[0].independent_review_complete=true;
  assert.throws(()=>normalizeReviewEvidence(fake),/claims closure/);

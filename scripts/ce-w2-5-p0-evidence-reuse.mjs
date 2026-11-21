@@ -15,7 +15,8 @@ const root=new URL("../",import.meta.url);
 const sourcePaths=[
  "registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json",
  "registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json",
- "registers/governance/ce-w2-5-p0-thirdwave-review-20261121.v1.json"
+ "registers/governance/ce-w2-5-p0-thirdwave-review-20261121.v1.json",
+ "registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json"
 ];
 const proof=(condition,reason)=>{if(!condition)throw Error("CE_P0_REUSE_HOLD:"+reason);};
 const read=p=>JSON.parse(readFileSync(new URL(p,root),"utf8"));
@@ -24,11 +25,12 @@ const objectKey=(path,blob,mode="")=>JSON.stringify([path,blob,mode]);
 export const sameCanonicalBaseline=(recorded,observed)=>(recorded??null)===(observed??null);
 
 export function normalizeReviewEvidence(documents){
- proof(Array.isArray(documents)&&documents.length===3,"three wave reviews are required");
- const [first,second,third]=documents;
+ proof(Array.isArray(documents)&&documents.length===4,"four wave reviews are required");
+ const [first,second,third,fourth]=documents;
  proof(first?.protocol==="CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1"&&
        second?.protocol==="CE.CROSS.W2.5.P0.SECOND_WAVE_STATIC_REVIEW.v1"&&
-       third?.protocol==="CE.CROSS.W2.5.P0.THIRD_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
+       third?.protocol==="CE.CROSS.W2.5.P0.THIRD_WAVE_STATIC_REVIEW.v1"&&
+       fourth?.protocol==="CE.CROSS.W2.5.P0.FOURTH_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
  const referenceShas=new Set();
  const canonical=new Map(),registrations=new Map();
  for(const doc of documents){
@@ -60,8 +62,9 @@ export function normalizeReviewEvidence(documents){
    registrations.set(reg,false);
   }
  }
- proof(first.records.length===11&&second.records.length===13&&third.records.length===13,"unexpected wave widths");
- proof(canonical.size===16&&registrations.size===37,"object/provenance dedup regression");
+ proof(first.records.length===11&&second.records.length===13&&third.records.length===13&&
+       fourth.records.length===15,"unexpected wave widths");
+ proof(canonical.size===19&&registrations.size===52,"object/provenance dedup regression");
  return {canonical,registrations};
 }
 
@@ -142,7 +145,7 @@ export function projectEvidenceReuse(){
   })).sort((a,b)=>a.source_sha.localeCompare(b.source_sha))
  };
  proof(result.reviewed_p0_occurrences>=1&&
-       result.reviewed_p0_occurrences+result.same_content_different_baseline_hold_occurrences>=37,
+       result.reviewed_p0_occurrences+result.same_content_different_baseline_hold_occurrences>=52,
        "no reusable matches or missing source registrations");
  return result;
 }

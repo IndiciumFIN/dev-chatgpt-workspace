@@ -1,20 +1,11 @@
 name: CE — first-admin bootstrap security (no deploy)
 on:
-  push:
-    branches:
-      - fix/security-auth-env-optin-oauth-17-20261114
-    paths:
-      - 'src/lib/source.functions.ts'
-      - 'scripts/ce-first-admin-bootstrap.test.mjs'
-      - 'scripts/ce-source-tool-default-unpublished.test.mjs'
-      - 'migrations/0059_source_tool_default_unpublished.sql'
-      - 'scripts/ce-source-tool-default-unpublished.test.mjs'
-      - 'migrations/0059_source_tool_default_unpublished.sql'
-      - '.github/workflows/ce-first-admin-bootstrap.yml'
   pull_request:
     paths:
       - 'src/lib/source.functions.ts'
       - 'scripts/ce-first-admin-bootstrap.test.mjs'
+      - 'scripts/ce-source-tool-default-unpublished.test.mjs'
+      - 'migrations/0059_source_tool_default_unpublished.sql'
       - '.github/workflows/ce-first-admin-bootstrap.yml'
   workflow_dispatch:
 permissions:

@@ -54,10 +54,10 @@ test("sixth wave keeps auth/migrations on HOLD and rejects false approvals",()=>
  assert.deepEqual(novel.map(x=>x.path).sort(),["scripts/migrate.mjs","src/lib/auth/client.ts","src/lib/auth/preview.ts","src/lib/auth/server.ts"]);
  assert.ok(novel.every(x=>x.provisional_decision.startsWith("HOLD_")));
  const r=projectEvidenceReuse();
- assert.equal(r.reviewed_p0_unique_objects,31);
- assert.equal(r.projectable_p0_unique_objects,21);
+ assert.equal(r.reviewed_p0_unique_objects,32);
+ assert.equal(r.projectable_p0_unique_objects,22);
  assert.equal(r.source_only_review_objects_without_canonical_baseline,10);
- assert.equal(r.remaining_p0_unique_objects,328);
+ assert.equal(r.remaining_p0_unique_objects,327);
  assert.equal(r.independent_approvals,0);
  assert.equal(r.branch_closures,0);
  const docs=[...wave.prior_review_paths.map(read),wave];

@@ -168,5 +168,7 @@ jobs:
           test ! -e .grok/skills/og/SKILL.md
           echo "PASS: evidências legadas excluídas do pacote; nenhum teste de hash foi contornado"
       - run: npm run build:spa
+      - name: Validar Vercel Build Output API v3 e SSR (falhar fechado)
+        run: node scripts/ce-vercel-output-contract.mjs
       - name: Verificar arquivos estaticos basicos
         run: test -s .vercel/output/nitro.json && test -d .vercel/output/functions/__server.func && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt

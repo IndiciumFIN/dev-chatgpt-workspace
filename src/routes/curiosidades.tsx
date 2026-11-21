@@ -30,13 +30,13 @@ function CuriosidadesPage() {
   const [query, setQuery] = useState("");
   const [filterType, setFilterType] = useState<FactType | "ALL">("ALL");
   const [filterCategory, setFilterCategory] = useState<FactCategory | "ALL">("ALL");
-  const [onlyReleased, setOnlyReleased] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return FUN_FACTS_SEED.filter((f) => {
-      if (onlyReleased && f.status !== "RELEASED") return false;
+      // Public surface is release-only; candidate/HOLD records are never exposed by a visitor filter.
+      if (f.status !== "RELEASED") return false;
       if (filterType !== "ALL" && f.fact_type !== filterType) return false;
       if (filterCategory !== "ALL" && f.category !== filterCategory) return false;
       if (!q) return true;
@@ -47,7 +47,7 @@ function CuriosidadesPage() {
         (f.tags || []).some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [query, filterType, filterCategory, onlyReleased]);
+  }, [query, filterType, filterCategory]);
 
   const releasedCount = FUN_FACTS_SEED.filter((f) => f.status === "RELEASED").length;
 
@@ -81,9 +81,6 @@ function CuriosidadesPage() {
               <option value="ALL">Todas as categorias</option>
               {Object.entries(FACT_CATEGORY_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
-            <label style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.85rem", padding: "0 0.5rem", cursor: "pointer" }}>
-              <input type="checkbox" checked={onlyReleased} onChange={(e) => setOnlyReleased(e.target.checked)} /> Só publicados
-            </label>
           </div>
 
           <div style={{ fontSize: "0.85rem", color: "var(--muted, #666)", marginBottom: "0.75rem" }}>

@@ -1,0 +1,132 @@
+{
+  "protocol": "CE.QUARANTINE.SOURCE.CLOSURE.v1",
+  "batch": 4,
+  "date": "2026-11-21",
+  "phase": "DEVELOPMENT",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "assessed_main_sha": "3b122b9079615e72aec0029423ba4541bfdd24b6",
+  "quarantine_before": 16,
+  "quarantine_added": 9,
+  "quarantine_after": 25,
+  "method": "MOVE_SOURCE_DIFF_BLOBS_INTO_INERT_MAIN_QUARANTINE_KEEP_ALL_GIT_HISTORY",
+  "source_dispositions": [
+    {
+      "branch": "governance/quarantine-branches-20261115",
+      "branch_head_sha": "b75866adb43c73195091699d624992847f20babc",
+      "original_pr": 75,
+      "original_pr_state_before": "OPEN_DRAFT",
+      "compare_main": {
+        "status": "diverged",
+        "ahead_by": 3,
+        "behind_by": 232
+      },
+      "changed_paths": 8,
+      "staged_paths": [
+        {
+          "source_path": ".github/workflows/branch-quarantine-trusted.yml",
+          "git_blob_sha": "0a25e290b5f2888c20f3bdcb635d3660c2b82321",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/.github/workflows/branch-quarantine-trusted.yml",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": ".github/workflows/branch-quarantine.yml",
+          "git_blob_sha": "aced1d5aa74814820d5d14ce4ee960c9aa87dbdd",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/.github/workflows/branch-quarantine.yml",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": ".github/workflows/opa-candidate-validation.yml",
+          "git_blob_sha": "a2ab7b95cf97fb2e46d104f7029e224989d46fd0",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/.github/workflows/opa-candidate-validation.yml",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": "AGENTS.project.md",
+          "git_blob_sha": "66d5260a9e1725dd94eff42f1b5509a17b64901d",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/AGENTS.project.md",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": "docs/governance/BRANCH_QUARANTINE_POLICY.md",
+          "git_blob_sha": "2bdca778172ed5e7f2ab220a933a6ac82d2cd761",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/docs/governance/BRANCH_QUARANTINE_POLICY.md",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": "registers/governance/branch-quarantine.v1.json",
+          "git_blob_sha": "8f89129fa6a20ac92c1b2fefd07f3c71bcb75eb5",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/registers/governance/branch-quarantine.v1.json",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": "scripts/verify-branch-quarantine.mjs",
+          "git_blob_sha": "394a169ecb093dc963cf732bfa4417f3b1837118",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/scripts/verify-branch-quarantine.mjs",
+          "state": "STAGED_PENDING_REVIEW"
+        },
+        {
+          "source_path": "scripts/verify-branch-quarantine.test.mjs",
+          "git_blob_sha": "04b03b4b3fb6caddde11c09f283cbeeb4d2c3d05",
+          "destination": "_quarantine/ce/kernel/branch-governance-pr75/scripts/verify-branch-quarantine.test.mjs",
+          "state": "STAGED_PENDING_REVIEW"
+        }
+      ],
+      "exact_in_main": [],
+      "undisposed_changed_paths": 0,
+      "planned_original_pr_action": "CLOSE_UNMERGED_SUPERSEDED_AFTER_MAIN_POSTMERGE_VERIFY_SUCCESS",
+      "remote_source_branch_delete": false,
+      "release_admission": false
+    },
+    {
+      "branch": "fix/ce-vercel-native-output-20261121",
+      "branch_head_sha": "9725d7aac22f639b24bd0392d7a09a05d67656cc",
+      "original_pr": 86,
+      "original_pr_state_before": "OPEN_DRAFT",
+      "compare_main": {
+        "status": "diverged",
+        "ahead_by": 2,
+        "behind_by": 132
+      },
+      "changed_paths": 2,
+      "staged_paths": [
+        {
+          "source_path": "scripts/ce-vercel-tanstack-preset.test.mjs",
+          "git_blob_sha": "b15f02231b307fd06c199770ce7417f8e5fd69b4",
+          "destination": "_quarantine/ce/interfaces/vercel-pr86/scripts/ce-vercel-tanstack-preset.test.mjs",
+          "state": "STAGED_PENDING_REVIEW"
+        }
+      ],
+      "exact_in_main": [
+        {
+          "path": "vercel.json",
+          "git_blob_sha": "935d5d78ad166e4bb6189d21056fe80a1b342b16",
+          "state": "EXACT_IN_MAIN_PROVEN"
+        }
+      ],
+      "undisposed_changed_paths": 0,
+      "planned_original_pr_action": "CLOSE_UNMERGED_SUPERSEDED_AFTER_MAIN_POSTMERGE_VERIFY_SUCCESS",
+      "remote_source_branch_delete": false,
+      "release_admission": false
+    }
+  ],
+  "linked_previous_pulls": [
+    126,
+    127,
+    128
+  ],
+  "constraints": {
+    "active_runtime_changes": 0,
+    "remote_supabase_writes": 0,
+    "production_release": false,
+    "source_ref_delete": false,
+    "clinical_release": false,
+    "closed_pr_not_equal_merged": true
+  },
+  "proof_requirements": [
+    "byte_same_source_and_staged_git_blobs",
+    "manifest_25_entries_guard_check",
+    "PR_verify_AND_ce-integration-gate_success",
+    "postmerge_main_verify_success",
+    "comment_and_close_old_PRs_only_after_proof"
+  ]
+}

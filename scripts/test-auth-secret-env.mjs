@@ -7,6 +7,7 @@ const preview=readFileSync('src/lib/auth/preview.ts','utf8');
 const server=readFileSync('src/lib/auth/server.ts','utf8');
 const providers=readFileSync('src/lib/auth/providers.ts','utf8');
 const client=readFileSync('src/lib/auth/client.ts','utf8');
+const verify=readFileSync('src/lib/auth/verify.server.ts','utf8');
 
 test('preview OAuth credential is not committed as a literal',()=>{
   assert.doesNotMatch(preview,/PREVIEW_CLIENT_SECRET\s*=\s*["'][^"']{16,}["']/);
@@ -35,4 +36,10 @@ test('Better Auth 1.7 callback contract is documented without obsolete 1.6 route
   assert.match(preview,/\/api\/auth\/callback\/\*/);
   assert.doesNotMatch(providers,/\/api\/auth\/oauth2\/callback\//);
   assert.doesNotMatch(preview,/\/api\/auth\/oauth2\/callback\//);
+});
+
+test('production and preview refuse shared dev identity when authentication or DB is absent',()=>{
+  assert.match(verify,/process\.env\.NODE_ENV === "development" &&\s*!process\.env\.VERCEL &&\s*!process\.env\.VERCEL_ENV &&\s*!databaseConfigured;/);
+  assert.match(verify,/if \(!devFallbackAllowed\) \{\s*throw new UnauthorizedError\(\);\s*\}/);
+  assert.doesNotMatch(verify,/if \(databaseConfigured\) \{[\s\S]{0,200}return DEV_USER_ID;/);
 });

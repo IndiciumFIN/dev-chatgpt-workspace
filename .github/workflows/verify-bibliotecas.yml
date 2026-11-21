@@ -80,6 +80,8 @@ jobs:
           cache: npm
       - name: Validar adendo do censo CE sem selar branches
         run: node scripts/ce-branch-inventory-delta-verify.mjs
+      - name: Conferir paridade factual de rotas e componentes sem admitir publicacao
+        run: node scripts/ce-route-component-source-parity.mjs
       - name: Reconstituir fila W2.5 por hashes e impedir falso encerramento
         run: node scripts/ce-w2-5-action-queue.mjs --limit=25
       - name: Validar continuidade da governança (HOLD preservado)

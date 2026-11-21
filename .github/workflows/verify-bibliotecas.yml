@@ -92,5 +92,7 @@ jobs:
           test ! -e .grok/skills/og/SKILL.md
           echo "PASS: evidências legadas excluídas do pacote; nenhum teste de hash foi contornado"
       - run: npm run build:spa
+      - name: Verificar que artefatos estáticos não contêm conteúdo editorial em HOLD
+        run: node scripts/ce-audit-public-editorial-bundle.mjs
       - name: Verificar arquivos estaticos basicos
         run: test -s .vercel/output/nitro.json && test -d .vercel/output/functions/__server.func && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt

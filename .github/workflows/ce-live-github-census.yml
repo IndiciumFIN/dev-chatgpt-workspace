@@ -1,0 +1,44 @@
+name: CE — live GitHub branch and PR census (read only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/ce-live-github-census.yml"
+      - "scripts/ce-live-census.mjs"
+      - "scripts/ce-live-census.test.mjs"
+      - "registers/governance/ce-github-live-census-20261121.v1.json"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 11 * * *"
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: ce-live-census-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Adversarial tests and pinned census validation
+        run: node --test scripts/ce-live-census.test.mjs
+      - name: Two-pass live census (read only)
+        run: node scripts/ce-live-census.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish public ref-only drift artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-live-census-${{ github.run_id }}
+          path: ${{ runner.temp }}/ce-live-census-report.json
+          if-no-files-found: warn
+          retention-days: 14
+# No secret scan, merge, delete, database write, publication, release or SEALED.

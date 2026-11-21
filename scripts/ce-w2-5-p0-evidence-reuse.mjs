@@ -16,7 +16,8 @@ const sourcePaths=[
  "registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json",
  "registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json",
  "registers/governance/ce-w2-5-p0-thirdwave-review-20261121.v1.json",
- "registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json"
+ "registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json",
+ "registers/governance/ce-w2-5-p0-fifthwave-review-20261121.v1.json"
 ];
 const proof=(condition,reason)=>{if(!condition)throw Error("CE_P0_REUSE_HOLD:"+reason);};
 const read=p=>JSON.parse(readFileSync(new URL(p,root),"utf8"));
@@ -25,12 +26,13 @@ const objectKey=(path,blob,mode="")=>JSON.stringify([path,blob,mode]);
 export const sameCanonicalBaseline=(recorded,observed)=>(recorded??null)===(observed??null);
 
 export function normalizeReviewEvidence(documents){
- proof(Array.isArray(documents)&&documents.length===4,"four wave reviews are required");
- const [first,second,third,fourth]=documents;
+ proof(Array.isArray(documents)&&documents.length===5,"five wave reviews are required");
+ const [first,second,third,fourth,fifth]=documents;
  proof(first?.protocol==="CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1"&&
        second?.protocol==="CE.CROSS.W2.5.P0.SECOND_WAVE_STATIC_REVIEW.v1"&&
        third?.protocol==="CE.CROSS.W2.5.P0.THIRD_WAVE_STATIC_REVIEW.v1"&&
-       fourth?.protocol==="CE.CROSS.W2.5.P0.FOURTH_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
+       fourth?.protocol==="CE.CROSS.W2.5.P0.FOURTH_WAVE_STATIC_REVIEW.v1"&&
+       fifth?.protocol==="CE.CROSS.W2.5.P0.FIFTH_WAVE_STATIC_REVIEW.v1","unexpected review protocol");
  const referenceShas=new Set();
  const canonical=new Map(),registrations=new Map();
  for(const doc of documents){
@@ -63,8 +65,8 @@ export function normalizeReviewEvidence(documents){
   }
  }
  proof(first.records.length===11&&second.records.length===13&&third.records.length===13&&
-       fourth.records.length===15,"unexpected wave widths");
- proof(canonical.size===19&&registrations.size===52,"object/provenance dedup regression");
+       fourth.records.length===15&&fifth.records.length===20,"unexpected wave widths");
+ proof(canonical.size===27&&registrations.size===72,"object/provenance dedup regression");
  return {canonical,registrations};
 }
 
@@ -77,7 +79,7 @@ export function projectEvidenceReuse(){
        index.batches?.length===6,"changed W2.4 universe");
  const sourceIndex=new Map(index.sources.map(s=>[s.source_sha,s]));
  const matchedObjects=new Set(),matchedSources=new Map();
- let totalP0=0,matchedP0=0,quarantinedDifferentBaseline=0;
+ let totalP0=0,matchedP0=0,quarantinedDifferentBaseline=0,sourceOnlyMissingCanonical=0,canonicalConflict=0;
  const distinctP0=new Set(),observedSources=new Set();
  for(const batch of index.batches){
   const bytes=readFileSync(new URL(batch.path,root));
@@ -108,6 +110,8 @@ export function projectEvidenceReuse(){
       // Same source payload against a different canonical file is NOT equivalent
       // evidence. Keep this occurrence for explicit comparative review.
       quarantinedDifferentBaseline++;
+      if(rel==="S"&&reviewed.baseline===null&&baselineBlob==="")sourceOnlyMissingCanonical++;
+      else canonicalConflict++;
       continue;
     }
     matchedObjects.add(key);matchedP0++;srcHits++;
@@ -130,6 +134,9 @@ export function projectEvidenceReuse(){
   unprojected_baseline_hold_objects:canonical.size-matchedObjects.size,
   reviewed_p0_occurrences:matchedP0,
   same_content_different_baseline_hold_occurrences:quarantinedDifferentBaseline,
+  source_only_without_canonical_baseline_occurrences:sourceOnlyMissingCanonical,
+  canonical_baseline_conflict_occurrences:canonicalConflict,
+  source_only_review_objects_without_canonical_baseline:[...canonical.values()].filter(x=>x.baseline===null).length,
   direct_review_registrations:registrations.size,
   sources_with_exact_content_matches:matchedSources.size,
   branches_with_exact_content_matches:branchNames.size,

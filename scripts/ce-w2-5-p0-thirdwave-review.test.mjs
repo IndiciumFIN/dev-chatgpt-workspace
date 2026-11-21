@@ -40,7 +40,7 @@ test("third W2.5 P0 wave contains 13 Git-pinned source objects and reuses exactl
 test("temporary generator workflow absent from main: no raw base64 manifest export",()=>{
  const row=t.records.find(x=>x.path===".github/workflows/_temporary-generated-contracts.yml");
  assert.ok(row);
- assert.equal(row.relationship,"S");
+ assert.equal(row.relation,"S");
  assert.equal(row.source_blob_sha,"efbd2c3866c719ba99c45a5c90cf5a0bbf8b2b38");
  assert.equal(row.historical_main_blob_sha,null);
  assert.equal(row.comparison_main_blob_sha,null);

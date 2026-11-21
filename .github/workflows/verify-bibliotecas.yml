@@ -78,6 +78,8 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Auditar 44 tarefas v6/legado por issue e bloquear falso encerramento
+        run: node scripts/ce-audit-v6-execution-ledger.mjs
       - name: Validar adendo do censo CE sem selar branches
         run: node scripts/ce-branch-inventory-delta-verify.mjs
       - name: Conferir paridade factual de rotas e componentes sem admitir publicacao

@@ -8,6 +8,7 @@ are opt-in, local-only and never part of a public manifest.
 from __future__ import annotations
 import argparse
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import gzip
 import hashlib
@@ -262,9 +263,12 @@ def main(argv: list[str] | None=None) -> int:
     ap.add_argument("--private-diff",action="store_true",help="write PRIVATE patch with actual source content, never upload")
     ap.add_argument("--decisions-dir",type=Path,help="per-branch proposed decisions; never auto-approved")
     ap.add_argument("--strict-heads",action="store_true",help="exit 2 if snapshot moved or an expected branch is missing")
+    ap.add_argument("--jobs",type=int,default=4,help="parallel read-only branch jobs, 1..8 (default 4)")
     a=ap.parse_args(argv)
     os.umask(0o077)
     try:
+        if not 1 <= a.jobs <= 8:
+            raise ValueError("--jobs must be between 1 and 8")
         root=Path(git(a.repo.resolve(),"rev-parse","--show-toplevel").decode().strip()).resolve()
         out=a.out.resolve()
         if out==root or root in out.parents:
@@ -295,8 +299,7 @@ def main(argv: list[str] | None=None) -> int:
             raise ValueError("main SHA drift from cohort")
         summaries=[]
         incomplete=False
-        for i,name in enumerate(selected,1):
-            print("[%d/%d] %s"%(i,len(selected),name),flush=True)
+        def reconcile_one(name):
             ref=git_ref(name,a.remote)
             review=None
             if a.decisions_dir:
@@ -305,13 +308,23 @@ def main(argv: list[str] | None=None) -> int:
                     review=json.loads(decisionfile.read_text("utf-8"))
             try:
                 result=reconcile(root,name,ref,main_ref,rows.get(name),expected_main,review)
-            except ValueError as e:
-                incomplete=True
-                print("HOLD_MISSING_SOURCE_REF: "+name+" "+str(e),file=sys.stderr)
-                continue
-            if result["source"]["head_drift"] or result["main"]["head_drift"]:
-                incomplete=True
-            summaries.append(write_bundle(root,out,result,a.private_diff))
+            except ValueError as error:
+                return None, False, str(error)
+            drift=result["source"]["head_drift"] or result["main"]["head_drift"]
+            return write_bundle(root,out,result,a.private_diff), drift, None
+        with ThreadPoolExecutor(max_workers=a.jobs) as pool:
+            futures={pool.submit(reconcile_one,name):name for name in selected}
+            for i,future in enumerate(as_completed(futures),1):
+                name=futures[future]
+                summary,drift,error=future.result()
+                print("[%d/%d] %s %s"%(i,len(selected),name,"HOLD" if error or drift else "INVENTORIED"),flush=True)
+                if error:
+                    incomplete=True
+                    print("HOLD_MISSING_SOURCE_REF: "+name+" "+error,file=sys.stderr)
+                elif summary is not None:
+                    summaries.append(summary)
+                    incomplete=incomplete or drift
+        summaries.sort(key=lambda x:x["branch"])
         index={"protocol":"CE.BRANCH.RUN.INDEX.v1","main_sha":main_sha,"cohort_count":len(rows) if rows else None,
                "requested":len(selected),"generated":len(summaries),"incomplete":incomplete or len(summaries)!=len(selected),
                "total_union_path_instances":sum(x["coverage"]["union_paths"] for x in summaries),

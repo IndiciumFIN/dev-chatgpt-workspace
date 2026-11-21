@@ -3,6 +3,7 @@
  * without connecting to Neon, Supabase or reading secrets.
  * No shared in-memory PGlite fallback on an actual Vercel deployment.
  */
+/** @param {NodeJS.ProcessEnv} env */
 export function assertDatabaseConfiguredForDeployment(env) {
   const isVercel = env?.VERCEL === '1' ||
     ['production', 'preview', 'development'].includes(env?.VERCEL_ENV);

@@ -1,4 +1,5 @@
 import { pendingMigrations } from "../../scripts/migration-plan.mjs";
+import { assertDatabaseConfiguredForDeployment } from "../../scripts/ce-db-deployment-guard.mjs";
 
 /** Which database backend is active. */
 export type DbSource = "neon" | "pglite";
@@ -176,6 +177,8 @@ async function createSql(): Promise<Sql> {
         "or a server route loader, never from client code.",
     );
   }
+  // A hosted Vercel runtime must have an explicit database; ephemeral PGlite is local-only.
+  assertDatabaseConfiguredForDeployment(process.env);
   return dbSource === "neon" ? createNeonSql() : createPgliteSql();
 }
 

@@ -165,9 +165,8 @@ export const ensureRole = createServerFn({ method: "POST" })
     await seed(sql);
     await sql`
       insert into member (user_id, role)
-      select ${context.userId},
-        case when exists (select 1 from member where role = 'admin') then 'subscriber' else 'admin' end
-      where not exists (select 1 from member where user_id = ${context.userId})
+      values (${context.userId}, 'subscriber')
+      on conflict (user_id) do nothing
     `;
     const rows = await sql<{ role: SourceRole }>`select role from member where user_id = ${context.userId}`;
     return { role: rows[0]?.role === "admin" ? "admin" : "subscriber" } as const;

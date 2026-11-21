@@ -1,0 +1,38 @@
+# Cloud execution of the read-only Codespaces accelerator. No deploy.
+name: CE Codespaces accelerator - cloud audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/ce-codespaces-run.sh'
+      - '.github/workflows/ce-codespaces-audit.yml'
+      - 'registers/governance/ce-w2-5-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ce-codespaces-readonly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout candidate without reusable credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Run W2.5 offline Git manifest reconciliation
+        shell: bash
+        env:
+          CE_REPORT_DIR: ce-reports
+        run: |
+          bash scripts/ce-codespaces-run.sh
+      - name: Publish private read-only report (3-day retention)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-codespaces-audit
+          path: ce-reports/
+          retention-days: 3
+          if-no-files-found: error

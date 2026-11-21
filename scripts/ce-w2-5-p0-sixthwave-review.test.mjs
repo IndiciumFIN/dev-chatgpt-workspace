@@ -60,7 +60,7 @@ test("sixth wave keeps auth/migrations on HOLD and rejects false approvals",()=>
  assert.equal(r.remaining_p0_unique_objects,327);
  assert.equal(r.independent_approvals,0);
  assert.equal(r.branch_closures,0);
- const docs=[...wave.prior_review_paths.map(read),wave];
+ const docs=[...wave.prior_review_paths.map(read),wave,read("registers/governance/ce-w2-5-p0-seventhwave-review-20261121.v1.json")];
  const forged=structuredClone(docs);
  forged[5].records[0].status="APPROVED";
  assert.throws(()=>normalizeReviewEvidence(forged),/claims closure/);

@@ -38,6 +38,7 @@ test('candidate Aldrete and laboratory interpretations are preserved for isolate
 });
 test('candidate routes remain known, noindex and devoid of clinical payload',()=>{
  assert.match(routes,/import \{ tools \} from "@\/lib\/tools\/catalog"/);
+ assert.match(routes,/indexavel: \(tool\.publicacao \?\? "publicada"\) === "publicada"/);
  assert.doesNotMatch(routes,/import .*candidateTools|import .*candidates\.review-only/);
  for(const slug of ['aldrete','exames-laboratoriais']) {
   const anchor='path: "/ferramentas/'+slug+'"';

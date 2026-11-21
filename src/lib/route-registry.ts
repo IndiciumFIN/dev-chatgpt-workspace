@@ -78,7 +78,7 @@ function ferramentas(): RouteEntry[] {
       kind: "ferramenta" as const,
       title: tool.title,
       description: tool.lead,
-      indexavel: true,
+      indexavel: (tool.publicacao ?? "publicada") === "publicada",
     })),
     ...heldCandidateRoutes,
   ];

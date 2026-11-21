@@ -283,6 +283,9 @@ def main(argv: list[str] | None=None) -> int:
             if scope.get("protocol")!=COHORT or not isinstance(scope.get("branches"),list):
                 raise ValueError("invalid CE cohort schema")
             expected_main=scope.get("main_sha")
+            declared=scope.get("counts",{}).get("ce")
+            if type(declared) is not int or declared != len(scope["branches"]):
+                raise ValueError("CE cohort branch count disagrees with its declared coverage")
             for x in scope["branches"]:
                 name=x.get("name")
                 if not isinstance(name,str) or not SHA.fullmatch(str(x.get("sha"))) or name=="main" or name.startswith("wutrib/") or name in rows:
@@ -295,10 +298,19 @@ def main(argv: list[str] | None=None) -> int:
             raise ValueError("selected branch not in explicit CE cohort")
         main_ref=git_ref(a.main,a.remote)
         main_sha=sha_commit(root,main_ref)
+        census_missing=[]
+        census_extra=[]
+        if rows:
+            live_lines=git(root,"for-each-ref","--format=%(refname:strip=3)","refs/remotes/"+a.remote).decode("utf-8").splitlines()
+            live_ce={n for n in live_lines if n and n not in ("main","HEAD") and not n.startswith("wutrib/")}
+            census_missing=sorted(set(rows)-live_ce)
+            census_extra=sorted(live_ce-set(rows))
+            if census_missing or census_extra:
+                print("HOLD_COHORT_COVERAGE missing=%d extra=%d"%(len(census_missing),len(census_extra)),file=sys.stderr)
         if a.strict_heads and expected_main and main_sha!=expected_main:
             raise ValueError("main SHA drift from cohort")
         summaries=[]
-        incomplete=False
+        incomplete=bool(census_missing or census_extra)
         def reconcile_one(name):
             ref=git_ref(name,a.remote)
             review=None
@@ -326,6 +338,8 @@ def main(argv: list[str] | None=None) -> int:
                     incomplete=incomplete or drift
         summaries.sort(key=lambda x:x["branch"])
         index={"protocol":"CE.BRANCH.RUN.INDEX.v1","main_sha":main_sha,"cohort_count":len(rows) if rows else None,
+               "local_remote_ref_coverage_checked":bool(rows),
+               "cohort_missing_remote_refs":census_missing,"cohort_new_remote_refs":census_extra,
                "requested":len(selected),"generated":len(summaries),"incomplete":incomplete or len(summaries)!=len(selected),
                "total_union_path_instances":sum(x["coverage"]["union_paths"] for x in summaries),
                "total_divergent_path_instances":sum(x["coverage"]["divergent"] for x in summaries),

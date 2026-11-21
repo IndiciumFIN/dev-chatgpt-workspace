@@ -1,12 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync,existsSync} from "node:fs";
-import {createHash} from "node:crypto";
+import {matchesPinnedTextBlob} from "./ce-w2-5-git-text-sha.mjs";
 import {loadActionQueue} from "./ce-w2-5-action-queue.mjs";
 const file=p=>readFileSync(new URL("../"+p,import.meta.url));
 const data=JSON.parse(file("registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json"));
 const first=JSON.parse(file(data.first_wave_path));
-const gitSha=b=>createHash("sha1").update("blob "+b.length+"\0").update(b).digest("hex");
 test("second W2.5 P0 wave has 13 grounded SHA pairs with exactly nine safe evidence reuses",()=>{
  const q=loadActionQueue(100);
  assert.equal(data.protocol,"CE.CROSS.W2.5.P0.SECOND_WAVE_STATIC_REVIEW.v1");
@@ -35,7 +34,7 @@ test("second W2.5 P0 wave has 13 grounded SHA pairs with exactly nine safe evide
   assert.equal(match.baseline_main_blob_sha,x.historical_main_blob_sha);
   if(x.relationship==="S")assert.equal(x.historical_main_blob_sha,null);
   else if(x.path!==".github/workflows/verify-bibliotecas.yml"&&x.path!==".github/workflows/admin-ux-e2e.yml")
-    assert.equal(gitSha(file(x.path)),x.comparison_main_blob_sha,"canonical code drift "+x.path);
+    assert.ok(matchesPinnedTextBlob(file(x.path),x.comparison_main_blob_sha),"canonical code changed beyond CRLF/LF: "+x.path);
  }
  assert.equal([...unique].filter(x=>firstItems.has(x)).length,9);
  assert.equal(new Set([...firstItems,...unique]).size,15);

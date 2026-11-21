@@ -1,0 +1,11 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {gitBlobSha,matchesPinnedTextBlob} from "./ce-w2-5-git-text-sha.mjs";
+const lf=Buffer.from("const a=1;\nconst b=2;\n");
+const crlf=Buffer.from("const a=1;\r\nconst b=2;\r\n");
+const pinned=gitBlobSha(lf);
+test("pinned Git text blob accepts exact bytes",()=>assert.equal(matchesPinnedTextBlob(lf,pinned),true));
+test("pinned Git text blob accepts CRLF-only working tree",()=>assert.equal(matchesPinnedTextBlob(crlf,pinned),true));
+test("pinned Git text blob rejects edited CRLF content",()=>assert.equal(matchesPinnedTextBlob(Buffer.from("const a=3;\r\nconst b=2;\r\n"),pinned),false));
+test("pinned Git text blob rejects lone CR alteration",()=>assert.equal(matchesPinnedTextBlob(Buffer.from("const a=1;\rconst b=2;\n"),pinned),false));
+test("pinned Git text blob rejects fake SHA",()=>assert.equal(matchesPinnedTextBlob(crlf,"abcdef"),false));

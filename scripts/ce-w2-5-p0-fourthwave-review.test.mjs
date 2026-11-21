@@ -1,13 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {createHash} from "node:crypto";
+import {matchesPinnedTextBlob} from "./ce-w2-5-git-text-sha.mjs";
 import {loadActionQueue} from "./ce-w2-5-action-queue.mjs";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url));
 const fourth=JSON.parse(read("registers/governance/ce-w2-5-p0-fourthwave-review-20261121.v1.json"));
 const earlier=fourth.prior_review_paths.map(path=>JSON.parse(read(path)));
 const key=x=>x.path+"|"+x.source_blob_sha;
-const gitSha=bytes=>createHash("sha1").update("blob "+bytes.length+"\0").update(bytes).digest("hex");
 test("fourth P0 wave: all fifteen source rows anchored to Git-pinned W2.4 objects",()=>{
  const q=loadActionQueue(100);
  assert.deepEqual(fourth.inventoried_relations,{E:2839,C:229,D:70,S:0,T:4});
@@ -48,7 +47,7 @@ test("new fourth-wave workflows cannot regress SSR Nitro checks or Git provenanc
  for(const item of newItems){
    const canonical=read(item.path).toString();
    if(item.path!==".github/workflows/verify-bibliotecas.yml"){
-     assert.equal(gitSha(Buffer.from(canonical)),item.comparison_main_blob_sha);
+     assert.ok(matchesPinnedTextBlob(read(item.path),item.comparison_main_blob_sha),"canonical workflow changed beyond CRLF/LF: "+item.path);
      assert.match(canonical,/nitro\.json/);
      assert.match(canonical,/__server\.func/);
    }

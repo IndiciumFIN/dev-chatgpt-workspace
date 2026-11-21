@@ -1,11 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {createHash} from "node:crypto";
+import {matchesPinnedTextBlob} from "./ce-w2-5-git-text-sha.mjs";
 import {readFileSync} from "node:fs";
 import {loadActionQueue} from "./ce-w2-5-action-queue.mjs";
 const fromRoot=(p)=>readFileSync(new URL("../"+p,import.meta.url));
 const register=JSON.parse(fromRoot("registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json"));
-const gitBlobSha=(bytes)=>createHash("sha1").update("blob "+bytes.length+"\0").update(bytes).digest("hex");
 test("eleven P0 first-wave code pairs are anchored to W2.4 immutable source blobs",()=>{
  const queue=loadActionQueue(100);
  assert.equal(register.protocol,"CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1");
@@ -23,8 +22,8 @@ test("eleven P0 first-wave code pairs are anchored to W2.4 immutable source blob
   assert.ok(match,"missing W2.4 manifest/blob source: "+x.path);
   assert.equal(match.priority,"P0");
   assert.equal(match.baseline_main_blob_sha,x.canonical_blob_sha);
-  assert.equal(gitBlobSha(fromRoot(x.path)),x.canonical_blob_sha,
-   "canonical blob changed, re-review before assuming risk disposition: "+x.path);
+  assert.ok(matchesPinnedTextBlob(fromRoot(x.path),x.canonical_blob_sha),
+   "canonical content changed beyond CRLF/LF, re-review: "+x.path);
   assert.equal(x.approval_status,"HOLD_INDEPENDENT_REVIEW");
   assert.match(x.provisional_decision,/^PRESERVE_/);
   assert.ok(x.required_next_evidence.length>35);

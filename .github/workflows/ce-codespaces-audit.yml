@@ -36,3 +36,49 @@ jobs:
           path: ce-reports/
           retention-days: 3
           if-no-files-found: error
+
+  ce-windows-crlf-regression:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout candidate with no reusable credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 24 (matches local Windows)
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - name: Restore W2.4 pinned JSON as exact Git blob, simulate CRLF on canonical files
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import {execFileSync} from "node:child_process";
+          import {readFileSync,writeFileSync} from "node:fs";
+          import {createHash} from "node:crypto";
+          const indexPath="registers/governance/ce-w2-4-orphan-full-file-index-20261120.v1.json";
+          const riskPath="registers/governance/ce-w2-5-orphan-risk-screen-results-20261120.v1.json";
+          const pinned=path=>execFileSync("git",["show","HEAD:"+path]);
+          const index=JSON.parse(pinned(indexPath).toString("utf8"));
+          const paths=[indexPath,riskPath,...index.batches.map(x=>x.path)];
+          if(paths.length!==8||new Set(paths).size!==8)throw Error("Unexpected pinned W2.4 files");
+          const blob=b=>createHash("sha1").update("blob "+b.length+"\0").update(b).digest("hex");
+          const risk=JSON.parse(pinned(riskPath).toString("utf8"));
+          if(risk.index_blob_sha!==blob(pinned(indexPath)))throw Error("Historical index integrity mismatch");
+          for(const path of paths){
+            const original=pinned(path);
+            writeFileSync(path,original);
+            const batch=index.batches.find(x=>x.path===path);
+            if(batch&&batch.git_blob_sha!==blob(original))throw Error("W2.4 manifest tamper "+path);
+          }
+          for(const path of ["scripts/migrate.mjs",".github/workflows/diagnostico-build-nuvem.yml"]){
+            const original=pinned(path);
+            const win=Buffer.from(original.toString("utf8").replace(/\r?\n/g,"\r\n"));
+            writeFileSync(path,win);
+            if(!readFileSync(path).includes(13))throw Error("CRLF fixture failed "+path);
+          }
+          console.log("Windows CRLF fixture ready: 8 immutable JSON files exact, 2 canonical files CRLF");
+          JS
+      - name: Run all W2.5 tests on Windows / Node 24
+        shell: bash
+        run: node --test scripts/ce-w2-5*.test.mjs

@@ -75,3 +75,11 @@ test('historical imported content stays immutable and blocked rather than silent
  assert.equal(page.content_status,'BLOCKED_SOURCE');
  assert.match(JSON.stringify(page),/358\/2009/);
 });
+
+
+test('public editorial route always enforces RELEASED without a visitor override',()=>{
+ const route=read('src/routes/curiosidades.tsx');
+ assert.match(route,/if \(f\.status !== "RELEASED"\) return false/);
+ assert.doesNotMatch(route,/onlyReleased|setOnlyReleased/);
+ assert.doesNotMatch(route,/checked=\{onlyReleased\}/);
+});

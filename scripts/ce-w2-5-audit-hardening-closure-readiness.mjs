@@ -73,7 +73,12 @@ export function validateBranchClosureReadiness(doc,index,sourceManifest){
       cl.semantic_final_dispositions===0&&cl.semantic_review_complete===false&&
       cl.remaining_semantic_review===421&&cl.SEALED===false&&cl.no_revisit===false&&
       cl.main_integration_sha===null&&cl.ci_verified_main_sha===null&&
-      cl.owner_approval_name==="Leivis Lima"&&cl.owner_approval_recorded===false&&
+      cl.owner_approval_name==="Cauê Zipfel"&&cl.technical_coordinator==="Leivis Lima"&&
+      cl.governance_phase==="DEVELOPMENT"&&cl.owner_approval_deferred===true&&
+      cl.independent_review_dev_gate==="OPTIONAL_NOT_BLOCKING"&&
+      cl.sealed_for_release===false&&cl.dev_reconciled===false&&
+      cl.policy_exception_doc==="docs/governance/CE_DEV_APPROVAL_DEFERRAL_20261121.md"&&
+      cl.owner_approval_recorded===false&&
       cl.independent_reviewer===null&&cl.independent_review_recorded===false&&
       cl.supabase_cross_complete===false&&cl.drive_cross_complete===false&&
       cl.merge_authorized===false&&cl.source_branch_delete_authorized===false&&

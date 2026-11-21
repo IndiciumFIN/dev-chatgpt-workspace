@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {requiredChecks,pullRequestPathGlobs,matchesGlob,assessChecks,CHECK_POLICIES} from './ce-integration-gate.mjs';
+import {requiredChecks,requiredAcrossBaselines,pullRequestPathGlobs,matchesGlob,assessChecks,CHECK_POLICIES} from './ce-integration-gate.mjs';
 const paths=Object.fromEntries([...new Set(CHECK_POLICIES.map(x=>x[1]))].map(p=>[p,readFileSync(p,'utf8')]));
 const sha='a'.repeat(40),one=(name,conclusion='success',id=1,app=15368)=>({id,name,status:'completed',conclusion,head_sha:sha,app:{id:app}});
 test('all conditional workflows derive triggers from their real YAML, no duplicated path ledger',()=>{
@@ -41,4 +41,11 @@ test('reject forged integration, stale SHA, and duplicate old PASS before newer 
 test('unknown SHA or missing verified diff is not accepted',()=>{
  assert.throws(()=>assessChecks({required:['verify'],checkRuns:[],headSha:'bad'}),/UNVERIFIED_HEAD_SHA/);
  assert.throws(()=>requiredChecks([],paths),/NO_VERIFIED_CHANGE_PATHS/);
+});
+
+test('proposed YAML cannot remove an existing mandatory workflow path trigger',()=>{
+ const file='.github/workflows/curiosidades-mem-validation.yml';
+ const candidate={...paths,[file]:paths[file].replace("      - 'src/lib/route-registry.ts'",'')};
+ const retained=requiredAcrossBaselines(['src/lib/route-registry.ts'],candidate,paths);
+ assert.ok(retained.includes('validate-curiosities'));
 });

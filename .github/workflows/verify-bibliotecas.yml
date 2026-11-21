@@ -112,6 +112,7 @@ jobs:
       - name: Registrar resultados técnicos por SHA, sem inferir aprovação clínica
         if: always()
         env:
+          CE_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           CE_STEP_DEP_AUDIT: ${{ steps.dep_audit.outcome }}
           CE_STEP_TYPECHECK: ${{ steps.typecheck.outcome }}
           CE_STEP_TEST_SUITE: ${{ steps.test_suite.outcome }}

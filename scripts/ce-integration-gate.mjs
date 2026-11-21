@@ -53,6 +53,9 @@ export function requiredChecks(paths,workflowSources){
  }
  return [...checks];
 }
+export function requiredAcrossBaselines(changedPaths,candidateWorkflows,baselineWorkflows){
+ return [...new Set([...requiredChecks(changedPaths,candidateWorkflows),...requiredChecks(changedPaths,baselineWorkflows)])];
+}
 export function assessChecks({required,checkRuns,headSha}){
  if(!SHA.test(headSha))throw Error('UNVERIFIED_HEAD_SHA');
  if(!Array.isArray(required)||!required.includes('verify'))throw Error('MISSING_BASE_VERIFY_POLICY');
@@ -118,8 +121,11 @@ async function main(){
  const repo=process.env.GITHUB_REPOSITORY,base=process.env.CE_PR_BASE_SHA,head=process.env.CE_PR_HEAD_SHA,token=process.env.GH_TOKEN;
  if(repo!=='IndiciumFIN/dev-chatgpt-workspace'||!token||!SHA.test(head)||!SHA.test(base))throw Error('UNTRUSTED_GATE_CONTEXT');
  const changed=changedPaths(base,head);
- const sources=Object.fromEntries([...new Set(CHECK_POLICIES.map(x=>x[1]))].map(p=>[p,readFileSync(resolve(ROOT,p),'utf8')]));
- const required=requiredChecks(changed,sources);
+ const files=[...new Set(CHECK_POLICIES.map(x=>x[1]))];
+ const sources=Object.fromEntries(files.map(p=>[p,readFileSync(resolve(ROOT,p),'utf8')]));
+ // Union of base and proposed path policies: a PR cannot bypass checks by weakening triggers.
+ const historical=Object.fromEntries(files.map(p=>[p,execFileSync('git',['show',base+':'+p],{cwd:ROOT,encoding:'utf8',maxBuffer:1024*1024})]));
+ const required=requiredAcrossBaselines(changed,sources,historical);
  console.log('CE_INTEGRATION_EXPECTED',JSON.stringify({head,count_changed_paths:changed.length,required}));
  for(let attempt=0;attempt<88;attempt++){
   const runs=await getCheckRuns(repo,head,token);

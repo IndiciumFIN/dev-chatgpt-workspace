@@ -22,3 +22,10 @@ test('invalid SHA or unknown outcome fails closed',()=>{
  assert.throws(()=>buildCeTechnicalEvidence({sha:'bad',outcomes:passed()}),/MISSING_IMMUTABLE_SHA/);
  assert.throws(()=>buildCeTechnicalEvidence({sha,outcomes:{...passed(),build:'PASS-ish'}}),/UNKNOWN_CI_STEP_OUTCOME/);
 });
+
+test('PR source HEAD and GitHub synthetic merge checkout are recorded independently',()=>{
+ const v=buildCeTechnicalEvidence({sha,testedSha:'b'.repeat(40),outcomes:passed()});
+ assert.equal(v.sha,sha);assert.equal(v.tested_merge_sha,'b'.repeat(40));
+ assert.match(summaryMarkdown(v),/checkout tested: b{40}/);
+ assert.throws(()=>buildCeTechnicalEvidence({sha,testedSha:'garbled',outcomes:passed()}),/MISSING_TESTED_SHA/);
+});

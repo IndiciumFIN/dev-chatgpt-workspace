@@ -5,6 +5,8 @@ import { BiographyView } from "@/components/templates/biography-view";
 import { ArticlePage } from "@/components/article/article-page";
 import { RelatedContent } from "@/components/site/related-content";
 import { findArticle, type ArticleSlug } from "@/lib/content/articles/index";
+import { findCuriosityMeta } from "@/lib/content/curiosidades/catalog";
+import { CuriosityPage } from "@/components/article/curiosity-page";
 import { languageLinks } from "@/lib/seo";
 import { parseLocale } from "@/lib/translate";
 
@@ -32,16 +34,29 @@ export const Route = createFileRoute("/blog/$slug")({
     const lang = parseLocale(search.lang);
     return lang ? { lang } : {};
   },
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const article = findArticle(params.slug);
-    // Um slug fora do catálogo é 404, não 500. `throw new Error` devolvia erro
-    // do servidor por erro do visitante.
-    if (!article) throw raiseNotFound();
-    return { slug: article.slug };
+    if (article) return { kind: "published" as const, slug: article.slug };
+    // Drafts exist ONLY in explicitly opted-in localhost development/CI preview.
+    // This branch is dead in a production build; the post-build gate scans for leaked bodies.
+    if (import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true") {
+      const { loadCuriosity } = await import("@/lib/content/curiosidades/load");
+      const record = await loadCuriosity(params.slug);
+      if (record) return { kind: "editorial-preview" as const, record };
+    }
+    throw raiseNotFound();
   },
   head: ({ match, params }) => {
     const article = findArticle(params.slug);
-    if (!article) return {};
+    if (!article) {
+      const allowed = import.meta.env.DEV &&
+        import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true" &&
+        Boolean(findCuriosityMeta(params.slug));
+      return allowed ? { meta: [
+        { title: "Prévia editorial não homologada · Calculadoras de Enfermagem" },
+        { name: "robots", content: "noindex, nofollow, noarchive" },
+      ] } : { meta: [{ name: "robots", content: "noindex, nofollow, noarchive" }] };
+    }
     const lang = (match.search as { lang?: unknown }).lang;
     return {
       meta: [
@@ -71,6 +86,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function ArticleRouteView() {
   const { slug } = Route.useParams();
+  const loaded = Route.useLoaderData();
+  if (loaded.kind === "editorial-preview") return <Shell><CuriosityPage record={loaded.record} /></Shell>;
   const article = findArticle(slug);
   // O loader já garantiu que existe; este guard cobre o render direto.
   if (!article) return <ArticleMissing />;

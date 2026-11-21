@@ -57,6 +57,19 @@ try {
       verdict: "AUTH_OFF_PROTECTED_AREA_NOT_RENDERED" });
   }
 
+  // Public editorial pages must never offer a toggle that exposes held drafts.
+  const editorial = await go("/curiosidades");
+  assert.equal(editorial.status, 200, "public editorial route must be available");
+  assert.match(editorial.text, /Curiosidades de Enfermagem/);
+  assert.doesNotMatch(editorial.text, /Processo de Enfermagem segundo a Resolução Cofen nº 736\/2024/,
+    "held normative fact FF-009 rendered on a public route");
+  assert.doesNotMatch(editorial.text, /Curiosidade 11 — a curar/,
+    "placeholder candidate was visible on the public route");
+  assert.equal(await page.getByText("Só publicados", { exact: true }).count(), 0,
+    "public editorial filter can disclose CANDIDATE/HOLD");
+  report.routes.push({ path: "/curiosidades", status: editorial.status,
+    verdict: "PUBLIC_EDITORIAL_RELEASED_ONLY" });
+
   const home = await go("/kids");
   assert.match(home.text, /Status: CANDIDATE/);
   assert.match(home.text, /aguardando curadoria humana/);

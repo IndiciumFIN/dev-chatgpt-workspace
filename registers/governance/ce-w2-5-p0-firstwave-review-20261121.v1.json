@@ -1,0 +1,65 @@
+{
+  "protocol": "CE.CROSS.W2.5.P0.FIRST_WAVE_STATIC_REVIEW.v1",
+  "repository": "IndiciumFIN/dev-chatgpt-workspace",
+  "review_date": "2026-11-21",
+  "baseline_main_sha": "cdc707d5333fb7cc533999ac5dbdd4cebd4feb57",
+  "source_branch": "grook_10_26",
+  "source_commit_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+  "review_method": "DIRECT_GITHUB_BLOB_CONTENT_AND_LINE_DIFF",
+  "scope": "FIRST_WAVE_P0_PRELIMINARY_NOT_CLINICAL_OR_INDEPENDENT_ADMISSION",
+  "first_wave_total_p0_occurrences": 11,
+  "technically_inspected_source_blob_pairs": 5,
+  "first_wave_technical_progress_percent": 45.45,
+  "semantic_final_dispositions": 0,
+  "independent_review_complete": false,
+  "release_authorized": false,
+  "remote_db_write": false,
+  "branch_sealed": false,
+  "records": [
+    {
+      "path": "scripts/migrate.mjs",
+      "source_blob_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "canonical_blob_sha": "754b21a8e904587b7ef11ea92b818473fd21a8eb",
+      "difference": "Legacy source describes automatic deploy-time migration on npm build; canonical code explicitly requires CE_DB_MIGRATION_APPROVED=true, exactly --approved and rejects CI/GitHub Actions before connecting to DATABASE_URL.",
+      "provisional_decision": "PRESERVE_CANONICAL_NO_AUTO_DDL",
+      "required_next_evidence": "Independent reviewer and negative tests for CI, absent CLI grant, absent DATABASE_URL and rollback in disposable PostgreSQL.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/client.ts",
+      "source_blob_sha": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+      "canonical_blob_sha": "3d7efba87c1c1fc55b259e1095fb226efbc0a2d9",
+      "difference": "Legacy enables authentication unless VITE_AUTH_ENABLED is exactly false and uses genericOAuthClient/signIn.oauth2; canonical requires explicit true and uses social sign-in. Blind replacement could re-enable auth or alter provider contract.",
+      "provisional_decision": "PRESERVE_EXPLICIT_AUTH_OPT_IN",
+      "required_next_evidence": "Browser and server tests of disabled/undefined/true flags and provider-specific OAuth flow, verified credentials and 401/403 negative cases.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/gate-identity.test.ts",
+      "source_blob_sha": "02cf0269fe3cdbcba3d96be110264f94e0cdea13",
+      "canonical_blob_sha": "84aba93d9aa0e218f74df7e50ba8bf3a8c067380",
+      "difference": "Canonical test has before/after hooks forcing positive auth scenario and restoring environment, unlike old version; historical copy would lose isolated positive coverage when CI sets VITE_AUTH_ENABLED=false.",
+      "provisional_decision": "PRESERVE_ENV_ISOLATED_TEST",
+      "required_next_evidence": "Verify execution of negative auth-off and positive identity tests under CI, independently audit JWT issuer/audience and session binding.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "src/lib/auth/popup.server.ts",
+      "source_blob_sha": "9e686ae29e2b0463b7868ce755dd066479ebe8a3",
+      "canonical_blob_sha": "40adca02eaf00dcd6cf4108b91b7b68df746fc58",
+      "difference": "Source calls auth.api.signInWithOAuth2 with providerId; canonical calls auth.api.signInSocial with provider and disableRedirect=true. Functional equivalence depends on active provider plugins; no remote popup E2E performed.",
+      "provisional_decision": "PRESERVE_CANONICAL_PENDING_OAUTH_E2E",
+      "required_next_evidence": "Preview browser OAuth callback, cookie/bearer scope, redirect origin, token forwarding and error propagation tests; no real credentials exposed.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "source_blob_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "canonical_blob_sha": "8eb4736b4c7277ed5b4e329443b0a036da0d0426",
+      "difference": "Historical test assumes no SQL files in root migrations directory. Canonical test enumerates root SQL files and validates non-recursive auth isolation; historical assertion would regress once product migrations exist.",
+      "provisional_decision": "PRESERVE_CURRENT_SQL_ROOT_COVERAGE",
+      "required_next_evidence": "Recheck SQL root inventory on protected main and idempotence/rollback in isolated database.",
+      "approval_status": "HOLD_INDEPENDENT_REVIEW"
+    }
+  ]
+}

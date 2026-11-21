@@ -20,6 +20,9 @@ on:
 
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate-curiosities:
@@ -52,7 +55,7 @@ jobs:
         run: node scripts/curiosidades-audit-finds.mjs
       - name: Preparar CSV de revisão bibliográfica sem conteúdo clínico
         run: node scripts/export-curiosidades-source-alternatives-csv.mjs
-      - name: Build SPA público sem conteúdos não homologados
+      - name: Build Nitro SSR público sem conteúdos não homologados
         run: npm run build:spa
       - name: Gate fail-closed — sem rotas, sitemap ou conteúdo público dos 87 HOLD
         run: node scripts/test-curiosidades-publication-gate.mjs

@@ -18,7 +18,7 @@
  */
 import { listSections } from "@/lib/sections";
 import { articleSlugs, findArticle } from "@/lib/content/articles/index";
-import { candidateTools, tools } from "@/lib/tools/catalog";
+import { tools } from "@/lib/tools/catalog";
 import { localesWithInterface } from "@/lib/locale-registry";
 import { siteOrigin } from "@/lib/site-origin";
 
@@ -63,16 +63,25 @@ function artigos(): RouteEntry[] {
   });
 }
 
+/** Known but unavailable candidates keep stable noindex paths without loading their clinical source. */
+const heldCandidateRoutes: RouteEntry[] = [
+  { path: "/ferramentas/aldrete", kind: "ferramenta", title: "Aldrete (em revisão)",
+    description: "Ferramenta candidata não homologada para uso clínico.", indexavel: false },
+  { path: "/ferramentas/exames-laboratoriais", kind: "ferramenta", title: "Exames Laboratoriais (ferramenta em revisão)",
+    description: "Interpretador candidato não homologado como ferramenta clínica.", indexavel: false },
+];
+
 function ferramentas(): RouteEntry[] {
-  return [...tools, ...candidateTools].map((tool) => ({
-    path: `/ferramentas/${tool.slug}`,
-    kind: "ferramenta" as const,
-    title: tool.title,
-    description: tool.lead,
-    // `publicacao: "candidata"` fica FORA do indice ate a homologacao humana
-    // (CKO-POL-R-005, FIND-CTR-009). Ver `clinical-tools.v1.json`.
-    indexavel: (tool.publicacao ?? "publicada") === "publicada",
-  }));
+  return [
+    ...tools.map((tool) => ({
+      path: `/ferramentas/${tool.slug}`,
+      kind: "ferramenta" as const,
+      title: tool.title,
+      description: tool.lead,
+      indexavel: (tool.publicacao ?? "publicada") === "publicada",
+    })),
+    ...heldCandidateRoutes,
+  ];
 }
 
 /** O registro, na ordem em que as rotas aparecem no sitemap. */

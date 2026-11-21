@@ -1,0 +1,159 @@
+name: CE — live canonical Git reconciliation (read only)
+on:
+  workflow_dispatch:
+  schedule:
+    # Twice daily, UTC; scheduled workflows execute only from the default branch.
+    - cron: '23 7,19 * * *'
+  pull_request:
+    paths:
+      - '.github/workflows/ce-live-branch-reconciliation.yml'
+      - 'scripts/ce-live-branch-reconcile.mjs'
+      - 'scripts/lib/ce-live-branch-reconcile-core.mjs'
+      - 'scripts/ce-live-branch-reconcile.test.mjs'
+      - 'scripts/ce-large-pr-native-diff.mjs'
+      - 'scripts/ce-large-pr-native-diff.test.mjs'
+      - 'scripts/ce-pr32-baseline-diagnostic.mjs'
+      - 'scripts/ce-pr32-baseline-diagnostic.test.mjs'
+      - 'scripts/ce-pr32-17-content-screen.mjs'
+      - 'scripts/ce-pr32-17-content-screen.test.mjs'
+      - 'scripts/ce-pr32-browser-p0.mjs'
+      - 'scripts/ce-global-scorecard.mjs'
+      - 'scripts/ce-global-scorecard.test.mjs'
+      - 'registers/governance/ce-branch-completion-20261120.v1.json'
+permissions:
+  contents: read
+concurrency:
+  group: ce-live-branch-reconcile-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  git-reconcile:
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout audited workflow without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use fixed Node major
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Fetch every ref from the public repository (no GitHub token)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
+          git rev-parse --verify refs/remotes/origin/main
+      - name: Verify negative invariants and source coverage
+        run: |
+          node --test scripts/ce-live-branch-reconcile.test.mjs scripts/ce-large-pr-native-diff.test.mjs scripts/ce-pr32-baseline-diagnostic.test.mjs scripts/ce-pr32-17-content-screen.test.mjs scripts/ce-global-scorecard.test.mjs
+          python3 scripts/ce-branch-closure.py
+      - name: Reconcile all pinned CE branches with complete native Git trees
+        run: |
+          node scripts/ce-live-branch-reconcile.mjs \
+            --output audit-evidence/ce-live-reconciliation/git-inventory.json \
+            --summary audit-evidence/ce-live-reconciliation/summary.json
+      - name: Reconcile two oversized PR changes without REST 300-file limit
+        run: node scripts/ce-large-pr-native-diff.mjs
+      - name: Diagnose 486-file PR32 discrepancy against both immutable baselines
+        run: node scripts/ce-pr32-baseline-diagnostic.mjs
+      - name: Verify 17 changed PR32 blobs by content and risk (no execution)
+        run: node scripts/ce-pr32-17-content-screen.mjs
+      - name: Calculate strict platform readiness scorecard from immutable evidence
+        run: node scripts/ce-global-scorecard.mjs
+      - name: Publish aggregate progress in the Actions summary
+        if: always()
+        shell: bash
+        run: |
+          if test ! -f audit-evidence/ce-live-reconciliation/summary.json; then
+            echo 'CE live reconciliation: no trustworthy report; check failed steps.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const p=JSON.parse(readFileSync('audit-evidence/ce-live-reconciliation/summary.json','utf8'));
+          const lines=[
+            '### CE — read-only Git source reconciliation',
+            '- Main baseline: '+p.canonical_main_sha,
+            '- Pinned CE branches compared: '+p.coverage.branches_with_tree+'/'+p.ledger_ce_branches,
+            '- Missing historical Git trees: '+p.coverage.branches_missing_tree,
+            '- Moved source branches: '+p.coverage.branches_with_moved_head,
+            '- Missing live refs: '+p.coverage.pinned_branches_missing_live_ref,
+            '- Unclassified current refs: '+p.coverage.unclassified_current_refs,
+            '- Nonidentical occurrences: '+p.review_occurrences,
+            '- Deduplicated review objects: '+p.unique_review_objects,
+            '- Priority occurrences: P0='+p.priority_occurrences.P0+', P1='+p.priority_occurrences.P1+', P2='+p.priority_occurrences.P2,
+            '- Supabase/Google Drive/semantic approval: HOLD; no auto merge, release or SEALED.',
+            ''
+          ];
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n'));
+          NODE
+      - name: Retain public-Git-only manifest and review queue
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-live-git-reconciliation-${{ github.run_id }}
+          path: |
+            audit-evidence/ce-live-reconciliation/git-inventory.json
+            audit-evidence/ce-live-reconciliation/summary.json
+            audit-evidence/ce-live-reconciliation/large-pr-native-diff.json
+            audit-evidence/ce-live-reconciliation/pr32-baseline-diagnostic.json
+            audit-evidence/ce-live-reconciliation/pr32-17-content-screen.json
+            audit-evidence/ce-live-reconciliation/platform-readiness.json
+          if-no-files-found: warn
+          retention-days: 14
+# Only Git paths/hash metadata already visible in this public repository are exported.
+# Never upload private Drive metadata, PHI, DB data, source documents or credentials.
+
+  browser-p0-local-negative:
+    # Independent browser check; intentionally never talks to Neon/Supabase.
+    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      VITE_AUTH_ENABLED: "false"
+      DATABASE_URL: ""
+      CE_ADMIN_E2E_FIXTURE: "false"
+      CE_PR32_E2E_URL: "http://127.0.0.1:4174"
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked dependencies and disposable Chromium
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Run negative browser behavior against local in-memory PGlite
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$PWD/node_modules/.bin:$PATH"
+          node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4174 > /tmp/ce-pr32-p0-vite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 50); do
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/ce-pr32-p0-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4174/login -o /dev/null 2>/dev/null; then ready=true; break; fi
+            sleep 2
+          done
+          if test "$ready" != true; then cat /tmp/ce-pr32-p0-vite.log; exit 1; fi
+          node scripts/ce-pr32-browser-p0.mjs
+      - name: Retain non-sensitive browser verdict
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-pr32-browser-negative-${{ github.run_id }}
+          path: audit-evidence/ce-pr32-browser/verdict.json
+          if-no-files-found: warn
+          retention-days: 7
+# Browser test proves only local auth-off/PGlite negative behavior; RBAC in real auth,
+# remote publication state, clinical admission, visual parity and release remain HOLD.

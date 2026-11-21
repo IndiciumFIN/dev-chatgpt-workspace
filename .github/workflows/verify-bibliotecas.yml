@@ -8,6 +8,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -71,13 +74,18 @@ jobs:
           echo "PASS: entradas críticas verificadas antes dos testes; quarantena histórica continua disponível para checagem de hash"
       - run: npm ci
       - name: Auditoria de dependências bloqueante
+        id: dep_audit
         run: npm audit --audit-level=high
       - run: node scripts/test-admin-console.mjs
-      - run: npm run typecheck
+      - id: typecheck
+        run: npm run typecheck
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs
       - run: node scripts/check-contract-coverage.mjs
-      - run: npm test
+      - name: Verificar separação do catálogo público de conteúdo em HOLD
+        run: node scripts/generate-public-fun-facts.mjs --check
+      - id: test_suite
+        run: npm test
       - run: node scripts/audit-execution-gates.mjs
       - name: Simular exclusões do upload Vercel após testes completos
         run: |
@@ -89,6 +97,35 @@ jobs:
           test ! -e intake/legacy-ce/contracts/fontes/cofen_dou.json
           test ! -e .grok/skills/og/SKILL.md
           echo "PASS: evidências legadas excluídas do pacote; nenhum teste de hash foi contornado"
-      - run: npm run build:spa
+      - id: build
+        run: npm run build:spa
+      - name: Verificar que artefatos estáticos não contêm conteúdo editorial em HOLD
+        id: editorial_bundle
+        run: node scripts/ce-audit-public-editorial-bundle.mjs
+      - name: Verificar que candidatos clínicos não entram no JavaScript público
+        id: clinical_bundle
+        run: node scripts/ce-audit-candidate-clinical-bundle.mjs
       - name: Verificar arquivos estaticos basicos
+        id: static_output
         run: test -s .vercel/output/nitro.json && test -d .vercel/output/functions/__server.func && test -s .vercel/output/static/sitemap.xml && test -s .vercel/output/static/robots.txt
+
+      - name: Registrar resultados técnicos por SHA, sem inferir aprovação clínica
+        if: always()
+        env:
+          CE_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          CE_STEP_DEP_AUDIT: ${{ steps.dep_audit.outcome }}
+          CE_STEP_TYPECHECK: ${{ steps.typecheck.outcome }}
+          CE_STEP_TEST_SUITE: ${{ steps.test_suite.outcome }}
+          CE_STEP_BUILD: ${{ steps.build.outcome }}
+          CE_STEP_EDITORIAL_BUNDLE: ${{ steps.editorial_bundle.outcome }}
+          CE_STEP_CLINICAL_BUNDLE: ${{ steps.clinical_bundle.outcome }}
+          CE_STEP_STATIC_OUTPUT: ${{ steps.static_output.outcome }}
+        run: node scripts/ce-ci-evidence.mjs
+      - name: Arquivar scorecard técnico somente leitura
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ce-ci-technical-status-${{ github.run_id }}
+          path: audit-evidence/ce-ci-automated/technical-readiness.json
+          if-no-files-found: warn
+          retention-days: 14

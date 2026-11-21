@@ -8,7 +8,11 @@ const root = ".vercel/output/static";
 const catalog = JSON.parse(readFileSync("src/lib/content/curiosidades/catalog.json", "utf8"));
 assert.equal(catalog.length, 87, "Expected 87 HOLD draft records");
 assert(catalog.every((page) => page.content_status !== "APPROVED" && page.content_status !== "PUBLISHED"), "New admission detected; manual policy review required");
-assert(existsSync(join(root,"blog/index.html")), "Missing safe public blog index");
+// TanStack Start is served through Nitro SSR; absence of static /blog/index.html
+// is expected. Require real server-function output instead of a false static gate.
+assert(existsSync(".vercel/output/nitro.json"), "NITRO_SSR_MANIFEST_MISSING");
+assert(existsSync(".vercel/output/functions/__server.func"), "NITRO_SSR_HANDLER_MISSING");
+assert(existsSync(join(root,"sitemap.xml")), "SITEMAP_MISSING");
 for (const {slug} of catalog) {
   assert(!existsSync(join(root,"blog",slug,"index.html")), "UNAUTHORIZED_PUBLIC_ROUTE:" + slug);
 }
@@ -46,8 +50,13 @@ for (const path of files) {
 }
 const route = readFileSync("src/routes/blog.$slug.tsx","utf8");
 const loader = readFileSync("src/lib/content/curiosidades/load.ts","utf8");
-assert(route.includes('VITE_CURIOSIDADES_MEM_PREVIEW'), "Missing route deny-by-default");
-assert(loader.includes('VITE_CURIOSIDADES_MEM_PREVIEW'), "Missing draft module gate");
+assert(route.includes('import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true"'),
+  "ROUTE_PREVIEW_NOT_DEV_ONLY");
+assert(loader.includes('!import.meta.env.DEV || import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW !== "true"'),
+  "LOADER_PREVIEW_NOT_DEV_ONLY");
+const index = readFileSync("src/routes/blog.index.tsx","utf8");
+assert(index.includes('import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true"'),
+  "INDEX_PREVIEW_NOT_DEV_ONLY");
 console.log(JSON.stringify({
   verdict:"PASS_PUBLICATION_GATE",checkedDrafts:catalog.length,publicDraftRoutes:0,
   indexableDraftRoutes:0,bundleLeaks:0,anchorsChecked:anchors.length,assetsScanned:files.length,

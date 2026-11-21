@@ -37,7 +37,7 @@ test("o que está publicado nesta mesa tem corpo e cálculo só nas cinco ferram
   assert.deepEqual(open.rows.map((row) => row.slug), governed);
 
   const catalog = await readFile(new URL("./tools/catalog.ts", import.meta.url), "utf8");
-  const menu = catalog.slice(catalog.indexOf("export const tools"), catalog.indexOf("export const candidateTools"));
+  const menu = catalog.slice(catalog.indexOf("export const tools"), catalog.indexOf("export function getTool"));
   assert.match(menu, /\[braden, morse, apgar, gotejamento, imc\]/);
   assert.equal(menu.includes("aldrete"), false);
 

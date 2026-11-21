@@ -218,11 +218,11 @@ const imc: ClinicalTool = {
   outputs: [{ id: "imc", label: "IMC", unit: "kg/m²", digits: 1 }],
   bandFrom: "imc",
   bands: [
-    { min: 0, max: 18.49, label: "Baixo peso", tone: "info", note: "Abaixo de 18,5 kg/m². Interprete junto com a avaliação clínica.", nanda: [] },
-    { min: 18.5, max: 24.99, label: "Adequado", tone: "ok", note: "Faixa de 18,5 a 24,9 kg/m² para o adulto.", nanda: [] },
-    { min: 25, max: 29.99, label: "Sobrepeso", tone: "warn", note: "Faixa de 25 a 29,9 kg/m².", nanda: [] },
-    { min: 30, max: 34.99, label: "Obesidade I", tone: "warn", note: "Faixa de 30 a 34,9 kg/m².", nanda: [] },
-    { min: 35, max: 39.99, label: "Obesidade II", tone: "danger", note: "Faixa de 35 a 39,9 kg/m².", nanda: [] },
+    { min: 0, max: 18.5, label: "Baixo peso", tone: "info", note: "Abaixo de 18,5 kg/m². Interprete junto com a avaliação clínica.", nanda: [] },
+    { min: 18.5, max: 25, label: "Adequado", tone: "ok", note: "Faixa de 18,5 a 24,9 kg/m² para o adulto.", nanda: [] },
+    { min: 25, max: 30, label: "Sobrepeso", tone: "warn", note: "Faixa de 25 a 29,9 kg/m².", nanda: [] },
+    { min: 30, max: 35, label: "Obesidade I", tone: "warn", note: "Faixa de 30 a 34,9 kg/m².", nanda: [] },
+    { min: 35, max: 40, label: "Obesidade II", tone: "danger", note: "Faixa de 35 a 39,9 kg/m².", nanda: [] },
     { min: 40, max: 200, label: "Obesidade III", tone: "danger", note: "Igual ou acima de 40 kg/m².", nanda: [] },
   ],
   howTo: [

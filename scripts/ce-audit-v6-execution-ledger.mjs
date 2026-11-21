@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /** Fail-closed coverage guard for CE audit v6 task ledger.
  * Creates NO issues/PRs/branches, executes NO remote writes or DB access.
- * A tracked task != a completed task; controls owner/reviewer separation. */
+ * A tracked task != a completed task; DEV owner approval is deferred, never forged. */
 import {readFileSync} from "node:fs";
 import {pathToFileURL} from "node:url";
 const src=new URL("../registers/governance/ce-audit-v6-execution-ledger-20261121.v1.json",import.meta.url);
@@ -36,7 +36,15 @@ export function validateAuditV6Ledger(d){
       t.all_completed===0&&t.all_sealed===0&&
       t.production_deploy_allowed===false&&t.remote_db_writes_allowed===false&&
       t.source_branch_delete_allowed===false&&t.protected_workflows_no_unreviewed_merge===true&&
-      t.approval_policy==="OWNER_LEIVIS_LIMA_DISTINCT_FROM_AUTHENTIC_INDEPENDENT_REVIEWER",
+      t.approval_policy==="DEV_REVIEW_OPTIONAL_OWNER_CAUE_DEFERRED_TO_RELEASE"&&
+      t.governance_phase==="DEVELOPMENT"&&t.project_owner==="Cauê Zipfel"&&
+      t.technical_coordinator==="Leivis Lima"&&
+      t.owner_approval_state==="NOT_REQUESTED_DEFERRED"&&
+      t.independent_review_dev_gate==="OPTIONAL_NOT_BLOCKING"&&
+      t.pre_release_owner_approval_required===true&&
+      t.owner_approval_forged===false&&
+      t.dev_delegation_is_not_release_authorization===true&&
+      t.phase_policy_document==="docs/governance/CE_DEV_APPROVAL_DEFERRAL_20261121.md",
       "false completion/merge/deploy authorization");
  must(t.task_definition_of_done?.length>=7,"task evidence contract missing");
  must(Array.isArray(d.records)&&d.records.length===44,"missing historical or v6 task");

@@ -43,7 +43,7 @@ test('continuous adult BMI thresholds are gap-free and choose the higher band at
  ]) assert.equal(findClinicalBand(bands,v)?.label,expected,String(v));
  assert.equal(findClinicalBand(bands,Number.NaN),undefined);
  const source=read('src/lib/tools/catalog.ts');
- const imc=source.slice(source.indexOf('const imc: ClinicalTool'),source.indexOf('const aldrete: ClinicalTool'));
+ const imc=source.slice(source.indexOf('const imc: ClinicalTool'),source.indexOf('export const tools: ClinicalTool[]'));
  for(const bound of ['max: 18.5,','max: 25,','max: 30,','max: 35,','max: 40,'])
   assert.ok(imc.includes(bound),'raw BMI tool band must match continuous cutoffs: '+bound);
 });

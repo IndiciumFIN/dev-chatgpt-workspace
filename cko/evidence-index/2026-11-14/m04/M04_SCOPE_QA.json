@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-14",
+  "scope": "selected M04 12 topic IDs only",
+  "counts": {
+    "topics": 12,
+    "sum_topic_candidate_rows": 651,
+    "right_classes": {
+      "NOT_ATOMIZED": 2,
+      "MIXED_RIGHTS_CANDIDATES": 4,
+      "RESTRICTED_CANDIDATES_ONLY": 6
+    },
+    "learning_resources": 3,
+    "claims_bound": 0,
+    "clinical_release": 0
+  },
+  "source": "M03 verified SQLite derived index; GitHub PR66 readback",
+  "rights_class_rules": {
+    "NOT_ATOMIZED": "No matching rows in evidence_topic_candidates",
+    "MIXED_RIGHTS_CANDIDATES": "At least one DEFAULT_ACTIVE/CONDITIONAL_EXPLICIT_ENABLE among other candidate statuses",
+    "RESTRICTED_CANDIDATES_ONLY": "Candidate flags only LICENSE_QUARANTINED/HUMAN_REFERENCE_ONLY"
+  },
+  "caveats": [
+    "Rights flags are candidate metadata, not distribution licenses",
+    "Candidate link count is neither unique atom count nor approved clinical claims",
+    "No raw protected text, PDF or SQLite included",
+    "Source span and validity not re-reviewed"
+  ],
+  "publish": false
+}

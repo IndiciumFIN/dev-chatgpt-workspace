@@ -11,10 +11,15 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ce-integration-gate:
-    if: github.repository == 'IndiciumFIN/dev-chatgpt-workspace' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 24
     steps:
+      - name: Reject untrusted forks with failure, never SKIPPED
+        env:
+          CE_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          test "$GITHUB_REPOSITORY" = "IndiciumFIN/dev-chatgpt-workspace"
+          test "$CE_HEAD_REPOSITORY" = "$GITHUB_REPOSITORY"
       - name: Read-only checkout with complete base/head history
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:

@@ -84,3 +84,10 @@ test('invalid workflow representation fails closed',()=>{
  const file='.github/workflows/ce-live-branch-reconciliation.yml';
  assert.throws(()=>baselineWorkflowSources({[file]:undefined},()=>null),/UNTRUSTED_CANDIDATE_WORKFLOW/);
 });
+
+test('fork PR never skips the required CI gate',()=>{
+ const wf=readFileSync('.github/workflows/ce-integration-gate.yml','utf8');
+ assert.doesNotMatch(wf,/ce-integration-gate:\n\s+if:/);
+ assert.match(wf,/Reject untrusted forks with failure, never SKIPPED/);
+ assert.match(wf,/test "\$CE_HEAD_REPOSITORY" = "\$GITHUB_REPOSITORY"/);
+});

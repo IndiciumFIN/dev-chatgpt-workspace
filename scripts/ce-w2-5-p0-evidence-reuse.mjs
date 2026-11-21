@@ -21,6 +21,7 @@ const proof=(condition,reason)=>{if(!condition)throw Error("CE_P0_REUSE_HOLD:"+r
 const read=p=>JSON.parse(readFileSync(new URL(p,root),"utf8"));
 const shaBlob=bytes=>createHash("sha1").update("blob "+bytes.length+"\0").update(bytes).digest("hex");
 const objectKey=(path,blob,mode="")=>JSON.stringify([path,blob,mode]);
+export const sameCanonicalBaseline=(recorded,observed)=>(recorded??null)===(observed??null);
 
 export function normalizeReviewEvidence(documents){
  proof(Array.isArray(documents)&&documents.length===3,"three wave reviews are required");
@@ -73,7 +74,7 @@ export function projectEvidenceReuse(){
        index.batches?.length===6,"changed W2.4 universe");
  const sourceIndex=new Map(index.sources.map(s=>[s.source_sha,s]));
  const matchedObjects=new Set(),matchedSources=new Map();
- let totalP0=0,matchedP0=0;
+ let totalP0=0,matchedP0=0,quarantinedDifferentBaseline=0;
  const distinctP0=new Set(),observedSources=new Set();
  for(const batch of index.batches){
   const bytes=readFileSync(new URL(batch.path,root));
@@ -96,7 +97,12 @@ export function projectEvidenceReuse(){
     totalP0++;distinctP0.add(key);
     const reviewed=canonical.get(key);
     if(!reviewed)continue;
-    proof((baselineBlob??null)===reviewed.baseline,"review crossed incompatible canonical blob");
+    if(!sameCanonicalBaseline(reviewed.baseline,baselineBlob)){
+      // Same source payload against a different canonical file is NOT equivalent
+      // evidence. Keep this occurrence for explicit comparative review.
+      quarantinedDifferentBaseline++;
+      continue;
+    }
     matchedObjects.add(key);matchedP0++;srcHits++;
     const origin=JSON.stringify([src.source_sha,path,sha]);
     if(registrations.has(origin))registrations.set(origin,true);
@@ -116,6 +122,7 @@ export function projectEvidenceReuse(){
   total_p0_occurrences:totalP0,total_p0_unique_objects:distinctP0.size,
   reviewed_p0_unique_objects:matchedObjects.size,
   reviewed_p0_occurrences:matchedP0,
+  same_content_different_baseline_hold_occurrences:quarantinedDifferentBaseline,
   direct_review_registrations:registrations.size,
   sources_with_exact_content_matches:matchedSources.size,
   branches_with_exact_content_matches:branchNames.size,

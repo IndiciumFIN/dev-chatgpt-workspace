@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {normalizeReviewEvidence,projectEvidenceReuse} from "./ce-w2-5-p0-evidence-reuse.mjs";
+import {normalizeReviewEvidence,projectEvidenceReuse,sameCanonicalBaseline} from "./ce-w2-5-p0-evidence-reuse.mjs";
 const read=p=>JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
 const first=read("registers/governance/ce-w2-5-p0-firstwave-review-20261121.v1.json");
 const second=read("registers/governance/ce-w2-5-p0-secondwave-review-20261121.v1.json");
@@ -20,6 +20,8 @@ test("W2.5 automatically projects sixteen static P0 reviews onto all six Git-pin
  assert.equal(report.remaining_p0_unique_objects,343);
  assert.equal(report.direct_review_registrations,37);
  assert.ok(report.reviewed_p0_occurrences>=37);
+ assert.ok(report.same_content_different_baseline_hold_occurrences>=1);
+ assert.equal(report.reviewed_p0_occurrences+report.same_content_different_baseline_hold_occurrences<=842,true);
  assert.ok(report.sources_with_exact_content_matches>=3);
  assert.ok(report.branches_with_exact_content_matches>=3);
  assert.equal(report.independent_approvals,0);
@@ -45,4 +47,11 @@ test("reuse rejects spoofed SHA, forged approval and conflicting prior decision"
  assert.ok(match);
  match.provisional_decision="INTEGRATE_WITHOUT_APPROVAL";
  assert.throws(()=>normalizeReviewEvidence(contradiction),/contradictory P0 finding/);
+});
+
+test("same content but different canonical baseline is quarantined, never auto-cleared",()=>{
+ assert.equal(sameCanonicalBaseline("a","a"),true);
+ assert.equal(sameCanonicalBaseline(null,undefined),true);
+ assert.equal(sameCanonicalBaseline("a","b"),false);
+ assert.equal(sameCanonicalBaseline(null,"a"),false);
 });

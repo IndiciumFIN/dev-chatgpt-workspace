@@ -1,0 +1,54 @@
+{
+  "protocol": "CE.V6.A10.SUPABASE_PUBLIC_SCHEMA_READONLY.v1",
+  "date": "2026-11-21",
+  "source": "Supabase connected project Calculadoras-Smart; list_tables verbose=true + SELECT pg_catalog only",
+  "project_name": "Calculadoras-Smart",
+  "schema": "public",
+  "postgres_engine": "17",
+  "tables": 48,
+  "columns": 608,
+  "tables_primary_key": 48,
+  "foreign_keys": 71,
+  "rls_enabled_tables": 48,
+  "force_rls_tables": 0,
+  "rls_policies": 45,
+  "tables_with_policies": 23,
+  "tables_without_explicit_policies": 25,
+  "views": 1,
+  "views_security_invoker": 0,
+  "views_without_security_invoker": 1,
+  "views_select_granted_anon": 0,
+  "views_select_granted_authenticated": 0,
+  "public_security_definer_functions": 56,
+  "public_security_definer_execute_anon": 0,
+  "public_security_definer_execute_authenticated": 0,
+  "public_security_definer_no_explicit_search_path": 0,
+  "method": "metadata only; no application rows, credentials, DDL/DML or privileged function calls",
+  "findings": [
+    {
+      "code": "V6-A10-META-001",
+      "status": "REVIEW_REQUIRED_NOT_EXPLOIT_CONFIRMED",
+      "summary": "One public view not marked security_invoker; neither anon nor authenticated has SELECT on the view in this snapshot"
+    },
+    {
+      "code": "V6-A10-META-002",
+      "status": "REVIEW_REQUIRED_NOT_EXPLOIT_CONFIRMED",
+      "summary": "56 SECURITY DEFINER functions are in public; zero show EXECUTE permission to anon or authenticated and zero lack an explicit search_path"
+    },
+    {
+      "code": "V6-A10-META-003",
+      "status": "DEFAULT_DENY_NOT_IMMEDIATE_VULNERABILITY",
+      "summary": "25 RLS-enabled tables have no explicit policies (default deny), pending intended functional access assessment"
+    }
+  ],
+  "runtime_database_identified": false,
+  "all_schemas_reconciled": false,
+  "drive_cross_complete": false,
+  "rls_behavior_tested": false,
+  "permissions_comprehensively_audited": false,
+  "full_source_body_audited": false,
+  "production_release_authorized": false,
+  "remote_database_write_performed": false,
+  "owner_approval_state": "NOT_REQUESTED_DEFERRED",
+  "status": "READ_ONLY_METADATA_PARTIAL"
+}

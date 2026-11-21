@@ -1,0 +1,488 @@
+{
+  "protocol": "CE.W2.6.G2.UI.U1.v1",
+  "task_issue": 120,
+  "parent_issue": 106,
+  "source": {
+    "branch": "grook_10_26",
+    "commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+    "tree": "d8de6c9a983e9ad4ecb95fb5aec68bd2389d0b8b"
+  },
+  "baseline": {
+    "branch": "main",
+    "commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+    "tree": "98237c8467d37cddf8529f7137d3ba3aa4c28344"
+  },
+  "source_manifest": "registers/governance/ce-w26-grook-full-delta-20261121.v1.json",
+  "previous_ledger": "registers/governance/ce-w26-grook-runtime-r1-20261121.v1.json",
+  "counts": {
+    "total": 48,
+    "prior_dev_disposed": 34,
+    "new_dev_disposed": 8,
+    "total_dev_disposed": 42,
+    "prior_holds": 4,
+    "new_holds": 2,
+    "total_holds": 6,
+    "unresolved": 6,
+    "ui_unresolved": 2,
+    "security_unresolved": 2,
+    "clinical_unresolved": 1,
+    "vercel_runtime_unresolved": 2,
+    "branches_sealed": 0
+  },
+  "new_decisions": [
+    {
+      "path": "src/components/admin/registry.tsx",
+      "relation": "ADMIN_CATALOG_FRAME_FROM_CANONICAL",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "9f068cc0ceb2d626bc89d90594689b13a9962203",
+      "canonical_git_blob_sha": "8602fede9a520364fe56f167ff4e613ce9b06cff",
+      "old_marker": "{contract.frame}",
+      "new_marker": "templateCatalogo.find((item) => item.kind === kind)?.frame",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Admin registry reads per-screen frame from templateCatalogo rather than stale generic TemplateContract.frame, maintaining route and kind relationships.",
+      "residual": "This is not a complete schema of every admin/subscriber screen, link to DB tables, rights validation, owner approval or E2E browser test.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/components/site/areas.tsx",
+      "relation": "AREA_AUTH_PRINCIPAL_BOUND_FAIL_CLOSED",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "1b7fdc584d8a44c6b887fb1d641ede9d3af59239",
+      "canonical_git_blob_sha": "7425ab275f1b6a18be346aee790f2fca49b5ee28",
+      "old_marker": "if (!authEnabled && allow === \"member\") return",
+      "new_marker": "evaluateAreaAccess({ allow",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Old auth-disabled mode privileged a member UI and cached roles independent of principal. Current access decision requires user and role bound to same user ID and isPending handled; source-tested area-access-policy regression exists.",
+      "residual": "UI defense in depth only. Server-side auth middleware, real OAuth issuer, RLS, production session and all admin endpoints still require independent verification.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/components/site/related-content.tsx",
+      "relation": "RELATED_DYNAMIC_BLOG_ROUTE",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "a1270f39b0abe2fd0e4e17f311c4a479ae06e606",
+      "canonical_git_blob_sha": "c6a96f5524e4101a3d9fd4f833433df5c823d71e",
+      "old_marker": "params={{ slug: item.params.slug }}",
+      "new_marker": "item.to === \"/blog/$slug\"",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Current RelatedContent routes dynamic blog slugs and tool/section path params to explicit TanStack types instead of falling back to modelos for blog items.",
+      "residual": "A missing slug may still create invalid navigation, article existence and linking correctness need E2E, and URLs are not all content reviewed.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/components/site/shell.tsx",
+      "relation": "SHELL_CANONICAL_I18N_FOCUS_LABELS",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ec9c61954bfbac5b5ff33a630a56cbac4d83bbc4",
+      "canonical_git_blob_sha": "d3a24f6267a13bd2c0259a26d2017282f357fd1d",
+      "old_marker": "const locales: { id: Locale; label: string }[]",
+      "new_marker": "selectableLocales.map((item) =>",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Shell no longer duplicates a locale list and consumes selectableLocales from header registry, with focusColorName labels sourced from versioned i18n register.",
+      "residual": "No browser/screen-reader validation of all menu states, keyboard focus, 19 full translations or mobile-first layout is implied.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/components/templates/contract-view.tsx",
+      "relation": "TEMPLATE_FRAME_CATALOG_CONSUMER",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ee95cc2662bbb9698a2f58fd82119c40ae4e68cd",
+      "canonical_git_blob_sha": "a60136229d473b51503878446a73b4587f862c2d",
+      "old_marker": "{contract.frame}",
+      "new_marker": "{row.frame}",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Page contract preview now displays row.frame from templateCatalog (per-page metadata) instead of frame field removed from generic behavior contract.",
+      "residual": "The frame shown is not proof of actual rendering or that every screen field, relationship, table and action has a documented contract.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/ecosystem-audit.ts",
+      "relation": "NODE_AUDIT_LOCALE_INDEPENDENCE",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "3376721a85fd3d39f94d2d38ef010eaa81ab5ac5",
+      "canonical_git_blob_sha": "c36d7b7e1d3e5a8904ceaa25ed040f01cfff75fb",
+      "old_marker": "import { languageLinks } from \"./seo.ts\"",
+      "new_marker": "import { localesWithInterface } from \"./locale-registry.ts\"",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Node isolated ecosystem audit now consumes locale readiness registry directly without importing Vite @ aliases through SEO/router, reducing test environment false failures.",
+      "residual": "SEO/browser language links, actual translated content, locale-specific contracts and external authority remain unreviewed.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/focus-color-i18n.ts",
+      "relation": "FOCUS_COLOR_19X4_IDENTICAL_REGISTER",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "de43d9a4276c41410bc0521e5b8a004480f51a3f",
+      "canonical_git_blob_sha": "e24aee8e4458404265efc2fbfd30ac023abf0398",
+      "old_marker": "export const focusColorLabels =",
+      "new_marker": "registers/i18n/focus-color-locale-register.v1.json",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Legacy 19-locale x four-color static candidate labels were compared per language/key with versioned focus-color-locale-register; 76 semantic labels match exactly, and new module imports this register with pt-BR fallback.",
+      "residual": "Legacy labels are not professional linguistic approval, no full internationalized UI and no clinical translation authorization; screen-reader audio and keyboard QA still open.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/sections.ts",
+      "relation": "SECTIONS_SINGLE_CANONICAL_DEDUP",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "6ead8e9e3926df7edb0fa0f929b04472f1f84c1b",
+      "canonical_git_blob_sha": "f7c08bdc6f20474799b0ab612c29ce7e35206073",
+      "old_marker": "export type Section =",
+      "new_marker": "export function listSections(): Section[]",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+      "reason": "Canonical sections list preserves all legacy core rows, adds extraSections from institutional register, deduplicates by section.slug deterministically and feeds the Route Registry.",
+      "residual": "No editorial/legal/clinical validity or rights certification for new sections; does not prove every link or page renders correctly in a browser.",
+      "visual_approval": false,
+      "clinical_approval": false,
+      "release_authorized": false
+    }
+  ],
+  "new_holds": [
+    {
+      "path": ".gitignore",
+      "decision": "HOLD_SECRET_SCAN_EXCEPTIONS",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "8f7fd077b4d8fd61238b6b452b51b24b41422fa3",
+      "canonical_git_blob_sha": "ba41cb8913e0fbbe50be389ba48836ecaf9d03fa",
+      "reason": "Git ignore narrowed .grok/** and whitelists .grok/app-env.json and OG markdown paths; static patterns do not prove the exempted app-env file has no secrets or that historic committed blobs have been revoked.",
+      "requested_evidence": "Run private secret/PII scan of historical blobs and currently tracked allowlisted paths including .grok/app-env.json, classify evidence without emitting secrets, link #91/#92.",
+      "external_issue": 91,
+      "visual_approval": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/styles.css",
+      "decision": "HOLD_DESIGN_SYSTEM_VISUAL_A11Y",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "84baefd591567ba69ab9e8b9152dfba6361b619d",
+      "canonical_git_blob_sha": "b8bd267f36fb6c6363f9ccd7cf3de4a478bca2ff",
+      "reason": "Historical to current src/styles.css added exactly 25 lines, removed 0: chrome tokens, min-touch 44px, RTL menu and focus-visible outlines. Structural addition is not visual acceptance; the user requested consistent canonical design across admin and subscriber screens.",
+      "requested_evidence": "Automated screenshot and keyboard/screen-reader/mobile breakpoint walkthrough, token/contrast audit and per-screen field/action/table mapping; resolve owner design acceptance separately.",
+      "external_issue": 120,
+      "visual_approval": false,
+      "release_authorized": false
+    }
+  ],
+  "prior_dispositions": [
+    {
+      "path": "scripts/admin-catalog.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "be35ebbebd7f2370551c3d71dcc9dadabf415ada",
+      "canonical_git_blob_sha": "e3d3b818df2ac0b08326a0540810ef117f9b77f9"
+    },
+    {
+      "path": "src/lib/desk-boundary.test.ts",
+      "decision": "REJECTED_WITH_PROVENANCE",
+      "source_git_blob_sha": "314ee405f8d8796461f674292ee6c95dad9ea043",
+      "canonical_git_blob_sha": "1bbb89333dab4efcc8fd9d3901de01d33f416a72"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "23f9969b20f5f377cb8b31f2e23b16ff02d557db",
+      "canonical_git_blob_sha": "4e3c76b2b8973101ba89d79b33214dbb7f0fe0e5"
+    },
+    {
+      "path": "scripts/check-auth-invariant.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b558378c35f88069e34e344579391c395f565640",
+      "canonical_git_blob_sha": "52ea0bae18460e0fddaaacf80af19632e28f482b"
+    },
+    {
+      "path": "scripts/check-auth-invariant.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "4cc9b6faa28b56c83a498003bfc9a2b200aad276",
+      "canonical_git_blob_sha": "e41fbc72c773f9d39983b7940e4bb70a71dd3608"
+    },
+    {
+      "path": "scripts/with-app-env.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e48dfafa69fa33d5288269ce939236956ff75e9c",
+      "canonical_git_blob_sha": "cc1ec4b520a7d8364665663415e0a96c712933d4"
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "canonical_git_blob_sha": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1"
+    },
+    {
+      "path": "src/lib/auth/verify.server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "2bf5acc72dd13134b1ec86781aa7591e1b2dca5c",
+      "canonical_git_blob_sha": "5cc0e660c914851fca9761bacdff84d9f74e415d"
+    },
+    {
+      "path": "src/lib/db.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d0a89f7ab08220fada355c6fb5eca2f786eceacc",
+      "canonical_git_blob_sha": "2178a40c7fc0d6bfd959db33d2703fead48bcaf1"
+    },
+    {
+      "path": "src/lib/auth/client.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+      "canonical_git_blob_sha": "3d7efba87c1c1fc55b259e1095fb226efbc0a2d9"
+    },
+    {
+      "path": "src/lib/auth/gate-identity.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "02cf0269fe3cdbcba3d96be110264f94e0cdea13",
+      "canonical_git_blob_sha": "84aba93d9aa0e218f74df7e50ba8bf3a8c067380"
+    },
+    {
+      "path": "src/lib/auth/popup.server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "9e686ae29e2b0463b7868ce755dd066479ebe8a3",
+      "canonical_git_blob_sha": "40adca02eaf00dcd6cf4108b91b7b68df746fc58"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "canonical_git_blob_sha": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa"
+    },
+    {
+      "path": "src/lib/source.functions.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "812f9dfecac5932dd269f4d08ede9804065faafc",
+      "canonical_git_blob_sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "01de60dfb265c8648cef46f739ce6d6d96dcdb69",
+      "canonical_git_blob_sha": "390247798436e287a518dbbea30ca2e762b93f50"
+    },
+    {
+      "path": "src/components/tools/clinical-tool.tsx",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e0def64a8d588bff619e7702361b2c57b0c4af37",
+      "canonical_git_blob_sha": "ccdf2599d0dd21d930b2b7e95db44e6e8b7d037d"
+    },
+    {
+      "path": "src/lib/contract.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e4775ae60914b6f787fa79fcbdb34a8ad56a197d",
+      "canonical_git_blob_sha": "f059f3d8fd4135b5aa22b65879aba568ab25b9c2"
+    },
+    {
+      "path": "src/lib/kernel-admit.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "0f1fb85ea9fd2d76e14cf41f259ea82a294fc4fe",
+      "canonical_git_blob_sha": "d551f2869154f686bec06760d5b28d5125e8a538"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "canonical_git_blob_sha": "4251544045c70ee90cd2595c23900bf48084eb4a"
+    },
+    {
+      "path": "src/lib/template-contract.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d4f3908f43c882a6173630967124398b0e181582",
+      "canonical_git_blob_sha": "84fd27e310b97acb3f0d54da5105d4f6a58f167b"
+    },
+    {
+      "path": "package-lock.json",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b6432638b56727d1e822e1d1d8ca6a5b76375adc",
+      "canonical_git_blob_sha": "c2beea71660d7f44d647f3adb1195e4a75701d92"
+    },
+    {
+      "path": "package.json",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "844f8aad72fcfc6a17b30268f7d50c8d95a92b69",
+      "canonical_git_blob_sha": "a6834d59c30429141ebd600c2fef328c11a5e1bd"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b67be804cf79dec86dcbde559dea7a6f408baeec",
+      "canonical_git_blob_sha": "08675cad3cdac219fe1a3c97aebc65ef8f5157e4"
+    },
+    {
+      "path": "scripts/alias-hook.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "4fcff75b3776c70d820983d1e869437070e632f3",
+      "canonical_git_blob_sha": "d23b5c1fbcb33ef23efa06e59ea50bbb15f1c98b"
+    },
+    {
+      "path": "scripts/grok-pwa-plugin.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "30d01b79d8b71b64b00ff6c835cf66066be1df92",
+      "canonical_git_blob_sha": "317bd1be1aab4dc04fd2ff0ecfed0f7091aae93b"
+    },
+    {
+      "path": "scripts/grok-pwa-shared.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b05a47d95e97d3f617585ddf10a7a0e9623a5fb7",
+      "canonical_git_blob_sha": "29bce8f98b4aa129b6ee4730a1c72f72dfff31f4"
+    },
+    {
+      "path": "scripts/migrate.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "canonical_git_blob_sha": "754b21a8e904587b7ef11ea92b818473fd21a8eb"
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "canonical_git_blob_sha": "8eb4736b4c7277ed5b4e329443b0a036da0d0426"
+    },
+    {
+      "path": "src/lib/header-i18n.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "65e9418cab58e08ae33f519d3e1671cede885a86",
+      "canonical_git_blob_sha": "58a0251cb093b05fe94eeaaadfe81ec4b93e7cb3"
+    },
+    {
+      "path": "src/lib/locale-registry.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "9b72fbc7593cc2f2d6d2984e592c921d44ec0d5b",
+      "canonical_git_blob_sha": "dac9eab10830c27e20e3af97dd85e5a1baaad732"
+    },
+    {
+      "path": "src/lib/seo.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "ecc4e8693f207a5f5ee8e8a8d8a50f249f095f55",
+      "canonical_git_blob_sha": "d879d5e454da71981ab12d7888ed62e15f57607d"
+    },
+    {
+      "path": "src/lib/template-catalog.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "c3b3ec7574b044b01a1c0f16a5e76554e579e432",
+      "canonical_git_blob_sha": "8794e7428de8288652baac8c88d88cdbb26952f9"
+    },
+    {
+      "path": "src/router.tsx",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "fd662dabc3270ed3c70eb11fd4c4bfe4bb0501ab",
+      "canonical_git_blob_sha": "49561b83ea097cab9ac7fa0f6e58a9a21fafcbce"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d020d11d40ab143cd0a2c435d8ecf7e95267ff55",
+      "canonical_git_blob_sha": "140ece4fff6ef32196ee6475d6bb5be860915467"
+    }
+  ],
+  "prior_holds": [
+    {
+      "path": "src/lib/auth/preview.ts",
+      "decision": "HOLD_ISSUER_ROTATION_AND_HISTORY_SCAN",
+      "source_git_blob_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+      "canonical_git_blob_sha": "9346354e7510bebb9bde3651b1da148d7080854a",
+      "release_allowed": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/contract-index.generated.ts",
+      "decision": "HOLD_CONTRACT_COMPLETENESS_AND_RIGHTS",
+      "source_git_blob_sha": "9708b014d6114b586a33b5eba6085280ddd30c56",
+      "canonical_git_blob_sha": "99255c97157d7cbfee29e670bd852dd3a7ec23ad",
+      "release_allowed": false,
+      "release_authorized": false
+    },
+    {
+      "path": "vercel.json",
+      "decision": "HOLD_PREVIEW_RUNTIME_SMOKE",
+      "source_git_blob_sha": "1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6",
+      "canonical_git_blob_sha": "935d5d78ad166e4bb6189d21056fe80a1b342b16",
+      "release_allowed": false,
+      "release_authorized": false
+    },
+    {
+      "path": "vite.config.ts",
+      "decision": "HOLD_SERVERLESS_PGLITE_ASSET_SMOKE",
+      "source_git_blob_sha": "f0aa67ddb6b5067c5aece4678259caa57638aa5a",
+      "canonical_git_blob_sha": "39c0cd51ea5f59ccf11776abf442760c6a4df7ac",
+      "release_allowed": false,
+      "release_authorized": false
+    }
+  ],
+  "remaining_pending_paths": [],
+  "focus_color_cross_proof": {
+    "source_file": "src/lib/focus-color-i18n.ts",
+    "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+    "source_git_blob_sha": "de43d9a4276c41410bc0521e5b8a004480f51a3f",
+    "current_register": "registers/i18n/focus-color-locale-register.v1.json",
+    "current_register_git_blob_sha": "988ad3f7ab745b79fba86125bb506cbe4d9fbbc5",
+    "locale_count": 19,
+    "semantic_colors": [
+      "yellow",
+      "lime",
+      "cyan",
+      "magenta"
+    ],
+    "labels_exactly_matching": 76,
+    "labels_differing": 0,
+    "translation_approved": false
+  },
+  "css_delta": {
+    "path": "src/styles.css",
+    "source_lines": 2994,
+    "current_lines": 3019,
+    "added_lines": 25,
+    "removed_lines": 0,
+    "visual_review": "HOLD"
+  },
+  "release": {
+    "owner_approval": "NOT_REQUESTED_DEFERRED",
+    "clinical_approval": false,
+    "visual_approval": false,
+    "secret_rotation_verified": false,
+    "production_deployment": false,
+    "preview_runtime_verified": false,
+    "remote_db_write": false,
+    "rights_clearance": false,
+    "branch_sealed": false,
+    "branch_deleted": false
+  },
+  "testing": {
+    "baseline_sha": "f1492de899ba5d252a33bc13f9884ee2080b2307",
+    "baseline_verify_run": 44908107623,
+    "postmerge_verify_required": true,
+    "area_access_regression_required": true
+  }
+}

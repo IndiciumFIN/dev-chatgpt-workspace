@@ -41,3 +41,9 @@ Testes existentes também devem passar na CI: `scripts/ce-first-admin-bootstrap.
 Antes de baixar qualquer branch, verificar HEAD live, tree SHA, ancestralidade, PRs ainda abertas, inventário recursivo completo `truncated=false`, decisões por objeto, direitos, normativos, provedores e checks no SHA da main. Refs históricas com apenas hash de raiz ou PR mergeada **não** são fechadas. `SEALED_FOR_RELEASE` depende da prova independente e da aprovação do proprietário quando aplicável; o adendo DEV não a dispensa.
 
 **Proibições:** nenhum segredo em issue/artefato, DDL/DML remoto, deploy, simulação de aprovação, exclusão de branch ou alegação de credencial rotacionada. Se CI ou evidência falhar, manter PR aberta e registrar HOLD; rollback por PR de reversão dos registros/testes, sem ressuscitar autenticação implícita.
+
+## CI `pull_request` — controle de acionamento
+
+Se os checks obrigatórios `verify` e `ce-integration-gate` não forem instanciados após a abertura da PR, classificar como `CI_TRIGGER_MISSING` e **não** fazer merge. Verificar primeiro o workflow e o SHA corrente, depois realizar um único commit não-vazio e auditável de atualização de documentação na branch técnica para emitir o evento `synchronize`. A seguir verificar os checks no **novo HEAD**, não reutilizar runs de commits anteriores. Caso continuem ausentes, manter a PR aberta em HOLD e deixar recibo na issue. Um `workflow_dispatch` isolado não substitui automaticamente checks obrigatórios associados à PR.
+
+Este registro não autoriza desabilitar branch protection, falsificar status, executar produção, usar credenciais reais ou fechar a branch de origem por ausência de erro.

@@ -44,16 +44,25 @@
       "issue id and bounded scope with acceptance tests",
       "PR url with immutable head/base commit SHA or external issuer receipt hash",
       "evidence of actual executed tests on exact SHA with run id and failure links",
-      "independent reviewer identity and approval ref for applicable risk",
+      "phase-aware approval: DEV independent review optional; Cauê Zipfel owner approval postponed to homologation/release with authentic evidence",
       "main merge SHA and post-merge tests on same SHA when code changed",
       "security/domain gates and rollback, no PHI or secret publishing",
       "final state verified by evidence, never assumed from issue creation"
     ],
-    "approval_policy": "OWNER_LEIVIS_LIMA_DISTINCT_FROM_AUTHENTIC_INDEPENDENT_REVIEWER",
+    "approval_policy": "DEV_REVIEW_OPTIONAL_OWNER_CAUE_DEFERRED_TO_RELEASE",
     "protected_workflows_no_unreviewed_merge": true,
     "production_deploy_allowed": false,
     "remote_db_writes_allowed": false,
-    "source_branch_delete_allowed": false
+    "source_branch_delete_allowed": false,
+    "governance_phase": "DEVELOPMENT",
+    "project_owner": "Cauê Zipfel",
+    "technical_coordinator": "Leivis Lima",
+    "owner_approval_state": "NOT_REQUESTED_DEFERRED",
+    "independent_review_dev_gate": "OPTIONAL_NOT_BLOCKING",
+    "pre_release_owner_approval_required": true,
+    "owner_approval_forged": false,
+    "dev_delegation_is_not_release_authorization": true,
+    "phase_policy_document": "docs/governance/CE_DEV_APPROVAL_DEFERRAL_20261121.md"
   },
   "records": [
     {

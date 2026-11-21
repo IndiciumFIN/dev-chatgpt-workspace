@@ -1,0 +1,588 @@
+{
+  "protocol": "CE.W2.6.G2.RUNTIME.R1.v1",
+  "task_issue": 118,
+  "parent_issue": 106,
+  "source": {
+    "branch": "grook_10_26",
+    "commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+    "tree": "d8de6c9a983e9ad4ecb95fb5aec68bd2389d0b8b"
+  },
+  "baseline": {
+    "branch": "main",
+    "commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+    "tree": "f3817b340ae517f2fb32dfcf7dceae5311b4ca2b"
+  },
+  "source_manifest": "registers/governance/ce-w26-grook-full-delta-20261121.v1.json",
+  "previous_ledger": "registers/governance/ce-w26-grook-clinical-c1-20261121.v1.json",
+  "counts": {
+    "total": 48,
+    "prior_dev_disposed": 20,
+    "new_dev_disposed": 14,
+    "total_dev_disposed": 34,
+    "prior_holds": 2,
+    "new_holds": 2,
+    "total_holds": 4,
+    "other_pending": 10,
+    "total_unresolved": 14,
+    "runtime_unresolved": 2,
+    "ui_unresolved": 10,
+    "clinical_unresolved": 1,
+    "security_unresolved": 1,
+    "branches_sealed": 0
+  },
+  "new_decisions": [
+    {
+      "path": "package-lock.json",
+      "relation": "LOCK_AUTH_ZOD_TRANSITIVE_GRAPH",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "b6432638b56727d1e822e1d1d8ca6a5b76375adc",
+      "canonical_git_blob_sha": "c2beea71660d7f44d647f3adb1195e4a75701d92",
+      "old_marker": "\"version\": \"1.6.33\"",
+      "new_marker": "\"version\": \"1.7.15\"",
+      "reason": "npm lockfile v3 changes 27 graph entries, including Better Auth 1.6.33 to 1.7.15, Zod 4.6.5 to 4.6.7, and nested AJV; npm ci and build on SHA passed.",
+      "residual": "Dependency resolution is not live OAuth provider verification, issuer rotation, transitive license clearance, production security audit or deploy smoke.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "package.json",
+      "relation": "BUILD_NO_IMPLICIT_DDL",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "844f8aad72fcfc6a17b30268f7d50c8d95a92b69",
+      "canonical_git_blob_sha": "a6834d59c30429141ebd600c2fef328c11a5e1bd",
+      "old_marker": "&& npm run db:migrate",
+      "new_marker": "\"build:spa\": \"npm run build\"",
+      "reason": "Old build called db:migrate automatically; current build runs Vite only, separate explicit db:migrate. npm ci/typecheck/test/build verified on fixed main SHA.",
+      "residual": "Configured production migrations and actual data schema/RLS, rollback and OAuth integration remain unverified and cannot be presumed safe.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "public/sitemap.xml",
+      "relation": "SITEMAP_NEW_POLICIES",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "b67be804cf79dec86dcbde559dea7a6f408baeec",
+      "canonical_git_blob_sha": "08675cad3cdac219fe1a3c97aebc65ef8f5157e4",
+      "old_marker": "secao/impacto-digital</loc>",
+      "new_marker": "secao/cancelamento-e-reembolso</loc>",
+      "reason": "Sitemap preserves prior URLs and adds 17 new entries including policies and clinical notices; module contract.ts derives paths from the route registry.",
+      "residual": "Sitemap coverage and indexation in actual deployed site, canonical accuracy and clinical candidate publication are not established.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "scripts/alias-hook.mjs",
+      "relation": "ESM_ALIAS_PORTABILITY",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "4fcff75b3776c70d820983d1e869437070e632f3",
+      "canonical_git_blob_sha": "d23b5c1fbcb33ef23efa06e59ea50bbb15f1c98b",
+      "old_marker": "const base = `/workspace/src/",
+      "new_marker": "register(import.meta.url)",
+      "reason": "Previous resolver hardcoded Linux /workspace/src; current ESM register uses import.meta.url and portable root resolution.",
+      "residual": "Windows and every independent consumer context are not fully smoke-tested outside the source and GitHub Actions.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "scripts/grok-pwa-plugin.test.mjs",
+      "relation": "PWA_FIXTURE_BRAND_ISOLATION",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "30d01b79d8b71b64b00ff6c835cf66066be1df92",
+      "canonical_git_blob_sha": "317bd1be1aab4dc04fd2ff0ecfed0f7091aae93b",
+      "old_marker": "injectGrokPwaHead(html, { appName: \"Wild Race\" })",
+      "new_marker": "TEMPLATE_FIXTURE_ROOT",
+      "reason": "Current PWA tests isolate temporary generic fixture roots and verify canonical CE title wins over unrelated preview host.",
+      "residual": "Live HTML SSR response, real OG image rights, deployment routing and PWA functionality in external hosts remain to be tested.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "scripts/grok-pwa-shared.mjs",
+      "relation": "PWA_REL_SEMANTICS",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "b05a47d95e97d3f617585ddf10a7a0e9623a5fb7",
+      "canonical_git_blob_sha": "29bce8f98b4aa129b6ee4730a1c72f72dfff31f4",
+      "old_marker": "next.includes('href=\"/__grok/manifest.webmanifest\"')",
+      "new_marker": "function hasLinkRelation(html, relation)",
+      "reason": "Current injector recognizes rel token values for manifest and apple-touch-icon independent of href; prevents duplicate relation tags.",
+      "residual": "Actual installability, offline operation, external OG-card metadata and live Preview behavior are not certified by unit tests.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "scripts/migrate.mjs",
+      "relation": "MIGRATE_FAIL_CLOSED",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "7b3dc087119d24d283b4ad89f1d8ab77f9d2ec9b",
+      "canonical_git_blob_sha": "754b21a8e904587b7ef11ea92b818473fd21a8eb",
+      "old_marker": "Runs during `npm run build`",
+      "new_marker": "CE_DB_MIGRATION_APPROVED",
+      "reason": "Manual migration runner now requires flag, --approved, DATABASE_URL, and rejects CI/GITHUB_ACTIONS before connecting.",
+      "residual": "No authorization for real target, remote SQL write, clinical migrations, backup, RLS/rollback or production database state.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "scripts/migration-plan.test.mjs",
+      "relation": "MIGRATION_ROOT_ONLY_INVARIANT",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "ae2ffa74f0f722e0f99f0c6003c0aa367d1d06a1",
+      "canonical_git_blob_sha": "8eb4736b4c7277ed5b4e329443b0a036da0d0426",
+      "old_marker": "test(\"the auth schema ships outside the globbed directory\"",
+      "new_marker": "test(\"migration runner finds only root SQL files",
+      "reason": "Migration test no longer assumes no root migrations and now verifies root SQL discovery without nested auth, with byte identity gate.",
+      "residual": "Discovery tests do not prove applied migrations, production schema identity, SQL safety or a successful restore.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/header-i18n.ts",
+      "relation": "I18N_SELECTOR_FAIL_CLOSED",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "65e9418cab58e08ae33f519d3e1671cede885a86",
+      "canonical_git_blob_sha": "58a0251cb093b05fe94eeaaadfe81ec4b93e7cb3",
+      "old_marker": "localeRegistry.filter((item) => true",
+      "new_marker": "interfaceDictionary === \"partial_existing\"",
+      "reason": "Header selector no longer offers all 19 declared languages as complete; only four with partial interface dictionaries are eligible.",
+      "residual": "No full UI translation guarantee even for four, 15 header-only need human review, clinical translated content unverified.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/locale-registry.ts",
+      "relation": "I18N_4_PARTIAL_15_HEADER_ONLY",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "9b72fbc7593cc2f2d6d2984e592c921d44ec0d5b",
+      "canonical_git_blob_sha": "dac9eab10830c27e20e3af97dd85e5a1baaad732",
+      "old_marker": "\"interfaceDictionary\": \"interface_ready\"",
+      "new_marker": "\"interfaceDictionary\": \"header_only\"",
+      "reason": "Registry reclassifies 15 unsupported languages from claimed interface_ready to header_only, retaining 4 partial and all 19 IDs.",
+      "residual": "WCAG page language requires truthful mapping, not clinical translations; content, accessibility and hreflang for 19 remain unverified.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/seo.ts",
+      "relation": "SEO_ROUTE_REGISTRY_SINGLE_SOURCE",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "ecc4e8693f207a5f5ee8e8a8d8a50f249f095f55",
+      "canonical_git_blob_sha": "d879d5e454da71981ab12d7888ed62e15f57607d",
+      "old_marker": "const offered = [\"pt-BR\", \"en\", \"es\", \"fr\"]",
+      "new_marker": "import { alternateLocales, canonicalLocale, routeEntry }",
+      "reason": "SEO module now sources canonical language and alternate links from the route registry instead of independent offered list.",
+      "residual": "No actual crawler, canonical redirects, hreflang content parity, translated clinical content or live index status was checked.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/lib/template-catalog.ts",
+      "relation": "TEMPLATE_LEGACY_COMPAT_ADAPTER",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "c3b3ec7574b044b01a1c0f16a5e76554e579e432",
+      "canonical_git_blob_sha": "8794e7428de8288652baac8c88d88cdbb26952f9",
+      "old_marker": "export const templateCatalog: CatalogRow[]",
+      "new_marker": "export const templateCatalogo = templateCatalog.map",
+      "reason": "Current catalog offers a backward-compatible mapped alias while maintaining canonical data and per-page frame/note.",
+      "residual": "This does not verify full admin/subscriber field matrices, UI designs, accessibility or approval of design system.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/router.tsx",
+      "relation": "ROUTER_BOOTSTRAP_CONTRACT",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "fd662dabc3270ed3c70eb11fd4c4bfe4bb0501ab",
+      "canonical_git_blob_sha": "49561b83ea097cab9ac7fa0f6e58a9a21fafcbce",
+      "old_marker": "import { routeTree } from './routeTree.gen'",
+      "new_marker": "routeIds.some((route) => route.file === \"src/routes/index.tsx\")",
+      "reason": "Current router bootstrap validates the initial route in the route contract, rather than only importing routeTree.",
+      "residual": "No complete route/browser E2E or RBAC, and a bootstrap assertion does not prove auth against external identity.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "relation": "ROUTETREE_SUPERSET_IMPORTS",
+      "risk": "P1_RUNTIME",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "evidence_status": "DEV_CODE_ONLY",
+      "source_git_blob_sha": "d020d11d40ab143cd0a2c435d8ecf7e95267ff55",
+      "canonical_git_blob_sha": "140ece4fff6ef32196ee6475d6bb5be860915467",
+      "old_marker": "import { Route as rootRouteImport }",
+      "new_marker": "CentralComandoRouteImport",
+      "reason": "Generated router now includes three extra import routes central-comando, oficina-local, blog.index, with all 50 historical imports still retained.",
+      "residual": "Auto-generated snapshot cannot itself prove route availability, authorized admin access or complete screen tests.",
+      "source_commit": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+      "baseline_commit": "f49496b050b77c366d7614a717fdf29f97d47346",
+      "scope_limit": "CODE_SEMANTICS_ONLY_NO_DEPLOY_OR_REGULATORY_ATTESTATION",
+      "deployment_verified": false,
+      "release_authorized": false
+    }
+  ],
+  "new_holds": [
+    {
+      "path": "vercel.json",
+      "risk": "P1_RUNTIME",
+      "decision": "HOLD_PREVIEW_RUNTIME_SMOKE",
+      "source_git_blob_sha": "1c00aa58be1fc08fc0ef50cedbf813a8bc3f4cb6",
+      "canonical_git_blob_sha": "935d5d78ad166e4bb6189d21056fe80a1b342b16",
+      "reason": "Current framework set to tanstack-start and old npm install --omit=dev override removed. CLI/GitHub CI success is not Vercel Preview READY, serverless health or controlled production-build skip evidence.",
+      "requested_evidence": "Project setting readback and safe Preview deployment with deploy output/health; no production build, verify skip settings and no release.",
+      "external_issue": 96,
+      "release_authorized": false,
+      "deployment_verified": false
+    },
+    {
+      "path": "vite.config.ts",
+      "risk": "P1_RUNTIME",
+      "decision": "HOLD_SERVERLESS_PGLITE_ASSET_SMOKE",
+      "source_git_blob_sha": "f0aa67ddb6b5067c5aece4678259caa57638aa5a",
+      "canonical_git_blob_sha": "39c0cd51ea5f59ccf11776abf442760c6a4df7ac",
+      "reason": "Current Nitro compiled hook adds PGlite WASM/data/initdb into _libs. Source build cannot prove Vercel serverless function packaging and actual asset resolution.",
+      "requested_evidence": "Preview function artifact readback of pglite.data/pglite.wasm/initdb.wasm and invocation under isolated synthetic DB; do not access operational DB.",
+      "external_issue": 96,
+      "release_authorized": false,
+      "deployment_verified": false
+    }
+  ],
+  "prior_dispositions": [
+    {
+      "path": "scripts/admin-catalog.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "be35ebbebd7f2370551c3d71dcc9dadabf415ada",
+      "canonical_git_blob_sha": "e3d3b818df2ac0b08326a0540810ef117f9b77f9"
+    },
+    {
+      "path": "src/lib/desk-boundary.test.ts",
+      "decision": "REJECTED_WITH_PROVENANCE",
+      "source_git_blob_sha": "314ee405f8d8796461f674292ee6c95dad9ea043",
+      "canonical_git_blob_sha": "1bbb89333dab4efcc8fd9d3901de01d33f416a72"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "23f9969b20f5f377cb8b31f2e23b16ff02d557db",
+      "canonical_git_blob_sha": "4e3c76b2b8973101ba89d79b33214dbb7f0fe0e5"
+    },
+    {
+      "path": "scripts/check-auth-invariant.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "b558378c35f88069e34e344579391c395f565640",
+      "canonical_git_blob_sha": "52ea0bae18460e0fddaaacf80af19632e28f482b"
+    },
+    {
+      "path": "scripts/check-auth-invariant.test.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "4cc9b6faa28b56c83a498003bfc9a2b200aad276",
+      "canonical_git_blob_sha": "e41fbc72c773f9d39983b7940e4bb70a71dd3608"
+    },
+    {
+      "path": "scripts/with-app-env.mjs",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e48dfafa69fa33d5288269ce939236956ff75e9c",
+      "canonical_git_blob_sha": "cc1ec4b520a7d8364665663415e0a96c712933d4"
+    },
+    {
+      "path": "src/lib/auth/server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "66d94be9eb10e78fe46e2da2e7d950eef82580d0",
+      "canonical_git_blob_sha": "842ec9cd32dc07242ecfc29ea1d57db4d39ee8b1"
+    },
+    {
+      "path": "src/lib/auth/verify.server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "2bf5acc72dd13134b1ec86781aa7591e1b2dca5c",
+      "canonical_git_blob_sha": "5cc0e660c914851fca9761bacdff84d9f74e415d"
+    },
+    {
+      "path": "src/lib/db.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d0a89f7ab08220fada355c6fb5eca2f786eceacc",
+      "canonical_git_blob_sha": "2178a40c7fc0d6bfd959db33d2703fead48bcaf1"
+    },
+    {
+      "path": "src/lib/auth/client.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d3b267d3de8b9d5e31545ee56ed7a3ff240c601d",
+      "canonical_git_blob_sha": "3d7efba87c1c1fc55b259e1095fb226efbc0a2d9"
+    },
+    {
+      "path": "src/lib/auth/gate-identity.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "02cf0269fe3cdbcba3d96be110264f94e0cdea13",
+      "canonical_git_blob_sha": "84aba93d9aa0e218f74df7e50ba8bf3a8c067380"
+    },
+    {
+      "path": "src/lib/auth/popup.server.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "9e686ae29e2b0463b7868ce755dd066479ebe8a3",
+      "canonical_git_blob_sha": "40adca02eaf00dcd6cf4108b91b7b68df746fc58"
+    },
+    {
+      "path": "src/lib/auth/providers.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "cd53b6faf1bf1ba4cef1193c42e533401bec4e65",
+      "canonical_git_blob_sha": "e82dfaecfd82b69b8aa5d0dd198535a5720b40fa"
+    },
+    {
+      "path": "src/lib/source.functions.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "812f9dfecac5932dd269f4d08ede9804065faafc",
+      "canonical_git_blob_sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "01de60dfb265c8648cef46f739ce6d6d96dcdb69",
+      "canonical_git_blob_sha": "390247798436e287a518dbbea30ca2e762b93f50"
+    },
+    {
+      "path": "src/components/tools/clinical-tool.tsx",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e0def64a8d588bff619e7702361b2c57b0c4af37",
+      "canonical_git_blob_sha": "ccdf2599d0dd21d930b2b7e95db44e6e8b7d037d"
+    },
+    {
+      "path": "src/lib/contract.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "e4775ae60914b6f787fa79fcbdb34a8ad56a197d",
+      "canonical_git_blob_sha": "f059f3d8fd4135b5aa22b65879aba568ab25b9c2"
+    },
+    {
+      "path": "src/lib/kernel-admit.test.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "0f1fb85ea9fd2d76e14cf41f259ea82a294fc4fe",
+      "canonical_git_blob_sha": "d551f2869154f686bec06760d5b28d5125e8a538"
+    },
+    {
+      "path": "src/lib/kernel-admit.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "1ef3e1600e03079540ddbdd0ad1ab712165ede44",
+      "canonical_git_blob_sha": "4251544045c70ee90cd2595c23900bf48084eb4a"
+    },
+    {
+      "path": "src/lib/template-contract.ts",
+      "decision": "SUPERSEDED_WITH_PROOF",
+      "source_git_blob_sha": "d4f3908f43c882a6173630967124398b0e181582",
+      "canonical_git_blob_sha": "84fd27e310b97acb3f0d54da5105d4f6a58f167b"
+    }
+  ],
+  "prior_holds": [
+    {
+      "path": "src/lib/auth/preview.ts",
+      "risk": "P0_SECURITY",
+      "decision": "HOLD_ISSUER_ROTATION_AND_HISTORY_SCAN",
+      "source_git_blob_sha": "b8822e87c83be13fb834714f53fb5a09d07588cd",
+      "canonical_git_blob_sha": "9346354e7510bebb9bde3651b1da148d7080854a",
+      "code_transition_observed": "Historical preview credential literal is absent from current source and replaced with a server environment variable. Never copy the credential value.",
+      "operational_evidence": "NO_ISSUER_REVOCATION_RECEIPT",
+      "related_issues": [
+        91,
+        92
+      ],
+      "security_incident_open": true,
+      "rights_state": "FIRST_PARTY_GIT_PROVENANCE_ONLY",
+      "why": "The old token remains in immutable historical Git objects and might still be valid at the issuer; a code diff or CI passing is insufficient to prove revocation, audience rotation or independent security review.",
+      "revisit_conditions": [
+        "issuer-authenticated revocation or rotation receipt with no secret bytes",
+        "all reachable Git history scanned and sanitized report",
+        "preview/issuer allowlist and credentials revalidated by authorized operator"
+      ],
+      "release_allowed": false,
+      "origin_issue": 113
+    },
+    {
+      "path": "src/lib/contract-index.generated.ts",
+      "risk": "P0_CLINICAL",
+      "source_git_blob_sha": "9708b014d6114b586a33b5eba6085280ddd30c56",
+      "canonical_git_blob_sha": "99255c97157d7cbfee29e670bd852dd3a7ec23ad",
+      "decision": "HOLD_CONTRACT_COMPLETENESS_AND_RIGHTS",
+      "origin_issue": 115,
+      "crosswalk_issue": 116,
+      "crosswalk_path": "registers/governance/ce-w26-grook-78-tools-crosswalk-20261121.v1.json",
+      "historical_tool_contract_items": 83,
+      "canonical_published_tool_contract_items": 5,
+      "old_only_ids": 78,
+      "of_which_candidates": 2,
+      "of_which_scope_review": 4,
+      "of_which_unmapped": 72,
+      "clinical_correctness": "NOT_VERIFIED",
+      "rights_state": "HOLD",
+      "regulatory_scope": "NOT_DETERMINED",
+      "reason": "Generated file shrunk sharply, reflecting an active runtime tools registry of five tools, not an audited disposition of 78 historical tool IDs. Two are currently candidateTools; other 76 require cross-source mapping. Do not presume 78 disappeared from entire ecosystem or restore them as published clinical resources.",
+      "release_allowed": false,
+      "clinical_approval": false
+    }
+  ],
+  "other_pending_paths": [
+    {
+      "path": ".gitignore",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "8f7fd077b4d8fd61238b6b452b51b24b41422fa3",
+      "baseline_git_blob_sha": "ba41cb8913e0fbbe50be389ba48836ecaf9d03fa",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/admin/registry.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "9f068cc0ceb2d626bc89d90594689b13a9962203",
+      "baseline_git_blob_sha": "8602fede9a520364fe56f167ff4e613ce9b06cff",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/areas.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "1b7fdc584d8a44c6b887fb1d641ede9d3af59239",
+      "baseline_git_blob_sha": "7425ab275f1b6a18be346aee790f2fca49b5ee28",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/related-content.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "a1270f39b0abe2fd0e4e17f311c4a479ae06e606",
+      "baseline_git_blob_sha": "c6a96f5524e4101a3d9fd4f833433df5c823d71e",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/site/shell.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ec9c61954bfbac5b5ff33a630a56cbac4d83bbc4",
+      "baseline_git_blob_sha": "d3a24f6267a13bd2c0259a26d2017282f357fd1d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/components/templates/contract-view.tsx",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "ee95cc2662bbb9698a2f58fd82119c40ae4e68cd",
+      "baseline_git_blob_sha": "a60136229d473b51503878446a73b4587f862c2d",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/ecosystem-audit.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "3376721a85fd3d39f94d2d38ef010eaa81ab5ac5",
+      "baseline_git_blob_sha": "c36d7b7e1d3e5a8904ceaa25ed040f01cfff75fb",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/focus-color-i18n.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "de43d9a4276c41410bc0521e5b8a004480f51a3f",
+      "baseline_git_blob_sha": "e24aee8e4458404265efc2fbfd30ac023abf0398",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/lib/sections.ts",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "6ead8e9e3926df7edb0fa0f929b04472f1f84c1b",
+      "baseline_git_blob_sha": "f7c08bdc6f20474799b0ab612c29ce7e35206073",
+      "decision": "PENDING_SEMANTIC"
+    },
+    {
+      "path": "src/styles.css",
+      "risk": "P1_UI",
+      "source_git_blob_sha": "84baefd591567ba69ab9e8b9152dfba6361b619d",
+      "baseline_git_blob_sha": "b8bd267f36fb6c6363f9ccd7cf3de4a478bca2ff",
+      "decision": "PENDING_SEMANTIC"
+    }
+  ],
+  "normative_sources": [
+    {
+      "authority": "W3C",
+      "identifier": "WCAG 2.2 SC 3.1.1 Language of Page",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html",
+      "relevance": "Language declaration and fallback must not falsely advertise clinical translations",
+      "release_clearance": false
+    },
+    {
+      "authority": "Vercel",
+      "identifier": "TanStack Start via Nitro",
+      "url": "https://vercel.com/docs/frameworks/full-stack/tanstack-start",
+      "relevance": "Framework support, not project-specific deploy proof",
+      "release_clearance": false
+    }
+  ],
+  "release": {
+    "owner_approval": "NOT_REQUESTED_DEFERRED",
+    "clinical_approval": false,
+    "secret_rotation_verified": false,
+    "production_deployment": false,
+    "preview_runtime_verified": false,
+    "remote_db_write": false,
+    "rights_clearance": false,
+    "regulatory_classification_final": false,
+    "branch_sealed": false,
+    "branch_deleted": false
+  },
+  "testing": {
+    "baseline_sha": "f49496b050b77c366d7614a717fdf29f97d47346",
+    "baseline_verify_run": 44906102074,
+    "postmerge_verify_required": true,
+    "adversarial_migration_test_required": true
+  }
+}

@@ -78,6 +78,8 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: G00 inventariar nove repositórios por SHA sem declarar scan de segredos
+        run: node scripts/ce-g00-ref-census-verify.mjs
       - name: Validar preset TanStack Start-Nitro na Vercel sem deploy
         run: node scripts/ce-vercel-nitro-config.mjs
       - name: Auditar 44 tarefas v6/legado por issue e bloquear falso encerramento

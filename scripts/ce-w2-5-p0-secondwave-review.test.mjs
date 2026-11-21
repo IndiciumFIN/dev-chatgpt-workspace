@@ -56,7 +56,7 @@ test("do not replace expanded canonical admin and governance CI or auth gate",()
  const verify=file(".github/workflows/verify-bibliotecas.yml").toString();
  assert.match(verify,/check-grok-workspace-intake/);
  assert.match(verify,/ce-legacy-reconcile/);
- assert.match(verify,/opa test/);
+ assert.match(verify,/opa"\s+test\s+--fail-on-empty/);
  const auth=file("src/lib/auth/client.ts").toString();
  assert.match(auth,/authEnabled\s*=\s*import\.meta\.env\.VITE_AUTH_ENABLED\s*===\s*"true"/);
  assert.equal(data.independent_review_complete,false);

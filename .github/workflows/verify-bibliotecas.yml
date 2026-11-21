@@ -78,6 +78,10 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: CE quarantine guard — inerte, hash exato e testes adversariais
+        run: |
+          node scripts/ce-quarantine-guard.mjs
+          node --test scripts/ce-quarantine-guard.test.mjs
       - name: G00 inventariar nove repositórios por SHA sem declarar scan de segredos
         run: node scripts/ce-g00-ref-census-verify.mjs
       - name: Validar preset TanStack Start-Nitro na Vercel sem deploy

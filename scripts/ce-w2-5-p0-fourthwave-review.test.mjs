@@ -9,7 +9,7 @@ const earlier=fourth.prior_review_paths.map(path=>JSON.parse(read(path)));
 const key=x=>x.path+"|"+x.source_blob_sha;
 const gitSha=bytes=>createHash("sha1").update("blob "+bytes.length+"\0").update(bytes).digest("hex");
 test("fourth P0 wave: all fifteen source rows anchored to Git-pinned W2.4 objects",()=>{
- const q=loadActionQueue(150);
+ const q=loadActionQueue(100);
  assert.deepEqual(fourth.inventoried_relations,{E:2839,C:229,D:70,S:0,T:4});
  assert.equal(fourth.nonidentical_source_files,74);
  assert.equal(fourth.p0_occurrences,15);

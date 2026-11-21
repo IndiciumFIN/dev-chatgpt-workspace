@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { PageHero } from "@/components/site/page-hero";
 import { SearchIcon, BookIcon, ChevronDownIcon, ChevronRightIcon, FilterIcon } from "lucide-react";
-import { FUN_FACTS_SEED, FUN_FACTS_TOTAL } from "@/lib/editorial/fun-facts.seed";
+import { PUBLIC_FUN_FACTS, FUN_FACTS_TOTAL } from "@/lib/editorial/fun-facts.public.generated";
 import {
   FACT_TYPE_LABELS,
   FACT_CATEGORY_LABELS,
@@ -34,7 +34,7 @@ function CuriosidadesPage() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return FUN_FACTS_SEED.filter((f) => {
+    return PUBLIC_FUN_FACTS.filter((f) => {
       // Public surface is release-only; candidate/HOLD records are never exposed by a visitor filter.
       if (f.status !== "RELEASED") return false;
       if (filterType !== "ALL" && f.fact_type !== filterType) return false;
@@ -49,7 +49,7 @@ function CuriosidadesPage() {
     });
   }, [query, filterType, filterCategory]);
 
-  const releasedCount = FUN_FACTS_SEED.filter((f) => f.status === "RELEASED").length;
+  const releasedCount = PUBLIC_FUN_FACTS.filter((f) => f.status === "RELEASED").length;
 
   return (
     <Shell>

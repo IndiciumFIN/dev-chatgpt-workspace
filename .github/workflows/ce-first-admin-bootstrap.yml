@@ -6,6 +6,9 @@ on:
       - 'scripts/ce-first-admin-bootstrap.test.mjs'
       - 'scripts/ce-source-tool-default-unpublished.test.mjs'
       - 'migrations/0059_source_tool_default_unpublished.sql'
+      - 'src/lib/db.ts'
+      - 'scripts/ce-db-deployment-guard.mjs'
+      - 'scripts/ce-db-deployment-guard.test.mjs'
       - '.github/workflows/ce-first-admin-bootstrap.yml'
   workflow_dispatch:
 permissions:
@@ -35,7 +38,7 @@ jobs:
       - name: Install locked packages
         run: npm ci
       - name: Run real disposable Postgres SQL bootstrap tests
-        run: node --test scripts/ce-first-admin-bootstrap.test.mjs scripts/ce-source-tool-default-unpublished.test.mjs
+        run: node --test scripts/ce-first-admin-bootstrap.test.mjs scripts/ce-source-tool-default-unpublished.test.mjs scripts/ce-db-deployment-guard.test.mjs
       - name: Run candidate OAuth and fail-closed auth guard tests
         run: node --test scripts/test-auth-secret-env.mjs scripts/check-auth-invariant.test.mjs
 # This never sets application roles in Neon/Supabase or tests a real OAuth session.

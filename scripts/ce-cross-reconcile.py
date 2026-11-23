@@ -68,10 +68,15 @@ def reconcile(inputs):
                 violations.append("DUPLICATE_IN_SOURCE:" + sid + ":" + row["canonical_key"])
             seen.add(pair)
             grouped[row["canonical_key"]].append(dict(row, source_id=sid))
+    # A global source-universe violation invalidates every per-object cross decision.
+    # Consumers must not be able to bypass HOLD by reading decisions alone.
+    global_issues = [v for v in violations if v.startswith((
+        "SOURCE_KIND_MISSING:", "SNAPSHOT_INCOMPLETE:"
+    ))]
     decisions = []
     for key, rows in sorted(grouped.items()):
         ids = {r["source_id"] for r in rows}
-        issues = []
+        issues = list(global_issues)
         classes = {r["artifact_class"] for r in rows}
         if len(classes) != 1:
             issues.append("CLASS_CONFLICT")

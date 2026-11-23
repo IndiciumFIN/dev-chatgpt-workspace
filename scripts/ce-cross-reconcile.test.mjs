@@ -72,6 +72,21 @@ test("missing Drive or incomplete pagination is never globally PASS", () => {
   inputs[1].cursor_exhausted = false;
   assert.equal(cross(inputs).code, 2);
 });
+test("global snapshot violations propagate HOLD to every object decision", () => {
+  const incomplete = clean();
+  incomplete[1].cursor_exhausted = false;
+  const r = cross(incomplete);
+  assert.equal(r.code, 2);
+  assert.equal(r.report.status, "HOLD_RECONCILIATION");
+  assert.equal(r.report.decisions[0].state, "HOLD");
+  assert.ok(r.report.decisions[0].issues.some(x => x.startsWith("SNAPSHOT_INCOMPLETE:")));
+  assert.equal(r.report.counts.cross_ok_not_release, 0);
+
+  const missing = cross(clean().slice(0, 2));
+  assert.equal(missing.code, 2);
+  assert.equal(missing.report.decisions[0].state, "HOLD");
+  assert.ok(missing.report.decisions[0].issues.some(x => x.startsWith("SOURCE_KIND_MISSING:")));
+});
 test("duplicate source objects, missing hashes, rights and single-source stay HOLD", () => {
   const dup = clean();
   dup[0].records.push(structuredClone(dup[0].records[0]));

@@ -72,6 +72,21 @@ test("missing Drive or incomplete pagination is never globally PASS", () => {
   inputs[1].cursor_exhausted = false;
   assert.equal(cross(inputs).code, 2);
 });
+test("global snapshot violations propagate HOLD to every object decision", () => {
+  const incomplete = clean();
+  incomplete[1].cursor_exhausted = false;
+  const r = cross(incomplete);
+  assert.equal(r.code, 2);
+  assert.equal(r.report.status, "HOLD_RECONCILIATION");
+  assert.equal(r.report.decisions[0].state, "HOLD");
+  assert.ok(r.report.decisions[0].issues.some(x => x.startsWith("SNAPSHOT_INCOMPLETE:")));
+  assert.equal(r.report.counts.cross_ok_not_release, 0);
+
+  const missing = cross(clean().slice(0, 2));
+  assert.equal(missing.code, 2);
+  assert.equal(missing.report.decisions[0].state, "HOLD");
+  assert.ok(missing.report.decisions[0].issues.some(x => x.startsWith("SOURCE_KIND_MISSING:")));
+});
 test("duplicate source objects, missing hashes, rights and single-source stay HOLD", () => {
   const dup = clean();
   dup[0].records.push(structuredClone(dup[0].records[0]));
@@ -89,6 +104,28 @@ test("duplicate source objects, missing hashes, rights and single-source stay HO
   only[1].records = [];
   only[2].records = [];
   assert.ok(cross(only).report.decisions[0].issues.includes("SOURCE_ONLY"));
+});
+test("denied, expired, or unknown rights cannot be treated as cleared", () => {
+  for (const state of ["DENIED", "EXPIRED", "REVOKED", "UNLICENSED", "NOT_APPLICABLE"]) {
+    const inputs = clean();
+    inputs[2].records[0].rights_state = state;
+    const result = cross(inputs);
+    assert.equal(result.code, 2, state);
+    assert.equal(result.report.decisions[0].state, "HOLD", state);
+    assert.ok(result.report.decisions[0].issues.includes("RIGHTS_NOT_CLEARED"), state);
+  }
+});
+test("omitted or empty expected-source declarations remain HOLD", () => {
+  for (const missing of [true, false]) {
+    const inputs = clean();
+    for (const src of inputs) {
+      if (missing) delete src.records[0].expected_source_ids;
+      else src.records[0].expected_source_ids = [];
+    }
+    const result = cross(inputs);
+    assert.equal(result.code, 2);
+    assert.ok(result.report.decisions[0].issues.includes("REQUIRED_SOURCES_UNDECLARED"));
+  }
 });
 test("misaligned mapping or expected-source sets cannot silently pass", () => {
   const inputs = clean();

@@ -14,7 +14,7 @@ REQUIRED = {"source_id", "source_kind", "snapshot_ref", "complete", "cursor_exha
 FIELDS = {"canonical_key", "record_ref", "artifact_class", "rights_state"}
 HASH = re.compile(r"^[0-9a-f]{64}$")
 BLOB = re.compile(r"^[0-9a-f]{40}$")
-RIGHTS_HOLD = {"UNKNOWN", "UNRESOLVED", "NOT_VERIFIED", "PENDING", "BLOCKED", "HOLD"}
+RIGHTS_CLEARED = {"CLEARED"}
 
 
 def snapshot(path):
@@ -68,16 +68,23 @@ def reconcile(inputs):
                 violations.append("DUPLICATE_IN_SOURCE:" + sid + ":" + row["canonical_key"])
             seen.add(pair)
             grouped[row["canonical_key"]].append(dict(row, source_id=sid))
+    # A global source-universe violation invalidates every per-object cross decision.
+    # Consumers must not be able to bypass HOLD by reading decisions alone.
+    global_issues = [v for v in violations if v.startswith((
+        "SOURCE_KIND_MISSING:", "SNAPSHOT_INCOMPLETE:"
+    ))]
     decisions = []
     for key, rows in sorted(grouped.items()):
         ids = {r["source_id"] for r in rows}
-        issues = []
+        issues = list(global_issues)
         classes = {r["artifact_class"] for r in rows}
         if len(classes) != 1:
             issues.append("CLASS_CONFLICT")
         requirements = {tuple(sorted(set(r.get("expected_source_ids", [])))) for r in rows}
         if len(requirements) != 1:
             issues.append("REQUIRED_SOURCE_DISAGREEMENT")
+        if any(not requirement for requirement in requirements):
+            issues.append("REQUIRED_SOURCES_UNDECLARED")
         required_ids = set().union(*(set(v) for v in requirements))
         if required_ids - ids:
             issues.append("SOURCE_MISSING:" + ",".join(sorted(required_ids - ids)))
@@ -93,7 +100,7 @@ def reconcile(inputs):
             issues.append("CONTENT_SHA256_MISSING")
         if len(bytesets) > 1:
             issues.append("BYTES_DIFFER_REVIEW")
-        if any(r["rights_state"].upper() in RIGHTS_HOLD for r in rows):
+        if any(r["rights_state"].strip().upper() not in RIGHTS_CLEARED for r in rows):
             issues.append("RIGHTS_NOT_CLEARED")
         if any(r.get("admitted") is True for r in rows):
             issues.append("ADMISSION_CLAIM_REVIEW")

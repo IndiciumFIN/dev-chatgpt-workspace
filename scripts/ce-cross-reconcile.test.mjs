@@ -105,6 +105,28 @@ test("duplicate source objects, missing hashes, rights and single-source stay HO
   only[2].records = [];
   assert.ok(cross(only).report.decisions[0].issues.includes("SOURCE_ONLY"));
 });
+test("denied, expired, or unknown rights cannot be treated as cleared", () => {
+  for (const state of ["DENIED", "EXPIRED", "REVOKED", "UNLICENSED", "NOT_APPLICABLE"]) {
+    const inputs = clean();
+    inputs[2].records[0].rights_state = state;
+    const result = cross(inputs);
+    assert.equal(result.code, 2, state);
+    assert.equal(result.report.decisions[0].state, "HOLD", state);
+    assert.ok(result.report.decisions[0].issues.includes("RIGHTS_NOT_CLEARED"), state);
+  }
+});
+test("omitted or empty expected-source declarations remain HOLD", () => {
+  for (const missing of [true, false]) {
+    const inputs = clean();
+    for (const src of inputs) {
+      if (missing) delete src.records[0].expected_source_ids;
+      else src.records[0].expected_source_ids = [];
+    }
+    const result = cross(inputs);
+    assert.equal(result.code, 2);
+    assert.ok(result.report.decisions[0].issues.includes("REQUIRED_SOURCES_UNDECLARED"));
+  }
+});
 test("misaligned mapping or expected-source sets cannot silently pass", () => {
   const inputs = clean();
   inputs[2].records[0].canonical_key = "ce:tool:other";

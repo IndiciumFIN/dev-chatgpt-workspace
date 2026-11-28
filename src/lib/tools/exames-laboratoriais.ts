@@ -30,37 +30,7 @@ export function examesPorCategoria(categoria: string) {
  * vale para todos. Devolve `indisponivel` quando o exame nao tem faixa — e
  * honesto dizer que nao sabemos, em vez de inventar um valor.
  */
-export function interpretar(
-  exame: Exame,
-  valor: number,
-  genero: "homem" | "mulher" | "nao-binario" | "nao-informado",
-) {
-  const r = exame.ref;
-  const porSexo = r.porSexo && (genero === "homem" || genero === "mulher");
-  const min = porSexo ? (genero === "homem" ? r.minH : r.minM) : r.min;
-  const max = porSexo ? (genero === "homem" ? r.maxH : r.maxM) : r.max;
-
-  // Faixa PARCIAL e o caso perigoso: o Colesterol HDL vem com minimo e sem
-  // maximo. Dizer "na faixa" ali seria afirmar que o valor esta dentro de um
-  // intervalo que a base nao declara. A ferramenta diz so o que sabe.
-  if (min === null && max === null) {
-    return { situacao: "indisponivel" as const, cobertura: "nenhuma" as const, min, max, unidade: r.unidade };
-  }
-  // A COBERTURA vem do intervalo, nao do ramo: uma faixa so com minimo
-  // continua parcial mesmo quando o resultado saiu "abaixo".
-  const cobertura = min === null || max === null ? "parcial" : "completa";
-  if (min !== null && valor < min) {
-    return { situacao: "abaixo" as const, cobertura, min, max, unidade: r.unidade };
-  }
-  if (max !== null && valor > max) {
-    return { situacao: "acima" as const, cobertura, min, max, unidade: r.unidade };
-  }
-  return {
-    situacao: max === null ? ("acima-do-minimo" as const) : ("na-faixa" as const),
-    cobertura: max === null ? ("parcial-sem-maximo" as const) : "completa",
-    min, max, unidade: r.unidade,
-  };
-}
+export { interpretar } from "./exames-reference";
 
 /**
  * Os 149 exames, como select da ferramenta — gerados da base, nunca a mao.

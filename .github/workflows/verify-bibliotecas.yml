@@ -172,6 +172,19 @@ jobs:
           git fetch --no-tags --depth=1 origin 3f004049945ebaa50e4efee313092974b83a5bf2
           node scripts/ce-r83-historical-source-replay.mjs
       - run: npm test
+      - name: Public lab library browser regression (synthetic only, no deploy)
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/with-app-env.mjs vite dev --host 127.0.0.1 --port 4173 > /tmp/ce-lab-vite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 50); do
+            if ! kill -0 "$server_pid" 2>/dev/null; then cat /tmp/ce-lab-vite.log; exit 1; fi
+            if curl -fsS http://127.0.0.1:4173/exames-laboratoriais -o /dev/null 2>/dev/null; then break; fi
+            sleep 2
+          done
+          curl --fail http://127.0.0.1:4173/exames-laboratoriais -o /dev/null
+          node scripts/ce-lab-public-e2e.mjs
       - run: node scripts/audit-execution-gates.mjs
       - name: Simular exclusões do upload Vercel após testes completos
         run: |

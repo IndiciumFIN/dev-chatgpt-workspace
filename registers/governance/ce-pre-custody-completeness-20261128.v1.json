@@ -1,0 +1,84 @@
+{
+  "protocol": "CE.PRE.CUSTODY.COMPLETENESS.v1",
+  "date": "2026-11-28",
+  "baseline": "30e500beb692c9180a4032fa6551487cc1664291",
+  "decision": "User requires earlier activity completion before custody; no source retirement.",
+  "review": [
+    {
+      "scope": "Historical corpus reconciliation",
+      "state": "MERGED_POSTMERGE_PENDING",
+      "pr": 188
+    },
+    {
+      "scope": "7 current tools",
+      "state": "ENGINE_TESTS_PASS_UI_E2E_INCOMPLETE",
+      "pr": 181
+    },
+    {
+      "scope": "Public lab library 149",
+      "issue": 82,
+      "state": "TECHNICAL_PATCH_PENDING_CI",
+      "findings": [
+        "parseFloat accepts trailing garbage",
+        "missing sex defaults to H",
+        "single-sided bounds wrongly classified as normal",
+        "candidate comparator also misclassifies maximum-only bounds"
+      ],
+      "changes": "Strict parser, explicit missing sex, shared pure reference comparator, partial bounds, synthetic unit and browser tests; reference dataset unchanged",
+      "clinical_provenance": "HOLD_PER_EXAM",
+      "clinical_review": "HOLD",
+      "regulatory_review": "HOLD"
+    },
+    {
+      "scope": "78 historical IDs",
+      "issue": 116,
+      "state": "OPEN_CROSS_SOURCE_MAPPING",
+      "historical_only": 78,
+      "candidate": 2,
+      "scope_review": 4,
+      "unmapped": 72
+    },
+    {
+      "scope": "CKO intake",
+      "issue": 69,
+      "state": "OPEN_SOURCE_AND_SCHEMA_ACCEPTANCE"
+    },
+    {
+      "scope": "NCOS 17 source snapshots",
+      "issues": [
+        59,
+        63,
+        65
+      ],
+      "state": "OPEN_EDITION_IDENTITY_AND_REVIEW"
+    },
+    {
+      "scope": "NCOS 15-theme library",
+      "issue": 61,
+      "state": "OPEN_BYTES_AND_RIGHTS"
+    },
+    {
+      "scope": "NCOS regulatory links",
+      "issue": 60,
+      "state": "OPEN_16_PROVISION_MAPPING"
+    },
+    {
+      "scope": "Operational DB and identity",
+      "issues": [
+        80,
+        79,
+        92,
+        25
+      ],
+      "state": "OPEN_EXTERNAL_EVIDENCE"
+    }
+  ],
+  "controls": {
+    "custody_advance": false,
+    "source_ref_deletion": false,
+    "release": false,
+    "db_write": false,
+    "rights_clearance": false
+  },
+  "note": "Issue bodies may be historical; review current canonical evidence and comments before declaring unresolved counts or closure. No total project percentage inferred."
+}

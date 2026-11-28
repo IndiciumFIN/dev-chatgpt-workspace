@@ -121,3 +121,25 @@ test("source code does not call mutating Git checkout, merge, reset, push, fetch
  assert.match(s,/--private-diff/);assert.match(s,/--strict-heads/);
  assert.match(s,/--no-renames/);assert.match(s,/ls-tree/);
 });
+
+test("explicit cohort coverage cannot silently accept extra or missing remote refs",()=>{
+ const f=mkfixture();
+ const out=mkdtempSync(join(tmpdir(),"ce-cohort-drift-"));
+ try{
+  git(f.root,"update-ref","refs/remotes/origin/main",f.main);
+  git(f.root,"update-ref","refs/remotes/origin/legacy",f.source);
+  git(f.root,"update-ref","refs/remotes/origin/unlisted",f.source);
+  git(f.root,"update-ref","refs/remotes/origin/wutrib/isolated",f.source);
+  const cohort=join(f.root,"scope.json");
+  writeFileSync(cohort,JSON.stringify({protocol:"CE.BRANCH.COHORT.v1",counts:{ce:2},main_sha:f.main,
+    branches:[{name:"legacy",sha:f.source},{name:"missing",sha:f.source}]}));
+  const proc=spawnSync("python3",[script,"--repo",f.root,"--main","refs/remotes/origin/main",
+    "--cohort",cohort,"--out",out,"--strict-heads"],{encoding:"utf8",timeout:30000});
+  assert.equal(proc.status,2,proc.stderr);
+  const idx=JSON.parse(readFileSync(join(out,"index.json"),"utf8"));
+  assert.equal(idx.incomplete,true);
+  assert.deepEqual(idx.cohort_missing_remote_refs,["missing"]);
+  assert.deepEqual(idx.cohort_new_remote_refs,["unlisted"]);
+  assert.equal(idx.seal_branch,false);
+ }finally{rmSync(out,{recursive:true,force:true});rmSync(f.root,{recursive:true,force:true})}
+});

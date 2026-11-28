@@ -32,7 +32,7 @@ jobs:
           set -euo pipefail
           git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
           test "$(git for-each-ref --format='%(refname)' refs/remotes/origin | grep -c '^refs/remotes/origin/' || :)" -ge 55
-      - name: Gerar 54 manifestos de todos os paths Git, sem diff textual sensível
+      - name: Gerar manifestos do escopo CE declarado de todos os paths Git, sem diff textual sensível
         shell: bash
         run: |
           set -euo pipefail
@@ -41,7 +41,7 @@ jobs:
             --repo . --main refs/remotes/origin/main \
             --cohort registers/governance/ce-branch-live-cohort-20261121.v1.json \
             --jobs 4 --out "$RUNNER_TEMP/ce-branch-path-manifests"
-      - name: Validar cobertura 54/54, SHA256 de todos os gzip e zero promoção
+      - name: Validar cobertura integral declarada, SHA256 de todos os gzip e zero promoção
         shell: bash
         env:
           CE_OUT: ${{ runner.temp }}/ce-branch-path-manifests
@@ -53,8 +53,14 @@ jobs:
           out=Path(os.environ['CE_OUT'])
           idx=json.loads((out/'index.json').read_text())
           assert idx['protocol']=='CE.BRANCH.RUN.INDEX.v1'
-          assert idx['requested']==54 and idx['generated']==54 and idx['cohort_count']==54
-          assert len(idx['branches'])==54 and idx['seal_branch'] is False
+          cohort=json.loads(Path('registers/governance/ce-branch-live-cohort-20261121.v1.json').read_text())
+          expected=cohort['counts']['ce']
+          names=[r['name'] for r in cohort['branches']]
+          assert type(expected) is int and expected>0 and len(names)==len(set(names))==expected
+          assert all(n!='main' and not n.startswith('wutrib/') for n in names)
+          assert idx['requested']==expected and idx['generated']==expected and idx['cohort_count']==expected
+          assert len(idx['branches'])==expected and idx['seal_branch'] is False
+          assert sorted(b['branch'] for b in idx['branches'])==sorted(names), 'manifest refset differs from approved cohort'
           assert idx['local_remote_ref_coverage_checked'] is True
           assert idx['cohort_missing_remote_refs']==[], 'cohort branch absent locally'
           assert idx['cohort_new_remote_refs']==[], 'new CE refs need explicit scope update'
@@ -74,7 +80,7 @@ jobs:
               assert all(p['decision'].get('justification') and p['decision'].get('tests_evidence') for p in m['paths'])
               total+=len(m['paths'])
           assert total==idx['total_union_path_instances']
-          print('PASS: 54 manifests, full path coverage, immutable SHA256 and no auto SEALED')
+          print(f'PASS: {expected} manifests, full path coverage, immutable SHA256 and no auto SEALED')
           if idx['incomplete']:
               print('HOLD: head drift relative to historical cohort snapshot. Refresh evidence before closure.')
           PY
@@ -82,7 +88,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: ce-branch-54-path-manifests-${{ github.run_id }}
+          name: ce-branch-path-manifests-${{ github.run_id }}
           path: ${{ runner.temp }}/ce-branch-path-manifests/
           if-no-files-found: warn
           retention-days: 7

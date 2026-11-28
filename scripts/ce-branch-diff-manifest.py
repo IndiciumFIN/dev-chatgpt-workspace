@@ -258,7 +258,7 @@ def main(argv: list[str] | None=None) -> int:
     ap.add_argument("--main",default="main",help="main Git ref; e.g. refs/remotes/origin/main")
     ap.add_argument("--remote",default="origin")
     ap.add_argument("--branch",action="append",help="repeatable branch name/ref")
-    ap.add_argument("--cohort",type=Path,help="versioned JSON cohort with 54 CE branch SHA observations")
+    ap.add_argument("--cohort",type=Path,help="versioned JSON cohort with explicitly approved CE branch SHA observations")
     ap.add_argument("--out",type=Path,required=True,help="directory OUTSIDE checkout; private 0700")
     ap.add_argument("--private-diff",action="store_true",help="write PRIVATE patch with actual source content, never upload")
     ap.add_argument("--decisions-dir",type=Path,help="per-branch proposed decisions; never auto-approved")

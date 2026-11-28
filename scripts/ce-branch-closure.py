@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import json
+import hashlib
 from pathlib import Path
 import re
 import sys
@@ -82,12 +83,67 @@ def validate_proof(row: dict, by_name: dict[str, dict]) -> None:
 
 
 
-def validate_retirement(ledger: dict) -> None:
-    """Validate candidate-only live extension; never authorize deletion."""
+def read_retirement_evidence(pointer: object, root: Path) -> dict:
+    if not isinstance(pointer, dict) or not looks_sha(pointer.get("sha256"), SHA256):
+        fail("retirement: missing hashed evidence")
+    relative = pointer.get("path")
+    if not isinstance(relative, str) or not re.fullmatch(r"audit/branch-retirement/[a-zA-Z0-9_.-]+[.]json", relative):
+        fail("retirement: invalid evidence path")
+    path = (root / relative).resolve()
+    if not path.is_relative_to(root.resolve() / "audit" / "branch-retirement"):
+        fail("retirement: evidence path escapes audit directory")
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != pointer["sha256"]:
+        fail("retirement: evidence hash mismatch")
+    data = json.loads(raw)
+    if not isinstance(data, dict):
+        fail("retirement: invalid evidence object")
+    return data
+
+
+def verify_technical_evidence(row: dict, cohort: dict, root: Path) -> None:
+    proof = read_retirement_evidence(row.get("eligibility_evidence"), root)
+    name, sha = row["branch"], row["source_sha"]
+    if (proof.get("protocol") != "CE.BRANCH.RETIREMENT.EVIDENCE.v1"
+            or proof.get("branch") != name or proof.get("source_sha") != sha
+            or proof.get("main_sha") != cohort["main_sha"]
+            or proof.get("main_tree_sha") != cohort["main_tree_sha"]
+            or proof.get("merge_base_sha") != sha
+            or type(proof.get("exclusive_commits")) is not int or proof["exclusive_commits"] != 0
+            or proof.get("authorization_ref") != cohort["authorization_ref"]):
+        fail("retirement: evidence identity or ancestry mismatch")
+    gates = proof.get("gates")
+    required = {"DEPENDENCIES_FULL", "RETENTION", "SECURITY_RIGHTS", "MAIN_LEDGER_CI"}
+    if not isinstance(gates, dict) or set(gates) != required:
+        fail("retirement: evidence gate set incomplete")
+    for name_gate in required:
+        gate = gates[name_gate]
+        if (not isinstance(gate, dict) or gate.get("state") != "PASS"
+                or not isinstance(gate.get("evidence_ref"), str) or not gate["evidence_ref"].strip()
+                or not isinstance(gate.get("reviewer"), str) or not gate["reviewer"].strip()):
+            fail("retirement: missing passed gate " + name_gate)
+    if row["state"] == "RETIREMENT_ELIGIBLE":
+        if "retirement_receipt" in row:
+            fail("retirement: receipt before retirement")
+        return
+    receipt = read_retirement_evidence(row.get("retirement_receipt"), root)
+    if (receipt.get("protocol") != "CE.BRANCH.RETIREMENT.RECEIPT.v1"
+            or receipt.get("branch") != name or receipt.get("expected_sha") != sha
+            or receipt.get("eligibility_sha256") != row["eligibility_evidence"]["sha256"]
+            or receipt.get("method") != "GIT_FORCE_WITH_LEASE_DELETE"
+            or receipt.get("remote_ref_absent") is not True
+            or receipt.get("main_preserved") is not True
+            or not looks_sha(receipt.get("post_main_sha"), SHA1)
+            or not isinstance(receipt.get("execution_ref"), str) or not receipt["execution_ref"].strip()):
+        fail("retirement: invalid conditional deletion receipt")
+
+
+def validate_retirement(ledger: dict, evidence_root: Path = Path(".")) -> None:
+    """Validate recorded technical states; never authorize or perform deletion."""
     if "technical_retirement" not in ledger:
         fail("retirement: missing live extension")
     obj = ledger["technical_retirement"]
-    if not isinstance(obj, dict) or obj.get("protocol") != "CE.BRANCH.RETIREMENT.v1" or obj.get("phase") != "CANDIDATE_ONLY":
+    if not isinstance(obj, dict) or obj.get("protocol") != "CE.BRANCH.RETIREMENT.v1" or obj.get("phase") not in {"CANDIDATE_ONLY", "EVIDENCE_VERIFIED"}:
         fail("retirement: invalid protocol or phase")
     if obj.get("authorization_ref") != "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231593810":
         fail("retirement: authorization reference missing")
@@ -109,10 +165,10 @@ def validate_retirement(ledger: dict) -> None:
         if not looks_sha(row.get("source_sha"), SHA1):
             fail("retirement: missing source SHA")
         state = row.get("state")
-        if state not in ("PENDING_EVIDENCE", "RETIREMENT_CANDIDATE"):
+        if state not in ("PENDING_EVIDENCE", "RETIREMENT_CANDIDATE", "RETIREMENT_ELIGIBLE", "RETIRED_TECHNICAL"):
             fail("retirement: higher states not supported without proof verifier")
         counts[state] += 1
-        if state == "RETIREMENT_CANDIDATE":
+        if state in ("RETIREMENT_CANDIDATE", "RETIREMENT_ELIGIBLE", "RETIRED_TECHNICAL"):
             proof = row.get("structural_evidence")
             if not isinstance(proof, dict) or proof.get("kind") not in ("ANCESTOR", "IDENTICAL_TREE", "DELTA_BLOB_MODE_PRESERVED") or proof.get("main_sha") != obj["main_sha"] or not isinstance(proof.get("evidence_ref"), str) or not proof["evidence_ref"].startswith("https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-"):
                 fail("retirement: missing structural evidence")
@@ -120,18 +176,25 @@ def validate_retirement(ledger: dict) -> None:
             required = {"DEPENDENCIES_FULL", "RETENTION", "SECURITY_RIGHTS", "MAIN_LEDGER_CI"}
             if proof["kind"] != "ANCESTOR":
                 required.add("EXCLUSIVE_HISTORY_RECOVERY")
-            if not isinstance(blockers, list) or not required.issubset(set(blockers)):
-                fail("retirement: missing blocking checks")
+            if state == "RETIREMENT_CANDIDATE":
+                if not isinstance(blockers, list) or not required.issubset(set(blockers)):
+                    fail("retirement: missing blocking checks")
+                if "eligibility_evidence" in row or "retirement_receipt" in row:
+                    fail("retirement: premature evidence state")
+            else:
+                if obj["phase"] != "EVIDENCE_VERIFIED" or blockers != [] or proof["kind"] != "ANCESTOR":
+                    fail("retirement: higher states require evidence phase, zero blockers and ancestor proof")
+                verify_technical_evidence(row, obj, evidence_root)
             if proof["kind"] == "DELTA_BLOB_MODE_PRESERVED":
                 n, q = proof.get("delta_paths"), proof.get("quarantined_paths")
                 if type(n) is not int or n <= 0 or type(q) is not int or not 0 <= q <= n:
                     fail("retirement: invalid delta counts")
-        elif "structural_evidence" in row:
+        elif any(k in row for k in ("structural_evidence", "eligibility_evidence", "retirement_receipt")):
             fail("retirement: inconsistent pending evidence")
     live = obj.get("live_counts")
-    if not isinstance(live, dict) or any(type(live.get(k)) is not int or live[k] < 0 for k in ("all", "ce", "wutrib", "main")) or live["ce"] != len(rows) or live["main"] != 1 or live["all"] != live["ce"] + live["wutrib"] + live["main"]:
+    if not isinstance(live, dict) or any(type(live.get(k)) is not int or live[k] < 0 for k in ("all", "ce", "wutrib", "main")) or live["ce"] != len(rows) - counts["RETIRED_TECHNICAL"] or live["main"] != 1 or live["all"] != live["ce"] + live["wutrib"] + live["main"]:
         fail("retirement: live cohort count drift")
-    expected = {"candidates": counts["RETIREMENT_CANDIDATE"], "pending": counts["PENDING_EVIDENCE"], "eligible": 0, "retired": 0}
+    expected = {"candidates": counts["RETIREMENT_CANDIDATE"], "pending": counts["PENDING_EVIDENCE"], "eligible": counts["RETIREMENT_ELIGIBLE"], "retired": counts["RETIRED_TECHNICAL"]}
     actual = obj.get("counts")
     if not isinstance(actual, dict) or any(type(actual.get(k)) is not int for k in expected) or actual != expected:
         fail("retirement: state count drift")
@@ -225,11 +288,12 @@ def main() -> int:
     p.add_argument("--ledger", type=Path, default=Path(LEDGER))
     p.add_argument("--require-closed", action="store_true")
     p.add_argument("--retirement-cohort", type=Path, default=Path("registers/governance/ce-branch-live-cohort-20261121.v1.json"))
+    p.add_argument("--evidence-root", type=Path, default=Path("."))
     args = p.parse_args()
     try:
         j = json.loads(args.ledger.read_text(encoding="utf-8"))
         result = validate(j, args.require_closed)
-        validate_retirement(json.loads(args.retirement_cohort.read_text(encoding="utf-8")))
+        validate_retirement(json.loads(args.retirement_cohort.read_text(encoding="utf-8")), args.evidence_root)
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as err:

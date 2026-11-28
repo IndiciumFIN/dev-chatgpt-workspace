@@ -1,0 +1,180 @@
+{
+  "protocol": "CE.JSON.INVENTORY.RETIREMENT.PREFLIGHT.v1",
+  "date": "2026-11-28",
+  "phase": "DEVELOPMENT",
+  "baseline": "aff80aa0220d3356de3d0341b47e17c81b24ff66",
+  "census": {
+    "all": 73,
+    "ce": 58,
+    "wutrib": 14,
+    "main": 1,
+    "open_prs": 31
+  },
+  "priority_retirement": [
+    {
+      "branch": "archivamento",
+      "sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "ahead": 0,
+      "behind": 784,
+      "merge_base": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "protected": false,
+      "open_pr_dependencies": [],
+      "state": "RETIREMENT_CANDIDATE",
+      "remaining": [
+        "DEPENDENCIES_FULL",
+        "RETENTION",
+        "SECURITY_RIGHTS",
+        "MAIN_LEDGER_CI",
+        "INDEPENDENT_REVIEW",
+        "AUTHENTICATED_CONDITIONAL_DELETE"
+      ]
+    },
+    {
+      "branch": "planning",
+      "sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "ahead": 0,
+      "behind": 784,
+      "merge_base": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "protected": false,
+      "open_pr_dependencies": [],
+      "state": "RETIREMENT_CANDIDATE",
+      "remaining": [
+        "DEPENDENCIES_FULL",
+        "RETENTION",
+        "SECURITY_RIGHTS",
+        "MAIN_LEDGER_CI",
+        "INDEPENDENT_REVIEW",
+        "AUTHENTICATED_CONDITIONAL_DELETE"
+      ]
+    },
+    {
+      "branch": "fix/ce-admin-e2e-hierarchy-20261101",
+      "sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+      "ahead": 0,
+      "behind": 455,
+      "merge_base": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+      "protected": false,
+      "open_pr_dependencies": [],
+      "state": "RETIREMENT_CANDIDATE",
+      "remaining": [
+        "DEPENDENCIES_FULL",
+        "RETENTION",
+        "SECURITY_RIGHTS",
+        "MAIN_LEDGER_CI",
+        "INDEPENDENT_REVIEW",
+        "AUTHENTICATED_CONDITIONAL_DELETE"
+      ]
+    }
+  ],
+  "main_ci_at_observation": [
+    {
+      "name": "verify",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/actions/runs/46137812823/job/140956949496"
+    }
+  ],
+  "json_inventory": {
+    "method": "Untruncated recursive trees for five source tips, corresponding merge bases and main; deduplicate missing entries by mode:sha; classify by first two components of lexicographically first path, not content schema",
+    "unique_all": 13438,
+    "json": 11615,
+    "groups": 40,
+    "leading_groups": [
+      [
+        "artifacts/fonte",
+        8254
+      ],
+      [
+        "src/data",
+        1588
+      ],
+      [
+        "registers/i18n",
+        1257
+      ],
+      [
+        "_archive/download",
+        162
+      ],
+      [
+        "imports/drive-snapshots",
+        150
+      ],
+      [
+        "_archive/schemas",
+        44
+      ],
+      [
+        "_archive/docs",
+        37
+      ],
+      [
+        "_archive/audit-evidence",
+        30
+      ],
+      [
+        "audit/audit-evidence",
+        15
+      ],
+      [
+        "_archive/audit",
+        10
+      ]
+    ],
+    "sample": {
+      "requested": 8,
+      "parse_ok": 7,
+      "parse_not_verified": 1,
+      "failed_path": "artifacts/fonte/catalogo.json",
+      "failure": "Unexpected end of JSON input in connector return; source invalidity not established",
+      "families": [
+        "audit_summary",
+        "asset_binding_manifest",
+        "i18n_candidate_bundle",
+        "i18n_translation_record",
+        "JSON Schema API contract",
+        "JSON Schema career dossier",
+        "clinical editorial array"
+      ],
+      "limits": "Sample only; no extrapolated validity or rights clearance. Full parse and schema validation pending."
+    },
+    "staged": [
+      {
+        "id": "CE-LOT30-JSON-SCHEMA-1",
+        "source_repository": "IndiciumFIN/dev-chatgpt-workspace",
+        "source_ref": "fix/pendencias-camadas-20261101",
+        "source_commit_sha": "949423ef555f40d5e6538b3d7bf2fa4b0c9051e3",
+        "source_path": "_archive/schemas/api-contract.schema.json",
+        "source_git_blob_sha": "eb99fb0a1d8560546c8b5776a53e544ab849bb08",
+        "source_mode": "100755",
+        "destination": "_quarantine/ce/kernel/lot30-json-schemas/api-contract.schema.json",
+        "state": "STAGED_PENDING_REVIEW",
+        "classification": "PUBLIC_GIT_SOURCE_CANDIDATE",
+        "clinical_rights": "NO_RUNTIME_ADMISSION",
+        "runtime_admission": false,
+        "release_eligible": false,
+        "lifecycle_rule": "PROMOTE_OR_REJECT_WITH_EVIDENCE_THEN_DELETE_QUARANTINE_COPY_IN_SAME_PR"
+      },
+      {
+        "id": "CE-LOT30-JSON-SCHEMA-2",
+        "source_repository": "IndiciumFIN/dev-chatgpt-workspace",
+        "source_ref": "fix/pendencias-camadas-20261101",
+        "source_commit_sha": "949423ef555f40d5e6538b3d7bf2fa4b0c9051e3",
+        "source_path": "_archive/schemas/career-admission-dossier.schema.json",
+        "source_git_blob_sha": "aa197fadc744240545a9ac4ab15553bfb2e212ff",
+        "source_mode": "100644",
+        "destination": "_quarantine/ce/kernel/lot30-json-schemas/career-admission-dossier.schema.json",
+        "state": "STAGED_PENDING_REVIEW",
+        "classification": "PUBLIC_GIT_SOURCE_CANDIDATE",
+        "clinical_rights": "NO_RUNTIME_ADMISSION",
+        "runtime_admission": false,
+        "release_eligible": false,
+        "lifecycle_rule": "PROMOTE_OR_REJECT_WITH_EVIDENCE_THEN_DELETE_QUARANTINE_COPY_IN_SAME_PR"
+      }
+    ],
+    "policy": "Do not bulk copy source-derived corpora, private snapshots, or clinical editorial content without review. JSON syntax != schema validity != rights clearance."
+  },
+  "retirement": "HOLD",
+  "release": false,
+  "runtime_admission": false
+}

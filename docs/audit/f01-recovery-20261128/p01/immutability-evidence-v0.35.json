@@ -1,0 +1,34 @@
+{
+  "version": "0.35",
+  "package": "F01/P01",
+  "source": "supabase_extract_out_20261128.zip functions.csv, triggers.csv, constraints.csv",
+  "functions_scanned": 341,
+  "triggers_scanned": 186,
+  "target_triggers": 6,
+  "after_update_audit": 2,
+  "before_delete_guards": 2,
+  "before_truncate_guards": 2,
+  "before_update_guards": 0,
+  "audit_function_md5": "c0c9dd6210dfa78e8b8e23e07edc8d55",
+  "destructive_guard_md5": "aa5afecf48681b689579e3c3f1c474d2",
+  "direct_update_text_matches": [
+    {
+      "name": "run_md_audit_8l_v1",
+      "md5": "7c9c9b5b2b57d0fc29f1cdb408410782"
+    },
+    {
+      "name": "run_md_audit_8l_v2",
+      "md5": "79b73141bc4b908844f0d0005dbf7bfb"
+    }
+  ],
+  "candidate_commit": "836d977f5ce01c1602fc80f86f805e41c6aaf228",
+  "scope": "Layer identity only; preserve existing audit and destructive controls; no override path introduced.",
+  "sql_executed": false,
+  "limitations": "Static structural export; effective permissions and indirect/dynamic writers not established. Candidate SQL not executed. Test coverage only canonical key mutation and no-op update; UUID and type changes need negative tests before admission.",
+  "checklist": {
+    "executed": 8,
+    "total": 12
+  },
+  "status": "HOLD",
+  "next_package": false
+}

@@ -1,0 +1,110 @@
+{
+  "protocol": "CE.I18N.CONTENT.DISPOSITION.v1",
+  "date": "2026-11-28",
+  "phase": "DEVELOPMENT",
+  "baseline": "f308cf4e46a4216b76c27a431ce48f3c2504cbcc",
+  "previous": "registers/governance/ce-i18n-reconciliation-lot30-auxiliary-20261128.v1.json",
+  "purpose": "Close the initiated i18n workstream; no expansion.",
+  "cohort_total": 1257,
+  "contracts_preserved": 1197,
+  "auxiliary_preserved_before": 56,
+  "new_preserved": 1,
+  "projected_preserved_main": 1254,
+  "remaining_exact_copies": 3,
+  "staged": {
+    "id": "CE-LOT30-I18N-AUX-57",
+    "source_repository": "IndiciumFIN/dev-chatgpt-workspace",
+    "source_ref": "idioma/consolidado-19",
+    "source_commit_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+    "source_path": "registers/i18n/incoming/conteudo/norma.json",
+    "source_git_blob_sha": "d3356e1bcf4b208662f0e7611bffa0aff2274f26",
+    "source_mode": "100644",
+    "destination": "_quarantine/ce/conteudos/lot30-i18n-aux/idioma-consolidado-19/incoming/conteudo/norma.json",
+    "state": "STAGED_PENDING_REVIEW",
+    "classification": "PUBLIC_GIT_SOURCE_CANDIDATE",
+    "clinical_rights": "NO_RUNTIME_ADMISSION",
+    "runtime_admission": false,
+    "release_eligible": false,
+    "lifecycle_rule": "PROMOTE_OR_REJECT_WITH_EVIDENCE_THEN_DELETE_QUARANTINE_COPY_IN_SAME_PR",
+    "records": 11,
+    "existing_main_text_matches": 11,
+    "existing_source": "src/content/norm-specimen.json",
+    "basis": "Brazil Law 9.610/1998 art. 8 IV excludes official acts from copyright protection. Historical extracts of Law 7.498/1986 and internal descriptive fields already present verbatim in current main. Archival decision only; not completeness/translation/clinical/legal signoff.",
+    "sources": [
+      "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm",
+      "https://www.planalto.gov.br/ccivil_03/leis/l7498.htm"
+    ]
+  },
+  "holds": [
+    {
+      "source_ref": "idioma/consolidado-19",
+      "source_commit_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+      "source_path": "registers/i18n/incoming/conteudo/biblioteca.json",
+      "sha": "8759fa6bcb8daa356e7f62660f0ab0023f1c0607",
+      "mode": "100644",
+      "items": 322,
+      "clinical": 322,
+      "disposition": "HOLD_RIGHTS_PROVENANCE_CONTENT",
+      "reason": "Contains source_text records; need item-level primary evidence, rights, privacy and applicable clinical review before additional copy/admission. No deletion of source refs.",
+      "review": {
+        "source_text_matches_current_main": 273,
+        "total": 322,
+        "remaining": 49,
+        "restriction": "Resolve item origin and rights for unmatched 49; existing text match alone is not permission."
+      }
+    },
+    {
+      "source_ref": "idioma/consolidado-19",
+      "source_commit_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+      "source_path": "registers/i18n/incoming/conteudo/editorial.json",
+      "sha": "4b0cf491692b5dbc0e50610f41ec3cf41ae7f048",
+      "mode": "100644",
+      "items": 640,
+      "clinical": 0,
+      "disposition": "HOLD_RIGHTS_PROVENANCE_CONTENT",
+      "reason": "Contains source_text records; need item-level primary evidence, rights, privacy and applicable clinical review before additional copy/admission. No deletion of source refs.",
+      "review": {
+        "source_text_matches_current_main": 638,
+        "total": 640,
+        "remaining": 2,
+        "unmatched_ids": [
+          "editorial.mary.title.1",
+          "editorial.mary.lead.2"
+        ],
+        "restriction": "Match proves origin text already present, not copyright license. Resolve authorship and unmatched items."
+      }
+    },
+    {
+      "source_ref": "idioma/consolidado-19",
+      "source_commit_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+      "source_path": "registers/i18n/incoming/conteudo/instrumento.json",
+      "sha": "b48c28e3a8cb0ee51b29bfb4139dfda6ea54bc2a",
+      "mode": "100644",
+      "items": 198,
+      "clinical": 198,
+      "disposition": "HOLD_RIGHTS_PROVENANCE_CONTENT",
+      "reason": "Contains source_text records; need item-level primary evidence, rights, privacy and applicable clinical review before additional copy/admission. No deletion of source refs.",
+      "review": {
+        "matched_groups": {
+          "braden": 48,
+          "morse": 35,
+          "apgar": 38,
+          "gotejamento": 11,
+          "imc": 18,
+          "aldrete": 48
+        },
+        "restriction": "Existing ce-clinical-rights-boundary-20261128.v1.json holds Braden and Morse; public exact duplication of combined blob remains blocked; seek author authorization or authorized private custody.",
+        "source": "https://www.bradenscale.com/"
+      }
+    }
+  ],
+  "screening": {
+    "all_records": 1171,
+    "email_cpf_phone_pattern_hits": 0,
+    "approved_items": 0,
+    "limits": "Pattern screen and source text comparison only; no comprehensive LGPD or rights clearance. Public repository, no new copies of held bodies."
+  },
+  "runtime_admission": false,
+  "release": false,
+  "retirement": "HOLD"
+}

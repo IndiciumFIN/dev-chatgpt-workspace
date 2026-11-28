@@ -104,3 +104,35 @@ test("CE no auto-merge or database write is allowed by ledger", () => {
   newBranches.policy.new_branch = true;
   assert.equal(run(newBranches).code, 2);
 });
+
+test("retirement extension preserves historical closure and denies higher states", () => {
+  const data = fresh();
+  assert.equal(data.technical_retirement.rows.length, 56);
+  assert.equal(data.technical_retirement.counts.candidates, 13);
+  assert.equal(run(data).code, 0);
+  assert.equal(run(data, true).code, 2);
+  for (const state of ["RETIREMENT_ELIGIBLE", "RETIRED_TECHNICAL", "SEALED"]) {
+    const bad = fresh();
+    bad.technical_retirement.rows.find(r => r.state === "RETIREMENT_CANDIDATE").state = state;
+    assert.equal(run(bad).code, 2);
+  }
+});
+test("retirement extension rejects missing proof, blockers, drift and scope mixing", () => {
+  const cases = [
+    o => { o.rows.find(r => r.state === "RETIREMENT_CANDIDATE").structural_evidence.main_sha = "0".repeat(40); },
+    o => { o.rows.find(r => r.state === "RETIREMENT_CANDIDATE").blocking_checks = []; },
+    o => { o.rows[0].branch = "main"; },
+    o => { o.rows[0].branch = "wutrib/test"; },
+    o => { o.rows[0].source_sha = "invalid"; },
+    o => { o.rows[0].branch = o.rows[1].branch; },
+    o => { o.counts.retired = 1; },
+    o => { o.live_counts.ce = 55; },
+    o => { delete o.authorization_ref; },
+    o => { o.rows.find(r => r.structural_evidence?.kind === "DELTA_BLOB_MODE_PRESERVED").structural_evidence.quarantined_paths = 100; }
+  ];
+  for (const mutate of cases) {
+    const data = fresh();
+    mutate(data.technical_retirement);
+    assert.equal(run(data).code, 2);
+  }
+});

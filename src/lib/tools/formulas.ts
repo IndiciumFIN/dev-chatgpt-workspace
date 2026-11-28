@@ -6,7 +6,8 @@ const leituraExame: Record<string, string> = {
   abaixo: "Abaixo da faixa de referência.",
   acima: "Acima da faixa de referência.",
   "na-faixa": "Dentro da faixa de referência.",
-  "acima-do-minimo": "Acima do mínimo declarado. A base não traz máximo.",
+  "acima-do-minimo": "No mínimo declarado ou acima. A base não traz máximo.",
+  "abaixo-do-maximo": "No máximo declarado ou abaixo. A base não traz mínimo.",
 };
 
 /** O método de cada conta está em tool_formula. Estas funções só interpretam soma, gotejamento, imc e a faixa do exame. */

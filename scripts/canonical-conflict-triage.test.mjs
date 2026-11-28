@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {triageCanonicalConflict,buildCanonicalTriage} from './lib/canonical-conflict-triage.mjs';
+import {triageCanonicalConflict,buildCanonicalTriage,buildUnmappedHoldQueue} from './lib/canonical-conflict-triage.mjs';
 
 const collision=path=>({path,sources:[{branch:'a',blob:'a'.repeat(40)},{branch:'b',blob:'b'.repeat(40)}]});
 test('semantic duplicates are never authorization or owner selection',()=>{
@@ -232,4 +232,16 @@ test('Wave 8: 22 observed unassigned paths get existing WO CANDIDATES, never aut
     assert.equal(r.releaseGate,'HOLD_HUMAN');
   }
   assert.equal(triageCanonicalConflict('unseen/2026-11-01/unknown.dat').mappingStatus,'WO_MAPPING_REQUIRED');
+});
+
+test('current-cohort unknown conflicts are retained in tracked HOLD queue, never falsely mapped',()=>{
+ const t=buildCanonicalTriage([collision('unknown/copy.bin'),collision('package.json')],{equivalent:[]});
+ const issue='https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/149';
+ const q=buildUnmappedHoldQueue(t,'a'.repeat(40),issue);
+ assert.equal(q.count,1);assert.equal(q.mappingComplete,false);assert.equal(q.formallyApproved,0);
+ assert.equal(q.items[0].path,'unknown/copy.bin');assert.equal(q.items[0].proposedWo,null);
+ assert.deepEqual(q.items[0].sources,t.items.find(x=>x.path==='unknown/copy.bin').sources);
+ assert.throws(()=>buildUnmappedHoldQueue(t,'a'.repeat(40),'https://example.invalid'),/INVALID_HOLD_QUEUE_CONTEXT/);
+ const bad=structuredClone(t);bad.counts.unresolvedWoMappings=0;
+ assert.throws(()=>buildUnmappedHoldQueue(bad,'a'.repeat(40),issue),/INCOMPLETE_HOLD_QUEUE/);
 });

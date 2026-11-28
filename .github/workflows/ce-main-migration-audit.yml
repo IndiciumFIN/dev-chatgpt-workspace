@@ -147,10 +147,24 @@ jobs:
           if(!Number.isSafeInteger(expected)||expected<=0||expected!==source.summary.collisionPaths)throw Error('INVALID_SOURCE_COLLISION_COUNT');
           if(r.counts.total!==expected||r.items.length!==expected||r.counts.semanticEquivalent!==semantic.counts.semanticEquivalents||r.counts.needingReview!==expected-semantic.counts.semanticEquivalents)throw Error('INCOMPLETE_TRIAGE');
           if(new Set(r.items.map(x=>x.path)).size!==expected)throw Error('DUPLICATE_TRIAGE_PATH');
-          if(r.counts.unresolvedWoMappings!==0||r.counts.candidateWoMappings!==expected)throw Error('UNASSIGNED_COLLISION_WO');
+          if(source.auditMode==='CURRENT_CE_COHORT_READ_ONLY'){
+            const q=r.unmappedHoldQueue;
+            const held=r.items.filter(x=>x.mappingStatus==='WO_MAPPING_REQUIRED');
+            const mapped=r.items.filter(x=>x.mappingStatus==='CANDIDATE_WO_MAPPING');
+            if(!q||q.protocol!=='CE.PMO.UNMAPPED_CONFLICTS.v1'||q.mainSha!==source.main.sha||
+               q.trackingIssue!=='https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/149'||
+               q.count!==held.length||q.items.length!==held.length||q.mappingComplete!==(held.length===0)||
+               q.releaseGate!=='HOLD_HUMAN'||q.formallyApproved!==0||
+               held.length!==r.counts.unresolvedWoMappings||mapped.length!==r.counts.candidateWoMappings||
+               held.length+mapped.length!==expected||
+               JSON.stringify(q.items.map(x=>[x.path,x.sources]))!==JSON.stringify(held.map(x=>[x.path,x.sources]))||
+               q.items.some(x=>x.proposedWo!==null||x.status!=='WO_MAPPING_REQUIRED'||x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'))
+              throw Error('UNTRACKED_OR_FALSE_HOLD_QUEUE');
+            console.log('WO mapping remains HOLD; explicit tracked queue:',q.count,q.trackingIssue);
+          }else if(r.counts.unresolvedWoMappings!==0||r.counts.candidateWoMappings!==expected)throw Error('UNASSIGNED_COLLISION_WO');
           if(r.counts.formallyApproved!==0||r.releaseGate!=='HOLD_HUMAN'||r.mainUpdated!==false)throw Error('FALSE_PROMOTION');
           if(r.items.some(x=>x.decision!=='NOT_APPROVED'||x.releaseGate!=='HOLD_HUMAN'||x.kernelAdmission!=='NOT_VERIFIED'))throw Error('FALSE_ITEM_DECISION');
-          console.log('PASS: all '+expected+' collision paths mapped; '+r.counts.semanticEquivalent+' semantic candidates; 0 authorized merges',JSON.stringify(r.counts));
+          console.log('PASS: all '+expected+' collision paths accounted for (mapped or explicitly held); '+r.counts.semanticEquivalent+' semantic candidates; 0 authorized merges',JSON.stringify(r.counts));
           NODE
       - name: Test source-corpus provenance and licensing fail-closed rules
         run: node --test scripts/corpus-index.test.mjs

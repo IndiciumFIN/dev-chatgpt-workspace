@@ -2,7 +2,7 @@
 /** Candidate-only classification across all collision paths, not a merge engine. */
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {dirname} from 'node:path';
-import {buildCanonicalTriage} from './lib/canonical-conflict-triage.mjs';
+import {buildCanonicalTriage,buildUnmappedHoldQueue} from './lib/canonical-conflict-triage.mjs';
 const args=process.argv.slice(2);
 const opt=(n,f)=>{const i=args.indexOf(n);return i>=0?args[i+1]:f;};
 const source=JSON.parse(readFileSync(opt('--source','audit-evidence/main-migration/runtime-report.json'),'utf8'));
@@ -11,9 +11,12 @@ const destination=opt('--output','audit-evidence/main-migration/canonical-confli
 if(source.releaseGate!=='HOLD_HUMAN'||semantic.releaseGate!=='HOLD_HUMAN')throw Error('BYPASS_ATTEMPT');
 if(source.collisions.length!==semantic.counts.sourceCollisions)throw Error('MISMATCHED_SOURCE_SNAPSHOT');
 const triage=buildCanonicalTriage(source.collisions,semantic);
+const current=source.auditMode==='CURRENT_CE_COHORT_READ_ONLY';
+const queue=current?buildUnmappedHoldQueue(triage,source.main.sha,'https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/149'):null;
 if(triage.counts.total!==source.collisions.length)throw Error('INCOMPLETE_COLLISION_TRIAGE');
 const report={
  ...triage,
+ ...(current?{unmappedHoldQueue:queue}:{}),
  date:'2026-10-31',
  repo:'IndiciumFIN/dev-chatgpt-workspace',
  mainSha:source.main.sha,

@@ -136,3 +136,20 @@ export function buildCanonicalTriage(collisions,semantic){
   if(counts.total!==counts.semanticEquivalent+counts.needingReview)throw Error('INCOMPLETE_DISPOSITION');
   return {schemaVersion:'1.0.0',sourceType:'READ_ONLY_PRE_TRIAGE',counts,items,releaseGate:'HOLD_HUMAN',mainUpdated:false};
 }
+
+/** Read-only audit can demonstrate full coverage while mapping is explicitly held.
+ * This queue does not assign an owner or admit any work order.
+ */
+export function buildUnmappedHoldQueue(triage, mainSha, trackingIssue) {
+  if(!/^[a-f0-9]{40}$/.test(mainSha)||trackingIssue!=='https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/149')throw Error('INVALID_HOLD_QUEUE_CONTEXT');
+  const rows=triage.items.filter(x=>x.mappingStatus==='WO_MAPPING_REQUIRED');
+  const mapped=triage.items.filter(x=>x.mappingStatus==='CANDIDATE_WO_MAPPING');
+  if(rows.length!==triage.counts.unresolvedWoMappings||mapped.length!==triage.counts.candidateWoMappings||
+     rows.length+mapped.length!==triage.items.length||triage.counts.total!==triage.items.length||
+     new Set(triage.items.map(x=>x.path)).size!==triage.items.length||
+     triage.items.some(x=>x.releaseGate!=='HOLD_HUMAN'||x.decision!=='NOT_APPROVED'||x.kernelAdmission!=='NOT_VERIFIED')||
+     rows.some(x=>x.proposedWo!==null)||mapped.some(x=>!/^WO-/.test(x.proposedWo??'')))throw Error('INCOMPLETE_HOLD_QUEUE');
+  return {protocol:'CE.PMO.UNMAPPED_CONFLICTS.v1',mainSha,trackingIssue,mappingComplete:rows.length===0,
+    releaseGate:'HOLD_HUMAN',formallyApproved:0,count:rows.length,
+    items:rows.map(x=>({path:x.path,sources:x.sources,proposedWo:null,status:'WO_MAPPING_REQUIRED',decision:'NOT_APPROVED',releaseGate:'HOLD_HUMAN'}))};
+}

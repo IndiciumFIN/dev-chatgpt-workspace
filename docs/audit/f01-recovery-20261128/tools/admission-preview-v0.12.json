@@ -1,0 +1,45 @@
+{
+  "version": "0.12",
+  "candidates": [
+    {
+      "entity_type": "DEVICE_COHORT",
+      "pattern": "^COHORT-[A-Z0-9-]+$",
+      "existing_count": 0,
+      "mismatch_count": 0,
+      "candidate_strategy": "EXISTING_OR_FAIL_CLOSED",
+      "preserve_existing": true,
+      "reuse_forbidden": true,
+      "blockers": [
+        "AUTHORITY_NOT_HOMOLOGATED",
+        "STRATEGY_SEMANTICS_NOT_HOMOLOGATED"
+      ],
+      "status": "HOLD"
+    },
+    {
+      "entity_type": "LABOR_TOOL",
+      "pattern": "^WK-[0-9]{3}$",
+      "existing_count": 7,
+      "mismatch_count": 0,
+      "candidate_strategy": "EXISTING_OR_FAIL_CLOSED",
+      "preserve_existing": true,
+      "reuse_forbidden": true,
+      "blockers": [
+        "AUTHORITY_NOT_HOMOLOGATED",
+        "STRATEGY_SEMANTICS_NOT_HOMOLOGATED"
+      ],
+      "status": "HOLD"
+    }
+  ],
+  "authorization": false,
+  "kernel": "HOLD",
+  "local_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "source": "dump-derived tables; local execution",
+  "sha256": {
+    "code": "fc43f068a69671057296baa518e072c4235f50f97cd075dec2e18ec179fbc0bc",
+    "tests": "3c5beaf1aea4d6b74081f27d6b12125b9d06ca0a5eaba0331b69a7daa2b6efe4",
+    "local_result": "2ee04f82048088b59f6f526bf161d5d4089aaafe629baa07b61abfd36d47b61a"
+  }
+}

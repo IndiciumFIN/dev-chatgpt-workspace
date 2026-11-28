@@ -2493,6 +2493,233 @@
       },
       "limitations": "Targeted legal/technical desk audit, not legal opinion; no permission grant located, no exact textual provenance comparison for all claims, no production test, no all-history or all-149-file rights audit.",
       "report": "docs/audits/CE_RIGHTS_AUDIT_PR78_20261128.md"
+    },
+    "br_legal_blocker_review_20261128": {
+      "date": "2026-11-28",
+      "baseline_sha": "35aecf3874be93bfdcee8910c885a7feba8c27b6",
+      "report": "docs/audits/CE_BR_LEGAL_BLOCKERS_20261128.md",
+      "matrix": [
+        {
+          "id": "BR-01",
+          "scope": "Direitos autorais, conteúdo, TDM",
+          "legal": "Lei 9.610/1998 arts. 7-8, 29, 46, 47",
+          "dev": "DEV_CONDITIONAL",
+          "release": "HOLD_REPRODUCTION",
+          "action": "Fatos, métodos e atos oficiais podem subsidiar redação própria. Citação proporcional com atribuição; nenhuma exceção geral de cópia integral ou TDM inferida. Quarentena pública não é autorização. Preservar metadados e hashes; validar direitos inclusive tradução e IA externa.",
+          "url": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        },
+        {
+          "id": "BR-02",
+          "scope": "Software, autoria, dependências",
+          "legal": "Lei 9.609/1998 arts. 2, 4, 6, 9",
+          "dev": "DEV_CONDITIONAL",
+          "release": "HOLD_DISTRIBUTION_IF_UNLICENSED",
+          "action": "Confirmar autoria, contratos, titularidade e licenças transitivas; SBOM. Registro no INPI não é requisito constitutivo da proteção. Não atribuir licença em nome do titular.",
+          "url": "https://www.planalto.gov.br/ccivil_03/leis/l9609.htm"
+        },
+        {
+          "id": "BR-03",
+          "scope": "Dados pessoais e saúde",
+          "legal": "LGPD arts. 5, 6, 7, 11, 12, 18, 37, 46-49",
+          "dev": "DEV_SYNTHETIC",
+          "release": "HOLD_REAL_DATA",
+          "action": "Dados efetivamente sintéticos, sem identificação real, para desenvolvimento. Pseudonimização não equivale a anonimização. Inventário, base legal, minimização, RBAC, RLS e testes negativos antes do tratamento real. Hipótese de pesquisa não se presume para empresa comercial.",
+          "url": "https://planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709compilado.htm"
+        },
+        {
+          "id": "BR-04",
+          "scope": "IA externa e transferência internacional",
+          "legal": "LGPD arts. 11, 33-36; Res. ANPD 19/2024",
+          "dev": "DEV_MOCK",
+          "release": "HOLD_EXTERNAL_REAL_DATA",
+          "action": "Mock e fontes autorizadas. Antes de enviar dados pessoais: base legal, papéis, finalidade, mecanismo de transferência aplicável, contratos, retenção, subprocessadores. Direitos autorais são gate separado; decisão automatizada art. 20 quando aplicável.",
+          "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional/atos-normativos/regulamentacoes_anpd/resolucao-cd-anpd-no-19-de-23-de-agosto-de-2024"
+        },
+        {
+          "id": "BR-05",
+          "scope": "Incidentes, segredos e vulnerabilidades",
+          "legal": "LGPD arts. 46-48; Res. ANPD 15/2024",
+          "dev": "DEV_REMEDIATE",
+          "release": "HOLD_IF_EXPOSURE",
+          "action": "Não presumir incidente pela mera falha CI. Investigar exposição, rotacionar credenciais reais, preservar evidência com acesso restrito. Comunicação de incidente com risco/dano relevante em três dias úteis, observadas regras específicas. Não duplicar segredo no Git.",
+          "url": "https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis"
+        },
+        {
+          "id": "BR-06",
+          "scope": "Software com finalidade médica",
+          "legal": "RDC Anvisa 657/2022 e 751/2022; RDC 848/2024 quando aplicável",
+          "dev": "DEV_SYNTHETIC",
+          "release": "HOLD_CLINICAL_MARKET_USE",
+          "action": "Determinar finalidade pretendida por função, público, claims e risco. Não presumir isenção por disclaimer, uso educacional nominal ou gratuidade. Se SaMD, classificar e regularizar conforme regime aplicável, com segurança e desempenho demonstrados.",
+          "url": "https://www.gov.br/anvisa/pt-br/acessoainformacao/perguntasfrequentes/produtosparasaude/conceitos-e-definicoes"
+        },
+        {
+          "id": "BR-07",
+          "scope": "Exercício da enfermagem e Processo de Enfermagem",
+          "legal": "Lei 7.498/1986; Res. COFEN 736/2024",
+          "dev": "DEV_SYNTHETIC",
+          "release": "HOLD_CLINICAL_AUTONOMY",
+          "action": "Ferramenta de apoio não substitui competências privativas do enfermeiro. Diagnóstico e prescrição de enfermagem sob responsabilidade profissional. Validar fórmulas, escalas, interpretação e rastreabilidade; não declarar aprovação COFEN inexistente.",
+          "url": "https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/"
+        },
+        {
+          "id": "BR-08",
+          "scope": "Telessaúde e telenfermagem",
+          "legal": "Lei 14.510/2022; Res. COFEN 696/2022 com alterações",
+          "dev": "DEV_SIMULATION",
+          "release": "HOLD_ACTUAL_CARE_IF_APPLICABLE",
+          "action": "Avaliar se há serviço de cuidado remoto, não confundir biblioteca educacional com consulta. Quando aplicável, observar consentimento, sigilo, registros, profissionais habilitados e regras de atendimento.",
+          "url": "https://www.cofen.gov.br/resolucao-cofen-no-696-2022/"
+        },
+        {
+          "id": "BR-09",
+          "scope": "Prontuário e retenção",
+          "legal": "Lei 13.787/2018 arts. 2-6; LGPD",
+          "dev": "DEV_SYNTHETIC",
+          "release": "HOLD_REAL_RECORDS",
+          "action": "Se houver prontuário, integridade, autenticidade, confidencialidade e retenção mínima legal de 20 anos desde último registro para eliminação. Não aplicar automaticamente a logs Git, estudos sintéticos ou toda telemetria. Classificar retenção por tipo de dado.",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13787.htm"
+        },
+        {
+          "id": "BR-10",
+          "scope": "Acessibilidade digital",
+          "legal": "Lei 13.146/2015 art. 63",
+          "dev": "DEV_IMPLEMENT",
+          "release": "RELEASE_ACCESSIBILITY_GATE",
+          "action": "Obrigação de acessibilidade conforme escopo legal. WCAG como referência técnica; níveis AA/AAA e Lighthouse são metas do projeto, não equivalentes automáticos a conformidade. Testes teclado, leitor de tela, contraste e formulários.",
+          "url": "https://planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm"
+        },
+        {
+          "id": "BR-11",
+          "scope": "Internet, logs, cookies",
+          "legal": "Lei 12.965/2014 arts. 7, 10, 15; LGPD; guia ANPD cookies",
+          "dev": "DEV_IMPLEMENT",
+          "release": "HOLD_NONCOMPLIANT_TRACKING",
+          "action": "Logs de acesso à aplicação por seis meses quando art. 15 aplicável; não equivale a guardar dados clínicos. Configurar consentimento quando base aplicável, escolha real, revogação e minimização de analytics. Guia é orientação, não lei autônoma.",
+          "url": "https://planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm"
+        },
+        {
+          "id": "BR-12",
+          "scope": "Assinaturas e consumidor",
+          "legal": "CDC arts. 6, 14, 31, 49; Decreto 7.962/2013",
+          "dev": "DEV_IMPLEMENT",
+          "release": "HOLD_COMMERCIAL_OFFER_IF_NONCOMPLIANT",
+          "action": "Informações claras de preço/recorrência, cancelamento, atendimento, arrependimento quando aplicável e segurança; avisos não excluem responsabilidade legal. Teste de fluxo comercial antes de cobrança real.",
+          "url": "https://planalto.gov.br/ccivil_03/leis/l8078compilado.htm"
+        },
+        {
+          "id": "BR-13",
+          "scope": "Regulação geral de IA",
+          "legal": "PL 2338/2023: proposta em tramitação nas fontes consultadas",
+          "dev": "DEV_MONITOR",
+          "release": "NOT_STATUTORY_GATE_BY_ITSELF",
+          "action": "Não converter projeto de lei em lei vigente. Reavaliar tramitação antes do release. Aplicar legislação vigente já identificada e governança de IA proporcional.",
+          "url": "https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2487262"
+        },
+        {
+          "id": "BR-14",
+          "scope": "Aposentadoria Git, CI, Vercel, dependências",
+          "legal": "Controles internos CE.BRANCH.RETIREMENT.v1; direitos/LGPD onde aplicáveis",
+          "dev": "DEV_RECONCILE",
+          "release": "HOLD_DELETION_UNTIL_PROOF",
+          "action": "Não há exigência legal genérica de manter branches ou obter homologação clínica para excluir refs redundantes. Provar retenção lícita, dependências, segurança, autorização e SHA; não confundir ausência de obrigação legal com autorização para descumprir norma interna. A dispensa de isolamento foi específica de merges DEV; não inferir dispensa de produção/retirement.",
+          "url": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm"
+        }
+      ],
+      "classification": "TARGETED_LEGAL_APPLICABILITY_REVIEW_NOT_LEGAL_OPINION",
+      "retirement_authorized_by_evidence": false,
+      "clinical_release_authorized": false,
+      "limitations": "No individualized legal opinion, no verification of actual production data flows, no full historical rights review or permission grant. The PL is not relied on as enacted law. No change to existing gates by this report."
+    },
+    "pr67_partial_preservation": {
+      "source_ref": "cko/pmo-corpus-canonical-20261114",
+      "source_sha": "2452a4c1bea48990e538e975973fe7dcd1653c6b",
+      "merge_base_sha": "d2c8abd22e1d2b15142049e723883c5016a68296",
+      "main_baseline_sha": "35aecf3874be93bfdcee8910c885a7feba8c27b6",
+      "source_pr": 67,
+      "delta_paths": 48,
+      "already_preserved": 0,
+      "new_staged_paths": 12,
+      "pending_paths": 36,
+      "state": "PARTIAL_STAGED_PENDING_POSTMERGE_CI",
+      "screening": "12 technical governance texts fetched; narrow credential/email/CPF regex screen zero matches. Named lines reviewed. No full G00, ownership or rights clearance; no raw scientific corpus copied.",
+      "destinations": [
+        {
+          "path": "cko/pmo/corpus-2026-11-14/ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/ADR_CKO_002_CORPUS_INFRA_ISOLATION_PROPOSED.md",
+          "sha": "960e665aed0a7b6ae199fadda6ba6cc20fbc4533",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/AGENT_EXECUTION_PROTOCOL.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/AGENT_EXECUTION_PROTOCOL.md",
+          "sha": "d128c1f1d0cad39164b0f35397455f11ab1a2098",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/GATES.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/GATES.md",
+          "sha": "747b628e7291131eb0202480ea666e69d6e81101",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/GATE_CROSSWALK_TRIPLO_20261114.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/GATE_CROSSWALK_TRIPLO_20261114.md",
+          "sha": "810b690329b862f67c3efd27d3800bb5bc89bdb4",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/KPIS.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/KPIS.md",
+          "sha": "dc47c1d685d176e830ac5624648fc536131cdccb",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/M04_CONTRACT_BRANCH_CROSSWALK.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/M04_CONTRACT_BRANCH_CROSSWALK.md",
+          "sha": "9aaf70878d846c6636afd7cb5822711a9d100b65",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/M05_PLAN_GATES.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/M05_PLAN_GATES.md",
+          "sha": "e5be08301d87454c5cd765f6e3e9d3fa2530e9fa",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/M07_CHECKPOINT_SYNTHETIC_DB_AND_HOLDS.md",
+          "sha": "825e1e8846d654b60b1b63da48bb6433492f7ce4",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/M08_CANONICAL_ATOMIC_CONTENT_CHECKPOINT.md",
+          "sha": "e577f60226f396883be130f9a8cfa77dee1d14ab",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/M09_CANONICAL_CONTENT_COMPLETENESS_CHECKPOINT.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/M09_CANONICAL_CONTENT_COMPLETENESS_CHECKPOINT.md",
+          "sha": "88ab079cc4e2ea12c13e9af9ce423d470fdb8e97",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/b59/B59_ALIAS_ADMISSION_RULES.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/b59/B59_ALIAS_ADMISSION_RULES.md",
+          "sha": "351ba1905a465f4d4002737f5030d5d7ce10ca23",
+          "mode": "100644"
+        },
+        {
+          "path": "cko/pmo/corpus-2026-11-14/b59/B59_SOURCE_RIGHTS_TDM_BOUNDARY.md",
+          "destination": "_quarantine/ce/conteudos/pmo-corpus-pr67/cko/pmo/corpus-2026-11-14/b59/B59_SOURCE_RIGHTS_TDM_BOUNDARY.md",
+          "sha": "179a0dfd9091d689402cf09af71348e93f7c83a4",
+          "mode": "100644"
+        }
+      ],
+      "runtime_admission": false,
+      "release_eligible": false,
+      "retirement_eligible": false
     }
   },
   "previous_inventory_snapshot": {

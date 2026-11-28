@@ -1131,6 +1131,68 @@
         ],
         "runtime_admission": false,
         "release_eligible": false
+      },
+      {
+        "source_ref": "fix/shell-consolidation",
+        "source_sha": "c68e3009556f140ece43ac23cb1ea0ed49395560",
+        "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "main_baseline_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "source_pr": 27,
+        "source_pr_state": "OPEN",
+        "delta_paths": 6,
+        "already_exact_paths": [
+          {
+            "path": ".github/workflows/ce-header-entry-candidate.yml",
+            "sha": "477d092d5f0e4381c76d25bc6a506e1439905480",
+            "mode": "100644"
+          }
+        ],
+        "staged_paths": 5,
+        "source_visibility": "PUBLIC_SAME_REPOSITORY",
+        "screening": "Five full text files fetched and byte lengths matched source metadata; limited regex screen for credential patterns and email addresses returned zero; inspected social links and password variable usages, no actual credentials found in those matches. Not full-history G00, rights approval or authentication security assessment.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": "scripts/header-entry.test.mjs",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/scripts/header-entry.test.mjs",
+            "sha": "75e983120c49464fd5e55d3d6d16f139b7ffb533",
+            "mode": "100644"
+          },
+          {
+            "path": "src/components/site/shell.tsx",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/components/site/shell.tsx",
+            "sha": "4688714cc3cc44a4209a80f5e3b668e809121efd",
+            "mode": "100644"
+          },
+          {
+            "path": "src/routes/login.tsx",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/routes/login.tsx",
+            "sha": "7b9a4e895396d4cc4049cfe5517c21c4b596b01f",
+            "mode": "100644"
+          },
+          {
+            "path": "src/styles.css",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/styles.css",
+            "sha": "88dd76015ceb6ebe6e812ee9b8d7116cb17742c8",
+            "mode": "100644"
+          },
+          {
+            "path": "vercel.json",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/vercel.json",
+            "sha": "b99d11a9f30bb767b650241cf4fad09f01a21800",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR27_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY",
+          "VERCEL_ISOLATION"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
       }
     ]
   },

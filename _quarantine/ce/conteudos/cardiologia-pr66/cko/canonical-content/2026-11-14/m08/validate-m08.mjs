@@ -1,0 +1,17 @@
+import fs from "node:fs";import path from "node:path";import {fileURLToPath} from "node:url";
+const root=path.dirname(fileURLToPath(import.meta.url));
+const read=name=>JSON.parse(fs.readFileSync(path.join(root,name),"utf8"));
+const p=read("M08_MANIFEST.json"),a=read("M08_CLAIM_EVIDENCE_REFERENCE_INDEX.json");
+const err=[];const ok=(b,s)=>{if(!b)err.push(s)};
+ok(p.pilot.atomic_claims===34&&a.length===34,"34 claims");
+ok(p.pilot.evidence_atoms_referenced===33&&new Set(a.map(x=>x.evidence_atom_id)).size===33,"33 unique spans");
+ok(a.filter(x=>x.family==="PE").length===18&&a.filter(x=>x.family==="PS").length===16,"source distribution");
+ok(new Set(a.map(x=>x.claim_id)).size===34&&new Set(a.map(x=>x.knowledge_atom_candidate_id)).size===34,"unique canonical IDs");
+ok(a.every(x=>p.source_docs.some(s=>s.source_id===x.source_id&&s.document_id===x.document_id)),"source/doc binding");
+ok(a.every(x=>x.publication_allowed===false&&x.clinical_review==="PENDING"&&x.status==="EVIDENCE_BOUND"),"HOLD gates");
+ok(p.pilot.clinical_approved_claims===0&&p.pilot.resources_published===0&&p.rights_and_release.publication_allowed===false,"no release");
+ok(p.global_inventory.evidence_atoms===28001&&p.global_inventory.source_topic_candidate_links===9102&&p.global_inventory.legacy_claims_not_revalidated===29,"baseline");
+ok(Object.values(p.global_inventory.candidate_status_counts).reduce((x,y)=>x+y,0)===9102,"candidate counts");
+ok(/^[a-f0-9]{64}$/.test(p.protected_delivery.sha256)&&p.protected_delivery.url.startsWith("https://drive.google.com/file/d/"),"protected package ref");
+console.log(JSON.stringify({gate:"M08_ATOMIC_MANIFEST_ONLY",status:err.length?"FAIL":"PASS",claims:a.length,distinct_evidence_atoms:new Set(a.map(x=>x.evidence_atom_id)).size,source_documents:2,content_masters:p.pilot.content_masters,publication_allowed:false,scope:"only metadata; full SQLite source->evidence hash check executed offline",errors:err},null,2));
+if(err.length)process.exitCode=1;

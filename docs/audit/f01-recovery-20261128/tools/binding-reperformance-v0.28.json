@@ -1,0 +1,63 @@
+{
+  "version": "0.28",
+  "phase": "F01",
+  "packages": [
+    "P11",
+    "P12"
+  ],
+  "criteria": [
+    "C09",
+    "C10",
+    "C15",
+    "C16"
+  ],
+  "source": "Local dump-derived four-table projection; executed Python audit in current round",
+  "layers": 44,
+  "stage_types": 24,
+  "lens_types": 8,
+  "stage_grid": {
+    "rows": 1056,
+    "expected": 1056,
+    "missing": 0,
+    "unexpected": 0,
+    "duplicate_pairs": 0,
+    "inferred_dimension": true
+  },
+  "audit_grid": {
+    "rows": 352,
+    "expected": 352,
+    "missing": 0,
+    "unexpected": 0,
+    "duplicate_pairs": 0,
+    "inferred_dimension": true
+  },
+  "audit_runs": 373,
+  "audit_status": {
+    "HOLD": 280,
+    "EXACT": 72
+  },
+  "unresolved_candidate_counts": {
+    "none": 269,
+    "single": 9,
+    "multiple": 2
+  },
+  "stage_execution": {
+    "NOT_EXECUTED": 1056
+  },
+  "stage_reference_coverage": {
+    "engine_refs": 0,
+    "validator_refs": 0,
+    "caat_refs": 0,
+    "ipe_refs": 0,
+    "evidence_refs": 0,
+    "reperformance_refs": 0
+  },
+  "local_artifact_sha256": {
+    "audit_bindings.py": "49cb13e6135bcf6a5686d8a37276e8347d0f92bc7a1878fc1dc5b922e714898b",
+    "result.json": "eb78a6e5028cabb59dec879d92b44a75aa0ec6ce65162d5d315ade8810b37857",
+    "details.json": "9608cb1840ab01d1a12bb001477a71ccb4c6f78f6412d29942ab6b83546f025a"
+  },
+  "limitations": "Expected grid derived from observed dimensions, not independently authoritative stage/lens definitions. Same-pair result candidates are not approved replacements. No SQL execution, no production updates or formal gate changes.",
+  "kernel": "HOLD",
+  "authorization": false
+}

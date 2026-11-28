@@ -5,6 +5,7 @@ import { decide } from "@/lib/policy-decision";
 import { assertProductionAuth } from "@/lib/publish-guard";
 import { assembleTool, hasStoredSheet, type ToolSheet } from "@/lib/tools/bridge";
 import { getTool, tools } from "@/lib/tools/catalog";
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import { restoreCopyTx, saveSheetTx } from "@/lib/tools/write-sheet";
 
 export type SourceRole = "admin" | "subscriber";
@@ -67,7 +68,7 @@ async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
   for (const tool of tools) {
     await sql`
       insert into source_tool (slug, kind, title, lead, published)
-      values (${tool.slug}, ${tool.kind}, ${tool.title}, ${tool.lead}, true)
+      values (${tool.slug}, ${tool.kind}, ${tool.title}, ${tool.lead}, ${!isClinicalRightsHeld(tool.slug)})
     `;
   }
 }
@@ -136,12 +137,12 @@ export const readCatalog = createServerFn({ method: "GET" }).handler(async () =>
   const rows = await sql<{ slug: string; kind: string; title: string; lead: string; published: unknown }>`
     select slug, kind, title, lead, published from source_tool order by title
   `;
-  return rows.map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[];
+  return rows.filter((row) => !isClinicalRightsHeld(row.slug)).map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[];
 });
 
 export const readTool = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => {
-    if (!/^[a-z0-9-]{1,80}$/.test(slug)) throw new Error("Ferramenta fora da fonte.");
+    if (!/^[a-z0-9-]{1,80}$/.test(slug) || isClinicalRightsHeld(slug)) throw new Error("Ferramenta fora da fonte.");
     return slug;
   })
   .handler(async ({ data: slug }) => {
@@ -206,9 +207,11 @@ export const saveTool = createServerFn({ method: "POST" })
     if (!known.has(input.slug) || title.length < 3 || title.length > 80 || lead.length < 10 || lead.length > 400) {
       throw new Error("Título ou texto fora do limite.");
     }
+    if (input.published === true && isClinicalRightsHeld(input.slug)) throw new Error("Instrumento em revisão de direitos.");
     return { slug: input.slug, title, lead, published: input.published === true };
   })
   .handler(async ({ context, data }) => {
+    if (data.published && isClinicalRightsHeld(data.slug)) throw new Error("Instrumento em revisão de direitos.");
     assertProductionAuth();
     const { withSqlTransaction } = await import("@/lib/db");
     await withSqlTransaction(async (sql) => {

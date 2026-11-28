@@ -1075,7 +1075,64 @@
       },
       "no_new_candidates": true,
       "retirement_authorized": false
-    }
+    },
+    "staged_preservation_batches": [
+      {
+        "source_ref": "audit/cko-atomic-intake-schema-20261114",
+        "source_sha": "ee2c2cb5c66f6d7af143f22669aa38b8b17159f2",
+        "merge_base_sha": "d2c8abd22e1d2b15142049e723883c5016a68296",
+        "main_baseline_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "source_pr": 70,
+        "source_pr_state": "OPEN",
+        "delta_paths": 5,
+        "staged_paths": 5,
+        "source_visibility": "PUBLIC_SAME_REPOSITORY",
+        "screening": "Reviewed all five texts; no imported clinical payload, patient records, third-party text or apparent credentials; limited pattern scan, not G00 full history. Technical source already public in same repository, staging only under coordinator instruction; release rights not established.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": ".github/workflows/cko-intake-strict-schema-audit.yml",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/.github/workflows/cko-intake-strict-schema-audit.yml",
+            "sha": "1a35caf07e7eb432f0209ebc6739a89a1319037a",
+            "mode": "100644"
+          },
+          {
+            "path": "docs/cko/CKO_ATOMIC_NORMATIVE_EXECUTION_STANDARD_20261114.md",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/docs/cko/CKO_ATOMIC_NORMATIVE_EXECUTION_STANDARD_20261114.md",
+            "sha": "8b97a28f9b797f07943510b2f48ef7f373468cb8",
+            "mode": "100644"
+          },
+          {
+            "path": "governance/audits/2026-11-14/CKO_ATOMIC_ANNEX_INTAKE_REVIEW.md",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/governance/audits/2026-11-14/CKO_ATOMIC_ANNEX_INTAKE_REVIEW.md",
+            "sha": "1fea70649fbd7c47cc8e45161a9d04750458383f",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/cko-atomic-intake-guard.py",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/scripts/cko-atomic-intake-guard.py",
+            "sha": "fbac048467fb3737d24d617604435432523b8bbe",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/test_cko_atomic_intake_guard.py",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/scripts/test_cko_atomic_intake_guard.py",
+            "sha": "6a04723123f6f6245e1d9002653785b1ad9fb13a",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR70_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY",
+          "VERCEL_ISOLATION"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
+      }
+    ]
   },
   "previous_inventory_snapshot": {
     "date": "2026-11-21",

@@ -31,7 +31,7 @@ function validateBasicSchema(schema, object) {
     if (!Object.hasOwn(object, field)) continue;
     const value = object[field];
     if (property.enum) assert.ok(property.enum.includes(value), "Invalid enum " + field);
-    if (property.const) assert.equal(value, property.const, "Invalid const " + field);
+    if (property.const !== undefined) assert.equal(value, property.const, "Invalid const " + field);
     if (property.type === "string") {
       assert.equal(typeof value, "string", "Invalid string " + field);
       if (property.minLength) assert.ok(value.length >= property.minLength, "Invalid minimum " + field);
@@ -53,7 +53,7 @@ test("all four findings are candidate-only and conform to existing contract", {
   for (const id of ids) {
     const f = read(candidateRecordPath("FIND-CKO-", id));
     validateBasicSchema(findSchema, f);
-    assert.equal(f.canonical_id, name);
+    assert.equal(f.canonical_id, candidateRecordPath("FIND-CKO-", id).split("/").at(-1).replace(/\.json$/, ""));
     assert.equal(f.status, "CANDIDATE");
     assert.equal(f.root_cause_status, "PENDING");
     assert.ok(f.evidence_refs.length > 0);

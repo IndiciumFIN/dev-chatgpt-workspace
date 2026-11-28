@@ -163,6 +163,14 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin 38a33fcec02e5bc996a1f84164bf13799b2f81c7
           node scripts/ce-cko-historical-replay.mjs
+      - name: Validate R83 pinned PMO sources in temporary directory (no queue write)
+        run: |
+          git fetch --no-tags --depth=1 origin eeab3942d7c4331586af7f25073d75a2572ab61c
+          git fetch --no-tags --depth=1 origin 95a416c1e4ac422e435baf7e95f6ce5c09989c99
+          git fetch --no-tags --depth=1 origin 38a33fcec02e5bc996a1f84164bf13799b2f81c7
+          git fetch --no-tags --depth=1 origin 3dc979a795634eda9b097f2e69660f87ddd779e3
+          git fetch --no-tags --depth=1 origin 3f004049945ebaa50e4efee313092974b83a5bf2
+          node scripts/ce-r83-historical-source-replay.mjs
       - run: npm test
       - run: node scripts/audit-execution-gates.mjs
       - name: Simular exclusões do upload Vercel após testes completos

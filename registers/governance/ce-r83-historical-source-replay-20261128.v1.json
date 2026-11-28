@@ -1,0 +1,61 @@
+{
+  "protocol": "CE.PMO.R83.HISTORICAL.REPLAY.v1",
+  "date": "2026-11-28",
+  "baseline": "eeab3942d7c4331586af7f25073d75a2572ab61c",
+  "source_path": "registers/pmo/queue.v1.json",
+  "sources": [
+    {
+      "branch": "main",
+      "commit": "eeab3942d7c4331586af7f25073d75a2572ab61c",
+      "filename": "main.json",
+      "git_blob_sha": "c713557a808857eab9952e511d1f2a10bfa6f828"
+    },
+    {
+      "branch": "fix/governed-activities-cli-20261026",
+      "commit": "95a416c1e4ac422e435baf7e95f6ce5c09989c99",
+      "filename": "governed.json",
+      "git_blob_sha": "80c5d327411287132f23caa0ace817d7d356edb8"
+    },
+    {
+      "branch": "work/editorial-canonical-learning-20261026",
+      "commit": "38a33fcec02e5bc996a1f84164bf13799b2f81c7",
+      "filename": "editorial.json",
+      "git_blob_sha": "84f9e1ad8ffa8baf785eb8370facbf258ada3160"
+    },
+    {
+      "branch": "idioma/consolidado-19",
+      "commit": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+      "filename": "idioma.json",
+      "git_blob_sha": "e7d77e9467ee6f6c6a7483de0d8b2b64f673cef5"
+    },
+    {
+      "branch": "preview/central-comando-20261026",
+      "commit": "3f004049945ebaa50e4efee313092974b83a5bf2",
+      "filename": "preview.json",
+      "git_blob_sha": "e60a017b0ffd55d8d0976abea76fa3f0b15fb8cb"
+    }
+  ],
+  "expected": {
+    "sources": 5,
+    "source_occurrences": 112,
+    "unique_events": 28,
+    "work_orders": 12,
+    "wo_variants": 7,
+    "collisions": [
+      20,
+      21
+    ],
+    "tests": 13,
+    "unresolved_authority_decisions": 4
+  },
+  "status": "PENDING_CI",
+  "controls": {
+    "no_canonical_election": true,
+    "no_event_replay": true,
+    "no_queue_write": true,
+    "no_kernel_admission": true,
+    "no_release": true,
+    "no_artifact_upload": true,
+    "source_retention_required": true
+  }
+}

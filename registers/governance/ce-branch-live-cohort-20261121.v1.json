@@ -1444,6 +1444,160 @@
         ],
         "runtime_admission": false,
         "release_eligible": false
+      },
+      {
+        "source_ref": "fix/ce-chrome-frozen-tokens-source-20261114",
+        "source_sha": "288b4ff68481fb9ed2d8e2140d286cb550fc7b85",
+        "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+        "main_baseline_sha": "b38652132bc9f933f66c38d36c9b511a8fea4e34",
+        "source_pr": 74,
+        "source_pr_state": "OPEN",
+        "delta_paths": 22,
+        "already_exact_paths": [
+          {
+            "path": "contracts/entities/components.v1.json",
+            "sha": "d53c5ba6ebf5638803578cc9fe9216487a56259e",
+            "mode": "100644"
+          },
+          {
+            "path": "contracts/entities/routes.v1.json",
+            "sha": "369313370131edeb2f3f8fbb5fdd25a9de05e195",
+            "mode": "100644"
+          },
+          {
+            "path": "contracts/entities/tool-components.v1.json",
+            "sha": "0d27f14337f3c63ff8d1af4c1bf8f0b3a3e73b29",
+            "mode": "100644"
+          },
+          {
+            "path": ".github/workflows/ce-route-component-contract-freshness.yml",
+            "sha": "bcaf10a571363e7572df8970e79acdc7b270524c",
+            "mode": "100644",
+            "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/.github/workflows/ce-route-component-contract-freshness.yml"
+          },
+          {
+            "path": "scripts/audit-clinical-contract-drift.mjs",
+            "sha": "d301f5def0dfe18d5a94770571371b8a8c84aabe",
+            "mode": "100644",
+            "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/scripts/audit-clinical-contract-drift.mjs"
+          },
+          {
+            "path": "scripts/check-route-component-contract-freshness.mjs",
+            "sha": "d925c7dd1ea45bf7ae088d9398cc7c4c09ec1629",
+            "mode": "100644",
+            "destination": "_quarantine/ce/interfaces/route-component-contracts-20261114/scripts/check-route-component-contract-freshness.mjs"
+          }
+        ],
+        "staged_paths": 16,
+        "screening": "Sixteen source texts fetched; narrow credential/email regex screen zero matches; named credential lines inspected. Clinical contracts are metadata/reference IDs and ranges, all seven HOLD_HUMAN, six with empty source_ids; generated index contains metadata and bindings, not admission. No full G00, rights or clinical/visual approval. No historical scripts executed.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": ".github/workflows/ce-chrome-canonical-parity.yml",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/.github/workflows/ce-chrome-canonical-parity.yml",
+            "sha": "52ab06e505a238857c401c7fc0721ce769c7ba29",
+            "mode": "100644"
+          },
+          {
+            "path": ".github/workflows/ce-clinical-candidate-contract-sync.yml",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/.github/workflows/ce-clinical-candidate-contract-sync.yml",
+            "sha": "a9b87d8c5b51aad66e16b377ddba6a4fb600cd92",
+            "mode": "100644"
+          },
+          {
+            "path": ".github/workflows/ce-main-unit-baseline-readonly.yml",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/.github/workflows/ce-main-unit-baseline-readonly.yml",
+            "sha": "7d308097f32f49df6c06319e1f8c01a98ce77acb",
+            "mode": "100644"
+          },
+          {
+            "path": "contracts/entities/chrome-bands.v1.json",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/contracts/entities/chrome-bands.v1.json",
+            "sha": "1d2dd4d979421b94dbc834a3a9a47245d710d864",
+            "mode": "100644"
+          },
+          {
+            "path": "contracts/entities/clinical-tools.v1.json",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/contracts/entities/clinical-tools.v1.json",
+            "sha": "37617f5b2fe01d205977293ca77d4df94e0fa8e8",
+            "mode": "100644"
+          },
+          {
+            "path": "docs/audits/CE_CONTRATOS_FECHAMENTO_TECNICO_PR74_20261114.md",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/docs/audits/CE_CONTRATOS_FECHAMENTO_TECNICO_PR74_20261114.md",
+            "sha": "5e4168be2b9b291a139f906a58b8eca18fe8ae46",
+            "mode": "100644"
+          },
+          {
+            "path": "docs/audits/CE_PR74_22_FAILS_TRIAGE_20261115.md",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/docs/audits/CE_PR74_22_FAILS_TRIAGE_20261115.md",
+            "sha": "8215eaba7d84bd21bce0f475e503f7ec815cecd8",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/check-chrome-canonical-parity.mjs",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/check-chrome-canonical-parity.mjs",
+            "sha": "a3fd384915604c1a3073d403c3bb1ce4cd8bdde9",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/check-clinical-candidate-boundary.mjs",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/check-clinical-candidate-boundary.mjs",
+            "sha": "55ef219fa7e85a11843892d8bc2ec1cb831de1af",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/check-contract-coverage.mjs",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/check-contract-coverage.mjs",
+            "sha": "46ed219481e1bdfc931f3f92c3fa81a450092e1a",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/generate-entity-contracts.mjs",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/generate-entity-contracts.mjs",
+            "sha": "e43f9549986e433c14bf6e60d2760e509f92a9b1",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/load-tool-contracts.mjs",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/load-tool-contracts.mjs",
+            "sha": "c638e5416793159bb7150459b6bff16af09f02e9",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/read-tool-contracts.ts",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/scripts/read-tool-contracts.ts",
+            "sha": "d7905cd100e5760f1bca2c447780b09609ac567a",
+            "mode": "100644"
+          },
+          {
+            "path": "src/lib/contract-index.generated.ts",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/src/lib/contract-index.generated.ts",
+            "sha": "ecbe260558ea743d2344cfb796b0c0621cefcd84",
+            "mode": "100755"
+          },
+          {
+            "path": "src/routes/__root.tsx",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/src/routes/__root.tsx",
+            "sha": "e708ec5d9575f5a8bf793f560477153b1a675201",
+            "mode": "100644"
+          },
+          {
+            "path": "src/styles.css",
+            "destination": "_quarantine/ce/interfaces/chrome-contracts-pr74/src/styles.css",
+            "sha": "eca5cf949a4ae03a2657a453305f329e9b5f3980",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR74_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
       }
     ],
     "ancestor_reverification_20261127": {
@@ -1933,6 +2087,15 @@
       "source_pr": 136,
       "manifest_entries_verified": 94,
       "blob_mode_pass": 94,
+      "tree_truncated": false,
+      "runtime_admission": false,
+      "retirement_eligible": false
+    },
+    "postmerge_pr137": {
+      "main_sha": "b38652132bc9f933f66c38d36c9b511a8fea4e34",
+      "source_pr": 137,
+      "manifest_entries_verified": 99,
+      "blob_mode_pass": 99,
       "tree_truncated": false,
       "runtime_admission": false,
       "retirement_eligible": false

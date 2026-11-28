@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/research-instrument.candidate.v1.json",
+  "title": "CE | Research Instrument Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "status",
+    "kind",
+    "title",
+    "definition"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^INS-[A-Z0-9-]+$"
+    },
+    "project_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "DRAFT",
+        "HOLD_HUMAN",
+        "READY_FOR_REVIEW"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "SURVEY",
+        "INTERVIEW",
+        "OBSERVATION",
+        "FORM",
+        "CHECKLIST",
+        "OTHER"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": {
+      "type": "object"
+    }
+  }
+}

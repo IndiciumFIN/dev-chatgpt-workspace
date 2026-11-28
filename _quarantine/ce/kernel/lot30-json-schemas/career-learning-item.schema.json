@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Learning Resource Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "resource_type_id",
+    "source_id",
+    "title",
+    "provider",
+    "jurisdiction",
+    "source_locator",
+    "dedupe_key",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "resource_type_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "modality": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workload_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "price_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "source_locator": {
+      "type": "string",
+      "format": "uri"
+    },
+    "dedupe_key": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "EXPIRED",
+        "HOLD_HUMAN",
+        "RETIRED"
+      ]
+    }
+  }
+}

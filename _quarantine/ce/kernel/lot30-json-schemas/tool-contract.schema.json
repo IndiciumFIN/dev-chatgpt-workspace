@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ToolContract",
+  "type": "object",
+  "required": ["id","name","kind","owner","templateId","authMode","requiredScopes","validators","normativeIds","status","hash","createdAt","updatedAt"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "kind": { "type": "string", "enum": ["http","cli","browser","db","shell","ai-tool"] },
+    "owner": { "type": "string" },
+    "templateId": { "type": "string" },
+    "host": { "type": ["string","null"] },
+    "baseUrl": { "type": ["string","null"] },
+    "authMode": { "type": "string", "enum": ["none","apiKey","oauth","basic","mTLS"] },
+    "requiredScopes": { "type": "array", "items": { "type": "string" } },
+    "endpointSpec": { "type": ["string","null"] },
+    "requestSchemaRef": { "type": ["string","null"] },
+    "responseSchemaRef": { "type": ["string","null"] },
+    "validators": { "type": "array", "items": { "type": "string" } },
+    "normativeIds": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["draft","admitted","rejected"] },
+    "hash": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

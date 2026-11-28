@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/research-skill-need.candidate.v1.json",
+  "title": "CE | Research Skill Need Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_id",
+    "skill",
+    "priority",
+    "coverage_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^SKILL-[A-Z0-9-]+$"
+    },
+    "project_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "skill": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "coverage_state": {
+      "enum": [
+        "GAP",
+        "PARTIAL",
+        "COVERED",
+        "REVIEW_REQUIRED"
+      ]
+    }
+  }
+}

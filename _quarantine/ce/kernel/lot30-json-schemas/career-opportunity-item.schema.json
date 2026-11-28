@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Opportunity Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "type_id",
+    "source_id",
+    "title",
+    "organization",
+    "jurisdiction",
+    "source_locator",
+    "dedupe_key",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "location_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_locator": {
+      "type": "string",
+      "format": "uri"
+    },
+    "published_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "dedupe_key": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "SOURCE_QUALIFIED",
+        "EVIDENCE_BOUND",
+        "EXPIRED",
+        "HOLD_HUMAN",
+        "RETIRED"
+      ]
+    }
+  }
+}

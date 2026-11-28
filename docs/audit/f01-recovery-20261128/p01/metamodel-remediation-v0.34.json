@@ -1,0 +1,45 @@
+{
+  "version": "0.34",
+  "phase": "F01",
+  "package": "P01",
+  "finding": "Duplicate identical metamodel representations identified v0.33",
+  "state": "CORRECTED_IN_BRANCH_PENDING_RUNTIME_REGRESSION",
+  "path": "src/lib/metamodel.ts",
+  "before_blob": "ed18298e0240955cf8b7641de8427c4e09aba2d4",
+  "after_blob": "1c0795a855b1b2faa8780883ac73660526d35a17",
+  "correction_commit": "6d30dde06658178bb4039136434da5f08ae3f810",
+  "before_entries": 65,
+  "after_entries": 62,
+  "distinct_entities_preserved": 62,
+  "removed_duplicate_entries": [
+    "kernel_order",
+    "kernel_order_policy",
+    "kernel_validator"
+  ],
+  "checks": {
+    "duplicate_lines_identical": true,
+    "expected_duplicate_set": true,
+    "remote_readback_exact": true
+  },
+  "runtime_tests": false,
+  "sql_tests": false,
+  "immutability_control": "NOT_VERIFIED",
+  "remaining": [
+    "Complete consumer audit",
+    "Verify existing immutable identity controls",
+    "Integration and regression tests",
+    "Contract admission"
+  ],
+  "checklist": {
+    "executed": 8,
+    "total": 12
+  },
+  "status": "HOLD",
+  "next_package": false,
+  "impact": {
+    "horizontal": "Application metamodel",
+    "vertical": "Logical representations of existing physical entities",
+    "transversal": "Kernel metadata consumers"
+  },
+  "limitations": "No database or physical entity changes. No runtime test. No new criterion approval."
+}

@@ -1,0 +1,31 @@
+name: CKO B59/SOT documentation and rights HOLD gate
+on:
+  push:
+    branches:
+      - 'cko/pmo-corpus-canonical-20261114'
+    paths:
+      - 'cko/pmo/corpus-2026-11-14/**'
+      - '.github/workflows/cko-b59-sot-static.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-candidate-holds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CKO_DB_WRITE: 'false'
+      CKO_AI_TDM_DEPLOY: 'false'
+      CKO_RIGHTS_RELEASE: 'false'
+      CKO_PUBLICATION: 'false'
+    steps:
+      - name: Checkout read-only
+        uses: actions/checkout@v4
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify snapshot and AI rights HOLD metadata
+        run: node cko/pmo/corpus-2026-11-14/validate-b59-sot.mjs

@@ -1,0 +1,21 @@
+id,severity,risk,owner,mitigation,status
+R01,HIGH,Repositório público com documentos de direitos desconhecidos,RIGHTS,"Bloquear texto protegido, PDFs, SQLite e ZIP; só metadata/reuse candidato",OPEN
+R02,HIGH,Colisão curricular UC08/UC07/UC09,CURRICULUM,Decisão documental institucional antes da promoção,HOLD_HUMAN
+R03,HIGH,PR #36 alterando 13.550 arquivos,GIT,"Mapear contratos e cherry-pick seletivo, nunca merge indiscriminado",OPEN
+R04,HIGH,Confundir 80.261 referências com 80.261 textos licenciados,DATA,Mostrar 28.001 text atoms de corpus governed e gate rights separado,CONTROLLED
+R05,HIGH,Claims legados sem validação atual,CLINICAL,"Revisar 29+29 records, não herdar aprovação",OPEN
+R06,MEDIUM,PMOs múltiplos e filas divergentes,PMO,"Crosswalk por ID, preservar histórico e não substituir sheet",OPEN
+R07,HIGH,Norma ou diretriz obsoleta,AUTHORITY,Verificar autoridade/version date/escopo por afirmação,OPEN
+R08,HIGH,Associação lexical sem equivalência clínica; comprovada em TOPIC-UE-2-26 ligado indevidamente à diretriz HA2025,ONTOLOGY,"Aplicar regra de supressão por topic+source e revisar spans, preservar histórico",OPEN
+R09,MEDIUM,Dados de pacientes/segredos em dumps,SECURITY,Scan antes de qualquer commit público,OPEN
+R10,MEDIUM,Template editorial duplicado,EDITORIAL,Usar contracts/cko-editorial existentes; proibir segundo master,OPEN
+R11,MEDIUM,Supabase drift e RLS,ARCHITECTURE,"Read-only snapshot, dry-run e approval explícita",OPEN
+R12,MEDIUM,Ausência ementas Centro Cirúrgico/CME,CURRICULUM,HOLD_SOURCE e não inventar currículo,WAITING_SOURCE
+R13,HIGH,Perfil de direitos HA2025 referencia URLs de licença do artigo ECG 2022,Rights,Revisão da prova de licença por documento e DOI; HOLD de uso dependente,OPEN
+R14,HIGH,SBV possui 26 candidatos de indexação e 0 átomos com texto conferível no recorte,Evidence,Substituir por documentos e fontes válidas/permitidas antes de claims,HOLD_SOURCE
+R15,HIGH,Suporte circulatório mecânico ligado a 80 átomos de diretriz hipertensão,Ontology,"FIND e bloqueio da associação, validação por especialista clínico",OPEN
+R16,HIGH,Piloto SOT com 3 Edge Functions públicas verify_jwt=false sem teste de conteúdo e controle de abuso,Security,"Inventariar métodos, retornos, permissões, rate limits, logs e exposição de informações sem acessar segredos",OPEN_REVIEW
+R17,HIGH,"Piloto SOT e Calculadoras-Smart estão na mesma organização, sem comprovar isolamento organizacional exigido",Architecture,"Ratificar ADR, escopo e custo antes de ingestão, migração ou novo projeto",HOLD_ADR
+R18,HIGH,SOT deepseek-atomize envia texto de corpus_fragments à API DeepSeek sem checagem explícita de direitos external AI TDM encontrada na função,Security/Rights,Bloquear execução com fragmentos de direitos não aprovados; exigir preflight documental/provedor/privacidade antes da chamada externa,HOLD_P0_RIGHTS
+R19,HIGH,Reenvio externo de fragmento pode ocorrer duas vezes em tentativas sequenciais: mock do preflight não tem claim transacional nem idempotency key persistente,Architecture/Security/Rights,"Propor claim durável e testes de disputa/revogação em PostgreSQL descartável, depois revisão de DB migration/rollback; nenhum deploy SOT",HOLD_P0_REPLAY
+R20,MEDIUM,"M08 continha três lacunas de completude de afirmações isoladas: prazo regular/72h da RDC 36, documentação das etapas pelo enfermeiro e fundamento teórico do PE. M09 adiciona complementos sem alterar o baseline.",Authority/Editorial/ClinicalReview,"Preservar claims antigos, vincular M09 e revisar 46 proposições por artigo, incluindo alterações normativas de 2026; não publicar antes de revisão dupla.",HOLD_CONTENT_COMPLETENESS

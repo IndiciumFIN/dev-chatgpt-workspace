@@ -1,0 +1,22 @@
+name: CKO M08 canonical atomic metadata gate
+on:
+  push:
+    branches:
+      - 'cko/cardiologia-corpus-editorial-20261114'
+    paths:
+      - 'cko/canonical-content/2026-11-14/m08/**'
+      - '.github/workflows/cko-m08-content-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate-content:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate M08 candidate and block publication
+        run: node cko/canonical-content/2026-11-14/m08/validate-m08.mjs

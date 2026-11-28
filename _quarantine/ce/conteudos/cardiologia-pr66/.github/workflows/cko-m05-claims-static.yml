@@ -1,0 +1,36 @@
+name: CKO M05 claims structural gate (candidate-only)
+on:
+  push:
+    branches:
+      - 'cko/cardiologia-corpus-editorial-20261114'
+    paths:
+      - 'cko/canonical-content/2026-11-14/**'
+      - '.github/workflows/cko-m05-claims-static.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cko-claims-candidate-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CKO_CLINICAL_PROMOTION: 'false'
+      CKO_DB_WRITE: 'false'
+      CKO_PUBLICATION: 'false'
+    steps:
+      - name: Checkout (read-only)
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate M04 curriculum and topic link structure
+        run: node cko/canonical-content/2026-11-14/m04/validate-m04.mjs
+      - name: Validate M05 claim provenance and holds
+        run: node cko/canonical-content/2026-11-14/m05/validate-m05.mjs
+      - name: Validate Trilha de carreira source ID and UC08 preservation
+        run: node cko/canonical-content/2026-11-14/career-path/validate-career-path.mjs
+      - name: Validate Trilha de carreira Urgencia and Trabalho source clusters
+        run: node cko/canonical-content/2026-11-14/career-path/validate-ue-oh.mjs

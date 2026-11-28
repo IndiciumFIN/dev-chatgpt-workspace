@@ -143,3 +143,39 @@ test("explicit cohort coverage cannot silently accept extra or missing remote re
   assert.equal(idx.seal_branch,false);
  }finally{rmSync(out,{recursive:true,force:true});rmSync(f.root,{recursive:true,force:true})}
 });
+
+test("retired ancestor is read by pinned SHA only with valid receipt; reappearance fails",()=>{
+ const f=mkfixture();
+ const out=mkdtempSync(join(tmpdir(),"ce-retired-source-"));
+ try{
+  git(f.root,"merge","--no-ff","--no-edit","legacy");
+  const main=git(f.root,"rev-parse","HEAD"),tree=git(f.root,"rev-parse","HEAD^{tree}");
+  git(f.root,"update-ref","refs/remotes/origin/main",main);
+  const auth="https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231593810";
+  const folder=join(f.root,"audit","branch-retirement");mkdirSync(folder,{recursive:true});
+  const save=(name,obj)=>{
+   const raw=JSON.stringify(obj);writeFileSync(join(folder,name),raw);
+   return {path:"audit/branch-retirement/"+name,sha256:createHash("sha256").update(raw).digest("hex")};
+  };
+  const evidence=save("fixture-evidence.json",{protocol:"CE.BRANCH.RETIREMENT.EVIDENCE.v1",branch:"legacy",source_sha:f.source,
+   main_sha:main,main_tree_sha:tree,merge_base_sha:f.source,exclusive_commits:0,authorization_ref:auth,
+   gates:Object.fromEntries(["DEPENDENCIES_FULL","RETENTION","SECURITY_RIGHTS","MAIN_LEDGER_CI"].map(k=>[k,{state:"PASS",evidence_ref:"synthetic only",reviewer:"fixture"}]))});
+  const receipt=save("fixture-receipt.json",{protocol:"CE.BRANCH.RETIREMENT.RECEIPT.v1",branch:"legacy",expected_sha:f.source,
+   eligibility_sha256:evidence.sha256,method:"GIT_FORCE_WITH_LEASE_DELETE",remote_ref_absent:true,main_preserved:true,post_main_sha:main,execution_ref:"synthetic only"});
+  const scope={protocol:"CE.BRANCH.COHORT.v1",counts:{ce:1},main_sha:main,branches:[{name:"legacy",sha:f.source}],
+   technical_retirement:{protocol:"CE.BRANCH.RETIREMENT.v1",phase:"EVIDENCE_VERIFIED",authorization_ref:auth,main_sha:main,main_tree_sha:tree,
+    counts:{candidates:0,pending:0,eligible:0,retired:1},live_counts:{all:1,ce:0,wutrib:0,main:1},rows:[{branch:"legacy",source_sha:f.source,state:"RETIRED_TECHNICAL",
+     structural_evidence:{kind:"ANCESTOR",main_sha:main,evidence_ref:auth},blocking_checks:[],eligibility_evidence:evidence,retirement_receipt:receipt}]}};
+  const cohort=join(f.root,"scope.json");
+  const invoke=()=>{writeFileSync(cohort,JSON.stringify(scope));return spawnSync("python3",[script,"--repo",f.root,"--main","refs/remotes/origin/main","--cohort",cohort,"--out",out,"--strict-heads"],{encoding:"utf8",timeout:30000});};
+  const first=invoke();assert.equal(first.status,0,first.stderr);
+  const idx=JSON.parse(readFileSync(join(out,"index.json"),"utf8"));
+  assert.deepEqual(idx.retired_sources_by_sha,["legacy"]);assert.equal(idx.generated,1);assert.equal(idx.incomplete,false);
+  assert.equal(idx.branches[0].source_sha,f.source);assert.equal(idx.seal_branch,false);
+  git(f.root,"update-ref","refs/remotes/origin/legacy",f.source);
+  const reappeared=invoke();assert.equal(reappeared.status,2);assert.match(reappeared.stderr,/reappeared/);
+  git(f.root,"update-ref","-d","refs/remotes/origin/legacy");
+  scope.technical_retirement.rows[0].retirement_receipt.sha256="0".repeat(64);
+  const tampered=invoke();assert.equal(tampered.status,2);assert.match(tampered.stderr,/hash mismatch/);
+ }finally{rmSync(out,{recursive:true,force:true});rmSync(f.root,{recursive:true,force:true})}
+});

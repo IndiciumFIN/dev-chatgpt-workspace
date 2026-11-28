@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+/** Mandatory post-build fail-closed gate: the 87 HOLD drafts must not reach the public output. */
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
+import { join } from "node:path";
+import assert from "node:assert/strict";
+
+const root = ".vercel/output/static";
+const catalog = JSON.parse(readFileSync("src/lib/content/curiosidades/catalog.json", "utf8"));
+assert.equal(catalog.length, 87, "Expected 87 HOLD draft records");
+assert(catalog.every((page) => page.content_status !== "APPROVED" && page.content_status !== "PUBLISHED"), "New admission detected; manual policy review required");
+// TanStack Start is served through Nitro SSR; absence of static /blog/index.html
+// is expected. Require real server-function output instead of a false static gate.
+assert(existsSync(".vercel/output/nitro.json"), "NITRO_SSR_MANIFEST_MISSING");
+assert(existsSync(".vercel/output/functions/__server.func"), "NITRO_SSR_HANDLER_MISSING");
+assert(existsSync(join(root,"sitemap.xml")), "SITEMAP_MISSING");
+for (const {slug} of catalog) {
+  assert(!existsSync(join(root,"blog",slug,"index.html")), "UNAUTHORIZED_PUBLIC_ROUTE:" + slug);
+}
+const sitemap = readFileSync(join(root,"sitemap.xml"),"utf8");
+for (const {slug} of catalog) {
+  assert(!sitemap.includes("/blog/" + slug), "UNAUTHORIZED_SITEMAP:" + slug);
+}
+
+// Compilation must not include the article bodies, even as dynamically imported chunks.
+// Read only generated text assets. Match unique phrases from source JSON, not common titles.
+const anchors = catalog.map(({slug}) => {
+  const record = JSON.parse(readFileSync("src/lib/content/curiosidades/pages/" + slug + ".json", "utf8"));
+  const intro = record.content?.intro?.lead;
+  const firstParagraph = record.content?.sections?.[0]?.paragraphs?.[0];
+  // 70 caracteres quase sempre distinguem corpo editorial de título/metadata.
+  const anchor = (typeof firstParagraph === "string" ? firstParagraph : intro)?.slice(0,70);
+  assert(typeof anchor === "string" && anchor.length >= 35, "MISSING_LEAK_ANCHOR:" + slug);
+  return {slug,anchor};
+});
+const files = [];
+function scan(dir) {
+  for (const item of readdirSync(dir)) {
+    const path = join(dir,item);
+    const stat = statSync(path);
+    if (stat.isDirectory()) scan(path);
+    else if (/\.(?:js|json|html|txt|map)$/.test(item) && stat.size < 12_000_000) files.push(path);
+  }
+}
+scan(root);
+for (const path of files) {
+  const text = readFileSync(path,"utf8");
+  for (const {slug,anchor} of anchors) {
+    assert(!text.includes(anchor), "DRAFT_BODY_LEAK:" + path + ":" + slug);
+  }
+}
+const route = readFileSync("src/routes/blog.$slug.tsx","utf8");
+const loader = readFileSync("src/lib/content/curiosidades/load.ts","utf8");
+assert(route.includes('import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true"'),
+  "ROUTE_PREVIEW_NOT_DEV_ONLY");
+assert(loader.includes('!import.meta.env.DEV || import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW !== "true"'),
+  "LOADER_PREVIEW_NOT_DEV_ONLY");
+const index = readFileSync("src/routes/blog.index.tsx","utf8");
+assert(index.includes('import.meta.env.DEV && import.meta.env.VITE_CURIOSIDADES_MEM_PREVIEW === "true"'),
+  "INDEX_PREVIEW_NOT_DEV_ONLY");
+console.log(JSON.stringify({
+  verdict:"PASS_PUBLICATION_GATE",checkedDrafts:catalog.length,publicDraftRoutes:0,
+  indexableDraftRoutes:0,bundleLeaks:0,anchorsChecked:anchors.length,assetsScanned:files.length,
+  publicCatalogStatus:"DRAFT_UNLISTED",approval:"NOT_GRANTED"
+}));

@@ -15,15 +15,16 @@ if (!manifest.release_eligible && manifest.runtime_admission === false) {
 const expected = new Set();
 for (const entry of manifest.entries) {
   const path = entry.destination;
-  if (typeof path !== 'string' || !/^_quarantine\/ce\/(calculadoras|kernel|conteudos|interfaces|migrations)\/[a-zA-Z0-9._/-]+$/.test(path) || path.includes('..')) fail('invalid candidate path');
+  if (typeof path !== 'string' || !/^_quarantine\/ce\/(calculadoras|kernel|conteudos|interfaces|migrations)\/[a-zA-Z0-9._/$-]+$/.test(path) || path.includes('..') || path.split('/').some(segment => !segment || segment === '.')) fail('invalid candidate path');
   if (expected.has(path)) fail('duplicate candidate');
   expected.add(path);
   if (entry.state !== 'STAGED_PENDING_REVIEW' || entry.runtime_admission !== false || entry.release_eligible !== false) fail('candidate not inactive');
   if (!/^[0-9a-f]{40}$/.test(entry.source_git_blob_sha) || !/^[0-9a-f]{40}$/.test(entry.source_commit_sha)) fail('source hashes missing');
+  if (!['100644','100755'].includes(entry.source_mode)) fail('invalid source regular-file mode');
   if (!existsSync(join(root, path))) fail('candidate missing: ' + path);
   if (git('hash-object', '--', path) !== entry.source_git_blob_sha) fail('Git blob drift: ' + path);
   const staged = git('ls-files', '-s', '--', path);
-  if (!staged.startsWith('100644 ' + entry.source_git_blob_sha + ' ')) fail('index blob/mode drift: ' + path);
+  if (staged !== entry.source_mode + ' ' + entry.source_git_blob_sha + ' 0\t' + path) fail('index blob/mode drift: ' + path);
 }
 const tracked = git('ls-files', '-z', '--', '_quarantine/ce').split('\0').filter(Boolean);
 for (const path of tracked) {

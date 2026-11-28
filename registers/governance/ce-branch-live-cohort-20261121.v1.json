@@ -1272,6 +1272,103 @@
         ],
         "runtime_admission": false,
         "release_eligible": false
+      },
+      {
+        "source_ref": "fix/ce-tanstack-vercel-build-no-migrations-20261114",
+        "source_sha": "1976da6bf8cbb13a6547e2d7deed6ff3674f1d4d",
+        "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+        "main_baseline_sha": "6c2d94b388a76c1a2a260e1eed638187b8c1548e",
+        "source_pr": 71,
+        "source_pr_state": "OPEN",
+        "delta_paths": 12,
+        "already_exact_paths": [
+          {
+            "path": "package.json",
+            "destination": "_quarantine/ce/kernel/g02-workspace-pr77/package.json",
+            "sha": "4bebc886f638e00f6ea8018c731ebd0fefc29dc0",
+            "mode": "100644"
+          }
+        ],
+        "staged_paths": 11,
+        "screening": "Eleven source texts fetched; narrow credential/email regex screen: six hits only in migration-preflight test, all obvious dummy pairs and example hostnames in assertions; other ten files zero hits. Lockfile resolved host registry.npmjs.org. Not full G00, rights or DB approval. No scripts executed or DB access.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": ".github/workflows/ce-vercel-build-output-p0.yml",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/.github/workflows/ce-vercel-build-output-p0.yml",
+            "sha": "13a8c504be094d58cbe2dd83c5aa1e0483c2e02c",
+            "mode": "100644"
+          },
+          {
+            "path": "docs/audits/CE_MIGRATION_FIRST_RECONCILIATION_20261115.md",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/docs/audits/CE_MIGRATION_FIRST_RECONCILIATION_20261115.md",
+            "sha": "aa653bf776584a9a6e49c0353760f99bb6e8a513",
+            "mode": "100644"
+          },
+          {
+            "path": "package-lock.json",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/package-lock.json",
+            "sha": "ef767d2d9dea3664eb3c4cf331b398be7e2f492e",
+            "mode": "100644"
+          },
+          {
+            "path": "registers/governance/migration-source-lineage.v1.json",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/registers/governance/migration-source-lineage.v1.json",
+            "sha": "7f3e00b60d6385fdf21ada28aef0be72c106b50d",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/check-local-ssr-preview.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/check-local-ssr-preview.mjs",
+            "sha": "0925d5451b7c61cc6cbb1a808afad3a3cf888bb8",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/migrate.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/migrate.mjs",
+            "sha": "f460c375e0d2d2d7be8cd43f2a7a4a4ad52a2c0a",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/migration-preflight.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/migration-preflight.mjs",
+            "sha": "3d00e11a0787c090caf4a0f01ae9566f1b770746",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/migration-preflight.test.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/migration-preflight.test.mjs",
+            "sha": "ad378d33e5e9dafccb52870075babca6825b581a",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/vercel-build-gate.test.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/vercel-build-gate.test.mjs",
+            "sha": "ee255582e8e1025c4b4abfec23e0190905314ef3",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/verify-vercel-build-output.mjs",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/scripts/verify-vercel-build-output.mjs",
+            "sha": "1db393606fec073f1c625f6ef9b597926e25b786",
+            "mode": "100644"
+          },
+          {
+            "path": "vercel.json",
+            "destination": "_quarantine/ce/kernel/vercel-migration-pr71/vercel.json",
+            "sha": "e357e3e862e309604144da21744f44b680ac9847",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR71_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
       }
     ],
     "ancestor_reverification_20261127": {
@@ -1743,6 +1840,17 @@
       ],
       "runtime_admission": false,
       "release_eligible": false,
+      "retirement_eligible": false
+    },
+    "postmerge_pr135": {
+      "main_sha": "6c2d94b388a76c1a2a260e1eed638187b8c1548e",
+      "source_pr": 135,
+      "manifest_entries_verified": 83,
+      "blob_mode_pass": 83,
+      "tree_truncated": false,
+      "guard_fix": "51431d156cb1ebaba21b22f0f184c44d1da1cfe3",
+      "pr78_pending_rights": 3,
+      "runtime_admission": false,
       "retirement_eligible": false
     }
   },

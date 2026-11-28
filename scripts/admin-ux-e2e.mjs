@@ -56,6 +56,20 @@ try {
   if (await mobile.locator('.admin-main .err').count()) {
     throw new Error('ADMIN_E2E_MOBILE_ERROR: ' + (await mobile.locator('.admin-main .err').innerText()));
   }
+  // Confere o Builder na rota administrativa ATIVA, não somente em /oficina-local.
+  await mobile.locator('button.admin-launch').click();
+  await dialog.waitFor({state:'visible',timeout:5000});
+  await dialog.locator('button.admin-tree-item',{hasText:'Design system e interfaces'}).click();
+  await mobile.getByRole('heading',{name:'Design system e interfaces'}).waitFor({timeout:20000});
+  await mobile.locator('.admin-tabs button',{hasText:'Builder'}).click();
+  const builder=mobile.locator('section.ce-admin-tbuilder[aria-label="Builder visual por templates"]');
+  await builder.waitFor({state:'visible',timeout:10000});
+  await builder.locator('.ce-admin-tbuilder__fields input').nth(1).fill('Teste de prévia local');
+  await builder.locator('.ce-admin-tbuilder__actions button').first().click();
+  await builder.locator('[role="status"]').filter({hasText:'Rascunho salvo somente neste navegador.'}).waitFor({timeout:7000});
+  if(await builder.getByText('Publicação bloqueada').count()!==1) throw new Error('BUILDER_PUBLICATION_GUARD_MISSING');
+  if(await mobile.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1)) throw new Error('BUILDER_MOBILE_HORIZONTAL_OVERFLOW');
+  await mobile.screenshot({path:'audit-evidence/admin-ux/04-builder-mobile.png',fullPage:true});
   if (errors.length) throw new Error('JavaScript errors in admin browser: ' + errors.join('; '));
   console.log('PASS ADMIN E2E: overview, module navigation, modal Escape/focus, desktop and mobile evidence.');
 } finally { await browser.close(); }

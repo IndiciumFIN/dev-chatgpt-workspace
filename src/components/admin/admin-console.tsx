@@ -11,6 +11,7 @@ import { Breadcrumb } from '@/components/site/breadcrumb';
 import { tools } from '@/lib/tools/catalog';
 import { templateCatalogo } from '@/lib/template-catalog';
 import { templateContracts } from '@/lib/template-contract';
+import { TemplateBuilderPanel } from '@/components/admin/template-builder-panel';
 import {
   initialWorkbench, validateWorkbench, exportWorkbench,
   type LocalToolPublication, type LocalWorkbench,
@@ -289,7 +290,8 @@ export function AdminConsole() {
             </div>}
           </Panel>
         </>}
-        {tab === 'templates' && <Panel title="Inventário canônico de templates" subtitle="Derivado diretamente de template-catalog.ts e template-contract.ts; os contratos não são alterados por este painel.">
+        {tab === 'templates' && <Panel title="Templates canônicos" subtitle="Editor de prévias locais; o catálogo e os contratos permanecem somente leitura.">
+          <TemplateBuilderPanel />
           <div className="ce-admin-table-scroll"><table className="ce-admin-table"><thead><tr><th>Template / família</th><th>Contrato</th><th>Origem / matéria-prima</th><th>Disponibilidade</th></tr></thead><tbody>
             {templateCatalogo.map(item => <tr key={item.id}><td data-label="Template"><strong>{item.nome}</strong><small>{item.id}</small></td><td data-label="Contrato">{item.kind}<small>Frame: {item.frame}</small></td><td data-label="Origem">{item.materiaPrima}</td><td data-label="Disponibilidade">{item.url ? <a href={item.url} className="ce-admin-table-link">Ver página <ArrowUpRight size={13}/></a> : <Indicator tone="warn">Sem página</Indicator>}<small>{item.situacao}</small></td></tr>)}
           </tbody></table></div>

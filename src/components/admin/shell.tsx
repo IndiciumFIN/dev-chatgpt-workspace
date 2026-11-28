@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/admin-layout";
+import { TemplateBuilderPanel } from "@/components/admin/template-builder-panel";
 import { DataModule, NormsModule, PoliciesModule } from "@/components/admin/governance";
 import { ModelDesk } from "@/components/admin/model-desk";
 import { ModuleDirectory, PlannedModule } from "@/components/admin/module-board";
@@ -16,6 +17,7 @@ export function AdminDesk() {
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
   const [selection, setSelection] = useState<AdminPick>("overview");
+  const [systemView, setSystemView] = useState<"visual" | "builder">("visual");
   const current = selection === "overview" ? null : adminModule(selection);
   const desk = current?.desk ?? null;
 
@@ -46,7 +48,15 @@ export function AdminDesk() {
       {desk === "politicas" ? <PoliciesModule onError={setError} /> : null}
       {desk === "dados" ? <DataModule onError={setError} /> : null}
       {desk === "conteudo" ? <ContentModule key={current?.id} desk={tools} tab={current?.focus} /> : null}
-      {desk === "sistema" ? <SystemModule key={current?.id} tab={current?.focus} /> : null}
+      {desk === "sistema" ? (
+        <section aria-label="Design System e Builder">
+          <div className="admin-tabs" role="tablist" aria-label="Modo do Design System">
+            <button type="button" role="tab" aria-selected={systemView === "visual"} onClick={() => setSystemView("visual")}>Contratos e tokens</button>
+            <button type="button" role="tab" aria-selected={systemView === "builder"} onClick={() => setSystemView("builder")}>Builder</button>
+          </div>
+          {systemView === "visual" ? <SystemModule key={current?.id} tab={current?.focus} /> : <TemplateBuilderPanel />}
+        </section>
+      ) : null}
       {desk === "instrumentos" ? <InstrumentModule tools={tools} onSaved={reload} onError={setError} /> : null}
       {desk === "pessoas" ? <PeopleModule people={people} onSaved={reload} onError={setError} /> : null}
     </AdminShell>

@@ -1,0 +1,58 @@
+{
+  "version": "0.32",
+  "phase": "F01",
+  "package": "P01",
+  "criteria": [
+    "C01",
+    "C04",
+    "C05",
+    "C06",
+    "C07"
+  ],
+  "migration": {
+    "name": "20260822014043_cko_sequential_layer_pipeline_and_uuidv7_v0285.sql",
+    "sha256": "9cc1b8245883bcceab5ce6f0acefba48cd07fec49281bed27f12a27052faac69"
+  },
+  "identity_contract": {
+    "semantic_join": "layer_catalog.layer_id = entities.canonical_id",
+    "catalog_uuid": "layer_uuid",
+    "master_uuid": "object_uuid",
+    "preserve_both": true,
+    "distinct_pairs": 44
+  },
+  "snapshot_checks": {
+    "population": true,
+    "semantic_keys": true,
+    "catalog_uuid": true,
+    "md_uuid": true,
+    "version_ownership": true,
+    "sequence": true,
+    "catalog_fk": true,
+    "catalog_pk": true,
+    "catalog_semantic_unique": true,
+    "md_uuid_index": true
+  },
+  "static_scan": {
+    "functions": 341,
+    "views": 46,
+    "triggers": 186,
+    "candidates": 13,
+    "explicit_layer_uuid": 0,
+    "explicit_object_uuid": 3
+  },
+  "sources": [
+    "https://www.rfc-editor.org/rfc/rfc9562.html",
+    "https://www.postgresql.org/docs/17/ddl-constraints.html",
+    "https://archive.docs.datahub.com/docs/1.8.0/what-is-datahub/datahub-concepts",
+    "https://docs.open-metadata.org/v1.12.x/api-reference/governance/data-products/create"
+  ],
+  "remaining": [
+    "Inspect Git repository consumers at pinned SHA, including APIs and Kernel",
+    "Review immutability controls: FK ON UPDATE CASCADE is not proof of immutable canonical IDs",
+    "Run read-only PostgreSQL checks and regression tests",
+    "Admit contract via existing governance; no UUID rewrite"
+  ],
+  "status": "HOLD",
+  "next_package": false,
+  "limitations": "Local snapshot and static SQL export checks executed; SQL acceptance script not executed. Benchmark examples not binding norms."
+}

@@ -13,7 +13,8 @@ test("held instruments stay in the record and leave every public lookup", () => 
   for (const slug of ["braden", "morse"]) {
     assert.equal(getTool(slug), undefined);
     const record = toolRecord(slug);
-    assert.equal(record?.publicacao, "candidata");
+    assert.equal(record?.publicacao, undefined);
+    assert.ok((record?.holds ?? []).length >= 1);
     assert.equal(
       assembleTool(
         {

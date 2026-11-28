@@ -62,8 +62,7 @@ test("o indice bate com o CATALOGO lido diretamente, nao com o registry", () => 
   ];
   assert.deepEqual(dump.publicPaths, esperado);
   assert.ok(dump.publicPaths.includes("/"), "a home tem de ser indexavel");
-  // Braden e Morse saíram do índice por direito autoral. O piso acompanha essa saída.
-  assert.ok(dump.publicPaths.length >= 39, `sitemap com apenas ${dump.publicPaths.length} rotas`);
+  assert.ok(dump.publicPaths.length >= 40, `sitemap com apenas ${dump.publicPaths.length} rotas`);
 });
 
 test("toda secao publicada entra no indice e nenhuma candidata entra", () => {

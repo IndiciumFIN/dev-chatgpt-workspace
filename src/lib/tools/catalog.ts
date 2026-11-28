@@ -96,10 +96,9 @@ const braden: ClinicalTool = {
     "Braden B, Bergstrom N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing. 1987;12(1):8-12.",
     "Paranhos WY, Santos VLCG. Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa. Rev Esc Enferm USP. 1999;33(esp):191-206.",
   ],
-  publicacao: "candidata",
   holds: [
     "Titular da Braden Scale informa acordo de licença para a Scale II. A versão original e a tradução não foram verificadas.",
-    "Lei 9.610/1998: o método não se confunde com a expressão protegida. Esta ficha fica fora de rota, índice, consulta e publicação até a licença.",
+    "Lei 9.610/1998: o método não se confunde com a expressão protegida. A página não monta este instrumento até a licença.",
   ],
   related: ["morse", "gotejamento", "imc"],
 };
@@ -136,10 +135,9 @@ const morse: ClinicalTool = {
   references: [
     "Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989;8(4):366-377.",
   ],
-  publicacao: "candidata",
   holds: [
     "Fall TIPS informa uso gratuito condicionado à permissão do autor. A autorização aplicável não está no registro.",
-    "Fora de rota, índice, consulta direta, restauração e publicação até essa permissão. Não é liberação clínica.",
+    "A página não monta este instrumento até essa permissão. Não é liberação clínica.",
   ],
   related: ["braden", "apgar", "imc"],
 };

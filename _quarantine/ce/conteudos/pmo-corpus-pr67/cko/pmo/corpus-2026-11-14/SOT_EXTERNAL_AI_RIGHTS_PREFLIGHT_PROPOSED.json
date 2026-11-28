@@ -1,0 +1,60 @@
+{
+  "policy_id": "POL-CKO-EXTERNAL-AI-RIGHTS-20261114",
+  "state": "PROPOSAL_NOT_DEPLOYED",
+  "priority": "P0",
+  "source": "SOT deepseek-atomize v5 static read",
+  "required_preflight": [
+    "fragment_id",
+    "source_id",
+    "document_id",
+    "snapshot_id",
+    "origin_sha256",
+    "valid_source_document_link",
+    "approved_item_rights_for_external_ai_tdm",
+    "data_privacy_approved",
+    "provider_allowed",
+    "no_stale_or_superseded_version",
+    "actor_authorized"
+  ],
+  "on_missing": "DENY_AND_HOLD_RIGHTS",
+  "outbound_before_preflight": false,
+  "default_state": "DENY",
+  "audit_log": "REFERENCE_ONLY_NO_RAW_TEXT",
+  "approval": "HOLD_SECURITY_RIGHTS",
+  "deployment": false,
+  "tests": [
+    {
+      "case": "rights_unknown",
+      "source_rights": "UNKNOWN",
+      "expect": "DENY"
+    },
+    {
+      "case": "local_retrieval_only",
+      "source_rights": "DEFAULT_ACTIVE_LOCAL_ONLY",
+      "expect": "DENY"
+    },
+    {
+      "case": "quarantined_source",
+      "source_rights": "LICENSE_QUARANTINED",
+      "expect": "DENY"
+    },
+    {
+      "case": "mismatched_snapshot",
+      "source_rights": "AI_TDM_APPROVED_BUT_WRONG_SHA",
+      "expect": "DENY"
+    },
+    {
+      "case": "approved_rights_but_privacy_hold",
+      "source_rights": "AI_TDM_APPROVED",
+      "privacy": "HOLD",
+      "expect": "DENY"
+    },
+    {
+      "case": "fully_approved_in_permitted_sandbox",
+      "source_rights": "AI_TDM_APPROVED",
+      "privacy": "APPROVED",
+      "provider": "APPROVED",
+      "expect": "ELIGIBLE_ONLY_AFTER_DEPLOYED_GUARD"
+    }
+  ]
+}

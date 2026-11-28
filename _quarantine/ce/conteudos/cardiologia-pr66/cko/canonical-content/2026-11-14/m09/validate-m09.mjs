@@ -1,0 +1,16 @@
+import fs from "node:fs";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
+const d=path.dirname(fileURLToPath(import.meta.url));
+const read=f=>JSON.parse(fs.readFileSync(path.join(d,f),"utf8"));
+const m=read("M09_MANIFEST.json"),a=read("M09_CLAIM_EVIDENCE_REFERENCE_INDEX.json");
+const prior=read("../m08/M08_CLAIM_EVIDENCE_REFERENCE_INDEX.json");
+const err=[];const ok=(v,s)=>{if(!v)err.push(s)};
+ok(prior.length===34&&a.length===12,"count");
+ok(new Set([...prior,...a].map(x=>x.claim_id)).size===46,"claim collision");
+ok(new Set([...prior,...a].map(x=>x.evidence_atom_id)).size===43,"source evidence count");
+ok(a.filter(x=>x.source_id==="SRC-COFEN-736-2024").length===5&&a.filter(x=>x.source_id==="SRC-ANVISA-RDC36-2013").length===7,"source mix");
+ok(a.every(x=>x.status==="EVIDENCE_BOUND"&&x.review==="PENDING"&&!x.publication_allowed&&/^[a-f0-9]{64}$/.test(x.document_sha256)&&/^[a-f0-9]{64}$/.test(x.content_sha256)),"evidence and release gates");
+ok(m.cumulative_claims===46&&m.cumulative_unique_atoms===43&&!m.publication_allowed&&m.clinical_approval===0,"release");
+ok(m.m08_completeness_issues.length===3&&/^[a-f0-9]{64}$/.test(m.zip_sha256),"lineage");
+console.log(JSON.stringify({status:err.length?"FAIL":"PASS",scope:"METADATA_ONLY",m08:34,m09:12,claims:46,unique_atoms:43,publication:false,errors:err},null,2));if(err.length)process.exitCode=1;

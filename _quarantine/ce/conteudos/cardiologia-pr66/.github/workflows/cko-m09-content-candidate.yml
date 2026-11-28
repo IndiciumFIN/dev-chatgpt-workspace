@@ -1,0 +1,22 @@
+name: CKO M09 canonical content metadata gate
+on:
+  push:
+    branches:
+      - 'cko/cardiologia-corpus-editorial-20261114'
+    paths:
+      - 'cko/canonical-content/2026-11-14/m09/**'
+      - '.github/workflows/cko-m09-content-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: M09 ID/link and release HOLD checks
+        run: node cko/canonical-content/2026-11-14/m09/validate-m09.mjs

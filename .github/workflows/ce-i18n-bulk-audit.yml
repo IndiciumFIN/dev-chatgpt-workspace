@@ -1,0 +1,36 @@
+name: CE i18n bulk read-only audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/ce_i18n_bulk_audit.py'
+      - 'scripts/test_ce_i18n_bulk_audit.py'
+      - '.github/workflows/ce-i18n-bulk-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ce-i18n-bulk-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Verify same-repository PR
+        env:
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+        run: test "$GITHUB_REPOSITORY" = "IndiciumFIN/dev-chatgpt-workspace" && test "$HEAD_REPO" = "$GITHUB_REPOSITORY"
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Unit tests
+        run: python3 -m unittest discover -s scripts -p test_ce_i18n_bulk_audit.py
+      - name: Audit pinned baseline and five historical sources without checkout
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
+        run: python3 scripts/ce_i18n_bulk_audit.py --baseline "$BASE_SHA" --out "$RUNNER_TEMP/ce-i18n-bulk/report.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ce-i18n-bulk-metadata
+          path: ${{ runner.temp }}/ce-i18n-bulk/report.json
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,46 @@
+name: P01 isolated PostgreSQL rehearsal
+on:
+  push:
+    branches: [audit/cko-f01-recovery-20261128]
+    paths:
+      - 'docs/audit/f01-recovery-20261128/p01/**'
+      - '.github/workflows/p01-isolated-rehearsal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rehearsal:
+    if: github.ref == 'refs/heads/audit/cko-f01-recovery-20261128'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: p01
+          POSTGRES_PASSWORD: synthetic-ci-only
+          POSTGRES_DB: p01_fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U p01 -d p01_fixture"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: p01
+      PGPASSWORD: synthetic-ci-only
+      PGDATABASE: p01_fixture
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute synthetic fixture and acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd docs/audit/f01-recovery-20261128/p01
+          psql -X -v ON_ERROR_STOP=1 -f synthetic_fixture_v0.37.sql
+          psql -X -v ON_ERROR_STOP=1 -f identity_acceptance_v0.32.sql
+          psql -X -v ON_ERROR_STOP=1 -f immutability_rehearsal_v0.36.sql
+          psql -X -v ON_ERROR_STOP=1 -c "DO \$\$ BEGIN IF EXISTS (SELECT 1 FROM pg_trigger WHERE tgname IN ('p01_guard_layer_catalog_identity','p01_guard_master_layer_identity')) THEN RAISE EXCEPTION 'rollback failed'; END IF; END \$\$;"

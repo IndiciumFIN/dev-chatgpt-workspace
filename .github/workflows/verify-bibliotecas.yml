@@ -159,6 +159,10 @@ jobs:
       - run: node scripts/check-generated-fresh.mjs
       - run: node scripts/check-cko-packages.mjs
       - run: node scripts/check-contract-coverage.mjs
+      - name: Replay CKO historical metadata in disposable directory (no publication or DB)
+        run: |
+          git fetch --no-tags --depth=1 origin 38a33fcec02e5bc996a1f84164bf13799b2f81c7
+          node scripts/ce-cko-historical-replay.mjs
       - run: npm test
       - run: node scripts/audit-execution-gates.mjs
       - name: Simular exclusões do upload Vercel após testes completos

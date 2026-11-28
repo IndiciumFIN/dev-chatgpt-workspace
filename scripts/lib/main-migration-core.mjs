@@ -105,3 +105,38 @@ export function detectMainMigrationCollisions(candidateByBranch) {
   }
   return {collisions:collisions.sort((a,b)=>a.path.localeCompare(b.path)),duplicates:duplicates.sort((a,b)=>a.path.localeCompare(b.path)),distinctPaths:paths.size};
 }
+
+/** Only accept already-verified technical retirement records, not mere absent refs.
+ * The caller MUST validate the ledger and receipt hashes and check Git ancestry.
+ */
+export function historicalMigrationSources(expectedBranches, remoteHeads, verifiedRetired) {
+  const declared=new Map(expectedBranches.map(b=>[b.name,b]));
+  if(declared.size!==expectedBranches.length)throw Error('DUPLICATE_HISTORICAL_SOURCE');
+  const retired=new Map();
+  for(const [name,sha] of verifiedRetired){
+    if(!/^[a-f0-9]{40}$/.test(sha)||name==='main'||name.startsWith('wutrib/'))throw Error('INVALID_RETIRED_SOURCE');
+    if(remoteHeads.has(name))throw Error('RETIRED_SOURCE_REAPPEARED:'+name);
+    if(!declared.has(name))continue;
+    if(declared.get(name).observedSha!==sha)throw Error('HISTORICAL_SHA_MISMATCH:'+name);
+    retired.set(name,sha);
+  }
+  const active=[...remoteHeads.keys()].filter(name=>name!=='main');
+  const historicalObserved=[...active,...retired.keys()];
+  const population=reconcileBranchPopulation([...declared.keys()],historicalObserved);
+  return {retired,population,activeCount:active.length,historicalObserved};
+}
+
+/** Current CE scope is explicitly versioned; historical scope is not live authority. */
+export function currentMigrationScope(cohort, historical) {
+  if(cohort?.protocol!=='CE.BRANCH.COHORT.v1'||!Array.isArray(cohort.branches)||
+     !Number.isSafeInteger(cohort.counts?.ce)||cohort.counts.ce!==cohort.branches.length||
+     !/^[a-f0-9]{40}$/.test(cohort.main_sha))throw Error('INVALID_CURRENT_COHORT');
+  const seen=new Set(), old=new Map(historical.branches.map(b=>[b.name,b]));
+  const branches=cohort.branches.map(row=>{
+    if(typeof row.name!=='string'||!row.name||row.name==='main'||row.name.startsWith('wutrib/')||
+       seen.has(row.name)||!/^[a-f0-9]{40}$/.test(row.sha))throw Error('INVALID_CURRENT_SOURCE');
+    seen.add(row.name);
+    return {name:row.name,observedSha:row.sha,category:old.get(row.name)?.category??'UNCLASSIFIED_HOLD',status:null};
+  });
+  return {branches,mainSha:cohort.main_sha};
+}

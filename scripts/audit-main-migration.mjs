@@ -3,13 +3,15 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { validateMigrationManifest, parseTree, parseNameStatus, classifyCandidateRisk, detectMainMigrationCollisions, reconcileBranchPopulation } from './lib/main-migration-core.mjs';
+import { validateMigrationManifest, parseTree, parseNameStatus, classifyCandidateRisk, detectMainMigrationCollisions, historicalMigrationSources, currentMigrationScope } from './lib/main-migration-core.mjs';
 
 const manifestPath='registers/governance/main-migration-scope.v1.json';
 const reportPath=process.argv.includes('--output')
   ? process.argv[process.argv.indexOf('--output')+1]
   : 'audit-evidence/main-migration/runtime-report.json';
 const strict=process.argv.includes('--require-promotable');
+const current=process.argv.includes('--current-ce-cohort');
+const cohortPath='registers/governance/ce-branch-live-cohort-20261121.v1.json';
 if(!reportPath || reportPath.startsWith('-'))throw Error('INVALID_REPORT_PATH');
 const manifest=JSON.parse(readFileSync(manifestPath,'utf8'));
 const contractErrors=validateMigrationManifest(manifest);
@@ -38,22 +40,36 @@ function remoteBranchRefs(){
 }
 const mainRef='refs/remotes/origin/main';
 const sourceRefsBefore=remoteBranchRefs();
-const observedNames=[...sourceRefsBefore.keys()].filter(name=>name!=='main');
-const population=reconcileBranchPopulation(manifest.branches.map(b=>b.name),observedNames);
+const currentScope=current?currentMigrationScope(JSON.parse(readFileSync(cohortPath,'utf8')),manifest):null;
+const declared=currentScope?.branches??manifest.branches;
+const baselineMain=currentScope?.mainSha??manifest.main.observedSha;
+const scopedHeads=current?new Map([...sourceRefsBefore].filter(([name])=>!name.startsWith('wutrib/'))):sourceRefsBefore;
+const snapshotDrift=[];
 const mainSha=rev(mainRef);
+// Reuse the canonical Python verifier. Never infer retirement from a missing ref.
+const retiredRows=JSON.parse(execFileSync('python3',['-c',
+  'import json,runpy; from pathlib import Path; p=Path("registers/governance/ce-branch-live-cohort-20261121.v1.json"); d=json.loads(p.read_text()); runpy.run_path("scripts/ce-branch-closure.py")["validate_retirement"](d,Path(".")); print(json.dumps([[r["branch"],r["source_sha"]] for r in d["technical_retirement"]["rows"] if r["state"]=="RETIRED_TECHNICAL"]))'
+],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));
+const verifiedRetired=new Map(retiredRows);
+for(const [name,sha] of verifiedRetired){
+  if(rev(sha+'^{commit}')!==sha)throw Error('RETIRED_SHA_UNAVAILABLE:'+name);
+  git('merge-base','--is-ancestor',sha,mainSha);
+}
+const {retired,population,activeCount,historicalObserved:observedNames}=historicalMigrationSources(declared,scopedHeads,verifiedRetired);
 const mainFiles=tree(mainRef);
 const groups=[];
 const failures=[];
 for(const name of population.untracked) failures.push({branch:name,code:'UNTRACKED_REMOTE_BRANCH'});
 for(const name of population.missing) failures.push({branch:name,code:'MANIFEST_BRANCH_MISSING_FROM_REMOTE'});
 if(population.duplicates) failures.push({code:'DUPLICATE_BRANCH_POPULATION'});
-if(mainSha!==manifest.main.observedSha) failures.push({code:'MAIN_SHA_DRIFT',previous:manifest.main.observedSha,current:mainSha});
-const sourceEntries=[...manifest.branches,...population.untracked.map(name=>({name,category:'UNCLASSIFIED_HOLD',status:null}))];
+if(mainSha!==baselineMain) (current?snapshotDrift:failures).push({code:'MAIN_SHA_DRIFT',previous:baselineMain,current:mainSha});
+const sourceEntries=[...declared,...population.untracked.map(name=>({name,category:'UNCLASSIFIED_HOLD',status:null}))];
 for(const src of sourceEntries){
-  const ref='refs/remotes/origin/'+src.name;
+  const ref=retired.get(src.name)??('refs/remotes/origin/'+src.name);
   let branchSha;
   try{branchSha=rev(ref);}catch {failures.push({branch:src.name,code:'SOURCE_BRANCH_NOT_FETCHED'});continue;}
-  const branchFiles=tree(ref);
+  if(current&&src.observedSha&&branchSha!==src.observedSha) snapshotDrift.push({branch:src.name,code:'SOURCE_SHA_DRIFT',previous:src.observedSha,current:branchSha});
+  const branchFiles=tree(branchSha);
   let mergeBase=null;
   try{mergeBase=git('merge-base',mainRef,ref);}catch { /* unrelated history is explicitly permitted for audit only */ }
   let records=[];
@@ -75,7 +91,7 @@ for(const src of sourceEntries){
   const currentStatus=!mergeBase?'no_common_ancestor':ahead===0?'behind':behind===0?'ahead':'diverged';
   if(src.status && currentStatus!==src.status)failures.push({branch:src.name,code:'DRIFTED_BRANCH_STATUS',previous:src.status,current:currentStatus});
   groups.push({
-    branch:src.name,sha:branchSha,category:src.category,
+    branch:src.name,sha:branchSha,category:src.category,sourceRefKind:retired.has(src.name)?'RETIRED_PINNED_SHA':'LIVE_REMOTE_REF',
     ahead,behind,baseSha:mergeBase,status:currentStatus,
     filesTotal:branchFiles.size,
     changedPaths:paths.length,
@@ -102,12 +118,17 @@ const report={
   schemaVersion:'1.0.0',
   reportType:'READ_ONLY_CANDIDATE_NOT_RELEASE',
   repository:manifest.repository,
-  scopeId:manifest.recordId,
-  main:{sha:mainSha,expected:manifest.main.observedSha,changedSinceSnapshot:mainSha!==manifest.main.observedSha},
+  scopeId:current?'CE.BRANCH.COHORT.v1':manifest.recordId,
+  auditMode:current?'CURRENT_CE_COHORT_READ_ONLY':'HISTORICAL_STRICT',
+  snapshotDrift,
+  excludedWutrib:current?[...sourceRefsBefore.keys()].filter(name=>name.startsWith('wutrib/')).sort():[],
+  main:{sha:mainSha,expected:baselineMain,changedSinceSnapshot:mainSha!==baselineMain},
   branchPopulation:population,
   remoteBranchHeads:Object.fromEntries(sourceRefsBefore),
+  retiredHistoricalSources:Object.fromEntries(retired),
   summary:{
-    branchesExpected:manifest.branches.length,branchesObserved:observedNames.length,branchesInspected:groups.length,
+    branchesExpected:declared.length,branchesObserved:observedNames.length,branchesInspected:groups.length,
+    activeRemoteBranchesObserved:activeCount,retiredHistoricalSourcesObserved:retired.size,
     sourceCoverageComplete:population.complete && groups.length===observedNames.length && failures.length===0,
     sourceFailures:failures.length,
     totalSourceChangePaths:totalPendingPaths+totalIdentical,

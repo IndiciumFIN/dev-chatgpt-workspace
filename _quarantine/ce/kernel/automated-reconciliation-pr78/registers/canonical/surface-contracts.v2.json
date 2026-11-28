@@ -1,0 +1,571 @@
+{
+  "schemaVersion": "2.0.0",
+  "scope": "CE_PUBLIC_BACKUP_ONLY",
+  "authority": "EXPLICIT_REVIEWED_SOURCE_IMPORT_CONTRACT",
+  "notes": "PASS means static imports exist, NOT visual parity or end-to-end validation — Reconciliado para 53 rotas: novas entradas CANDIDATE_STATIC_ONLY e HOLD_SCOPE_CLINICAL_RIGHTS não equivalem a homologação visual ou autorização de publicação.",
+  "entries": {
+    "__root.tsx": {
+      "kind": "shell",
+      "role": "system",
+      "templateKind": null,
+      "requiredImports": [
+        "@/components/preview-host-bridge",
+        "@/lib/auth/provider",
+        "@/lib/chrome"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "admin.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/admin/shell",
+        "@/components/site/areas"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "api/auth/$.ts": {
+      "kind": "endpoint",
+      "role": "authentication",
+      "templateKind": null,
+      "requiredImports": [
+        "@/lib/auth/server"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "assinante.ferramentas.$slug.tsx": {
+      "kind": "page",
+      "role": "subscriber",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/areas",
+        "@/components/tools/clinical-tool",
+        "@/lib/source.functions"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "assinante.tsx": {
+      "kind": "page",
+      "role": "subscriber",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/areas",
+        "@/lib/source.functions"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "blog.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "artigo",
+      "requiredImports": [
+        "@/components/article/article-page",
+        "@/components/site/related-content",
+        "@/components/site/shell",
+        "@/components/templates/biography-view",
+        "@/lib/content/articles/index",
+        "@/lib/seo",
+        "@/lib/translate",
+        "@tanstack/react-router"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "blog.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "secao",
+      "requiredImports": [
+        "@/components/article/article-page",
+        "@/components/site/shell",
+        "@/lib/content/curiosidades/catalog",
+        "@tanstack/react-router"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "central-comando.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/central-command-tables",
+        "@/styles/command-center.css",
+        "@tanstack/react-router",
+        "../../registers/governance/imports/cko-coren-cofen-20261023/pending-candidates.v1.json",
+        "../../registers/pmo/queue.v1.json"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "conta.tsx": {
+      "kind": "redirect",
+      "role": "account",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "ferramentas.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/tools/clinical-tool",
+        "@/components/site/shell",
+        "@/lib/source.functions",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "home",
+      "requiredImports": [
+        "@/components/site/home-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.$page.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.index.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.$hub.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "institucional.index.tsx": {
+      "kind": "redirect",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/institutional-target"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "institucional.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "kids.$section.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/shell",
+        "@/components/page-hero"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "kids.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/shell",
+        "@/components/page-hero"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "kids.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": null,
+      "requiredImports": [
+        "@tanstack/react-router"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "login.tsx": {
+      "kind": "page",
+      "role": "authentication",
+      "templateKind": "entrada",
+      "requiredImports": [
+        "@/lib/auth/client",
+        "@/lib/auth/gates"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.$id.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/template-catalog",
+        "@/components/templates/contract-view"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/template-catalog",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "modelos.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "oficina-local.tsx": {
+      "kind": "page",
+      "role": "administrator-local",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/local/local-workbench-page"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "pacote.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/tools/catalog",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "secao.$slug.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "secao",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/stored.functions",
+        "@/components/site/section-page"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "sessao.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/components/site/areas"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "sistema.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@/lib/contract",
+        "@/components/article/article-page",
+        "@/components/site/shell"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.tsx": {
+      "kind": "layout",
+      "role": "public",
+      "templateKind": null,
+      "requiredImports": [],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.index.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "bibliotecas.$slug.$object.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "biblioteca",
+      "requiredImports": [
+        "@/components/templates/library-canonical",
+        "@/components/site/shell",
+        "@/lib/seo"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "viladocuidado.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/vila-page"
+      ],
+      "assertion": "static-import-presence"
+    },
+    "$.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": null,
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/article/article-page",
+        "@/lib/content-object.functions"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "album.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/shell",
+        "@/lib/editorial/album.seed"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "blog.mary-eliza-mahoney.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "artigo",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/templates/biography-view",
+        "@/lib/content-object.functions"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "bolsas.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "calculadoras-trabalhistas.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/shell",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "HOLD_SCOPE_CLINICAL_RIGHTS"
+    },
+    "concurso.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/career/curriculum-editor"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "concursos.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "curiosidades.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/editorial/fun-facts.public.generated"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "cursos-sus.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "doencas-compulsorias.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/saude-publica/doencas-compulsorias.data"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "HOLD_SCOPE_CLINICAL_RIGHTS"
+    },
+    "estudo.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/education/simulados-panel",
+        "@/lib/education/store"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "exames-laboratoriais.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/tools/exames-laboratoriais.data"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "HOLD_SCOPE_CLINICAL_RIGHTS"
+    },
+    "ferramentas-pesquisa.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/research/pico-panel",
+        "@/lib/research/store"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "forum.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/lib/editorial/forum.store"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "kids.colorir.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "kids.jogos.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "oportunidades.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "residencias.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    },
+    "sbar.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "ferramenta",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/sbar/sbar-editor"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "HOLD_SCOPE_CLINICAL_RIGHTS"
+    },
+    "vagas.tsx": {
+      "kind": "page",
+      "role": "public",
+      "templateKind": "area",
+      "requiredImports": [
+        "@tanstack/react-router",
+        "@/components/site/page-hero"
+      ],
+      "assertion": "static-import-presence",
+      "reviewState": "CANDIDATE_STATIC_ONLY"
+    }
+  }
+}

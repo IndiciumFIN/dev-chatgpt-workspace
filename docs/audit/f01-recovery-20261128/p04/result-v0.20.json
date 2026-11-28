@@ -1,0 +1,28 @@
+{
+  "version": "0.20",
+  "source_migration": "20260822001744_cko_master_policy_normative_binding_coverage_v0270.sql",
+  "source_migration_sha256": "2fc402c6a181be5265612e2aad321c345204d7181c19413da33f11f7cf7e3180",
+  "active_types": 45,
+  "covered_before": 43,
+  "covered_simulated": 45,
+  "candidates": [
+    {
+      "entity_type": "LABOR_TOOL",
+      "candidate_policy_id": "IDPOL-AUTO-LABOR-TOOL",
+      "population": 7,
+      "pattern": "^WK-[0-9]{3}$"
+    },
+    {
+      "entity_type": "DEVICE_COHORT",
+      "candidate_policy_id": "IDPOL-AUTO-DEVICE-COHORT",
+      "population": 0,
+      "pattern": "^COHORT-[A-Z0-9-]+$"
+    }
+  ],
+  "sql_sha256": "d7d2f496326b18ac3059541db2785e423c307f8c6b1be2a9dc439d5d65416c39",
+  "execution": "Python in-memory population simulation only; SQL not executed",
+  "production_changes": 0,
+  "authorization": false,
+  "kernel": "HOLD",
+  "resolver_finding": "canonical ID and alias resolution not type-scoped; alias LIMIT 1 can mask ambiguity"
+}

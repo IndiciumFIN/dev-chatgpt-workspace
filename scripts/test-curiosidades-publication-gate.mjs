@@ -4,18 +4,25 @@ import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 import assert from "node:assert/strict";
 
-const root = ".vercel/output/static";
+const output = ".vercel/output";
+const root = join(output, "static");
+assert(existsSync(output) && existsSync(root), "Missing Vercel build output");
 const catalog = JSON.parse(readFileSync("src/lib/content/curiosidades/catalog.json", "utf8"));
 assert.equal(catalog.length, 87, "Expected 87 HOLD draft records");
 assert(catalog.every((page) => page.content_status !== "APPROVED" && page.content_status !== "PUBLISHED"), "New admission detected; manual policy review required");
-assert(existsSync(join(root,"blog/index.html")), "Missing safe public blog index");
+// Nitro SSR serves the admitted index dynamically; static prerender is not required.
 for (const {slug} of catalog) {
   assert(!existsSync(join(root,"blog",slug,"index.html")), "UNAUTHORIZED_PUBLIC_ROUTE:" + slug);
 }
-const sitemap = readFileSync(join(root,"sitemap.xml"),"utf8");
-for (const {slug} of catalog) {
-  assert(!sitemap.includes("/blog/" + slug), "UNAUTHORIZED_SITEMAP:" + slug);
+const sitemapPath = join(root,"sitemap.xml");
+if (existsSync(sitemapPath)) {
+  const sitemap = readFileSync(sitemapPath,"utf8");
+  for (const {slug} of catalog) assert(!sitemap.includes("/blog/" + slug), "UNAUTHORIZED_SITEMAP:" + slug);
 }
+// SSR sitemap authority is the canonical contract, independent of static generation.
+const { execFileSync } = await import("node:child_process");
+const paths = JSON.parse(execFileSync(process.execPath, ["--experimental-strip-types", "--import", "./scripts/alias-hook.mjs", "-e", "import(\"./src/lib/contract.ts\").then(m=>console.log(JSON.stringify(m.publicPaths())))"], {encoding:"utf8"}).trim().split("\n").pop());
+for (const {slug} of catalog) assert(!paths.includes("/blog/" + slug), "UNAUTHORIZED_CONTRACT_ROUTE:" + slug);
 
 // Compilation must not include the article bodies, even as dynamically imported chunks.
 // Read only generated text assets. Match unique phrases from source JSON, not common titles.
@@ -34,10 +41,11 @@ function scan(dir) {
     const path = join(dir,item);
     const stat = statSync(path);
     if (stat.isDirectory()) scan(path);
-    else if (/\.(?:js|json|html|txt|map)$/.test(item) && stat.size < 12_000_000) files.push(path);
+    else if (/\.(?:js|mjs|cjs|json|html|txt|map)$/.test(item)) files.push(path);
   }
 }
-scan(root);
+scan(output);
+assert(files.length > 0, "No build assets inspected");
 for (const path of files) {
   const text = readFileSync(path,"utf8");
   for (const {slug,anchor} of anchors) {

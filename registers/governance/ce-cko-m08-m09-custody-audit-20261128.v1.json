@@ -1,0 +1,78 @@
+{
+  "protocol": "CE.CKO.M08.M09.CUSTODY.AUDIT.v1",
+  "date": "2026-11-28",
+  "baseline": "fbbc1b27b69e5c70ae36de35154ee5597844ecec",
+  "scope": "Offline ZIP integrity and referential audit; no source text, private pointers, or individual permission identifiers reproduced.",
+  "packages": [
+    {
+      "module": "M08",
+      "bytes": 1711989,
+      "zip_sha256": "1663f80280684aa005aa58e029c1dabdeba3cd05fb8b15cefccb9abc5c9bfff4",
+      "entries": 18,
+      "crc": "PASS",
+      "public_link_before": true,
+      "public_link_after": true,
+      "individual_owner_role_preserved": true
+    },
+    {
+      "module": "M09",
+      "bytes": 26136,
+      "zip_sha256": "f0abd0869df21d09b9e78d8557f6c2e31ed2cafeae21c32a4912071df8739860",
+      "entries": 16,
+      "crc": "PASS",
+      "public_link_before": true,
+      "public_link_after": true,
+      "individual_owner_role_preserved": true
+    }
+  ],
+  "access": {
+    "user_authorized_restriction": true,
+    "operation_result": "CONNECTOR_ACTION_NOT_IMPLEMENTED",
+    "post_attempt_readback": "ANYONE_READER_STILL_PRESENT_BOTH",
+    "individual_permissions_changed": false,
+    "manual_restriction_required": true,
+    "independent_custody_verified": false
+  },
+  "referential_audit": {
+    "metadata_atoms": 28001,
+    "unique_atom_ids": 28001,
+    "topic_atom_pairs": 9102,
+    "unique_topic_atom_pairs": 9102,
+    "resolved_pairs": 4142,
+    "resolved_source_mismatch": 0,
+    "unresolved_pairs": 4960,
+    "unresolved_distinct_atoms": 1765,
+    "unresolved_distinct_sources": 52,
+    "unresolved_status": {
+      "BLOCKED_RIGHTS_CANDIDATE": 3290,
+      "CONDITIONAL_RIGHTS_CANDIDATE": 1670
+    },
+    "resolved_status": {
+      "ACTIVE_EVIDENCE_CANDIDATE": 4142
+    },
+    "qa_report_provenance_orphans": 0,
+    "qa_scope_reconciliation_required": true,
+    "claims": 46,
+    "claim_evidence_atoms": 43,
+    "claim_binding_metadata_matches": 46,
+    "claim_ids_unique": 46,
+    "knowledge_atom_claim_links": 46,
+    "m09_reference_index_matches": 12,
+    "educational_claim_link_failures": 0,
+    "approved_claims": 0,
+    "released_claims": 0
+  },
+  "controls": {
+    "clinical_release": false,
+    "license_clearance": false,
+    "kernel_admission": false,
+    "raw_copy_to_main": false,
+    "source_ref_deletion": false,
+    "db_write": false
+  },
+  "next": [
+    "Restrict link sharing via Drive UI and verify readback; no new access grants.",
+    "Reconcile the 4960 withheld or missing pair targets with authorized source metadata and original QA scope; do not admit them by inventing records.",
+    "Obtain independent custody and rights evidence."
+  ]
+}

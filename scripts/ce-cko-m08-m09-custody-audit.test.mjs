@@ -1,0 +1,20 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const d=JSON.parse(readFileSync(new URL("../registers/governance/ce-cko-m08-m09-custody-audit-20261128.v1.json",import.meta.url),"utf8"));
+test("M08/M09 custody audit preserves unresolved rights and access states",()=>{
+ assert.equal(d.packages.length,2);
+ assert.ok(d.packages.every(x=>x.public_link_after===true&&x.individual_owner_role_preserved===true&&x.crc==="PASS"));
+ assert.equal(d.access.operation_result,"CONNECTOR_ACTION_NOT_IMPLEMENTED");
+ assert.equal(d.access.independent_custody_verified,false);
+ assert.equal(d.access.individual_permissions_changed,false);
+ const a=d.referential_audit;
+ assert.equal(a.resolved_pairs+a.unresolved_pairs,a.topic_atom_pairs);
+ assert.equal(Object.values(a.unresolved_status).reduce((s,x)=>s+x,0),a.unresolved_pairs);
+ assert.equal(a.resolved_status.ACTIVE_EVIDENCE_CANDIDATE,a.resolved_pairs);
+ assert.equal(a.claim_binding_metadata_matches,a.claims);
+ assert.equal(a.approved_claims,0);
+ assert.equal(a.released_claims,0);
+ assert.ok(a.qa_scope_reconciliation_required);
+ assert.ok(Object.values(d.controls).every(x=>x===false));
+});

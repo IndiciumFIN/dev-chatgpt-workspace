@@ -256,8 +256,8 @@
       "main": 1
     },
     "counts": {
-      "candidates": 14,
-      "pending": 42,
+      "candidates": 16,
+      "pending": 40,
       "eligible": 0,
       "retired": 0
     },
@@ -449,7 +449,23 @@
       {
         "branch": "fix/ce-generated-contract-fresh-20261115",
         "source_sha": "19ced90f3ac51533daed1e441fc253d77e2fbffd",
-        "state": "PENDING_EVIDENCE"
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 7,
+          "quarantined_paths": 5,
+          "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+          "delta_tree_rederived": true
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
       },
       {
         "branch": "fix/ce-route-component-contract-freshness-20261114",
@@ -573,7 +589,23 @@
       {
         "branch": "governance/quarantine-branches-20261115",
         "source_sha": "b75866adb43c73195091699d624992847f20babc",
-        "state": "PENDING_EVIDENCE"
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 8,
+          "quarantined_paths": 8,
+          "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+          "delta_tree_rederived": true
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
       },
       {
         "branch": "grook_10_26",
@@ -803,6 +835,96 @@
         "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231985229",
         "complete": false
       }
+    },
+    "incremental_delta_screen": {
+      "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+      "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+      "screened": 10,
+      "candidates_added": 2,
+      "held": 8,
+      "method": "Recursive Git trees and exact path/blob/mode/type; candidates independently rederived from merge-base trees; no raw content read.",
+      "rows": [
+        {
+          "branch": "fix/ce-generated-contract-fresh-20261115",
+          "observed": 7,
+          "exact": 2,
+          "quarantine": 5,
+          "hold": 0,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "governance/quarantine-branches-20261115",
+          "observed": 8,
+          "exact": 0,
+          "quarantine": 8,
+          "hold": 0,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/shell-consolidation",
+          "observed": 6,
+          "exact": 1,
+          "quarantine": 0,
+          "hold": 5,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ce-chrome-frozen-tokens-source-20261114",
+          "observed": 22,
+          "exact": 3,
+          "quarantine": 3,
+          "hold": 16,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ce-tanstack-vercel-build-no-migrations-20261114",
+          "observed": 12,
+          "exact": 0,
+          "quarantine": 0,
+          "hold": 12,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ncos-generated-contract-sync-20261113",
+          "observed": 115,
+          "exact": 3,
+          "quarantine": 0,
+          "hold": 112,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/de-v1",
+          "observed": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "hold": 88,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/pt-PT-v1",
+          "observed": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "hold": 88,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/consolidado-19",
+          "observed": 300,
+          "exact": 15,
+          "quarantine": 0,
+          "hold": 285,
+          "api_cap_possible": true
+        },
+        {
+          "branch": "backup/research-hub-complete-20261026",
+          "observed": 64,
+          "exact": 8,
+          "quarantine": 1,
+          "hold": 55,
+          "api_cap_possible": false
+        }
+      ]
     }
   },
   "previous_inventory_snapshot": {

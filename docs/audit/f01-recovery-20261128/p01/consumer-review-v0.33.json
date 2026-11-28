@@ -1,0 +1,54 @@
+{
+  "version": "0.33",
+  "phase": "F01",
+  "package": "P01",
+  "baseline": "6df454bdecce75fdf558a7b196ef5c90277c414f",
+  "tree": "14af594e57ec413a25ce88e01d107c0fc5b78a36",
+  "tree_entries": 4145,
+  "tree_truncated": false,
+  "reviewed": [
+    [
+      "src/lib/metamodel.ts",
+      "ed18298e0240955cf8b7641de8427c4e09aba2d4"
+    ],
+    [
+      "migrations/0004_metamodel.sql",
+      "a66e0e7e269d92dfc39da51e4c63715170cec86a"
+    ],
+    [
+      "migrations/0027_kernel_admission.sql",
+      "bd42b910fbd1a7f0ed662636baf3efc8cdc37a98"
+    ],
+    [
+      "src/core/governance/kernel.ts",
+      "085abfc8dd0737d942fe9f752f264d2458989ef7"
+    ],
+    [
+      "src/core/kernel/kernel.ts",
+      "aaabfee0318cf7ccd1e6013824578f70bfd9d3c5"
+    ],
+    [
+      "src/lib/kernel-admit.ts",
+      "4251544045c70ee90cd2595c23900bf48084eb4a"
+    ],
+    [
+      "src/data/contracts/cko-governance/opa/kernel_admission.rego",
+      "8e9434c7d21a2a71869df2fcb0b4a33ebcadfeb7"
+    ]
+  ],
+  "findings": [
+    "Application metamodel describes schema_layer.id and schema_entity.layer_id; no explicit mapping to cko_governance.layer_catalog or cko_master.entities in inspected file.",
+    "No layer_uuid or object_uuid references in seven inspected files; this is not evidence of repository-wide absence.",
+    "Three kernel metamodel entries are duplicated (kernel_order, kernel_order_policy, kernel_validator); retain as separate finding, not change scope.",
+    "Admission adapter uses work order and policy evidence rather than a typed layer identity."
+  ],
+  "decision": "Do not equate schema_layer.id with canonical layer identifier absent authoritative binding. Preserve both UUIDs. No production or runtime change.",
+  "remaining": [
+    "Full content scan of runtime/API paths at pinned SHA",
+    "Verify database mutation controls and consumers",
+    "Execute SQL acceptance and regression",
+    "Admit contract"
+  ],
+  "status": "HOLD",
+  "next_package": false
+}

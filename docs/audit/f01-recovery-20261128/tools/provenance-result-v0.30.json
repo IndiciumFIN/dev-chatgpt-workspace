@@ -1,0 +1,48 @@
+{
+  "version": "0.30",
+  "phase": "F01",
+  "packages": [
+    "P06",
+    "P08",
+    "P09",
+    "P10",
+    "P16"
+  ],
+  "criteria": [
+    "C08",
+    "C09",
+    "C10",
+    "C15",
+    "C16"
+  ],
+  "versions": 1840,
+  "sources": 157,
+  "snapshots": 84,
+  "agents": 89,
+  "entities": 1164,
+  "snapshot_source_missing": 0,
+  "entity_current_version_missing": 0,
+  "distinct_source_refs_outside_index": 2316,
+  "counts": {
+    "versions_without_source_refs": 352,
+    "source_ref_occurrences": 4221,
+    "creator_not_agent_key": 472,
+    "versions_with_source_refs": 1488,
+    "source_ref_outside_index": 4182,
+    "creator_registered_agent": 1368,
+    "source_or_snapshot_key_match": 15,
+    "nonstring_or_empty_ref": 24
+  },
+  "local_sha256": {
+    "provenance.py": "0c9a9ea2e8c3da9672ac7b3d4a29ca4e70c37d65067544197fd8166944ac8fde",
+    "result.json": "c54cd9d21b5e6544f61fa5f917921df7a3454752ba00e3f5ffef53dda30b97cb"
+  },
+  "execution": "Local Python audit executed. Initial strict string-only parser failed; revised validator counted non-string references instead of dropping them. Observed 24 dict entries. Exact key matching only.",
+  "limitations": "No full source registry resolution, no semantic validation of objects, no database change or formal approval. A reference outside these two indexes is not necessarily invalid.",
+  "impacts": {
+    "horizontal": "Master Data and versioned objects",
+    "vertical": "entity to version to source or snapshot and author",
+    "transversal": "provenance and assurance"
+  },
+  "kernel": "HOLD"
+}

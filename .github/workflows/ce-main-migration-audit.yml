@@ -83,20 +83,24 @@ jobs:
           path: audit-evidence/pmo-forks/fork-reconciliation.v1.json
           retention-days: 30
       - name: Generate exhaustive Git blob/path collision candidate report
-        run: node scripts/audit-main-migration.mjs --output audit-evidence/main-migration/runtime-report.json
+        run: node scripts/audit-main-migration.mjs --current-ce-cohort --output audit-evidence/main-migration/runtime-report.json
       - name: Assert all live branches audited and release still blocked
         run: |
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
           const r=JSON.parse(readFileSync('audit-evidence/main-migration/runtime-report.json','utf8'));
-          const scope=JSON.parse(readFileSync('registers/governance/main-migration-scope.v1.json','utf8'));
+          const scope=JSON.parse(readFileSync('registers/governance/ce-branch-live-cohort-20261121.v1.json','utf8'));
+          if(r.auditMode!=='CURRENT_CE_COHORT_READ_ONLY'||r.scopeId!==scope.protocol||scope.counts.ce!==scope.branches.length)throw Error('WRONG_CURRENT_SCOPE');
+          if(r.branches.some(b=>b.branch.startsWith('wutrib/'))||r.excludedWutrib.some(b=>!b.startsWith('wutrib/')))throw Error('CROSS_DOMAIN_SCOPE');
+          if(r.main.changedSinceSnapshot&&!r.snapshotDrift.some(d=>d.code==='MAIN_SHA_DRIFT'&&d.current===r.main.sha&&d.previous===r.main.expected))throw Error('UNRECORDED_MAIN_DRIFT');
           if(r.summary.branchesExpected!==scope.branches.length ||
              r.summary.branchesObserved!==scope.branches.length ||
              r.summary.branchesInspected!==r.summary.branchesObserved ||
              r.summary.activeRemoteBranchesObserved+r.summary.retiredHistoricalSourcesObserved!==r.summary.branchesObserved ||
              r.summary.sourceCoverageComplete!==true ||
              r.branchPopulation?.complete!==true) throw Error('INCOMPLETE_BRANCH_INVENTORY');
-          if(r.summary.sourceFailures || r.main.changedSinceSnapshot) throw Error('DRIFT_OR_MISSING_SOURCES');
+          if(r.summary.sourceFailures) throw Error('LIVE_DRIFT_OR_MISSING_SOURCES');
+          console.log('Historical snapshot drift retained as HOLD:',r.snapshotDrift.length);
           if(r.releaseGate!=='HOLD_HUMAN' || r.migrationComplete!==false) throw Error('INVALID_RELEASE_CLAIM');
           console.log('PASS: all',r.summary.branchesObserved,'active or receipt-verified historical sources audited; migration HOLD_HUMAN');
           console.log('SUMMARY:',JSON.stringify(r.summary));

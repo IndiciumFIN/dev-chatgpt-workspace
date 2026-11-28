@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions,reconcileBranchPopulation,historicalMigrationSources} from './lib/main-migration-core.mjs';
+import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions,reconcileBranchPopulation,historicalMigrationSources,currentMigrationScope} from './lib/main-migration-core.mjs';
 
 const manifest=JSON.parse(readFileSync('registers/governance/main-migration-scope.v1.json','utf8'));
 test('scope contains a controlled, versioned branch universe with explicit HOLD',()=>{
@@ -121,4 +121,20 @@ test('historical population counts receipt-verified retired sources separately a
  assert.throws(()=>historicalMigrationSources(declared,new Map([...heads,['archivamento',sha]]),new Map([['archivamento',sha]])),/REAPPEARED/);
  assert.throws(()=>historicalMigrationSources(declared,heads,new Map([['wutrib/test',sha]])),/INVALID_RETIRED_SOURCE/);
  assert.equal(historicalMigrationSources(declared,new Map([...heads,['unexpected',main]]),new Map([['archivamento',sha]])).population.complete,false);
+});
+
+test('current CE cohort is separately versioned and cannot absorb WU-TRIB or unknown refs',()=>{
+ const sha='a'.repeat(40);
+ const cohort={protocol:'CE.BRANCH.COHORT.v1',main_sha:sha,counts:{ce:2},branches:[{name:'archivamento',sha},{name:'new-ce',sha}]};
+ const current=currentMigrationScope(cohort,manifest);
+ assert.equal(current.branches.length,2);
+ assert.equal(current.branches[1].category,'UNCLASSIFIED_HOLD');
+ assert.equal(current.branches[0].status,null);
+ const pop=historicalMigrationSources(current.branches,new Map([['main',sha],['archivamento',sha],['new-ce',sha],['unknown',sha]]),new Map());
+ assert.deepEqual(pop.population.untracked,['unknown']);
+ assert.equal(pop.population.complete,false);
+ const wrong=structuredClone(cohort);wrong.branches[1].name='wutrib/test';
+ assert.throws(()=>currentMigrationScope(wrong,manifest),/INVALID_CURRENT_SOURCE/);
+ const dup=structuredClone(cohort);dup.branches[1].name='archivamento';
+ assert.throws(()=>currentMigrationScope(dup,manifest),/INVALID_CURRENT_SOURCE/);
 });

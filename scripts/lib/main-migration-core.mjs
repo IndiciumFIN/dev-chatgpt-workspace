@@ -125,3 +125,18 @@ export function historicalMigrationSources(expectedBranches, remoteHeads, verifi
   const population=reconcileBranchPopulation([...declared.keys()],historicalObserved);
   return {retired,population,activeCount:active.length,historicalObserved};
 }
+
+/** Current CE scope is explicitly versioned; historical scope is not live authority. */
+export function currentMigrationScope(cohort, historical) {
+  if(cohort?.protocol!=='CE.BRANCH.COHORT.v1'||!Array.isArray(cohort.branches)||
+     !Number.isSafeInteger(cohort.counts?.ce)||cohort.counts.ce!==cohort.branches.length||
+     !/^[a-f0-9]{40}$/.test(cohort.main_sha))throw Error('INVALID_CURRENT_COHORT');
+  const seen=new Set(), old=new Map(historical.branches.map(b=>[b.name,b]));
+  const branches=cohort.branches.map(row=>{
+    if(typeof row.name!=='string'||!row.name||row.name==='main'||row.name.startsWith('wutrib/')||
+       seen.has(row.name)||!/^[a-f0-9]{40}$/.test(row.sha))throw Error('INVALID_CURRENT_SOURCE');
+    seen.add(row.name);
+    return {name:row.name,observedSha:row.sha,category:old.get(row.name)?.category??'UNCLASSIFIED_HOLD',status:null};
+  });
+  return {branches,mainSha:cohort.main_sha};
+}

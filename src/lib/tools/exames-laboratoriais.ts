@@ -30,7 +30,7 @@ export function examesPorCategoria(categoria: string) {
  * vale para todos. Devolve `indisponivel` quando o exame nao tem faixa — e
  * honesto dizer que nao sabemos, em vez de inventar um valor.
  */
-export { interpretar } from "./exames-reference";
+export { interpretar } from "./exames-reference.ts";
 
 /**
  * Os 149 exames, como select da ferramenta — gerados da base, nunca a mao.

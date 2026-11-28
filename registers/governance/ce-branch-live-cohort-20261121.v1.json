@@ -1,14 +1,14 @@
 {
   "protocol": "CE.BRANCH.COHORT.v1",
-  "date": "2026-11-21",
+  "date": "2026-11-27",
   "repository": "IndiciumFIN/dev-chatgpt-workspace",
-  "main_sha": "5a5455ebf0a4f6a9f0dde643cfa622d43adc108c",
+  "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
   "scope": "CE_CKO_NCOS",
   "counts": {
-    "all_branches": 69,
+    "all_branches": 71,
     "main": 1,
     "excluded_wutrib": 14,
-    "ce": 54
+    "ce": 56
   },
   "selection": "All remote GitHub heads except main and prefix wutrib/ on readback at main SHA; revalidate live refset before certification",
   "branches": [
@@ -46,7 +46,7 @@
     },
     {
       "name": "ci/ce-gate-main-isolated-20261121",
-      "sha": "5a5455ebf0a4f6a9f0dde643cfa622d43adc108c"
+      "sha": "7c42b07259be30e830fe0d6aace0125d8c0bc4e6"
     },
     {
       "name": "cko/cardiologia-corpus-editorial-20261114",
@@ -145,6 +145,10 @@
       "sha": "4d5e22f5b144d83da455b108a0293b2c1785210e"
     },
     {
+      "name": "gate/ce-cross-global-hold-20261123",
+      "sha": "00ec51ed699b8f920bda62101c0658b110cdcc0f"
+    },
+    {
       "name": "gate/g02-workspace-pr-policy-20261120",
       "sha": "c8a1017972032e246f70d052c3db007f37673064"
     },
@@ -179,6 +183,10 @@
     {
       "name": "import/drive-cko-nurseos-20261026",
       "sha": "cd851c4c0efeb8adf298af96851ad45e7685b3e1"
+    },
+    {
+      "name": "integration/ce-unified-pr-branch-reconciliation-20261123",
+      "sha": "c1a799ecba5f510f037746a4aabcc3cc897e979a"
     },
     {
       "name": "integration/structural-overlay-20261101",
@@ -234,5 +242,1348 @@
     "owner_approval": "NOT_REQUESTED_DEFERRED",
     "remote_writes": false,
     "clinical_approved": false
+  },
+  "technical_retirement": {
+    "protocol": "CE.BRANCH.RETIREMENT.v1",
+    "authorization_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231593810",
+    "snapshot_date": "2026-11-27",
+    "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+    "main_tree_sha": "f6d24cf3bf536ba601e1fd82005035b0823da967",
+    "live_counts": {
+      "all": 71,
+      "ce": 56,
+      "wutrib": 14,
+      "main": 1
+    },
+    "counts": {
+      "candidates": 16,
+      "pending": 40,
+      "eligible": 0,
+      "retired": 0
+    },
+    "phase": "CANDIDATE_ONLY",
+    "note": "Live retirement snapshot; W2 historical ledger remains byte-identical and SEALED unchanged. Candidate evidence is structural only, not permission to delete. Higher states disabled until independent proof verification is implemented. The active PR ref is a snapshot, not a post-commit census. The original 54-ref inventory baseline is preserved in previous_inventory_snapshot.",
+    "rows": [
+      {
+        "branch": "archivamento",
+        "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "audit-hardening-2026-10-24",
+        "source_sha": "9c9ca4640dedf705fe1c3cccca474af4f8d1a422",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "audit/ce-wave1-evidence-20261101",
+        "source_sha": "e6fc8f0178e617845fb55384557cd0dcb1becbf0",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "audit/cko-atomic-intake-schema-20261114",
+        "source_sha": "ee2c2cb5c66f6d7af143f22669aa38b8b17159f2",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "backup/research-hub-complete-20261026",
+        "source_sha": "86ebd5a2d8791ea7c750994a7e833686829dc45c",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "canonical/foundation-20261101",
+        "source_sha": "65486491dece96e107a1f3f5172a473d7421f14d",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "canonical/local-20261101",
+        "source_sha": "8c0c4b6f9c049bb5bf13de260074b5020b08a07d",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "canonical/supabase-skeleton-20261101",
+        "source_sha": "48188f56ca54795a22994cdbf3eda7b5e7453791",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "ci/ce-gate-main-isolated-20261121",
+        "source_sha": "7c42b07259be30e830fe0d6aace0125d8c0bc4e6",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "cko/cardiologia-corpus-editorial-20261114",
+        "source_sha": "4d44d4a5f5bfe2f316089537174f13412141c241",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "cko/evidence-index-rights-20261114",
+        "source_sha": "25c7675b2605d14f656a03a6b54f4f8849d1cc01",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "cko/pmo-corpus-canonical-20261114",
+        "source_sha": "2452a4c1bea48990e538e975973fe7dcd1653c6b",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/career-youth-db-first-20261026",
+        "source_sha": "ad4c683890779eda3a096743b70cf6be2bfc4605",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/curiosidades-mem-87-20261026",
+        "source_sha": "4131831be71246d3c6e6ac61498310a9adb575a0",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/projection-unica-f0-suite-real",
+        "source_sha": "6d712dd47029286869f909a2014f42083f5db2a9",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/research-all-tools-candidate-20261101",
+        "source_sha": "3b813449ea26d018755310686c900b9a6257c312",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/research-hub-governed-20261026",
+        "source_sha": "01574c5bfbe366a6ede9c0aee6bf2e3a907d92a1",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231985229",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 7,
+          "quarantined_paths": 7
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "feat/research-participation-layer-20261026",
+        "source_sha": "53f896fd6afcce66fc6d059b377024971e7a2c3f",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "feat/research-supabase-bridge-20261101",
+        "source_sha": "9c37e6fb35faabd3f79b3587d5da6a90cdb847f5",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/ce-admin-e2e-hierarchy-20261101",
+        "source_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "fix/ce-chrome-frozen-tokens-source-20261114",
+        "source_sha": "288b4ff68481fb9ed2d8e2140d286cb550fc7b85",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/ce-first-admin-fail-closed-20261121",
+        "source_sha": "3ed991e8b4c67fa1516270b695912557f20044e7",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 2,
+          "quarantined_paths": 0
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "fix/ce-generated-contract-fresh-20261115",
+        "source_sha": "19ced90f3ac51533daed1e441fc253d77e2fbffd",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 7,
+          "quarantined_paths": 5,
+          "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+          "delta_tree_rederived": true
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "fix/ce-route-component-contract-freshness-20261114",
+        "source_sha": "5c5cfeca440d32c76e8fdee00eff5befc94da2cb",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 5,
+          "quarantined_paths": 3
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "fix/ce-tanstack-vercel-build-no-migrations-20261114",
+        "source_sha": "1976da6bf8cbb13a6547e2d7deed6ff3674f1d4d",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/ce-vercel-db-fail-closed-20261121",
+        "source_sha": "abcb2c65f40d5f27562681cbd43210d4ae714091",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 3,
+          "quarantined_paths": 0
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "fix/ce-vercel-native-output-20261121",
+        "source_sha": "9725d7aac22f639b24bd0392d7a09a05d67656cc",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 2,
+          "quarantined_paths": 1
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "fix/governed-activities-cli-20261026",
+        "source_sha": "95a416c1e4ac422e435baf7e95f6ce5c09989c99",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/ncos-generated-contract-sync-20261113",
+        "source_sha": "ace85778be5bdee038a896308b1785267b27179e",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/pendencias-camadas-20261101",
+        "source_sha": "949423ef555f40d5e6538b3d7bf2fa4b0c9051e3",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/security-auth-env-optin-oauth-17-20261114",
+        "source_sha": "eb8ff56d68ed235b455a5a6887de27eb8731a5db",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "fix/shell-consolidation",
+        "source_sha": "c68e3009556f140ece43ac23cb1ea0ed49395560",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "gate/ce-automated-reconciliation-20261120",
+        "source_sha": "4d5e22f5b144d83da455b108a0293b2c1785210e",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "gate/ce-cross-global-hold-20261123",
+        "source_sha": "00ec51ed699b8f920bda62101c0658b110cdcc0f",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "IDENTICAL_TREE",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "gate/g02-workspace-pr-policy-20261120",
+        "source_sha": "c8a1017972032e246f70d052c3db007f37673064",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "governance/normative-crossdomain-evaluation-20261108",
+        "source_sha": "de620c1ebed047af6ac5ad52325542f0a45a57ca",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "governance/quarantine-branches-20261115",
+        "source_sha": "b75866adb43c73195091699d624992847f20babc",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 8,
+          "quarantined_paths": 8,
+          "merge_base_sha": "dacfaa6bc29fd213ffc4d63998b4dd669d10854b",
+          "delta_tree_rederived": true
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
+      },
+      {
+        "branch": "grook_10_26",
+        "source_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "idioma/consolidado-19",
+        "source_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "idioma/de-v1",
+        "source_sha": "9a12fad8d32fc17f424d4425c0acfb11af3ef1d6",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "idioma/pt-PT-v1",
+        "source_sha": "314199bc72f7be9928f120c85e14c2f644a28e9e",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "implementation-governed-ecosystem",
+        "source_sha": "e16f0fb682dbf70adbca9987f2d0ac2adfd71149",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "import/drive-cko-nurseos-20261026",
+        "source_sha": "cd851c4c0efeb8adf298af96851ad45e7685b3e1",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "integration/ce-unified-pr-branch-reconciliation-20261123",
+        "source_sha": "6b89e70d890903e8124331c9912f99b918e599cc",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "integration/structural-overlay-20261101",
+        "source_sha": "621f73b5abde2dbb65818645c00d4821cbd3d061",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "plan/ce-best-excellence-supabase-readonly-20261101",
+        "source_sha": "74b4a741b0075279c94d4fa96d9e9d682cbf5dcd",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "plan/ce-reconciliacao-v6-20261101",
+        "source_sha": "70bc1181e7c9a572302d57b48384a26261248921",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "plan/pmokernel-finalization-20261031",
+        "source_sha": "57242ec5e813f6e4d88ab803e6e5f2d29893ec3d",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "planning",
+        "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "preview/central-comando-20261026",
+        "source_sha": "3f004049945ebaa50e4efee313092974b83a5bf2",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "revert-26-plan/pmokernel-finalization-20261031",
+        "source_sha": "bfcb0333a6b15a9afb0e224bdd156b0c04523f2c",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "review/grook-na-main",
+        "source_sha": "c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f",
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "ANCESTOR",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231549933",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b"
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI"
+        ]
+      },
+      {
+        "branch": "simulados-enfermagem-db-canonico",
+        "source_sha": "415a02a854a871fb5e9f72dcc8c4646b2708f1eb",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "staging/bibliotecas-corpus-20261026",
+        "source_sha": "d81736c77852d8953672d334afc32de279c96878",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "viladocuidado",
+        "source_sha": "2a199f3943efa3e0def4dcd94a286076c16d33ba",
+        "state": "PENDING_EVIDENCE"
+      },
+      {
+        "branch": "work/editorial-canonical-learning-20261026",
+        "source_sha": "38a33fcec02e5bc996a1f84164bf13799b2f81c7",
+        "state": "PENDING_EVIDENCE"
+      }
+    ],
+    "dependency_screen": {
+      "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+      "main_workflow_tree_sha": "2d790911d24cce5034dfd3553ee459b165df6ea3",
+      "scope": "Literal ref screen of 30/30 tracked workflow files on main; open PR head/base list 37/37; not a full dependency proof.",
+      "workflows_scanned": 30,
+      "workflows_total": 30,
+      "workflow_tree_truncated": false,
+      "open_prs_scanned": 37,
+      "open_pr_matches": 0,
+      "refs": [
+        {
+          "branch": "archivamento",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "audit/ce-wave1-evidence-20261101",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "ci/ce-gate-main-isolated-20261121",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "fix/ce-admin-e2e-hierarchy-20261101",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "grook_10_26",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "integration/structural-overlay-20261101",
+          "literal_workflow_matches": [
+            {
+              "path": ".github/workflows/candidate-visual-validation.yml",
+              "source_blob": "1c88eb513e8d89ac14e3628739cfdca8252c22ca",
+              "line": 11,
+              "kind": "PUSH_BRANCH_TRIGGER"
+            },
+            {
+              "path": ".github/workflows/opa-candidate-validation.yml",
+              "source_blob": "4bcee7d3a26aed26bdfb10c96a4d90dcdaba6573",
+              "line": 10,
+              "kind": "PUSH_BRANCH_TRIGGER"
+            }
+          ],
+          "status": "HOLD_TRIGGER_REPLACEMENT_CANDIDATE"
+        },
+        {
+          "branch": "planning",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        },
+        {
+          "branch": "review/grook-na-main",
+          "literal_workflow_matches": [],
+          "status": "NO_LITERAL_WORKFLOW_MATCH_PARTIAL"
+        }
+      ],
+      "remaining": [
+        "Dynamic ref expressions and reusable actions",
+        "Repository scripts/config/docs requiring live branch names",
+        "External automation and Vercel project settings",
+        "G00/security/rights and retention receipts",
+        "Post-merge checks of replacement triggers"
+      ],
+      "release": false,
+      "additional_script_screen": {
+        "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "scope": "13 selected scripts/config files, literal screening only",
+        "files_scanned": 13,
+        "literal_matches": 1,
+        "classified_matches": [
+          {
+            "path": "scripts/lib/main-migration-core.mjs",
+            "line": 4,
+            "branch": "planning",
+            "kind": "CATEGORY_NOT_REF"
+          }
+        ],
+        "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231985229",
+        "complete": false
+      }
+    },
+    "incremental_delta_screen": {
+      "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+      "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232032087",
+      "screened": 10,
+      "candidates_added": 2,
+      "held": 8,
+      "method": "Recursive Git trees and exact path/blob/mode/type; candidates independently rederived from merge-base trees; no raw content read.",
+      "rows": [
+        {
+          "branch": "fix/ce-generated-contract-fresh-20261115",
+          "observed": 7,
+          "exact": 2,
+          "quarantine": 5,
+          "hold": 0,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "governance/quarantine-branches-20261115",
+          "observed": 8,
+          "exact": 0,
+          "quarantine": 8,
+          "hold": 0,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/shell-consolidation",
+          "observed": 6,
+          "exact": 1,
+          "quarantine": 0,
+          "hold": 5,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ce-chrome-frozen-tokens-source-20261114",
+          "observed": 22,
+          "exact": 3,
+          "quarantine": 3,
+          "hold": 16,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ce-tanstack-vercel-build-no-migrations-20261114",
+          "observed": 12,
+          "exact": 0,
+          "quarantine": 0,
+          "hold": 12,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "fix/ncos-generated-contract-sync-20261113",
+          "observed": 115,
+          "exact": 3,
+          "quarantine": 0,
+          "hold": 112,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/de-v1",
+          "observed": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "hold": 88,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/pt-PT-v1",
+          "observed": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "hold": 88,
+          "api_cap_possible": false
+        },
+        {
+          "branch": "idioma/consolidado-19",
+          "observed": 300,
+          "exact": 15,
+          "quarantine": 0,
+          "hold": 285,
+          "api_cap_possible": true
+        },
+        {
+          "branch": "backup/research-hub-complete-20261026",
+          "observed": 64,
+          "exact": 8,
+          "quarantine": 1,
+          "hold": 55,
+          "api_cap_possible": false
+        }
+      ]
+    },
+    "full_tree_screen_20261127": {
+      "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+      "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7232105847",
+      "method": "Full recursive merge-base/source/main tree delta by path and blob/mode/type; no raw contents; alternate blobs are HOLD.",
+      "rows": [
+        {
+          "branch": "idioma/de-v1",
+          "source_sha": "9a12fad8d32fc17f424d4425c0acfb11af3ef1d6",
+          "delta": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "alternate_blob_hold": 2,
+          "hold": 86,
+          "tree_truncated": false
+        },
+        {
+          "branch": "idioma/pt-PT-v1",
+          "source_sha": "314199bc72f7be9928f120c85e14c2f644a28e9e",
+          "delta": 151,
+          "exact": 63,
+          "quarantine": 0,
+          "alternate_blob_hold": 2,
+          "hold": 86,
+          "tree_truncated": false
+        },
+        {
+          "branch": "idioma/consolidado-19",
+          "source_sha": "3dc979a795634eda9b097f2e69660f87ddd779e3",
+          "delta": 1247,
+          "exact": 63,
+          "quarantine": 0,
+          "alternate_blob_hold": 14,
+          "hold": 1170,
+          "tree_truncated": false
+        },
+        {
+          "branch": "audit/cko-atomic-intake-schema-20261114",
+          "source_sha": "ee2c2cb5c66f6d7af143f22669aa38b8b17159f2",
+          "delta": 5,
+          "exact": 0,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 5,
+          "tree_truncated": false
+        },
+        {
+          "branch": "cko/cardiologia-corpus-editorial-20261114",
+          "source_sha": "4d44d4a5f5bfe2f316089537174f13412141c241",
+          "delta": 45,
+          "exact": 0,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 45,
+          "tree_truncated": false
+        },
+        {
+          "branch": "cko/evidence-index-rights-20261114",
+          "source_sha": "25c7675b2605d14f656a03a6b54f4f8849d1cc01",
+          "delta": 34,
+          "exact": 0,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 34,
+          "tree_truncated": false
+        },
+        {
+          "branch": "cko/pmo-corpus-canonical-20261114",
+          "source_sha": "2452a4c1bea48990e538e975973fe7dcd1653c6b",
+          "delta": 48,
+          "exact": 0,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 48,
+          "tree_truncated": false
+        },
+        {
+          "branch": "fix/governed-activities-cli-20261026",
+          "source_sha": "95a416c1e4ac422e435baf7e95f6ce5c09989c99",
+          "delta": 65,
+          "exact": 28,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 37,
+          "tree_truncated": false
+        },
+        {
+          "branch": "gate/g02-workspace-pr-policy-20261120",
+          "source_sha": "c8a1017972032e246f70d052c3db007f37673064",
+          "delta": 9,
+          "exact": 1,
+          "quarantine": 1,
+          "alternate_blob_hold": 0,
+          "hold": 7,
+          "tree_truncated": false
+        },
+        {
+          "branch": "plan/ce-best-excellence-supabase-readonly-20261101",
+          "source_sha": "74b4a741b0075279c94d4fa96d9e9d682cbf5dcd",
+          "delta": 13551,
+          "exact": 8,
+          "quarantine": 7,
+          "alternate_blob_hold": 557,
+          "hold": 12979,
+          "tree_truncated": false
+        },
+        {
+          "branch": "plan/ce-reconciliacao-v6-20261101",
+          "source_sha": "70bc1181e7c9a572302d57b48384a26261248921",
+          "delta": 24,
+          "exact": 0,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 24,
+          "tree_truncated": false
+        },
+        {
+          "branch": "feat/career-youth-db-first-20261026",
+          "source_sha": "ad4c683890779eda3a096743b70cf6be2bfc4605",
+          "delta": 70,
+          "exact": 13,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 57,
+          "tree_truncated": false
+        },
+        {
+          "branch": "feat/research-participation-layer-20261026",
+          "source_sha": "53f896fd6afcce66fc6d059b377024971e7a2c3f",
+          "delta": 30,
+          "exact": 8,
+          "quarantine": 0,
+          "alternate_blob_hold": 0,
+          "hold": 22,
+          "tree_truncated": false
+        }
+      ],
+      "language_dedup": {
+        "occurrences": 1549,
+        "unique": 1366,
+        "repeated": 183,
+        "shared_all_three": 91,
+        "shared_two": 1,
+        "only_one": 1274,
+        "unique_exact": 63,
+        "unique_alternate_hold": 14,
+        "unique_hold": 1289
+      },
+      "no_new_candidates": true,
+      "retirement_authorized": false
+    },
+    "staged_preservation_batches": [
+      {
+        "source_ref": "audit/cko-atomic-intake-schema-20261114",
+        "source_sha": "ee2c2cb5c66f6d7af143f22669aa38b8b17159f2",
+        "merge_base_sha": "d2c8abd22e1d2b15142049e723883c5016a68296",
+        "main_baseline_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "source_pr": 70,
+        "source_pr_state": "OPEN",
+        "delta_paths": 5,
+        "staged_paths": 5,
+        "source_visibility": "PUBLIC_SAME_REPOSITORY",
+        "screening": "Reviewed all five texts; no imported clinical payload, patient records, third-party text or apparent credentials; limited pattern scan, not G00 full history. Technical source already public in same repository, staging only under coordinator instruction; release rights not established.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": ".github/workflows/cko-intake-strict-schema-audit.yml",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/.github/workflows/cko-intake-strict-schema-audit.yml",
+            "sha": "1a35caf07e7eb432f0209ebc6739a89a1319037a",
+            "mode": "100644"
+          },
+          {
+            "path": "docs/cko/CKO_ATOMIC_NORMATIVE_EXECUTION_STANDARD_20261114.md",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/docs/cko/CKO_ATOMIC_NORMATIVE_EXECUTION_STANDARD_20261114.md",
+            "sha": "8b97a28f9b797f07943510b2f48ef7f373468cb8",
+            "mode": "100644"
+          },
+          {
+            "path": "governance/audits/2026-11-14/CKO_ATOMIC_ANNEX_INTAKE_REVIEW.md",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/governance/audits/2026-11-14/CKO_ATOMIC_ANNEX_INTAKE_REVIEW.md",
+            "sha": "1fea70649fbd7c47cc8e45161a9d04750458383f",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/cko-atomic-intake-guard.py",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/scripts/cko-atomic-intake-guard.py",
+            "sha": "fbac048467fb3737d24d617604435432523b8bbe",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/test_cko_atomic_intake_guard.py",
+            "destination": "_quarantine/ce/conteudos/cko-atomic-intake-pr70/scripts/test_cko_atomic_intake_guard.py",
+            "sha": "6a04723123f6f6245e1d9002653785b1ad9fb13a",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR70_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY",
+          "VERCEL_ISOLATION"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
+      },
+      {
+        "source_ref": "fix/shell-consolidation",
+        "source_sha": "c68e3009556f140ece43ac23cb1ea0ed49395560",
+        "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+        "main_baseline_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "source_pr": 27,
+        "source_pr_state": "OPEN",
+        "delta_paths": 6,
+        "already_exact_paths": [
+          {
+            "path": ".github/workflows/ce-header-entry-candidate.yml",
+            "sha": "477d092d5f0e4381c76d25bc6a506e1439905480",
+            "mode": "100644"
+          }
+        ],
+        "staged_paths": 5,
+        "source_visibility": "PUBLIC_SAME_REPOSITORY",
+        "screening": "Five full text files fetched and byte lengths matched source metadata; limited regex screen for credential patterns and email addresses returned zero; inspected social links and password variable usages, no actual credentials found in those matches. Not full-history G00, rights approval or authentication security assessment.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": "scripts/header-entry.test.mjs",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/scripts/header-entry.test.mjs",
+            "sha": "75e983120c49464fd5e55d3d6d16f139b7ffb533",
+            "mode": "100644"
+          },
+          {
+            "path": "src/components/site/shell.tsx",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/components/site/shell.tsx",
+            "sha": "4688714cc3cc44a4209a80f5e3b668e809121efd",
+            "mode": "100644"
+          },
+          {
+            "path": "src/routes/login.tsx",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/routes/login.tsx",
+            "sha": "7b9a4e895396d4cc4049cfe5517c21c4b596b01f",
+            "mode": "100644"
+          },
+          {
+            "path": "src/styles.css",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/src/styles.css",
+            "sha": "88dd76015ceb6ebe6e812ee9b8d7116cb17742c8",
+            "mode": "100644"
+          },
+          {
+            "path": "vercel.json",
+            "destination": "_quarantine/ce/interfaces/shell-consolidation-pr27/vercel.json",
+            "sha": "b99d11a9f30bb767b650241cf4fad09f01a21800",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR27_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY",
+          "VERCEL_ISOLATION"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
+      }
+    ],
+    "ancestor_reverification_20261127": {
+      "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+      "pr_head_observed": "028502524fd88b786acb730fc2e4bdd4edbf171e",
+      "method": "GitHub compare, live branches list and open PR list (per_page=100); compare deduplicated by SHA. Ancestry proves exclusive history is already reachable from main, not full G00 or external dependency clearance.",
+      "live_branch_count": 71,
+      "open_pr_count": 37,
+      "open_pr_head_base_matches": 0,
+      "rows": [
+        {
+          "branch": "archivamento",
+          "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 605,
+          "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...87c537fea1825766b58d3a31d0328a69cbc77007",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "planning",
+          "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 605,
+          "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...87c537fea1825766b58d3a31d0328a69cbc77007",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "audit/ce-wave1-evidence-20261101",
+          "source_sha": "e6fc8f0178e617845fb55384557cd0dcb1becbf0",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 309,
+          "merge_base_sha": "e6fc8f0178e617845fb55384557cd0dcb1becbf0",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...e6fc8f0178e617845fb55384557cd0dcb1becbf0",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "ci/ce-gate-main-isolated-20261121",
+          "source_sha": "7c42b07259be30e830fe0d6aace0125d8c0bc4e6",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 2,
+          "merge_base_sha": "7c42b07259be30e830fe0d6aace0125d8c0bc4e6",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...7c42b07259be30e830fe0d6aace0125d8c0bc4e6",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "fix/ce-admin-e2e-hierarchy-20261101",
+          "source_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 276,
+          "merge_base_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "grook_10_26",
+          "source_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 655,
+          "merge_base_sha": "2eacacafd95c106e58a33372ee96bc6a6442439f",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...2eacacafd95c106e58a33372ee96bc6a6442439f",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "integration/structural-overlay-20261101",
+          "source_sha": "621f73b5abde2dbb65818645c00d4821cbd3d061",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 279,
+          "merge_base_sha": "621f73b5abde2dbb65818645c00d4821cbd3d061",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...621f73b5abde2dbb65818645c00d4821cbd3d061",
+          "retirement_eligible": false
+        },
+        {
+          "branch": "review/grook-na-main",
+          "source_sha": "c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f",
+          "live_sha_match": true,
+          "status": "behind",
+          "ahead_by": 0,
+          "behind_by": 253,
+          "merge_base_sha": "c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f",
+          "history_reachable_from_main": true,
+          "open_pr_head_base_matches": 0,
+          "compare_url": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/compare/a6304d437413cb41f9b64f3aa088582f78d7906b...c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f",
+          "retirement_eligible": false
+        }
+      ],
+      "vercel_preview_diagnosis": {
+        "projects": [
+          "dev-chatgpt-workspace",
+          "dev-chatgpt-workspace-4xrp"
+        ],
+        "deployments": [
+          "dpl_3hxyui4jQDdkLsYStd8jKXkfm2r5",
+          "dpl_E4B5NTCgm5VAgUkA8tdsjXjTR7YZ"
+        ],
+        "observed_target": null,
+        "build_output": ".vercel/output/nitro.json",
+        "error_code": "STATIC_BUILD_NO_OUT_DIR",
+        "expected_by_platform": "dist",
+        "production_isolation_proven": false,
+        "configuration_changed": false
+      },
+      "remaining": [
+        "G00_SECURITY_RIGHTS",
+        "EXTERNAL_AND_DYNAMIC_DEPENDENCIES",
+        "WORKFLOW_TRIGGER_REPLACEMENT_STRUCTURAL_OVERLAY",
+        "PRODUCTION_ISOLATION",
+        "G02_POSTMERGE_LEDGER_CI",
+        "ATOMIC_SHA_CONDITIONAL_REF_DELETE_SUPPORT"
+      ],
+      "retirement_authorized_by_evidence": false
+    }
+  },
+  "previous_inventory_snapshot": {
+    "date": "2026-11-21",
+    "main_sha": "5a5455ebf0a4f6a9f0dde643cfa622d43adc108c",
+    "counts": {
+      "all_branches": 69,
+      "main": 1,
+      "excluded_wutrib": 14,
+      "ce": 54
+    },
+    "branches": [
+      {
+        "name": "archivamento",
+        "sha": "87c537fea1825766b58d3a31d0328a69cbc77007"
+      },
+      {
+        "name": "audit-hardening-2026-10-24",
+        "sha": "9c9ca4640dedf705fe1c3cccca474af4f8d1a422"
+      },
+      {
+        "name": "audit/ce-wave1-evidence-20261101",
+        "sha": "e6fc8f0178e617845fb55384557cd0dcb1becbf0"
+      },
+      {
+        "name": "audit/cko-atomic-intake-schema-20261114",
+        "sha": "ee2c2cb5c66f6d7af143f22669aa38b8b17159f2"
+      },
+      {
+        "name": "backup/research-hub-complete-20261026",
+        "sha": "86ebd5a2d8791ea7c750994a7e833686829dc45c"
+      },
+      {
+        "name": "canonical/foundation-20261101",
+        "sha": "65486491dece96e107a1f3f5172a473d7421f14d"
+      },
+      {
+        "name": "canonical/local-20261101",
+        "sha": "8c0c4b6f9c049bb5bf13de260074b5020b08a07d"
+      },
+      {
+        "name": "canonical/supabase-skeleton-20261101",
+        "sha": "48188f56ca54795a22994cdbf3eda7b5e7453791"
+      },
+      {
+        "name": "ci/ce-gate-main-isolated-20261121",
+        "sha": "5a5455ebf0a4f6a9f0dde643cfa622d43adc108c"
+      },
+      {
+        "name": "cko/cardiologia-corpus-editorial-20261114",
+        "sha": "4d44d4a5f5bfe2f316089537174f13412141c241"
+      },
+      {
+        "name": "cko/evidence-index-rights-20261114",
+        "sha": "25c7675b2605d14f656a03a6b54f4f8849d1cc01"
+      },
+      {
+        "name": "cko/pmo-corpus-canonical-20261114",
+        "sha": "2452a4c1bea48990e538e975973fe7dcd1653c6b"
+      },
+      {
+        "name": "feat/career-youth-db-first-20261026",
+        "sha": "ad4c683890779eda3a096743b70cf6be2bfc4605"
+      },
+      {
+        "name": "feat/curiosidades-mem-87-20261026",
+        "sha": "4131831be71246d3c6e6ac61498310a9adb575a0"
+      },
+      {
+        "name": "feat/projection-unica-f0-suite-real",
+        "sha": "6d712dd47029286869f909a2014f42083f5db2a9"
+      },
+      {
+        "name": "feat/research-all-tools-candidate-20261101",
+        "sha": "3b813449ea26d018755310686c900b9a6257c312"
+      },
+      {
+        "name": "feat/research-hub-governed-20261026",
+        "sha": "01574c5bfbe366a6ede9c0aee6bf2e3a907d92a1"
+      },
+      {
+        "name": "feat/research-participation-layer-20261026",
+        "sha": "53f896fd6afcce66fc6d059b377024971e7a2c3f"
+      },
+      {
+        "name": "feat/research-supabase-bridge-20261101",
+        "sha": "9c37e6fb35faabd3f79b3587d5da6a90cdb847f5"
+      },
+      {
+        "name": "fix/ce-admin-e2e-hierarchy-20261101",
+        "sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9"
+      },
+      {
+        "name": "fix/ce-chrome-frozen-tokens-source-20261114",
+        "sha": "288b4ff68481fb9ed2d8e2140d286cb550fc7b85"
+      },
+      {
+        "name": "fix/ce-first-admin-fail-closed-20261121",
+        "sha": "3ed991e8b4c67fa1516270b695912557f20044e7"
+      },
+      {
+        "name": "fix/ce-generated-contract-fresh-20261115",
+        "sha": "19ced90f3ac51533daed1e441fc253d77e2fbffd"
+      },
+      {
+        "name": "fix/ce-route-component-contract-freshness-20261114",
+        "sha": "5c5cfeca440d32c76e8fdee00eff5befc94da2cb"
+      },
+      {
+        "name": "fix/ce-tanstack-vercel-build-no-migrations-20261114",
+        "sha": "1976da6bf8cbb13a6547e2d7deed6ff3674f1d4d"
+      },
+      {
+        "name": "fix/ce-vercel-db-fail-closed-20261121",
+        "sha": "abcb2c65f40d5f27562681cbd43210d4ae714091"
+      },
+      {
+        "name": "fix/ce-vercel-native-output-20261121",
+        "sha": "9725d7aac22f639b24bd0392d7a09a05d67656cc"
+      },
+      {
+        "name": "fix/governed-activities-cli-20261026",
+        "sha": "95a416c1e4ac422e435baf7e95f6ce5c09989c99"
+      },
+      {
+        "name": "fix/ncos-generated-contract-sync-20261113",
+        "sha": "ace85778be5bdee038a896308b1785267b27179e"
+      },
+      {
+        "name": "fix/pendencias-camadas-20261101",
+        "sha": "949423ef555f40d5e6538b3d7bf2fa4b0c9051e3"
+      },
+      {
+        "name": "fix/security-auth-env-optin-oauth-17-20261114",
+        "sha": "eb8ff56d68ed235b455a5a6887de27eb8731a5db"
+      },
+      {
+        "name": "fix/shell-consolidation",
+        "sha": "c68e3009556f140ece43ac23cb1ea0ed49395560"
+      },
+      {
+        "name": "gate/ce-automated-reconciliation-20261120",
+        "sha": "4d5e22f5b144d83da455b108a0293b2c1785210e"
+      },
+      {
+        "name": "gate/g02-workspace-pr-policy-20261120",
+        "sha": "c8a1017972032e246f70d052c3db007f37673064"
+      },
+      {
+        "name": "governance/normative-crossdomain-evaluation-20261108",
+        "sha": "de620c1ebed047af6ac5ad52325542f0a45a57ca"
+      },
+      {
+        "name": "governance/quarantine-branches-20261115",
+        "sha": "b75866adb43c73195091699d624992847f20babc"
+      },
+      {
+        "name": "grook_10_26",
+        "sha": "2eacacafd95c106e58a33372ee96bc6a6442439f"
+      },
+      {
+        "name": "idioma/consolidado-19",
+        "sha": "3dc979a795634eda9b097f2e69660f87ddd779e3"
+      },
+      {
+        "name": "idioma/de-v1",
+        "sha": "9a12fad8d32fc17f424d4425c0acfb11af3ef1d6"
+      },
+      {
+        "name": "idioma/pt-PT-v1",
+        "sha": "314199bc72f7be9928f120c85e14c2f644a28e9e"
+      },
+      {
+        "name": "implementation-governed-ecosystem",
+        "sha": "e16f0fb682dbf70adbca9987f2d0ac2adfd71149"
+      },
+      {
+        "name": "import/drive-cko-nurseos-20261026",
+        "sha": "cd851c4c0efeb8adf298af96851ad45e7685b3e1"
+      },
+      {
+        "name": "integration/structural-overlay-20261101",
+        "sha": "621f73b5abde2dbb65818645c00d4821cbd3d061"
+      },
+      {
+        "name": "plan/ce-best-excellence-supabase-readonly-20261101",
+        "sha": "74b4a741b0075279c94d4fa96d9e9d682cbf5dcd"
+      },
+      {
+        "name": "plan/ce-reconciliacao-v6-20261101",
+        "sha": "70bc1181e7c9a572302d57b48384a26261248921"
+      },
+      {
+        "name": "plan/pmokernel-finalization-20261031",
+        "sha": "57242ec5e813f6e4d88ab803e6e5f2d29893ec3d"
+      },
+      {
+        "name": "planning",
+        "sha": "87c537fea1825766b58d3a31d0328a69cbc77007"
+      },
+      {
+        "name": "preview/central-comando-20261026",
+        "sha": "3f004049945ebaa50e4efee313092974b83a5bf2"
+      },
+      {
+        "name": "revert-26-plan/pmokernel-finalization-20261031",
+        "sha": "bfcb0333a6b15a9afb0e224bdd156b0c04523f2c"
+      },
+      {
+        "name": "review/grook-na-main",
+        "sha": "c4a6ee1f6f85d4c4f1b5438c906c2a627d744a8f"
+      },
+      {
+        "name": "simulados-enfermagem-db-canonico",
+        "sha": "415a02a854a871fb5e9f72dcc8c4646b2708f1eb"
+      },
+      {
+        "name": "staging/bibliotecas-corpus-20261026",
+        "sha": "d81736c77852d8953672d334afc32de279c96878"
+      },
+      {
+        "name": "viladocuidado",
+        "sha": "2a199f3943efa3e0def4dcd94a286076c16d33ba"
+      },
+      {
+        "name": "work/editorial-canonical-learning-20261026",
+        "sha": "38a33fcec02e5bc996a1f84164bf13799b2f81c7"
+      }
+    ],
+    "source_git_blob_sha": "79f2e337208dac94df041489b2431b404b71fa2e"
+  },
+  "inventory_delta": {
+    "added": [
+      {
+        "name": "gate/ce-cross-global-hold-20261123",
+        "sha": "00ec51ed699b8f920bda62101c0658b110cdcc0f"
+      },
+      {
+        "name": "integration/ce-unified-pr-branch-reconciliation-20261123",
+        "sha": "c1a799ecba5f510f037746a4aabcc3cc897e979a"
+      }
+    ],
+    "removed": [],
+    "head_drift": [
+      {
+        "name": "ci/ce-gate-main-isolated-20261121",
+        "old": "5a5455ebf0a4f6a9f0dde643cfa622d43adc108c",
+        "new": "7c42b07259be30e830fe0d6aace0125d8c0bc4e6"
+      }
+    ],
+    "proof_scope": "LIVE_REF_METADATA_ONLY",
+    "closure_authorized": false
   }
 }

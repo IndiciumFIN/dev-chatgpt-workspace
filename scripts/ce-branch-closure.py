@@ -81,6 +81,62 @@ def validate_proof(row: dict, by_name: dict[str, dict]) -> None:
             fail(name + ": cannot seal a duplicate before its source group is sealed")
 
 
+
+def validate_retirement(ledger: dict) -> None:
+    """Validate candidate-only live extension; never authorize deletion."""
+    if "technical_retirement" not in ledger:
+        fail("retirement: missing live extension")
+    obj = ledger["technical_retirement"]
+    if not isinstance(obj, dict) or obj.get("protocol") != "CE.BRANCH.RETIREMENT.v1" or obj.get("phase") != "CANDIDATE_ONLY":
+        fail("retirement: invalid protocol or phase")
+    if obj.get("authorization_ref") != "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231593810":
+        fail("retirement: authorization reference missing")
+    for key in ("main_sha", "main_tree_sha"):
+        if not looks_sha(obj.get(key), SHA1):
+            fail("retirement: missing " + key)
+    rows = obj.get("rows")
+    if not isinstance(rows, list):
+        fail("retirement: missing rows")
+    names = set()
+    counts = Counter()
+    for row in rows:
+        if not isinstance(row, dict):
+            fail("retirement: invalid row")
+        name = row.get("branch")
+        if not isinstance(name, str) or not name or name == "main" or name.startswith("wutrib/") or name in names:
+            fail("retirement: duplicate or out-of-scope branch")
+        names.add(name)
+        if not looks_sha(row.get("source_sha"), SHA1):
+            fail("retirement: missing source SHA")
+        state = row.get("state")
+        if state not in ("PENDING_EVIDENCE", "RETIREMENT_CANDIDATE"):
+            fail("retirement: higher states not supported without proof verifier")
+        counts[state] += 1
+        if state == "RETIREMENT_CANDIDATE":
+            proof = row.get("structural_evidence")
+            if not isinstance(proof, dict) or proof.get("kind") not in ("ANCESTOR", "IDENTICAL_TREE", "DELTA_BLOB_MODE_PRESERVED") or proof.get("main_sha") != obj["main_sha"] or not isinstance(proof.get("evidence_ref"), str) or not proof["evidence_ref"].startswith("https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-"):
+                fail("retirement: missing structural evidence")
+            blockers = row.get("blocking_checks")
+            required = {"DEPENDENCIES_FULL", "RETENTION", "SECURITY_RIGHTS", "MAIN_LEDGER_CI"}
+            if proof["kind"] != "ANCESTOR":
+                required.add("EXCLUSIVE_HISTORY_RECOVERY")
+            if not isinstance(blockers, list) or not required.issubset(set(blockers)):
+                fail("retirement: missing blocking checks")
+            if proof["kind"] == "DELTA_BLOB_MODE_PRESERVED":
+                n, q = proof.get("delta_paths"), proof.get("quarantined_paths")
+                if type(n) is not int or n <= 0 or type(q) is not int or not 0 <= q <= n:
+                    fail("retirement: invalid delta counts")
+        elif "structural_evidence" in row:
+            fail("retirement: inconsistent pending evidence")
+    live = obj.get("live_counts")
+    if not isinstance(live, dict) or any(type(live.get(k)) is not int or live[k] < 0 for k in ("all", "ce", "wutrib", "main")) or live["ce"] != len(rows) or live["main"] != 1 or live["all"] != live["ce"] + live["wutrib"] + live["main"]:
+        fail("retirement: live cohort count drift")
+    expected = {"candidates": counts["RETIREMENT_CANDIDATE"], "pending": counts["PENDING_EVIDENCE"], "eligible": 0, "retired": 0}
+    actual = obj.get("counts")
+    if not isinstance(actual, dict) or any(type(actual.get(k)) is not int for k in expected) or actual != expected:
+        fail("retirement: state count drift")
+
+
 def validate(ledger: dict, require_closed: bool = False) -> dict:
     if ledger.get("protocol") != "CE.BRANCH.CLOSURE.v1":
         fail("incorrect branch completion protocol")
@@ -168,10 +224,12 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ledger", type=Path, default=Path(LEDGER))
     p.add_argument("--require-closed", action="store_true")
+    p.add_argument("--retirement-cohort", type=Path, default=Path("registers/governance/ce-branch-live-cohort-20261121.v1.json"))
     args = p.parse_args()
     try:
         j = json.loads(args.ledger.read_text(encoding="utf-8"))
         result = validate(j, args.require_closed)
+        validate_retirement(json.loads(args.retirement_cohort.read_text(encoding="utf-8")))
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as err:

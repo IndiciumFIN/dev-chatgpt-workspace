@@ -1,3 +1,4 @@
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import { createFileRoute, Link, retainSearchParams } from "@tanstack/react-router";
 import { Shell } from "@/components/site/shell";
 import { ArticlePage } from "@/components/article/article-page";
@@ -40,7 +41,7 @@ function Pacote() {
         lead={`O menu principal segue o site homologado. Esta página guarda só o inventário do template clínico.${q ? ` Busca registrada: “${q}”.` : ""}`}
       >
         <ul className="related-grid" style={{ marginBottom: 20 }}>
-          {tools.map((tool) => (
+          {tools.filter((tool) => !isClinicalRightsHeld(tool.slug)).map((tool) => (
             <li key={tool.slug}>
               <Link to="/ferramentas/$slug" params={{ slug: tool.slug }} className="nav-card">
                 <h3>{tool.title}</h3>

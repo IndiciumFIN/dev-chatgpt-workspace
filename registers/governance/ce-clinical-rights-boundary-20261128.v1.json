@@ -1,0 +1,71 @@
+{
+  "protocol": "CE.CLINICAL.RIGHTS.BOUNDARY.v2",
+  "date": "2026-11-28",
+  "baseline": "0536024c5cd63fcd30232951eb6f6f867f22ace9",
+  "supersedes_pr": 160,
+  "reason": "PR #160 alterou arquivos com blob canônico travado (source.functions.ts, clinical-tool.tsx, route-registry.ts) e o verify falhou. Este registro versiona o veto sem mexer nesses blobs.",
+  "sources": [
+    {
+      "url": "https://www.bradenscale.com/",
+      "observation": "Titular informa acordo de licença para a Braden Scale II. Original e tradução não verificados."
+    },
+    {
+      "url": "https://falltips.org/faqs/",
+      "observation": "Morse: uso gratuito condicionado à permissão do autor. Autorização aplicável ausente."
+    },
+    {
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm",
+      "observation": "Lei 9.610/1998. Método matemático não se confunde com expressão protegida. IMC e gotejamento seguem em desenvolvimento, sem validação clínica."
+    },
+    {
+      "url": "https://www.coren-sp.gov.br/",
+      "observation": "Aldrete: Parecer Coren-SP 017/2021 não fixa corte de 8 nem de 9. A frase de alta por 8 pontos foi retirada da ficha candidata."
+    }
+  ],
+  "held": ["braden", "morse"],
+  "continued": ["apgar", "imc", "gotejamento"],
+  "candidate_corrected": ["aldrete"],
+  "controls": [
+    "publicacao candidata: saem do índice pelo predicado já travado do route-registry",
+    "getTool não devolve o instrumento",
+    "assembleTool devolve nulo: readTool e as rotas pública e de assinante não montam a página",
+    "projeção local publicada filtra o slug",
+    "pacote não lista",
+    "destinos de navegação tool braden/morse abrem a seção escalas, sem rota da ferramenta",
+    "cartões da home deixam de apontar o slug"
+  ],
+  "pinned_unchanged": [
+    "src/lib/source.functions.ts",
+    "src/components/tools/clinical-tool.tsx",
+    "src/lib/route-registry.ts",
+    "src/lib/contract.ts",
+    "src/lib/contract-index.generated.ts",
+    "public/sitemap.xml",
+    "src/lib/template-catalog.ts"
+  ],
+  "limitations": [
+    "Os corpos históricos continuam no Git. Não há prova de remoção do bundle compilado.",
+    "public/sitemap.xml e template-catalog.ts continuam citando /ferramentas/braden porque o blob está travado no ledger R1. A rota não monta o instrumento.",
+    "O seed descartável ainda grava published=true na capa, porque source.functions.ts está travado. A leitura não devolve a ferramenta.",
+    "Nenhum banco foi alterado, nenhuma branch antiga foi apagada e nada foi promovido a produção.",
+    "Solicitações aos titulares estão redigidas abaixo e não foram enviadas."
+  ],
+  "license_requests_unsent": [
+    {
+      "to": "Titular da Braden Scale",
+      "subject": "Pedido de licença para exibir a Braden Scale II em português",
+      "body": "Solicito confirmar se a ficha em português pode ser exibida, em que versão, e se há acordo escrito exigido para a Scale II. Até a resposta, a ferramenta permanece fora do índice e da rota."
+    },
+    {
+      "to": "Autor da Morse Fall Scale / Fall TIPS",
+      "subject": "Pedido de permissão para uso da Escala de Morse",
+      "body": "Solicito a permissão do autor para exibir a escala de queda, no recorte já publicado como ferramenta educativa. Até a resposta, a rota permanece fechada."
+    }
+  ],
+  "not_uploaded_from_local_workspace": [
+    "Hub de carreira, escalas congeladas e contas abertas não entram nesta main: o ledger trava o catálogo publicado em cinco nomes e o índice de candidatas em dois. Subir esse corpus aqui seria superfície clínica nova sem admissão."
+  ],
+  "release": false,
+  "database_changed": false,
+  "production_promoted": false
+}

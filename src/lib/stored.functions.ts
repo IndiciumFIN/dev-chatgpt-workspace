@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import type { Dest } from "@/lib/sections";
 import type { NavNode } from "@/lib/nav";
 import type { LibraryShelf } from "@/lib/library-shelves";
@@ -28,7 +29,10 @@ function destOf(row: NavRow): Dest | undefined {
   if (row.dest_kind === "section" && row.dest_slug) {
     return row.dest_hash ? { kind: "section", slug: row.dest_slug, hash: row.dest_hash } : { kind: "section", slug: row.dest_slug };
   }
-  if (row.dest_kind === "tool" && row.dest_slug) return { kind: "tool", slug: row.dest_slug };
+  if (row.dest_kind === "tool" && row.dest_slug) {
+    if (isClinicalRightsHeld(row.dest_slug)) return { kind: "section", slug: "escalas" };
+    return { kind: "tool", slug: row.dest_slug };
+  }
   if (row.dest_kind === "page" && row.dest_to) return { kind: "page", to: row.dest_to as Dest extends { kind: "page" } ? Dest["to"] : never };
   if (row.dest_kind === "model" && row.dest_model) {
     const id = row.dest_model as "biblioteca";

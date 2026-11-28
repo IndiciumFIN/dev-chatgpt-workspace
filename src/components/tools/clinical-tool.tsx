@@ -1,3 +1,4 @@
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import { useMemo, useState } from "react";
 import { ReferenceList } from "@/components/article/pieces";
 import { ClinicalForm, type ClinicalPatient } from "@/components/tools/clinical-form";
@@ -55,7 +56,7 @@ export function ClinicalToolPage({ tool, area = "public" }: { tool: ClinicalTool
 
   const filled = (tool.criteria ?? []).filter((criterion) => answers[criterion.id] !== undefined).length;
   const related = useMemo(
-    () => tool.related.map((slug) => getTool(slug)).filter((item): item is ClinicalTool => Boolean(item)),
+    () => tool.related.filter((slug) => !isClinicalRightsHeld(slug)).map((slug) => getTool(slug)).filter((item): item is ClinicalTool => Boolean(item)),
     [tool],
   );
 

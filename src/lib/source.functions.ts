@@ -1,3 +1,4 @@
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import { createServerFn } from "@tanstack/react-start";
 import { authMiddleware } from "@/lib/auth/middleware";
 import { approveItemTx, approveSpecificationTx, saveGovernanceDraftTx } from "@/lib/governance";
@@ -67,7 +68,7 @@ async function seed(sql: Awaited<ReturnType<typeof sqlClient>>) {
   for (const tool of tools) {
     await sql`
       insert into source_tool (slug, kind, title, lead, published)
-      values (${tool.slug}, ${tool.kind}, ${tool.title}, ${tool.lead}, true)
+      values (${tool.slug}, ${tool.kind}, ${tool.title}, ${tool.lead}, ${!isClinicalRightsHeld(tool.slug)})
     `;
   }
 }
@@ -136,12 +137,12 @@ export const readCatalog = createServerFn({ method: "GET" }).handler(async () =>
   const rows = await sql<{ slug: string; kind: string; title: string; lead: string; published: unknown }>`
     select slug, kind, title, lead, published from source_tool order by title
   `;
-  return rows.map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[];
+  return rows.filter((row) => !isClinicalRightsHeld(row.slug)).map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[];
 });
 
 export const readTool = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => {
-    if (!/^[a-z0-9-]{1,80}$/.test(slug)) throw new Error("Ferramenta fora da fonte.");
+    if (isClinicalRightsHeld(slug) || !/^[a-z0-9-]{1,80}$/.test(slug)) throw new Error("Ferramenta fora da fonte.");
     return slug;
   })
   .handler(async ({ data: slug }) => {
@@ -188,7 +189,7 @@ export const adminDesk = createServerFn({ method: "GET" })
       order by u.name
     `;
     return {
-      tools: catalog.map((row) => ({ ...row, published: asBool(row.published) })) satisfies SourceTool[],
+      tools: catalog.map((row) => ({ ...row, published: !isClinicalRightsHeld(row.slug) && asBool(row.published) })) satisfies SourceTool[],
       people: people.map((person) => ({
         userId: person.user_id,
         role: person.role === "admin" ? "admin" : "subscriber",
@@ -206,6 +207,7 @@ export const saveTool = createServerFn({ method: "POST" })
     if (!known.has(input.slug) || title.length < 3 || title.length > 80 || lead.length < 10 || lead.length > 400) {
       throw new Error("Título ou texto fora do limite.");
     }
+    if (input.published === true && isClinicalRightsHeld(input.slug)) throw new Error("Instrumento em revisão de direitos.");
     return { slug: input.slug, title, lead, published: input.published === true };
   })
   .handler(async ({ context, data }) => {
@@ -237,6 +239,7 @@ export const saveClinicalSheet = createServerFn({ method: "POST" })
     if (!known.has(input.slug) || title.length < 3 || title.length > 80 || lead.length < 10 || lead.length > 400) {
       throw new Error("Título ou texto fora do limite.");
     }
+    if (input.published === true && isClinicalRightsHeld(input.slug)) throw new Error("Instrumento em revisão de direitos.");
     return { slug: input.slug, title, lead, published: input.published === true };
   })
   .handler(async ({ context, data }) => {
@@ -412,6 +415,7 @@ export const restoreContent = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
   .inputValidator((input: { process?: { id: string; enabled: boolean }[]; tools?: { slug: string; title: string; lead: string; published: boolean }[] }) => {
     if (!Array.isArray(input?.process) || !Array.isArray(input?.tools)) throw new Error("Cópia inválida.");
+    if (input.tools.some((row) => row.published && isClinicalRightsHeld(row.slug))) throw new Error("Instrumento em revisão de direitos.");
     return { process: input.process, tools: input.tools };
   })
   .handler(async ({ context, data }) => {

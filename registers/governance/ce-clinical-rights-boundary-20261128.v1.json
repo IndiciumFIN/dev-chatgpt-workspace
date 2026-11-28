@@ -1,0 +1,44 @@
+{
+  "protocol": "CE.CLINICAL.RIGHTS.BOUNDARY.v1",
+  "date": "2026-11-28",
+  "baseline": "0536024c5cd63fcd30232951eb6f6f867f22ace9",
+  "source_pr": 78,
+  "source_blob": "8dc80c8a0c396910402e9bae629237c01a5a5eda",
+  "main_catalog_blob": "77be908edbc72353ea6015d07e56b5a57fdcb477",
+  "sources": [
+    {
+      "url": "https://www.bradenscale.com/",
+      "observation": "License agreement for Scale II; original and translation scope remains unverified."
+    },
+    {
+      "url": "https://falltips.org/faqs/",
+      "observation": "Morse use free but author permission required."
+    },
+    {
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm",
+      "observation": "Distinguish method from protected expression."
+    }
+  ],
+  "held": [
+    "braden",
+    "morse"
+  ],
+  "controls": [
+    "server readCatalog excludes held slugs",
+    "readTool rejects held slug at input validation",
+    "new disposable preview seeds held as unpublished",
+    "admin display effective unpublished",
+    "saveTool/saveClinicalSheet reject requested publication",
+    "restoreContent rejects published held rows",
+    "local published projection filters holds",
+    "route registry noindex",
+    "package and related navigation filter holds"
+  ],
+  "limitations": [
+    "Original catalog bodies remain in Git and legacy module; no claim of bundle removal or rights clearance.",
+    "Other admin/local import and publication paths, static section links, build artifacts and server endpoint integration require negative tests and audit.",
+    "No production, database, rights-holder contact or ACL mutation; historical originals still HOLD."
+  ],
+  "release": false,
+  "original_custody_verified": false
+}

@@ -1,0 +1,134 @@
+{
+  "protocol": "CE.BRANCH.RETIREMENT.RECONCILIATION.v1",
+  "date": "2026-11-28",
+  "baseline": "fdc8c77fd6274fd0e8459dbb5b65f4f3888dfaa0",
+  "baseline_tree": "bbbc8a4685ef89180db872750c8a57018aa47e22",
+  "scope": "Ten branch tips, no deletion or release",
+  "ancestor_branches": [
+    "archivamento",
+    "planning",
+    "audit/ce-wave1-evidence-20261101",
+    "fix/ce-admin-e2e-hierarchy-20261101",
+    "ci/ce-gate-main-isolated-20261121"
+  ],
+  "tree_identical": {
+    "branch": "fix/ce-rights-hold-20261128",
+    "head": "a381981dc2422acce8b6a3fd4e851eeb3e41be72",
+    "ahead": 3,
+    "history_custody": "HOLD"
+  },
+  "exact_final_delta": [
+    {
+      "branch": "fix/ce-first-admin-fail-closed-20261121",
+      "head": "3ed991e8b4c67fa1516270b695912557f20044e7",
+      "ahead": 1,
+      "files": [
+        [
+          "scripts/ce-first-admin-bootstrap.test.mjs",
+          "f9f3f49245de9d63a4d5f74fe9a380092a05ae63"
+        ],
+        [
+          "src/lib/source.functions.ts",
+          "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7"
+        ]
+      ]
+    },
+    {
+      "branch": "fix/ce-vercel-db-fail-closed-20261121",
+      "head": "abcb2c65f40d5f27562681cbd43210d4ae714091",
+      "ahead": 1,
+      "files": [
+        [
+          "scripts/ce-db-deployment-guard.mjs",
+          "190f3be685d30240debd92eef3bf4d94307e8b0f"
+        ],
+        [
+          "scripts/ce-db-deployment-guard.test.mjs",
+          "0aa5662325025b8a833657c9ab1a03e3c1c904cc"
+        ],
+        [
+          "src/lib/db.ts",
+          "2178a40c7fc0d6bfd959db33d2703fead48bcaf1"
+        ]
+      ]
+    },
+    {
+      "branch": "fix/ce-vercel-native-output-20261121",
+      "head": "9725d7aac22f639b24bd0392d7a09a05d67656cc",
+      "ahead": 2,
+      "files": [
+        [
+          "_quarantine/ce/interfaces/vercel-pr86/scripts/ce-vercel-tanstack-preset.test.mjs",
+          "b15f02231b307fd06c199770ce7417f8e5fd69b4"
+        ],
+        [
+          "vercel.json",
+          "935d5d78ad166e4bb6189d21056fe80a1b342b16"
+        ]
+      ]
+    }
+  ],
+  "pr160": {
+    "branch": "integration/ce-unified-pr-branch-reconciliation-20261123",
+    "head": "b1eb79484de5ee5b1986c9b8e38649a79b61fa56",
+    "source_tree": "7b4a34a47452ec8a333dda1782b8d93f14a4a545",
+    "disposition": "REJECTED_CI_HISTORICAL_ONLY",
+    "source_pr": 160,
+    "existing_exact": [
+      [
+        "src/routes/pacote.tsx",
+        "ec0912a043e2eb6237d4bf594b3451fb78f3b818"
+      ]
+    ],
+    "quarantine": [
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/registers/governance/ce-clinical-rights-boundary-20261128.v1.json",
+        "sha": "187440bb47ef87e2f95a123e15e3d20f86a3eba6",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/components/tools/clinical-tool.tsx",
+        "sha": "77dc71980ab2cff57290b2bfa4bcb454acd73c86",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/lib/local-canonical.ts",
+        "sha": "8017b0f44154ff60ed0fcb1774383883cd9db3b6",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/lib/route-registry.ts",
+        "sha": "49323ec55190ac9c1198d99222990bc6597a7de0",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/lib/source.functions.ts",
+        "sha": "a656cf5ed85a997a3f77060e068c1158b460411a",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/lib/tools/rights-boundary.test.ts",
+        "sha": "56aed4e89b13307dea22e1b3d462e1b5575d197f",
+        "mode": "100644"
+      },
+      {
+        "path": "_quarantine/ce/kernel/rights-boundary-pr160/src/lib/tools/rights-boundary.ts",
+        "sha": "20e00ab95b71da8d136622924eb93da1df445a1c",
+        "mode": "100644"
+      }
+    ],
+    "note": "Preservation only; no runtime import, no reactivation. Original third-party scale bodies excluded from this delta. Parent history retained in candidate commit; merge with ancestry required to preserve it in main."
+  },
+  "all_ten_no_open_pr_dependency_at_baseline": true,
+  "remaining": [
+    "independent review",
+    "external dependencies",
+    "security and retention verification",
+    "exclusive history and intermediate changes/deletions where applicable",
+    "CI and exact readback of new copies"
+  ],
+  "residual_originals_26": "HOLD_UNCHANGED",
+  "release": false,
+  "retirement": "HOLD",
+  "delete_authorized_by_this_record": false
+}

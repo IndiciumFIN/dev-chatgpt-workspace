@@ -2336,6 +2336,163 @@
       "tree_truncated": false,
       "runtime_admission": false,
       "retirement_eligible": false
+    },
+    "postmerge_pr139": {
+      "main_sha": "060b0f139c4baa7cc268ab55975bbff2993a02e2",
+      "source_pr": 139,
+      "manifest_entries_verified": 149,
+      "blob_mode_pass": 149,
+      "tree_truncated": false,
+      "runtime_admission": false,
+      "retirement_eligible": false
+    },
+    "rights_audit_pr78_20261128": {
+      "date": "2026-11-28",
+      "scope": "PR78 three held files, active-main counterpart check, root/tree license check, preliminary PR68 metadata boundary",
+      "baseline_sha": "060b0f139c4baa7cc268ab55975bbff2993a02e2",
+      "source_pr": 78,
+      "source_sha": "4d5e22f5b144d83da455b108a0293b2c1785210e",
+      "source_files": [
+        {
+          "path": "src/lib/editorial/fun-facts.public.generated.ts",
+          "sha": "2124eb7c367b7da39645f24eddf9ced0a5c189b2",
+          "decision": "HOLD_RAW_COPY"
+        },
+        {
+          "path": "src/lib/editorial/fun-facts.seed.ts",
+          "sha": "686733947fcdae4869f658a95736bc60997ea7fa",
+          "decision": "HOLD_RAW_COPY"
+        },
+        {
+          "path": "src/lib/tools/catalog.ts",
+          "sha": "8dc80c8a0c396910402e9bae629237c01a5a5eda",
+          "decision": "HOLD_RAW_COPY"
+        }
+      ],
+      "main_exposure_static": {
+        "seed_sha": "cb8f37c28f1fe45575c5daf2d2dae113111b82b4",
+        "catalog_sha": "77be908edbc72353ea6015d07e56b5a57fdcb477",
+        "curiosidades_route_sha": "09ba9129075b72aade3501108d2458a19353172d",
+        "seed_released_records": 10,
+        "seed_public_domain_labels": 10,
+        "route_imports_full_seed": true,
+        "active_catalog_slugs": [
+          "braden",
+          "morse",
+          "apgar",
+          "gotejamento",
+          "imc"
+        ],
+        "production_exposure": "NOT_VERIFIED",
+        "priority": "P0_REMEDIATION_REVIEW"
+      },
+      "license_tree_observation": "No LICENSE or COPYING named file in full main tree; no blanket license or ownership inferred; other grants not verified.",
+      "sources": {
+        "law": "https://www.planalto.gov.br/ccivil_03/leis/l9610.htm",
+        "github": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository",
+        "braden": "https://www.bradenscale.com/",
+        "morse": "https://falltips.org/faqs/",
+        "morsePt": "https://revistas.usp.br/reeusp/pt_BR/article/view/77996",
+        "apgar": "https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2015/10/the-apgar-score",
+        "apgarOpen": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11198217/",
+        "who": "https://www.who.int/about/policies/publishing/copyright",
+        "whoLegacy": "https://www.who.int/about/policies/publishing/open-access",
+        "whoFacts": "https://www.who.int/news-room/fact-sheets/detail/nursing-and-midwifery",
+        "law7498": "https://www.planalto.gov.br/ccivil_03/leis/l7498.htm",
+        "cofen736": "https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/"
+      },
+      "rows": [
+        {
+          "id": "FF-001",
+          "decision": "HOLD_PROVENANCE",
+          "note": "Historical claim and mortality figures need precise primary evidence and original wording."
+        },
+        {
+          "id": "FF-002",
+          "decision": "HOLD_PROVENANCE",
+          "note": "Historical claims and wording need exact source."
+        },
+        {
+          "id": "FF-003",
+          "decision": "OFFICIAL_ACT_REWRITE_CANDIDATE",
+          "note": "Law 7498 official text excluded by art. 8 IV; existing editorial wording not cleared automatically."
+        },
+        {
+          "id": "FF-004",
+          "decision": "HOLD_PROVENANCE",
+          "note": "Claim and wording not traced."
+        },
+        {
+          "id": "FF-005",
+          "decision": "FACT_REWRITE_CANDIDATE",
+          "note": "WHO May 12 corroborates date; independent wording and precise attribution needed."
+        },
+        {
+          "id": "FF-006",
+          "decision": "HOLD_PROVENANCE",
+          "note": "Etymology source not located precisely."
+        },
+        {
+          "id": "FF-007",
+          "decision": "FACT_REWRITE_CANDIDATE",
+          "note": "WHO confirms occupational-group fact; no blanket public-domain grant."
+        },
+        {
+          "id": "FF-008",
+          "decision": "HOLD_TRANSLATION_RIGHTS",
+          "note": "Quoted Portuguese pledge translation not identified; age of original does not clear translation."
+        },
+        {
+          "id": "FF-009",
+          "decision": "OFFICIAL_ACT_REWRITE_CANDIDATE",
+          "note": "COFEN 736 official text; source seed HOLD and main RELEASED mismatch; clinical review remains."
+        },
+        {
+          "id": "FF-010",
+          "decision": "HOLD_PROVENANCE",
+          "note": "Historical claims and wording need exact source."
+        },
+        {
+          "id": "FF-011..FF-087",
+          "decision": "PLACEHOLDERS_NOT_EVIDENCE",
+          "note": "77 generated placeholders with UNKNOWN rights and no provenance; not published content."
+        },
+        {
+          "id": "braden",
+          "decision": "HOLD_PERMISSION_P0",
+          "note": "Copyright owner identified; seek written authorization for exact version, Portuguese adaptation and digital use."
+        },
+        {
+          "id": "morse",
+          "decision": "HOLD_PERMISSION_P0",
+          "note": "Fall TIPS reports permission required; Portuguese paper CC BY-NC 4.0 does not establish underlying scale rights."
+        },
+        {
+          "id": "apgar",
+          "decision": "METHOD_REIMPLEMENTATION_CANDIDATE",
+          "note": "Independent method implementation may be possible under art. 8 I; ACOG presentation copyright; CC BY article alternative subject to third-party exclusions, clinical validation."
+        },
+        {
+          "id": "gotejamento",
+          "decision": "METHOD_REIMPLEMENTATION_CANDIDATE",
+          "note": "Mathematical formula itself excluded by art. 8 I; code authorship and original expression still to verify; clinical validation."
+        },
+        {
+          "id": "imc",
+          "decision": "METHOD_REIMPLEMENTATION_CANDIDATE",
+          "note": "Formula/method itself distinct from copyrighted WHO presentation; 2000 publication not retroactively relicensed under WHO post-2017 policy. Verify source and clinical applicability."
+        }
+      ],
+      "dispositions": {
+        "raw_copy_pass": 0,
+        "raw_copy_hold": 3,
+        "external_ai": "NOT_AUTHORIZED",
+        "retirement_eligible": false,
+        "runtime_admission": false,
+        "release_eligible": false
+      },
+      "limitations": "Targeted legal/technical desk audit, not legal opinion; no permission grant located, no exact textual provenance comparison for all claims, no production test, no all-history or all-149-file rights audit.",
+      "report": "docs/audits/CE_RIGHTS_AUDIT_PR78_20261128.md"
     }
   },
   "previous_inventory_snapshot": {

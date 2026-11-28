@@ -30,8 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
-          test "$(git for-each-ref --format='%(refname)' refs/remotes/origin | grep -c '^refs/remotes/origin/' || :)" -ge 55
+          git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
       - name: Gerar manifestos do escopo CE declarado de todos os paths Git, sem diff textual sensível
         shell: bash
         run: |
@@ -62,7 +61,9 @@ jobs:
           assert len(idx['branches'])==expected and idx['seal_branch'] is False
           assert sorted(b['branch'] for b in idx['branches'])==sorted(names), 'manifest refset differs from approved cohort'
           assert idx['local_remote_ref_coverage_checked'] is True
-          assert idx['cohort_missing_remote_refs']==[], 'cohort branch absent locally'
+          retired=sorted(r['branch'] for r in cohort.get('technical_retirement',{}).get('rows',[]) if r.get('state')=='RETIRED_TECHNICAL')
+          assert idx['retired_sources_by_sha']==retired, 'retired source evidence mismatch'
+          assert idx['cohort_missing_remote_refs']==[], 'active cohort branch absent locally'
           assert idx['cohort_new_remote_refs']==[], 'new CE refs need explicit scope update'
           total=0
           for branch in idx['branches']:

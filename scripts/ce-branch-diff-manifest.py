@@ -16,6 +16,7 @@ import json
 import os
 from pathlib import Path
 import re
+import runpy
 import subprocess
 import sys
 
@@ -277,6 +278,7 @@ def main(argv: list[str] | None=None) -> int:
             raise ValueError("output directory permissions must already be private 0700")
         out.mkdir(parents=True,exist_ok=True,mode=0o700)
         rows={}
+        retired={}
         expected_main=None
         if a.cohort:
             scope=json.loads(a.cohort.read_text("utf-8"))
@@ -291,6 +293,16 @@ def main(argv: list[str] | None=None) -> int:
                 if not isinstance(name,str) or not SHA.fullmatch(str(x.get("sha"))) or name=="main" or name.startswith("wutrib/") or name in rows:
                     raise ValueError("invalid/duplicate or non-CE branch in cohort")
                 rows[name]=x["sha"]
+            if "technical_retirement" in scope:
+                verifier=runpy.run_path(str(Path(__file__).with_name("ce-branch-closure.py")))
+                verifier["validate_retirement"](scope, root)
+                for record in scope["technical_retirement"]["rows"]:
+                    if record["state"]!="RETIRED_TECHNICAL":
+                        continue
+                    name,source=record["branch"],record["source_sha"]
+                    if name not in rows or rows[name]!=source:
+                        raise ValueError("retired SHA differs from historical cohort: "+name)
+                    retired[name]=source
         selected=a.branch if a.branch is not None else list(rows)
         if not selected:
             raise ValueError("give --branch or --cohort: no global branch discovery without scope")
@@ -303,8 +315,16 @@ def main(argv: list[str] | None=None) -> int:
         if rows:
             live_lines=git(root,"for-each-ref","--format=%(refname:strip=3)","refs/remotes/"+a.remote).decode("utf-8").splitlines()
             live_ce={n for n in live_lines if n and n not in ("main","HEAD") and not n.startswith("wutrib/")}
-            census_missing=sorted(set(rows)-live_ce)
-            census_extra=sorted(live_ce-set(rows))
+            reappeared=sorted(set(retired)&live_ce)
+            if reappeared:
+                raise ValueError("retired refs reappeared: "+", ".join(reappeared))
+            for name, source in retired.items():
+                if sha_commit(root,source)!=source:
+                    raise ValueError("retired source commit not retained: "+name)
+                git(root,"merge-base","--is-ancestor",source,main_sha)
+            expected_live=set(rows)-set(retired)
+            census_missing=sorted(expected_live-live_ce)
+            census_extra=sorted(live_ce-expected_live)
             if census_missing or census_extra:
                 print("HOLD_COHORT_COVERAGE missing=%d extra=%d"%(len(census_missing),len(census_extra)),file=sys.stderr)
         if a.strict_heads and expected_main and main_sha!=expected_main:
@@ -312,7 +332,7 @@ def main(argv: list[str] | None=None) -> int:
         summaries=[]
         incomplete=bool(census_missing or census_extra)
         def reconcile_one(name):
-            ref=git_ref(name,a.remote)
+            ref=retired[name] if name in retired else git_ref(name,a.remote)
             review=None
             if a.decisions_dir:
                 decisionfile=a.decisions_dir/(safe_name(name)+".decisions.json")
@@ -340,6 +360,7 @@ def main(argv: list[str] | None=None) -> int:
         index={"protocol":"CE.BRANCH.RUN.INDEX.v1","main_sha":main_sha,"cohort_count":len(rows) if rows else None,
                "local_remote_ref_coverage_checked":bool(rows),
                "cohort_missing_remote_refs":census_missing,"cohort_new_remote_refs":census_extra,
+               "retired_sources_by_sha":sorted(retired),
                "requested":len(selected),"generated":len(summaries),"incomplete":incomplete or len(summaries)!=len(selected),
                "total_union_path_instances":sum(x["coverage"]["union_paths"] for x in summaries),
                "total_divergent_path_instances":sum(x["coverage"]["divergent"] for x in summaries),

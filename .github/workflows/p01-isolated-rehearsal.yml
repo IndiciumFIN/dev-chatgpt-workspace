@@ -42,5 +42,5 @@ jobs:
           cd docs/audit/f01-recovery-20261128/p01
           psql -X -v ON_ERROR_STOP=1 -f synthetic_fixture_v0.39.sql
           psql -X -v ON_ERROR_STOP=1 -f identity_acceptance_v0.32.sql
-          psql -X -v ON_ERROR_STOP=1 -f immutability_rehearsal_v0.39.sql
+          psql -X -v ON_ERROR_STOP=1 -f immutability_rehearsal_v0.40.sql
           psql -X -v ON_ERROR_STOP=1 -c "DO \$\$ BEGIN IF EXISTS (SELECT 1 FROM pg_trigger WHERE tgname IN ('p01_guard_layer_catalog_identity','p01_guard_master_layer_identity')) THEN RAISE EXCEPTION 'rollback failed'; END IF; END \$\$;"

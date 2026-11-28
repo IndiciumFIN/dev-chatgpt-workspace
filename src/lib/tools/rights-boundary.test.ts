@@ -14,7 +14,30 @@ test("held instruments stay in the record and leave every public lookup", () => 
     assert.equal(getTool(slug), undefined);
     const record = toolRecord(slug);
     assert.equal(record?.publicacao, "candidata");
-    assert.equal(assembleTool({ cover: { slug, kind: "escala", title: "x", lead: "x" }, criteria: [], choices: [], fields: [], selects: [], selectOptions: [], metas: [], metaOptions: [], outputs: [], bands: [], nanda: [], references: [], steps: [], faqs: [], related: [], specific: [] }, record), null);
+    assert.equal(
+      assembleTool(
+        {
+          cover: { slug, kind: "escala", title: "x", lead: "x", category: null, nandaMode: null, bandFrom: null, evidence: null, version: null },
+          criteria: [],
+          choices: [],
+          fields: [],
+          selects: [],
+          selectOptions: [],
+          metas: [],
+          metaOptions: [],
+          outputs: [],
+          bands: [],
+          nanda: [],
+          references: [],
+          steps: [],
+          faqs: [],
+          related: [],
+          specific: [],
+        },
+        record,
+      ),
+      null,
+    );
   }
   assert.ok(getTool("apgar"));
   assert.ok(getTool("imc"));

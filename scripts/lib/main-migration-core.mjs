@@ -105,3 +105,23 @@ export function detectMainMigrationCollisions(candidateByBranch) {
   }
   return {collisions:collisions.sort((a,b)=>a.path.localeCompare(b.path)),duplicates:duplicates.sort((a,b)=>a.path.localeCompare(b.path)),distinctPaths:paths.size};
 }
+
+/** Only accept already-verified technical retirement records, not mere absent refs.
+ * The caller MUST validate the ledger and receipt hashes and check Git ancestry.
+ */
+export function historicalMigrationSources(expectedBranches, remoteHeads, verifiedRetired) {
+  const declared=new Map(expectedBranches.map(b=>[b.name,b]));
+  if(declared.size!==expectedBranches.length)throw Error('DUPLICATE_HISTORICAL_SOURCE');
+  const retired=new Map();
+  for(const [name,sha] of verifiedRetired){
+    if(!/^[a-f0-9]{40}$/.test(sha)||name==='main'||name.startsWith('wutrib/'))throw Error('INVALID_RETIRED_SOURCE');
+    if(remoteHeads.has(name))throw Error('RETIRED_SOURCE_REAPPEARED:'+name);
+    if(!declared.has(name))continue;
+    if(declared.get(name).observedSha!==sha)throw Error('HISTORICAL_SHA_MISMATCH:'+name);
+    retired.set(name,sha);
+  }
+  const active=[...remoteHeads.keys()].filter(name=>name!=='main');
+  const historicalObserved=[...active,...retired.keys()];
+  const population=reconcileBranchPopulation([...declared.keys()],historicalObserved);
+  return {retired,population,activeCount:active.length,historicalObserved};
+}

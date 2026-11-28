@@ -93,11 +93,12 @@ jobs:
           if(r.summary.branchesExpected!==scope.branches.length ||
              r.summary.branchesObserved!==scope.branches.length ||
              r.summary.branchesInspected!==r.summary.branchesObserved ||
+             r.summary.activeRemoteBranchesObserved+r.summary.retiredHistoricalSourcesObserved!==r.summary.branchesObserved ||
              r.summary.sourceCoverageComplete!==true ||
              r.branchPopulation?.complete!==true) throw Error('INCOMPLETE_BRANCH_INVENTORY');
           if(r.summary.sourceFailures || r.main.changedSinceSnapshot) throw Error('DRIFT_OR_MISSING_SOURCES');
           if(r.releaseGate!=='HOLD_HUMAN' || r.migrationComplete!==false) throw Error('INVALID_RELEASE_CLAIM');
-          console.log('PASS: all',r.summary.branchesObserved,'current branch source refs audited; migration HOLD_HUMAN');
+          console.log('PASS: all',r.summary.branchesObserved,'active or receipt-verified historical sources audited; migration HOLD_HUMAN');
           console.log('SUMMARY:',JSON.stringify(r.summary));
           NODE
       - name: Verify semantic comparison safeguards

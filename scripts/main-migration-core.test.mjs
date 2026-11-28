@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions,reconcileBranchPopulation} from './lib/main-migration-core.mjs';
+import {validateMigrationManifest,parseTree,parseNameStatus,classifyCandidateRisk,detectMainMigrationCollisions,reconcileBranchPopulation,historicalMigrationSources} from './lib/main-migration-core.mjs';
 
 const manifest=JSON.parse(readFileSync('registers/governance/main-migration-scope.v1.json','utf8'));
 test('scope contains a controlled, versioned branch universe with explicit HOLD',()=>{
@@ -105,4 +105,20 @@ test('read-only branch auditor never persists git checkout credentials',()=>{
   assert.match(workflow,/persist-credentials:\s*false/);
   assert.doesNotMatch(workflow,/persist-credentials:\s*true/);
   assert.match(workflow,/permissions:\s*\n\s*contents:\s*read/);
+});
+
+test('historical population counts receipt-verified retired sources separately and fails closed on reappearance or wrong SHA',()=>{
+ const sha='a'.repeat(40), main='b'.repeat(40);
+ const declared=[{name:'archivamento',observedSha:sha},{name:'active',observedSha:main}];
+ const heads=new Map([['main',main],['active',main]]);
+ const ok=historicalMigrationSources(declared,heads,new Map([['archivamento',sha]]));
+ assert.equal(ok.population.complete,true);
+ assert.equal(ok.activeCount,1);
+ assert.equal(ok.retired.size,1);
+ assert.equal(ok.historicalObserved.length,2);
+ assert.deepEqual(historicalMigrationSources(declared,heads,new Map()).population.missing,['archivamento']);
+ assert.throws(()=>historicalMigrationSources(declared,heads,new Map([['archivamento',main]])),/HISTORICAL_SHA_MISMATCH/);
+ assert.throws(()=>historicalMigrationSources(declared,new Map([...heads,['archivamento',sha]]),new Map([['archivamento',sha]])),/REAPPEARED/);
+ assert.throws(()=>historicalMigrationSources(declared,heads,new Map([['wutrib/test',sha]])),/INVALID_RETIRED_SOURCE/);
+ assert.equal(historicalMigrationSources(declared,new Map([...heads,['unexpected',main]]),new Map([['archivamento',sha]])).population.complete,false);
 });

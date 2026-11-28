@@ -1,0 +1,90 @@
+{
+  "protocol": "CE.BRANCH.RETIREMENT.PREFLIGHT.v1",
+  "main_sha": "181009d7994033244738b18f3d6f94a9bcccab0b",
+  "main_tree_sha": "afcdcfab9ccc5e43213736dad2d1a5035301b5ec",
+  "source_pr": 145,
+  "source_pr_head": "6df91e3f76214aab6b620212db8adce35395cf12",
+  "source_pr_checks": {
+    "verify": "success",
+    "ce-integration-gate": "success"
+  },
+  "main_push_ci": "in_progress_at_observation",
+  "census": {
+    "all": 71,
+    "open_prs": 36,
+    "wutrib": 14
+  },
+  "priority_rows": [
+    {
+      "branch": "archivamento",
+      "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "exclusive_commits": 0,
+      "protected": false,
+      "open_prs": [],
+      "vercel_deployments_found": 0,
+      "state": "RETIREMENT_CANDIDATE"
+    },
+    {
+      "branch": "planning",
+      "source_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "merge_base_sha": "87c537fea1825766b58d3a31d0328a69cbc77007",
+      "exclusive_commits": 0,
+      "protected": false,
+      "open_prs": [],
+      "vercel_deployments_found": 0,
+      "state": "RETIREMENT_CANDIDATE"
+    },
+    {
+      "branch": "fix/ce-admin-e2e-hierarchy-20261101",
+      "source_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+      "merge_base_sha": "4bc814577a21fd88eb33774e5bbfcf42fceea2e9",
+      "exclusive_commits": 0,
+      "protected": false,
+      "open_prs": [],
+      "vercel_deployments_found": 0,
+      "state": "RETIREMENT_CANDIDATE"
+    }
+  ],
+  "vercel": {
+    "projects": [
+      "dev-chatgpt-workspace",
+      "dev-chatgpt-workspace-4xrp"
+    ],
+    "ready_previews_checked": 18,
+    "without_aliases": 15,
+    "with_aliases": [
+      {
+        "branch": "audit/ce-wave1-evidence-20261101",
+        "deployment": "dpl_34AfcgiZdELZpT9GiVSHAySnvKJp",
+        "alias": "dev-chatgpt-workspace-git-audit-ca0275-leivisml-7739s-projects.vercel.app"
+      },
+      {
+        "branch": "grook_10_26",
+        "deployment": "dpl_9iLM2gToWRDYMCYkGG1G7xS3ovdw",
+        "alias": "dev-chatgpt-workspace-git-grook1026-leivisml-7739s-projects.vercel.app"
+      },
+      {
+        "branch": "integration/structural-overlay-20261101",
+        "deployment": "dpl_HKYREJgK6SoTpUbEvcSbg2aHDTJ3",
+        "alias": "dev-chatgpt-workspace-git-integr-3a8d69-leivisml-7739s-projects.vercel.app"
+      }
+    ],
+    "custom_domains_found_in_checked_aliases": 0,
+    "configuration_and_usage_review": "PENDING"
+  },
+  "gates": {
+    "DEPENDENCIES_FULL": "PENDING",
+    "RETENTION": "PENDING",
+    "SECURITY_RIGHTS": "PENDING",
+    "MAIN_LEDGER_CI": "PENDING"
+  },
+  "limitations": [
+    "Vercel Git production branch settings not returned; aliases do not prove active use.",
+    "Dynamic and external dependencies not fully proven absent.",
+    "No conditional delete or workflow dispatch action in GitHub connector.",
+    "This preflight record is not eligibility evidence or a deletion receipt."
+  ],
+  "retired": 0,
+  "release": false
+}

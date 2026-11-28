@@ -67,9 +67,10 @@ def assert_no_runs(rows):
             for run in page["workflow_runs"]:
                 must(run.get("head_branch") not in names, "active workflow dependency")
 def assert_ci(main):
-    data = gh("/commits/"+main+"/check-runs?per_page=100")
-    checks = data["check_runs"]
-    must(data["total_count"] == len(checks), "incomplete check census")
+    pages = gh("/commits/"+main+"/check-runs?per_page=100", True)
+    must(isinstance(pages,list) and bool(pages), "invalid check census")
+    checks = [c for page in pages for c in page["check_runs"]]
+    must(all(page["total_count"] == len(checks) for page in pages) and len({c["id"] for c in checks}) == len(checks), "incomplete or unstable check census")
     must(any(c["name"]=="verify" and c["status"]=="completed" and c["conclusion"]=="success" for c in checks), "main verify not passed")
     must(all(c["status"]=="completed" and c["conclusion"] in ("success","neutral","skipped") for c in checks), "main checks pending/failing")
 def run(args):

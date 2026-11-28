@@ -37,7 +37,7 @@ npm run build:spa
 ```
 
 Os pontos relevantes incluem:
-- `check-generated-fresh` para garantir contratos gerados em sincronia com o código
+- `node scripts/check-generated-fresh.mjs` para garantir contratos gerados em sincronia com o código. O check remoto `verify` é o job do GitHub Actions, não um script `npm run verify`.
 - `check-cko-packages` para verificar integridade de pacotes CKO
 - `check-contract-coverage` para garantir cobertura completa de contratos e entidades
 

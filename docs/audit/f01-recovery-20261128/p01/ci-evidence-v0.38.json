@@ -1,0 +1,41 @@
+{
+  "version": "0.38",
+  "phase": "F01",
+  "package": "P01",
+  "run_id": 46154086650,
+  "job_id": 141006786500,
+  "tested_sha": "05d468afd74d4ddb81012a1c6aec38d644c7dbe4",
+  "run_conclusion": "success",
+  "job_conclusion": "success",
+  "sql_step": "success",
+  "log_observations": {
+    "fixture_insert_counts": [
+      44,
+      44,
+      44
+    ],
+    "matched_layers": 44,
+    "distinct_identity_roles": 44,
+    "trigger_creations": 2,
+    "rollback_statements": 2,
+    "post_rollback_assertion": "success"
+  },
+  "cases": {
+    "negative": 5,
+    "positive_noop": 2,
+    "all_pass_in_synthetic_fixture": true
+  },
+  "scope": "Synthetic PostgreSQL 17 only; no production data. No-op updates do not establish ordinary nonidentity mutation compatibility. No actual permissions or full schema regression proven.",
+  "remaining": [
+    "Complete consumer inventory and binding review",
+    "Verify effective database permissions and existing triggers on real schema",
+    "Run representative nonidentity updates and regression against isolated real schema",
+    "Admit contract through existing governance"
+  ],
+  "checklist": {
+    "executed": 8,
+    "total": 12
+  },
+  "status": "HOLD",
+  "next_package": false
+}

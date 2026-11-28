@@ -8,7 +8,6 @@ import { LocaleDesk } from "@/components/admin/locale-desk";
 import { useStored } from "@/lib/stored";
 import { templateContracts } from "@/lib/template-contract";
 import { templateCatalogo } from "@/lib/template-catalog";
-import { TemplateBuilderPanel } from "@/components/admin/template-builder-panel";
 import { tools } from "@/lib/tools/catalog";
 
 export function ContentModule({ desk, tab: forced = "paginas" }: { desk: SourceTool[]; tab?: string }) {
@@ -91,11 +90,11 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
   return (
     <ModuleFrame
       id="sistema"
-      toolbar={tab === "builder" ? null : <RecordToolbar search={search} onSearch={setSearch} searchLabel="Buscar no sistema" sort="nome" onSort={() => undefined} sorts={[{ value: "nome", label: "Nome" }]} />}
+      toolbar={<RecordToolbar search={search} onSearch={setSearch} searchLabel="Buscar no sistema" sort="nome" onSort={() => undefined} sorts={[{ value: "nome", label: "Nome" }]} />}
       list={(
         <>
           <div className="admin-tabs" role="tablist" aria-label="Sistema">
-            {[["visual", "Visual"], ["builder", "Builder"], ["arquivos", "Arquivos"], ["agentes", "Agentes"]].map(([id, label]) => (
+            {[["visual", "Visual"], ["arquivos", "Arquivos"], ["agentes", "Agentes"]].map(([id, label]) => (
               <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>
             ))}
           </div>
@@ -117,7 +116,6 @@ export function SystemModule({ tab: forced = "visual" }: { tab?: string }) {
               <tbody>{files.filter((file) => `${file.path} ${file.locale} ${file.alt}`.toLowerCase().includes(needle)).map((file) => <tr key={`${file.path}-${file.locale}`}><td data-label="Arquivo"><a href={file.path}>{file.path.split("/").pop()}</a></td><td data-label="Idioma">{file.locale} · {file.status}</td><td data-label="Texto alternativo">{file.alt || "Sem texto"}</td></tr>)}</tbody>
             </table>
           ) : null}
-          {tab === "builder" ? <TemplateBuilderPanel /> : null}
           {tab === "agentes" ? <AgentRoster /> : null}
         </>
       )}

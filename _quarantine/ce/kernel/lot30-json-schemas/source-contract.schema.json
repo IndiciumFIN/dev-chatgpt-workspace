@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceContract",
+  "type": "object",
+  "required": ["id","kind","owner","sourceType","templateId","normativeIds","validators","status","hash","sourceRef","createdAt","updatedAt"],
+  "properties": {
+    "id": { "type": "string" },
+    "kind": { "type": "string", "enum": ["api","file","database","feed","manual"] },
+    "owner": { "type": "string" },
+    "sourceType": { "type": "string" },
+    "templateId": { "type": "string" },
+    "normativeIds": { "type": "array", "items": { "type": "string" } },
+    "validators": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["draft","admitted","rejected"] },
+    "hash": { "type": "string" },
+    "sourceRef": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

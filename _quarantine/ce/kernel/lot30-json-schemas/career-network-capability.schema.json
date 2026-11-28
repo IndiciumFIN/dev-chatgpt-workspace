@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Network Capability Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "description",
+    "requires_identity",
+    "moderation_required",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "requires_identity": {
+      "type": "boolean"
+    },
+    "moderation_required": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "HOLD_HUMAN"
+      ]
+    }
+  }
+}

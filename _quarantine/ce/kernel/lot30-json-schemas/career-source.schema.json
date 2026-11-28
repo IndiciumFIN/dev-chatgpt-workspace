@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CE | Career Source Candidate",
+  "type": "object",
+  "required": [
+    "id",
+    "source_type",
+    "title",
+    "authority",
+    "uri",
+    "pinpoint",
+    "rights",
+    "jurisdiction",
+    "retrieved_at",
+    "sha256",
+    "snapshot_ref",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_type": {
+      "enum": [
+        "OFFICIAL_LAW",
+        "REGULATOR",
+        "STANDARD",
+        "TERMINOLOGY",
+        "PRIMARY_STUDY",
+        "GUIDELINE",
+        "TEXTBOOK",
+        "DATASET_API",
+        "SOFTWARE",
+        "IMAGE",
+        "INTERNAL_GOVERNED"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "pinpoint": {
+      "type": "string"
+    },
+    "rights": {
+      "enum": [
+        "UNKNOWN",
+        "PERMITTED",
+        "RESTRICTED",
+        "LICENSED",
+        "PUBLIC_DOMAIN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "snapshot_ref": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "SOURCE_QUALIFIED",
+        "HOLD_HUMAN",
+        "RETIRED"
+      ]
+    }
+  }
+}

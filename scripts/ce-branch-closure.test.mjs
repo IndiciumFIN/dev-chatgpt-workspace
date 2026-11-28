@@ -8,12 +8,17 @@ import { spawnSync } from "node:child_process";
 const ledgerPath = new URL("../registers/governance/ce-branch-completion-20261120.v1.json", import.meta.url);
 const fresh = () => JSON.parse(readFileSync(ledgerPath, "utf8"));
 
-function run(ledger, requireClosed = false) {
+const retirementPath = new URL("../registers/governance/ce-branch-live-cohort-20261121.v1.json", import.meta.url);
+const freshRetirement = () => JSON.parse(readFileSync(retirementPath, "utf8"));
+
+function run(ledger, requireClosed = false, retirement = freshRetirement()) {
   const dir = mkdtempSync(join(tmpdir(), "ce-branch-closure-"));
   try {
     const input = join(dir, "ledger.json");
     writeFileSync(input, JSON.stringify(ledger));
-    const args = ["scripts/ce-branch-closure.py", "--ledger", input];
+    const retirementInput = join(dir, "retirement.json");
+    writeFileSync(retirementInput, JSON.stringify(retirement));
+    const args = ["scripts/ce-branch-closure.py", "--ledger", input, "--retirement-cohort", retirementInput];
     if (requireClosed) args.push("--require-closed");
     const child = spawnSync("python3", args, { encoding: "utf8" });
     assert.equal(child.error, undefined, child.error?.message || child.stderr);
@@ -106,15 +111,15 @@ test("CE no auto-merge or database write is allowed by ledger", () => {
 });
 
 test("retirement extension preserves historical closure and denies higher states", () => {
-  const data = fresh();
+  const data = freshRetirement();
   assert.equal(data.technical_retirement.rows.length, 56);
   assert.equal(data.technical_retirement.counts.candidates, 13);
-  assert.equal(run(data).code, 0);
-  assert.equal(run(data, true).code, 2);
+  assert.equal(run(fresh(), false, data).code, 0);
+  assert.equal(run(fresh(), true, data).code, 2);
   for (const state of ["RETIREMENT_ELIGIBLE", "RETIRED_TECHNICAL", "SEALED"]) {
-    const bad = fresh();
+    const bad = freshRetirement();
     bad.technical_retirement.rows.find(r => r.state === "RETIREMENT_CANDIDATE").state = state;
-    assert.equal(run(bad).code, 2);
+    assert.equal(run(fresh(), false, bad).code, 2);
   }
 });
 test("retirement extension rejects missing proof, blockers, drift and scope mixing", () => {
@@ -131,8 +136,14 @@ test("retirement extension rejects missing proof, blockers, drift and scope mixi
     o => { o.rows.find(r => r.structural_evidence?.kind === "DELTA_BLOB_MODE_PRESERVED").structural_evidence.quarantined_paths = 100; }
   ];
   for (const mutate of cases) {
-    const data = fresh();
+    const data = freshRetirement();
     mutate(data.technical_retirement);
-    assert.equal(run(data).code, 2);
+    assert.equal(run(fresh(), false, data).code, 2);
   }
+});
+
+test("retirement extension cannot be silently removed", () => {
+  const data = freshRetirement();
+  delete data.technical_retirement;
+  assert.equal(run(fresh(), false, data).code, 2);
 });

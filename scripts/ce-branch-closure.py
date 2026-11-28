@@ -85,7 +85,7 @@ def validate_proof(row: dict, by_name: dict[str, dict]) -> None:
 def validate_retirement(ledger: dict) -> None:
     """Validate candidate-only live extension; never authorize deletion."""
     if "technical_retirement" not in ledger:
-        return
+        fail("retirement: missing live extension")
     obj = ledger["technical_retirement"]
     if not isinstance(obj, dict) or obj.get("protocol") != "CE.BRANCH.RETIREMENT.v1" or obj.get("phase") != "CANDIDATE_ONLY":
         fail("retirement: invalid protocol or phase")
@@ -213,7 +213,6 @@ def validate(ledger: dict, require_closed: bool = False) -> dict:
     if not isinstance(ledger.get("policy"), dict) or any(ledger["policy"].get(k) is not False for k in
         ("new_branch", "force_merge", "delete_branch", "auto_publish", "remote_database_writes", "archive_is_admission")):
         fail("fail-closed policy missing")
-    validate_retirement(ledger)
     if require_closed and sealed != totals["CE_CKO_NCOS_REVIEW"]:
         fail("global branch closure NOT READY; %d/%d are SEALED" % (sealed, totals["CE_CKO_NCOS_REVIEW"]))
     return {"branches": len(rows), "ce": totals["CE_CKO_NCOS_REVIEW"],
@@ -225,10 +224,12 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ledger", type=Path, default=Path(LEDGER))
     p.add_argument("--require-closed", action="store_true")
+    p.add_argument("--retirement-cohort", type=Path, default=Path("registers/governance/ce-branch-live-cohort-20261121.v1.json"))
     args = p.parse_args()
     try:
         j = json.loads(args.ledger.read_text(encoding="utf-8"))
         result = validate(j, args.require_closed)
+        validate_retirement(json.loads(args.retirement_cohort.read_text(encoding="utf-8")))
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as err:

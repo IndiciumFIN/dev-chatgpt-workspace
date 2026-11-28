@@ -1,0 +1,124 @@
+{
+  "protocol": "CE.CKO.ORIGINAL.CORPUS.RECONCILIATION.v1",
+  "date": "2026-11-28",
+  "baseline": "0211cf55a6b32c237d8ca414f6693186dedd41bd",
+  "predecessor": {
+    "path": "registers/governance/ce-cko-m08-m09-custody-audit-20261128.v1.json",
+    "git_blob_sha": "d4e614d43e40d5aac78687e03ae4d5346af29ca2"
+  },
+  "source": {
+    "bundle_version": "1.0.0",
+    "bundle_date": "2026-10-03",
+    "zip_sha256": "a2e0cf37114b9a6b6c11881c5f43ed32592bacd3a38a1cdb74e0d8290b88d07f",
+    "sqlite_sha256": "cad94fa782918fb3ef9f77666306537139e3d04ebc96631425bdbd6383372142",
+    "sqlite_hash_matches_m08": true,
+    "zip_entries": 1108,
+    "crc": "PASS",
+    "sqlite_quick_check": "ok",
+    "sqlite_access": "READ_ONLY_IMMUTABLE",
+    "public_link_observed": false,
+    "visibility_scope": "Observed Drive permissions: individual owner/writer/reader roles; no anyone permission returned."
+  },
+  "reconciliation": {
+    "source_registry": 118,
+    "document_registry": 124,
+    "atom_count": 28001,
+    "atom_id_source_document_locator_content_hash_matches": 28001,
+    "atom_id_differences": 0,
+    "pair_count": 9102,
+    "pair_field_matches": 9102,
+    "pair_fields": [
+      "topic_uid",
+      "atom_id",
+      "source_id",
+      "rank",
+      "candidate_score",
+      "candidate_status",
+      "rights_gate_status",
+      "relation",
+      "canonical_claim_mapping"
+    ],
+    "pair_differences": 0,
+    "source_registry_orphans": 0,
+    "topic_registry_orphans": 0,
+    "active_atom_source_mismatches": 0,
+    "groups": [
+      {
+        "gate": "DEFAULT_ACTIVE",
+        "pairs": 4142,
+        "matched_atoms": 4142,
+        "missing_atoms": 0
+      },
+      {
+        "gate": "CONDITIONAL_EXPLICIT_ENABLE",
+        "pairs": 1670,
+        "matched_atoms": 0,
+        "missing_atoms": 1670
+      },
+      {
+        "gate": "LICENSE_QUARANTINED",
+        "pairs": 2280,
+        "matched_atoms": 0,
+        "missing_atoms": 2280
+      },
+      {
+        "gate": "HUMAN_REFERENCE_ONLY",
+        "pairs": 1010,
+        "matched_atoms": 0,
+        "missing_atoms": 1010
+      }
+    ],
+    "source_registry_groups": [
+      {
+        "gate": "DEFAULT_ACTIVE",
+        "sources": 21,
+        "documents": 33,
+        "atoms": 28001
+      },
+      {
+        "gate": "CONDITIONAL_EXPLICIT_ENABLE",
+        "sources": 22,
+        "documents": 34,
+        "atoms": 0
+      },
+      {
+        "gate": "LICENSE_QUARANTINED",
+        "sources": 22,
+        "documents": 29,
+        "atoms": 0
+      },
+      {
+        "gate": "HUMAN_REFERENCE_ONLY",
+        "sources": 19,
+        "documents": 28,
+        "atoms": 0
+      },
+      {
+        "gate": "RIGHTS_AUDIT_REQUIRED",
+        "sources": 34,
+        "documents": 0,
+        "atoms": 0
+      }
+    ],
+    "missing_distinct_atoms": 1765,
+    "missing_distinct_sources": 52,
+    "topics_with_any_active_pair": 72,
+    "topics_without_active_pair": 98,
+    "topic_count_with_pairs": 170,
+    "unadmitted_pairs": 9102
+  },
+  "finding": "All 4960 missing atom targets predate M08 export and are present as candidate relationships in the exact original SQLite. Gate states of every pair agree with source registry. Rights partition is evidenced; original intent and earlier extraction completeness are not proven. No source or topic registry orphan, but missing atom targets remain explicit.",
+  "controls": {
+    "raw_corpus_copied_to_main": false,
+    "db_write": false,
+    "clinical_release": false,
+    "kernel_admission": false,
+    "rights_clearance": false,
+    "source_ref_deletion": false
+  },
+  "next": [
+    "Track 4960 missing targets as historical rights-gated references, not approved evidence.",
+    "Review rights and upstream provenance per source before any atomization; never synthesize missing IDs.",
+    "Clarify QA provenance_orphans=0 scope against missing atom targets."
+  ]
+}

@@ -1,0 +1,28 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+import {createHash} from "node:crypto";
+const read=p=>readFileSync(new URL("../"+p,import.meta.url));
+const d=JSON.parse(read("registers/governance/ce-cko-original-corpus-reconciliation-20261128.v1.json"));
+test("original corpus reconciliation separates export fidelity from missing historical atom targets",()=>{
+ const old=read(d.predecessor.path);
+ assert.equal(createHash("sha1").update("blob "+old.length+"\0").update(old).digest("hex"),d.predecessor.git_blob_sha);
+ const p=JSON.parse(old).referential_audit;
+ const a=d.reconciliation;
+ assert.equal(d.source.sqlite_hash_matches_m08,true);
+ assert.equal(d.source.sqlite_access,"READ_ONLY_IMMUTABLE");
+ assert.equal(a.atom_count,p.metadata_atoms);
+ assert.equal(a.atom_id_source_document_locator_content_hash_matches,a.atom_count);
+ assert.equal(a.pair_field_matches,p.topic_atom_pairs);
+ assert.equal(a.pair_differences,0);
+ assert.equal(a.source_registry_orphans,0);
+ assert.equal(a.topic_registry_orphans,0);
+ assert.equal(a.groups.reduce((n,x)=>n+x.pairs,0),a.pair_count);
+ assert.equal(a.groups.reduce((n,x)=>n+x.missing_atoms,0),p.unresolved_pairs);
+ assert.equal(a.groups.reduce((n,x)=>n+x.matched_atoms,0),p.resolved_pairs);
+ assert.equal(a.source_registry_groups.reduce((n,x)=>n+x.sources,0),118);
+ assert.equal(a.source_registry_groups.reduce((n,x)=>n+x.documents,0),124);
+ assert.equal(a.source_registry_groups.reduce((n,x)=>n+x.atoms,0),28001);
+ assert.equal(a.unadmitted_pairs,a.pair_count);
+ assert.ok(Object.values(d.controls).every(x=>x===false));
+});

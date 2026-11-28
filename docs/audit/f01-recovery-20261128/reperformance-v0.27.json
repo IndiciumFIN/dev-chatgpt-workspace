@@ -1,0 +1,72 @@
+{
+  "version": "0.27",
+  "phase": "F01",
+  "packages_affected": [
+    "P04",
+    "P05",
+    "P06",
+    "P12",
+    "P13",
+    "P15",
+    "P16"
+  ],
+  "criteria_affected": [
+    "C10",
+    "C15",
+    "C16",
+    "C17"
+  ],
+  "tests": {
+    "mode": "local Python unittest rerun; not SQL or CI",
+    "suites": [
+      4,
+      7,
+      5,
+      5,
+      6,
+      8
+    ],
+    "passed": 35,
+    "failed": 0,
+    "log_sha256": "b1f79800761ff429bd9eef0beea9404f183296c45abc433235de2d21875d8abd"
+  },
+  "responsibilities": {
+    "total": 8,
+    "active": 8,
+    "authority_ref_present": 8,
+    "execution_ref_present": 8,
+    "control_ref_present": 8,
+    "evidence_requirement_present": 8,
+    "risk_owner_present": 8
+  },
+  "agents": {
+    "total": 89,
+    "active": 88,
+    "waiting_provider": 1,
+    "orphan_reporting_refs": 0,
+    "make_and_check": 8,
+    "check_and_audit": 11,
+    "make_and_audit": 0,
+    "interpretation": "Role capability overlap is a risk indicator, not evidence of same-transaction self approval."
+  },
+  "pipeline": {
+    "bindings": 1056,
+    "not_executed": 1056
+  },
+  "historical_criteria": {
+    "pass": 8,
+    "hold": 9
+  },
+  "packages": {
+    "executed": 3,
+    "partial": 13,
+    "pending": 1
+  },
+  "kernel": "HOLD",
+  "limitations": "Local dump projection and local tests only. Original criterion definitions not independently recovered; no new formal PASS. No production or main change.",
+  "impacts": {
+    "horizontal": "44 layers",
+    "vertical": "responsibility to agent to execution to evidence",
+    "transversal": "assurance and Kernel"
+  }
+}

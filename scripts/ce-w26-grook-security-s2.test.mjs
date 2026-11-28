@@ -64,3 +64,11 @@ test("preview OAuth historical exposure remains explicit HOLD; current file no l
  assert.doesNotMatch(preview,/PREVIEW_CLIENT_SECRET\s*=\s*["'][A-Za-z0-9_-]{16,}["']/);
  assert.equal(d.hold_issuer.operational_evidence,"NO_ISSUER_REVOCATION_RECEIPT");
 });
+
+test("rights-only successor is pinned; arbitrary mutation and first-admin regression remain denied",()=>{
+ const path="src/lib/source.functions.ts";
+ const current=raw(path);
+ assert.doesNotThrow(()=>validateSecurityS2(d,m,p1,s1));
+ for(const changed of [current+"\\n// unauthorized change",current.replace("values (${context.userId}, 'subscriber')","values (${context.userId}, 'admin')")])
+  assert.throws(()=>validateSecurityS2(d,m,p1,s1,p=>p===path?changed:raw(p)),/canonical file changed/);
+});

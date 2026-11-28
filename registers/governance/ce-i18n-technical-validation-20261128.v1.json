@@ -39,5 +39,24 @@
     "Public source listing and admin publication writes require separate end-to-end rights veto verification",
     "Candidate patch denies held tools at public listing/direct lookup and cover publication; preview seeds held records unpublished; existing sheet/restore veto exercised by tests. End-to-end browser and runtime validation still pending."
   ],
-  "next_gate": "CI + end-to-end technical evidence; advance independent work only; no production promotion or deletion"
+  "next_gate": "CI + end-to-end technical evidence; advance independent work only; no production promotion or deletion",
+  "security_reconciliation": {
+    "historical_ledger": "registers/governance/ce-w26-grook-security-s2-20261121.v1.json",
+    "historical_source_blob": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7",
+    "reviewed_successor_blob": "422030e1753045971d28f5d6e9f7abbf293d3ca0",
+    "reviewed_successor_commit": "241ecfeae23417491ff10684bfd3399d85da253b",
+    "verified_diff": "Exact five replacements reproduced from baseline; no other changes in source.functions.ts.",
+    "prior_ci": {
+      "verify_run": 46147581987,
+      "total": 706,
+      "pass": 697,
+      "fail": 2,
+      "skipped": 7,
+      "clinical_wrapper": "PASS",
+      "rights_server_tests": "2 PASS",
+      "failure": "Historical immutable guard rejects new source blob; integration gate propagates verify failure."
+    },
+    "decision": "Keep historical hashes unchanged; explicitly allow only the reviewed successor, retain semantic guards and reject any other hash; rerun CI.",
+    "release_authorized": false
+  }
 }

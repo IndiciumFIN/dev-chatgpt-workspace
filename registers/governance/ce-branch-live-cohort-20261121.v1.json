@@ -1369,6 +1369,81 @@
         ],
         "runtime_admission": false,
         "release_eligible": false
+      },
+      {
+        "source_ref": "fix/security-auth-env-optin-oauth-17-20261114",
+        "source_sha": "eb8ff56d68ed235b455a5a6887de27eb8731a5db",
+        "merge_base_sha": "f3390cb134db09195cf3c78a7db2b896ec304d6e",
+        "main_baseline_sha": "6187c43d1b4142f4f1ae7e155059cdae068b73ef",
+        "source_pr": 72,
+        "source_pr_state": "OPEN",
+        "delta_paths": 9,
+        "already_exact_paths": [
+          {
+            "path": "scripts/ce-db-deployment-guard.mjs",
+            "sha": "190f3be685d30240debd92eef3bf4d94307e8b0f",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/ce-db-deployment-guard.test.mjs",
+            "sha": "0aa5662325025b8a833657c9ab1a03e3c1c904cc",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/ce-first-admin-bootstrap.test.mjs",
+            "sha": "f9f3f49245de9d63a4d5f74fe9a380092a05ae63",
+            "mode": "100644"
+          },
+          {
+            "path": "src/lib/source.functions.ts",
+            "sha": "b697a57a2b7bcaeb80cb9bec0f902e3b9ef174e7",
+            "mode": "100644"
+          }
+        ],
+        "staged_paths": 5,
+        "screening": "Five source texts fetched; narrow credential/email regex screen zero matches; credential-named lines reviewed, references to environment variables and assertions only in inspected lines. Not full G00, rights or DB approval. No scripts executed or DB access.",
+        "state": "STAGED_PENDING_POSTMERGE_CI",
+        "destinations": [
+          {
+            "path": ".github/workflows/ce-first-admin-bootstrap.yml",
+            "destination": "_quarantine/ce/kernel/security-auth-pr72/.github/workflows/ce-first-admin-bootstrap.yml",
+            "sha": "2b4945f0c9f3d9b1e97bd09239ccb12bb5f4325d",
+            "mode": "100644"
+          },
+          {
+            "path": "migrations/0059_source_tool_default_unpublished.sql",
+            "destination": "_quarantine/ce/kernel/security-auth-pr72/migrations/0059_source_tool_default_unpublished.sql",
+            "sha": "d7ac933b7f2332d794d82aae1688f2b65bae9aa3",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/ce-source-tool-default-unpublished.test.mjs",
+            "destination": "_quarantine/ce/kernel/security-auth-pr72/scripts/ce-source-tool-default-unpublished.test.mjs",
+            "sha": "ca1d014b387c31abcbc6a13bca4fa531236276b6",
+            "mode": "100644"
+          },
+          {
+            "path": "scripts/test-auth-secret-env.mjs",
+            "destination": "_quarantine/ce/kernel/security-auth-pr72/scripts/test-auth-secret-env.mjs",
+            "sha": "2fa14796cc80259697ea103a8947cf5dca17f70f",
+            "mode": "100644"
+          },
+          {
+            "path": "src/lib/db.ts",
+            "destination": "_quarantine/ce/kernel/security-auth-pr72/src/lib/db.ts",
+            "sha": "ff8fdf02a86107f1e72743d54e7ac47e1833e666",
+            "mode": "100644"
+          }
+        ],
+        "remaining": [
+          "POSTMERGE_MAIN_READBACK",
+          "G00_FULL_HISTORY",
+          "RIGHTS",
+          "PR72_DEPENDENCY",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ],
+        "runtime_admission": false,
+        "release_eligible": false
       }
     ],
     "ancestor_reverification_20261127": {
@@ -1850,6 +1925,15 @@
       "tree_truncated": false,
       "guard_fix": "51431d156cb1ebaba21b22f0f184c44d1da1cfe3",
       "pr78_pending_rights": 3,
+      "runtime_admission": false,
+      "retirement_eligible": false
+    },
+    "postmerge_pr136": {
+      "main_sha": "6187c43d1b4142f4f1ae7e155059cdae068b73ef",
+      "source_pr": 136,
+      "manifest_entries_verified": 94,
+      "blob_mode_pass": 94,
+      "tree_truncated": false,
       "runtime_admission": false,
       "retirement_eligible": false
     }

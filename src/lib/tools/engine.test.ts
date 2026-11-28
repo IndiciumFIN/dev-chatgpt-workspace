@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getTool } from "./catalog.ts";
+import { toolRecord } from "./catalog.ts";
 import { evaluateFormula, evaluateScale } from "./engine.ts";
 
 test("escala incompleta não produz escore", () => {
-  const tool = getTool("braden");
+  const tool = toolRecord("braden");
   assert.ok(tool);
   const result = evaluateScale(tool, { sensorial: 1 });
   assert.equal(result.ok, false);
@@ -12,14 +12,14 @@ test("escala incompleta não produz escore", () => {
 });
 
 test("número fora do limite não calcula", () => {
-  const tool = getTool("imc");
+  const tool = toolRecord("imc");
   assert.ok(tool);
   const result = evaluateFormula(tool, { peso: "900", altura: "170" });
   assert.equal(result.ok, false);
 });
 
 test("gotejamento de 500 mL em 2 horas no equipo 20", () => {
-  const tool = getTool("gotejamento");
+  const tool = toolRecord("gotejamento");
   assert.ok(tool);
   const result = evaluateFormula(tool, { volume: "500", horas: "2", minutos: "0", fator: "20" });
   assert.equal(result.ok, true);
@@ -30,7 +30,7 @@ test("gotejamento de 500 mL em 2 horas no equipo 20", () => {
 });
 
 test("IMC de 70 kg e 170 cm fica na faixa adequada", () => {
-  const tool = getTool("imc");
+  const tool = toolRecord("imc");
   assert.ok(tool);
   const result = evaluateFormula(tool, { peso: "70", altura: "170" });
   assert.equal(result.ok, true);

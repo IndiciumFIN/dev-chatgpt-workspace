@@ -14,7 +14,7 @@ function tagged(query: (text: string, params: unknown[]) => Promise<unknown[]>) 
 }
 
 const tool: ClinicalTool = {
-  slug: "braden",
+  slug: "apgar",
   kind: "escala",
   category: "Pele",
   title: "Braden gravada",
@@ -33,22 +33,22 @@ test("grava a ficha inteira e recusa quando o processo está desligado", async (
   await db.exec(await readFile(new URL("../../../migrations/0002_source.sql", import.meta.url), "utf8"));
   await db.exec(await readFile(new URL("../../../migrations/0004_metamodel.sql", import.meta.url), "utf8"));
   await db.exec(await readFile(new URL("../../../migrations/0005_controls.sql", import.meta.url), "utf8"));
-  await db.exec("insert into source_tool (slug, kind, title, lead) values ('braden', 'escala', 'Braden', 'Texto longo o bastante.')");
+  await db.exec("insert into source_tool (slug, kind, title, lead) values ('apgar', 'escala', 'Braden', 'Texto longo o bastante.')");
   const sql = tagged(async (text, params) => (await db.query(text, params)).rows);
   await saveSheetTx(sql, tool, true, "admin-1");
-  const criteria = await db.query("select id from tool_criterion where tool_slug = 'braden'");
-  const cover = await db.query("select title, updated_by from source_tool where slug = 'braden'");
+  const criteria = await db.query("select id from tool_criterion where tool_slug = 'apgar'");
+  const cover = await db.query("select title, updated_by from source_tool where slug = 'apgar'");
   assert.equal(criteria.rows.length, 1);
   assert.equal((cover.rows[0] as { title: string }).title, "Braden gravada");
   assert.equal((cover.rows[0] as { updated_by: string }).updated_by, "admin-1");
   await saveSheetTx(sql, { ...tool, title: "Braden'; drop table source_tool;--" }, true, "admin-1");
-  const quoted = await db.query("select title from source_tool where slug = 'braden'");
+  const quoted = await db.query("select title from source_tool where slug = 'apgar'");
   assert.equal((quoted.rows[0] as { title: string }).title, "Braden'; drop table source_tool;--");
-  const still = await db.query("select id from tool_criterion where tool_slug = 'braden'");
+  const still = await db.query("select id from tool_criterion where tool_slug = 'apgar'");
   assert.equal(still.rows.length, 1);
   await db.exec("update process set enabled = false where id = 'publicar_ferramenta'");
   await assert.rejects(() => saveSheetTx(sql, { ...tool, title: "Não pode" }, true, "admin-1"), /desligado/);
-  const kept = await db.query("select title from source_tool where slug = 'braden'");
+  const kept = await db.query("select title from source_tool where slug = 'apgar'");
   assert.equal((kept.rows[0] as { title: string }).title, "Braden'; drop table source_tool;--");
 });
 
@@ -57,7 +57,7 @@ test("a cópia devolve o título e registra restaurar", async () => {
   await db.exec(await readFile(new URL("../../../migrations/0002_source.sql", import.meta.url), "utf8"));
   await db.exec(await readFile(new URL("../../../migrations/0004_metamodel.sql", import.meta.url), "utf8"));
   await db.exec(await readFile(new URL("../../../migrations/0005_controls.sql", import.meta.url), "utf8"));
-  await db.exec("insert into source_tool (slug, kind, title, lead) values ('braden', 'escala', 'Braden', 'Texto longo o bastante.')");
+  await db.exec("insert into source_tool (slug, kind, title, lead) values ('apgar', 'escala', 'Braden', 'Texto longo o bastante.')");
   const sql = tagged(async (text, params) => (await db.query(text, params)).rows);
   const copy = {
     process: [
@@ -70,10 +70,19 @@ test("a cópia devolve o título e registra restaurar", async () => {
   await saveSheetTx(sql, tool, true, "admin-1");
   await saveSheetTx(sql, { ...tool, title: "Titulo alterado" }, true, "admin-1");
   await restoreCopyTx(sql, copy, "admin-1");
-  const title = await db.query("select title from source_tool where slug = 'braden'");
+  const title = await db.query("select title from source_tool where slug = 'apgar'");
   const trail = await db.query("select action from audit_event where action = 'restaurar'");
   const community = await db.query("select enabled from process where id = 'comunidade'");
   assert.equal((title.rows[0] as { title: string }).title, "Braden gravada");
   assert.equal(trail.rows.length, 1);
   assert.equal((community.rows[0] as { enabled: boolean }).enabled, false);
+});
+
+test("publicar Braden ou Morse na ficha ou na cópia é recusado", async () => {
+  const sql = tagged(async () => []);
+  await assert.rejects(() => saveSheetTx(sql, { ...tool, slug: "braden" }, true, "admin-1"), /direitos/);
+  await assert.rejects(
+    () => restoreCopyTx(sql, { process: [], tools: [{ slug: "morse", title: "Escala de Morse", lead: "Texto longo o bastante.", published: true }] }, "admin-1"),
+    /direitos/,
+  );
 });

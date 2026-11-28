@@ -1,3 +1,4 @@
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import type { Band, ClinicalTool, ToolKind } from "@/lib/tools/types";
 
 export type ToolCover = {
@@ -50,6 +51,7 @@ export function hasStoredSheet(sheet: Pick<ToolSheet, "criteria" | "fields" | "s
 }
 
 export function assembleTool(sheet: ToolSheet, fallback?: ClinicalTool): ClinicalTool | null {
+  if (isClinicalRightsHeld(sheet.cover.slug) || (fallback && isClinicalRightsHeld(fallback.slug))) return null;
   const kind: ToolKind | null = sheet.cover.kind === "escala" || sheet.cover.kind === "calculadora" ? sheet.cover.kind : fallback?.kind ?? null;
   if (!kind) return null;
   const nandaMode = sheet.cover.nandaMode === "sugerir" || sheet.cover.nandaMode === "nao-fechar" ? sheet.cover.nandaMode : fallback?.nandaMode ?? "nao-fechar";

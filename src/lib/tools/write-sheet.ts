@@ -1,4 +1,5 @@
 import type { ClinicalTool } from "@/lib/tools/types";
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import { getTool } from "./catalog.ts";
 import { assertProductionAuth } from "../publish-guard.ts";
 
@@ -9,6 +10,7 @@ function on(value: unknown) {
 }
 
 export async function saveSheetTx(sql: Tx, tool: ClinicalTool, published: boolean, userId: string) {
+  if (published && isClinicalRightsHeld(tool.slug)) throw new Error("Instrumento em revisão de direitos.");
   assertProductionAuth();
   const gate = await sql<{ enabled: unknown }>`select enabled from process where id = ${"publicar_ferramenta"}`;
   if (!on(gate[0]?.enabled)) throw new Error("O processo publicar_ferramenta está desligado.");
@@ -138,6 +140,7 @@ export async function restoreCopyTx(
 ) {
   await sql`update process set enabled = true where id = ${"publicar_ferramenta"}`;
   for (const row of copy.tools) {
+    if (row.published && isClinicalRightsHeld(row.slug)) throw new Error("Instrumento em revisão de direitos.");
     const base = getTool(row.slug);
     const title = row.title.trim();
     const lead = row.lead.trim();

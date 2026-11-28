@@ -1,3 +1,4 @@
+import { isClinicalRightsHeld } from "@/lib/tools/rights-boundary";
 import type { ClinicalTool } from "@/lib/tools/types";
 import { examesLaboratoriais } from "@/lib/tools/exames-laboratoriais";
 
@@ -95,6 +96,10 @@ const braden: ClinicalTool = {
     "Braden B, Bergstrom N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing. 1987;12(1):8-12.",
     "Paranhos WY, Santos VLCG. Avaliação de risco para úlceras de pressão por meio da escala de Braden, na língua portuguesa. Rev Esc Enferm USP. 1999;33(esp):191-206.",
   ],
+  holds: [
+    "Titular da Braden Scale informa acordo de licença para a Scale II. A versão original e a tradução não foram verificadas.",
+    "Lei 9.610/1998: o método não se confunde com a expressão protegida. A página não monta este instrumento até a licença.",
+  ],
   related: ["morse", "gotejamento", "imc"],
 };
 
@@ -129,6 +134,10 @@ const morse: ClinicalTool = {
   ],
   references: [
     "Morse JM, Morse RM, Tylko SJ. Development of a scale to identify the fall-prone patient. Can J Aging. 1989;8(4):366-377.",
+  ],
+  holds: [
+    "Fall TIPS informa uso gratuito condicionado à permissão do autor. A autorização aplicável não está no registro.",
+    "A página não monta este instrumento até essa permissão. Não é liberação clínica.",
   ],
   related: ["braden", "apgar", "imc"],
 };
@@ -255,23 +264,21 @@ const aldrete: ClinicalTool = {
     { id: "saturacao", label: "Saturação de O₂ (SpO₂)", help: "Necessidade de oxigênio suplementar.", choices: [{ value: 2, label: "Mantém SpO₂ acima de 92% em ar ambiente" }, { value: 1, label: "Precisa de O₂ para manter SpO₂ acima de 90%" }, { value: 0, label: "SpO₂ abaixo de 90% mesmo com suplementação de O₂" }] },
   ],
   bands: [
-    { min: 8, max: 10, label: "Critério de recuperação atingido", tone: "ok", note: "Critério de recuperação atingido. A decisão de alta cabe ao médico responsável, considerando o quadro clínico.", nanda: [] },
-    { min: 7, max: 7, label: "Manter em observação", tone: "warn", note: "Manter em observação e reavaliar antes de considerar alta.", nanda: [] },
-    { min: 0, max: 6, label: "Paciente instável", tone: "danger", note: "Critério de recuperação não atingido. Manter monitorização e acionar o protocolo institucional.", nanda: [] },
+    { min: 0, max: 10, label: "Escore registrado", tone: "info", note: "O Parecer Coren-SP 017/2021 não fixa corte de 8 nem de 9. A alta não sai desta ficha.", nanda: [] },
   ],
   howTo: [
-    "Avalie cada um dos cinco critérios após a cirurgia, conferindo o paciente e o registro intraoperatório.",
-    "Some os pontos: o escore vai de 0 a 10.",
-    "Leia a faixa: 8 ou mais atinge o critério de recuperação; 7 pede observação; abaixo de 7 o paciente está instável.",
-    "O resultado não autoriza alta de forma autônoma: a decisão considera o quadro clínico e a avaliação do médico responsável.",
+    "Avalie os cinco critérios. Cada um vai de 0 a 2. O total vai de 0 a 10.",
+    "Registre o escore. Não converta o número em alta.",
+    "A decisão de alta não é desta página.",
   ],
   faqs: [
-    { q: "Qual escore permite alta da sala de recuperação pós-anestésica?", a: "O critério de recuperação é atingido com 8 pontos ou mais. Com 7 pontos, a recomendação é manter em observação. Abaixo de 7, o paciente permanece instável. A alta é decisão do médico responsável, não do escore isolado." },
-    { q: "Quais são os cinco critérios?", a: "Atividade (motricidade), respiração, circulação (pressão arterial em relação ao pré-anestésico), nível de consciência e saturação de O₂." },
-    { q: "A escala substitui a avaliação do anestesiologista?", a: "Não. O escore apoia a decisão; a alta da SRPA depende do quadro clínico e da avaliação do médico responsável, conforme o Parecer nº 28/2020 do CFM." },
+    { q: "O escore dá alta da recuperação?", a: "Não. O Parecer Coren-SP 017/2021 diz que a equipe de enfermagem pode preencher a escala e que a decisão de alta, a partir dela, não é desta página. O texto não fixa corte de 8 nem de 9." },
+    { q: "Quais são os cinco critérios?", a: "Atividade, respiração, circulação, consciência e saturação. Cada um vai de 0 a 2." },
   ],
   references: [
-    "CONSELHO FEDERAL DE MEDICINA. Parecer nº 28/2020. Assunto: Critérios para alta da sala de recuperação pós-anestésica. Brasília: CFM, 2020.",
+    "Aldrete JA, Kroulik D. A postanesthetic recovery score. Anesth Analg. 1970;49(6):924-934.",
+    "Aldrete JA. The post-anesthesia recovery score revisited. J Clin Anesth. 1995;7(1):89-91.",
+    "CONSELHO REGIONAL DE ENFERMAGEM DE SÃO PAULO. Parecer nº 017/2021. São Paulo: Coren-SP, 2021.",
   ],
   publicacao: "candidata",
   holds: [
@@ -282,8 +289,10 @@ const aldrete: ClinicalTool = {
     "UTC-072: E2E de browser",
     "UTC-080/081/082: verificador de ABNT/citacao/pinpoint",
     "UTC-097: decisao sobre aplicabilidade do disclaimer de emergencia",
+    "O artigo de 1995 não teve o texto conferido nesta mesa. A troca da cor pela saturação não foi conferida na página do periódico.",
+    "O Parecer Coren-SP 017/2021 não fixa corte de 8 nem de 9. A ficha não afirma alta. Não é homologação.",
   ],
-  sourceIds: ["SRC-CFM-PARECER-28-2020"],
+  sourceIds: ["SRC-CFM-PARECER-28-2020", "SRC-ALDRETE-MOD-1995", "SRC-COREN-SP-017-2021"],
   related: ["braden", "morse", "apgar"],
   version: "1.0.0-piloto",
 };
@@ -293,6 +302,12 @@ export const tools: ClinicalTool[] = [braden, morse, apgar, gotejamento, imc];
 /** Fora do menu e do sitemap. A branch de auditoria exige homologação humana antes do índice. */
 export const candidateTools: ClinicalTool[] = [aldrete, examesLaboratoriais];
 
-export function getTool(slug: string) {
+export function toolRecord(slug: string) {
   return tools.find((tool) => tool.slug === slug) ?? candidateTools.find((tool) => tool.slug === slug);
+}
+
+/** Consulta pública. Braden e Morse permanecem no registro e não saem por este caminho. */
+export function getTool(slug: string) {
+  if (isClinicalRightsHeld(slug)) return undefined;
+  return toolRecord(slug);
 }

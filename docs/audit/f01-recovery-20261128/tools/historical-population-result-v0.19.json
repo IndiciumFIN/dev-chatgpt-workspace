@@ -1,0 +1,42 @@
+{
+  "version": "0.19",
+  "source": "2026-11-28 logical dump; cko_governance.md_tool_registry_v2_candidate and cko_master.entities",
+  "registry_rows": 131,
+  "registry_distinct_slugs": 131,
+  "registry_identity_status": {
+    "IDENTITY_RESOLVED": 81,
+    "IDENTITY_RECOVERED_FIELD_REGISTRY_RUN032_CANONICAL_ID_HOLD": 38,
+    "HOLD_UNRESOLVED_TOOL_IDENTITY": 12
+  },
+  "clinical_tool_entities": 77,
+  "labor_tool_entities": 7,
+  "historical_claims": [
+    {
+      "claim": "registry=93",
+      "observed": 131,
+      "status": "SNAPSHOT_DIFFERS"
+    },
+    {
+      "claim": "CLINICAL_TOOL=8",
+      "observed": 77,
+      "status": "SNAPSHOT_DIFFERS"
+    },
+    {
+      "claim": "LABOR_TOOL=7",
+      "observed": 7,
+      "status": "COUNT_MATCH_ONLY"
+    },
+    {
+      "claim": "unresolved-82..93",
+      "status": "HISTORICAL_SUBSET_NOT_PROVEN"
+    }
+  ],
+  "kernel": "HOLD",
+  "authorization": false,
+  "limitations": "Counts do not establish historical membership or evidence authority. No hold closure.",
+  "impacts": {
+    "horizontal": "clinical and labor tools",
+    "vertical": "historical population to candidate registry to master entities",
+    "transversal": "Master Data, assurance, Kernel"
+  }
+}

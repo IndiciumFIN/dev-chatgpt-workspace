@@ -256,8 +256,8 @@
       "main": 1
     },
     "counts": {
-      "candidates": 13,
-      "pending": 43,
+      "candidates": 14,
+      "pending": 42,
       "eligible": 0,
       "retired": 0
     },
@@ -380,7 +380,21 @@
       {
         "branch": "feat/research-hub-governed-20261026",
         "source_sha": "01574c5bfbe366a6ede9c0aee6bf2e3a907d92a1",
-        "state": "PENDING_EVIDENCE"
+        "state": "RETIREMENT_CANDIDATE",
+        "structural_evidence": {
+          "kind": "DELTA_BLOB_MODE_PRESERVED",
+          "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231985229",
+          "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+          "delta_paths": 7,
+          "quarantined_paths": 7
+        },
+        "blocking_checks": [
+          "DEPENDENCIES_FULL",
+          "RETENTION",
+          "SECURITY_RIGHTS",
+          "MAIN_LEDGER_CI",
+          "EXCLUSIVE_HISTORY_RECOVERY"
+        ]
       },
       {
         "branch": "feat/research-participation-layer-20261026",
@@ -772,7 +786,23 @@
         "G00/security/rights and retention receipts",
         "Post-merge checks of replacement triggers"
       ],
-      "release": false
+      "release": false,
+      "additional_script_screen": {
+        "main_sha": "a6304d437413cb41f9b64f3aa088582f78d7906b",
+        "scope": "13 selected scripts/config files, literal screening only",
+        "files_scanned": 13,
+        "literal_matches": 1,
+        "classified_matches": [
+          {
+            "path": "scripts/lib/main-migration-core.mjs",
+            "line": 4,
+            "branch": "planning",
+            "kind": "CATEGORY_NOT_REF"
+          }
+        ],
+        "evidence_ref": "https://github.com/IndiciumFIN/dev-chatgpt-workspace/issues/33#issuecomment-7231985229",
+        "complete": false
+      }
     }
   },
   "previous_inventory_snapshot": {

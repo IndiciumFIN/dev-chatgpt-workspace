@@ -113,7 +113,7 @@ test("CE no auto-merge or database write is allowed by ledger", () => {
 test("retirement extension preserves historical closure and denies higher states", () => {
   const data = freshRetirement();
   assert.equal(data.technical_retirement.rows.length, 56);
-  assert.equal(data.technical_retirement.counts.candidates, 13);
+  assert.equal(data.technical_retirement.counts.candidates, 14);
   assert.equal(run(fresh(), false, data).code, 0);
   assert.equal(run(fresh(), true, data).code, 2);
   for (const state of ["RETIREMENT_ELIGIBLE", "RETIRED_TECHNICAL", "SEALED"]) {

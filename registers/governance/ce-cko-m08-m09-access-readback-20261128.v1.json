@@ -1,0 +1,63 @@
+{
+  "protocol": "CE.CKO.M08.M09.ACCESS.READBACK.v1",
+  "date": "2026-11-28",
+  "baseline": "996be273884018c8bd15ad5b5d9fbbf99b102a3b",
+  "predecessor": {
+    "path": "registers/governance/ce-cko-m08-m09-custody-audit-20261128.v1.json",
+    "git_blob_sha": "d4e614d43e40d5aac78687e03ae4d5346af29ca2",
+    "historical_state": "ANYONE_READER_STILL_PRESENT_BOTH"
+  },
+  "operation": {
+    "actor": "USER_MANUAL_UI",
+    "user_reported_completed": true,
+    "readback": "CONNECTED_DRIVE_METADATA",
+    "scope": "M08 and M09 only",
+    "connector_mutation": false
+  },
+  "packages": [
+    {
+      "module": "M08",
+      "bytes": 1711989,
+      "shared": false,
+      "public_link": false,
+      "permission_types_roles": [
+        "user:owner"
+      ],
+      "administrative_access": true
+    },
+    {
+      "module": "M09",
+      "bytes": 26136,
+      "shared": false,
+      "public_link": false,
+      "permission_types_roles": [
+        "user:owner"
+      ],
+      "administrative_access": true
+    }
+  ],
+  "result": "PUBLIC_LINK_REMOVAL_VERIFIED_2_OF_2",
+  "limitations": [
+    "Owner role preserved; identity not independently established by permission metadata.",
+    "No new verification of archive content hashes after access change; sizes unchanged.",
+    "Does not prove previous downloads revoked, independent archival custody or rights clearance.",
+    "No private file identifiers or links reproduced."
+  ],
+  "remaining": {
+    "independent_custody_verified": false,
+    "rights_clearance": false,
+    "clinical_release": false,
+    "kernel_admission": false,
+    "source_ref_deletion": false,
+    "db_write": false,
+    "unresolved_curriculum_pairs": 4960
+  },
+  "evidence": {
+    "pr185": {
+      "premerge_verify": 46152078407,
+      "premerge_gate": 46152078401,
+      "merge": "996be273884018c8bd15ad5b5d9fbbf99b102a3b",
+      "postmerge_status": "PENDING"
+    }
+  }
+}

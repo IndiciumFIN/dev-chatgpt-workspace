@@ -1,0 +1,98 @@
+{
+  "protocol": "CE.CKO.UPSTREAM.ATOM.INDEX.RECONCILIATION.v1",
+  "date": "2026-11-28",
+  "baseline": "0c4a8c7b09e0e89fd2bfcc0d58deae4ac94a8f4d",
+  "predecessor": {
+    "path": "registers/governance/ce-cko-original-corpus-reconciliation-20261128.v1.json",
+    "git_blob_sha": "72051b693377aca8603f70a4e6a153a480815145"
+  },
+  "source": {
+    "foundation_version": "1.7.7",
+    "foundation_sha256": "c3fd53517c6c329cc5398d09188401881c5533f6555b9575accc40a99b88a50f",
+    "extraction_zip_sha256": "071b8588096ef3760a107e3ce071312f1682e0fbebbc4c609425910db3edf287",
+    "extraction_zip_entries": 648,
+    "report_zip_sha256": "2e3aaae586eec84236ff3992e220df45383f02731a6023d31944917a4a1876a3",
+    "report_zip_entries": 8,
+    "crc": "PASS_BOTH",
+    "atomized_sqlite_sha256": "e61c424e52394a923b785a201ba15be2a79aafb59d7802b3a63537b1ef54a0d6",
+    "content_bank_sqlite_sha256": "cca0bcd922640ff39b1dff38495df2b6c4a321ae91e0dbc21df829050fe8e6a9",
+    "sqlite_quick_check": "ok",
+    "sqlite_access": "READ_ONLY_IMMUTABLE",
+    "drive_public_link_observed": false,
+    "visibility_scope": "Only named roles returned for both archives; no anyone permission observed."
+  },
+  "reconciliation": {
+    "historical_index_atoms": 80261,
+    "materialized_atoms": 28001,
+    "metadata_only_atoms": 52260,
+    "active_atoms_exact_match": 28001,
+    "active_pairs_original_match": 4142,
+    "pair_total": 9102,
+    "pairs_matched_upstream_index": 9102,
+    "source_mismatches": 0,
+    "gate_mismatches": 0,
+    "previously_missing_pairs": 4960,
+    "previously_missing_distinct_atom_ids": 1765,
+    "matched_previously_missing_distinct_atom_ids": 1765,
+    "previously_missing_sources": 52,
+    "matched_previously_missing_sources": 52,
+    "held_pairs_with_default_retrieval_enabled": 0,
+    "held_pairs_without_64_character_hash": 0,
+    "held_pairs_with_materialized_text_in_upstream_atoms": 0,
+    "groups": [
+      {
+        "gate": "DEFAULT_ACTIVE",
+        "index_atoms": 28001,
+        "pairs": 4142,
+        "matched_pairs": 4142,
+        "materialized_pairs": 4142,
+        "default_retrieval_atoms": 28001
+      },
+      {
+        "gate": "CONDITIONAL_EXPLICIT_ENABLE",
+        "index_atoms": 3523,
+        "pairs": 1670,
+        "matched_pairs": 1670,
+        "materialized_pairs": 0,
+        "default_retrieval_atoms": 0,
+        "held_distinct_atoms": 595,
+        "held_distinct_sources": 19
+      },
+      {
+        "gate": "LICENSE_QUARANTINED",
+        "index_atoms": 24784,
+        "pairs": 2280,
+        "matched_pairs": 2280,
+        "materialized_pairs": 0,
+        "default_retrieval_atoms": 0,
+        "held_distinct_atoms": 625,
+        "held_distinct_sources": 16
+      },
+      {
+        "gate": "HUMAN_REFERENCE_ONLY",
+        "index_atoms": 23953,
+        "pairs": 1010,
+        "matched_pairs": 1010,
+        "materialized_pairs": 0,
+        "default_retrieval_atoms": 0,
+        "held_distinct_atoms": 545,
+        "held_distinct_sources": 17
+      }
+    ]
+  },
+  "finding": "Upstream atoms_all_index resolves every historical candidate reference with matching source and rights gate. The held references have metadata and hashes but are not present in upstream atoms text table. This evidences the rights-gated separation; no individual license approval or text recovery is inferred.",
+  "controls": {
+    "raw_text_copied_to_main": false,
+    "raw_index_copied_to_main": false,
+    "db_write": false,
+    "clinical_release": false,
+    "kernel_admission": false,
+    "rights_clearance": false,
+    "source_ref_deletion": false
+  },
+  "next": [
+    "Use metadata-only resolution in diagnostics; distinguish index identity from retrievable evidence.",
+    "Keep 4960 held pairs blocked for clinical use until per-source authorization and independent review.",
+    "Continue custody and retirement review without treating index matches as permission."
+  ]
+}
